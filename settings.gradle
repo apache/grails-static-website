@@ -25,4 +25,4 @@ buildCache {
     }
 }
 
-rootProject.name = "static-website"
+rootProject.name = 'static-website'
