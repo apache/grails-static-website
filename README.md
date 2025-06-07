@@ -1,6 +1,6 @@
 # Grails Website
 
-[![Build Status](https://github.com/grails/grails-static-website/workflows/Publish/badge.svg)](https://github.com/grails/grails-static-website/actions)
+[![Build Status](https://github.com/apache/grails-static-website/workflows/Publish/badge.svg)](https://github.com/apache/grails-static-website/actions)
 
 This project builds the Grails website. A static website build with [Gradle](https://gradle.org). It uses a Gradle Plugin whose sources can be found at `buildSrc`.
 
@@ -39,7 +39,7 @@ You can get more info by running:
 
 ## Generating the MAIN site
 
-[https://grails.org](https://grails.org)
+[https://grails.apache.org](https://grails.apache.org)
 
 ```bash
 ./gradlew build --console=plain
@@ -61,14 +61,39 @@ The output can be found in the `build/dist` directory.
 
 The easiest way to work locally is to generate the site and setup your Webserver to serve build/dist.
 
-For example with [MAMP](https://www.mamp.info/en/mamp/):
+
+### Using MAMP
+
+Go to [MAMP](https://www.mamp.info/en/mamp/) for installation instructions:
 
 ![](docs/mamp.png)
 
+### Using Python
+
 You can also use Python to serve the directory:
 
-```
+```bash
 python3 -m http.server 8080 --directory build/dist
+```
+
+### Using `npm`
+
+You can use install `live-serve` with `npm` to get live auto-reload:
+
+```bash 
+npm install -g live-server
+```
+
+And then run the server like this:
+
+```bash 
+live-server build/dist
+```
+
+Combining this with `./gradlew` continuously build in a separate shell, you get full reloading:
+
+```bash
+./gradlew build --continuous
 ```
 
 ## Blog Posts
@@ -183,7 +208,7 @@ Tags: #angular
 
 Release announcements should be tagged with `release`.
 
-Check the [list of tags](https://grails.org/blog/index.html) and try to reuse them.
+Check the [list of tags](https://grails.apache.org/blog/index.html) and try to reuse them.
 
 #### Code Highlighting
 

@@ -76,7 +76,7 @@ sdk install grails 6.0.0
 
 ### Option 2: Download & Install Binary
 
-1. Download the latest binary from the following link, based on your Operating System: [New Grails CLI Binary](https://github.com/grails/grails-forge/releases)
+1. Download the latest binary from the following link, based on your Operating System: [New Grails CLI Binary](https://github.com/apache/grails-forge/releases)
 
 2. Extract the downloaded zip file to an appropriate directory on your system.
 
@@ -93,7 +93,7 @@ sdk install grails 6.0.0
 1. Clone the repository with the following command:
 
 ```shell
-git clone https://github.com/grails/grails-forge.git
+git clone https://github.com/apache/grails-forge.git
 ```
 
 2. Build the distribution using the following command:
@@ -114,7 +114,7 @@ sdk use grails dev
 
 ## Explore the Source Code
 
-Curious about the inner workings of the New Grails Forge? Delve into the source code on GitHub: [Grails Forge Core Source Code](https://github.com/grails/grails-forge)
+Curious about the inner workings of the New Grails Forge? Delve into the source code on GitHub: [Grails Forge Core Source Code](https://github.com/apache/grails-forge)
 
 ## Preview Feature: Explore Your Grails Application Source Files
 

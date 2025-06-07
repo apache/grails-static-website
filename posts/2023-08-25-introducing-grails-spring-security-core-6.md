@@ -44,7 +44,7 @@ Security is paramount, and that's why we've given the underlying Spring Security
 
 We've heard your feedback – navigating documentation shouldn't be a chore. That's why we've spruced up the Internal Docs task. This magic generates documentation that empowers you to grasp the plugin's features and their effective usage. But there's more – we've added a slick select drop-down feature. This nifty addition enables you to switch effortlessly between documentation for different releases. Whether diving into the latest version or revisiting an older one, finding the info you need is now seamless.
 
-![Documentation Select Option](https://grails.org/blog/2023-08-25-thenewselectoption.png)
+![Documentation Select Option](/blog/2023-08-25-thenewselectoption.png)
 
 ## All Aboard the Grails 6 Train
 

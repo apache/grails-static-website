@@ -20,4 +20,4 @@ The outage will begin at **08:00 UTC** and is expected to last 3 hours. The repo
 
 During this time, projects that retrieve their dependencies from repo.grails.org may experience issues.
 
-For more information, or to discuss issues encountered after this window, please see this <a href="https://github.com/grails/grails-core/issues/12863">GitHub issue</a>.
+For more information, or to discuss issues encountered after this window, please see this <a href="https://github.com/apache/grails-core/issues/12863">GitHub issue</a>.

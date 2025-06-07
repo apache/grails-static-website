@@ -14,11 +14,11 @@ image: grails-blog-index-3.png
 
 Hey there, Grails enthusiasts! Are you ready for some exciting news? We're thrilled to introduce the revamped Grails Plugin Portal, and let us tell you, it's a game-changer! This dynamic portal is now completely static and hosted on GitHub, offering you a seamless and efficient experience in exploring Grails plugins.
 
-![Grails Plugin Portal!](https://grails.org/blog/2023-09-11-new-grails-plugin-portal.png)
+![Grails Plugin Portal!](/blog/2023-09-11-new-grails-plugin-portal.png)
 
 ## A Glimpse of the Future: Grails Plugin Portal Redesigned
 
-Our dedicated team has been hard at work, and we're excited to unveil the Grails Plugin Portal 2.0, now hosted at [https://github.com/grails/grails-static-website](https://github.com/grails/grails-static-website). What's our aim? To make your Grails plugin journey smoother and more accessible than ever before!
+Our dedicated team has been hard at work, and we're excited to unveil the Grails Plugin Portal 2.0, now hosted at [https://github.com/apache/grails-static-website](https://github.com/apache/grails-static-website). What's our aim? To make your Grails plugin journey smoother and more accessible than ever before!
 
 ## Key Features of the New Grails Plugin Portal
 
@@ -54,26 +54,26 @@ Before we dive further into the awesomeness of the new portal, let's address the
 
 ## All Plugins in One Place
 
-Did you know that all the plugins on the Grails Plugin Portal are sourced from [https://github.com/grails/grails-plugins-metadata/tree/grails-plugins.json](https://github.com/grails/grails-plugins-metadata/tree/grails-plugins.json)? We've streamlined the process to ensure you have access to the most up-to-date plugins directly from the source.
+Did you know that all the plugins on the Grails Plugin Portal are sourced from [https://github.com/apache/grails-plugins-metadata/tree/grails-plugins.json](https://github.com/apache/grails-plugins-metadata/tree/grails-plugins.json)? We've streamlined the process to ensure you have access to the most up-to-date plugins directly from the source.
 
 ## How to Include or Update Your Grails Plugin
 
 Excited to get your Grails plugin into the spotlight on our portal? Here's how you can include or update your Grails plugin:
 
-1. **Fork the Repository**: Start by forking the [Grails Plugin Metadata Repository](https://github.com/grails/grails-plugins-metadata).
+1. **Fork the Repository**: Start by forking the [Grails Plugin Metadata Repository](https://github.com/apache/grails-plugins-metadata).
 
 2. **Edit the JSON File**: Navigate to the `grails-plugins.json` file in your forked repository. This file contains the plugin metadata.
 
 3. **Add Your Plugin**: To include your plugin, simply add its metadata to the JSON file. Make sure to follow the established format.
 
-4. **Submit a Pull Request**: Once you've added or updated your plugin details, submit a pull request to the original [Grails Plugin Metadata Repository](https://github.com/grails/grails-plugins-metadata). Our team will review it and, upon approval, your plugin will be part of the portal!
+4. **Submit a Pull Request**: Once you've added or updated your plugin details, submit a pull request to the original [Grails Plugin Metadata Repository](https://github.com/apache/grails-plugins-metadata). Our team will review it and, upon approval, your plugin will be part of the portal!
 
 ## Get Involved and Contribute
 
-But here's the exciting part: the Grails Plugin Portal is not just a resource; it's a community effort! We're eager to hear your thoughts and welcome your contributions. Have a Grails plugin you'd like to share, or ideas for portal enhancements? Join us on [GitHub](https://github.com/grails/grails-static-website), and together, we'll make Grails development a breeze!
+But here's the exciting part: the Grails Plugin Portal is not just a resource; it's a community effort! We're eager to hear your thoughts and welcome your contributions. Have a Grails plugin you'd like to share, or ideas for portal enhancements? Join us on [GitHub](https://github.com/apache/grails-static-website), and together, we'll make Grails development a breeze!
 
 ##  Embrace the Future of Grails Plugin Discovery
 
 The new Grails Plugin Portal is your gateway to a brighter future in Grails development. With its static structure, lightning-fast search, and curated lists of top-rated and latest release plugins, it's your one-stop-shop for all things Grails. Come on in, explore, discover, and become an active part of the Grails community. Let's build amazing Grails applications together with this reimagined portal!
 
-Ready to get started? Visit the [Grails Plugin Portal](https://grails.org/plugins.html) today!
+Ready to get started? Visit the [Grails Plugin Portal](/plugins.html) today!

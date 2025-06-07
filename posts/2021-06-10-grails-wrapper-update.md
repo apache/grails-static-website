@@ -46,4 +46,4 @@ The default value is `https://repo.grails.org/grails/core`, and we do not expect
 
 ## Wrapping Up
 
-We apologize for any inconvenience you may have experienced by this recent change. We will post a more detailed post-mortem on these events in the next few days. Please continue to report [any issues](https://github.com/grails/grails-core/issues) you encounter.
+We apologize for any inconvenience you may have experienced by this recent change. We will post a more detailed post-mortem on these events in the next few days. Please continue to report [any issues](https://github.com/apache/grails-core/issues) you encounter.

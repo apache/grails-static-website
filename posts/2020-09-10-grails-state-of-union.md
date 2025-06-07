@@ -63,4 +63,4 @@ In addition to the improvements above, we are planning on a number of additional
 - Support for the latest Groovy and JDK.
 
 ## Thank You
-The continuing evolution and improvements to the Grails framework wouldn’t be possible without the work and support provided by the vibrant [Grails community](https://grails.org/community.html). If you are new to the Grails framework or are considering it for your next project, please stop by our [Slack community](https://slack.grails.org) and say "hello." We can’t wait to hear about the great applications you're building with Groovy and the Grails framework! 
+The continuing evolution and improvements to the Grails framework wouldn’t be possible without the work and support provided by the vibrant [Grails community](/community.html). If you are new to the Grails framework or are considering it for your next project, please stop by our [Slack community](https://slack.grails.org) and say "hello." We can’t wait to hear about the great applications you're building with Groovy and the Grails framework! 

@@ -64,7 +64,7 @@ Keeping up with the latest dependencies is crucial for the health of any framewo
 * `org.grails.profiles:angular` to version 9.0.1
 * And many more transitive dependencies.
 
-These upgrades ensure that Grails 6.2.1 remains compatible with the latest libraries and tools, providing developers with a robust and reliable environment. We recommend checking out the [GitHub release page](https://github.com/grails/grails-core/releases/tag/v6.2.1) for more information.
+These upgrades ensure that Grails 6.2.1 remains compatible with the latest libraries and tools, providing developers with a robust and reliable environment. We recommend checking out the [GitHub release page](https://github.com/apache/grails-core/releases/tag/v6.2.1) for more information.
 
 ## Installing Grails 6.2.1
 

@@ -43,4 +43,4 @@ For more information, we recommend checking out [Liquibase Extension Upgrade Gui
 
 We are excited about the recent release of Grails framework 5 and continually updating documentation and popular libraries. Now is a good time to update to Grails framework 5 and switch to Liquibase 4.
 
-We would love to hear about your experience with the update to Grails Database Migration 4.0.0-RC1, and if you need any help with your upgrade, we're here to [support](https://grails.org/support.html) you.
+We would love to hear about your experience with the update to Grails Database Migration 4.0.0-RC1, and if you need any help with your upgrade, we're here to [support](/support.html) you.

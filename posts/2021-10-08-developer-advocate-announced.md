@@ -12,7 +12,7 @@ image: grails-blog-index-1.png
 
 [%date]
 
-The [Micronaut](https://micronaut.io/foundation/) and [Grails](https://grails.org/foundation/index.html) Foundations&trade; are excited to announce that Sergio del Amo Caballero has taken on a new role and new responsibilities as the 2GM Developer Advocate! 
+The [Micronaut](https://micronaut.io/foundation/) and Grails Foundations&trade; are excited to announce that Sergio del Amo Caballero has taken on a new role and new responsibilities as the 2GM Developer Advocate! 
 
 The Foundations support the technical innovation and advancement of the Grails<sup>&reg;</sup> and [Micronaut](https://micronaut.io/)<sup>&reg;</sup> frameworks for our growing global community, and the creation of this new position is one more way we are investing in the continued success of our open source products. As Developer Advocate, Sergio will represent developer interests while engaging with our communities to evangelize the Frameworks.
 

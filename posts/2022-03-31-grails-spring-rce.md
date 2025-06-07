@@ -33,4 +33,4 @@ The known exploit is one mechanism that can be used for this vulnerability. We w
 
 ## Next Steps
 
-Although at this time, we have no reason to believe that Grails applications are vulnerable, as a precaution, we have released [Grails 5.1.6](https://github.com/grails/grails-core/releases/tag/v5.1.6).  This Grails Framework release updates our Spring dependency to 5.3.18, which includes the upstream patch from the Spring Framework Team.
+Although at this time, we have no reason to believe that Grails applications are vulnerable, as a precaution, we have released [Grails 5.1.6](https://github.com/apache/grails-core/releases/tag/v5.1.6).  This Grails Framework release updates our Spring dependency to 5.3.18, which includes the upstream patch from the Spring Framework Team.

@@ -52,6 +52,6 @@ involved in in recent weeks has been helpful, appreciated, and respectful. This
 community is remarkable and your input is sincerely appreciated.
 
 We will continue to communicate more information here in the coming weeks. Always 
-feel welcome to reach out to us at [info@grails.org](mailto:info@grails.org) if you have any questions, 
+feel welcome to reach out to us at [dev@grails.apache.org](mailto:dev@grails.apache.org) if you have any questions, 
 concerns, or would like to engage in ways that you are currently not.  Together 
 we are all defining the way forward and your help is appreciated.

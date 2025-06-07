@@ -18,7 +18,7 @@ Tags: #bintray #plugins
 
 As many of you know, last week JFrog [announced](https://jfrog.com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/) that they are sunsetting JCenter and Bintray. On March 31st, JCenter will no longer accept new package submissions, but it will continue to serve artifacts until February 1st of 2022. On May 1, 2021, Bintray will be shut down. After May 1st, artifacts hosted by Bintray and the Bintray API will not be available.
 
-This has a large impact on the Grails community, as we have been using Bintray for quite some time to host a number of our artifacts, as well as the community plugins under the `org.grails.plugins` group ID. Additionally, the [Grails Plugins Portal](https://grails.org/plugins.html) utilizes the Bintray API to retrieve needed metadata to list and search plugins.
+This has a large impact on the Grails community, as we have been using Bintray for quite some time to host a number of our artifacts, as well as the community plugins under the `org.grails.plugins` group ID. Additionally, the [Grails Plugins Portal](/plugins.html) utilizes the Bintray API to retrieve needed metadata to list and search plugins.
 
 We have a plan, but it is going to require some lifting.
 

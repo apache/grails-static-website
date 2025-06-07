@@ -24,4 +24,4 @@ buildCache {
     }
 }
 
-rootProject.name = 'static-website'
+rootProject.name = 'grails-static-website'

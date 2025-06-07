@@ -53,7 +53,7 @@ Going forward, with each major release, the previous major release will go into 
 
 ## The Road Ahead
 
-We are excited to continue to advance the Grails framework in the year 2021 with the support of the new [Grails Foundation](https://grails.org/foundation/index.html) and great community. We will be focusing on improving the performance of the Grails application and user experience. In addition, we are planning a number of enhancements including:
+We are excited to continue to advance the Grails framework in the year 2021 with the support of the new Grails Foundation and great community. We will be focusing on improving the performance of the Grails application and user experience. In addition, we are planning a number of enhancements including:
 
 - Making GSP more modular and independent of the Grails framework
 - Transaction support in GORM for MongoDB 

@@ -116,8 +116,8 @@ class PluginsPage {
     @CompileDynamic
     static String linksMenu(String siteUrl) {
         List<Map<String, String>> links = [
-                [url: "https://grails.org/blog/2021-04-07-publish-grails-plugin-to-maven-central.html", title: "Publishing Guide"],
-                [url: "https://github.com/grails/grails-plugins-metadata", title: "Portal on Github"],
+                [url: "https://grails.apache.org/blog/2021-04-07-publish-grails-plugin-to-maven-central.html", title: "Publishing Guide"],
+                [url: "https://github.com/apache/grails-plugins-metadata", title: "Portal on Github"],
         ]
 
         StringWriter writer = new StringWriter()
@@ -196,7 +196,7 @@ class PluginsPage {
         html.div {
             mkp.yieldUnescaped createHeader('Top Rated Plugins')
             div {
-                ul {
+                ul(class: 'plugin') {
                     for (Plugin plugin : topRatedPlugins) {
                         mkp.yieldUnescaped renderSinglePlugin(siteUrl, plugin)
                     }
@@ -304,7 +304,7 @@ class PluginsPage {
     static String renderLatestPlugins(String siteUrl, List<Plugin> topFive) {
         StringWriter writer = new StringWriter()
         MarkupBuilder html = new MarkupBuilder(writer)
-        html.ul {
+        html.ul(class: 'plugin') {
             for (plugin in topFive) {
                 mkp.yieldUnescaped renderSinglePlugin(siteUrl, plugin)
             }

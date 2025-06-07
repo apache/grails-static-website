@@ -43,7 +43,7 @@ The Grails Team recommends that all Grails applications be upgraded to a patched
 
 We have released a patched version of Grails 3 for this bug.  Grails 3.x applications can be upgraded to version 3.3.16.
 
-Please note that versions 1, 2, and 3 of the Grails framework [have reached end of support](https://grails.org/support-schedule.html).  We strongly recommend that applications built with these versions be upgraded to an actively maintained version of the Framework. Additionally, the [Grails Foundation](https://grails.org/foundation/) provides [Commercial Support options](https://grails.org/support.html) for Grails framework versions 3, 4, and 5.  To learn more about how Commercial Support can benefit your organization, please [contact us](mailto:info@grails.org).
+Please note that versions 1, 2, and 3 of the Grails framework have reached end of support.  We strongly recommend that applications built with these versions be upgraded to an actively maintained version of the Framework. Additionally, the Grails Foundation provides [Commercial Support options](/support.html) for Grails framework versions 3, 4, and 5. 
 
 If you are unable to upgrade to a patched version of the Framework, you can make a couple of minor adjustments to work around the issue.
 
@@ -74,4 +74,4 @@ static Closure constraints = { value min: 0 }
 
 We would like to thank the Engineering Team at Transitional Data Services for identifying this bug as well as the countless contributions from the folks in  our awesome community.  Without your dedication and enthusiasm, the Grails framework would not be where it is today.  Thank you!
 
-For more technical details about this bug and the patches, please see the [discussion on GitHub](https://github.com/grails/grails-core/issues/12718).
+For more technical details about this bug and the patches, please see the [discussion on GitHub](https://github.com/apache/grails-core/issues/12718).

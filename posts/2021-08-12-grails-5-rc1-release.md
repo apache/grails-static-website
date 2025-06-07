@@ -12,7 +12,7 @@ image: grails-blog-index-3.png
 
 [%date]
 
-The [Grails® Foundation](https://grails.org/foundation/index.html) is pleased to announce the first release candidate of [Grails framework 5.0.0](https://github.com/grails/grails-core/releases/tag/v5.0.0.RC1)! With this release, we are one step closer to the Grails framework's next GA release!
+The Grails® Foundation is pleased to announce the first release candidate of [Grails framework 5.0.0](https://github.com/apache/grails-core/releases/tag/v5.0.0.RC1)! With this release, we are one step closer to the Grails framework's next GA release!
 
 ## Overview
 
@@ -44,7 +44,7 @@ Many Grails plugins should work with Grails framework 5. For those in the Grails
 
 ##  Download
 The easiest way to get started is to use [SDKMAN! (The Software Development Kit Manager)](https://sdkman.io/) to download Grails 5.0.0.RC1.
-Alternatively, you could download the Grails Binary directly from the [Github Release](https://github.com/grails/grails-core/releases/download/v5.0.0.RC1/grails-5.0.0.RC1.zip) page.
+Alternatively, you could download the Grails Binary directly from the [Github Release](https://github.com/apache/grails-core/releases/download/v5.0.0.RC1/grails-5.0.0.RC1.zip) page.
 
 ## Conclusion
 
