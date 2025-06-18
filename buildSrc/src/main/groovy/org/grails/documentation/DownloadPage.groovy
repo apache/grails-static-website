@@ -25,12 +25,12 @@ import groovy.xml.MarkupBuilder
 @CompileStatic
 class DownloadPage {
 
-    static String binaryUrl(String version, String artifact, String ext = '') {
-        "https://www.apache.org/dyn/closer.lua/grails/core/${version}/distribution/apache-${artifact}-${version}-incubating-bin.zip${ext}?action=download"
+    static String binaryUrl(String version, String artifact, String ext = '', String directory = 'core') {
+        "https://www.apache.org/dyn/closer.lua/grails/${directory}/${version}/distribution/apache-${artifact}-${version}-incubating-bin.zip${ext}?action=download"
     }
 
-    static String sourceUrl(String version, String ext = '') {
-        "https://www.apache.org/dyn/closer.lua/grails/core/${version}/sources/apache-grails-${version}-incubating-src.zip${ext}?action=download"
+    static String sourceUrl(String version, String ext = '', String artifact='grails', String directory = 'core') {
+        "https://www.apache.org/dyn/closer.lua/grails/${directory}/${version}/sources/apache-${artifact}-${version}-incubating-src.zip${ext}?action=download"
     }
 
     @CompileDynamic
@@ -62,13 +62,29 @@ class DownloadPage {
                             a(href: binaryUrl(version, 'grails-wrapper', '.sha512'), 'SHA512')
                             a(href: binaryUrl(version, 'grails-wrapper', '.asc'), 'ASC')
                         }
+                        li {
+                            a(href: sourceUrl(version,'', 'grails-spring-security', 'spring-security'), 'Grails Spring Security Plugin Source')
+                            a(href: sourceUrl(version,'.sha512', 'grails-spring-security', 'spring-security'), 'SHA512')
+                            a(href: sourceUrl(version,'.asc','grails-spring-security', 'spring-security'), 'ASC')
+                        }
+                        li {
+                            a(href: sourceUrl('5.0.0-M4',  '', 'grails-redis', 'redis'), 'Grails Redis 5.0.0-M4 Plugin Source')
+                            a(href: sourceUrl('5.0.0-M4',  '.sha512', 'grails-redis','redis'), 'SHA512')
+                            a(href: sourceUrl('5.0.0-M4',  '.asc','grails-redis', 'redis'), 'ASC')
+                        }
                     } else {
                         li {
                             a(href: "https://github.com/apache/grails-forge/releases/download/v${version}/grails-cli-${version}.zip", 'Binary')
                         }
                     }
                     li {
-                        a(href: "https://github.com/apache/grails-core/releases/tag/v${version}", 'Release Notes')
+                        a(href: "https://github.com/apache/grails-core/releases/tag/v${version}", 'Grails Release Notes')
+                    }
+                    li {
+                        a(href: "https://github.com/apache/grails-spring-security/releases/tag/v${version}", 'Grails Spring Security Plugin Release Notes')
+                    }
+                    li {
+                        a(href: "https://github.com/apache/grails-redis/releases/tag/v5.0.0-M4", 'Grails Redis 5.0.0-M4 Plugin Release Notes')
                     }
                 }
             }
