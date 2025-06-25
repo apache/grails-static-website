@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Technology Advisory Board Meeting</title>
+    <meta name="keywords" content="grails,jvm,framework,groovy,gradle,spring-boot,gorm"/>
+    <meta name="description" content="A powerful Groovy-based web application framework for the JVM built on top of Spring Boot"/>
+    <meta name="date" content="July 7, 2022"/>
+    <meta name="robots" content="all"/>
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://grails.apache.org/rss.xml"/>
+    <meta charset='UTF-8'/>
+    <link rel='icon' href='https://grails.apache.org/images/favicon.ico'/>
+    <meta name='twitter:card' content='summary_large_image'/>
+    <meta name='twitter:site' content='@grailsframework'/>
+    <meta name='twitter:description' content='A powerful Groovy-based web application framework for the JVM built on top of Spring Boot'/>
+    <meta name='twitter:creator' content='@grailsframework'/>
+    <meta property='og:image' content='https://grails.apache.org/images/grails.png'/>
+    <meta property='og:image:width' content='300'/>
+    <meta property='og:image:height' content='300'/>
+    <meta property='og:url' content='https://grails.apache.org'/>
+    <meta property='og:title' content='Technology Advisory Board Meeting'/>
+    <meta property='og:description' content='A powerful Groovy-based web application framework for the JVM built on top of Spring Boot'/>
+    <meta property='og:type' content='website'/>
+
+    <meta name='viewport' content='width=device-width, initial-scale=1'/>
+    <link rel='mask-icon' href='https://grails.apache.org/images/grails-pinned-icon.svg' color='feb672'/>
+    <link rel='stylesheet' href='https://grails.apache.org/stylesheets/screen.css'/>
+    <link rel='stylesheet' href='https://grails.apache.org/stylesheets/plugin.css'/>
+    <link rel='stylesheet' href='https://grails.apache.org/stylesheets/paginate.css'/>
+    <script src='https://grails.apache.org/javascripts/navigation.js'></script>
+    <script src='https://grails.apache.org/javascripts/paginate.js'></script>
+    
+    <link rel='stylesheet' href='https://grails.apache.orghttps://grails.apache.org/stylesheets/foundation.css'/>
+    
+    <script src='https://grails.apache.org/javascripts/plugins.js'></script>
+</head>
+<body class='foundation minutes'>
+<header class='mainheader'>
+    <div class='content'>
+        <a href='https://grails.apache.org/index.html'><img class='grailslogo' src='https://grails.apache.org/images/grails_logo.svg' alt='Grails Logo'/></a>
+        <a href='javascript:show(&apos;topmenus&apos;, &apos;showNavigationLink&apos;)' id='showNavigationLink'
+           class='mobile align-center'>Show Navigation</a>
+        <div id='topmenus'>
+            <nav class='secondarymenu' id='secondarymenu'>
+                <ul>
+                    <li><a href='https://grails.apache.org/casestudies/index.html'>Case Studies</a></li>
+                    <li><a href='https://grails.apache.org/blog/index.html'>Blog</a></li>
+                    <li><a href='https://grails.apache.org/learning.html'>Learning</a></li>
+                    <li><a href='https://grails.apache.org/community.html'>Community</a></li>
+                    <li><a href='https://grails.apache.org/search.html'>Search</a></li>
+                </ul>
+            </nav>
+            <nav class='mainmenu' id='mainmenu'>
+                <ul>
+                    <li><a href='https://grails.apache.org/documentation.html'>Documentation</a></li>
+                    <li><a href='https://grails.apache.org/download.html'>Download</a></li>
+                    <li><a href='https://grails.apache.org/plugins.html'>Plugins</a></li>
+                    <li><a href='https://guides.grails.org/index.html'>Guides</a></li>
+                    <li><a href='https://grails.apache.org/faq.html'>FAQ</a></li>
+                    <li><a href='https://grails.apache.org/support.html'>Support</a></li>
+                    <li><a href='https://start.grails.org'>Forge App</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+<article><div class='headerbar chalicesbg'>
+  <div class='content'>
+    <h1>
+      <a href='https://grails.apache.org/foundation/index.html'>Foundation</a>
+    </h1>
+  </div>
+</div>
+<article class='content container'>
+  <section class='largegoldenratio align-left foundation-description'>
+    <div><h2>Technology Advisory Board Meeting, <span class="date">July 7, 2022</span></h2>
+<h3>Meeting Attendance:</h3>
+<ul>
+<li><strong>Puneet Behl</strong> - Grails Product Development Lead at Object Computing</li>
+<li><strong>Søren Glasius</strong> - Architect and Technical Manager at Gennemtænkt IT</li>
+<li><strong>Jason Schindler</strong> - Object Computing Inc., Partner and Groovy, Grails, and Micronaut Team Manager</li>
+<li><strong>Paul King</strong> - Groovy Project Development Lead at Object Computing, Inc.</li>
+<li><strong>James Kleeh</strong> – Software Development Engineer at Amazon</li>
+<li><strong>Jen Wiese</strong> - Grails Foundation Community Engagement Manager</li>
+<li><strong>Tabitha Willan</strong> - Lead Application Engineer at Omaha Public Power District</li>
+</ul>
+<h3>Not in Attendance:</h3>
+<ul>
+<li><strong>David Estes</strong> – Co-founder and VP of Engineering at Morpheus Data; Creator of the Grails Asset-Pipeline</li>
+<li><strong>Ken Kousen</strong> – President at Kousen IT, Inc.</li>
+<li><strong>Graeme Rocher</strong> - Grails co-founder; Architect at Oracle</li>
+</ul>
+<p><strong>The Meeting Was Led By:</strong> Jason Schindler</p>
+<hr />
+<h3>Agenda:</h3>
+<ul>
+<li>Welcome</li>
+<li>Grails Updates</li>
+<li>Open Discussion</li>
+<li>Close Meeting</li>
+</ul>
+<h3>Grails Framework Updates</h3>
+<ul>
+<li>Review of JDK Support in Grails framework 6 from last meeting
+<ul>
+<li>The plan is to base Grails framework 6 on JDK 11</li>
+<li>Paul: The Groovy community is a little split on if Groovy 5 should be JDK 8, 11, or 17.  It will only impact future versions of the Grails framework that use Groovy 5, so shouldn’t be a concern for Grails framework 6
+<ul>
+<li>https://twitter.com/ApacheGroovy/status/1524255310923595776</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>New Grails CLI
+<ul>
+<li><em>Puneet</em>: Plan is to have the new CLI available as an option in Grails 5 and then make it the standard in Grails 6.  If we are unable to get the CLI complete in time for Grails 6, we will release it as an option in Grails 6.</li>
+<li><em>Jason</em>: Polled the group to see who uses custom templates / profiles from the CLI.  Tabitha does.
+<ul>
+<li><em>Jason</em>: When we update the Grails CLI to the new version based on Micronaut there will be some changes to how custom commands and profiles are done.  I think it would be good for us to review those with the group.</li>
+<li><em>Puneet</em>: Reviewed tentative updates for the new CLI
+<ul>
+<li><em>Puneet</em>: current commands written as an <code>ApplicationCommand</code> should continue to work</li>
+</ul>
+</li>
+<li><em>Tabitha</em>: As far as the templates, what we did was create a custom plugin for the templates with a command that updates the templates, so I don’t think your change will impact us.</li>
+<li><em>Puneet</em>: I would like to demo this to the tab once it is in a presentable state.</li>
+<li><em>James</em>: I think there will be some things that won’t immediately translate with the new CLI but it should be easier to extend and understand once the change is made.  I personally feel like the pros outweigh the cons there.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Grails framework 4 End of Support
+<ul>
+<li><em>Jason</em>: The tentative date for end of support for Grails framework 4 is at the end of this year.  That is dependent on the release of Grails 6.  By the end of the year, Grails 6 should be released, 5 should move to active maintenance</li>
+</ul>
+</li>
+</ul>
+<h3>Open Discussion</h3>
+<ul>
+<li><em>Puneet</em>: I had some presentations accepted for ApacheCon.  I don’t know the full schedule yet but I’m looking forward to presenting.
+<ul>
+<li><em>Paul</em>: Here is the tentative schedule: https://www.apachecon.com/acna2022/schedule.html</li>
+</ul>
+</li>
+<li><em>Puneet</em>: Currently the Grails Plugin Portal goes down very often, but I know James we had some plans of making it completely static and I’d like some feedback on the priority of that
+<ul>
+<li>TAB talked through static site generation options</li>
+</ul>
+</li>
+<li><em>Søren</em>: The CFP for GR8 Conf is open and we are always looking for speakers
+<ul>
+<li>https://cfp.gr8conf.org/login/auth</li>
+</ul>
+</li>
+</ul>
+<h3>Close Meeting</h3>
+<ul>
+<li>Meeting notes will be published</li>
+<li>Thank you to everyone who attended. Your participation and time is very much appreciated</li>
+</ul>
+</div>
+  </section>
+  <section class='smallgoldenratio align-left foundation-boards'>
+    <div class='meeting-archive-list'>
+      <a href='https://grails.apache.org/foundation/minutes/index.html' style='text-decoration: none' title='Meeting Minutes Archive'>
+        <h2>Meeting Minutes Archive</h2>
+      </a>
+      <br />
+      <div>
+        <h3>2022</h3>
+        <ul>
+          <li>
+            <a href='https://grails.apache.org/foundation/minutes/20221128-tab.html'>Nov 28 - Technology Advisory Board Meeting</a>
+          </li>
+          <li>
+            <a href='https://grails.apache.org/foundation/minutes/20220711-tab.html'>Jul 07 - Technology Advisory Board Meeting</a>
+          </li>
+          <li>
+            <a href='https://grails.apache.org/foundation/minutes/20220323-tab.html'>Mar 23 - Technology Advisory Board Meeting</a>
+          </li>
+        </ul>
+        <h3>2021</h3>
+        <ul>
+          <li>
+            <a href='https://grails.apache.org/foundation/minutes/20211217-tab.html'>Dec 17 - Technology Advisory Board Meeting</a>
+          </li>
+          <li>
+            <a href='https://grails.apache.org/foundation/minutes/20210321-tab.html'>Mar 21 - Technology Advisory Board Meeting</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</article>&nbsp;</article>
+<footer>
+    <div class='content'>
+        <div class='apache-grails'>
+            <p>The Apache Grails Framework is incubating at the Apache Software Foundation, sponsored by the <a href="http://groovy.apache.org" target="_blank">Apache
+                Groovy</a> project. Incubation is required of all newly accepted projects. It is supported by the Grails community.</p>
+            <a href='https://apache.org'><img class='' src='https://grails.apache.org/images/asf_logo.svg' width='300px'
+                                              alt='Apache Software Foundation'/></a>
+            <p>The Apache Software Foundation</p>
+            <p>Apache, Apache Grails, Grails, and the Apache feather logo are either registered trademarks or trademarks
+                of The Apache Software Foundation.
+            </p>
+
+        </div>
+        <nav class='socialmedianav'>
+            <ul>
+                <li>
+                    <a href='mailto:dev@grails.apache.org'><img class='' src='https://grails.apache.org/images/email.svg' alt='Email Icon'/></a>
+                </li>
+                <li>
+                    <a href='https://slack.grails.org'><img class='' src='https://grails.apache.org/images/slack.svg'
+                                                            alt='Slack Icon'/></a>
+                </li>
+                <li>
+                    <a hre f='https://www.youtube.com/@GrailsFramework'><img class='' src='https://grails.apache.org/images/youtube.svg'
+                                                                             alt='Youtube Icon'/></a>
+                </li>
+                <li>
+                    <a href='https://www.linkedin.com/showcase/official-grails/'><img class=''
+                                                                                      src='https://grails.apache.org/images/linkedin.svg'
+                                                                                      alt='LinkedIn Icon'/></a>
+                </li>
+                <li>
+                    <a href='https://github.com/apache/grails-core'><img class='' src='https://grails.apache.org/images/github.svg'
+                                                              alt='Github Icon'/></a>
+                </li>
+                <li style="margin-bottom:10px;">
+                    <a href='https://twitter.com/grailsframework'><img class='' src='https://grails.apache.org/images/x-twitter.svg'
+                                                                       alt='Twitter Icon'/></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="content">
+        <nav class='footer' style="margin-bottom: 10px">
+                <p>© 2005-2025 the Apache Grails project — Grails is Open Source: 
+                    <a href="https://www.apache.org/licenses/LICENSE-2.0.html">License</a>,
+                    <a href='https://privacy.apache.org/policies/privacy-policy-public.html'>Privacy Policy</a>,
+                    <a href='https://www.apache.org/foundation/sponsorship'>Sponsor Apache</a>
+                </p>
+        </nav>
+    </div>
+</footer>
+<div>
+
+</div>
+</body>
+</html>
