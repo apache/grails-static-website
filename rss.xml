@@ -1,4 +1,212 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog | Grails Framework</title><link>https://grails.apache.org</link><description>A powerful Groovy-based web application framework for the JVM built on top of Spring Boot</description><pubDate>Tue, 15 Jul 2025 22:24:06 GMT</pubDate><item><title>Apache Grails (Incubating) 7.0.0-M4 - Release Announcement</title><link>https://grails.apache.org/blog/2025-06-10-grails-7-m4.html</link><description><![CDATA[</p>
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog | Grails Framework</title><link>https://grails.apache.org</link><description>A powerful Groovy-based web application framework for the JVM built on top of Spring Boot</description><pubDate>Tue, 15 Jul 2025 22:30:31 GMT</pubDate><item><title>Apache Grails (Incubating) [%version] - Release Announcement</title><link>https://grails.apache.org/blog/2025-07-15-grails-7-m5.html</link><description><![CDATA[</p>
+<p>The Apache Grails (incubating) community is excited to announce the Milestone 7.0.0-M5 release of the Grails Framework! <br />
+We encourage you to try this pre-release version and provide your feedback <a href="https://github.com/apache/grails-core/issues">here</a>.</p>
+<h2>Download Source Code and Binary Distributions</h2>
+<p><a href="/download.html">Apache Grails Downloads</a></p>
+<h2>What's Changed</h2>
+<p>For changes made in Grails 7 prior to 7.0.0-M5, check out the following blog posts:</p>
+<ul>
+<li><a href="/blog/2024-12-23-grails-7-m1.html">Grails 7.0.0-M1</a></li>
+<li><a href="/blog/2025-03-05-grails-7-m3.html">Grails 7.0.0-M3</a></li>
+<li><a href="/blog/2025-06-10-grails-7-m4.html">Grails 7.0.0-M4</a></li>
+</ul>
+<h3>7.0.0-M5 Changes:</h3>
+<ul>
+<li>Add permissions to release environments by @jdaugherty in #14795</li>
+<li>Force update asf.yaml by @jdaugherty in #14796</li>
+<li>explicitly add jdaugherty as approver by @jdaugherty in #14797</li>
+<li>back to snapshot by @jdaugherty in #14800</li>
+<li>Add add-license scripts for .raw, .java and .groovy by @jamesfredley in #14794</li>
+<li>Fixes found as part of the second attempt at M2 by @jdaugherty in #14782</li>
+<li>Verify build explanation and minor fix by @sbglasius in #14781</li>
+<li>initial attempt at GitHub -&gt; Mailing List notifications by @jamesfredley in #14784</li>
+<li>Update Geb documentation changes in Breaking Changes Section by @jamesfredley in #14793</li>
+<li>Update grails-forge - google cloud run deploy documentation by @jamesfredley in #14803</li>
+<li>Unnest the snapshot zip uploaded to workflow results by @jamesfredley in #14808</li>
+<li>Gradle deprecations by @jdaugherty in #14805</li>
+<li>Update grails-static-website section on RELEASE.md by @jamesfredley in #14807</li>
+<li>Support specifying the publication name so that gradle plugins can be published by @jdaugherty in #14812</li>
+<li>Use developmentOnly Gradle configuration scope for webjars by @jamesfredley in #14811</li>
+<li>Rework mainClass gradle find logic by @jdaugherty in #14816</li>
+<li>fix: #14818 - ensure plugin is the base for web-plugin by @jdaugherty in #14819</li>
+<li>Fixing Issue #14173 – Update grails Command Documentation for Grails 7 by @irllyliketoast in #14809</li>
+<li>Update to new asset pipeline coordinates by @jdaugherty in #14813</li>
+<li>fix: update grails-docs coords in GrailsDocGradlePlugin by @matrei in #14826</li>
+<li>Support not adding components from the grails publish plugin by @jdaugherty in #14827</li>
+<li>fix: scope webjars as testAndDevelopmentOnly by @jamesfredley in #14829</li>
+<li>Update to Spring Boot 3.5.3 which uses Groovy 4.0.27 by @jamesfredley in #14824</li>
+<li>database-migration mapped to grails-data-hibernate5-dbmigration by @jamesfredley in #14831</li>
+<li>#14832 - support findMainTask caching with plugins &amp; boot tasks in the task graph by @jdaugherty in #14833</li>
+<li>Add Documentation: Tomcat 10.1.42 multipart/form-data part count and header size limit by @jamesfredley in #14838</li>
+<li>chore(tests): move tests to the correct module by @matrei in #14839</li>
+<li>Merge grails-forge into grails-core by @jdaugherty in #14836</li>
+<li>Replace google analytics with Matomo, analytics.apache.org by @jamesfredley in #14842</li>
+<li>Correct dependency to grails-codecs-core by @matrei in #14844</li>
+<li>chore: update to 5.0.12 for the asset pipeline by @jdaugherty in #14879</li>
+<li>Fix spelling by @jdaugherty in #14881</li>
+<li>fix: #14854 - remove duplicate repo definition (restricted contains maven central) by @jdaugherty in #14882</li>
+<li>chore: #14779 - add better instructions on how to build &amp; use the source distribution by @jdaugherty in #14880</li>
+<li>chore: #14877 - add DISCLAIMER, LICENSE, &amp; NOTICE files to jar files by @jdaugherty in #14878</li>
+<li>Various Cleanup prior to Sitemesh 2 revert by @jdaugherty in #14876</li>
+<li>fix: #14090 - fix baseUrl returning the wrong result when forwardPort is null by @jdaugherty in #14884</li>
+<li>Revert to Sitemesh 2 for Grails 7 by @jdaugherty in #14875</li>
+<li>Issue #14748 - upgrade notes for gradle plugin / task changes by @jdaugherty in #14883</li>
+<li>#14316 Use local repo commands instead of the github api for Release Drop Down population by @JudeRV in #14834</li>
+</ul>
+<p>Full Changelog: <a href="https://github.com/apache/grails-core/compare/v7.0.0-M4...v7.0.0-M5">v7.0.0-M4...v7.0.0-M5</a></p>
+<p>Upgrade instructions are available in the <a href="https://docs.grails.org/7.0.0-M5/guide/single.html#upgrading60x">documentation</a>.</p>
+<h2>Dependency Upgrades</h2>
+<p>In this release, we've upgraded several dependency versions, including but not limited to the following:</p>
+<ul>
+<li>Asset Pipeline 5.0.12 (now cloud.wondrify.asset-pipeline)</li>
+<li>Groovy 4.0.27</li>
+<li>Spring Framework 6.2.8</li>
+<li>Spring Boot 3.5.3</li>
+<li>Gradle 8.14.2</li>
+<li>See all in the <a href="https://docs.grails.org/7.0.0-M5/ref/Versions/Grails%20BOM.html">grails-bom</a>.</li>
+</ul>
+<h2>Generating a new Grails 7.0.0-M5 application with Grails Forge</h2>
+<p>Try out Grails today by visiting our online application generator <a href="https://start.grails.org/">Grails Forge</a>.  This is the quickest and the recommended way to get started with Grails.</p>
+<p>After installing the JetBrains' IntelliJ IDEA <a href="https://plugins.jetbrains.com/plugin/18504-grails">Grails Plugin</a>, the Grails Application Forge will also be available under New Project in IntelliJ IDEA.</p>
+<p>Within your newly generated project you can access the Grails CLIs with the grails wrapper</p>
+<p>See <a href="https://docs.grails.org/7.0.0-M5/guide/gettingStarted.html#downloadingAndInstalling">Types of CLI</a> for details on each CLI</p>
+<p>grail-shell-cli</p>
+<pre><code class="language-shell">grailsw
+</code></pre>
+<p>grails-forge-cli</p>
+<pre><code class="language-shell">grailsw -t forge
+</code></pre>
+<h2>Installing Grails CLIs 7.0.0-M5 with SDKMan</h2>
+<p>Alternatively, you can quickly install Grails 7.0.0-M5 CLIs (grails-shell-cli and grails-forge-cli) using <a href="https://sdkman.io/">SDKMan</a>.</p>
+<p>See <a href="https://docs.grails.org/7.0.0-M5/guide/gettingStarted.html#downloadingAndInstalling">Types of CLI</a> for details on each CLI</p>
+<ol>
+<li>
+<p>If you don't have SDKMan installed, follow the instructions at <a href="https://sdkman.io/install/">SDKMan Installation Guide</a>
+to set it up.</p>
+</li>
+<li>
+<p>Once SDKMan is installed, open your terminal and run the following command to install Grails 7.0.0-M5:</p>
+<pre><code class="language-shell">sdk install grails 7.0.0-M5
+</code></pre>
+</li>
+<li>
+<p>You're all set! To verify the installation, run:</p>
+<pre><code class="language-shell">grails --version
+</code></pre>
+</li>
+</ol>
+<p>The Grails Shell CLI can be accessed as:</p>
+<pre><code class="language-shell">grails
+</code></pre>
+<p>or</p>
+<pre><code class="language-shell">grails-shell-cli
+</code></pre>
+<p>The Grails Forge CLI can be accessed as:</p>
+<pre><code class="language-shell">grails -t forge
+</code></pre>
+<p>or</p>
+<pre><code class="language-shell">grails-forge-cli
+</code></pre>
+<h2>Upgrading Your Existing Applications to Grails 7.0.0-M5</h2>
+<p>If you already have a Grails application and want to upgrade to the latest version, follow these steps:</p>
+<ol>
+<li>
+<p>Open the project in your favorite IDE (preferably JetBrains' IntelliJ IDEA).</p>
+</li>
+<li>
+<p>Update your application's <code>gradle.properties</code> file to specify Grails 7.0.0-M5 as the desired version.</p>
+<pre><code class="language-properties">grailsVersion=7.0.0-M5
+</code></pre>
+</li>
+<li>
+<p>Make any necessary adjustments to your application code, configuration, and dependencies to ensure compatibility with
+the new version. <a href="https://docs.grails.org/7.0.0-M5/guide/single.html#upgrading60x">See Upgrade Guide</a></p>
+</li>
+</ol>
+<p>Normally, Grails Core dependencies are automatically updated using the Grails Bill of Materials (BOM). However, if you
+have specific versions defined in your build configuration, you may need to manually update them to align with
+Grails 7.0.0-M5.</p>
+<p>By following these steps, you should be able to transition your existing Grails application to Grails 7.0.0-M5.</p>
+<h3>Exploring Alternative Approaches</h3>
+<p>If manual dependency updates seem daunting, or you want a more streamlined approach, consider the following alternatives:</p>
+<h4>1. Use Grails Forge Website</h4>
+<p>Visit <a href="https://start.grails.org">Grails Forge</a> and generate a new Grails application with Grails 7.0.0-M5. Compare the
+versions in the newly generated application with your existing one to identify any discrepancies. This can serve as a
+reference point for your update.</p>
+<h4>2. Automated Dependency Update Bots</h4>
+<p>Configure automated dependency update bots like <a href="https://docs.renovatebot.com/">Renovate</a> or
+<a href="https://dependabot.com/">Dependabot</a> with your source control platform (e.g., GitHub). These bots can automatically
+detect and update outdated dependencies in your project, including Grails dependencies, saving you time and effort in
+manual updates.</p>
+<p>With these steps and alternative approaches, you should be well on your way to enjoying the exciting features and
+improvements in Grails 7.0.0-M5.</p>
+<h2>Why should you try out Grails 7.0.0-M5?</h2>
+<ul>
+<li>Help us test this major upgrade of the Grails Framework and provide feedback.</li>
+<li>Be ready for when Grails 7 is released.</li>
+</ul>
+<h2>Grails 7 Release Schedule</h2>
+<ul>
+<li>We will continue to work on <a href="https://github.com/orgs/apache/projects/487">updating and fixing issues</a> over the next few
+weeks.</li>
+<li>Based on feedback, an Apache Grails RC release is targeted for July/August 2025.</li>
+</ul>
+<h2>Apache Grails Mailing Lists</h2>
+<h3>Users Mailing List</h3>
+<p>The users mailing list will be a General purpose list for questions and discussion about Grails.<br />
+<strong>Web Archive:</strong> <a href="https://lists.apache.org/list.html?users@grails.apache.org">https://lists.apache.org/list.html?users@grails.apache.org</a> <br />
+<strong>Subscribe:</strong> Send a blank email to <a href="mailto:users-subscribe@grails.apache.org">users-subscribe@grails.apache.org</a></p>
+<h3>Dev Mailing List</h3>
+<p>The dev mailing list is focused on the framework implementation and its evolution. <br />
+<strong>Web Archive:</strong> <a href="https://lists.apache.org/list.html?dev@grails.apache.org">https://lists.apache.org/list.html?dev@grails.apache.org</a> <br />
+<strong>Subscribe:</strong> Send a blank email to <a href="mailto:dev-subscribe@grails.apache.org">dev-subscribe@grails.apache.org</a></p>
+<p>When participating in mailing lists, you should never include any personally identifiable information (PII) like
+your address, phone number or email address, as all messages sent to these lists are publicly accessible and archived,
+meaning anyone can view your information. Make sure your email client does not add your signature with these items.</p>
+<h2>Thank you!</h2>
+<p>A huge thank you to our amazing community for supporting the Grails Framework over the past 19 years! We’re excited for
+the future and grateful for the opportunity to continue innovating and pushing Grails forward together.</p>
+<h2>Contributors</h2>
+<p>We would like to extend our heartfelt thanks to all the contributors who made Grails 7.0.0-M5 possible. <br />
+Special thanks to:</p>
+<ul>
+<li><a href="https://github.com/jdaugherty">James Daugherty</a></li>
+<li><a href="https://github.com/jamesfredley">James Fredley</a></li>
+<li><a href="https://github.com/matrei">Mattias Reichel</a></li>
+<li><a href="https://github.com/codeconsole">Scott Murphy</a></li>
+<li><a href="https://github.com/bkoehm">Brian Koehmstedt</a></li>
+<li><a href="https://github.com/sbglasius">Søren Berg Glasius</a></li>
+<li><a href="https://github.com/paulk-asert">Paul King</a></li>
+<li><a href="https://github.com/JonasPammer">Jonas Pammer</a></li>
+<li><a href="https://github.com/gsartori">Gianluca Sartori</a></li>
+<li><a href="https://github.com/davydotcom">David Estes</a></li>
+<li><a href="https://github.com/rainboyan">Michael Yan</a></li>
+<li><a href="https://github.com/JudeRV">Jude Vargas</a></li>
+<li><a href="https://github.com/dauer">Thomas Rasmussen</a></li>
+<li><a href="https://github.com/irllyliketoast">Laura Estremera</a></li>
+<li><a href="https://github.com/dreewh">Andrew Herring</a></li>
+<li><a href="https://github.com/nobeans">Yasuharu Nakano</a></li>
+<li><a href="https://github.com/amondel2">Aaron Mondelblatt</a></li>
+<li><a href="https://github.com/arjangch">Arjang Chinichian</a></li>
+<li><a href="https://github.com/felixscheinost">Felix Scheinost</a></li>
+<li><a href="https://github.com/gandharvas">gandharvas</a></li>
+<li><a href="https://github.com/zyro23">zyro</a></li>
+</ul>
+<p>Recent Contributors by Project:</p>
+<ul>
+<li><a href="https://github.com/apache/grails-core/graphs/contributors?from=December+15%2C+2024&amp;to=June+15%2C+2025">grails-core</a></li>
+<li><a href="https://github.com/apache/grails-spring-security/graphs/contributors?from=December+15%2C+2024&amp;to=June+15%2C+2025">grails-spring-security</a></li>
+<li><a href="https://github.com/apache/grails-static-website/graphs/contributors?from=December+15%2C+2024&amp;to=June+15%2C+2025">grails-static-website</a></li>
+<li><a href="https://github.com/apache/grails-forge-ui/graphs/contributors?from=December+15%2C+2024&amp;to=June+15%2C+2025">grails-forge-ui</a></li>
+<li><a href="https://github.com/apache/grails-quartz/graphs/contributors?from=December+15%2C+2024&amp;to=June+15%2C+2025">grails-quartz</a></li>
+<li><a href="https://github.com/apache/incubator-grails-gradle-publish/graphs/contributors?from=December+15%2C+2024&amp;to=June+15%2C+2025">grails-gradle-publish</a></li>
+<li><a href="https://github.com/apache/grails-redis/graphs/contributors?from=December+15%2C+2024&amp;to=June+15%2C+2025">grails-redis</a></li>
+<li><a href="https://github.com/apache/grails-github-actions/graphs/contributors?from=December+15%2C+2024&amp;to=June+15%2C+2025">grails-github-actions</a></li>
+</ul>
+<p><a href="https://github.com/search?q=repo%3Aapache%2Fgrails-core+repo%3Aapache%2Fgrails-spring-security+repo%3Aapache%2Fgrails-static-website+repo%3Aapache%2Fgrails-forge-ui+repo%3Aapache%2Fgrails-quartz+repo%3Aapache%2Fincubator-grails-gradle-publish+repo%3Agrails-redis+repo%3Agrails-github-actions+is%3Apublic&amp;type=commits&amp;s=committer-date&amp;o=desc">Combined Commit List</a></p>
+<p>Their dedication and hard work have significantly contributed to the release of Grails 7.0.0-M5.</p>
+<p>Join the <a href="https://grails.slack.com">Grails Slack Community</a>, share your feedback, and contribute to making Grails Framework even better in
+the future. Happy coding!</p>]]></description><author>James Fredley</author><guid>2025-07-15-grails-7-m5</guid><pubDate>Sun, 15 Jun 2025 00:00:00 GMT</pubDate></item><item><title>Apache Grails (Incubating) 7.0.0-M4 - Release Announcement</title><link>https://grails.apache.org/blog/2025-06-10-grails-7-m4.html</link><description><![CDATA[</p>
 <p>The Apache Grails (incubating) community is excited for the release of Grails Framework 7.0.0-M4. <br />
 We encourage you to try this pre-release and provide your feedback <a href="https://github.com/apache/grails-core/issues">here</a>.</p>
 <h2>Download Source Code and Binary Distributions</h2>
