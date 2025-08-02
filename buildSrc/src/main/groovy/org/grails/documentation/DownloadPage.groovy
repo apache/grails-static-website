@@ -36,61 +36,73 @@ class DownloadPage {
 
     @CompileDynamic
     static String renderDownload(String version) {
+        String redisVersion = '5.0.0-M5'
+        String quartzVersion = '4.0.0-M3'
+        String springSecurityVersion = '7.0.0-M5'
+
         StringWriter writer = new StringWriter()
         MarkupBuilder html = new MarkupBuilder(writer)
         boolean isSnapshot = version.endsWith('-SNAPSHOT') || version.contains('snapshot')
         if (!isSnapshot) {
             html.div(class: "guidegroup") {
-            if (version) {
-                div(class: "guidegroupheader") {
-                    img(src: "[%url]/images/download.svg", alt: "Download Grails (${version})")
-                    h2 "${isSnapshot ? 'Snapshot' : (version.contains('-M') ? 'Milestone' : (version.contains('-RC') ? 'Release Candidate': 'Latest Stable'))} Version (${version}) Downloads"
+                if (version) {
+                    div(class: "guidegroupheader") {
+                        img(src: "[%url]/images/download.svg", alt: "Download Grails (${version})")
+                        h2 "${isSnapshot ? 'Snapshot' : (version.contains('-M') ? 'Milestone' : (version.contains('-RC') ? 'Release Candidate': 'Latest Stable'))} Version (${version}) Downloads"
+                    }
+                    ul {
+                        if (version.startsWith('7')) {
+                            li {
+                                a(href: sourceUrl(version), 'Source')
+                                a(href: sourceUrl(version, 'grails', '.sha512'), 'SHA512')
+                                a(href: sourceUrl(version, 'grails', '.asc'), 'ASC')
+                            }
+                            li {
+                                a(href: binaryUrl(version, 'grails'), 'Binary')
+                                a(href: binaryUrl(version, 'grails', '.sha512'), 'SHA512')
+                                a(href: binaryUrl(version, 'grails', '.asc'), 'ASC')
+                            }
+                            li {
+                                a(href: binaryUrl(version, 'grails-wrapper'), 'Binary Wrapper')
+                                a(href: binaryUrl(version, 'grails-wrapper', '.sha512'), 'SHA512')
+                                a(href: binaryUrl(version, 'grails-wrapper', '.asc'), 'ASC')
+                            }
+                            li {
+                                a(href: sourceUrl(springSecurityVersion, 'grails-spring-security', '', 'spring-security'), "Grails Spring Security ${springSecurityVersion} Plugin Source")
+                                a(href: sourceUrl(springSecurityVersion, 'grails-spring-security', '.sha512', 'spring-security'), 'SHA512')
+                                a(href: sourceUrl(springSecurityVersion, 'grails-spring-security', '.asc', 'spring-security'), 'ASC')
+                            }
+                            li {
+                                a(href: sourceUrl(redisVersion, 'grails-redis', '', 'redis'), "Grails Redis ${redisVersion} Plugin Source")
+                                a(href: sourceUrl(redisVersion, 'grails-redis', '.sha512', 'redis'), 'SHA512')
+                                a(href: sourceUrl(redisVersion, 'grails-redis', '.asc', 'redis'), 'ASC')
+                            }
+                            li {
+                                a(href: sourceUrl(quartzVersion, 'grails-quartz', '', 'quartz'), "Grails Quartz ${quartzVersion} Plugin Source")
+                                a(href: sourceUrl(quartzVersion, 'grails-quartz', '.sha512', 'quartz'), 'SHA512')
+                                a(href: sourceUrl(quartzVersion, 'grails-quartz', '.asc', 'quartz'), 'ASC')
+                            }
+                        } else {
+                            li {
+                                a(href: "https://github.com/apache/grails-forge/releases/download/v${version}/grails-cli-${version}.zip", 'Binary')
+                            }
+                        }
+                        li {
+                            a(href: "https://github.com/apache/grails-core/releases/tag/v${version}", 'Grails Release Notes')
+                        }
+                        if (version.startsWith('7')) {
+                            li {
+                                a(href: "https://github.com/apache/grails-spring-security/releases/tag/v${springSecurityVersion}", "Grails Spring Security Plugin ${springSecurityVersion} Release Notes")
+                            }
+                            li {
+                                a(href: "https://github.com/apache/grails-redis/releases/tag/v${redisVersion}", "Grails Redis ${redisVersion} Plugin Release Notes")
+                            }
+                            li {
+                                a(href: "https://github.com/apache/grails-quartz/releases/tag/v${quartzVersion}", "Grails Quartz ${quartzVersion} Plugin Release Notes")
+                            }
+                        }
+                    }
                 }
-                ul {
-                    if (version.startsWith('7')) {
-                        li {
-                            a(href: sourceUrl(version), 'Source')
-                            a(href: sourceUrl(version, 'grails', '.sha512'), 'SHA512')
-                            a(href: sourceUrl(version, 'grails', '.asc'), 'ASC')
-                        }
-                        li {
-                            a(href: binaryUrl(version, 'grails'), 'Binary')
-                            a(href: binaryUrl(version, 'grails', '.sha512'), 'SHA512')
-                            a(href: binaryUrl(version, 'grails', '.asc'), 'ASC')
-                        }
-                        li {
-                            a(href: binaryUrl(version, 'grails-wrapper'), 'Binary Wrapper')
-                            a(href: binaryUrl(version, 'grails-wrapper', '.sha512'), 'SHA512')
-                            a(href: binaryUrl(version, 'grails-wrapper', '.asc'), 'ASC')
-                        }
-                        li {
-                            a(href: sourceUrl(version, 'grails-spring-security', '', 'spring-security'), 'Grails Spring Security Plugin Source')
-                            a(href: sourceUrl(version, 'grails-spring-security', '.sha512', 'spring-security'), 'SHA512')
-                            a(href: sourceUrl(version, 'grails-spring-security', '.asc', 'spring-security'), 'ASC')
-                        }
-                        li {
-                            a(href: sourceUrl('5.0.0-M4', 'grails-redis', '', 'redis'), 'Grails Redis 5.0.0-M4 Plugin Source')
-                            a(href: sourceUrl('5.0.0-M4', 'grails-redis', '.sha512', 'redis'), 'SHA512')
-                            a(href: sourceUrl('5.0.0-M4', 'grails-redis', '.asc', 'redis'), 'ASC')
-                        }
-                    } else {
-                        li {
-                            a(href: "https://github.com/apache/grails-forge/releases/download/v${version}/grails-cli-${version}.zip", 'Binary')
-                        }
-                    }
-                    li {
-                        a(href: "https://github.com/apache/grails-core/releases/tag/v${version}", 'Grails Release Notes')
-                    }
-                    if (version.startsWith('7')) {
-                        li {
-                            a(href: "https://github.com/apache/grails-spring-security/releases/tag/v${version}", 'Grails Spring Security Plugin Release Notes')
-                        }
-                        li {
-                            a(href: "https://github.com/apache/grails-redis/releases/tag/v5.0.0-M4", 'Grails Redis 5.0.0-M4 Plugin Release Notes')
-                        }
-                    }
-                }
-            }
             }
         }
         writer.toString()
