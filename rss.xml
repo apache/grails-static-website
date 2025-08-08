@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog | Grails Framework</title><link>https://grails.staged.apache.org</link><description>A powerful Groovy-based web application framework for the JVM built on top of Spring Boot</description><pubDate>Fri, 08 Aug 2025 00:07:20 GMT</pubDate><item><title>Apache Grails (Incubating) [%version] - Release Announcement</title><link>https://grails.staged.apache.org/blog/2025-08-10-grails-7-rc1.html</link><description><![CDATA[</p>
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog | Grails Framework</title><link>https://grails.staged.apache.org</link><description>A powerful Groovy-based web application framework for the JVM built on top of Spring Boot</description><pubDate>Fri, 08 Aug 2025 00:07:48 GMT</pubDate><item><title>Apache Grails (Incubating) [%version] - Release Announcement</title><link>https://grails.staged.apache.org/blog/2025-08-10-grails-7-rc1.html</link><description><![CDATA[</p>
 <p>The Apache Grails (incubating) community is excited to announce the Milestone 7.0.0-RC1 release of the Grails Framework! <br />
 We encourage you to try this pre-release version and provide your feedback <a href="https://github.com/apache/grails-core/issues">here</a>.</p>
 <h2>Download Source Code and Binary Distributions</h2>
@@ -76,8 +76,7 @@ We encourage you to try this pre-release version and provide your feedback <a hr
 <p>See <a href="https://docs.grails.org/7.0.0-RC1/guide/gettingStarted.html#downloadingAndInstalling">Types of CLI</a> for details on each CLI</p>
 <ol>
 <li>
-<p>If you don't have SDKMan installed, follow the instructions at <a href="https://sdkman.io/install/">SDKMan Installation Guide</a>
-to set it up.</p>
+<p>If you don't have SDKMan installed, follow the instructions at <a href="https://sdkman.io/install">SDKMan Installation Guide</a> to set it up.</p>
 </li>
 <li>
 <p>Once SDKMan is installed, open your terminal and run the following command to install Grails 7.0.0-RC1:</p>
