@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog | Grails Framework</title><link>https://grails.staged.apache.org</link><description>A powerful Groovy-based web application framework for the JVM built on top of Spring Boot</description><pubDate>Thu, 07 Aug 2025 19:56:28 GMT</pubDate><item><title>Apache Grails (Incubating) [%version] - Release Announcement</title><link>https://grails.staged.apache.org/blog/2025-08-10-grails-7-rc1.html</link><description><![CDATA[</p>
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog | Grails Framework</title><link>https://grails.staged.apache.org</link><description>A powerful Groovy-based web application framework for the JVM built on top of Spring Boot</description><pubDate>Fri, 08 Aug 2025 00:05:18 GMT</pubDate><item><title>Apache Grails (Incubating) [%version] - Release Announcement</title><link>https://grails.staged.apache.org/blog/2025-08-10-grails-7-rc1.html</link><description><![CDATA[</p>
 <p>The Apache Grails (incubating) community is excited to announce the Milestone 7.0.0-RC1 release of the Grails Framework! <br />
 We encourage you to try this pre-release version and provide your feedback <a href="https://github.com/apache/grails-core/issues">here</a>.</p>
 <h2>Download Source Code and Binary Distributions</h2>
@@ -61,9 +61,9 @@ We encourage you to try this pre-release version and provide your feedback <a hr
 <li>See all in the <a href="https://docs.grails.org/7.0.0-RC1/ref/Versions/Grails%20BOM.html">grails-bom</a>.</li>
 </ul>
 <h2>Generating a new Grails 7.0.0-RC1 application with Grails Forge</h2>
-<p>Try out Grails today by visiting our online application generator <a href="https://start.grails.org/">Grails Forge</a>.  This is the quickest and the recommended way to get started with Grails.</p>
+<p>Try out Grails today by visiting our online application generator <a href="https://start.grails.org">Grails Forge</a>. This is the quickest and the recommended way to get started with Grails.</p>
 <p>After installing JetBrains' IntelliJ IDEA 2025.2 or later and the <a href="https://plugins.jetbrains.com/plugin/18504-grails">Grails Plugin</a>, the Grails Application Forge will also be available under New Project in IntelliJ IDEA.</p>
-<p>Within your newly generated project you can access the Grails CLIs with the grails wrapper</p>
+<p>Within your newly generated project you can access the Grails CLIs with the Grails Wrapper.</p>
 <p>See <a href="https://docs.grails.org/7.0.0-RC1/guide/gettingStarted.html#downloadingAndInstalling">Types of CLI</a> for details on each CLI</p>
 <p>grail-shell-cli</p>
 <pre><code class="language-shell">grailsw
