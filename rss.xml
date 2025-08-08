@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog | Grails Framework</title><link>https://grails.staged.apache.org</link><description>A powerful Groovy-based web application framework for the JVM built on top of Spring Boot</description><pubDate>Fri, 08 Aug 2025 00:07:48 GMT</pubDate><item><title>Apache Grails (Incubating) [%version] - Release Announcement</title><link>https://grails.staged.apache.org/blog/2025-08-10-grails-7-rc1.html</link><description><![CDATA[</p>
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog | Grails Framework</title><link>https://grails.staged.apache.org</link><description>A powerful Groovy-based web application framework for the JVM built on top of Spring Boot</description><pubDate>Fri, 08 Aug 2025 00:18:40 GMT</pubDate><item><title>Apache Grails (Incubating) [%version] - Release Announcement</title><link>https://grails.staged.apache.org/blog/2025-08-10-grails-7-rc1.html</link><description><![CDATA[</p>
 <p>The Apache Grails (incubating) community is excited to announce the Milestone 7.0.0-RC1 release of the Grails Framework! <br />
 We encourage you to try this pre-release version and provide your feedback <a href="https://github.com/apache/grails-core/issues">here</a>.</p>
 <h2>Download Source Code and Binary Distributions</h2>
@@ -128,8 +128,8 @@ Grails 7.0.0-RC1.</p>
 versions in the newly generated application with your existing one to identify any discrepancies. This can serve as a
 reference point for your update.</p>
 <h4>2. Automated Dependency Update Bots</h4>
-<p>Configure automated dependency update bots like <a href="https://docs.renovatebot.com/">Renovate</a> or
-<a href="https://dependabot.com/">Dependabot</a> with your source control platform (e.g., GitHub). These bots can automatically
+<p>Configure automated dependency update bots like <a href="https://docs.renovatebot.com">Renovate</a> or
+<a href="https://dependabot.com">Dependabot</a> with your source control platform (e.g., GitHub). These bots can automatically
 detect and update outdated dependencies in your project, including Grails dependencies, saving you time and effort in
 manual updates.</p>
 <p>With these steps and alternative approaches, you should be well on your way to enjoying the exciting features and
