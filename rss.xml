@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog | Grails Framework</title><link>https://grails.apache.org</link><description>A powerful Groovy-based web application framework for the JVM built on top of Spring Boot</description><pubDate>Mon, 11 Aug 2025 13:20:17 GMT</pubDate><item><title>Apache Grails (Incubating) [%version] - Release Announcement</title><link>https://grails.apache.org/blog/2025-08-10-grails-7-rc1.html</link><description><![CDATA[</p>
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog | Grails Framework</title><link>https://grails.apache.org</link><description>A powerful Groovy-based web application framework for the JVM built on top of Spring Boot</description><pubDate>Mon, 11 Aug 2025 13:30:36 GMT</pubDate><item><title>Apache Grails (Incubating) [%version] - Release Announcement</title><link>https://grails.apache.org/blog/2025-08-10-grails-7-rc1.html</link><description><![CDATA[</p>
 <p>The Apache Grails (incubating) community is excited to announce the Milestone 7.0.0-RC1 release of the Grails Framework! <br />
 We encourage you to try this pre-release version and provide your feedback <a href="https://github.com/apache/grails-core/issues">here</a>.</p>
 <h2>Download Source Code and Binary Distributions</h2>
@@ -399,19 +399,19 @@ Special thanks to:</p>
 </ul>
 <p>Recent Contributors by Project:</p>
 <ul>
-<li><a href="https://github.com/apache/grails-core/graphs/contributors?from=December+15%2C+2024&amp;to=June+15%2C+2025">grails-core</a></li>
-<li><a href="https://github.com/apache/grails-spring-security/graphs/contributors?from=December+15%2C+2024&amp;to=June+15%2C+2025">grails-spring-security</a></li>
-<li><a href="https://github.com/apache/grails-static-website/graphs/contributors?from=December+15%2C+2024&amp;to=June+15%2C+2025">grails-static-website</a></li>
-<li><a href="https://github.com/apache/grails-forge-ui/graphs/contributors?from=December+15%2C+2024&amp;to=June+15%2C+2025">grails-forge-ui</a></li>
-<li><a href="https://github.com/apache/grails-quartz/graphs/contributors?from=December+15%2C+2024&amp;to=June+15%2C+2025">grails-quartz</a></li>
-<li><a href="https://github.com/apache/incubator-grails-gradle-publish/graphs/contributors?from=December+15%2C+2024&amp;to=June+15%2C+2025">grails-gradle-publish</a></li>
-<li><a href="https://github.com/apache/grails-redis/graphs/contributors?from=December+15%2C+2024&amp;to=June+15%2C+2025">grails-redis</a></li>
-<li><a href="https://github.com/apache/grails-github-actions/graphs/contributors?from=December+15%2C+2024&amp;to=June+15%2C+2025">grails-github-actions</a></li>
+<li><a href="https://github.com/apache/grails-core/graphs/contributors?from=January+15%2C+2025&amp;to=July+15%2C+2025">grails-core</a></li>
+<li><a href="https://github.com/apache/grails-spring-security/graphs/contributors?from=January+15%2C+2025&amp;to=July+15%2C+2025">grails-spring-security</a></li>
+<li><a href="https://github.com/apache/grails-static-website/graphs/contributors?from=January+15%2C+2025&amp;to=July+15%2C+2025">grails-static-website</a></li>
+<li><a href="https://github.com/apache/grails-forge-ui/graphs/contributors?from=January+15%2C+2025&amp;to=July+15%2C+2025">grails-forge-ui</a></li>
+<li><a href="https://github.com/apache/grails-quartz/graphs/contributors?from=January+15%2C+2025&amp;to=July+15%2C+2025">grails-quartz</a></li>
+<li><a href="https://github.com/apache/incubator-grails-gradle-publish/graphs/contributors?from=January+15%2C+2025&amp;to=July+15%2C+2025">grails-gradle-publish</a></li>
+<li><a href="https://github.com/apache/grails-redis/graphs/contributors?from=January+15%2C+2025&amp;to=July+15%2C+2025">grails-redis</a></li>
+<li><a href="https://github.com/apache/grails-github-actions/graphs/contributors?from=January+15%2C+2025&amp;to=July+15%2C+2025">grails-github-actions</a></li>
 </ul>
 <p><a href="https://github.com/search?q=repo%3Aapache%2Fgrails-core+repo%3Aapache%2Fgrails-spring-security+repo%3Aapache%2Fgrails-static-website+repo%3Aapache%2Fgrails-forge-ui+repo%3Aapache%2Fgrails-quartz+repo%3Aapache%2Fincubator-grails-gradle-publish+repo%3Agrails-redis+repo%3Agrails-github-actions+is%3Apublic&amp;type=commits&amp;s=committer-date&amp;o=desc">Combined Commit List</a></p>
 <p>Their dedication and hard work have significantly contributed to the release of Grails 7.0.0-M5.</p>
 <p>Join the <a href="https://grails.slack.com">Grails Slack Community</a>, share your feedback, and contribute to making Grails Framework even better in
-the future. Happy coding!</p>]]></description><author>James Fredley</author><guid>2025-07-15-grails-7-m5</guid><pubDate>Sun, 15 Jun 2025 00:00:00 GMT</pubDate></item><item><title>Apache Grails (Incubating) 7.0.0-M4 - Release Announcement</title><link>https://grails.apache.org/blog/2025-06-10-grails-7-m4.html</link><description><![CDATA[</p>
+the future. Happy coding!</p>]]></description><author>James Fredley</author><guid>2025-07-15-grails-7-m5</guid><pubDate>Tue, 15 Jul 2025 00:00:00 GMT</pubDate></item><item><title>Apache Grails (Incubating) 7.0.0-M4 - Release Announcement</title><link>https://grails.apache.org/blog/2025-06-10-grails-7-m4.html</link><description><![CDATA[</p>
 <p>The Apache Grails (incubating) community is excited for the release of Grails Framework 7.0.0-M4. <br />
 We encourage you to try this pre-release and provide your feedback <a href="https://github.com/apache/grails-core/issues">here</a>.</p>
 <h2>Download Source Code and Binary Distributions</h2>
