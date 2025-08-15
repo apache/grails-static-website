@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog | Grails Framework</title><link>https://grails.apache.org</link><description>A powerful Groovy-based web application framework for the JVM built on top of Spring Boot</description><pubDate>Fri, 15 Aug 2025 20:46:03 GMT</pubDate><item><title>Apache Grails (Incubating) [%version] - Release Announcement</title><link>https://grails.apache.org/blog/2025-08-10-grails-7-rc1.html</link><description><![CDATA[</p>
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog | Grails Framework</title><link>https://grails.apache.org</link><description>A powerful Groovy-based web application framework for the JVM built on top of Spring Boot</description><pubDate>Fri, 15 Aug 2025 21:26:53 GMT</pubDate><item><title>Apache Grails (Incubating) [%version] - Release Announcement</title><link>https://grails.apache.org/blog/2025-08-10-grails-7-rc1.html</link><description><![CDATA[</p>
 <p>The Apache Grails (incubating) community is excited to announce the Milestone 7.0.0-RC1 release of the Grails Framework! <br />
 We encourage you to try this pre-release version and provide your feedback <a href="https://github.com/apache/grails-core/issues">here</a>.</p>
 <h2>Download Source Code and Binary Distributions</h2>
@@ -49,7 +49,7 @@ We encourage you to try this pre-release version and provide your feedback <a hr
 <li>fix: #13705 - revert changes to Metadata from micronaut removal @jdaugherty (#14897)</li>
 </ul>
 <p>Full Changelog: <a href="https://github.com/apache/grails-core/compare/v7.0.0-M5...v7.0.0-RC1">v7.0.0-M5...v7.0.0-RC1</a></p>
-<p>Upgrade instructions are available in the <a href="https://docs.grails.org/7.0.0-RC1/guide/single.html#upgrading60x">documentation</a>.</p>
+<p>Upgrade instructions are available in the <a href="https://docs.grails.org/7.0.0-RC1/guide/upgrading.html#upgrading60x">documentation</a>.</p>
 <h2>Dependency Upgrades</h2>
 <p>In this release, we've upgraded several dependency versions, including but not limited to the following:</p>
 <ul>
@@ -114,7 +114,7 @@ We encourage you to try this pre-release version and provide your feedback <a hr
 </li>
 <li>
 <p>Make any necessary adjustments to your application code, configuration, and dependencies to ensure compatibility with
-the new version. <a href="https://docs.grails.org/7.0.0-RC1/guide/single.html#upgrading60x">See Upgrade Guide</a></p>
+the new version. <a href="https://docs.grails.org/7.0.0-RC1/guide/upgrading.html#upgrading60x">See Upgrade Guide</a></p>
 </li>
 </ol>
 <p>Normally, Grails Core dependencies are automatically updated using the Grails Bill of Materials (BOM). However, if you
@@ -259,7 +259,7 @@ We encourage you to try this pre-release version and provide your feedback <a hr
 <li>#14316 Use local repo commands instead of the github api for Release Drop Down population by @JudeRV in #14834</li>
 </ul>
 <p>Full Changelog: <a href="https://github.com/apache/grails-core/compare/v7.0.0-M4...v7.0.0-M5">v7.0.0-M4...v7.0.0-M5</a></p>
-<p>Upgrade instructions are available in the <a href="https://docs.grails.org/7.0.0-M5/guide/single.html#upgrading60x">documentation</a>.</p>
+<p>Upgrade instructions are available in the <a href="https://docs.grails.org/7.0.0-M5/guide/upgrading.html#upgrading60x">documentation</a>.</p>
 <h2>Dependency Upgrades</h2>
 <p>In this release, we've upgraded several dependency versions, including but not limited to the following:</p>
 <ul>
@@ -325,7 +325,7 @@ to set it up.</p>
 </li>
 <li>
 <p>Make any necessary adjustments to your application code, configuration, and dependencies to ensure compatibility with
-the new version. <a href="https://docs.grails.org/7.0.0-M5/guide/single.html#upgrading60x">See Upgrade Guide</a></p>
+the new version. <a href="https://docs.grails.org/7.0.0-M5/guide/upgrading.html#upgrading60x">See Upgrade Guide</a></p>
 </li>
 </ol>
 <p>Normally, Grails Core dependencies are automatically updated using the Grails Bill of Materials (BOM). However, if you
@@ -485,7 +485,7 @@ meaning anyone can view your information. Make sure your email client does not a
 <li>Addition of NOTICE to Grails Source</li>
 <li>Created https://repo.grails.org/grails/restricted/ to replace https://repo.grails.org/grails/core longer term.  This virtual repo's scope is significantly reduced to help reduce the chance of using outdated libraries.</li>
 </ul>
-<p>Upgrade instructions are available in the <a href="https://docs.grails.org/7.0.0-M4/guide/single.html#upgrading60x">documentation</a>.</p>
+<p>Upgrade instructions are available in the <a href="https://docs.grails.org/7.0.0-M4/guide/upgrading.html#upgrading60x">documentation</a>.</p>
 <h2>Dependency Upgrades</h2>
 <p>In this release, we've upgraded several dependency versions, including but not limited to the following:</p>
 <ul>
@@ -535,7 +535,7 @@ groovy.version=4.0.27
 </li>
 <li>
 <p>Make any necessary adjustments to your application code, configuration, and dependencies to ensure compatibility with
-the new version. See https://docs.grails.org/7.0.0-M4/guide/single.html#upgrading60x.</p>
+the new version. See https://docs.grails.org/7.0.0-M4/guide/upgrading.html#upgrading60x.</p>
 </li>
 </ol>
 <p>Normally, Grails Core dependencies are automatically updated using the Grails Bill of Materials (BOM). However, if you
@@ -817,7 +817,7 @@ grailsGradlePluginVersion=7.0.0-M4
 </li>
 <li>
 <p>Make any necessary adjustments to your application code, configuration, and dependencies to ensure compatibility with
-the new version. See https://docs.grails.org/7.0.0-M3/guide/single.html#upgrading60x.</p>
+the new version. See https://docs.grails.org/7.0.0-M3/guide/upgrading.html#upgrading60x.</p>
 </li>
 </ol>
 <p>Normally, Grails Core dependencies are automatically updated using the Grails Bill of Materials (BOM). However, if you
@@ -1166,7 +1166,7 @@ grailsGradlePluginVersion=7.0.0-M3
 </code></pre>
 </li>
 <li>
-<p>Make any necessary adjustments to your application code, configuration, and dependencies to ensure compatibility with the new version. See https://docs.grails.org/7.0.0-M1/guide/single.html#upgrading60x.</p>
+<p>Make any necessary adjustments to your application code, configuration, and dependencies to ensure compatibility with the new version. See https://docs.grails.org/7.0.0-M1/guide/upgrading.html#upgrading60x.</p>
 </li>
 </ol>
 <p>Normally, Grails Core dependencies are automatically updated using the Grails Bill of Materials (BOM). However, if you have specific versions defined in your build configuration, you may need to manually update them to align with Grails 7.0.0-M1.</p>
@@ -6431,7 +6431,7 @@ class SkillsTestController {
 <p>Now that we have our backend largely ready to go, we’re ready to set up React.</p>
 <blockquote>
 <p>Question: Why Do This?</p>
-<p>Why not use separate backend and front-end apps? In a microservice architecture, the work we’ve done might be sufficient - we could now build a separate React/node-based front-end application independent of our Grails backend. This is a great strategy, and <a href="https://docs.grails.org/latest/guide/single.html#webApiAndAngularProfiles">Grails 3.1 ships with a profile</a> tailored to this use case (web-api). Another option is to take advantage of Gradle multi-project builds, with separate projects for the backend and front-end. Both of these options require another server to run the React app.</p>
+<p>Why not use separate backend and front-end apps? In a microservice architecture, the work we’ve done might be sufficient - we could now build a separate React/node-based front-end application independent of our Grails backend. This is a great strategy, and <a href="https://docs.grails.org/latest/guide/profiles.html#creatingProfiles">Grails 3.1 ships with a profile</a> tailored to this use case (web-api). Another option is to take advantage of Gradle multi-project builds, with separate projects for the backend and front-end. Both of these options require another server to run the React app.</p>
 <p>In this article, however, we’re considering the use of React as the “view” (the V in MVC) in a standard Grails application. And although we’re sharing a project directory, the React code and Grails artifacts are independent, and will communicate at runtime via our restful API just as if they were separate apps. The only thing tying these two apps together is the same Gradle build, which gives us the benefits described earlier in the article (in fact, it would be quite easy to split out the React app in future by simply moving the <code>src/main/js</code> and <code>src/test/js</code> directories into their own project, and configuring up a new server).</p>
 <p>There’s many situations where a team may want to bring React into a Grails application, and it can be done in a way that allows for full developer productivity for both Grails and Node/React developers. Read on to see how!</p>
 </blockquote>
