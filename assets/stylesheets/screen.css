@@ -561,6 +561,10 @@ body.gorm .mainheader {
 	background-color: gray;/*#feb672;*/
 }
 
+.get-started-row .calltoaction h2 {
+    background-color: #255aa8;
+}
+
 .headerbar,
 #features {
 	background-color: #255AA8;
@@ -1058,7 +1062,6 @@ article.quote h2 {
 	position: relative;
 	display: block;
 	justify-content: center;
-	padding-bottom: 2em;
 }
 
 .testimonials {
@@ -1101,7 +1104,6 @@ article.quote h2 {
 	}
 	.get-started-row {
 		display: flex;
-		top: -2em; /* This is super ugly, but the .calltoaction h2 has margins on it which we need to compensate for */
 	}
 
 	.mainheader {
