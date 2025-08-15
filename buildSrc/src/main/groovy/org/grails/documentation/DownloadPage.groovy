@@ -153,10 +153,12 @@ class DownloadPage {
                 }
                 html.div(class: "column") {
 
-                    h3(class: 'columnheader', style: 'margin-bottom: 10px;', 'Other ways to get Grails')
+                    h3(class: 'columnheader', style: 'margin-bottom: 10px;', 'Grails Application Forge')
 
-                    mkp.yieldUnescaped'Select a profile and set of features tailored to your needs with our application initializer:'
-                    a(href: 'https://start.grails.org', 'Grails Application Forge')
+                    mkp.yieldUnescaped'The quickest way to get started with our application generator:'
+                    p {
+                        a(href: 'https://start.grails.org', 'Grails Application Forge')
+                    }
 
 
                     h3(class: 'columnheader', style: 'margin-bottom: 10px;', 'Installing with SDKMAN!')
