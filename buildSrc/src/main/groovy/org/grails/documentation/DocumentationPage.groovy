@@ -41,17 +41,11 @@ class DocumentationPage {
                 }
                 ul {
                     li {
-                        a(href: "https://docs.grails.org/${version}/guide/single.html", 'Single Page - User Guide')
-                    }
-                    li {
                         a(href: "https://docs.grails.org/${version}/", 'User Guide')
                     }
-                    if (!isSnapshot) {
-                        li {
-                            a(href: "https://docs.grails.org/${version}/api/", 'API Reference')
-                        }
+                    li {
+                        a(href: "https://docs.grails.org/${version}/api/", 'API Reference')
                     }
-
                 }
             }
         }
@@ -93,7 +87,7 @@ class DocumentationPage {
 
                         div(class: 'versionselector') {
                             h4 'Single Page - User Guide'
-                            select(onchange: "window.location.href='https://docs.grails.org/' + this.value + '/guide/single.html'") {
+                            select(onchange: "window.location.href='https://docs.grails.org/' + this.value + '/'") {
                                 option 'Select a version'
                                 mkp.yield('[%versions]')
                             }

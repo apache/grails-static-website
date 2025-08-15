@@ -67,10 +67,10 @@ profiles:
     url: 'https://github.com/macprzepiora/web-vaadin8'
     category: 'Third-Party Profiles'
     image: '[%url]/images/profiles.svg'
-    description: 'Use the following documentation to learn how to [create your own application profiles](https://docs.grails.org/latest/guide/single.html#creatingProfiles)'
+    description: 'Use the following documentation to learn how to [create your own application profiles](https://docs.grails.org/latest/guide/profiles.html#creatingProfiles)'
   ember:
     title: 'Ember'
     url: 'https://github.com/hgarfer/grails-profile-ember'
     category: 'Third-Party Profiles'
     image: '[%url]/images/profiles.svg'
-    description: 'Use the following documentation to learn how to [create your own application profiles](https://docs.grails.org/latest/guide/single.html#creatingProfiles)'
+    description: 'Use the following documentation to learn how to [create your own application profiles](https://docs.grails.org/latest/guide/profiles.html#creatingProfiles)'
