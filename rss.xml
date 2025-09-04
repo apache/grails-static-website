@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog | Grails Framework</title><link>https://grails.staged.apache.org</link><description>A powerful Groovy-based web application framework for the JVM built on top of Spring Boot</description><pubDate>Fri, 08 Aug 2025 00:20:43 GMT</pubDate><item><title>Apache Grails (Incubating) [%version] - Release Announcement</title><link>https://grails.staged.apache.org/blog/2025-08-10-grails-7-rc1.html</link><description><![CDATA[</p>
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog | Grails Framework</title><link>https://grails.staged.apache.org</link><description>A powerful Groovy-based web application framework for the JVM built on top of Spring Boot</description><pubDate>Thu, 04 Sep 2025 10:42:22 GMT</pubDate><item><title>Apache Grails (Incubating) [%version] - Release Announcement</title><link>https://grails.staged.apache.org/blog/2025-08-10-grails-7-rc1.html</link><description><![CDATA[</p>
 <p>The Apache Grails (incubating) community is excited to announce the Milestone 7.0.0-RC1 release of the Grails Framework! <br />
 We encourage you to try this pre-release version and provide your feedback <a href="https://github.com/apache/grails-core/issues">here</a>.</p>
 <h2>Download Source Code and Binary Distributions</h2>
@@ -49,7 +49,7 @@ We encourage you to try this pre-release version and provide your feedback <a hr
 <li>fix: #13705 - revert changes to Metadata from micronaut removal @jdaugherty (#14897)</li>
 </ul>
 <p>Full Changelog: <a href="https://github.com/apache/grails-core/compare/v7.0.0-M5...v7.0.0-RC1">v7.0.0-M5...v7.0.0-RC1</a></p>
-<p>Upgrade instructions are available in the <a href="https://docs.grails.org/7.0.0-RC1/guide/single.html#upgrading60x">documentation</a>.</p>
+<p>Upgrade instructions are available in the <a href="https://docs.grails.org/7.0.0-RC1/guide/upgrading.html#upgrading60x">documentation</a>.</p>
 <h2>Dependency Upgrades</h2>
 <p>In this release, we've upgraded several dependency versions, including but not limited to the following:</p>
 <ul>
@@ -114,7 +114,7 @@ We encourage you to try this pre-release version and provide your feedback <a hr
 </li>
 <li>
 <p>Make any necessary adjustments to your application code, configuration, and dependencies to ensure compatibility with
-the new version. <a href="https://docs.grails.org/7.0.0-RC1/guide/single.html#upgrading60x">See Upgrade Guide</a></p>
+the new version. <a href="https://docs.grails.org/7.0.0-RC1/guide/upgrading.html#upgrading60x">See Upgrade Guide</a></p>
 </li>
 </ol>
 <p>Normally, Grails Core dependencies are automatically updated using the Grails Bill of Materials (BOM). However, if you
@@ -191,19 +191,19 @@ Special thanks to:</p>
 </ul>
 <p>Recent Contributors by Project:</p>
 <ul>
-<li><a href="https://github.com/apache/grails-core/graphs/contributors?from=January+10%2C+2025&amp;to=July+10%2C+2025">grails-core</a></li>
-<li><a href="https://github.com/apache/grails-spring-security/graphs/contributors?from=January+10%2C+2025&amp;to=July+10%2C+2025">grails-spring-security</a></li>
-<li><a href="https://github.com/apache/grails-static-website/graphs/contributors?from=January+10%2C+2025&amp;to=July+10%2C+2025">grails-static-website</a></li>
-<li><a href="https://github.com/apache/grails-forge-ui/graphs/contributors?from=January+10%2C+2025&amp;to=July+10%2C+2025">grails-forge-ui</a></li>
-<li><a href="https://github.com/apache/grails-quartz/graphs/contributors?from=January+10%2C+2025&amp;to=July+10%2C+2025">grails-quartz</a></li>
-<li><a href="https://github.com/apache/incubator-grails-gradle-publish/graphs/contributors?from=January+10%2C+2025&amp;to=July+10%2C+2025">grails-gradle-publish</a></li>
-<li><a href="https://github.com/apache/grails-redis/graphs/contributors?from=January+10%2C+2025&amp;to=July+10%2C+2025">grails-redis</a></li>
-<li><a href="https://github.com/apache/grails-github-actions/graphs/contributors?from=January+10%2C+2025&amp;to=July+10%2C+2025">grails-github-actions</a></li>
+<li><a href="https://github.com/apache/grails-core/graphs/contributors?from=February+10%2C+2025&amp;to=August+10%2C+2025">grails-core</a></li>
+<li><a href="https://github.com/apache/grails-spring-security/graphs/contributors?from=February+10%2C+2025&amp;to=August+10%2C+2025">grails-spring-security</a></li>
+<li><a href="https://github.com/apache/grails-static-website/graphs/contributors?from=February+10%2C+2025&amp;to=August+10%2C+2025">grails-static-website</a></li>
+<li><a href="https://github.com/apache/grails-forge-ui/graphs/contributors?from=February+10%2C+2025&amp;to=August+10%2C+2025">grails-forge-ui</a></li>
+<li><a href="https://github.com/apache/grails-quartz/graphs/contributors?from=February+10%2C+2025&amp;to=August+10%2C+2025">grails-quartz</a></li>
+<li><a href="https://github.com/apache/incubator-grails-gradle-publish/graphs/contributors?from=February+10%2C+2025&amp;to=August+10%2C+2025">grails-gradle-publish</a></li>
+<li><a href="https://github.com/apache/grails-redis/graphs/contributors?from=February+10%2C+2025&amp;to=August+10%2C+2025">grails-redis</a></li>
+<li><a href="https://github.com/apache/grails-github-actions/graphs/contributors?from=February+10%2C+2025&amp;to=August+10%2C+2025">grails-github-actions</a></li>
 </ul>
 <p><a href="https://github.com/search?q=repo%3Aapache%2Fgrails-core+repo%3Aapache%2Fgrails-spring-security+repo%3Aapache%2Fgrails-static-website+repo%3Aapache%2Fgrails-forge-ui+repo%3Aapache%2Fgrails-quartz+repo%3Aapache%2Fincubator-grails-gradle-publish+repo%3Agrails-redis+repo%3Agrails-github-actions+is%3Apublic&amp;type=commits&amp;s=committer-date&amp;o=desc">Combined Commit List</a></p>
 <p>Their dedication and hard work have significantly contributed to the release of Grails 7.0.0-RC1.</p>
 <p>Join the <a href="https://grails.slack.com">Grails Slack Community</a>, share your feedback, and contribute to making Grails Framework even better in
-the future. Happy coding!</p>]]></description><author>James Fredley</author><guid>2025-08-10-grails-7-rc1</guid><pubDate>Thu, 10 Jul 2025 00:00:00 GMT</pubDate></item><item><title>Apache Grails (Incubating) [%version] - Release Announcement</title><link>https://grails.staged.apache.org/blog/2025-07-15-grails-7-m5.html</link><description><![CDATA[</p>
+the future. Happy coding!</p>]]></description><author>James Fredley</author><guid>2025-08-10-grails-7-rc1</guid><pubDate>Sun, 10 Aug 2025 00:00:00 GMT</pubDate></item><item><title>Apache Grails (Incubating) [%version] - Release Announcement</title><link>https://grails.staged.apache.org/blog/2025-07-15-grails-7-m5.html</link><description><![CDATA[</p>
 <p>The Apache Grails (incubating) community is excited to announce the Milestone 7.0.0-M5 release of the Grails Framework! <br />
 We encourage you to try this pre-release version and provide your feedback <a href="https://github.com/apache/grails-core/issues">here</a>.</p>
 <h2>Download Source Code and Binary Distributions</h2>
@@ -259,7 +259,7 @@ We encourage you to try this pre-release version and provide your feedback <a hr
 <li>#14316 Use local repo commands instead of the github api for Release Drop Down population by @JudeRV in #14834</li>
 </ul>
 <p>Full Changelog: <a href="https://github.com/apache/grails-core/compare/v7.0.0-M4...v7.0.0-M5">v7.0.0-M4...v7.0.0-M5</a></p>
-<p>Upgrade instructions are available in the <a href="https://docs.grails.org/7.0.0-M5/guide/single.html#upgrading60x">documentation</a>.</p>
+<p>Upgrade instructions are available in the <a href="https://docs.grails.org/7.0.0-M5/guide/upgrading.html#upgrading60x">documentation</a>.</p>
 <h2>Dependency Upgrades</h2>
 <p>In this release, we've upgraded several dependency versions, including but not limited to the following:</p>
 <ul>
@@ -325,7 +325,7 @@ to set it up.</p>
 </li>
 <li>
 <p>Make any necessary adjustments to your application code, configuration, and dependencies to ensure compatibility with
-the new version. <a href="https://docs.grails.org/7.0.0-M5/guide/single.html#upgrading60x">See Upgrade Guide</a></p>
+the new version. <a href="https://docs.grails.org/7.0.0-M5/guide/upgrading.html#upgrading60x">See Upgrade Guide</a></p>
 </li>
 </ol>
 <p>Normally, Grails Core dependencies are automatically updated using the Grails Bill of Materials (BOM). However, if you
@@ -399,19 +399,19 @@ Special thanks to:</p>
 </ul>
 <p>Recent Contributors by Project:</p>
 <ul>
-<li><a href="https://github.com/apache/grails-core/graphs/contributors?from=December+15%2C+2024&amp;to=June+15%2C+2025">grails-core</a></li>
-<li><a href="https://github.com/apache/grails-spring-security/graphs/contributors?from=December+15%2C+2024&amp;to=June+15%2C+2025">grails-spring-security</a></li>
-<li><a href="https://github.com/apache/grails-static-website/graphs/contributors?from=December+15%2C+2024&amp;to=June+15%2C+2025">grails-static-website</a></li>
-<li><a href="https://github.com/apache/grails-forge-ui/graphs/contributors?from=December+15%2C+2024&amp;to=June+15%2C+2025">grails-forge-ui</a></li>
-<li><a href="https://github.com/apache/grails-quartz/graphs/contributors?from=December+15%2C+2024&amp;to=June+15%2C+2025">grails-quartz</a></li>
-<li><a href="https://github.com/apache/incubator-grails-gradle-publish/graphs/contributors?from=December+15%2C+2024&amp;to=June+15%2C+2025">grails-gradle-publish</a></li>
-<li><a href="https://github.com/apache/grails-redis/graphs/contributors?from=December+15%2C+2024&amp;to=June+15%2C+2025">grails-redis</a></li>
-<li><a href="https://github.com/apache/grails-github-actions/graphs/contributors?from=December+15%2C+2024&amp;to=June+15%2C+2025">grails-github-actions</a></li>
+<li><a href="https://github.com/apache/grails-core/graphs/contributors?from=January+15%2C+2025&amp;to=July+15%2C+2025">grails-core</a></li>
+<li><a href="https://github.com/apache/grails-spring-security/graphs/contributors?from=January+15%2C+2025&amp;to=July+15%2C+2025">grails-spring-security</a></li>
+<li><a href="https://github.com/apache/grails-static-website/graphs/contributors?from=January+15%2C+2025&amp;to=July+15%2C+2025">grails-static-website</a></li>
+<li><a href="https://github.com/apache/grails-forge-ui/graphs/contributors?from=January+15%2C+2025&amp;to=July+15%2C+2025">grails-forge-ui</a></li>
+<li><a href="https://github.com/apache/grails-quartz/graphs/contributors?from=January+15%2C+2025&amp;to=July+15%2C+2025">grails-quartz</a></li>
+<li><a href="https://github.com/apache/incubator-grails-gradle-publish/graphs/contributors?from=January+15%2C+2025&amp;to=July+15%2C+2025">grails-gradle-publish</a></li>
+<li><a href="https://github.com/apache/grails-redis/graphs/contributors?from=January+15%2C+2025&amp;to=July+15%2C+2025">grails-redis</a></li>
+<li><a href="https://github.com/apache/grails-github-actions/graphs/contributors?from=January+15%2C+2025&amp;to=July+15%2C+2025">grails-github-actions</a></li>
 </ul>
 <p><a href="https://github.com/search?q=repo%3Aapache%2Fgrails-core+repo%3Aapache%2Fgrails-spring-security+repo%3Aapache%2Fgrails-static-website+repo%3Aapache%2Fgrails-forge-ui+repo%3Aapache%2Fgrails-quartz+repo%3Aapache%2Fincubator-grails-gradle-publish+repo%3Agrails-redis+repo%3Agrails-github-actions+is%3Apublic&amp;type=commits&amp;s=committer-date&amp;o=desc">Combined Commit List</a></p>
 <p>Their dedication and hard work have significantly contributed to the release of Grails 7.0.0-M5.</p>
 <p>Join the <a href="https://grails.slack.com">Grails Slack Community</a>, share your feedback, and contribute to making Grails Framework even better in
-the future. Happy coding!</p>]]></description><author>James Fredley</author><guid>2025-07-15-grails-7-m5</guid><pubDate>Sun, 15 Jun 2025 00:00:00 GMT</pubDate></item><item><title>Apache Grails (Incubating) 7.0.0-M4 - Release Announcement</title><link>https://grails.staged.apache.org/blog/2025-06-10-grails-7-m4.html</link><description><![CDATA[</p>
+the future. Happy coding!</p>]]></description><author>James Fredley</author><guid>2025-07-15-grails-7-m5</guid><pubDate>Tue, 15 Jul 2025 00:00:00 GMT</pubDate></item><item><title>Apache Grails (Incubating) 7.0.0-M4 - Release Announcement</title><link>https://grails.staged.apache.org/blog/2025-06-10-grails-7-m4.html</link><description><![CDATA[</p>
 <p>The Apache Grails (incubating) community is excited for the release of Grails Framework 7.0.0-M4. <br />
 We encourage you to try this pre-release and provide your feedback <a href="https://github.com/apache/grails-core/issues">here</a>.</p>
 <h2>Download Source Code and Binary Distributions</h2>
@@ -485,7 +485,7 @@ meaning anyone can view your information. Make sure your email client does not a
 <li>Addition of NOTICE to Grails Source</li>
 <li>Created https://repo.grails.org/grails/restricted/ to replace https://repo.grails.org/grails/core longer term.  This virtual repo's scope is significantly reduced to help reduce the chance of using outdated libraries.</li>
 </ul>
-<p>Upgrade instructions are available in the <a href="https://docs.grails.org/7.0.0-M4/guide/single.html#upgrading60x">documentation</a>.</p>
+<p>Upgrade instructions are available in the <a href="https://docs.grails.org/7.0.0-M4/guide/upgrading.html#upgrading60x">documentation</a>.</p>
 <h2>Dependency Upgrades</h2>
 <p>In this release, we've upgraded several dependency versions, including but not limited to the following:</p>
 <ul>
@@ -535,7 +535,7 @@ groovy.version=4.0.27
 </li>
 <li>
 <p>Make any necessary adjustments to your application code, configuration, and dependencies to ensure compatibility with
-the new version. See https://docs.grails.org/7.0.0-M4/guide/single.html#upgrading60x.</p>
+the new version. See https://docs.grails.org/7.0.0-M4/guide/upgrading.html#upgrading60x.</p>
 </li>
 </ol>
 <p>Normally, Grails Core dependencies are automatically updated using the Grails Bill of Materials (BOM). However, if you
@@ -817,7 +817,7 @@ grailsGradlePluginVersion=7.0.0-M4
 </li>
 <li>
 <p>Make any necessary adjustments to your application code, configuration, and dependencies to ensure compatibility with
-the new version. See https://docs.grails.org/7.0.0-M3/guide/single.html#upgrading60x.</p>
+the new version. See https://docs.grails.org/7.0.0-M3/guide/upgrading.html#upgrading60x.</p>
 </li>
 </ol>
 <p>Normally, Grails Core dependencies are automatically updated using the Grails Bill of Materials (BOM). However, if you
@@ -1166,7 +1166,7 @@ grailsGradlePluginVersion=7.0.0-M3
 </code></pre>
 </li>
 <li>
-<p>Make any necessary adjustments to your application code, configuration, and dependencies to ensure compatibility with the new version. See https://docs.grails.org/7.0.0-M1/guide/single.html#upgrading60x.</p>
+<p>Make any necessary adjustments to your application code, configuration, and dependencies to ensure compatibility with the new version. See https://docs.grails.org/7.0.0-M1/guide/upgrading.html#upgrading60x.</p>
 </li>
 </ol>
 <p>Normally, Grails Core dependencies are automatically updated using the Grails Bill of Materials (BOM). However, if you have specific versions defined in your build configuration, you may need to manually update them to align with Grails 7.0.0-M1.</p>
@@ -3207,15 +3207,15 @@ class Team {
 <li>2.14.1.1 for Grails 2.x</li>
 <li>2.15.1 for Grails 3 and Java 7</li>
 <li>3.0.6 for Grails 3 and Java 8</li>
-</ul>]]></description><author>Iván López</author><guid>2018-09-23</guid><pubDate>Sun, 23 Sep 2018 00:00:00 GMT</pubDate></item><item><title>Quickcast #10: Debugging Grails® Apps</title><link>https://grails.staged.apache.org/blog/2018-08-22-1.html</link><description><![CDATA[</p>
-<p>Tags: <a href="https://grails.staged.apache.org/blog/tag/quickcast.html"><span class="hashtag">#quickcast</span></a></p>
-<p>In this 13-minute Quickcast, 2GM (Groovy, Grails<sup>®</sup> framework, and Micronaut) team member, <a href="https://objectcomputing.com/products/2gm-team#lopez">Iván López</a>, demonstrates a variety of ways to debug Grails core code and the Grails CLI (command line interface). Developers may use these tips to fix issues or contribute enhancements to the core Grails framework.</p>
-<p>Grails Quickcasts, brought to you through a partnership between <a href="https://objectcomputing.com/">Object Computing, Inc.</a> (OCI) and <a href="https://dzone.com/">DZone</a>, provide bite-sized tutorials to help you maximize your productivity with the Framework.</p>
-<iframe width="100%" height="560" src="https://www.youtube-nocookie.com/embed/y69Cr_hYUCA" frameborder="0"></iframe>]]></description><author>Iván López</author><guid>2018-08-22-1</guid><pubDate>Wed, 22 Aug 2018 00:00:00 GMT</pubDate></item><item><title>Quickcast #11: Grails® Profiling with YourKit</title><link>https://grails.staged.apache.org/blog/2018-08-22-2.html</link><description><![CDATA[</p>
+</ul>]]></description><author>Iván López</author><guid>2018-09-23</guid><pubDate>Sun, 23 Sep 2018 00:00:00 GMT</pubDate></item><item><title>Quickcast #11: Grails® Profiling with YourKit</title><link>https://grails.staged.apache.org/blog/2018-08-22-2.html</link><description><![CDATA[</p>
 <p>Tags: <a href="https://grails.staged.apache.org/blog/tag/quickcast.html"><span class="hashtag">#quickcast</span></a> <a href="https://grails.staged.apache.org/blog/tag/yourkit.html"><span class="hashtag">#yourkit</span></a></p>
 <p>In this Quickcast, 2GM (Groovy, Grails<sup>®</sup> framework, and Micronaut) team member, <a href="https://objectcomputing.com/products/2gm-team#assar">Nirav Assar</a>, demonstrates how to use YourKit to profile a Grails application and spot CPU problems and heap and garbage collection issues.</p>
 <p>Grails Quickcasts, brought to you through a partnership between <a href="https://objectcomputing.com/">Object Computing, Inc.</a> (OCI) and <a href="https://dzone.com/">DZone</a>, provide bite-sized tutorials to help you maximize your productivity with the Framework.</p>
-<iframe width="100%" height="560" src="https://www.youtube-nocookie.com/embed/NJ_T5g4bBeY" frameborder="0"></iframe>]]></description><author>Nirav Assar</author><guid>2018-08-22-2</guid><pubDate>Wed, 22 Aug 2018 00:00:00 GMT</pubDate></item><item><title>Mock vs Stub vs Spy</title><link>https://grails.staged.apache.org/blog/2018-06-22.html</link><description><![CDATA[</p>
+<iframe width="100%" height="560" src="https://www.youtube-nocookie.com/embed/NJ_T5g4bBeY" frameborder="0"></iframe>]]></description><author>Nirav Assar</author><guid>2018-08-22-2</guid><pubDate>Wed, 22 Aug 2018 00:00:00 GMT</pubDate></item><item><title>Quickcast #10: Debugging Grails® Apps</title><link>https://grails.staged.apache.org/blog/2018-08-22-1.html</link><description><![CDATA[</p>
+<p>Tags: <a href="https://grails.staged.apache.org/blog/tag/quickcast.html"><span class="hashtag">#quickcast</span></a></p>
+<p>In this 13-minute Quickcast, 2GM (Groovy, Grails<sup>®</sup> framework, and Micronaut) team member, <a href="https://objectcomputing.com/products/2gm-team#lopez">Iván López</a>, demonstrates a variety of ways to debug Grails core code and the Grails CLI (command line interface). Developers may use these tips to fix issues or contribute enhancements to the core Grails framework.</p>
+<p>Grails Quickcasts, brought to you through a partnership between <a href="https://objectcomputing.com/">Object Computing, Inc.</a> (OCI) and <a href="https://dzone.com/">DZone</a>, provide bite-sized tutorials to help you maximize your productivity with the Framework.</p>
+<iframe width="100%" height="560" src="https://www.youtube-nocookie.com/embed/y69Cr_hYUCA" frameborder="0"></iframe>]]></description><author>Iván López</author><guid>2018-08-22-1</guid><pubDate>Wed, 22 Aug 2018 00:00:00 GMT</pubDate></item><item><title>Mock vs Stub vs Spy</title><link>https://grails.staged.apache.org/blog/2018-06-22.html</link><description><![CDATA[</p>
 <p>Tags: <a href="https://grails.staged.apache.org/blog/tag/spock.html"><span class="hashtag">#spock</span></a></p>
 <h2>Introduction</h2>
 <p><a href="https://spockframework.org/">Spock</a> provides three powerful yet distinct, tools that make working with collaborators easier:</p>
@@ -4566,29 +4566,29 @@ info.app.grailsVersion=3.2.5
 <p>GORM 6.1 will become the default version of GORM to be used in the upcoming Grails 3.3, in the meantime you can use GORM 6.1 in Grails 3.2 simply by changing the <code>gormVersion</code> setting in <code>gradle.properties</code>:</p>
 <pre><code class="language-groovy">gormVersion=6.1.0.RELEASE
 </code></pre>
-<p>To celebrate the release we have prepared the first of a series of new guides to cover GORM 6.1. Among the many new features are huge improvements to support Neo4j. Using the official Neo4j sample application, the new guide describes how you can <a href="https://guides.grails.org/neo4j-movies/guide/index.html">build a graph application with the Grails framework, GORM 6.1 and Neo4j</a>! Enjoy!</p>]]></description><author>Graeme Rocher</author><guid>2017-03-27</guid><pubDate>Mon, 27 Mar 2017 00:00:00 GMT</pubDate></item><item><title>Quickcast #3: Multi-Project Builds</title><link>https://grails.staged.apache.org/blog/2017-01-20-1.html</link><description><![CDATA[</p>
+<p>To celebrate the release we have prepared the first of a series of new guides to cover GORM 6.1. Among the many new features are huge improvements to support Neo4j. Using the official Neo4j sample application, the new guide describes how you can <a href="https://guides.grails.org/neo4j-movies/guide/index.html">build a graph application with the Grails framework, GORM 6.1 and Neo4j</a>! Enjoy!</p>]]></description><author>Graeme Rocher</author><guid>2017-03-27</guid><pubDate>Mon, 27 Mar 2017 00:00:00 GMT</pubDate></item><item><title>Quickcast #4: Angular Scaffolding</title><link>https://grails.staged.apache.org/blog/2017-01-20-2.html</link><description><![CDATA[</p>
+<p>Tags: <a href="https://grails.staged.apache.org/blog/tag/quickcast.html"><span class="hashtag">#quickcast</span></a> <a href="https://grails.staged.apache.org/blog/tag/rest.html"><span class="hashtag">#rest</span></a></p>
+<p>In this Quickcast, 2GM (Groovy, Grails<sup>®</sup> framework, and Micronaut) team member, <a href="https://objectcomputing.com/products/2gm-team#kleeh">James Kleeh</a>, walks you through the process of using the Angular scaffolding for Grails apps to build a fully functional web app, using a simple blog format for demonstration.</p>
+<p>The tutorial explains how to have the Grails framework set up a REST endpoint and all the Angular modules needed to get the web app running.</p>
+<p>Grails Quickcasts, brought to you through a partnership between <a href="https://objectcomputing.com/">Object Computing, Inc.</a> (OCI) and <a href="https://dzone.com/">DZone</a>, provide bite-sized tutorials to help you maximize your productivity with the Framework.</p>
+<iframe width="100%" height="560" src="https://www.youtube-nocookie.com/embed/tT4BdlRFAis" frameborder="0"></iframe>]]></description><author>James Kleeh</author><guid>2017-01-20-2</guid><pubDate>Fri, 20 Jan 2017 00:00:00 GMT</pubDate></item><item><title>Quickcast #3: Multi-Project Builds</title><link>https://grails.staged.apache.org/blog/2017-01-20-1.html</link><description><![CDATA[</p>
 <p>Tags: <a href="https://grails.staged.apache.org/blog/tag/quickcast.html"><span class="hashtag">#quickcast</span></a></p>
 <p>In this video, Grails<sup>®</sup> framework co-founder Graeme Rocher walks you through multi-project builds in Grails apps.</p>
 <p>The Grails framework does a few handy things with multi-project builds and plugins, not the least of which being that Grails compiles your plugins first and puts the class and resources of those plugins directly in the classpath. This lets you make changes to your plugins and instantly see those changes in your build.</p>
 <p>Grails Quickcasts, brought to you through a partnership between <a href="https://objectcomputing.com/">Object Computing, Inc.</a> (OCI) and <a href="https://dzone.com/">DZone</a>, provide bite-sized tutorials to help you maximize your productivity with the Framework.</p>
-<iframe width="100%" height="560" src="https://www.youtube-nocookie.com/embed/yNA0ce5fG9s" frameborder="0"></iframe>]]></description><author>Graeme Rocher</author><guid>2017-01-20-1</guid><pubDate>Fri, 20 Jan 2017 00:00:00 GMT</pubDate></item><item><title>Quickcast #5: Retrieving Runtime Config Values in Grails® 3</title><link>https://grails.staged.apache.org/blog/2017-01-20-3.html</link><description><![CDATA[</p>
-<p>Tags: <a href="https://grails.staged.apache.org/blog/tag/quickcast.html"><span class="hashtag">#quickcast</span></a></p>
-<p>In this short video tutorial, Grails<sup>®</sup> framework co-founder, <a href="https://objectcomputing.com/products/2gm-team#brown">Jeff Scott Brown</a>, highlights some of the great features of the Grails framework.</p>
-<p>In fewer than 18 minutes, Jeff describes several techniques for retrieving configuration values at runtime and discusses the pros and cons of each. Visit <a href="https://objectcomputing.com/news/2016/08/31/retrieving-config-values-grails-3">this Grails blog post</a> for an accompanying article.</p>
-<p>For this Quickcast, you’ll need no more than a basic understanding of the Grails framework.</p>
-<p>Grails Quickcasts, brought to you through a partnership between <a href="https://objectcomputing.com/">Object Computing, Inc.</a> (OCI) and <a href="https://dzone.com/">DZone</a>, provide bite-sized tutorials to help you maximize your productivity with the Framework.</p>
-<iframe width="100%" height="560" src="https://www.youtube-nocookie.com/embed/Qw5hjwT9EOc" frameborder="0"></iframe>]]></description><author>Jeff Scott Brown</author><guid>2017-01-20-3</guid><pubDate>Fri, 20 Jan 2017 00:00:00 GMT</pubDate></item><item><title>Quickcast #6: Developing Grails® 3 Applications with IntelliJ IDEA</title><link>https://grails.staged.apache.org/blog/2017-01-20-4.html</link><description><![CDATA[</p>
+<iframe width="100%" height="560" src="https://www.youtube-nocookie.com/embed/yNA0ce5fG9s" frameborder="0"></iframe>]]></description><author>Graeme Rocher</author><guid>2017-01-20-1</guid><pubDate>Fri, 20 Jan 2017 00:00:00 GMT</pubDate></item><item><title>Quickcast #6: Developing Grails® 3 Applications with IntelliJ IDEA</title><link>https://grails.staged.apache.org/blog/2017-01-20-4.html</link><description><![CDATA[</p>
 <p>Tags: <a href="https://grails.staged.apache.org/blog/tag/quickcast.html"><span class="hashtag">#quickcast</span></a></p>
 <p>Grails<sup>®</sup> 3 is a high-productivity framework for building web applications for the JVM.</p>
 <p>IntelliJ IDEA is a high-productivity Integrated Development Environment (IDE) for building a variety of application types. IDEA has always had great support for building Grails applications and, in particular, has the best support of any IDE for developing with Grails 3.</p>
 <p>In this 20-minute video, Grails framework co-founder, <a href="https://objectcomputing.com/products/2gm-team#brown">Jeff Scott Brown</a>, introduces several tips and tricks related to building Grails 3 applications in IDEA.</p>
 <p>Grails Quickcasts, brought to you through a partnership between <a href="https://objectcomputing.com/">Object Computing, Inc.</a> (OCI) and <a href="https://dzone.com/">DZone</a>, provide bite-sized tutorials to help you maximize your productivity with the Framework.</p>
-<iframe width="100%" height="560" src="https://www.youtube-nocookie.com/embed/XsCCsTRdezw" frameborder="0"></iframe>]]></description><author>Jeff Scott Brown</author><guid>2017-01-20-4</guid><pubDate>Fri, 20 Jan 2017 00:00:00 GMT</pubDate></item><item><title>Quickcast #4: Angular Scaffolding</title><link>https://grails.staged.apache.org/blog/2017-01-20-2.html</link><description><![CDATA[</p>
-<p>Tags: <a href="https://grails.staged.apache.org/blog/tag/quickcast.html"><span class="hashtag">#quickcast</span></a> <a href="https://grails.staged.apache.org/blog/tag/rest.html"><span class="hashtag">#rest</span></a></p>
-<p>In this Quickcast, 2GM (Groovy, Grails<sup>®</sup> framework, and Micronaut) team member, <a href="https://objectcomputing.com/products/2gm-team#kleeh">James Kleeh</a>, walks you through the process of using the Angular scaffolding for Grails apps to build a fully functional web app, using a simple blog format for demonstration.</p>
-<p>The tutorial explains how to have the Grails framework set up a REST endpoint and all the Angular modules needed to get the web app running.</p>
+<iframe width="100%" height="560" src="https://www.youtube-nocookie.com/embed/XsCCsTRdezw" frameborder="0"></iframe>]]></description><author>Jeff Scott Brown</author><guid>2017-01-20-4</guid><pubDate>Fri, 20 Jan 2017 00:00:00 GMT</pubDate></item><item><title>Quickcast #5: Retrieving Runtime Config Values in Grails® 3</title><link>https://grails.staged.apache.org/blog/2017-01-20-3.html</link><description><![CDATA[</p>
+<p>Tags: <a href="https://grails.staged.apache.org/blog/tag/quickcast.html"><span class="hashtag">#quickcast</span></a></p>
+<p>In this short video tutorial, Grails<sup>®</sup> framework co-founder, <a href="https://objectcomputing.com/products/2gm-team#brown">Jeff Scott Brown</a>, highlights some of the great features of the Grails framework.</p>
+<p>In fewer than 18 minutes, Jeff describes several techniques for retrieving configuration values at runtime and discusses the pros and cons of each. Visit <a href="https://objectcomputing.com/news/2016/08/31/retrieving-config-values-grails-3">this Grails blog post</a> for an accompanying article.</p>
+<p>For this Quickcast, you’ll need no more than a basic understanding of the Grails framework.</p>
 <p>Grails Quickcasts, brought to you through a partnership between <a href="https://objectcomputing.com/">Object Computing, Inc.</a> (OCI) and <a href="https://dzone.com/">DZone</a>, provide bite-sized tutorials to help you maximize your productivity with the Framework.</p>
-<iframe width="100%" height="560" src="https://www.youtube-nocookie.com/embed/tT4BdlRFAis" frameborder="0"></iframe>]]></description><author>James Kleeh</author><guid>2017-01-20-2</guid><pubDate>Fri, 20 Jan 2017 00:00:00 GMT</pubDate></item><item><title>G3 Summit 2016 Wrap-up!</title><link>https://grails.staged.apache.org/blog/2016-12-14.html</link><description><![CDATA[</p>
+<iframe width="100%" height="560" src="https://www.youtube-nocookie.com/embed/Qw5hjwT9EOc" frameborder="0"></iframe>]]></description><author>Jeff Scott Brown</author><guid>2017-01-20-3</guid><pubDate>Fri, 20 Jan 2017 00:00:00 GMT</pubDate></item><item><title>G3 Summit 2016 Wrap-up!</title><link>https://grails.staged.apache.org/blog/2016-12-14.html</link><description><![CDATA[</p>
 <p><img src="2016-12-14-img01.jpg" alt="The OCI Grails team at G3 Summit 2016" /></p>
 <p>Last month, nearly the entire <a href="https://objectcomputing.com/products/2gm-team">2GM (Groovy, Grails<sup>®</sup> framework, and Micronaut) team</a> from [Object Computing, Inc.] (https://objectcomputing.com/) (OCI) converged on Fort Lauderdale for the inaugural edition of the G3 Summit, the conference for the Apache Groovy, Grails framework, and Gradle Community. The event is organized by <a href="https://www.nofluffjuststuff.com/home/main">No Fluff Just Stuff</a> and is a fantastic opportunity for developers to mingle with committers, authors, and project leaders in the greater Groovy community.</p>
 <p>OCI team members presented over 30 workshops and breakout sessions during the event, in addition to socializing with attendees between sessions and after hours. We’ve asked a few team members to share their experiences at the conference. We hope you will join us next year!</p>
@@ -6431,7 +6431,7 @@ class SkillsTestController {
 <p>Now that we have our backend largely ready to go, we’re ready to set up React.</p>
 <blockquote>
 <p>Question: Why Do This?</p>
-<p>Why not use separate backend and front-end apps? In a microservice architecture, the work we’ve done might be sufficient - we could now build a separate React/node-based front-end application independent of our Grails backend. This is a great strategy, and <a href="https://docs.grails.org/latest/guide/single.html#webApiAndAngularProfiles">Grails 3.1 ships with a profile</a> tailored to this use case (web-api). Another option is to take advantage of Gradle multi-project builds, with separate projects for the backend and front-end. Both of these options require another server to run the React app.</p>
+<p>Why not use separate backend and front-end apps? In a microservice architecture, the work we’ve done might be sufficient - we could now build a separate React/node-based front-end application independent of our Grails backend. This is a great strategy, and <a href="https://docs.grails.org/latest/guide/profiles.html#creatingProfiles">Grails 3.1 ships with a profile</a> tailored to this use case (web-api). Another option is to take advantage of Gradle multi-project builds, with separate projects for the backend and front-end. Both of these options require another server to run the React app.</p>
 <p>In this article, however, we’re considering the use of React as the “view” (the V in MVC) in a standard Grails application. And although we’re sharing a project directory, the React code and Grails artifacts are independent, and will communicate at runtime via our restful API just as if they were separate apps. The only thing tying these two apps together is the same Gradle build, which gives us the benefits described earlier in the article (in fact, it would be quite easy to split out the React app in future by simply moving the <code>src/main/js</code> and <code>src/test/js</code> directories into their own project, and configuring up a new server).</p>
 <p>There’s many situations where a team may want to bring React into a Grails application, and it can be done in a way that allows for full developer productivity for both Grails and Node/React developers. Read on to see how!</p>
 </blockquote>
