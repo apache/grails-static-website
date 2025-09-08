@@ -36,9 +36,9 @@ class DownloadPage {
 
     @CompileDynamic
     static String renderDownload(String version) {
-        String redisVersion = '5.0.0-M5'
-        String quartzVersion = '4.0.0-M3'
-        String springSecurityVersion = '7.0.0-M5'
+        String redisVersion = '5.0.0-RC2'
+        String quartzVersion = '4.0.0-RC2'
+        String springSecurityVersion = '7.0.0-RC2'
 
         StringWriter writer = new StringWriter()
         MarkupBuilder html = new MarkupBuilder(writer)
