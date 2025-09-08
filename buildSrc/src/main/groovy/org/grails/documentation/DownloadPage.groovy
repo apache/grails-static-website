@@ -90,7 +90,7 @@ class DownloadPage {
                                 a(href: sourceUrl(quartzVersion, 'grails-github-actions', '.asc', 'actions'), 'ASC')
                             }
                             li {
-                                a(href: sourceUrl(quartzVersion, 'grails-publish', '', 'grails-publish'), "Grails Gradle Publish Plugin ${grailsGradlePublishVersion} Source")
+                                a(href: sourceUrl(quartzVersion, 'grails-publish', '', 'grails-publish'), "Grails Publish Gradle Plugin ${grailsGradlePublishVersion} Source")
                                 a(href: sourceUrl(quartzVersion, 'grails-publish', '.sha512', 'grails-publish'), 'SHA512')
                                 a(href: sourceUrl(quartzVersion, 'grails-publish', '.asc', 'grails-publish'), 'ASC')
                             }
@@ -116,7 +116,7 @@ class DownloadPage {
                                 a(href: "https://github.com/apache/grails-github-actions/releases/tag/v${grailsGithubActionsVersion}", "Grails GitHub Actions ${grailsGithubActionsVersion} Release Notes")
                             }
                             li {
-                                a(href: "https://github.com/apache/incubator-grails-gradle-publish/releases/tag/v${grailsGradlePublishVersion}", "Grails Gradle Publish Plugin ${grailsGradlePublishVersion} Release Notes")
+                                a(href: "https://github.com/apache/incubator-grails-gradle-publish/releases/tag/v${grailsGradlePublishVersion}", "Grails Publish Gradle Plugin ${grailsGradlePublishVersion} Release Notes")
                             }
                         }
                     }
