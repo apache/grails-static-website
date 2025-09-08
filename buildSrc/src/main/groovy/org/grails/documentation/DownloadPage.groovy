@@ -39,6 +39,8 @@ class DownloadPage {
         String redisVersion = '5.0.0-RC2'
         String quartzVersion = '4.0.0-RC2'
         String springSecurityVersion = '7.0.0-RC2'
+        String grailsGithubActionsVersion = '1.0.0'
+        String grailsGradlePublishVersion = '0.0.1'
 
         StringWriter writer = new StringWriter()
         MarkupBuilder html = new MarkupBuilder(writer)
@@ -82,6 +84,16 @@ class DownloadPage {
                                 a(href: sourceUrl(quartzVersion, 'grails-quartz', '.sha512', 'quartz'), 'SHA512')
                                 a(href: sourceUrl(quartzVersion, 'grails-quartz', '.asc', 'quartz'), 'ASC')
                             }
+                            li {
+                                a(href: sourceUrl(quartzVersion, 'grails-github-actions', '', 'actions'), "Grails GitHub Actions ${grailsGithubActionsVersion} Source")
+                                a(href: sourceUrl(quartzVersion, 'grails-github-actions', '.sha512', 'actions'), 'SHA512')
+                                a(href: sourceUrl(quartzVersion, 'grails-github-actions', '.asc', 'actions'), 'ASC')
+                            }
+                            li {
+                                a(href: sourceUrl(quartzVersion, 'grails-publish', '', 'grails-publish'), "Grails Gradle Publish Plugin ${grailsGradlePublishVersion} Source")
+                                a(href: sourceUrl(quartzVersion, 'grails-publish', '.sha512', 'grails-publish'), 'SHA512')
+                                a(href: sourceUrl(quartzVersion, 'grails-publish', '.asc', 'grails-publish'), 'ASC')
+                            }
                         } else {
                             li {
                                 a(href: "https://github.com/apache/grails-forge/releases/download/v${version}/grails-cli-${version}.zip", 'Binary')
@@ -99,6 +111,12 @@ class DownloadPage {
                             }
                             li {
                                 a(href: "https://github.com/apache/grails-quartz/releases/tag/v${quartzVersion}", "Grails Quartz ${quartzVersion} Plugin Release Notes")
+                            }
+                            li {
+                                a(href: "https://github.com/apache/grails-github-actions/releases/tag/v${grailsGithubActionsVersion}", "Grails GitHub Actions ${grailsGithubActionsVersion} Release Notes")
+                            }
+                            li {
+                                a(href: "https://github.com/apache/incubator-grails-gradle-publish/releases/tag/v${grailsGradlePublishVersion}", "Grails Gradle Publish Plugin ${grailsGradlePublishVersion} Release Notes")
                             }
                         }
                     }
