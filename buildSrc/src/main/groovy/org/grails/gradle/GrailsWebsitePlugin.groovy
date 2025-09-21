@@ -211,7 +211,7 @@ class GrailsWebsitePlugin implements Plugin<Project> {
             task.finalizedBy(TASK_GEN_PLUGINS)
             task.finalizedBy(TASK_RENDER_MINUTES)
             task.finalizedBy(TASK_GEN_SITEMAP)
-            task.setDescription('Build Micronaut website - generates pages with HTML entries in pages and build/temp, renders blog and RSS feed, copies assets and generates a sitemap')
+            task.setDescription('Build Grails website - generates pages with HTML entries in pages and build/temp, renders blog and RSS feed, copies assets and generates a sitemap')
 
         })
         project.tasks.named(TASK_BUILD).configure(new Action<Task>() {
