@@ -1,0 +1,1842 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Guides | Grails Framework</title>
+    <meta name="keywords" content="grails,jvm,framework,groovy,gradle,spring-boot,gorm"/>
+    <meta name="description" content="A powerful Groovy-based web application framework for the JVM built on top of Spring Boot"/>
+    <meta name="date" content="September 21, 2025"/>
+    <meta name="robots" content="all"/>
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://grails.staged.apache.org/rss.xml"/>
+    <meta charset='UTF-8'/>
+    <link rel='icon' href='https://grails.staged.apache.org/images/favicon.ico'/>
+    <meta name='twitter:card' content='summary_large_image'/>
+    <meta name='twitter:site' content='@grailsframework'/>
+    <meta name='twitter:description' content='A powerful Groovy-based web application framework for the JVM built on top of Spring Boot'/>
+    <meta name='twitter:creator' content='@grailsframework'/>
+    <meta property='og:image' content='https://grails.staged.apache.org/images/grails.png'/>
+    <meta property='og:image:width' content='300'/>
+    <meta property='og:image:height' content='300'/>
+    <meta property='og:url' content='https://grails.staged.apache.org'/>
+    <meta property='og:title' content='Guides | Grails Framework'/>
+    <meta property='og:description' content='A powerful Groovy-based web application framework for the JVM built on top of Spring Boot'/>
+    <meta property='og:type' content='website'/>
+
+    <meta name='viewport' content='width=device-width, initial-scale=1'/>
+    <link rel='mask-icon' href='https://grails.staged.apache.org/images/grails-pinned-icon.svg' color='feb672'/>
+    <link rel='stylesheet' href='https://grails.staged.apache.org/stylesheets/screen.css'/>
+    <link rel='stylesheet' href='https://grails.staged.apache.org/stylesheets/plugin.css'/>
+    <link rel='stylesheet' href='https://grails.staged.apache.org/stylesheets/paginate.css'/>
+    <script src='https://grails.staged.apache.org/javascripts/navigation.js'></script>
+    <script src='https://grails.staged.apache.org/javascripts/paginate.js'></script>
+    
+    
+    <script src='https://grails.staged.apache.org/javascripts/search.js'></script>
+    <script src='https://grails.staged.apache.org/javascripts/plugins.js'></script>
+
+    <!-- Matomo -->
+    <script>
+      var _paq = window._paq = window._paq || [];
+      /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+      _paq.push(["setDoNotTrack", true]);
+      _paq.push(["disableCookies"]);
+      _paq.push(['trackPageView']);
+      _paq.push(['enableLinkTracking']);
+      (function() {
+        var u="https://analytics.apache.org/";
+        _paq.push(['setTrackerUrl', u+'matomo.php']);
+        _paq.push(['setSiteId', '79']);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+      })();
+    </script>
+    <!-- End Matomo Code -->
+</head>
+<body class='guides'>
+<header class='mainheader'>
+    <div class='content'>
+        <a href='https://grails.staged.apache.org/index.html'><img class='grailslogo' src='https://grails.staged.apache.org/images/grails_logo.svg' alt='Grails Logo'/></a>
+        <a href='javascript:show(&apos;topmenus&apos;, &apos;showNavigationLink&apos;)' id='showNavigationLink'
+           class='mobile align-center'>Show Navigation</a>
+        <div id='topmenus'>
+            <nav class='secondarymenu' id='secondarymenu'>
+                <ul>
+                    <li><a href='https://grails.staged.apache.org/casestudies/index.html'>Case Studies</a></li>
+                    <li><a href='https://grails.staged.apache.org/blog/index.html'>Blog</a></li>
+                    <li><a href='https://grails.staged.apache.org/learning.html'>Learning</a></li>
+                    <li><a href='https://grails.staged.apache.org/community.html'>Community</a></li>
+                    <li><a href='https://grails.staged.apache.org/search.html'>Search</a></li>
+                </ul>
+            </nav>
+            <nav class='mainmenu' id='mainmenu'>
+                <ul>
+                    <li><a href='https://grails.staged.apache.org/documentation.html'>Documentation</a></li>
+                    <li><a href='https://grails.staged.apache.org/download.html'>Download</a></li>
+                    <li><a href='https://grails.staged.apache.org/plugins.html'>Plugins</a></li>
+                    <li><a href='https://guides.grails.org/index.html'>Guides</a></li>
+                    <li><a href='https://grails.staged.apache.org/faq.html'>FAQ</a></li>
+                    <li><a href='https://grails.staged.apache.org/support.html'>Support</a></li>
+                    <li><a href='https://start.grails.org'>Forge App</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+<article><div class='headerbar chalicesbg'>
+  <div class='content'>
+    <h1>Guides</h1>
+  </div>
+</div>
+<div class='content'>
+  <div class='twocolumns'>
+    <div class='column'><div><div class='searchbox' style='margin-top: 50px !important;'>
+  <div class='search' style='margin-bottom: 0px !important;'>
+    <input type='text' id='query' placeholder='SEARCH' />
+  </div>
+</div><div class='latestguides'>
+  <h3 class='columnheader'>Latest Guides</h3>
+  <ul>
+    <li>
+      <b>Micronaut @ConfigurationProperties in Grails App</b>
+      <span>Jul 07, 2023 - Grails Apprentice</span>
+      <a href='https://guides.grails.org/grails-configuration-properties-micronaut/guide/index.html'>Read More</a>
+    </li>
+    <li>
+      <b>Grails Database Migration</b>
+      <span>Jun 22, 2023 - Advanced Grails</span>
+      <a href='https://guides.grails.org/grails-database-migration/guide/index.html'>Read More</a>
+    </li>
+    <li>
+      <b>Message Queues with Grails and Micronaut Kafka</b>
+      <span>Oct 14, 2021 - Advanced Grails</span>
+      <a href='https://guides.grails.org/grails-micronaut-kafka/guide/index.html'>Read More</a>
+    </li>
+    <li>
+      <b>Grails on Github Actions</b>
+      <span>Dec 16, 2019 - Grails + DevOps</span>
+      <a href='https://guides.grails.org/grails-on-github-actions/guide/index.html'>Read More</a>
+    </li>
+    <li>
+      <b>Grails with Micronaut HTTP Client</b>
+      <span>Dec 03, 2019 - Grails Apprentice</span>
+      <a href='https://guides.grails.org/grails-micronaut-http/guide/index.html'>Read More</a>
+    </li>
+    <li>
+      <b>Combining the Grails Vue profile client and server projects</b>
+      <span>Nov 05, 2018 - Grails + Vue.js</span>
+      <a href='https://guides.grails.org/grails-vue-combined/guide/index.html'>Read More</a>
+    </li>
+    <li>
+      <b>Deploy to AWS ElasticBeanstalk</b>
+      <span>Oct 29, 2018 - Grails + DevOps</span>
+      <a href='https://guides.grails.org/grails-elasticbeanstalk/guide/index.html'>Read More</a>
+    </li>
+    <li>
+      <b>SpringBoot @ConfigurationProperties in Grails App</b>
+      <span>Oct 11, 2018 - Grails Apprentice</span>
+      <a href='https://guides.grails.org/grails-configuration-properties/guide/index.html'>Read More</a>
+    </li>
+  </ul>
+</div></div></div>
+    <div class='column'><div><div class='tagsbytopic'>
+  <h3 class='columnheader'>Guides by Tag</h3>
+  <ul class='tagcloud'>
+    <li class='tag3'>
+      <a href='https://guides.grails.org/tags/actuator.html'>actuator</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/ai.html'>ai</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/android.html'>android</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/angular.html'>angular</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/angularjs.html'>angularjs</a>
+    </li>
+    <li class='tag3'>
+      <a href='https://guides.grails.org/tags/api-versioning.html'>api-versioning</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/apollo.html'>apollo</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/apple-tv.html'>apple-tv</a>
+    </li>
+    <li class='tag6'>
+      <a href='https://guides.grails.org/tags/async.html'>async</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/authentication.html'>authentication</a>
+    </li>
+    <li class='tag5'>
+      <a href='https://guides.grails.org/tags/aws.html'>aws</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/aws-elasticbeanstlak.html'>aws-elasticbeanstlak</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/backend.html'>backend</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/basicauth.html'>basicauth</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/binding.html'>binding</a>
+    </li>
+    <li class='tag5'>
+      <a href='https://guides.grails.org/tags/chrome.html'>chrome</a>
+    </li>
+    <li class='tag3'>
+      <a href='https://guides.grails.org/tags/ci.html'>ci</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/circleci.html'>circleci</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/client.html'>client</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/cloud-sql.html'>cloud-sql</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/cloud-storage.html'>cloud-storage</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/clover.html'>clover</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/code-coverage.html'>code-coverage</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/codenarc.html'>codenarc</a>
+    </li>
+    <li class='tag4'>
+      <a href='https://guides.grails.org/tags/command-object.html'>command-object</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/commit-info.html'>commit-info</a>
+    </li>
+    <li class='tag5'>
+      <a href='https://guides.grails.org/tags/configuration.html'>configuration</a>
+    </li>
+    <li class='tag4'>
+      <a href='https://guides.grails.org/tags/configuration-properties.html'>configuration-properties</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/conversation.html'>conversation</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/cors.html'>cors</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/cpu.html'>cpu</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/cron.html'>cron</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/data-services.html'>data-services</a>
+    </li>
+    <li class='tag7'>
+      <a href='https://guides.grails.org/tags/database.html'>database</a>
+    </li>
+    <li class='tag3'>
+      <a href='https://guides.grails.org/tags/docker.html'>docker</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/elasticsearch.html'>elasticsearch</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/email.html'>email</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/ersatz.html'>ersatz</a>
+    </li>
+    <li class='tag4'>
+      <a href='https://guides.grails.org/tags/events.html'>events</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/excel.html'>excel</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/execution.html'>execution</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/file-transfer.html'>file-transfer</a>
+    </li>
+    <li class='tag5'>
+      <a href='https://guides.grails.org/tags/firefox.html'>firefox</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/framework.html'>framework</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/frontend.html'>frontend</a>
+    </li>
+    <li class='tag6'>
+      <a href='https://guides.grails.org/tags/functional-test.html'>functional-test</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/garbage-collection.html'>garbage-collection</a>
+    </li>
+    <li class='tag13'>
+      <a href='https://guides.grails.org/tags/geb.html'>geb</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/git.html'>git</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/github.html'>github</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/github-actions.html'>github-actions</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/google.html'>google</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/google-app-engine.html'>google-app-engine</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/google-home.html'>google-home</a>
+    </li>
+    <li class='tag21'>
+      <a href='https://guides.grails.org/tags/gorm.html'>gorm</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/gorm-event.html'>gorm-event</a>
+    </li>
+    <li class='tag7'>
+      <a href='https://guides.grails.org/tags/gradle.html'>gradle</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/grails.html'>grails</a>
+    </li>
+    <li class='tag37'>
+      <a href='https://guides.grails.org/tags/grails3.html'>grails3</a>
+    </li>
+    <li class='tag49'>
+      <a href='https://guides.grails.org/tags/grails4.html'>grails4</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/grails5.html'>grails5</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/grails6.html'>grails6</a>
+    </li>
+    <li class='tag38'>
+      <a href='https://guides.grails.org/tags/grails_3.html'>grails_3</a>
+    </li>
+    <li class='tag40'>
+      <a href='https://guides.grails.org/tags/grails_4.html'>grails_4</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/grails_6.html'>grails_6</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/graph.html'>graph</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/graphql.html'>graphql</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/gsp.html'>gsp</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/hal.html'>hal</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/health.html'>health</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/heap-memory.html'>heap-memory</a>
+    </li>
+    <li class='tag7'>
+      <a href='https://guides.grails.org/tags/hibernate.html'>hibernate</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/html5.html'>html5</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/htmlunit.html'>htmlunit</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/i18n.html'>i18n</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/ide.html'>ide</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/intellij-idea.html'>intellij-idea</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/interceptor.html'>interceptor</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/ios.html'>ios</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/java.html'>java</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/javamelody.html'>javamelody</a>
+    </li>
+    <li class='tag10'>
+      <a href='https://guides.grails.org/tags/javascript.html'>javascript</a>
+    </li>
+    <li class='tag3'>
+      <a href='https://guides.grails.org/tags/job.html'>job</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/jpq-ql.html'>jpq-ql</a>
+    </li>
+    <li class='tag3'>
+      <a href='https://guides.grails.org/tags/json.html'>json</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/json-view.html'>json-view</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/json-views.html'>json-views</a>
+    </li>
+    <li class='tag3'>
+      <a href='https://guides.grails.org/tags/jsonviews.html'>json views</a>
+    </li>
+    <li class='tag4'>
+      <a href='https://guides.grails.org/tags/jwt.html'>jwt</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/kafka.html'>kafka</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/language.html'>language</a>
+    </li>
+    <li class='tag3'>
+      <a href='https://guides.grails.org/tags/liquibase.html'>liquibase</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/locale.html'>locale</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/log.html'>log</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/logging.html'>logging</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/logical-delete.html'>logical-delete</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/logs.html'>logs</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/message-queues.html'>message-queues</a>
+    </li>
+    <li class='tag3'>
+      <a href='https://guides.grails.org/tags/micronaut.html'>micronaut</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/micronaut-http-client.html'>micronaut-http-client</a>
+    </li>
+    <li class='tag3'>
+      <a href='https://guides.grails.org/tags/migration.html'>migration</a>
+    </li>
+    <li class='tag6'>
+      <a href='https://guides.grails.org/tags/mock.html'>mock</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/mongodb.html'>mongodb</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/monitoring.html'>monitoring</a>
+    </li>
+    <li class='tag4'>
+      <a href='https://guides.grails.org/tags/multi-datasource.html'>multi-datasource</a>
+    </li>
+    <li class='tag3'>
+      <a href='https://guides.grails.org/tags/multi-project.html'>multi-project</a>
+    </li>
+    <li class='tag6'>
+      <a href='https://guides.grails.org/tags/multi-tenancy.html'>multi-tenancy</a>
+    </li>
+    <li class='tag3'>
+      <a href='https://guides.grails.org/tags/mysql.html'>mysql</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/neo4j.html'>neo4j</a>
+    </li>
+    <li class='tag4'>
+      <a href='https://guides.grails.org/tags/node.html'>node</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/nosql.html'>nosql</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/oauth.html'>oauth</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/objective-c.html'>objective-c</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/openweather.html'>openweather</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/phantomjs.html'>phantomjs</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/postgresql.html'>postgresql</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/profiling.html'>profiling</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/promise.html'>promise</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/quartz.html'>quartz</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/query.html'>query</a>
+    </li>
+    <li class='tag7'>
+      <a href='https://guides.grails.org/tags/quickcast.html'>quickcast</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/rabbitmq.html'>rabbitmq</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/ratpack.html'>ratpack</a>
+    </li>
+    <li class='tag6'>
+      <a href='https://guides.grails.org/tags/react.html'>react</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/reactive.html'>reactive</a>
+    </li>
+    <li class='tag8'>
+      <a href='https://guides.grails.org/tags/rest.html'>rest</a>
+    </li>
+    <li class='tag15'>
+      <a href='https://guides.grails.org/tags/rest-api.html'>rest-api</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/rxjava.html'>rxjava</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/s3.html'>s3</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/scheduling.html'>scheduling</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/schwatz.html'>schwatz</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/security.html'>security</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/sendgrid.html'>sendgrid</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/ses.html'>ses</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/slf4j.html'>slf4j</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/soap.html'>soap</a>
+    </li>
+    <li class='tag8'>
+      <a href='https://guides.grails.org/tags/spock.html'>spock</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/spock-spring.html'>spock-spring</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/spreadsheet-builder-poi.html'>spreadsheet-builder-poi</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/spring.html'>spring</a>
+    </li>
+    <li class='tag4'>
+      <a href='https://guides.grails.org/tags/spring-boot.html'>spring-boot</a>
+    </li>
+    <li class='tag4'>
+      <a href='https://guides.grails.org/tags/spring-security.html'>spring-security</a>
+    </li>
+    <li class='tag4'>
+      <a href='https://guides.grails.org/tags/spring-security-core.html'>spring-security-core</a>
+    </li>
+    <li class='tag9'>
+      <a href='https://guides.grails.org/tags/spring-security-rest.html'>spring-security-rest</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/springboot.html'>spring boot</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/ssl.html'>ssl</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/static-analysis.html'>static-analysis</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/swift.html'>swift</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/taglib.html'>taglib</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/task.html'>task</a>
+    </li>
+    <li class='tag3'>
+      <a href='https://guides.grails.org/tags/test.html'>test</a>
+    </li>
+    <li class='tag3'>
+      <a href='https://guides.grails.org/tags/testing.html'>testing</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/travis.html'>travis</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/trix-editor.html'>trix-editor</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/tvml.html'>tvml</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/tvmljs.html'>tvmljs</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/tvos.html'>tvos</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/twitter.html'>twitter</a>
+    </li>
+    <li class='tag6'>
+      <a href='https://guides.grails.org/tags/unit-test.html'>unit-test</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/url-mappings.html'>url-mappings</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/vaadin.html'>vaadin</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/validation.html'>validation</a>
+    </li>
+    <li class='tag4'>
+      <a href='https://guides.grails.org/tags/vue.html'>vue</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/vue-profile.html'>vue-profile</a>
+    </li>
+    <li class='tag2'>
+      <a href='https://guides.grails.org/tags/web-profile.html'>web-profile</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/websockets.html'>websockets</a>
+    </li>
+    <li class='tag1'>
+      <a href='https://guides.grails.org/tags/yourkit.html'>yourkit</a>
+    </li>
+  </ul>
+</div></div>
+      <div class='searchresults'></div>
+    </div>
+  </div>
+  <div class='twocolumns'>
+    <div class='column'><div class='guidegroup' style='margin-top: 0;'>
+  <div class='guidegroupheader'>
+    <img src='https://grails.staged.apache.org/images/grailaprrentice.svg' alt='Grails Apprentice' />
+    <a href='https://guides.grails.org/categories/grailsapprentice.html'>
+      <h2>Grails Apprentice</h2>
+    </a>
+  </div>
+  <ul><li>
+  <div class='multiguide'>
+    <span class='title'>Micronaut @ConfigurationProperties in Grails App</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails-configuration-properties-micronaut/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>micronaut</span>
+      <span style='display: none' class='tag'>configuration</span>
+      <span style='display: none' class='tag'>configuration-properties</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails6/grails-configuration-properties-micronaut/guide/index.html'>GRAILS 6</a>
+      <span style='display: none' class='tag'>micronaut</span>
+      <span style='display: none' class='tag'>configuration</span>
+      <span style='display: none' class='tag'>configuration-properties</span>
+      <span style='display: none' class='tag'>grails6</span>
+    </div>
+  </div>
+</li><li>
+  <a class='guide' href='https://guides.grails.org/grails-micronaut-http/guide/index.html'>Grails with Micronaut HTTP Client</a>
+  <span style='display: none' class='tag'>rest</span>
+  <span style='display: none' class='tag'>test</span>
+  <span style='display: none' class='tag'>client</span>
+  <span style='display: none' class='tag'>micronaut</span>
+  <span style='display: none' class='tag'>grails5</span>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>SpringBoot @ConfigurationProperties in Grails App</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/grails-configuration-properties/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>spring-boot</span>
+      <span style='display: none' class='tag'>configuration</span>
+      <span style='display: none' class='tag'>configuration-properties</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails-configuration-properties/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>spring-boot</span>
+      <span style='display: none' class='tag'>configuration</span>
+      <span style='display: none' class='tag'>configuration-properties</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>Download an Excel file in Grails App</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/grails-file-download-excel/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>spreadsheet-builder-poi</span>
+      <span style='display: none' class='tag'>spock</span>
+      <span style='display: none' class='tag'>geb</span>
+      <span style='display: none' class='tag'>excel</span>
+      <span style='display: none' class='tag'>file-transfer</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails-file-download-excel/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>spreadsheet-builder-poi</span>
+      <span style='display: none' class='tag'>spock</span>
+      <span style='display: none' class='tag'>geb</span>
+      <span style='display: none' class='tag'>excel</span>
+      <span style='display: none' class='tag'>file-transfer</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <a class='guide' href='https://guides.grails.org/grails_url_mappings/guide/index.html'>Grails URL Mappings</a>
+  <span style='display: none' class='tag'>url-mappings</span>
+  <span style='display: none' class='tag'>grails4</span>
+</li><li>
+  <a class='quickcast guide' href='https://guides.grails.org/grails-quickcast-logging/guide/index.html'>Grails Logging</a>
+  <span style='display: none' class='tag'>quickcast</span>
+  <span style='display: none' class='tag'>logging</span>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>How to change languages in a Grails app?</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/grails_i18n/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>i18n</span>
+      <span style='display: none' class='tag'>locale</span>
+      <span style='display: none' class='tag'>grails3</span>
+      <span style='display: none' class='tag'>language</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails_i18n/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>i18n</span>
+      <span style='display: none' class='tag'>locale</span>
+      <span style='display: none' class='tag'>grails4</span>
+      <span style='display: none' class='tag'>language</span>
+    </div>
+  </div>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>How to upload a file with Grails 4</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/grails-upload-file/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>command-object</span>
+      <span style='display: none' class='tag'>aws</span>
+      <span style='display: none' class='tag'>s3</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails-upload-file/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>command-object</span>
+      <span style='display: none' class='tag'>aws</span>
+      <span style='display: none' class='tag'>s3</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>Create and test a Grails 5 TagLib; integrate the Trix WYSWYG editor</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/grails-taglib-wyswyg-trix/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>taglib</span>
+      <span style='display: none' class='tag'>trix-editor</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails-taglib-wyswyg-trix/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>taglib</span>
+      <span style='display: none' class='tag'>trix-editor</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>Creating your first Grails Application</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/creating-your-first-grails-app/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>mysql</span>
+      <span style='display: none' class='tag'>gsp</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/creating-your-first-grails-app/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>mysql</span>
+      <span style='display: none' class='tag'>gsp</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>Using Command Objects To Handle Form Data</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/command-objects-and-forms/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>command-object</span>
+      <span style='display: none' class='tag'>binding</span>
+      <span style='display: none' class='tag'>validation</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/command-objects-and-forms/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>command-object</span>
+      <span style='display: none' class='tag'>binding</span>
+      <span style='display: none' class='tag'>validation</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <a class='quickcast guide' href='https://guides.grails.org/grails-quickcasts-developing-grails-3-applications-with-intellij-idea/guide/index.html'>Developing Grails 3 Applications with IntelliJ IDEA</a>
+  <span style='display: none' class='tag'>quickcast</span>
+  <span style='display: none' class='tag'>intellij-idea</span>
+  <span style='display: none' class='tag'>ide</span>
+</li><li>
+  <a class='quickcast guide' href='https://guides.grails.org/grails-quickcasts-json-views/guide/index.html'>JSON Views</a>
+  <span style='display: none' class='tag'>quickcast</span>
+  <span style='display: none' class='tag'>json-view</span>
+</li></ul>
+</div><div class='guidegroup' style='margin-top: 0;'>
+  <div class='guidegroupheader'>
+    <img src='https://grails.staged.apache.org/images/async.svg' alt='Grails Async' />
+    <a href='https://guides.grails.org/categories/grailsasync.html'>
+      <h2>Grails Async</h2>
+    </a>
+  </div>
+  <ul><li>
+  <div class='multiguide'>
+    <span class='title'>Grails Events</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/grails-events/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>async</span>
+      <span style='display: none' class='tag'>events</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails-events/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>async</span>
+      <span style='display: none' class='tag'>events</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>Grails Promises</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/grails-async-promises/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>promise</span>
+      <span style='display: none' class='tag'>async</span>
+      <span style='display: none' class='tag'>rest</span>
+      <span style='display: none' class='tag'>openweather</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails-async-promises/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>promise</span>
+      <span style='display: none' class='tag'>async</span>
+      <span style='display: none' class='tag'>rest</span>
+      <span style='display: none' class='tag'>openweather</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>Sending Server Sent Events with Grails </span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/server-sent-events/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>rxjava</span>
+      <span style='display: none' class='tag'>reactive</span>
+      <span style='display: none' class='tag'>html5</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/server-sent-events/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>rxjava</span>
+      <span style='display: none' class='tag'>reactive</span>
+      <span style='display: none' class='tag'>html5</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li></ul>
+</div></div>
+    <div class='column'><div class='guidegroup' style='margin-top: 0;'>
+  <div class='guidegroupheader'>
+    <img src='https://grails.staged.apache.org/images/advancedgrails.svg' alt='Advanced Grails' />
+    <a href='https://guides.grails.org/categories/advancedgrails.html'>
+      <h2>Advanced Grails</h2>
+    </a>
+  </div>
+  <ul><li>
+  <div class='multiguide'>
+    <span class='title'>Grails Database Migration</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails-database-migration/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>liquibase</span>
+      <span style='display: none' class='tag'>database</span>
+      <span style='display: none' class='tag'>gorm</span>
+      <span style='display: none' class='tag'>migration</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/grails-database-migration/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>liquibase</span>
+      <span style='display: none' class='tag'>database</span>
+      <span style='display: none' class='tag'>gorm</span>
+      <span style='display: none' class='tag'>migration</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails6/grails-database-migration/guide/index.html'>GRAILS 6</a>
+      <span style='display: none' class='tag'>liquibase</span>
+      <span style='display: none' class='tag'>database</span>
+      <span style='display: none' class='tag'>gorm</span>
+      <span style='display: none' class='tag'>migration</span>
+      <span style='display: none' class='tag'>grails6</span>
+    </div>
+  </div>
+</li><li>
+  <a class='guide' href='https://guides.grails.org/grails-micronaut-kafka/guide/index.html'>Message Queues with Grails and Micronaut Kafka</a>
+  <span style='display: none' class='tag'>kafka</span>
+  <span style='display: none' class='tag'>message-queues</span>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>Grails Basic Auth</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/grails-basicauth/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>spring-security</span>
+      <span style='display: none' class='tag'>basicauth</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails-basicauth/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>spring-security</span>
+      <span style='display: none' class='tag'>basicauth</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <a class='guide' href='https://guides.grails.org/grails-oauth-twitter/guide/index.html'>Twitter OAuth with Grails 3 and Spring Security REST</a>
+  <span style='display: none' class='tag'>spring-security-rest</span>
+  <span style='display: none' class='tag'>oauth</span>
+  <span style='display: none' class='tag'>twitter</span>
+</li><li>
+  <a class='guide' href='https://guides.grails.org/grails-rabbitmq/guide/index.html'>Message Queues with Grails 3 and RabbitMQ</a>
+  <span style='display: none' class='tag'>rabbitMQ</span>
+  <span style='display: none' class='tag'>message-queues</span>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>Grails + @Scheduled</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/grails-scheduled/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>spring</span>
+      <span style='display: none' class='tag'>spring-boot</span>
+      <span style='display: none' class='tag'>task</span>
+      <span style='display: none' class='tag'>execution</span>
+      <span style='display: none' class='tag'>scheduling</span>
+      <span style='display: none' class='tag'>job</span>
+      <span style='display: none' class='tag'>cron</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails-scheduled/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>spring</span>
+      <span style='display: none' class='tag'>spring-boot</span>
+      <span style='display: none' class='tag'>task</span>
+      <span style='display: none' class='tag'>execution</span>
+      <span style='display: none' class='tag'>scheduling</span>
+      <span style='display: none' class='tag'>job</span>
+      <span style='display: none' class='tag'>cron</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <a class='guide' href='https://guides.grails.org/grails-elasticsearch/guide/index.html'>Grails ElasticSearch</a>
+  <span style='display: none' class='tag'>elasticsearch</span>
+  <span style='display: none' class='tag'>rest-api</span>
+</li><li>
+  <a class='guide' href='https://guides.grails.org/grails-schwartz/guide/index.html'>Schedule periodic tasks inside your Grails applications</a>
+  <span style='display: none' class='tag'>quartz</span>
+  <span style='display: none' class='tag'>job</span>
+  <span style='display: none' class='tag'>schwatz</span>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>Grails as a Docker Container</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/grails-as-docker-container/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>docker</span>
+      <span style='display: none' class='tag'>gradle</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails-as-docker-container/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>docker</span>
+      <span style='display: none' class='tag'>gradle</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <a class='guide' href='https://guides.grails.org/grails-docker-external-services/guide/index.html'>Use docker to provide external services to your Grails app</a>
+  <span style='display: none' class='tag'>docker</span>
+  <span style='display: none' class='tag'>postgresql</span>
+  <span style='display: none' class='tag'>gradle</span>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>Grails Multi-datasource</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/grails-multi-datasource/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>multi-datasource</span>
+      <span style='display: none' class='tag'>json-views</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails-multi-datasource/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>multi-datasource</span>
+      <span style='display: none' class='tag'>json-views</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>Grails &amp; SOAP</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/grails-soap/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>soap</span>
+      <span style='display: none' class='tag'>geb</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails-soap/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>soap</span>
+      <span style='display: none' class='tag'>geb</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>Configure Datasources dynamically while using DATABASE Multi-tenancy</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/grails-dynamic-multiple-datasources/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>spring-security-rest</span>
+      <span style='display: none' class='tag'>jwt</span>
+      <span style='display: none' class='tag'>multi-tenancy</span>
+      <span style='display: none' class='tag'>rest-api</span>
+      <span style='display: none' class='tag'>multi-datasource</span>
+      <span style='display: none' class='tag'>gorm-event</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails-dynamic-multiple-datasources/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>spring-security-rest</span>
+      <span style='display: none' class='tag'>jwt</span>
+      <span style='display: none' class='tag'>multi-tenancy</span>
+      <span style='display: none' class='tag'>rest-api</span>
+      <span style='display: none' class='tag'>multi-datasource</span>
+      <span style='display: none' class='tag'>gorm-event</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>Custom Tenant Resolver by Current Logged in User</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/grails-custom-security-tenant-resolver/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>spring-security</span>
+      <span style='display: none' class='tag'>spring-security-rest</span>
+      <span style='display: none' class='tag'>jwt</span>
+      <span style='display: none' class='tag'>multi-tenancy</span>
+      <span style='display: none' class='tag'>rest-api</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails-custom-security-tenant-resolver/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>spring-security</span>
+      <span style='display: none' class='tag'>spring-security-rest</span>
+      <span style='display: none' class='tag'>jwt</span>
+      <span style='display: none' class='tag'>multi-tenancy</span>
+      <span style='display: none' class='tag'>rest-api</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <a class='guide' href='https://guides.grails.org/grails-multi-project-build/guide/index.html'>Grails Multi-Project Build</a>
+  <span style='display: none' class='tag'>gradle</span>
+  <span style='display: none' class='tag'>multi-project</span>
+  <span style='display: none' class='tag'>grails4</span>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>Using HAL with JSON Views</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/using-hal-with-json-views/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>hal</span>
+      <span style='display: none' class='tag'>rest</span>
+      <span style='display: none' class='tag'>json views</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/using-hal-with-json-views/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>hal</span>
+      <span style='display: none' class='tag'>rest</span>
+      <span style='display: none' class='tag'>json views</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>Grails Spring Security Core Plugin Custom Authentication</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/grails-spring-security-core-plugin-custom-authentication/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>spring-security-core</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails-spring-security-core-plugin-custom-authentication/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>spring-security-core</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>Build a TVML App with Grails</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/grails-tvmlapp/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>tvml</span>
+      <span style='display: none' class='tag'>apple-tv</span>
+      <span style='display: none' class='tag'>tvmljs</span>
+      <span style='display: none' class='tag'>tvos</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails-tvmlapp/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>tvml</span>
+      <span style='display: none' class='tag'>apple-tv</span>
+      <span style='display: none' class='tag'>tvmljs</span>
+      <span style='display: none' class='tag'>tvos</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <a class='quickcast guide' href='https://guides.grails.org/grails-quickcasts-retrieving-config-values/guide/index.html'>Retrieving Config Values</a>
+  <span style='display: none' class='tag'>quickcast</span>
+  <span style='display: none' class='tag'>configuration</span>
+</li><li>
+  <a class='quickcast guide' href='https://guides.grails.org/grails-quickcasts-multi-project-builds/guide/index.html'>Grails Multi Project Builds</a>
+  <span style='display: none' class='tag'>quickcast</span>
+  <span style='display: none' class='tag'>gradle</span>
+</li><li>
+  <a class='quickcast guide' href='https://guides.grails.org/grails-quickcasts-interceptors/guide/index.html'>Grails Interceptors</a>
+  <span style='display: none' class='tag'>quickcast</span>
+  <span style='display: none' class='tag'>interceptor</span>
+</li></ul>
+</div></div>
+  </div>
+  <div class='twocolumns'>
+    <div class='column'><div class='guidegroup' style='margin-top: 0;'>
+  <div class='guidegroupheader'>
+    <img src='https://grails.staged.apache.org/images/gorm.svg' alt='GORM' />
+    <a href='https://guides.grails.org/categories/gorm.html'>
+      <h2>GORM</h2>
+    </a>
+  </div>
+  <ul><li>
+  <div class='multiguide'>
+    <span class='title'>Grails GORM Data Services</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/grails-gorm-data-services/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>gorm</span>
+      <span style='display: none' class='tag'>database</span>
+      <span style='display: none' class='tag'>jpq-ql</span>
+      <span style='display: none' class='tag'>data-services</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails-gorm-data-services/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>gorm</span>
+      <span style='display: none' class='tag'>database</span>
+      <span style='display: none' class='tag'>jpq-ql</span>
+      <span style='display: none' class='tag'>data-services</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>GORM Logical delete</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/grails-logicaldelete/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>logical-delete</span>
+      <span style='display: none' class='tag'>gorm</span>
+      <span style='display: none' class='tag'>geb</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails-logicaldelete/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>logical-delete</span>
+      <span style='display: none' class='tag'>gorm</span>
+      <span style='display: none' class='tag'>geb</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>GORM Event Listeners</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/gorm-event-listeners/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>gorm</span>
+      <span style='display: none' class='tag'>async</span>
+      <span style='display: none' class='tag'>events</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/gorm-event-listeners/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>gorm</span>
+      <span style='display: none' class='tag'>async</span>
+      <span style='display: none' class='tag'>events</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>Querying the Database using GORM Dynamic Finders</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/querying-gorm-dynamic-finders/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>gorm</span>
+      <span style='display: none' class='tag'>query</span>
+      <span style='display: none' class='tag'>database</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/querying-gorm-dynamic-finders/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>gorm</span>
+      <span style='display: none' class='tag'>query</span>
+      <span style='display: none' class='tag'>database</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>Build a Ratpack application which uses GORM</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/gorm-ratpack/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>ratpack</span>
+      <span style='display: none' class='tag'>gorm</span>
+      <span style='display: none' class='tag'>hibernate</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/gorm-ratpack/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>ratpack</span>
+      <span style='display: none' class='tag'>gorm</span>
+      <span style='display: none' class='tag'>hibernate</span>
+    </div>
+  </div>
+</li><li>
+  <a class='guide' href='https://guides.grails.org/gorm-without-grails/guide/index.html'>Build a Spring Boot application with GORM</a>
+  <span style='display: none' class='tag'>spring boot</span>
+  <span style='display: none' class='tag'>backend</span>
+  <span style='display: none' class='tag'>GORM</span>
+  <span style='display: none' class='tag'>hibernate</span>
+</li><li>
+  <a class='guide' href='https://guides.grails.org/discriminator-per-tenant/guide/index.html'>Single Database Multi-Tenancy - Discriminator Column</a>
+  <span style='display: none' class='tag'>multi-tenancy</span>
+  <span style='display: none' class='tag'>hibernate</span>
+  <span style='display: none' class='tag'>gorm</span>
+  <span style='display: none' class='tag'>grails4</span>
+</li><li>
+  <a class='guide' href='https://guides.grails.org/database-per-tenant/guide/index.html'>Database per Tenant Multi-Tenancy</a>
+  <span style='display: none' class='tag'>multi-tenancy</span>
+  <span style='display: none' class='tag'>hibernate</span>
+  <span style='display: none' class='tag'>gorm</span>
+</li><li>
+  <a class='guide' href='https://guides.grails.org/neo4j-movies/guide/index.html'>Building a Graph application with Grails and Neo4j</a>
+  <span style='display: none' class='tag'>neo4j</span>
+  <span style='display: none' class='tag'>nosql</span>
+  <span style='display: none' class='tag'>graph</span>
+  <span style='display: none' class='tag'>gorm</span>
+</li><li>
+  <a class='guide' href='https://guides.grails.org/rest-mongodb/guide/index.html'>Building a REST application with MongoDB</a>
+  <span style='display: none' class='tag'>mongodb</span>
+  <span style='display: none' class='tag'>rest-api</span>
+  <span style='display: none' class='tag'>json</span>
+  <span style='display: none' class='tag'>gorm</span>
+  <span style='display: none' class='tag'>grails4</span>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>Building a REST application with GORM and Hibernate 5</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/rest-hibernate/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>hibernate</span>
+      <span style='display: none' class='tag'>rest-api</span>
+      <span style='display: none' class='tag'>json</span>
+      <span style='display: none' class='tag'>gorm</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/rest-hibernate/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>hibernate</span>
+      <span style='display: none' class='tag'>rest-api</span>
+      <span style='display: none' class='tag'>json</span>
+      <span style='display: none' class='tag'>gorm</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li></ul>
+</div></div>
+    <div class='column'><div class='guidegroup' style='margin-top: 0;'>
+  <div class='guidegroupheader'>
+    <img src='https://grails.staged.apache.org/images/testing.svg' alt='Grails Testing' />
+    <a href='https://guides.grails.org/categories/grailstesting.html'>
+      <h2>Grails Testing</h2>
+    </a>
+  </div>
+  <ul><li>
+  <div class='multiguide'>
+    <span class='title'>Grails Mock Logging with Slf4j Test</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/grails-mock-logging-slf4j-test/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>spock</span>
+      <span style='display: none' class='tag'>slf4j</span>
+      <span style='display: none' class='tag'>mock</span>
+      <span style='display: none' class='tag'>log</span>
+      <span style='display: none' class='tag'>test</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails-mock-logging-slf4j-test/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>spock</span>
+      <span style='display: none' class='tag'>slf4j</span>
+      <span style='display: none' class='tag'>mock</span>
+      <span style='display: none' class='tag'>log</span>
+      <span style='display: none' class='tag'>test</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>Send Email and Spock Spring</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/grails-email/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>spock-spring</span>
+      <span style='display: none' class='tag'>email</span>
+      <span style='display: none' class='tag'>sendgrid</span>
+      <span style='display: none' class='tag'>aws</span>
+      <span style='display: none' class='tag'>ses</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails-email/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>spock-spring</span>
+      <span style='display: none' class='tag'>email</span>
+      <span style='display: none' class='tag'>sendgrid</span>
+      <span style='display: none' class='tag'>aws</span>
+      <span style='display: none' class='tag'>ses</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>Consume and test a third-party REST API</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/grails-mock-http-server/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>ersatz</span>
+      <span style='display: none' class='tag'>mock</span>
+      <span style='display: none' class='tag'>rest</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails-mock-http-server/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>ersatz</span>
+      <span style='display: none' class='tag'>mock</span>
+      <span style='display: none' class='tag'>rest</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>Grails Code Coverage</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/grails-code-coverage/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>clover</span>
+      <span style='display: none' class='tag'>code-coverage</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails-code-coverage/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>clover</span>
+      <span style='display: none' class='tag'>code-coverage</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>Grails Controller Testing</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/grails-controller-testing/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>unit-test</span>
+      <span style='display: none' class='tag'>functional-test</span>
+      <span style='display: none' class='tag'>spock</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails-controller-testing/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>unit-test</span>
+      <span style='display: none' class='tag'>functional-test</span>
+      <span style='display: none' class='tag'>spock</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <a class='guide' href='https://guides.grails.org/grails-codenarc/guide/index.html'>Static code analysis in a Grails app with CodeNarc</a>
+  <span style='display: none' class='tag'>codenarc</span>
+  <span style='display: none' class='tag'>static-analysis</span>
+  <span style='display: none' class='tag'>grails4</span>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>Grails Service Testing</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/grails-mock-basics/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>unit-test</span>
+      <span style='display: none' class='tag'>mock</span>
+      <span style='display: none' class='tag'>spock</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails-mock-basics/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>unit-test</span>
+      <span style='display: none' class='tag'>mock</span>
+      <span style='display: none' class='tag'>spock</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>How to test Domain class constraints?</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/grails-test-domain-class-constraints/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>unit-test</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails-test-domain-class-constraints/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>unit-test</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>Run Grails Geb Functional Tests with multiple Browsers</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/grails-geb-multiple-browsers/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>functional-test</span>
+      <span style='display: none' class='tag'>geb</span>
+      <span style='display: none' class='tag'>firefox</span>
+      <span style='display: none' class='tag'>chrome</span>
+      <span style='display: none' class='tag'>phantomjs</span>
+      <span style='display: none' class='tag'>htmlunit</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails-geb-multiple-browsers/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>functional-test</span>
+      <span style='display: none' class='tag'>geb</span>
+      <span style='display: none' class='tag'>firefox</span>
+      <span style='display: none' class='tag'>chrome</span>
+      <span style='display: none' class='tag'>phantomjs</span>
+      <span style='display: none' class='tag'>htmlunit</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>Testing a Secured Grails Application</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/grails-test-security/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>spring-security-rest</span>
+      <span style='display: none' class='tag'>rest-api</span>
+      <span style='display: none' class='tag'>functional-test</span>
+      <span style='display: none' class='tag'>geb</span>
+      <span style='display: none' class='tag'>spring-security-core</span>
+      <span style='display: none' class='tag'>micronaut-http-client</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails-test-security/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>spring-security-rest</span>
+      <span style='display: none' class='tag'>rest-api</span>
+      <span style='display: none' class='tag'>functional-test</span>
+      <span style='display: none' class='tag'>geb</span>
+      <span style='display: none' class='tag'>spring-security-core</span>
+      <span style='display: none' class='tag'>micronaut-http-client</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li></ul>
+</div></div>
+  </div>
+  <div class='twocolumns'>
+    <div class='column'><div class='guidegroup' style='margin-top: 0;'>
+  <div class='guidegroupheader'>
+    <img src='https://grails.staged.apache.org/images/grailsdevops.svg' alt='Grails + DevOps' />
+    <a href='https://guides.grails.org/categories/grailsdevops.html'>
+      <h2>Grails + DevOps</h2>
+    </a>
+  </div>
+  <ul><li>
+  <a class='guide' href='https://guides.grails.org/grails-on-github-actions/guide/index.html'>Grails on Github Actions</a>
+  <span style='display: none' class='tag'>github</span>
+  <span style='display: none' class='tag'>github-actions</span>
+  <span style='display: none' class='tag'>ci</span>
+  <span style='display: none' class='tag'>testing</span>
+  <span style='display: none' class='tag'>chrome</span>
+  <span style='display: none' class='tag'>firefox</span>
+  <span style='display: none' class='tag'>geb</span>
+  <span style='display: none' class='tag'>grails4</span>
+</li><li>
+  <a class='guide' href='https://guides.grails.org/grails-elasticbeanstalk/guide/index.html'>Deploy to AWS ElasticBeanstalk</a>
+  <span style='display: none' class='tag'>actuator</span>
+  <span style='display: none' class='tag'>health</span>
+  <span style='display: none' class='tag'>aws</span>
+  <span style='display: none' class='tag'>aws-elasticbeanstlak</span>
+</li><li>
+  <a class='guide' href='https://guides.grails.org/grails-on-circleci-basics/guide/index.html'>Grails on Circle CI Basics</a>
+  <span style='display: none' class='tag'>circleci</span>
+  <span style='display: none' class='tag'>ci</span>
+  <span style='display: none' class='tag'>testing</span>
+  <span style='display: none' class='tag'>chrome</span>
+  <span style='display: none' class='tag'>firefox</span>
+  <span style='display: none' class='tag'>geb</span>
+  <span style='display: none' class='tag'>grails4</span>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>Grails on Travis Basics</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/grails-on-travis-basics/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>travis</span>
+      <span style='display: none' class='tag'>ci</span>
+      <span style='display: none' class='tag'>testing</span>
+      <span style='display: none' class='tag'>chrome</span>
+      <span style='display: none' class='tag'>firefox</span>
+      <span style='display: none' class='tag'>geb</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li><li>
+  <a class='guide' href='https://guides.grails.org/grails-yourkit-profiling/guide/index.html'>Grails YourKit Profiling</a>
+  <span style='display: none' class='tag'>yourkit</span>
+  <span style='display: none' class='tag'>profiling</span>
+  <span style='display: none' class='tag'>heap-memory</span>
+  <span style='display: none' class='tag'>garbage-collection</span>
+  <span style='display: none' class='tag'>cpu</span>
+  <span style='display: none' class='tag'>web-profile</span>
+  <span style='display: none' class='tag'>grails4</span>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>Adding Commit Info to your Grails Application</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/adding-commit-info/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>git</span>
+      <span style='display: none' class='tag'>actuator</span>
+      <span style='display: none' class='tag'>commit-info</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/adding-commit-info/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>git</span>
+      <span style='display: none' class='tag'>actuator</span>
+      <span style='display: none' class='tag'>commit-info</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li></ul>
+</div><div class='guidegroup' style=''>
+  <div class='guidegroupheader'>
+    <img src='https://grails.staged.apache.org/images/googlecloud.svg' alt='Grails + Google Cloud' />
+    <a href='https://guides.grails.org/categories/grailsgooglecloud.html'>
+      <h2>Grails + Google Cloud</h2>
+    </a>
+  </div>
+  <ul><li>
+  <a class='guide' href='https://guides.grails.org/grails-oauth-google/guide/index.html'>Google OAuth2 with Grails 3 and Spring Security REST</a>
+  <span style='display: none' class='tag'>spring-security-rest</span>
+  <span style='display: none' class='tag'>google</span>
+  <span style='display: none' class='tag'>oauth</span>
+</li><li>
+  <a class='guide' href='https://guides.grails.org/grails-google-home/guide/index.html'>Google Home Guide</a>
+  <span style='display: none' class='tag'>conversation</span>
+  <span style='display: none' class='tag'>ai</span>
+  <span style='display: none' class='tag'>google-home</span>
+  <span style='display: none' class='tag'>google-app-engine</span>
+  <span style='display: none' class='tag'>web-profile</span>
+</li><li>
+  <a class='guide' href='https://guides.grails.org/grails-google-cloud/guide/index.html'>Deploy a Grails app to Google Cloud</a>
+  <span style='display: none' class='tag'>mysql</span>
+  <span style='display: none' class='tag'>cloud-sql</span>
+  <span style='display: none' class='tag'>cloud-storage</span>
+  <span style='display: none' class='tag'>google-app-engine</span>
+  <span style='display: none' class='tag'>logs</span>
+</li></ul>
+</div><div class='guidegroup' style=''>
+  <div class='guidegroupheader'>
+    <img src='https://grails.staged.apache.org/images/ios.svg' alt='Grails + iOS' />
+    <a href='https://guides.grails.org/categories/grailsios.html'>
+      <h2>Grails + iOS</h2>
+    </a>
+  </div>
+  <ul><li>
+  <a class='guide' href='https://guides.grails.org/building-an-ios-objectc-client-powered-by-a-grails-backend/guide/index.html'>Building a Objective-C iOS Client powered by a Grails backend</a>
+  <span style='display: none' class='tag'>objective-c</span>
+  <span style='display: none' class='tag'>ios</span>
+  <span style='display: none' class='tag'>api-versioning</span>
+  <span style='display: none' class='tag'>rest-api</span>
+</li><li>
+  <a class='guide' href='https://guides.grails.org/building-an-ios-swift-client-powered-by-a-grails-backend/guide/index.html'>Building a Swift iOS Client powered by a Grails backend</a>
+  <span style='display: none' class='tag'>swift</span>
+  <span style='display: none' class='tag'>ios</span>
+  <span style='display: none' class='tag'>api-versioning</span>
+  <span style='display: none' class='tag'>rest-api</span>
+</li></ul>
+</div><div class='guidegroup' style=''>
+  <div class='guidegroupheader'>
+    <img src='https://grails.staged.apache.org/images/grails_android.svg' alt='Grails + Android' />
+    <a href='https://guides.grails.org/categories/grailsandroid.html'>
+      <h2>Grails + Android</h2>
+    </a>
+  </div>
+  <ul><li>
+  <a class='guide' href='https://guides.grails.org/building-an-android-client-powered-by-a-grails-backend/guide/index.html'>Building an Android client powered by a Grails backend</a>
+  <span style='display: none' class='tag'>android</span>
+  <span style='display: none' class='tag'>java</span>
+  <span style='display: none' class='tag'>rest-api</span>
+  <span style='display: none' class='tag'>api-versioning</span>
+  <span style='display: none' class='tag'>grails4</span>
+</li></ul>
+</div><div class='guidegroup' style=''>
+  <div class='guidegroupheader'>
+    <img src='https://grails.staged.apache.org/images/ria.svg' alt='Grails + RIA (Rich Internet Application)' />
+    <a href='https://guides.grails.org/categories/grailsriarichinternetapplication.html'>
+      <h2>Grails + RIA (Rich Internet Application)</h2>
+    </a>
+  </div>
+  <ul><li>
+  <a class='guide' href='https://guides.grails.org/vaadin-grails/guide/index.html'>Build a Grails 3 application with the Vaadin 8 Framework</a>
+  <span style='display: none' class='tag'>vaadin</span>
+  <span style='display: none' class='tag'>frontend</span>
+  <span style='display: none' class='tag'>framework</span>
+</li></ul>
+</div></div>
+    <div class='column'><div class='guidegroup' style='margin-top: 0;'>
+  <div class='guidegroupheader'>
+    <img src='https://grails.staged.apache.org/images/vue.svg' alt='Grails + Vue.js' />
+    <a href='https://guides.grails.org/categories/grailsvue.js.html'>
+      <h2>Grails + Vue.js</h2>
+    </a>
+  </div>
+  <ul><li>
+  <a class='guide' href='https://guides.grails.org/grails-vue-combined/guide/index.html'>Combining the Grails Vue profile client and server projects</a>
+  <span style='display: none' class='tag'>vue</span>
+  <span style='display: none' class='tag'>javascript</span>
+  <span style='display: none' class='tag'>gradle</span>
+  <span style='display: none' class='tag'>multi-project</span>
+</li><li>
+  <a class='guide' href='https://guides.grails.org/building-a-vue-app/guide/index.html'>Building a Vue.js app with Grails</a>
+  <span style='display: none' class='tag'>vue</span>
+  <span style='display: none' class='tag'>grails</span>
+  <span style='display: none' class='tag'>javascript</span>
+  <span style='display: none' class='tag'>rest-api</span>
+</li><li>
+  <div class='multiguide'>
+    <span class='title'>Using the Vue.js Grails Profile</span>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails3/using-the-vue-profile/guide/index.html'>GRAILS 3</a>
+      <span style='display: none' class='tag'>vue</span>
+      <span style='display: none' class='tag'>node</span>
+      <span style='display: none' class='tag'>javascript</span>
+      <span style='display: none' class='tag'>vue-profile</span>
+      <span style='display: none' class='tag'>grails3</span>
+    </div>
+    <div class='align-left'>
+      <a class='grailsVersion' href='https://guides.grails.org/grails4/using-the-vue-profile/guide/index.html'>GRAILS 4</a>
+      <span style='display: none' class='tag'>vue</span>
+      <span style='display: none' class='tag'>node</span>
+      <span style='display: none' class='tag'>javascript</span>
+      <span style='display: none' class='tag'>vue-profile</span>
+      <span style='display: none' class='tag'>grails4</span>
+    </div>
+  </div>
+</li></ul>
+</div><div class='guidegroup' style='margin-top: 0;'>
+  <div class='guidegroupheader'>
+    <img src='https://grails.staged.apache.org/images/grailsangular.svg' alt='Grails + Angular' />
+    <a href='https://guides.grails.org/categories/grailsangular.html'>
+      <h2>Grails + Angular</h2>
+    </a>
+  </div>
+  <ul><li>
+  <a class='guide' href='https://guides.grails.org/angular2-combined/guide/index.html'>Combining the Angular Profile Projects</a>
+  <span style='display: none' class='tag'>angular</span>
+  <span style='display: none' class='tag'>javascript</span>
+</li></ul>
+</div><div class='guidegroup' style=''>
+  <div class='guidegroupheader'>
+    <img src='https://grails.staged.apache.org/images/grailsangular.svg' alt='Grails + AngularJS' />
+    <a href='https://guides.grails.org/categories/grailsangularjs.html'>
+      <h2>Grails + AngularJS</h2>
+    </a>
+  </div>
+  <ul><li>
+  <a class='guide' href='https://guides.grails.org/grails-restapi-angularjs/guide/index.html'>Building a REST API with Grails and AngularJS 1.x</a>
+  <span style='display: none' class='tag'>cors</span>
+  <span style='display: none' class='tag'>angularjs</span>
+</li><li>
+  <a class='quickcast guide' href='https://guides.grails.org/grails-quickcasts-angularjs-scaffolding-with-grails-3/guide/index.html'>AngularJS Scaffolding with Grails 3</a>
+  <span style='display: none' class='tag'>quickcast</span>
+  <span style='display: none' class='tag'>angularjs</span>
+</li></ul>
+</div><div class='guidegroup' style=''>
+  <div class='guidegroupheader'>
+    <img src='https://grails.staged.apache.org/images/react.svg' alt='Grails + React' />
+    <a href='https://guides.grails.org/categories/grailsreact.html'>
+      <h2>Grails + React</h2>
+    </a>
+  </div>
+  <ul><li>
+  <a class='guide' href='https://guides.grails.org/react-spring-security/guide/index.html'>Creating a React app with Spring Security</a>
+  <span style='display: none' class='tag'>react</span>
+  <span style='display: none' class='tag'>grails</span>
+  <span style='display: none' class='tag'>javascript</span>
+  <span style='display: none' class='tag'>security</span>
+  <span style='display: none' class='tag'>spring-security-rest</span>
+  <span style='display: none' class='tag'>rest-api</span>
+</li><li>
+  <a class='guide' href='https://guides.grails.org/gorm-graphql-with-react-and-apollo/guide/index.html'>Building a GORM/GraphQL App with React and Apollo</a>
+  <span style='display: none' class='tag'>react</span>
+  <span style='display: none' class='tag'>graphql</span>
+  <span style='display: none' class='tag'>gorm</span>
+  <span style='display: none' class='tag'>javascript</span>
+  <span style='display: none' class='tag'>apollo</span>
+</li><li>
+  <a class='guide' href='https://guides.grails.org/grails-vs-nodejs/guide/index.html'>Replacing a Node/Express API with Grails</a>
+  <span style='display: none' class='tag'>react</span>
+  <span style='display: none' class='tag'>rest</span>
+  <span style='display: none' class='tag'>authentication</span>
+  <span style='display: none' class='tag'>security</span>
+  <span style='display: none' class='tag'>ssl</span>
+  <span style='display: none' class='tag'>websockets</span>
+</li><li>
+  <a class='guide' href='https://guides.grails.org/react-combined/guide/index.html'>Combining the React profile projects</a>
+  <span style='display: none' class='tag'>react</span>
+  <span style='display: none' class='tag'>javascript</span>
+  <span style='display: none' class='tag'>gradle</span>
+  <span style='display: none' class='tag'>multi-project</span>
+</li><li>
+  <a class='guide' href='https://guides.grails.org/building-a-react-app/guide/index.html'>Building a React App</a>
+  <span style='display: none' class='tag'>react</span>
+  <span style='display: none' class='tag'>node</span>
+  <span style='display: none' class='tag'>javascript</span>
+  <span style='display: none' class='tag'>json views</span>
+</li><li>
+  <a class='guide' href='https://guides.grails.org/using-the-react-profile/guide/index.html'>Using the React Profile</a>
+  <span style='display: none' class='tag'>react</span>
+  <span style='display: none' class='tag'>node</span>
+  <span style='display: none' class='tag'>javascript</span>
+  <span style='display: none' class='tag'>grails4</span>
+</li></ul>
+</div><div class='guidesuggestion'>
+  <h3 class='columnheader'>Which topic would you like us to cover?</h3><!--[if lte IE 8]>
+<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2-legacy.js"></script>
+<![endif]-->
+<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2.js"></script>
+<script>
+  hbspt.forms.create({
+	portalId: "4547412",
+	formId: "1cf35f89-c3ab-48c4-81e0-e1ec79cceda7"
+});
+</script>
+
+</div></div>
+  </div>
+</div>&nbsp;</article>
+<footer>
+    <div class='content'>
+        <div class='apache-grails'>            
+            <p>Apache Grails (incubating) is an effort undergoing incubation at The Apache Software Foundation (ASF), sponsored by the <a href="http://groovy.apache.org" target="_blank">Apache
+                Groovy</a> project. Incubation is required of all newly accepted projects until a further review indicates that the infrastructure, communications, and decision making process have stabilized in a manner consistent with other successful ASF projects. While incubation status is not necessarily a reflection of the completeness or stability of the code, it does indicate that the project has yet to be fully endorsed by the ASF.</p>
+            <a href='https://apache.org'><img class='' src='https://www.apache.org/img/asf_logo.png' width='300px'
+                                              alt='Apache Software Foundation'/></a>
+            <p>The Apache Software Foundation</p>
+            <p>Apache, Apache Grails, Grails, Groovy, and the ASF logo are either registered trademarks or trademarks
+                of The Apache Software Foundation.
+            </p>
+
+        </div>
+        <nav class='socialmedianav'>
+            <ul>
+                <li>
+                    <a href='mailto:dev@grails.apache.org'><img class='' src='https://grails.staged.apache.org/images/email.svg' alt='Email Icon'/></a>
+                </li>
+                <li>
+                    <a href='https://slack.grails.org'><img class='' src='https://grails.staged.apache.org/images/slack.svg'
+                                                            alt='Slack Icon'/></a>
+                </li>
+                <li>
+                    <a href='https://www.youtube.com/@GrailsFramework'><img class='' src='https://grails.staged.apache.org/images/youtube.svg'
+                                                                             alt='Youtube Icon'/></a>
+                </li>
+                <li>
+                    <a href='https://www.linkedin.com/showcase/official-grails/'><img class=''
+                                                                                      src='https://grails.staged.apache.org/images/linkedin.svg'
+                                                                                      alt='LinkedIn Icon'/></a>
+                </li>
+                <li>
+                    <a href='https://github.com/apache/grails-core'><img class='' src='https://grails.staged.apache.org/images/github.svg'
+                                                              alt='Github Icon'/></a>
+                </li>
+                <li style="margin-bottom:10px;">
+                    <a href='https://twitter.com/grailsframework'><img class='' src='https://grails.staged.apache.org/images/x-twitter.svg'
+                                                                       alt='Twitter Icon'/></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="content">
+        <nav class='footer' style="margin-bottom: 10px">
+                <p>© 2005-2025 the Apache Grails project — Grails is Open Source: 
+                    <a href='https://www.apache.org/licenses/'>License</a>,
+                    <a href='https://privacy.apache.org/policies/privacy-policy-public.html'>Privacy Policy</a>,
+                    <a href='https://www.apache.org/foundation/sponsorship'>Sponsor Apache</a>,
+                    <a href='https://www.apache.org/events/current-event'>Events</a>,
+                    <a href='https://www.apache.org/security'>Security</a>,
+                    <a href='https://www.apache.org/foundation/thanks.html'>Thanks</a>
+                </p>
+        </nav>
+    </div>
+</footer>
+<div>
+
+</div>
+</body>
+</html>
