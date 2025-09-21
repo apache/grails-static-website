@@ -207,6 +207,7 @@ class GrailsWebsitePlugin implements Plugin<Project> {
             task.dependsOn(TASK_GEN_DOWNLOADS)
             task.dependsOn(TASK_GEN_PROFILES)
             task.dependsOn(TASK_GEN_FAQ)
+            task.dependsOn(TASK_GEN_GUIDES)
             task.finalizedBy(TASK_RENDER_BLOG)
             task.finalizedBy(TASK_GEN_PLUGINS)
             task.finalizedBy(TASK_RENDER_MINUTES)

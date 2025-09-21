@@ -58,8 +58,8 @@ class GuidesTask extends DefaultTask {
         generateGuidesPages(classLoader, pagesDir, url.get())
         File template = document.get()
         final String templateText = template.text
-        File o = new File(output.get().absolutePath + "/" + RenderSiteTask.DIST)
-        o.mkdir()
+        File o = new File(output.get().absolutePath + "/" + RenderSiteTask.DIST + "/guides")
+        o.mkdirs()
 
 
         File releasesFile = releases.get()
