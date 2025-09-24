@@ -33,7 +33,7 @@ jobs:
         run: ./publish.sh
         env:
           GITHUB_SLUG: apache/grails-static-website
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GRAILS_GHTOKEN }}
           GH_BRANCH: asf-site-production
           # AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
           # AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
