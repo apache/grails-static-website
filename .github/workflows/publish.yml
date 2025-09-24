@@ -42,6 +42,7 @@ jobs:
           SOURCE_FOLDER: build/dist
           TARGET_REPOSITORY: 'apache/grails-website'
           DOCUMENTATION_BRANCH: 'asf-site-production'
+          LAST_SNAPSHOT_FOLDER: '' # publish site to root
       # TODO Fix Grails Guide Publishing    
       # - name: Publish Guides Site
       #   run: ./publish.sh
