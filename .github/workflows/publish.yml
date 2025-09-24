@@ -29,18 +29,19 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           develocity-access-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
-      - name: Publish Main Site
-        run: ./publish.sh
+      - name: "🔨 Build Website"
         env:
-          GITHUB_SLUG: apache/grails-static-website
-          GH_TOKEN: ${{ secrets.GRAILS_GHTOKEN }}
-          GH_BRANCH: asf-site-production
-          # AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
-          # AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
-          GRADLE_ENTERPRISE_BUILD_CACHE_NODE_USER: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_USER }}
-          GRADLE_ENTERPRISE_BUILD_CACHE_NODE_KEY: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_KEY }}
-          GRADLE_TASK: build
           GRAILS_WS_URL: https://grails.apache.org
+        run: >
+          ./gradlew clean build
+      - name: "🚀 Publish Main Site"
+        uses: apache/grails-github-actions/deploy-github-pages@asf
+        env:
+          GH_TOKEN: ${{ secrets.GRAILS_GHTOKEN }}
+          GRADLE_PUBLISH_RELEASE: 'false'
+          SOURCE_FOLDER: /build/dist
+          TARGET_REPOSITORY: 'apache/grails-website'
+          DOCUMENTATION_BRANCH: 'asf-site-production'
       # TODO Fix Grails Guide Publishing    
       # - name: Publish Guides Site
       #   run: ./publish.sh
