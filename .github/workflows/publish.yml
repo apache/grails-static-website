@@ -39,7 +39,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GRAILS_GHTOKEN }}
           GRADLE_PUBLISH_RELEASE: 'false'
-          SOURCE_FOLDER: /build/dist
+          SOURCE_FOLDER: build/dist
           TARGET_REPOSITORY: 'apache/grails-website'
           DOCUMENTATION_BRANCH: 'asf-site-production'
       # TODO Fix Grails Guide Publishing    
