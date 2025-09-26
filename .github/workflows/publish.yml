@@ -45,14 +45,13 @@ jobs:
           GRADLE_ENTERPRISE_BUILD_CACHE_NODE_USER: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_USER }}
           GRADLE_ENTERPRISE_BUILD_CACHE_NODE_KEY: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_KEY }}
           GRADLE_TASK: build
-          GRAILS_WS_URL: https://grails.apache.org
-      # TODO Fix Grails Guide Publishing    
-      # - name: Publish Guides Site
-      #   run: ./publish.sh
-      #   env:
-      #     GITHUB_SLUG: grails-guides/grails-guides-template
-      #     GH_BRANCH: gh-pages
-      #     GH_TOKEN: ${{ secrets.GRAILS_GHTOKEN }}
-      #     GRADLE_ENTERPRISE_BUILD_CACHE_NODE_USER: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_USER }}
-      #     GRADLE_ENTERPRISE_BUILD_CACHE_NODE_KEY: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_KEY }}
-      #     GRADLE_TASK: buildGuide
+          GRAILS_WS_URL: https://grails.apache.org    
+      - name: Publish Guides Site
+        run: ./publish.sh
+        env:
+          GITHUB_SLUG: grails-guides/grails-guides-template
+          GH_BRANCH: gh-pages
+          GH_TOKEN: ${{ secrets.APACHE_GRAILS_BUILD_GH_TOKEN }}
+          GRADLE_ENTERPRISE_BUILD_CACHE_NODE_USER: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_USER }}
+          GRADLE_ENTERPRISE_BUILD_CACHE_NODE_KEY: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_KEY }}
+          GRADLE_TASK: buildGuide
