@@ -32,7 +32,7 @@ Work on the Grails framework began in July 2005, with the 0.1 release on March 2
 
 The migration to the ASF was an 18-month process starting in late Spring 2024. Motivations included shifting from single-organization dependency to a volunteer-driven model for sustainability, fostering community growth and revitalization with new energy from volunteers, aligning with open-source best practices like the Apache Way (consensus and transparency), enhancing governance through a Project Management Committee (PMC), mailing lists, and voting, and promoting vendor neutrality to encourage broader collaboration.
 
-Key steps involved forming a volunteer team, assessing project readiness, submitting an incubation proposal, modernizing the codebase (including mono-repo merge, build system updates, dependency upgrades, and Maven coordinates), and issuing releases under the ASF. Releases included Milestone 4 (June 2025, the first ASF release), Milestone 5 (July 2025), Release Candidate 1 (August 2025), Release Candidate 2 (September 2025), with the 7.0.0 General Availability expected in early October 2025.
+Key steps involved forming a volunteer team, assessing project readiness, submitting an incubation proposal, modernizing the codebase (including mono-repo merge, build system updates, dependency upgrades, and Maven coordinates), and issuing releases under the ASF. Releases included Milestone 4 (June 2025, the first ASF release), Milestone 5 (July 2025), Release Candidate 1 (August 2025), Release Candidate 2 (September 2025), with the 7.0.0 General Availability expected in October 2025.
 
 The project passed the ASF board vote on September 24, 2025, officially graduating to TLP status.
 
