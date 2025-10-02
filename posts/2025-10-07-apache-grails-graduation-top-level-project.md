@@ -14,7 +14,7 @@ image: grails-blog-index-1.png
 
 The Apache Grails team is excited to announce that Apache Grails has officially graduated from incubation under the Apache Groovy project to become a Top-Level Project (TLP) at The Apache Software Foundation (ASF). This achievement reflects the dedication of our community and underscores the strength of the ASF's open source ecosystems.
 
-Apache Grails is a powerful Groovy-based web application framework for the Java Virtual Machine (JVM) built on top of Spring Boot. It enables rapid application development through convention-over-configuration and Don't Repeat Yourself (DRY) principles, making it ideal for productively building full-stack applications with simplicity. Similar to Ruby on Rails, Grails has a nearly 20-year history of evolution and refinement, built on Java Enterprise foundations like Spring Framework, Jakarta EE, and Hibernate.
+Apache Grails is a powerful Apache Groovy-based web application framework for the Java Virtual Machine (JVM) built on top of Spring Boot. It enables rapid application development through convention-over-configuration and Don't Repeat Yourself (DRY) principles, making it ideal for productively building full-stack applications with simplicity. Similar to Ruby on Rails, Grails has a nearly 20-year history of evolution and refinement, built on Java Enterprise foundations like Spring Framework, Jakarta EE, and Hibernate.
 
 "Becoming an ASF Top-Level Project signals the beginning of a new chapter for Apache Grails," said James Fredley, Apache Grails PMC Chair. "With ASF’s support and a thriving contributor community, we look forward to broadening adoption and advancing the project’s capabilities."
 
@@ -90,7 +90,7 @@ Recent Contributors by Project:
 
 [Combined Commit List](https://github.com/search?q=repo%3Aapache%2Fgrails-core+repo%3Aapache%2Fgrails-spring-security+repo%3Aapache%2Fgrails-static-website+repo%3Aapache%2Fgrails-forge-ui+repo%3Aapache%2Fgrails-quartz+repo%3Aapache%2Fincubator-grails-gradle-publish+repo%3Agrails-redis+repo%3Agrails-github-actions+is%3Apublic&type=commits&s=committer-date&o=desc)
 
-Their dedication and hard work have significantly contributed to the release of Grails [%version].
+Their dedication and hard work have significantly contributed to the release of Grails 7.
 
 ### Resources
 - Website: https://grails.apache.org/
