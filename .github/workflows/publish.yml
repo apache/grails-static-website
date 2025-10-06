@@ -29,11 +29,6 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           develocity-access-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
-      - name: "🔨 Build Website"
-        env:
-          GRAILS_WS_URL: https://grails.apache.org
-        run: >
-          ./gradlew clean build
       - name: Publish Main Site
         run: ./publish.sh
         env:
