@@ -27,7 +27,7 @@ if [[ $EXIT_STATUS -ne 0 ]]; then
     exit $EXIT_STATUS
 fi
 
-git clone https://${GH_TOKEN}@github.com/${GITHUB_SLUG}.git -b ${GH_BRANCH} ${GH_BRANCH} --single-branch > /dev/null
+git clone https://${GH_TOKEN}@github.com/${GITHUB_SLUG}.git -b ${GH_BRANCH} ${GH_BRANCH} --single-branch --depth 1 > /dev/null
 cd ${GH_BRANCH}
 cp -rv ../build/dist/* .
 if git diff --quiet; then
