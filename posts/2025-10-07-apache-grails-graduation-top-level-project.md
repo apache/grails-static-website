@@ -14,7 +14,7 @@ image: grails-blog-index-1.png
 
 The Apache Grails team is excited to announce that Apache Grails has officially graduated from incubation under the Apache Groovy project to become a Top-Level Project (TLP) at The Apache Software Foundation (ASF). This achievement reflects the dedication of our community and underscores the strength of the ASF's open source ecosystems.
 
-Apache Software Foundation Press Release:  https://news.apache.org/foundation/entry/the-apache-software-foundation-announces-new-top-level-projects-2
+[Apache Software Foundation Press Release](https://news.apache.org/foundation/entry/the-apache-software-foundation-announces-new-top-level-projects-2)
 
 Apache Grails is a powerful Apache Groovy-based web application framework for the Java Virtual Machine (JVM) built on top of Spring Boot. It enables rapid application development through convention-over-configuration and Don't Repeat Yourself (DRY) principles, making it ideal for productively building full-stack applications with simplicity. Similar to Ruby on Rails, Grails has a nearly 20-year history of evolution and refinement, built on Java Enterprise foundations like Spring Framework, Jakarta EE, and Hibernate.
 
@@ -106,14 +106,14 @@ Recent Contributors by Project:
 Their dedication and hard work have significantly contributed to the release of Grails 7.
 
 ### Resources
-- Website: https://grails.apache.org/
-- Documentation: https://docs.grails.org/latest/
-- GitHub: https://github.com/apache/grails-core
-- Developer Mailing List: https://lists.apache.org/list.html?dev@grails.apache.org
-- Users Mailing List: https://lists.apache.org/list.html?users@grails.apache.org
-- Slack: https://grails.slack.com/ (Join: https://slack.grails.org/)
+- [Website](https://grails.apache.org/)
+- [Documentation](https://docs.grails.org/latest/)
+- [GitHub](https://github.com/apache/grails-core)
+- [Developer Mailing List](https://lists.apache.org/list.html?dev@grails.apache.org)
+- [Users Mailing List](https://lists.apache.org/list.html?users@grails.apache.org)
+- [Slack](https://grails.slack.com/) (Join: [https://slack.grails.org/](https://slack.grails.org/))
 
 ## About The Apache Software Foundation (ASF)
-The Apache Software Foundation (ASF) is the global home for open source software, powering some of the world’s most ubiquitous software projects, including Apache Airflow, Apache Camel, Apache Cassandra, Apache Groovy, Apache HTTP Server, and Apache Kafka. Established in 1999, The ASF is at the forefront of open source innovation, setting industry standards to advance software for the public good. Learn more at https://apache.org.
+The Apache Software Foundation (ASF) is the global home for open source software, powering some of the world’s most ubiquitous software projects, including Apache Airflow, Apache Camel, Apache Cassandra, Apache Groovy, Apache HTTP Server, and Apache Kafka. Established in 1999, The ASF is at the forefront of open source innovation, setting industry standards to advance software for the public good. Learn more at [https://apache.org](https://apache.org).
 
 For media inquiries, contact press@apache.org.
