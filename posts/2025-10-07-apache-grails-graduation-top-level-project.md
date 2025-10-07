@@ -14,6 +14,8 @@ image: grails-blog-index-1.png
 
 The Apache Grails team is excited to announce that Apache Grails has officially graduated from incubation under the Apache Groovy project to become a Top-Level Project (TLP) at The Apache Software Foundation (ASF). This achievement reflects the dedication of our community and underscores the strength of the ASF's open source ecosystems.
 
+Apache Software Foundation Press Release:  https://news.apache.org/foundation/entry/the-apache-software-foundation-announces-new-top-level-projects-2
+
 Apache Grails is a powerful Apache Groovy-based web application framework for the Java Virtual Machine (JVM) built on top of Spring Boot. It enables rapid application development through convention-over-configuration and Don't Repeat Yourself (DRY) principles, making it ideal for productively building full-stack applications with simplicity. Similar to Ruby on Rails, Grails has a nearly 20-year history of evolution and refinement, built on Java Enterprise foundations like Spring Framework, Jakarta EE, and Hibernate.
 
 "Becoming an ASF Top-Level Project signals the beginning of a new chapter for Apache Grails," said James Fredley, Apache Grails PMC Chair. "With ASF’s support and a thriving contributor community, we look forward to broadening adoption and advancing the project’s capabilities."
