@@ -16,6 +16,10 @@ limitations under the License.
 
 # Grails Website
 
+the gh-pages branch is used to redirect all https://grails.org/ URLs to https://grails.apache.org/
+
+The Grails Website is published on [https://grails.apache.org/](https://grails.apache.org/) via the [`asf-site-production` branch on `grails-website`](https://github.com/apache/grails-website/tree/asf-site-production) repository.  
+
 [![Build Status](https://github.com/apache/grails-static-website/workflows/Publish/badge.svg)](https://github.com/apache/grails-static-website/actions)
 
 This project builds the Grails website. A static website build with [Gradle](https://gradle.org). It uses a Gradle Plugin whose sources can be found at `buildSrc`.
