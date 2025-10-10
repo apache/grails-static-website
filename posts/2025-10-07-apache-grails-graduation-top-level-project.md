@@ -107,7 +107,7 @@ Their dedication and hard work have significantly contributed to the release of 
 
 ### Resources
 - [Website](https://grails.apache.org/)
-- [Documentation](https://docs.grails.org/latest/)
+- [Documentation](https://grails.apache.org/docs/latest/)
 - [GitHub](https://github.com/apache/grails-core)
 - [Developer Mailing List](https://lists.apache.org/list.html?dev@grails.apache.org)
 - [Users Mailing List](https://lists.apache.org/list.html?users@grails.apache.org)

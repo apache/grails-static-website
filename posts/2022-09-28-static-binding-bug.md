@@ -34,7 +34,7 @@ This can occur when manually calling **bindData** (or one of several variants) g
 
 One common property that represents an important part of the functionality in the Grails framework is the **constraints** property. The **constraints** property allows classes that implement the **Validateable** trait to check that the data in an instance of the class is valid. It is also a static property that could be overwritten due to this bug, potentially leading to data corruption.   Because of this possibility, we feel it is important for organizations using the Framework to be aware of this bug and its resolutions.
 
-For more information about data validation functionality available in the Grails framework, please see the [documentation](https://docs.grails.org/5.2.4/guide/validation.html).
+For more information about data validation functionality available in the Grails framework, please see the [documentation](https://grails.apache.org/docs/5.2.4/guide/validation.html).
 
 
 ## Resolution
