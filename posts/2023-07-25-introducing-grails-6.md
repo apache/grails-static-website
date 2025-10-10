@@ -66,6 +66,6 @@ At the heart of Grails lies its vibrant and passionate community of developers, 
 
 In conclusion, Grails 6 represents a significant advancement in web development, providing developers with a powerful platform to build exceptional applications. Embrace Grails 6 and its advancements in Java, Spring, Spring Boot, and Micronaut integration to unlock the full potential of modern web development and embark on an exciting journey towards creating innovative and scalable applications.
 
-To download and get started with Grails 6, visit the official Grails documentation: [docs.grails.org/latest/guide/gettingStarted.html#downloadingAndInstalling](https://docs.grails.org/latest/guide/gettingStarted.html#downloadingAndInstalling).
+To download and get started with Grails 6, visit the official Grails documentation: [https://grails.apache.org/docs/latest/guide/gettingStarted.html#downloadingAndInstalling](https://grails.apache.org/docs/latest/guide/gettingStarted.html#downloadingAndInstalling).
 
 **Happy Coding with Grails 6!**

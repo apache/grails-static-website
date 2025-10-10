@@ -1,40 +1,40 @@
 modules:
   upgrade:
     title: Upgrade Documentation
-    url: https://docs.grails.org/latest/guide/upgrading.html
+    url: https://grails.apache.org/docs/latest/guide/upgrading.html
     categoryImage: '[%url]/images/upgrade.svg'
     category: Upgrade
     categoryDescription: Upgrade guides for the latest version of Grails
   async:
     title: Async Grails
-    url: https://docs.grails.org/latest/guide/async.html
+    url: https://grails.apache.org/docs/latest/guide/async.html
     category: Async
     categoryImage: '[%url]/images/async.svg'
   testing:
     title: Testing Framework
-    url: https://docs.grails.org/latest/guide/testing.html
+    url: https://grails.apache.org/docs/latest/guide/testing.html
     categoryImage: '[%url]/images/testing.svg'
     category: Testing
   gormhibernate:
-    categoryUrl: https://docs.grails.org/latest/grails-data/
+    categoryUrl: https://grails.apache.org/docs/latest/grails-data/
     categoryImage: '[%url]/images/gorm.svg'
     category: GORM - Data Access Toolkit
     title: GORM Hibernate
-    url: https://docs.grails.org/latest/grails-data/hibernate5/manual/
+    url: https://grails.apache.org/docs/latest/grails-data/hibernate5/manual/
   gormmongodb:
-    categoryUrl: https://docs.grails.org/latest/grails-data/
+    categoryUrl: https://grails.apache.org/docs/latest/grails-data/
     categoryImage: '[%url]/images/gorm.svg'
     category: GORM - Data Access Toolkit
     title: GORM MongoDb
-    url: https://docs.grails.org/latest/grails-data/mongodb/manual/
+    url: https://grails.apache.org/docs/latest/grails-data/mongodb/manual/
   gormneo4j:
-    categoryUrl: https://docs.grails.org/latest/grails-data/
+    categoryUrl: https://grails.apache.org/docs/latest/grails-data/
     categoryImage: '[%url]/images/gorm.svg'
     category: GORM - Data Access Toolkit
     title: GORM Neo4j
     url: https://gorm.grails.org/latest/neo4j/manual/index.html
   gormgraphql:
-    categoryUrl: https://docs.grails.org/latest/grails-data/
+    categoryUrl: https://grails.apache.org/docs/latest/grails-data/
     categoryImage: '[%url]/images/gorm.svg'
     category: GORM - Data Access Toolkit
     title: Graphql
@@ -43,17 +43,17 @@ modules:
     categoryImage: '[%url]/images/views.svg'
     category: Views
     title: GSP
-    url: https://docs.grails.org/latest/guide/theWebLayer.html#gsp
+    url: https://grails.apache.org/docs/latest/guide/theWebLayer.html#gsp
   jsonviews:
     categoryImage: '[%url]/images/views.svg'
     category: Views
     title: JSON Views
-    url: https://docs.grails.org/latest/guide/theWebLayer.html#gson
+    url: https://grails.apache.org/docs/latest/guide/theWebLayer.html#gson
   markupviews:
     categoryImage: '[%url]/images/views.svg'
     category: Views
     title: Markup Views
-    url: https://docs.grails.org/latest/guide/theWebLayer.html#markup
+    url: https://grails.apache.org/docs/latest/guide/theWebLayer.html#markup
   springsecuritycore:
     categoryImage: '[%url]/images/security.svg'
     category: Security
@@ -103,7 +103,7 @@ modules:
     categoryImage: '[%url]/images/relationaldb.svg'
     category: Database
     title: Database Migration Plugin
-    url: https://docs.grails.org/latest/grails-data/hibernate5/manual/index.html#databaseMigration
+    url: https://grails.apache.org/docs/latest/grails-data/hibernate5/manual/index.html#databaseMigration
   redis:
     categoryImage: '[%url]/images/documentation.svg'
     category: Redis
