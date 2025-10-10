@@ -22,7 +22,7 @@ jobs:
           remove-android: 'true' # Remove Android tools (~2 GB savings)
           remove-haskell: 'true' # Remove Haskell (~1 GB savings)
           remove-codeql: 'true'  # Remove CodeQL (~500 MB savings)
-          remove-docker-images: 'true'  # Prune Docker if used (~1-2 GB savings)
+          remove-docker-images: 'false'  # Prune Docker if used (~1-2 GB savings)
       - uses: actions/checkout@v4
       - uses: actions/cache@v4
         with:
