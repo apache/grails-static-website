@@ -43,7 +43,7 @@ class GrailsWebsitePlugin implements Plugin<Project> {
     public static final String GROUP_GRAILS = 'grails'
     public static final String TASK_RENDER_BLOG = 'renderBlog'
     public static final String TASK_RENDER_MINUTES = 'renderMinutes'
-    public static final String TASK_GEN_HTACCESS = "genHtaccess"
+    public static final String TASK_GEN_HTACCESS = 'genHtaccess'
 
 
     @Override
