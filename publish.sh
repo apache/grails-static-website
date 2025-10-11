@@ -29,7 +29,7 @@ fi
 
 git clone https://${GH_TOKEN}@github.com/${GITHUB_SLUG}.git -b ${GH_BRANCH} ${GH_BRANCH} --single-branch --depth 1 > /dev/null
 cd ${GH_BRANCH}
-cp -rv ../build/dist/* .
+cp -rv ../build/dist/. .
 if git diff --quiet; then
   echo "No changes in MAIN Website"
 else
