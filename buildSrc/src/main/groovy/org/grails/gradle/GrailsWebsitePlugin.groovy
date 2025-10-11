@@ -43,6 +43,7 @@ class GrailsWebsitePlugin implements Plugin<Project> {
     public static final String GROUP_GRAILS = 'grails'
     public static final String TASK_RENDER_BLOG = 'renderBlog'
     public static final String TASK_RENDER_MINUTES = 'renderMinutes'
+    public static final String TASK_GEN_HTACCESS = 'genHtaccess'
 
 
     @Override
@@ -180,6 +181,14 @@ class GrailsWebsitePlugin implements Plugin<Project> {
             task.setGroup(GROUP_GRAILS)
         })
 
+        project.tasks.register(TASK_GEN_HTACCESS, HtaccessTask) { task ->
+            project.extensions.findByType(SiteExtension).with {
+                task.output.set(output)
+            }
+            task.description = 'Generates .htaccess file in the dist folder for Apache web server configuration'
+            task.group = GROUP_GRAILS
+        }
+
         project.tasks.register(BUILD_GUIDES, BuildGuidesTask, { task ->
             task.dependsOn(TASK_COPY_ASSETS)
             task.dependsOn(TASK_GEN_GUIDES)
@@ -211,6 +220,7 @@ class GrailsWebsitePlugin implements Plugin<Project> {
             task.finalizedBy(TASK_GEN_PLUGINS)
             task.finalizedBy(TASK_RENDER_MINUTES)
             task.finalizedBy(TASK_GEN_SITEMAP)
+            task.finalizedBy(TASK_GEN_HTACCESS)
             task.setDescription('Build Grails website - generates pages with HTML entries in pages and build/temp, renders blog and RSS feed, copies assets and generates a sitemap')
 
         })
