@@ -19,6 +19,7 @@
 package org.grails.gradle
 
 import groovy.transform.CompileStatic
+
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
@@ -29,38 +30,40 @@ import org.gradle.api.tasks.TaskAction
 @CompileStatic
 class HtaccessTask extends DefaultTask {
 
-    @Input
-    final Property<File> output = project.objects.property(File)
+    private static final List<String> DOMAINS = [
+            'https://*.kapa.ai/',
+            'https://kapa-widget-proxy-la7dkmplpq-uc.a.run.app',
+            'https://www.google.com/recaptcha/',
+            'https://www.gstatic.com/recaptcha/',
+            'https://hcaptcha.com',
+            'https://*.hcaptcha.com'
+        ]
+
+    private static String HT_ACCESS_CONTENT =
+            '# CSP permissions for grails.apache.org - https://issues.apache.org/jira/browse/INFRA-27297\n' +
+            '# Ref https://docs.kapa.ai/integrations/understanding-csp-cors\n' +
+            'SetEnv CSP_PROJECT_DOMAINS "' + DOMAINS.join(' ') + '"'
 
     @Input
-    final Property<String> url = project.objects.property(String)
+    final Property<File> output = project.objects.property(File)
 
     @OutputFile
     final RegularFileProperty htaccessFile = project.objects.fileProperty()
 
     HtaccessTask() {
-        htaccessFile.convention(project.layout.buildDirectory.file("dist/.htaccess"))
+        htaccessFile.convention(
+                project.layout.buildDirectory.file('dist/.htaccess')
+        )
     }
 
     @TaskAction
     void generateHtaccess() {
-        File outputDir = new File(output.get(), "dist")
-        if (!outputDir.exists()) {
-            outputDir.mkdirs()
+        def outputDir = new File(output.get(), 'dist').tap {
+            mkdirs()
         }
-
-        File htaccess = new File(outputDir, ".htaccess")
-
-        String htaccessContent = generateHtaccessContent()
-
-        htaccess.text = htaccessContent
-        logger.lifecycle("Generated .htaccess file at: ${htaccess.absolutePath}")
-    }
-
-    private String generateHtaccessContent() {
-        return '''# CSP permissions for grails.apache.org - https://issues.apache.org/jira/browse/INFRA-27297
-# Ref https://docs.kapa.ai/integrations/understanding-csp-cors
-SetEnv CSP_PROJECT_DOMAINS "https://*.kapa.ai/ https://kapa-widget-proxy-la7dkmplpq-uc.a.run.app https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://hcaptcha.com https://*.hcaptcha.com"
-'''
+        def htaccess = new File(outputDir, '.htaccess').tap {
+            text = HT_ACCESS_CONTENT
+        }
+        logger.lifecycle("Generated .htaccess file at: $htaccess.absolutePath")
     }
 }
