@@ -181,16 +181,13 @@ class GrailsWebsitePlugin implements Plugin<Project> {
             task.setGroup(GROUP_GRAILS)
         })
 
-        project.tasks.register(TASK_GEN_HTACCESS, HtaccessTask, { task ->
-            Object extension = project.getExtensions().findByName(EXTENSION_NAME)
-            if (extension instanceof SiteExtension) {
-                SiteExtension siteExtension = ((SiteExtension) extension)
-                task.setProperty("output", siteExtension.output)
-                task.setProperty("url", siteExtension.url)
+        project.tasks.register(TASK_GEN_HTACCESS, HtaccessTask) { task ->
+            project.extensions.findByType(SiteExtension).with {
+                task.output.set(output)
             }
-            task.setDescription('Generates .htaccess file in the dist folder for Apache web server configuration')
-            task.setGroup(GROUP_GRAILS)
-        })
+            task.description = 'Generates .htaccess file in the dist folder for Apache web server configuration'
+            task.group = GROUP_GRAILS
+        }
 
         project.tasks.register(BUILD_GUIDES, BuildGuidesTask, { task ->
             task.dependsOn(TASK_COPY_ASSETS)
