@@ -34,6 +34,15 @@ class DownloadPage {
         "https://www.apache.org/dyn/closer.lua/incubator/grails/${directory}/${version}/sources/apache-${artifact}-${version}-incubating-src.zip${ext}?action=download"
     }
 
+    static String binaryUrlPostGrad(String version, String artifact = 'grails', String ext = '', String directory = 'core') {
+        "https://www.apache.org/dyn/closer.lua/grails/${directory}/${version}/distribution/apache-${artifact}-${version}-bin.zip${ext}?action=download"
+
+    }
+
+    static String sourceUrlPostGrad(String version, String artifact = 'grails', String ext = '', String directory = 'core') {
+        "https://www.apache.org/dyn/closer.lua/grails/${directory}/${version}/sources/apache-${artifact}-${version}-src.zip${ext}?action=download"
+    }
+
     @CompileDynamic
     static String renderDownload(String version) {
         String redisVersion = '5.0.0-RC2'
@@ -85,9 +94,9 @@ class DownloadPage {
                                 a(href: sourceUrl(quartzVersion, 'grails-quartz', '.asc', 'quartz'), 'ASC')
                             }
                             li {
-                                a(href: sourceUrl(grailsGithubActionsVersion, 'grails-github-actions', '', 'actions'), "Grails GitHub Actions ${grailsGithubActionsVersion} Source")
-                                a(href: sourceUrl(grailsGithubActionsVersion, 'grails-github-actions', '.sha512', 'actions'), 'SHA512')
-                                a(href: sourceUrl(grailsGithubActionsVersion, 'grails-github-actions', '.asc', 'actions'), 'ASC')
+                                a(href: sourceUrlPostGrad(grailsGithubActionsVersion, 'grails-github-actions', '', 'actions'), "Grails GitHub Actions ${grailsGithubActionsVersion} Source")
+                                a(href: sourceUrlPostGrad(grailsGithubActionsVersion, 'grails-github-actions', '.sha512', 'actions'), 'SHA512')
+                                a(href: sourceUrlPostGrad(grailsGithubActionsVersion, 'grails-github-actions', '.asc', 'actions'), 'ASC')
                             }
                             li {
                                 a(href: sourceUrl(grailsGradlePublishVersion, 'grails-publish', '', 'grails-publish'), "Grails Publish Gradle Plugin ${grailsGradlePublishVersion} Source")
@@ -116,7 +125,7 @@ class DownloadPage {
                                 a(href: "https://github.com/apache/grails-github-actions/releases/tag/v${grailsGithubActionsVersion}", "Grails GitHub Actions ${grailsGithubActionsVersion} Release Notes")
                             }
                             li {
-                                a(href: "https://github.com/apache/incubator-grails-gradle-publish/releases/tag/v${grailsGradlePublishVersion}", "Grails Publish Gradle Plugin ${grailsGradlePublishVersion} Release Notes")
+                                a(href: "https://github.com/apache/grails-gradle-publish/releases/tag/v${grailsGradlePublishVersion}", "Grails Publish Gradle Plugin ${grailsGradlePublishVersion} Release Notes")
                             }
                         }
                     }
