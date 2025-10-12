@@ -39,7 +39,7 @@ class DownloadPage {
         String redisVersion = '5.0.0-RC2'
         String quartzVersion = '4.0.0-RC2'
         String springSecurityVersion = '7.0.0-RC2'
-        String grailsGithubActionsVersion = '1.0.0'
+        String grailsGithubActionsVersion = '1.0.1'
         String grailsGradlePublishVersion = '0.0.1'
 
         StringWriter writer = new StringWriter()
@@ -85,14 +85,14 @@ class DownloadPage {
                                 a(href: sourceUrl(quartzVersion, 'grails-quartz', '.asc', 'quartz'), 'ASC')
                             }
                             li {
-                                a(href: sourceUrl(quartzVersion, 'grails-github-actions', '', 'actions'), "Grails GitHub Actions ${grailsGithubActionsVersion} Source")
-                                a(href: sourceUrl(quartzVersion, 'grails-github-actions', '.sha512', 'actions'), 'SHA512')
-                                a(href: sourceUrl(quartzVersion, 'grails-github-actions', '.asc', 'actions'), 'ASC')
+                                a(href: sourceUrl(grailsGithubActionsVersion, 'grails-github-actions', '', 'actions'), "Grails GitHub Actions ${grailsGithubActionsVersion} Source")
+                                a(href: sourceUrl(grailsGithubActionsVersion, 'grails-github-actions', '.sha512', 'actions'), 'SHA512')
+                                a(href: sourceUrl(grailsGithubActionsVersion, 'grails-github-actions', '.asc', 'actions'), 'ASC')
                             }
                             li {
-                                a(href: sourceUrl(quartzVersion, 'grails-publish', '', 'grails-publish'), "Grails Publish Gradle Plugin ${grailsGradlePublishVersion} Source")
-                                a(href: sourceUrl(quartzVersion, 'grails-publish', '.sha512', 'grails-publish'), 'SHA512')
-                                a(href: sourceUrl(quartzVersion, 'grails-publish', '.asc', 'grails-publish'), 'ASC')
+                                a(href: sourceUrl(grailsGradlePublishVersion, 'grails-publish', '', 'grails-publish'), "Grails Publish Gradle Plugin ${grailsGradlePublishVersion} Source")
+                                a(href: sourceUrl(grailsGradlePublishVersion, 'grails-publish', '.sha512', 'grails-publish'), 'SHA512')
+                                a(href: sourceUrl(grailsGradlePublishVersion, 'grails-publish', '.asc', 'grails-publish'), 'ASC')
                             }
                         } else {
                             li {
