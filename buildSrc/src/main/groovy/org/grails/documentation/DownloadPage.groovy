@@ -49,7 +49,7 @@ class DownloadPage {
         String quartzVersion = '4.0.0-RC2'
         String springSecurityVersion = '7.0.0-RC2'
         String grailsGithubActionsVersion = '1.0.1'
-        String grailsGradlePublishVersion = '0.0.1'
+        String grailsGradlePublishVersion = '0.0.2'
 
         StringWriter writer = new StringWriter()
         MarkupBuilder html = new MarkupBuilder(writer)
