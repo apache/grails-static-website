@@ -49,7 +49,7 @@ class DownloadPage {
         String quartzVersion = '4.0.0-RC2'
         String springSecurityVersion = '7.0.0-RC2'
         String grailsGithubActionsVersion = '1.0.1'
-        String grailsGradlePublishVersion = '0.0.1'
+        String grailsGradlePublishVersion = '0.0.2'
 
         StringWriter writer = new StringWriter()
         MarkupBuilder html = new MarkupBuilder(writer)
@@ -99,9 +99,9 @@ class DownloadPage {
                                 a(href: sourceUrlPostGrad(grailsGithubActionsVersion, 'grails-github-actions', '.asc', 'actions'), 'ASC')
                             }
                             li {
-                                a(href: sourceUrl(grailsGradlePublishVersion, 'grails-publish', '', 'grails-publish'), "Grails Publish Gradle Plugin ${grailsGradlePublishVersion} Source")
-                                a(href: sourceUrl(grailsGradlePublishVersion, 'grails-publish', '.sha512', 'grails-publish'), 'SHA512')
-                                a(href: sourceUrl(grailsGradlePublishVersion, 'grails-publish', '.asc', 'grails-publish'), 'ASC')
+                                a(href: sourceUrlPostGrad(grailsGradlePublishVersion, 'grails-publish', '', 'grails-publish'), "Grails Publish Gradle Plugin ${grailsGradlePublishVersion} Source")
+                                a(href: sourceUrlPostGrad(grailsGradlePublishVersion, 'grails-publish', '.sha512', 'grails-publish'), 'SHA512')
+                                a(href: sourceUrlPostGrad(grailsGradlePublishVersion, 'grails-publish', '.asc', 'grails-publish'), 'ASC')
                             }
                         } else {
                             li {
