@@ -4,38 +4,38 @@ plugins {
 }
 
 ext {
-    micronautVersion = '3.1.3'
+    micronautVersion = '3.10.4'
+    flexmarkVersion = '0.64.8'
 }
 
 repositories {
     mavenCentral()
 }
 
-
 dependencies {
-    annotationProcessor(platform("io.micronaut:micronaut-bom:$micronautVersion"))
-    implementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
-    testAnnotationProcessor(platform("io.micronaut:micronaut-bom:$micronautVersion"))
-    testImplementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
 
-    annotationProcessor "io.micronaut:micronaut-inject-java"
-    annotationProcessor("io.micronaut:micronaut-validation")
-    implementation("io.micronaut:micronaut-validation")
-    implementation("io.micronaut:micronaut-http-client")
-    implementation("io.micronaut:micronaut-http")
-    implementation "io.micronaut:micronaut-inject"
+    annotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
+    implementation platform("io.micronaut:micronaut-bom:$micronautVersion")
+    testAnnotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
+    testImplementation platform("io.micronaut:micronaut-bom:$micronautVersion")
 
-    implementation("org.yaml:snakeyaml:1.20")
-    implementation("com.github.spotbugs:spotbugs-annotations:4.0.3")
-    implementation("javax.validation:validation-api:2.0.1.Final")
-    implementation("io.micronaut.rss:micronaut-rss-core:2.1.0")
-    implementation('com.vladsch.flexmark:flexmark:0.61.26')
-    implementation('com.vladsch.flexmark:flexmark-ext-tables:0.61.26')
+    annotationProcessor 'io.micronaut:micronaut-inject-java'
+    annotationProcessor 'io.micronaut:micronaut-validation'
 
-    testImplementation("io.micronaut:micronaut-http-server-netty")
-    testImplementation("org.spockframework:spock-core") {
-        exclude module:'groovy-all'
-    }
+    implementation 'io.micronaut:micronaut-validation'
+    implementation 'io.micronaut:micronaut-http-client'
+    implementation 'io.micronaut:micronaut-http'
+    implementation 'io.micronaut:micronaut-inject'
+
+    implementation 'org.yaml:snakeyaml'
+    implementation 'com.github.spotbugs:spotbugs-annotations'
+    implementation 'javax.validation:validation-api'
+    implementation 'io.micronaut.rss:micronaut-rss-core'
+    implementation "com.vladsch.flexmark:flexmark:$flexmarkVersion"
+    implementation "com.vladsch.flexmark:flexmark-ext-tables:$flexmarkVersion"
+
+    testImplementation 'io.micronaut:micronaut-http-server-netty'
+    testImplementation 'org.spockframework:spock-core'
 }
 
 tasks.withType(Jar).configureEach {
