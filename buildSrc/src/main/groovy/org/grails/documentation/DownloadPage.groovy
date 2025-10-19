@@ -64,19 +64,19 @@ class DownloadPage {
                     ul {
                         if (version.startsWith('7')) {
                             li {
-                                a(href: sourceUrl(version), 'Source')
-                                a(href: sourceUrl(version, 'grails', '.sha512'), 'SHA512')
-                                a(href: sourceUrl(version, 'grails', '.asc'), 'ASC')
+                                a(href: sourceUrlPostGrad(version), 'Source')
+                                a(href: sourceUrlPostGrad(version, 'grails', '.sha512'), 'SHA512')
+                                a(href: sourceUrlPostGrad(version, 'grails', '.asc'), 'ASC')
                             }
                             li {
-                                a(href: binaryUrl(version, 'grails'), 'Binary')
-                                a(href: binaryUrl(version, 'grails', '.sha512'), 'SHA512')
-                                a(href: binaryUrl(version, 'grails', '.asc'), 'ASC')
+                                a(href: binaryUrlPostGrad(version, 'grails'), 'Binary')
+                                a(href: binaryUrlPostGrad(version, 'grails', '.sha512'), 'SHA512')
+                                a(href: binaryUrlPostGrad(version, 'grails', '.asc'), 'ASC')
                             }
                             li {
-                                a(href: binaryUrl(version, 'grails-wrapper'), 'Binary Wrapper')
-                                a(href: binaryUrl(version, 'grails-wrapper', '.sha512'), 'SHA512')
-                                a(href: binaryUrl(version, 'grails-wrapper', '.asc'), 'ASC')
+                                a(href: binaryUrlPostGrad(version, 'grails-wrapper'), 'Binary Wrapper')
+                                a(href: binaryUrlPostGrad(version, 'grails-wrapper', '.sha512'), 'SHA512')
+                                a(href: binaryUrlPostGrad(version, 'grails-wrapper', '.asc'), 'ASC')
                             }
                             li {
                                 a(href: sourceUrl(springSecurityVersion, 'grails-spring-security', '', 'spring-security'), "Grails Spring Security ${springSecurityVersion} Plugin Source")
