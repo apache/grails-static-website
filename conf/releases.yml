@@ -507,3 +507,6 @@ releases:
   -
     version: 7.0.0-RC2
     publicationDate: Sep 12, 2025
+  -
+    version: 7.0.0
+    publicationDate: Oct 19, 2025
