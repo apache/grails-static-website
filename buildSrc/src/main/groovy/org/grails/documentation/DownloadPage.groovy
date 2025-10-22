@@ -45,8 +45,8 @@ class DownloadPage {
 
     @CompileDynamic
     static String renderDownload(String version) {
-        String redisVersion = '5.0.0-RC2'
-        String quartzVersion = '4.0.0-RC2'
+        String redisVersion = '5.0.0'
+        String quartzVersion = '4.0.0'
         String springSecurityVersion = '7.0.0-RC2'
         String grailsGithubActionsVersion = '1.0.1'
         String grailsGradlePublishVersion = '0.0.2'
@@ -84,14 +84,14 @@ class DownloadPage {
                                 a(href: sourceUrl(springSecurityVersion, 'grails-spring-security', '.asc', 'spring-security'), 'ASC')
                             }
                             li {
-                                a(href: sourceUrl(redisVersion, 'grails-redis', '', 'redis'), "Grails Redis ${redisVersion} Plugin Source")
-                                a(href: sourceUrl(redisVersion, 'grails-redis', '.sha512', 'redis'), 'SHA512')
-                                a(href: sourceUrl(redisVersion, 'grails-redis', '.asc', 'redis'), 'ASC')
+                                a(href: sourceUrlPostGrad(redisVersion, 'grails-redis', '', 'redis'), "Grails Redis ${redisVersion} Plugin Source")
+                                a(href: sourceUrlPostGrad(redisVersion, 'grails-redis', '.sha512', 'redis'), 'SHA512')
+                                a(href: sourceUrlPostGrad(redisVersion, 'grails-redis', '.asc', 'redis'), 'ASC')
                             }
                             li {
-                                a(href: sourceUrl(quartzVersion, 'grails-quartz', '', 'quartz'), "Grails Quartz ${quartzVersion} Plugin Source")
-                                a(href: sourceUrl(quartzVersion, 'grails-quartz', '.sha512', 'quartz'), 'SHA512')
-                                a(href: sourceUrl(quartzVersion, 'grails-quartz', '.asc', 'quartz'), 'ASC')
+                                a(href: sourceUrlPostGrad(quartzVersion, 'grails-quartz', '', 'quartz'), "Grails Quartz ${quartzVersion} Plugin Source")
+                                a(href: sourceUrlPostGrad(quartzVersion, 'grails-quartz', '.sha512', 'quartz'), 'SHA512')
+                                a(href: sourceUrlPostGrad(quartzVersion, 'grails-quartz', '.asc', 'quartz'), 'ASC')
                             }
                             li {
                                 a(href: sourceUrlPostGrad(grailsGithubActionsVersion, 'grails-github-actions', '', 'actions'), "Grails GitHub Actions ${grailsGithubActionsVersion} Source")
