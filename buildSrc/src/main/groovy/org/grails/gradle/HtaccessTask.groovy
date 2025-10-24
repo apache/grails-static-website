@@ -40,6 +40,9 @@ class HtaccessTask extends DefaultTask {
         ]
 
     private static String HT_ACCESS_CONTENT =
+            '# Custom 404 error page\n' +
+            'ErrorDocument 404 /404.html\n' +
+            '\n' +
             '# CSP permissions for grails.apache.org - https://issues.apache.org/jira/browse/INFRA-27297\n' +
             '# Ref https://docs.kapa.ai/integrations/understanding-csp-cors\n' +
             'SetEnv CSP_PROJECT_DOMAINS "' + DOMAINS.join(' ') + '"'
