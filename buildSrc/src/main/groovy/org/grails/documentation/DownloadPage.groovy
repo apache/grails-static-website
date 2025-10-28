@@ -26,20 +26,11 @@ import groovy.xml.MarkupBuilder
 class DownloadPage {
 
     static String binaryUrl(String version, String artifact = 'grails', String ext = '', String directory = 'core') {
-        "https://www.apache.org/dyn/closer.lua/incubator/grails/${directory}/${version}/distribution/apache-${artifact}-${version}-incubating-bin.zip${ext}?action=download"
-
-    }
-
-    static String sourceUrl(String version, String artifact = 'grails', String ext = '', String directory = 'core') {
-        "https://www.apache.org/dyn/closer.lua/incubator/grails/${directory}/${version}/sources/apache-${artifact}-${version}-incubating-src.zip${ext}?action=download"
-    }
-
-    static String binaryUrlPostGrad(String version, String artifact = 'grails', String ext = '', String directory = 'core') {
         "https://www.apache.org/dyn/closer.lua/grails/${directory}/${version}/distribution/apache-${artifact}-${version}-bin.zip${ext}?action=download"
 
     }
 
-    static String sourceUrlPostGrad(String version, String artifact = 'grails', String ext = '', String directory = 'core') {
+    static String sourceUrl(String version, String artifact = 'grails', String ext = '', String directory = 'core') {
         "https://www.apache.org/dyn/closer.lua/grails/${directory}/${version}/sources/apache-${artifact}-${version}-src.zip${ext}?action=download"
     }
 
@@ -64,19 +55,19 @@ class DownloadPage {
                     ul {
                         if (version.startsWith('7')) {
                             li {
-                                a(href: sourceUrlPostGrad(version), 'Source')
-                                a(href: sourceUrlPostGrad(version, 'grails', '.sha512'), 'SHA512')
-                                a(href: sourceUrlPostGrad(version, 'grails', '.asc'), 'ASC')
+                                a(href: sourceUrl(version), 'Source')
+                                a(href: sourceUrl(version, 'grails', '.sha512'), 'SHA512')
+                                a(href: sourceUrl(version, 'grails', '.asc'), 'ASC')
                             }
                             li {
-                                a(href: binaryUrlPostGrad(version, 'grails'), 'Binary')
-                                a(href: binaryUrlPostGrad(version, 'grails', '.sha512'), 'SHA512')
-                                a(href: binaryUrlPostGrad(version, 'grails', '.asc'), 'ASC')
+                                a(href: binaryUrl(version, 'grails'), 'Binary')
+                                a(href: binaryUrl(version, 'grails', '.sha512'), 'SHA512')
+                                a(href: binaryUrl(version, 'grails', '.asc'), 'ASC')
                             }
                             li {
-                                a(href: binaryUrlPostGrad(version, 'grails-wrapper'), 'Binary Wrapper')
-                                a(href: binaryUrlPostGrad(version, 'grails-wrapper', '.sha512'), 'SHA512')
-                                a(href: binaryUrlPostGrad(version, 'grails-wrapper', '.asc'), 'ASC')
+                                a(href: binaryUrl(version, 'grails-wrapper'), 'Binary Wrapper')
+                                a(href: binaryUrl(version, 'grails-wrapper', '.sha512'), 'SHA512')
+                                a(href: binaryUrl(version, 'grails-wrapper', '.asc'), 'ASC')
                             }
                             li {
                                 a(href: sourceUrl(springSecurityVersion, 'grails-spring-security', '', 'spring-security'), "Grails Spring Security ${springSecurityVersion} Plugin Source")
@@ -84,24 +75,24 @@ class DownloadPage {
                                 a(href: sourceUrl(springSecurityVersion, 'grails-spring-security', '.asc', 'spring-security'), 'ASC')
                             }
                             li {
-                                a(href: sourceUrlPostGrad(redisVersion, 'grails-redis', '', 'redis'), "Grails Redis ${redisVersion} Plugin Source")
-                                a(href: sourceUrlPostGrad(redisVersion, 'grails-redis', '.sha512', 'redis'), 'SHA512')
-                                a(href: sourceUrlPostGrad(redisVersion, 'grails-redis', '.asc', 'redis'), 'ASC')
+                                a(href: sourceUrl(redisVersion, 'grails-redis', '', 'redis'), "Grails Redis ${redisVersion} Plugin Source")
+                                a(href: sourceUrl(redisVersion, 'grails-redis', '.sha512', 'redis'), 'SHA512')
+                                a(href: sourceUrl(redisVersion, 'grails-redis', '.asc', 'redis'), 'ASC')
                             }
                             li {
-                                a(href: sourceUrlPostGrad(quartzVersion, 'grails-quartz', '', 'quartz'), "Grails Quartz ${quartzVersion} Plugin Source")
-                                a(href: sourceUrlPostGrad(quartzVersion, 'grails-quartz', '.sha512', 'quartz'), 'SHA512')
-                                a(href: sourceUrlPostGrad(quartzVersion, 'grails-quartz', '.asc', 'quartz'), 'ASC')
+                                a(href: sourceUrl(quartzVersion, 'grails-quartz', '', 'quartz'), "Grails Quartz ${quartzVersion} Plugin Source")
+                                a(href: sourceUrl(quartzVersion, 'grails-quartz', '.sha512', 'quartz'), 'SHA512')
+                                a(href: sourceUrl(quartzVersion, 'grails-quartz', '.asc', 'quartz'), 'ASC')
                             }
                             li {
-                                a(href: sourceUrlPostGrad(grailsGithubActionsVersion, 'grails-github-actions', '', 'actions'), "Grails GitHub Actions ${grailsGithubActionsVersion} Source")
-                                a(href: sourceUrlPostGrad(grailsGithubActionsVersion, 'grails-github-actions', '.sha512', 'actions'), 'SHA512')
-                                a(href: sourceUrlPostGrad(grailsGithubActionsVersion, 'grails-github-actions', '.asc', 'actions'), 'ASC')
+                                a(href: sourceUrl(grailsGithubActionsVersion, 'grails-github-actions', '', 'actions'), "Grails GitHub Actions ${grailsGithubActionsVersion} Source")
+                                a(href: sourceUrl(grailsGithubActionsVersion, 'grails-github-actions', '.sha512', 'actions'), 'SHA512')
+                                a(href: sourceUrl(grailsGithubActionsVersion, 'grails-github-actions', '.asc', 'actions'), 'ASC')
                             }
                             li {
-                                a(href: sourceUrlPostGrad(grailsGradlePublishVersion, 'grails-publish', '', 'grails-publish'), "Grails Publish Gradle Plugin ${grailsGradlePublishVersion} Source")
-                                a(href: sourceUrlPostGrad(grailsGradlePublishVersion, 'grails-publish', '.sha512', 'grails-publish'), 'SHA512')
-                                a(href: sourceUrlPostGrad(grailsGradlePublishVersion, 'grails-publish', '.asc', 'grails-publish'), 'ASC')
+                                a(href: sourceUrl(grailsGradlePublishVersion, 'grails-publish', '', 'grails-publish'), "Grails Publish Gradle Plugin ${grailsGradlePublishVersion} Source")
+                                a(href: sourceUrl(grailsGradlePublishVersion, 'grails-publish', '.sha512', 'grails-publish'), 'SHA512')
+                                a(href: sourceUrl(grailsGradlePublishVersion, 'grails-publish', '.asc', 'grails-publish'), 'ASC')
                             }
                         } else {
                             li {
