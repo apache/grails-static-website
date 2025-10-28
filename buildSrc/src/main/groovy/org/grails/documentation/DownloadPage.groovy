@@ -47,7 +47,7 @@ class DownloadPage {
     static String renderDownload(String version) {
         String redisVersion = '5.0.0'
         String quartzVersion = '4.0.0'
-        String springSecurityVersion = '7.0.0-RC2'
+        String springSecurityVersion = '7.0.0'
         String grailsGithubActionsVersion = '1.0.1'
         String grailsGradlePublishVersion = '0.0.2'
 
