@@ -522,3 +522,6 @@ releases:
   -
     version: 7.0.4
     publicationDate: Dec 01, 2025
+  -
+    version: 7.0.5
+    publicationDate: Jan 12, 2026
