@@ -162,11 +162,11 @@ class DownloadPage {
 
                     mkp.yieldUnescaped(renderDownload('snapshot'))
 
-                    p 'NOTE: The following versions are not ASF releases. Links to these releases are provided here as a convenience.'
                     mkp.yieldUnescaped(renderDownload(latest.versionText))
 
                     h3(class:'columnheader', 'Older Versions')
                     p 'You can download previous versions as far back as Grails 1.2.0.'
+                    p 'NOTE: Versions prior to 7.0.0-M4 are not ASF releases. Links to those releases are provided here as a convenience.'
                     div(class:'versionselector') {
                         select(class:'form-control', onchange:"window.location.href=this.value.startsWith('6') ? 'https://github.com/apache/grails-forge/releases/download/v'+this.value+'/grails-cli-'+this.value+'.zip': 'https://github.com/apache/grails-core/releases/download/v'+this.value+'/grails-'+this.value+'.zip'") {
                             option(label:'Select a version', disabled:'disabled', selected:'selected')
