@@ -41,6 +41,31 @@ class DownloadPage {
         "https://downloads.apache.org/grails/${directory}/${version}/sources/apache-${artifact}-${version}-src.zip${ext}"
     }
 
+    /**
+     * Does not handle pre-release versions as these are not displayed in the select box.
+     */
+    static String resolveOldDownloadUrl(String version) {
+        def baseUrl = 'https://github.com/apache/grails-core/releases/download'
+        def parts = ((version.split(/\./)*.replaceAll(/\D.*/, '')*.toInteger()) + [0, 0, 0]).take(3)
+        def (major, minor, patch) = [parts[0], parts[1], parts[2]]
+        def artifactName = "apache-grails-$version-bin"
+        def tag = "v$version"
+        if (major < 7) {
+            artifactName = "grails-$version"
+            if (major == 6) {
+                baseUrl = 'https://github.com/apache/grails-forge/releases/download'
+                artifactName = "grails-cli-$version"
+            }
+            if (major == 1 && minor == 1) {
+                artifactName = "grails-bin-$version"
+            }
+            if (major <= 1 && patch == 0) {
+                tag = "v$major.$minor"
+            }
+        }
+        return "$baseUrl/$tag/${artifactName}.zip"
+    }
+
     @CompileDynamic
     static String renderDownload(String version) {
         String redisVersion = '5.0.0'
@@ -165,13 +190,13 @@ class DownloadPage {
                     mkp.yieldUnescaped(renderDownload(latest.versionText))
 
                     h3(class:'columnheader', 'Older Versions')
-                    p 'You can download previous versions as far back as Grails 1.2.0.'
+                    p 'You can download previous versions as far back as Grails 0.1.'
                     p 'NOTE: Versions prior to 7.0.0-M4 are not ASF releases. Links to those releases are provided here as a convenience.'
-                    div(class:'versionselector') {
-                        select(class:'form-control', onchange:"window.location.href=this.value.startsWith('6') ? 'https://github.com/apache/grails-forge/releases/download/v'+this.value+'/grails-cli-'+this.value+'.zip': 'https://github.com/apache/grails-core/releases/download/v'+this.value+'/grails-'+this.value+'.zip'") {
-                            option(label:'Select a version', disabled:'disabled', selected:'selected')
+                    div(class: 'versionselector') {
+                        select(class: 'form-control', onchange: 'window.location.href=this.value') {
+                            option(label: 'Select a version', disabled: 'disabled', selected: 'selected')
                             SiteMap.stableVersions(releases)*.versionText.each {
-                                option(value: it, it)
+                                option(value: resolveOldDownloadUrl(it), it)
                             }
                         }
                     }

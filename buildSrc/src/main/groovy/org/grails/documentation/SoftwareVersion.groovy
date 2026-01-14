@@ -13,25 +13,45 @@ class SoftwareVersion implements Comparable<SoftwareVersion> {
 
     String versionText
 
+    /**
+     * Parses common Grails version formats.
+     * Examples:
+     *  - 1.0 / 1.0.0
+     *  - 1.0-RC1 / 1.0.RC1 /1.0.0-RC1 / 1.0.0.RC1
+     *  - 1.0.M1 / 1.0.0-M1
+     *  - 1.0.0-SNAPSHOT / 1.0.0.BUILD-SNAPSHOT
+     */
     static SoftwareVersion build(String version) {
-        String[] parts = version ? version.split("\\.") : null
-        SoftwareVersion softVersion
-        if (parts && parts.length >= 3) {
-            softVersion = new SoftwareVersion()
-            softVersion.versionText = version
-            softVersion.major = parts[0].toInteger()
-            softVersion.minor = parts[1].toInteger()
-            if (parts.length > 3) {
-                softVersion.snapshot = new Snapshot(parts[3])
-            } else if (parts[2].contains('-')) {
-                String[] subParts = parts[2].split("-")
-                softVersion.patch = subParts.first() as int
-                softVersion.snapshot = new Snapshot(subParts[1..-1].join("-"))
-            } else {
-                softVersion.patch = parts[2].toInteger()
-            }
+        if (!version) {
+            return null
         }
-        softVersion
+
+        def v = version.trim()
+        def softVersion = new SoftwareVersion(versionText: v)
+
+        // Match: major.minor[.patch][separator qualifier]
+        // qualifier may be after '-' or '.' (e.g. 1.0-RC1 or 1.0.RC1)
+        // patch is optional (e.g. 1.0.RC1)
+        def m = (v =~ /^(\d+)\.(\d+)(?:\.(\d+))?(?:[.-](.+))?$/)
+        if (!m.matches()) {
+            return null
+        }
+
+        softVersion.major = m.group(1).toInteger()
+        softVersion.minor = m.group(2).toInteger()
+
+        def patchStr = m.group(3)
+        def qualifier = m.group(4)
+
+        // If patch is missing but the third segment is actually a qualifier (1.0.RC1),
+        // the regex puts it in qualifier and leaves patch null.
+        softVersion.patch = patchStr ? patchStr.toInteger() : 0
+
+        if (qualifier) {
+            softVersion.snapshot = new Snapshot(qualifier)
+        }
+
+        return softVersion
     }
 
     boolean isSnapshot() {
@@ -66,4 +86,3 @@ class SoftwareVersion implements Comparable<SoftwareVersion> {
         }
     }
 }
-
