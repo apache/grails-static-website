@@ -45,13 +45,12 @@ class DownloadPage {
      * Does not handle pre-release versions as these are not displayed in the select box.
      */
     static String resolveOldDownloadUrl(String version) {
-        def baseUrl = 'https://github.com/apache/grails-core/releases/download'
         def parts = ((version.split(/\./)*.replaceAll(/\D.*/, '')*.toInteger()) + [0, 0, 0]).take(3)
         def (major, minor, patch) = [parts[0], parts[1], parts[2]]
-        def artifactName = "apache-grails-$version-bin"
         def tag = "v$version"
         if (major < 7) {
-            artifactName = "grails-$version"
+            def baseUrl = 'https://github.com/apache/grails-core/releases/download'
+            def artifactName = "grails-$version"
             if (major == 6) {
                 baseUrl = 'https://github.com/apache/grails-forge/releases/download'
                 artifactName = "grails-cli-$version"
@@ -62,8 +61,11 @@ class DownloadPage {
             if (major <= 1 && patch == 0) {
                 tag = "v$major.$minor"
             }
+            return "$baseUrl/$tag/${artifactName}.zip"
         }
-        return "$baseUrl/$tag/${artifactName}.zip"
+        else {
+            return "https://www.apache.org/dyn/closer.lua/grails/core/$version/distribution/apache-grails-$version-bin.zip?action=download"
+        }
     }
 
     @CompileDynamic
