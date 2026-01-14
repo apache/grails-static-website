@@ -52,6 +52,10 @@ class DownloadPage {
         def tag = "v$version"
         if (major < 7) {
             artifactName = "grails-$version"
+            if (major == 6) {
+                baseUrl = 'https://github.com/apache/grails-forge/releases/download'
+                artifactName = "grails-cli-$version"
+            }
             if (major == 1 && minor == 1) {
                 artifactName = "grails-bin-$version"
             }
