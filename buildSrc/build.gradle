@@ -41,3 +41,10 @@ dependencies {
 tasks.withType(Jar).configureEach {
     it.duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+    testLogging {
+        events('passed', 'skipped', 'failed', 'standardOut', 'standardError')
+    }
+}
