@@ -45,8 +45,6 @@ jobs:
           GITHUB_SLUG: apache/grails-website
           GH_TOKEN: ${{ secrets.GRAILS_GHTOKEN }}
           GH_BRANCH: asf-site-production
-          # AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
-          # AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
           GRADLE_ENTERPRISE_BUILD_CACHE_NODE_USER: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_USER }}
           GRADLE_ENTERPRISE_BUILD_CACHE_NODE_KEY: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_KEY }}
           GRADLE_TASK: build

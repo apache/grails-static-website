@@ -5,13 +5,12 @@ import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import org.grails.ContentAndMetadata
 import org.grails.Page
-import org.grails.airtable.AirtableBaseApi
 import io.micronaut.context.ApplicationContext
 import org.grails.documentation.SiteMap
 import org.grails.documentation.SoftwareVersion
 import org.grails.events.Event
 import org.grails.events.EventsPage
-import org.grails.events.GrailsAirtable
+
 import io.micronaut.inject.qualifiers.Qualifiers
 import org.gradle.api.DefaultTask
 import org.gradle.api.provider.ListProperty
@@ -94,17 +93,6 @@ class RenderSiteTask extends DefaultTask {
                                         String versionsBeforeGrails6
     ) {
         String eventsHtml = ""
-        if (System.getenv("AIRTABLE_API_KEY") != null && System.getenv("AIRTABLE_BASE_ID") != null) {
-            Map<String, Object> configuration = [:]
-            configuration['airtable.api-key'] = System.getenv("AIRTABLE_API_KEY")
-            configuration['airtable.bases.2022.id'] =  System.getenv("AIRTABLE_BASE_ID")
-            ApplicationContext applicationContext = ApplicationContext.run(configuration)
-            AirtableBaseApi api = applicationContext.getBean(AirtableBaseApi, Qualifiers.byName("2022"))
-            GrailsAirtable airtable = new GrailsAirtable(api)
-            List<Event> events = airtable.fetchGrailsByPracticeName('2GM')
-            eventsHtml = EventsPage.eventsTable(events)
-            applicationContext.close()
-        }
         [
                 title: title,
                 description: about,
