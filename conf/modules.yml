@@ -38,7 +38,7 @@ modules:
     categoryImage: '[%url]/images/gorm.svg'
     category: GORM - Data Access Toolkit
     title: Graphql
-    url: https://grails.github.io/gorm-graphql/snapshot/guide/index.html
+    url: https://grails.github.io/grails-data-graphql/latest/hibernate/guide/index.html
   gsp:
     categoryImage: '[%url]/images/views.svg'
     category: Views
