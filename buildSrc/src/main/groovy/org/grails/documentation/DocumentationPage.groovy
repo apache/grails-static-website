@@ -87,7 +87,7 @@ class DocumentationPage {
 
                         div(class: 'versionselector') {
                             h4 'Single Page - User Guide'
-                            select(onchange: "window.location.href='https://grails.apache.org/docs/' + this.value + '/'") {
+                            select(onchange: "window.location.href='https://grails.apache.org/docs/' + this.value + '/guide/single.html'") {
                                 option 'Select a version'
                                 mkp.yield('[%versions]')
                             }
