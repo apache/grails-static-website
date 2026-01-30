@@ -1,7 +1,7 @@
 package org.grails.questions
 
 import groovy.xml.MarkupBuilder
-import org.grails.markdown.MarkdownUtil
+import org.grails.utils.MarkdownUtils
 import org.yaml.snakeyaml.Yaml
 
 class QuestionsPage {
@@ -25,7 +25,7 @@ class QuestionsPage {
                     div(class: 'question', id: question.slug) {
                         h2(class: 'columnheader', question.title)
                         mkp.yieldUnescaped(
-                                MarkdownUtil.htmlFromMarkdown(question.answer)
+                                MarkdownUtils.htmlFromMarkdown(question.answer)
                         )
                     }
                 }

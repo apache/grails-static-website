@@ -16,15 +16,11 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.grails
+package org.grails.gradle.tasks
 
-import groovy.transform.CompileStatic
+import org.gradle.api.DefaultTask
 
-@CompileStatic
-class MarkdownPost extends Page {
+abstract class GrailsWebsiteTask extends DefaultTask {
 
-    @Override
-    String getPath() {
-        return filename.replace('.md', '.html').replace('.markdown', '.html')
-    }
+    String group = 'grails website'
 }

@@ -16,15 +16,33 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.grails
+package org.grails.gradle.tasks
 
 import groovy.transform.CompileStatic
 
-@CompileStatic
-class MarkdownPost extends Page {
+import org.gradle.api.Project
+import org.gradle.api.tasks.Internal
+import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.TaskProvider
 
-    @Override
-    String getPath() {
-        return filename.replace('.md', '.html').replace('.markdown', '.html')
+import org.grails.gradle.GrailsWebsiteExtension
+
+@CompileStatic
+class BuildGuidesTask extends GrailsWebsiteTask {
+
+    @Internal
+    String description = 'Build guides website - generates guides pages, copies assets and generates a sitemap'
+
+    public static final String NAME = 'buildGuides'
+
+    @TaskAction
+    void buildGuides() {}
+
+    static TaskProvider<BuildGuidesTask> register(
+            Project project,
+            GrailsWebsiteExtension siteExt,
+            String name = NAME
+    ) {
+        project.tasks.register(name, BuildGuidesTask)
     }
 }

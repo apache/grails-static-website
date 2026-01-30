@@ -16,15 +16,30 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.grails
+package org.grails.utils
 
 import groovy.transform.CompileStatic
 
-@CompileStatic
-class MarkdownPost extends Page {
+import com.vladsch.flexmark.ext.tables.TablesExtension
+import com.vladsch.flexmark.html.HtmlRenderer
+import com.vladsch.flexmark.parser.Parser
+import com.vladsch.flexmark.util.data.DataHolder
+import com.vladsch.flexmark.util.data.MutableDataSet
+import com.vladsch.flexmark.util.misc.Extension
 
-    @Override
-    String getPath() {
-        return filename.replace('.md', '.html').replace('.markdown', '.html')
+@CompileStatic
+class MarkdownUtils {
+
+    private final static DataHolder OPTIONS = new MutableDataSet().tap {
+        it.set(Parser.EXTENSIONS, [TablesExtension.create()] as Collection<Extension>)
+        it.toImmutable()
+    }
+    private final static Parser PARSER = Parser.builder(OPTIONS).build()
+    private final static HtmlRenderer RENDERER = HtmlRenderer.builder(OPTIONS).build()
+
+    static String htmlFromMarkdown(String input) {
+        RENDERER.render(
+                PARSER.parse(input)
+        )
     }
 }

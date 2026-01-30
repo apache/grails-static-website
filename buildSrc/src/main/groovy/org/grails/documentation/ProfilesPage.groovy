@@ -3,7 +3,7 @@ package org.grails.documentation;
 import groovy.transform.CompileDynamic;
 import groovy.transform.CompileStatic;
 import groovy.xml.MarkupBuilder
-import org.grails.markdown.MarkdownUtil
+import org.grails.utils.MarkdownUtils
 import org.yaml.snakeyaml.Yaml;
 
 @CompileStatic
@@ -74,7 +74,7 @@ class ProfilesPage {
                 ul {
                     if (cat.description) {
                         li(class: 'legend') {
-                            mkp.yieldUnescaped MarkdownUtil.htmlFromMarkdown(cat.description)
+                            mkp.yieldUnescaped MarkdownUtils.htmlFromMarkdown(cat.description)
                                     .replaceAll('<p>', '')
                                     .replaceAll('</p>', '')
                         }

@@ -16,15 +16,33 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.grails
+package org.grails.utils
 
 import groovy.transform.CompileStatic
 
 @CompileStatic
-class MarkdownPost extends Page {
+class ReadFileUtils {
 
-    @Override
-    String getPath() {
-        return filename.replace('.md', '.html').replace('.markdown', '.html')
+    static String readFileContent(ClassLoader classLoader, String filename) {
+        def file = getFileFromURL(classLoader, filename)
+        if (!file?.exists()) {
+            file = new File("buildSrc/build/resources/main/$filename")
+            if (!file.exists()) {
+                return null
+            }
+        }
+        file.text
+    }
+
+    static File getFileFromURL(ClassLoader classLoader, String filename) {
+        def url = classLoader.getResource(filename)
+        if (url == null) {
+            return null
+        }
+        try {
+            return new File(url.toURI())
+        } catch (URISyntaxException | IllegalArgumentException ignored) {
+            return new File(url.getPath())
+        }
     }
 }

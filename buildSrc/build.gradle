@@ -1,6 +1,5 @@
 plugins {
-    id 'java-gradle-plugin'
-    id 'groovy'
+    id 'groovy-gradle-plugin'
 }
 
 ext {
@@ -40,6 +39,17 @@ dependencies {
 
 tasks.withType(Jar).configureEach {
     it.duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
+gradlePlugin {
+    plugins {
+        register('grails-website') {
+            id = 'grails-website'
+            implementationClass = 'org.grails.gradle.GrailsWebsitePlugin'
+            displayName = 'Grails Website Plugin'
+            description = 'Creates tasks to generate the Grails Website'
+        }
+    }
 }
 
 tasks.withType(Test).configureEach {

@@ -1,6 +1,6 @@
 package org.grails
 
-import edu.umd.cs.findbugs.annotations.Nullable
+import jakarta.annotation.Nullable
 
 interface PostMetadata {
 

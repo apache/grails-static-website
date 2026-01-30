@@ -16,19 +16,36 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.grails.gradle
+package org.grails.gradle.tasks
+
+import javax.inject.Inject
 
 import groovy.transform.CompileStatic
 
-import org.gradle.api.DefaultTask
+import org.gradle.api.Project
+import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.RegularFileProperty
-import org.gradle.api.provider.Property
-import org.gradle.api.tasks.Input
+import org.gradle.api.model.ObjectFactory
+import org.gradle.api.tasks.CacheableTask
+import org.gradle.api.tasks.InputDirectory
+import org.gradle.api.tasks.Internal
+import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.OutputFile
+import org.gradle.api.tasks.PathSensitive
+import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.TaskProvider
+
+import org.grails.gradle.GrailsWebsiteExtension
 
 @CompileStatic
-class HtaccessTask extends DefaultTask {
+@CacheableTask
+class HtaccessTask extends GrailsWebsiteTask {
+
+    @Internal
+    String description = 'Generates the .htaccess file'
+
+    public static final String NAME = 'genHtaccess'
 
     private static final List<String> DOMAINS = [
             'https://*.kapa.ai/',
@@ -47,26 +64,38 @@ class HtaccessTask extends DefaultTask {
             '# Ref https://docs.kapa.ai/integrations/understanding-csp-cors\n' +
             'SetEnv CSP_PROJECT_DOMAINS "' + DOMAINS.join(' ') + '"'
 
-    @Input
-    final Property<File> output = project.objects.property(File)
+    private final ObjectFactory objects
+
+    @Inject
+    HtaccessTask(ObjectFactory objects) {
+        this.objects = objects
+    }
+
+    @Internal
+    final DirectoryProperty outputDir = objects.directoryProperty()
 
     @OutputFile
-    final RegularFileProperty htaccessFile = project.objects.fileProperty()
+    final RegularFileProperty htaccessFile = objects.fileProperty()
 
-    HtaccessTask() {
-        htaccessFile.convention(
-                project.layout.buildDirectory.file('dist/.htaccess')
-        )
+    static TaskProvider<HtaccessTask> register(
+            Project project,
+            GrailsWebsiteExtension siteExt,
+            String name = NAME
+    ) {
+        project.tasks.register(name, HtaccessTask) {
+            it.outputDir.set(siteExt.outputDir)
+            it.htaccessFile.convention(
+                    project.layout.buildDirectory.file('dist/.htaccess')
+            )
+        }
     }
 
     @TaskAction
     void generateHtaccess() {
-        def outputDir = new File(output.get(), 'dist').tap {
-            mkdirs()
-        }
+        def outputDir = new File(outputDir.get().asFile, 'dist').tap {mkdirs() }
         def htaccess = new File(outputDir, '.htaccess').tap {
             text = HT_ACCESS_CONTENT
         }
-        logger.lifecycle("Generated .htaccess file at: $htaccess.absolutePath")
+        logger.lifecycle('Generated .htaccess file at: {}', htaccess.absolutePath)
     }
 }

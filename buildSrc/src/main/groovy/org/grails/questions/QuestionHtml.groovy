@@ -4,7 +4,7 @@ import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import groovy.xml.MarkupBuilder
 import org.grails.PageElement
-import org.grails.markdown.MarkdownUtil
+import org.grails.utils.MarkdownUtils
 
 @CompileStatic
 trait QuestionHtml implements PageElement {
@@ -22,7 +22,7 @@ trait QuestionHtml implements PageElement {
             h2 {
                 html.mkp.yieldUnescaped title
             }
-            String text = MarkdownUtil.htmlFromMarkdown(answer)
+            String text = MarkdownUtils.htmlFromMarkdown(answer)
             text = text.replaceAll("\\\\n","<br/>")
             html.mkp.yieldUnescaped(text)
         }
