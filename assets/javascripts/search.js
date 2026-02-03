@@ -1,239 +1,227 @@
-var queryInputFieldId = "query";
-var mobileQueryInputFieldId = "mobilequery";
-var allguides = new Array();
-var guideClassName = "guide";
-var multiguideClassName = "multiguide";
+const allGuides = []
+const guideClassName = 'guide'
+const mobileQueryInputFieldId = 'mobile-query'
+const multiGuideClassName = 'multi-guide'
+const queryInputFieldId = 'query'
 
 
-var elementsClassNames = new Array();
-elementsClassNames.push('training');
-elementsClassNames.push('latestguides');
-elementsClassNames.push('guidegroup');
-elementsClassNames.push('tagsbytopic');
-elementsClassNames.push('guidesuggestion');
+const elementsClassNames = [
+    'training',
+    'latest-guides',
+    'guide-group',
+    'tags-by-topic',
+    'guides-suggestion',
+]
 
-onload = function () {
-    var elements = document.getElementsByClassName(guideClassName);
-    for ( var i = 0; i < elements.length; i++ ) {
-        var element = elements[i];
-        var guide = { href: element.getAttribute('href'), title: element.text, tags: tagsAtGuide(element.parentNode)  }; /* */
-        allguides.push(guide);
+window.addEventListener('load', () => {
+    let elements = document.getElementsByClassName(guideClassName)
+    for (let i = 0; i < elements.length; i++) {
+        allGuides.push({
+            href: elements[i].getAttribute('href'),
+            title: elements[i].text,
+            tags: tagsAtGuide(elements[i].parentNode)
+        })
     }
-    elements = document.getElementsByClassName(multiguideClassName);
-    for ( var i = 0; i < elements.length; i++ ) {
-        var element = elements[i];
-        var guide = { title: titleAtMultiguide(element), versions: versionsAtMultiguide(element)  }; /* */
-        allguides.push(guide);
+    elements = document.getElementsByClassName(multiGuideClassName)
+    for (let i = 0; i < elements.length; i++) {
+        allGuides.push({
+            title: titleAtMultiGuide(elements[i]),
+            versions: versionsAtMultiGuide(elements[i])
+        })
     }
-
-    if ( document.getElementById(queryInputFieldId) ) {
-        var e = document.getElementById(queryInputFieldId);
-        e.oninput = onQueryChanged;
-        e.onpropertychange = e.oninput; // for IE8
+    if (document.getElementById(queryInputFieldId)) {
+        document.getElementById(queryInputFieldId)
+            .addEventListener('input', onQueryChanged)
     }
-    if ( document.getElementById(mobileQueryInputFieldId) ) {
-        var e = document.getElementById(mobileQueryInputFieldId);
-        e.oninput = onQueryChanged;
-        e.onpropertychange = e.oninput; // for IE8
+    if (document.getElementById(mobileQueryInputFieldId)) {
+        document.getElementById(mobileQueryInputFieldId)
+            .addEventListener('input', onQueryChanged)
     }
-};
+})
 
 function hideElementsToDisplaySearchResults() {
-    for ( var i = 0; i < elementsClassNames.length; i++) {
-        var className = elementsClassNames[i];
-        hideElementsByClassName(className);
+    for (let i = 0; i < elementsClassNames.length; i++) {
+        hideElementsByClassName(elementsClassNames[i])
     }
 }
 
 function showElementsToDisplaySearchResults() {
-    for (var i = 0; i < elementsClassNames.length; i++) {
-        var className = elementsClassNames[i];
-        showElementsByClassName(className);
+    for (let i = 0; i < elementsClassNames.length; i++) {
+        showElementsByClassName(elementsClassNames[i])
     }
 }
 
 function hideElementsByClassName(className) {
-    var elements = document.getElementsByClassName(className);
-    for ( var i = 0; i < elements.length; i++ ) {
-        var element = elements[i];
-        element.style.display = "none";
+    const elements = document.getElementsByClassName(className)
+    for (let i = 0; i < elements.length; i++) {
+        elements[i].style.display = 'none'
     }
 }
 
 function showElementsByClassName(className) {
-    var elements = document.getElementsByClassName(className);
-    for ( var i = 0; i < elements.length; i++ ) {
-        var element = elements[i];
-        element.style.display = "block";
+    const elements = document.getElementsByClassName(className)
+    for (let i = 0; i < elements.length; i++) {
+        elements[i].style.display = 'block'
     }
 }
 
-function titleAtMultiguide(element) {
-    for (var y = 0; y < element.childNodes.length; y++) {
-        if (element.childNodes[y].className == "title") {
-            return element.childNodes[y].textContent;
+function titleAtMultiGuide(element) {
+    for (let y = 0; y < element.childNodes.length; y++) {
+        if (element.childNodes[y].className === 'title') {
+            return element.childNodes[y].textContent
         }
     }
-    return '';
+    return ''
 }
 
-function versionsAtMultiguide(element) {
-    var versions = [];
-
-    for (var y = 0; y < element.childNodes.length; y++) {
-        if (element.childNodes[y].className === "align-left") {
-            var versionDiv = element.childNodes[y];
-            var verEl;
-            var hrefEl;
-            var tagsArr = [];
-            for (var x = 0; x < versionDiv.childNodes.length; x++) {
-                if (versionDiv.childNodes[x].className === "grailsVersion") {
+function versionsAtMultiGuide(element) {
+    const versions = []
+    for (let y = 0; y < element.childNodes.length; y++) {
+        if (element.childNodes[y].className === 'align-left') {
+            const versionDiv = element.childNodes[y]
+            let verEl
+            let hrefEl
+            const tagsArr = []
+            for (let x = 0; x < versionDiv.childNodes.length; x++) {
+                if (versionDiv.childNodes[x].className === 'grails-version') {
                     verEl = versionDiv.childNodes[x].textContent
-                    hrefEl = versionDiv.childNodes[x].getAttribute('href');
+                    hrefEl = versionDiv.childNodes[x].getAttribute('href')
                 }
-                if (versionDiv.childNodes[x].className === "tag") {
-                    var tag = versionDiv.childNodes[x];
-                    tagsArr.push(tag.textContent);
+                if (versionDiv.childNodes[x].className === 'tag') {
+                    tagsArr.push(versionDiv.childNodes[x].textContent);
                 }
             }
-            versions.push({grailsVersion: verEl, href: hrefEl, tags: tagsArr})
+            versions.push({
+                grailsVersion: verEl,
+                href: hrefEl,
+                tags: tagsArr
+            })
         }
     }
     return versions
 }
 
 function tagsAtGuide(element) {
-    var tags = new Array();
-
-    for (var y = 0; y < element.childNodes.length; y++) {
-        if (element.childNodes[y].className == "tag") {
-            var tag = element.childNodes[y];
-            tags.push(tag.textContent);
+    const tags = []
+    for (let y = 0; y < element.childNodes.length; y++) {
+        if (element.childNodes[y].className === 'tag') {
+            tags.push(element.childNodes[y].textContent);
         }
     }
-    return tags;
+    return tags
 }
 
 function onQueryChanged() {
-    var query = queryValue();
-    const resultsDiv = document.getElementsByClassName("searchresults")
-    query = query.trim();
-    if ( query === '' ) {
-        showElementsToDisplaySearchResults();
-        resultsDiv[0].innerHTML = "";
-        return;
+    const query = queryValue().trim()
+    const resultsDiv = document.getElementsByClassName('search-results')
+    if (query === '') {
+        showElementsToDisplaySearchResults()
+        resultsDiv[0].innerHTML = ''
+        return
     }
 
-    var matchingGuides = [];
-    if ( query !== '' ) {
-        for (var i = 0; i < allguides.length; i++) {
-            var guide = allguides[i];
-            if ( doesGuideMatchesQuery(guide, query) ) {
-                matchingGuides.push(guide);
-            }
+    const matchingGuides = []
+    for (let i = 0; i < allguides.length; i++) {
+        let guide = allguides[i]
+        if (doesGuideMatchQuery(guide, query) ) {
+            matchingGuides.push(guide)
         }
     }
-    if ( matchingGuides.length > 0 ) {
-        hideElementsToDisplaySearchResults();
-        var html = renderGuideGroup(matchingGuides, query);
-        resultsDiv[0].innerHTML = html;
-
+    if (matchingGuides.length > 0) {
+        hideElementsToDisplaySearchResults()
+        resultsDiv[0].innerHTML = renderGuideGroup(matchingGuides, query)
     } else {
-        resultsDiv[0].innerHTML = "<div class='guidegroup'><div class='guidegroupheader'><h2>No results found</h2></div></div>";
+        resultsDiv[0].innerHTML =
+            "<div class='guide-group'><div class='guide-group-header'><h2>No results found</h2></div></div>"
     }
 }
 
-function doesTagsMatchesQuery(tags, query) {
-    for ( var x = 0; x < tags.length; x++) {
-        var tag = tags[x];
-        if (tag.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
-            return true;
+function doesTagsMatchQuery(tags, query) {
+    for (let x = 0; x < tags.length; x++) {
+        if (tags[x].toLowerCase().indexOf(query.toLowerCase()) !== -1) {
+            return true
         }
     }
-    return false;
+    return false
 }
 
-function doesTitleMatchesQuery(title, query) {
+function doesTitleMatchQuery(title, query) {
     if (title.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
-        return true;
+        return true
     }
 }
 
-function doesGuideMatchesQuery(guide, query) {
-    if (doesTitleMatchesQuery(guide.title, query)) {
-        return true;
+function doesGuideMatchQuery(guide, query) {
+    if (doesTitleMatchQuery(guide.title, query)) {
+        return true
     }
     if (guide.tags === undefined || guide.tags === null) {
-        for ( var i = 0; i < guide.versions.length; i++) {
-            var version = guide.versions[i];
-            if (doesTagsMatchesQuery(version.tags,query)) {
-                return true;
+        for (let i = 0; i < guide.versions.length; i++) {
+            const version = guide.versions[i]
+            if (doesTagsMatchQuery(version.tags, query)) {
+                return true
             }
         }
     } else {
-        if (doesTagsMatchesQuery(guide.tags, query)) {
-            return true;
+        if (doesTagsMatchQuery(guide.tags, query)) {
+            return true
         }
     }
-
-    return false;
+    return false
 }
 
 function queryValue() {
-    var value = document.getElementById(queryInputFieldId).value;
-    value = value.trim();
-    if ( value === '' ) {
+    const value = document.getElementById(queryInputFieldId).value.trim()
+    if (value === '') {
         if (document.getElementById(mobileQueryInputFieldId)) {
-            value = document.getElementById(mobileQueryInputFieldId).value;
-            value = value.trim();
-            return value;
+            return document.getElementById(mobileQueryInputFieldId).value.trim()
         }
     }
-    return value;
+    return value
 }
 
 function renderGuideGroup(guides, query) {
-    var html = "";
-    html += "<div class='guidegroup'>";
-    html += "  <div class='guidegroupheader'>";
-    html += "    <h2>Guides Filtered by: " + queryValue() + "</h2>";
-    html += "  </div>";
-    html += "  <ul>";
-    for ( var i = 0; i < guides.length; i++ ) {
-        html += "    " + renderGuideAsHtmlLi(guides[i], query);
-    }
-    html += "  </ul>";
-    html += "</div>";
-    return html;
+    const items = guides.map(g => renderGuideAsHtmlLi(g, query)).join('');
+    return `
+    <div class="guide-group">
+      <div class="guide-group-header">
+        <h2>Guides Filtered by: ${queryValue()}</h2>
+      </div>
+      <ul>
+        ${items}
+      </ul>
+    </div>
+  `;
 }
 
 function renderGuideAsHtmlLi(guide, query) {
-    var html = "<li>";
-    if (guide.tags === undefined || guide.tags === null) {
-        html += "<div class=\"multiguide\">";
-        html += "<span class=\"title\">" + guide.title + "</span>";
-        var titleMatched = doesTitleMatchesQuery(guide.title, query);
-        for (var i = 0; i < guide.versions.length; i++) {
-            var version = guide.versions[i];
-            var tagsMatched = doesTagsMatchesQuery(version.tags, query);
-            if (titleMatched || tagsMatched) {
-                html += "<div class=\"align-left\">";
-                html += "<a class=\"grailsVersion\" href=\""+version.href+"\">"+version.grailsVersion+"</a>"
-                for (var x = 0; x < version.tags.length; x++) {
-                    var tag = version.tags[x];
-                    html += "<span style='display: none' class='tag'>" + tag + "</span>";
-                }
-                html += "</div>";
-            }
-        }
-        html += "</div>";
-    } else {
-        html += "<a class='" + guideClassName + "' href='" + guide.href + "'>" + guide.title + "</a>";
-        for (var i = 0; i < guide.tags.length; i++) {
-            var tag = guide.tags[i];
-            html += "<span style='display: none' class='tag'>" + tag + "</span>";
-        }
+    const hiddenTags = (tags = []) =>
+        tags.map(tag => `<span style="display: none" class="tag">${tag}</span>`).join('')
+
+    // Multi-guide (no guide.tags)
+    if (guide.tags == null) {
+        const titleMatched = doesTitleMatchQuery(guide.title, query)
+        const versionsHtml = guide.versions
+            .filter(v => titleMatched || doesTagsMatchQuery(v.tags, query))
+            .map(v => `
+              <div class="align-left">
+                <a class="grails-version" href="${v.href}">${v.grailsVersion}</a>
+                ${hiddenTags(v.tags)}
+              </div>`
+            )
+            .join('')
+
+        return `<li>
+                  <div class="multi-guide">
+                    <span class="title">${guide.title}</span>
+                    ${versionsHtml}
+                  </div>
+                </li>`;
     }
-    html += "</li>"
-    return html;
+
+    // Single guide (has guide.tags)
+    return `<li>
+              <a class="${guideClassName}" href="${guide.href}">${guide.title}</a>
+              ${hiddenTags(guide.tags)}
+            </li>`;
 }

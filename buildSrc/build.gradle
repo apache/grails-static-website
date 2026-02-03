@@ -45,7 +45,7 @@ gradlePlugin {
     plugins {
         register('grails-website') {
             id = 'grails-website'
-            implementationClass = 'org.grails.gradle.GrailsWebsitePlugin'
+            implementationClass = 'website.gradle.GrailsWebsitePlugin'
             displayName = 'Grails Website Plugin'
             description = 'Creates tasks to generate the Grails Website'
         }

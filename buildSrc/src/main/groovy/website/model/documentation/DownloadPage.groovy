@@ -1,0 +1,286 @@
+/*
+ *  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements.  See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
+package website.model.documentation
+
+import groovy.transform.CompileDynamic
+import groovy.transform.CompileStatic
+
+import static website.utils.RenderUtils.renderHtml
+
+@CompileStatic
+class DownloadPage {
+
+    static String binaryUrl(String version, String artifact = 'grails', String ext = '', String directory = 'core') {
+        "https://www.apache.org/dyn/closer.lua/grails/$directory/$version/distribution/apache-$artifact-$version-bin.zip$ext?action=download"
+    }
+
+    static String sourceUrl(String version, String artifact = 'grails', String ext = '', String directory = 'core') {
+        "https://www.apache.org/dyn/closer.lua/grails/$directory/$version/sources/apache-$artifact-$version-src.zip$ext?action=download"
+    }
+
+    static String binaryVerificationUrl(String version, String artifact = 'grails', String ext = '', String directory = 'core') {
+        "https://downloads.apache.org/grails/$directory/$version/distribution/apache-$artifact-$version-bin.zip$ext"
+    }
+
+    static String sourceVerificationUrl(String version, String artifact = 'grails', String ext = '', String directory = 'core') {
+        "https://downloads.apache.org/grails/$directory/$version/sources/apache-$artifact-$version-src.zip$ext"
+    }
+
+    /**
+     * Does not handle pre-release versions as these are not displayed in the select box.
+     */
+    static String resolveOldDownloadUrl(String version) {
+        def parts = ((version.split(/\./)*.replaceAll(/\D.*/, '')*.toInteger()) + [0, 0, 0]).take(3)
+        def (major, minor, patch) = [parts[0], parts[1], parts[2]]
+        def tag = "v$version"
+        if (major < 7) {
+            def baseUrl = 'https://github.com/apache/grails-core/releases/download'
+            def artifactName = "grails-$version"
+            if (major == 6) {
+                baseUrl = 'https://github.com/apache/grails-forge/releases/download'
+                artifactName = "grails-cli-$version"
+            }
+            if (major == 1 && minor == 1) {
+                artifactName = "grails-bin-$version"
+            }
+            if (major <= 1 && patch == 0) {
+                tag = "v$major.$minor"
+            }
+            return "$baseUrl/$tag/${artifactName}.zip"
+        }
+        else {
+            return "https://www.apache.org/dyn/closer.lua/grails/core/$version/distribution/apache-grails-$version-bin.zip?action=download"
+        }
+    }
+
+    @CompileDynamic
+    static String renderDownload(String version) {
+
+        if (version.toLowerCase().contains('snapshot')) {
+            return ''
+        }
+
+        def redisVersion = '5.0.0'
+        def quartzVersion = '4.0.0'
+        def springSecurityVersion = '7.0.0'
+        def grailsGithubActionsVersion = '1.0.1'
+        def grailsGradlePublishVersion = '0.0.4'
+
+        renderHtml {
+            div(class: 'guide-group') {
+                if (version) {
+                    div(class: 'guide-group-header') {
+                        img(src: '[%url]/images/download.svg', alt: "Download Grails ($version)")
+                        h2(
+                                DocumentationPage.resolveDocumentationName(version)
+                        )
+                    }
+                    ul {
+                        if (version.startsWith('7')) {
+                            li {
+                                a(href: DownloadPage.sourceUrl(version), 'Source')
+                                a(href: sourceVerificationUrl(version, 'grails', '.sha512'), 'SHA512')
+                                a(href: sourceVerificationUrl(version, 'grails', '.asc'), 'ASC')
+                            }
+                            li {
+                                a(href: binaryUrl(version, 'grails'), 'Binary')
+                                a(href: binaryVerificationUrl(version, 'grails', '.sha512'), 'SHA512')
+                                a(href: binaryVerificationUrl(version, 'grails', '.asc'), 'ASC')
+                            }
+                            li {
+                                a(href: binaryUrl(version, 'grails-wrapper'), 'Binary Wrapper')
+                                a(href: binaryVerificationUrl(version, 'grails-wrapper', '.sha512'), 'SHA512')
+                                a(href: binaryVerificationUrl(version, 'grails-wrapper', '.asc'), 'ASC')
+                            }
+                            li {
+                                a(href: sourceUrl(springSecurityVersion, 'grails-spring-security', '', 'spring-security'), "Grails Spring Security $springSecurityVersion Plugin Source")
+                                a(href: sourceVerificationUrl(springSecurityVersion, 'grails-spring-security', '.sha512', 'spring-security'), 'SHA512')
+                                a(href: sourceVerificationUrl(springSecurityVersion, 'grails-spring-security', '.asc', 'spring-security'), 'ASC')
+                            }
+                            li {
+                                a(href: sourceUrl(redisVersion, 'grails-redis', '', 'redis'), "Grails Redis $redisVersion Plugin Source")
+                                a(href: sourceVerificationUrl(redisVersion, 'grails-redis', '.sha512', 'redis'), 'SHA512')
+                                a(href: sourceVerificationUrl(redisVersion, 'grails-redis', '.asc', 'redis'), 'ASC')
+                            }
+                            li {
+                                a(href: sourceUrl(quartzVersion, 'grails-quartz', '', 'quartz'), "Grails Quartz $quartzVersion Plugin Source")
+                                a(href: sourceVerificationUrl(quartzVersion, 'grails-quartz', '.sha512', 'quartz'), 'SHA512')
+                                a(href: sourceVerificationUrl(quartzVersion, 'grails-quartz', '.asc', 'quartz'), 'ASC')
+                            }
+                            li {
+                                a(href: sourceUrl(grailsGithubActionsVersion, 'grails-github-actions', '', 'actions'), "Grails GitHub Actions $grailsGithubActionsVersion Source")
+                                a(href: sourceVerificationUrl(grailsGithubActionsVersion, 'grails-github-actions', '.sha512', 'actions'), 'SHA512')
+                                a(href: sourceVerificationUrl(grailsGithubActionsVersion, 'grails-github-actions', '.asc', 'actions'), 'ASC')
+                            }
+                            li {
+                                a(href: sourceUrl(grailsGradlePublishVersion, 'grails-publish', '', 'grails-publish'), "Grails Publish Gradle Plugin $grailsGradlePublishVersion Source")
+                                a(href: sourceVerificationUrl(grailsGradlePublishVersion, 'grails-publish', '.sha512', 'grails-publish'), 'SHA512')
+                                a(href: sourceVerificationUrl(grailsGradlePublishVersion, 'grails-publish', '.asc', 'grails-publish'), 'ASC')
+                            }
+                        } else {
+                            li {
+                                a(
+                                        href: "https://github.com/apache/grails-forge/releases/download/v$version/grails-cli-${version}.zip",
+                                        'Binary'
+                                )
+                            }
+                        }
+                        li {
+                            a(
+                                    href: "https://github.com/apache/grails-core/releases/tag/v$version",
+                                    'Grails Release Notes')
+                        }
+                        if (version.startsWith('7')) {
+                            li {
+                                a(
+                                        href: "https://github.com/apache/grails-spring-security/releases/tag/v$springSecurityVersion",
+                                        "Grails Spring Security Plugin $springSecurityVersion Release Notes")
+                            }
+                            li {
+                                a(
+                                        href: "https://github.com/apache/grails-redis/releases/tag/v$redisVersion",
+                                        "Grails Redis $redisVersion Plugin Release Notes")
+                            }
+                            li {
+                                a(
+                                        href: "https://github.com/apache/grails-quartz/releases/tag/v$quartzVersion",
+                                        "Grails Quartz $quartzVersion Plugin Release Notes"
+                                )
+                            }
+                            li {
+                                a(
+                                        href: "https://github.com/apache/grails-github-actions/releases/tag/v$grailsGithubActionsVersion",
+                                        "Grails GitHub Actions $grailsGithubActionsVersion Release Notes")
+                            }
+                            li {
+                                a(
+                                        href: "https://github.com/apache/grails-gradle-publish/releases/tag/v$grailsGradlePublishVersion",
+                                        "Grails Publish Gradle Plugin $grailsGradlePublishVersion Release Notes"
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    @CompileDynamic
+    static String mainContent(File releases) {
+        def preRelease = SiteMap.latestPreReleaseVersion(releases)
+        def latest = SiteMap.latestVersion(releases)
+        renderHtml {
+            div(class: 'header-bar chalices-bg') {
+                div(class: 'content') {
+                    h1('Downloads')
+                }
+            }
+            div(class: 'content') {
+                div(class: 'two-columns') {
+                    div(class: 'odd column') {
+                        h3(
+                                class: 'column-header', style: 'margin-bottom: 10px',
+                                'Source and Binary Releases'
+                        )
+                        p {
+                            mkp.yieldUnescaped(
+                                    'We provide OpenPGP signatures (\'.asc\') files and checksums (\'.sha512\') for ' +
+                                    'every release artifact. We recommend that you '
+                            )
+                            a(href: 'https://www.apache.org/info/verification.html', 'verify')
+                            mkp.yieldUnescaped(
+                                    ' the integrity of downloaded files by generating your own checksums and match ' +
+                                    'them against ours, and checking signatures using the '
+                            )
+                            a(href: 'https://www.apache.org/dyn/closer.lua/grails/KEYS?action=download', 'KEYS')
+                            mkp.yieldUnescaped(' file which contains the Grails OpenPGP release keys.')
+                        }
+                        if (preRelease > latest) {
+                            mkp.yieldUnescaped(DownloadPage.renderDownload(preRelease.versionText))
+                        }
+
+                        mkp.yieldUnescaped(DownloadPage.renderDownload('snapshot'))
+                        mkp.yieldUnescaped(DownloadPage.renderDownload(latest.versionText))
+
+                        h3(
+                                class: 'column-header',
+                                'Older Versions'
+                        )
+                        p('You can download previous versions as far back as Grails 0.1.')
+                        p(
+                                'NOTE: Versions prior to 7.0.0-M4 are not ASF releases. Links to those releases are ' +
+                                'provided here as a convenience.'
+                        )
+                        div(class: 'version-selector') {
+                            select(class: 'form-control', onchange: 'window.location.href = this.value') {
+                                option(label: 'Select a version', disabled: 'disabled', selected: 'selected')
+                                SiteMap.stableVersions(releases)*.versionText.each {
+                                    option(value: DownloadPage.resolveOldDownloadUrl(it), it)
+                                }
+                            }
+                        }
+                    }
+                    div(class: 'column') {
+
+                        h3(
+                                class: 'column-header',
+                                style: 'margin-bottom: 10px',
+                                'Grails Application Forge'
+                        )
+                        p('The quickest way to get started with our application generator:')
+                        p {
+                            a(href: 'https://start.grails.org', 'Grails Application Forge')
+                        }
+
+                        h3(
+                                class: 'column-header',
+                                style: 'margin-bottom: 10px',
+                                'Installing with SDKMAN!'
+                        )
+                        p {
+                            a(
+                                    href: 'https://sdkman.io/',
+                                    'SDKMAN! (The Software Development Kit Manager)'
+                            )
+                        }
+
+                        p(
+                                'This tool makes installing the Grails framework on any Unix based platform ' +
+                                '(Mac OSX, Linux, Cygwin, Solaris, or FreeBSD) easy.'
+                        )
+                        p('Simply open a new terminal and enter:')
+                        div(class: 'code', '$ curl -s https://get.sdkman.io | bash')
+                        p('Follow the on-screen instructions to complete installation.')
+                        p('Open a new terminal or type the command:')
+                        div(class: 'code', '$ source "$HOME/.sdkman/bin/sdkman-init.sh"')
+                        p('Then install the latest stable Grails version:')
+                        div(class: 'code', '$ sdk install grails')
+                        p(
+                                'If prompted, make this your default version. After installation is complete ' +
+                                'it can be tested with:'
+                        )
+                        div(class: 'code', '$ grails --version')
+                        p('That\'s all there is to it!')
+                    }
+                }
+            }
+        }
+    }
+}

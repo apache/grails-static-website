@@ -1,51 +1,40 @@
 .pagination-container {
-    display: flex;
+    display: inline-flex;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: center;
-    margin-top: 20px;
-}
-
-.pagination-container a {
-    color: black;
-    float: left;
-    padding: 8px 16px;
-    text-decoration: none;
-}
-
-.pagination-container {
-    display: inline-flex;
-    border-radius: 5px;
+    border-radius: 4px;
     overflow: hidden;
 }
 
 .pagination-container a {
-    color: black;
-    padding: 8px 16px;
+    color: #555;
+    padding: 4px 10px;
     text-decoration: none;
     border: 1px solid #ddd;
     border-right: none;
-    background-color: #f1f1f1;
-    transition: background-color 0.3s ease-in-out;
+    background-color: #f5f5f5;
+    font-size: 0.85em;
+    transition: background-color 0.2s ease-in-out;
 }
 
 .pagination-container a:first-child {
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
 }
 
 .pagination-container a:last-child {
     border-right: 1px solid #ddd;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
 }
 
 .pagination-container a.active {
-    background-color: #4caf50;
+    background-color: #feb672;
     color: white;
-    border: none;
+    border-color: #feb672;
 }
 
 .pagination-container a:hover:not(.active) {
-    background-color: #ddd;
+    background-color: #e8e8e8;
 }
