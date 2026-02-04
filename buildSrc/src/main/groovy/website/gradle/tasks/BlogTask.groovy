@@ -313,7 +313,7 @@ class BlogTask extends GrailsWebsiteTask {
             def html = renderPostHtml(post, templateText, listOfPosts)
             new File(outputDir, post.path).tap {
                 it.parentFile?.mkdirs()
-                it.setText(text, 'UTF-8')
+                it.setText(html, 'UTF-8')
             }
             parseTags(html).each { tag ->
                 tagsCount[tag] = tagsCount[tag] + 1
