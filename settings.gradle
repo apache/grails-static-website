@@ -1,14 +1,11 @@
-/*
 plugins {
-    id 'com.gradle.develocity' version '4.0'
-    id 'com.gradle.common-custom-user-data-gradle-plugin' version '2.2.1'
+    id 'com.gradle.develocity' version '4.3.2'
+    id 'com.gradle.common-custom-user-data-gradle-plugin' version '2.4.0'
 }
-*/
 
 def isCI = System.getenv().containsKey('CI')
 def isLocal = !isCI
 
-/*
 develocity {
     server = 'https://develocity.apache.org'
     buildScan {
@@ -26,6 +23,5 @@ buildCache {
         enabled = true
     }
 }
-*/
 
 rootProject.name = 'grails-static-website'
