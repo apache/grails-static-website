@@ -36,7 +36,6 @@ import org.gradle.api.file.CopySpec
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.FileSystemOperations
 import org.gradle.api.file.RegularFileProperty
-import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.CacheableTask
@@ -50,17 +49,19 @@ import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
-import website.utils.DateUtils
+import website.gradle.GrailsWebsiteExtension
 import website.model.HtmlMinutes
 import website.model.MarkdownMinutes
 import website.model.MinutesMetadataAdaptor
 import website.model.documentation.SiteMap
-import website.gradle.GrailsWebsiteExtension
+import website.utils.DateUtils
 import website.utils.MarkdownUtils
+
+import static website.utils.RenderUtils.renderHtml
 
 @CompileStatic
 @CacheableTask
-class MinutesTask extends GrailsWebsiteTask {
+abstract class MinutesTask extends GrailsWebsiteTask {
 
     @Internal
     final String description =
@@ -76,48 +77,42 @@ class MinutesTask extends GrailsWebsiteTask {
     private static final String MINUTES = 'foundation/minutes'
     private static final String INDEX = 'index.html'
 
-    private final ObjectFactory objects
-    private final FileSystemOperations fileSystemOperations
-
     @Inject
-    MinutesTask(ObjectFactory objects, FileSystemOperations fileSystemOperations) {
-        this.objects = objects
-        this.fileSystemOperations = fileSystemOperations
-    }
+    abstract FileSystemOperations getFileSystemOperations()
 
     @InputFile
     @PathSensitive(PathSensitivity.RELATIVE)
-    final RegularFileProperty document = objects.fileProperty()
+    abstract RegularFileProperty getDocument()
 
     @InputFile
     @PathSensitive(PathSensitivity.RELATIVE)
-    final RegularFileProperty releases = objects.fileProperty()
+    abstract RegularFileProperty getReleases()
 
     @InputDirectory
     @PathSensitive(PathSensitivity.RELATIVE)
-    final DirectoryProperty assetsDir = objects.directoryProperty()
+    abstract DirectoryProperty getAssetsDir()
 
     @InputDirectory
     @PathSensitive(PathSensitivity.RELATIVE)
-    final DirectoryProperty minutesDir = objects.directoryProperty()
+    abstract DirectoryProperty getMinutesDir()
 
     @Input
-    final Property<String> about = objects.property(String)
+    abstract Property<String> getAbout()
 
     @Input
-    final ListProperty<String> keywords = objects.listProperty(String)
+    abstract ListProperty<String> getKeywords()
 
     @Input
-    final Property<String> robots = objects.property(String)
+    abstract Property<String> getRobots()
 
     @Input
-    final Property<String> title = objects.property(String)
+    abstract Property<String> getTitle()
 
     @Input
-    final Property<String> url = objects.property(String)
+    abstract Property<String> getUrl()
 
     @OutputDirectory
-    final DirectoryProperty outputDir = objects.directoryProperty()
+    abstract DirectoryProperty getOutputDir()
 
     static TaskProvider<MinutesTask> register(
             Project project,
@@ -266,7 +261,7 @@ class MinutesTask extends GrailsWebsiteTask {
         for (def htmlMinutes : listOfMinutes) {
             minuteCards.add(minutesCard(htmlMinutes))
             new File(outputDir, htmlMinutes.path).tap {
-                it.setText(renderMinutesHtml(htmlMinutes, templateText, listOfMinutes), 'UTF-8')
+                it.text = renderMinutesHtml(htmlMinutes, templateText, listOfMinutes)
             }
             rssItems.add(
                     BlogTask.rssItemWithPage(
@@ -297,8 +292,7 @@ class MinutesTask extends GrailsWebsiteTask {
 
     @CompileDynamic
     private static String minutesCard(HtmlMinutes htmlMinutes) {
-        def writer = new StringWriter()
-        new MarkupBuilder(writer).with {
+        renderHtml {
             article(class: 'blog-card', style: "margin-bottom: 0; background-image: url($htmlMinutes.metadata.url/$IMAGES/$MINUTES_BG)") {
                 a(href: minutesLink(htmlMinutes)) {
                     h3 {
@@ -314,7 +308,6 @@ class MinutesTask extends GrailsWebsiteTask {
                 }
             }
         }
-        writer.toString()
     }
 
     private static void renderArchive(
@@ -329,13 +322,12 @@ class MinutesTask extends GrailsWebsiteTask {
         }
         html = RenderSiteTask.renderHtmlWithTemplateContent(html, resolvedMetadata, templateText)
         html = RenderSiteTask.highlightMenu(html, resolvedMetadata, "/$MINUTES/$INDEX")
-        f.setText(html, 'UTF-8')
+        f.text = html
     }
 
     @CompileDynamic
     static String cardsHtml(List<String> cards, String title = null) {
-        def writer = new StringWriter()
-        new MarkupBuilder(writer).with {
+        renderHtml {
             div(class: 'header-bar chalices-bg') {
                 div(class: 'content') {
                     if (title) {
@@ -370,7 +362,6 @@ class MinutesTask extends GrailsWebsiteTask {
                 }
             }
         }
-        writer.toString()
     }
 
     private static void renderRss(

@@ -18,14 +18,11 @@
  */
 package website.gradle.tasks
 
-import javax.inject.Inject
-
 import groovy.transform.CompileStatic
 
 import org.gradle.api.Project
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.RegularFileProperty
-import org.gradle.api.model.ObjectFactory
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.Internal
@@ -40,7 +37,7 @@ import website.model.questions.QuestionsPage
 
 @CompileStatic
 @CacheableTask
-class QuestionsTask extends GrailsWebsiteTask {
+abstract class QuestionsTask extends GrailsWebsiteTask {
 
     @Internal
     final String description = 'Generates FAQ HTML - build/temp/faq.html'
@@ -49,19 +46,12 @@ class QuestionsTask extends GrailsWebsiteTask {
 
     private static final String PAGE_NAME_QUESTIONS = 'faq.html'
 
-    private final ObjectFactory objects
-
-    @Inject
-    QuestionsTask(ObjectFactory objects) {
-        this.objects = objects
-    }
-
     @InputFile
     @PathSensitive(PathSensitivity.RELATIVE)
-    final RegularFileProperty questions = objects.fileProperty()
+    abstract RegularFileProperty getQuestions()
 
     @OutputDirectory
-    final DirectoryProperty outputDir = objects.directoryProperty()
+    abstract DirectoryProperty getOutputDir()
 
     static TaskProvider<QuestionsTask> register(
             Project project,
@@ -76,11 +66,11 @@ class QuestionsTask extends GrailsWebsiteTask {
 
     @TaskAction
     void renderQuestionsPage() {
-        def buildDir = outputDir.get().asFile
-        def temp = new File(buildDir, 'temp').tap { it.mkdirs() }
+        def temp = outputDir.dir('temp').get().asFile.tap { it.mkdirs() }
         def output = new File(temp, PAGE_NAME_QUESTIONS)
         output.setText(
-                "title: FAQ | Apache Grails&reg;\nbody: faq\n---\n" + QuestionsPage.mainContent(questions.get().asFile),
+                "title: FAQ | Apache Grails&reg;\nbody: faq\n---\n" +
+                        QuestionsPage.mainContent(questions.get().asFile),
                 'UTF-8'
         )
     }

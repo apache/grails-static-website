@@ -18,9 +18,9 @@
  */
 package website.model.documentation
 
-import groovy.transform.CompileStatic
+//import groovy.transform.CompileStatic
 
-@CompileStatic
+//@CompileStatic Does not compile statically with Groovy 4
 class Snapshot implements Comparable<Snapshot> {
 
     final String text

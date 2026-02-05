@@ -18,14 +18,11 @@
  */
 package website.gradle.tasks
 
-import javax.inject.Inject
-
 import groovy.transform.CompileStatic
 
 import org.gradle.api.Project
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.RegularFileProperty
-import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.CacheableTask
@@ -38,16 +35,16 @@ import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
+import website.gradle.GrailsWebsiteExtension
 import website.model.Page
 import website.model.documentation.SiteMap
-import website.gradle.GrailsWebsiteExtension
 import website.model.guides.GuidesFetcher
 import website.model.guides.GuidesPage
 import website.model.guides.TagUtils
 
 @CompileStatic
 @CacheableTask
-class GuidesTask extends GrailsWebsiteTask {
+abstract class GuidesTask extends GrailsWebsiteTask {
 
     @Internal
     final String description =
@@ -57,38 +54,31 @@ class GuidesTask extends GrailsWebsiteTask {
 
     private static final String PAGE_NAME_GUIDES = 'guides.html'
     
-    private ObjectFactory objects
-
-    @Inject
-    GuidesTask(ObjectFactory objects) {
-        this.objects = objects
-    }
-    
     @InputFile
     @PathSensitive(PathSensitivity.RELATIVE)
-    final RegularFileProperty document = objects.fileProperty()
+    abstract RegularFileProperty getDocument()
 
     @InputFile
     @PathSensitive(PathSensitivity.RELATIVE)
-    final RegularFileProperty releases = objects.fileProperty()
+    abstract RegularFileProperty getReleases()
 
     @Input
-    final Property<String> about = objects.property(String)
+    abstract Property<String> getAbout()
 
     @Input
-    final ListProperty<String> keywords = objects.listProperty(String)
+    abstract ListProperty<String> getKeywords()
 
     @Input
-    final Property<String> robots = objects.property(String)
+    abstract Property<String> getRobots()
 
     @Input
-    final Property<String> title = objects.property(String)
+    abstract Property<String> getTitle()
 
     @Input
-    final Property<String> url = objects.property(String)
+    abstract Property<String> getUrl()
 
     @OutputDirectory
-    final DirectoryProperty outputDir = objects.directoryProperty()
+    abstract DirectoryProperty getOutputDir()
 
     static TaskProvider<GuidesTask> register(
             Project project,
@@ -109,12 +99,12 @@ class GuidesTask extends GrailsWebsiteTask {
 
     @TaskAction
     void renderGuides() {
-        def tempDir = new File(outputDir.get().asFile, 'temp').tap { it.mkdirs() }
+        def tempDir = outputDir.dir('temp').get().asFile.tap { it.mkdirs() }
         generateGuidesPages(tempDir, url.get())
 
         def template = document.get().asFile
         def templateText = template.text
-        def distDir = new File(outputDir.get().asFile, 'dist').tap { it.mkdirs() }
+        def distDir = outputDir.dir('dist').get().asFile.tap { it.mkdirs() }
 
         def releasesFile = releases.get().asFile
         def latest = SiteMap.latestVersion(releasesFile)

@@ -26,7 +26,6 @@ import org.gradle.api.Project
 import org.gradle.api.file.CopySpec
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.FileSystemOperations
-import org.gradle.api.model.ObjectFactory
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.Internal
@@ -40,7 +39,7 @@ import website.gradle.GrailsWebsiteExtension
 
 @CompileStatic
 @CacheableTask
-class AssetsTask extends GrailsWebsiteTask {
+abstract class AssetsTask extends GrailsWebsiteTask {
 
     @Internal
     final String description =
@@ -57,21 +56,15 @@ class AssetsTask extends GrailsWebsiteTask {
             'stylesheets': ['*.css'],
     ]
 
-    private final ObjectFactory objects
-    private final FileSystemOperations fileSystemOperations
-
     @Inject
-    AssetsTask(ObjectFactory objects, FileSystemOperations fileSystemOperations) {
-        this.objects = objects
-        this.fileSystemOperations = fileSystemOperations
-    }
+    abstract FileSystemOperations getFileSystemOperations()
 
     @InputDirectory
     @PathSensitive(PathSensitivity.RELATIVE)
-    final DirectoryProperty assetsDir = objects.directoryProperty()
+    abstract DirectoryProperty getAssetsDir()
 
     @OutputDirectory
-    final DirectoryProperty outputDir = objects.directoryProperty()
+    abstract DirectoryProperty getOutputDir()
 
     static TaskProvider<AssetsTask> register(Project project, GrailsWebsiteExtension siteExt) {
         project.tasks.register(NAME, AssetsTask) {

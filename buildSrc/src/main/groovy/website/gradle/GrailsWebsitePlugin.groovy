@@ -23,9 +23,8 @@ import groovy.transform.CompileStatic
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
-import website.gradle.tasks.BlogTask
-
 import website.gradle.tasks.AssetsTask
+import website.gradle.tasks.BlogTask
 import website.gradle.tasks.DocumentationTask
 import website.gradle.tasks.DownloadTask
 import website.gradle.tasks.GrailsWebsiteTask

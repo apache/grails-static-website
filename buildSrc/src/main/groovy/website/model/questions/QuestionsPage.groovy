@@ -18,8 +18,8 @@
  */
 package website.model.questions
 
-
 import org.yaml.snakeyaml.Yaml
+
 import website.utils.MarkdownUtils
 
 import static website.utils.RenderUtils.renderHtml

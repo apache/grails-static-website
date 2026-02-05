@@ -18,14 +18,11 @@
  */
 package website.gradle.tasks
 
-import javax.inject.Inject
-
 import groovy.transform.CompileStatic
 
 import org.gradle.api.Project
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.RegularFileProperty
-import org.gradle.api.model.ObjectFactory
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.Internal
@@ -35,34 +32,31 @@ import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
-import website.model.documentation.ProfilesPage
 import website.gradle.GrailsWebsiteExtension
+import website.model.documentation.ProfilesPage
 
 @CompileStatic
 @CacheableTask
-class ProfilesTask extends GrailsWebsiteTask {
+abstract class ProfilesTask extends GrailsWebsiteTask {
 
     @Internal
     final String description = 'Generates the Profiles HTML Page -> build/temp/profiles.html'
 
     public static final String NAME = 'genProfilesPage'
 
-    private final ObjectFactory objects
-
-    @Inject
-    ProfilesTask(ObjectFactory objects) {
-        this.objects = objects
-    }
-
     @InputFile
     @PathSensitive(PathSensitivity.RELATIVE)
-    final RegularFileProperty profiles = objects.fileProperty()
+    abstract RegularFileProperty getProfiles()
 
     @OutputDirectory
-    final DirectoryProperty outputDir = objects.directoryProperty()
+    abstract DirectoryProperty getOutputDir()
 
-    static TaskProvider<ProfilesTask> register(Project project, GrailsWebsiteExtension siteExt) {
-        project.tasks.register(NAME, ProfilesTask) {
+    static TaskProvider<ProfilesTask> register(
+            Project project,
+            GrailsWebsiteExtension siteExt,
+            String name = NAME
+    ) {
+        project.tasks.register(name, ProfilesTask) {
             it.profiles.set(siteExt.profiles)
             it.outputDir.set(siteExt.outputDir)
         }
@@ -70,7 +64,7 @@ class ProfilesTask extends GrailsWebsiteTask {
 
     @TaskAction
     void renderProfilesPage() {
-        def tempDir = new File(outputDir.get().asFile, 'temp').tap { mkdirs() }
+        def tempDir = outputDir.dir('temp').get().asFile.tap { mkdirs() }
         def output = new File(tempDir, 'profiles.html')
         output.setText(
                 'title: Profiles | Grails Framework\n' +

@@ -18,14 +18,11 @@
  */
 package website.gradle.tasks
 
-import javax.inject.Inject
-
 import groovy.transform.CompileStatic
 
 import org.gradle.api.Project
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.RegularFileProperty
-import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
@@ -37,12 +34,12 @@ import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
-import website.model.documentation.DocumentationPage
 import website.gradle.GrailsWebsiteExtension
+import website.model.documentation.DocumentationPage
 
 @CompileStatic
 @CacheableTask
-class DocumentationTask extends GrailsWebsiteTask {
+abstract class DocumentationTask extends GrailsWebsiteTask {
 
     @Internal
     final String description =
@@ -50,28 +47,25 @@ class DocumentationTask extends GrailsWebsiteTask {
 
     public static final String NAME = 'genDocsPage'
 
-    private final ObjectFactory objects
-
-    @Inject
-    DocumentationTask(ObjectFactory objects) {
-        this.objects = objects
-    }
+    @InputFile
+    @PathSensitive(PathSensitivity.RELATIVE)
+    abstract RegularFileProperty getModules()
 
     @InputFile
     @PathSensitive(PathSensitivity.RELATIVE)
-    final RegularFileProperty modules = objects.fileProperty()
-
-    @InputFile
-    @PathSensitive(PathSensitivity.RELATIVE)
-    final RegularFileProperty releases = objects.fileProperty()
+    abstract RegularFileProperty getReleases()
 
     @Input
-    final Property<String> url = objects.property(String)
+    abstract Property<String> getUrl()
 
     @OutputDirectory
-    final DirectoryProperty outputDir = objects.directoryProperty()
+    abstract DirectoryProperty getOutputDir()
 
-    static TaskProvider<DocumentationTask> register(Project project, GrailsWebsiteExtension siteExt, String name = NAME) {
+    static TaskProvider<DocumentationTask> register(
+            Project project,
+            GrailsWebsiteExtension siteExt,
+            String name = NAME)
+    {
         project.tasks.register(name, DocumentationTask) {
             it.modules.set(siteExt.modules)
             it.url.set(siteExt.url)
@@ -82,8 +76,7 @@ class DocumentationTask extends GrailsWebsiteTask {
 
     @TaskAction
     void renderDocsPage() {
-        def buildDir = outputDir.get().asFile
-        def tempDir = new File(buildDir, 'temp').tap {mkdirs() }
+        def tempDir = outputDir.dir('temp').get().asFile.tap {mkdirs() }
         def outputFile = new File(tempDir, 'documentation.html')
         outputFile.setText(
                 'title: Documentation | Grails Framework\n' +

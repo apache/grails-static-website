@@ -23,12 +23,12 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.util.regex.Pattern
 
-import jakarta.annotation.Nonnull
 import javax.inject.Inject
 
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
-import groovy.xml.MarkupBuilder
+
+import jakarta.annotation.Nonnull
 
 import io.micronaut.rss.DefaultRssFeedRenderer
 import io.micronaut.rss.RssChannel
@@ -39,7 +39,6 @@ import org.gradle.api.file.Directory
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.FileSystemOperations
 import org.gradle.api.file.RegularFileProperty
-import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.provider.Provider
@@ -54,17 +53,19 @@ import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
+import website.gradle.GrailsWebsiteExtension
 import website.model.HtmlPost
 import website.model.MarkdownPost
 import website.model.PostMetadataAdapter
 import website.model.documentation.SiteMap
-import website.gradle.GrailsWebsiteExtension
 import website.utils.DateUtils
 import website.utils.MarkdownUtils
 
+import static website.utils.RenderUtils.renderHtml
+
 @CompileStatic
 @CacheableTask
-class BlogTask extends GrailsWebsiteTask {
+abstract class BlogTask extends GrailsWebsiteTask {
 
     @Internal
     final String description =
@@ -88,48 +89,42 @@ class BlogTask extends GrailsWebsiteTask {
     private static final int MAX_RELATED_POSTS = 3
     private static final int MAX_TITLE_LENGTH = 45
 
-    private final ObjectFactory objects
-    private final FileSystemOperations fileSystemOperations
-
     @Inject
-    BlogTask(ObjectFactory objects, FileSystemOperations fileSystemOperations) {
-        this.objects = objects
-        this.fileSystemOperations = fileSystemOperations
-    }
+    abstract FileSystemOperations getFileSystemOperations()
 
     @InputFile
     @PathSensitive(PathSensitivity.RELATIVE)
-    final RegularFileProperty document = objects.fileProperty()
+    abstract RegularFileProperty getDocument()
 
     @InputFile
     @PathSensitive(PathSensitivity.RELATIVE)
-    final RegularFileProperty releases = objects.fileProperty()
+    abstract RegularFileProperty getReleases()
 
     @InputDirectory
     @PathSensitive(PathSensitivity.RELATIVE)
-    final DirectoryProperty assetsDir = objects.directoryProperty()
+    abstract DirectoryProperty getAssetsDir()
 
     @InputDirectory
     @PathSensitive(PathSensitivity.RELATIVE)
-    final DirectoryProperty postsDir = objects.directoryProperty()
+    abstract DirectoryProperty getPostsDir()
 
     @Input
-    final Property<String> about = objects.property(String)
+    abstract Property<String> getAbout()
 
     @Input
-    final ListProperty<String> keywords = objects.listProperty(String)
+    abstract ListProperty<String> getKeywords()
 
     @Input
-    final Property<String> robots = objects.property(String)
+    abstract Property<String> getRobots()
 
     @Input
-    final Property<String> title = objects.property(String)
+    abstract Property<String> getTitle()
 
     @Input
-    final Property<String> url = objects.property(String)
+    abstract Property<String> getUrl()
 
     @OutputDirectory
-    final DirectoryProperty outputDir = objects.directoryProperty()
+    abstract DirectoryProperty getOutputDir()
 
     static TaskProvider<BlogTask> register(Project project, GrailsWebsiteExtension siteExt) {
         project.tasks.register(NAME, BlogTask) {
@@ -217,8 +212,7 @@ class BlogTask extends GrailsWebsiteTask {
 
     @CompileDynamic
     static String renderPostHtml(HtmlPost htmlPost, String templateText, List<HtmlPost> posts) {
-        def writer = new StringWriter()
-        new MarkupBuilder(writer).with {
+        def html = renderHtml {
             div(class: 'header-bar chalices-bg') {
                 div(class: 'content') {
                     h1 {
@@ -244,7 +238,7 @@ class BlogTask extends GrailsWebsiteTask {
         }
 
         def metadata = htmlPost.metadata.toMap()
-        def html = RenderSiteTask.renderHtmlWithTemplateContent(writer.toString(), metadata, templateText)
+        html = RenderSiteTask.renderHtmlWithTemplateContent(html, metadata, templateText)
         html = RenderSiteTask.highlightMenu(html, metadata, htmlPost.path)
 
         def bodyClass = metadata.body
@@ -382,29 +376,25 @@ class BlogTask extends GrailsWebsiteTask {
         def style = imageUrl ? "background-image: url('$imageUrl')" : null
         def title = RenderSiteTask.replaceLineWithMetadata(meta.title, meta.toMap())
         title = title.size() > MAX_TITLE_LENGTH ? "${title.take(MAX_TITLE_LENGTH)}..." : title
-        def writer = new StringWriter()
-        new MarkupBuilder(writer).with {
+        renderHtml {
             omitNullAttributes = true
             article(class: 'blog-card', style: style) {
-                a(href: postLink(htmlPost)) {
+                a(href: BlogTask.postLink(htmlPost)) {
                     h3 { mkp.yield(RenderSiteTask.formatDate(meta.date)) }
                     h2 { mkp.yield(title) }
                 }
             }
         }
-        writer.toString()
     }
 
     @CompileDynamic
     private static String renderTagTitle(String tag) {
-        def writer = new StringWriter()
-        new MarkupBuilder(writer).with {
+        renderHtml {
             h1 {
                 span('Tag:')
                 b(tag)
             }
         }
-        writer.toString()
     }
 
     @CompileDynamic
@@ -442,8 +432,7 @@ class BlogTask extends GrailsWebsiteTask {
 
     @CompileDynamic
     static String cardsHtml(List<String> cards, String title = null) {
-        def writer = new StringWriter()
-        new MarkupBuilder(writer).tap {
+        renderHtml {
             div(class: 'header-bar chalices-bg') {
                 div(class: 'content') {
                     if (title) {
@@ -467,7 +456,6 @@ class BlogTask extends GrailsWebsiteTask {
                 }
             }
         }
-        writer.toString()
     }
 
     private static void renderRss(

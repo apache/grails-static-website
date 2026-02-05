@@ -18,8 +18,9 @@
  */
 package website.model
 
-import jakarta.annotation.Nullable
 import groovy.transform.CompileStatic
+
+import jakarta.annotation.Nullable
 
 @CompileStatic
 interface MinutesMetadata {

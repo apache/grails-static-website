@@ -18,13 +18,10 @@
  */
 package website.gradle.tasks
 
-import javax.inject.Inject
-
 import groovy.transform.CompileStatic
 
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
-import org.gradle.api.model.ObjectFactory
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.OutputFile
@@ -35,7 +32,7 @@ import website.gradle.GrailsWebsiteExtension
 
 @CompileStatic
 @CacheableTask
-class HtaccessTask extends GrailsWebsiteTask {
+abstract class HtaccessTask extends GrailsWebsiteTask {
 
     @Internal
     final String description = 'Generates the .htaccess file'
@@ -59,15 +56,8 @@ class HtaccessTask extends GrailsWebsiteTask {
             '# Ref https://docs.kapa.ai/integrations/understanding-csp-cors\n' +
             'SetEnv CSP_PROJECT_DOMAINS "' + DOMAINS.join(' ') + '"'
 
-    private final ObjectFactory objects
-
-    @Inject
-    HtaccessTask(ObjectFactory objects) {
-        this.objects = objects
-    }
-
     @OutputFile
-    final RegularFileProperty htaccess = objects.fileProperty()
+    abstract RegularFileProperty getHtaccess()
 
     static TaskProvider<HtaccessTask> register(
             Project project,

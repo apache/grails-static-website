@@ -24,8 +24,6 @@ import java.net.http.HttpResponse
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-import javax.inject.Inject
-
 import groovy.json.JsonSlurper
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
@@ -36,7 +34,6 @@ import jakarta.annotation.Nullable
 import org.gradle.api.Project
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.RegularFileProperty
-import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.CacheableTask
@@ -48,6 +45,7 @@ import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
+
 import website.gradle.GrailsWebsiteExtension
 import website.model.plugin.Owner
 import website.model.plugin.Plugin
@@ -57,7 +55,7 @@ import website.model.plugin.PluginsPage
 @Slf4j
 @CompileStatic
 @CacheableTask
-class PluginsTask extends GrailsWebsiteTask {
+abstract class PluginsTask extends GrailsWebsiteTask {
 
     @Internal
     final String description = 'Generates an HTML Page listing the Grails plugins'
@@ -67,25 +65,18 @@ class PluginsTask extends GrailsWebsiteTask {
     private static final String GRAILS_PLUGINS_JSON =
             'https://raw.githubusercontent.com/grails/grails-plugins-metadata/main/grails-plugins-index.json'
 
-    private final ObjectFactory objects
-
-    @Inject
-    PluginsTask(ObjectFactory objects) {
-        this.objects = objects
-    }
-
     @InputFile
     @PathSensitive(PathSensitivity.RELATIVE)
-    final RegularFileProperty document = objects.fileProperty()
+    abstract RegularFileProperty getDocument()
 
     @Input
-    final ListProperty<String> keywords = objects.listProperty(String)
+    abstract ListProperty<String> getKeywords()
 
     @Input
-    final Property<String> url = objects.property(String)
+    abstract Property<String> getUrl()
 
     @OutputDirectory
-    final DirectoryProperty outputDir = objects.directoryProperty()
+    abstract DirectoryProperty getOutputDir()
 
     static TaskProvider<PluginsTask> register(
             Project project,
@@ -121,10 +112,10 @@ class PluginsTask extends GrailsWebsiteTask {
     void renderHtml(List<Plugin> plugins, String templateText, Map<String, String> metadata, String fileName) {
         def siteUrl = url.get()
 
-        def distDir          = new File(outputDir.get().asFile, 'dist').tap { mkdirs() }
-        def pluginsDir       = new File(distDir, 'plugins').tap { mkdirs() }
-        def pluginsTagsDir   = new File(pluginsDir, 'tags').tap { mkdirs() }
-        def pluginsOwnersDir = new File(pluginsDir, 'owners').tap { mkdirs() }
+        def distDir          = outputDir.dir('dist').get().asFile
+        def pluginsDir       = outputDir.dir('dist/plugins').get().asFile
+        def pluginsTagsDir   = outputDir.dir('dist/plugins/tags').get().asFile.tap { mkdirs() }
+        def pluginsOwnersDir = outputDir.dir('dist/plugins/owners').get().asFile.tap { mkdirs() }
 
         def wrap = { String html -> RenderSiteTask.renderHtmlWithTemplateContent(html, metadata, templateText) }
 

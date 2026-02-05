@@ -18,19 +18,17 @@
  */
 package website.gradle.tasks
 
-import jakarta.annotation.Nonnull
-import javax.inject.Inject
-import jakarta.validation.constraints.NotNull
-
 import groovy.time.TimeCategory
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 
+import jakarta.annotation.Nonnull
 import jakarta.annotation.Nullable
+import jakarta.validation.constraints.NotNull
+
 import org.gradle.api.Project
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.RegularFileProperty
-import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.CacheableTask
@@ -44,17 +42,17 @@ import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
+import website.gradle.GrailsWebsiteExtension
 import website.model.ContentAndMetadata
-import website.utils.DateUtils
 import website.model.Page
 import website.model.documentation.SiteMap
-import website.gradle.GrailsWebsiteExtension
+import website.utils.DateUtils
 
 import static groovy.io.FileType.FILES
 
 @CompileStatic
 @CacheableTask
-class RenderSiteTask extends GrailsWebsiteTask {
+abstract class RenderSiteTask extends GrailsWebsiteTask {
 
     @Internal
     final String description =
@@ -69,42 +67,35 @@ class RenderSiteTask extends GrailsWebsiteTask {
     private static final int TWITTER_CARD_PLAYER_WIDTH = 560
     private static final int TWITTER_CARD_PLAYER_HEIGHT = 315
 
-    private final ObjectFactory objects
-
-    @Inject
-    RenderSiteTask(ObjectFactory objects) {
-        this.objects = objects
-    }
-    
     @InputFile
     @PathSensitive(PathSensitivity.RELATIVE)
-    final RegularFileProperty document = objects.fileProperty()
+    abstract RegularFileProperty getDocument()
 
     @InputFile
     @PathSensitive(PathSensitivity.RELATIVE)
-    final RegularFileProperty releases = objects.fileProperty()
+    abstract RegularFileProperty getReleases()
 
     @InputDirectory
     @PathSensitive(PathSensitivity.RELATIVE)
-    final DirectoryProperty pagesDir = objects.directoryProperty()
+    abstract DirectoryProperty getPagesDir()
 
     @Input
-    final Property<String> title = objects.property(String)
+    abstract Property<String> getTitle()
 
     @Input
-    final Property<String> about = objects.property(String)
+    abstract Property<String> getAbout()
 
     @Input
-    final Property<String> url = objects.property(String)
+    abstract Property<String> getUrl()
 
     @Input
-    final ListProperty<String> keywords = objects.listProperty(String)
+    abstract ListProperty<String> getKeywords()
 
     @Input
-    final Property<String> robots = objects.property(String)
+    abstract Property<String> getRobots()
 
     @OutputDirectory
-    final DirectoryProperty outputDir = objects.directoryProperty()
+    abstract DirectoryProperty getOutputDir()
 
     static TaskProvider<RenderSiteTask> register(
             Project project,
@@ -126,14 +117,13 @@ class RenderSiteTask extends GrailsWebsiteTask {
 
     @TaskAction
     void renderSite() {
-        def o = outputDir.get().asFile
         def releasesFile = releases.get().asFile
         def latest = SiteMap.latestVersion(releasesFile)
         def versions = SiteMap.olderVersions(releasesFile)
                 .reverse()
                 .collect { "<option>${it}</option>" }
                 .join(' ')
-        def m = website.gradle.tasks.RenderSiteTask.siteMeta(
+        def metaData = siteMeta(
                 title.get(),
                 about.get(),
                 url.get(),
@@ -144,11 +134,15 @@ class RenderSiteTask extends GrailsWebsiteTask {
         def listOfPages = parsePages(pagesDir.get().asFile)
         listOfPages.addAll(
                 parsePages(
-                        new File(o, 'temp')
+                        outputDir.dir('temp').get().asFile
                 )
         )
-        File dist = new File(o, 'dist')
-        renderPages(m, listOfPages, dist, document.get().asFile.text)
+        renderPages(
+                metaData,
+                listOfPages,
+                outputDir.dir('dist').get().asFile,
+                document.get().asFile.text
+        )
     }
 
     static Map<String, String> siteMeta(

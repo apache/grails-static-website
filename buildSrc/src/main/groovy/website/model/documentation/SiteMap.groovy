@@ -45,7 +45,7 @@ class SiteMap {
 
     static List<SoftwareVersion> stableVersions(File releases) {
         versions(releases)
-                .findAll { !it.isSnapshot() }
+                .findAll { !it.getIsSnapshot() }
                 .toSorted { a, b -> b <=> a }
     }
 

@@ -22,12 +22,9 @@ import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import groovy.xml.MarkupBuilder
 
-import javax.inject.Inject
-
 import org.gradle.api.Project
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.RegularFileProperty
-import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
@@ -45,29 +42,22 @@ import static groovy.io.FileType.FILES
 
 @CompileStatic
 @CacheableTask
-class SitemapTask extends GrailsWebsiteTask {
+abstract class SitemapTask extends GrailsWebsiteTask {
 
     @Internal
     final String description = 'Generates build/dist/sitemap.xml with every page in the site'
 
     public static final String NAME = 'genSitemap'
 
-    private final ObjectFactory objects
-
-    @Inject
-    SitemapTask(ObjectFactory objects) {
-        this.objects = objects
-    }
-
     @InputDirectory
     @PathSensitive(PathSensitivity.RELATIVE)
-    final DirectoryProperty inputDir = objects.directoryProperty()
+    abstract DirectoryProperty getInputDir()
 
     @Input
-    final Property<String> url = objects.property(String)
+    abstract Property<String> getUrl()
 
     @OutputFile
-    final RegularFileProperty outputFile = objects.fileProperty()
+    abstract RegularFileProperty getOutputFile()
 
     static TaskProvider<SitemapTask> register(
             Project project,
@@ -100,7 +90,8 @@ class SitemapTask extends GrailsWebsiteTask {
     @CompileDynamic
     static String sitemapContent(List<String> urls) {
         def writer = new StringWriter()
-        def xml = new MarkupBuilder(writer)
+        def printer = new IndentPrinter(new PrintWriter(writer), '', false)
+        def xml = new MarkupBuilder(printer)
         xml.urlset(xmlns: 'https://www.sitemaps.org/schemas/sitemap/0.9') {
             for (def urlStr : urls) {
                 url {

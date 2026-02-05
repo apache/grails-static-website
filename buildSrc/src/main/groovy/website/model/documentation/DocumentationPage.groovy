@@ -20,6 +20,7 @@ package website.model.documentation
 
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
+
 import org.yaml.snakeyaml.Yaml
 
 import static website.utils.RenderUtils.renderHtml

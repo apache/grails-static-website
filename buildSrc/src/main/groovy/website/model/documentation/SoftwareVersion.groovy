@@ -76,7 +76,7 @@ class SoftwareVersion implements Comparable<SoftwareVersion> {
         version.toLowerCase().contains('snapshot')
     }
 
-    boolean isSnapshot() {
+    boolean getIsSnapshot() {
         snapshot != null
     }
 
@@ -97,11 +97,11 @@ class SoftwareVersion implements Comparable<SoftwareVersion> {
             return patchCompare
         }
 
-        if (this.isSnapshot() && !o.isSnapshot()) {
+        if (this.getIsSnapshot() && !o.getIsSnapshot()) {
             return -1
-        } else if (!this.isSnapshot() && o.isSnapshot()) {
+        } else if (!this.getIsSnapshot() && o.getIsSnapshot()) {
             return 1
-        } else if (this.isSnapshot() && o.isSnapshot()) {
+        } else if (this.getIsSnapshot() && o.getIsSnapshot()) {
             return this.getSnapshot() <=> o.getSnapshot()
         } else {
             return 0

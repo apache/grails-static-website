@@ -18,8 +18,11 @@
  */
 package website.gradle.tasks
 
+import groovy.transform.CompileStatic
+
 import org.gradle.api.DefaultTask
 
+@CompileStatic
 abstract class GrailsWebsiteTask extends DefaultTask {
 
     public static String GROUP = 'grails website'
