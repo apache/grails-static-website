@@ -34,6 +34,7 @@ import io.micronaut.rss.RssItem
 import org.gradle.api.Project
 import org.gradle.api.file.CopySpec
 import org.gradle.api.file.DirectoryProperty
+import org.gradle.api.file.FileSystemOperations
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.ListProperty
@@ -76,10 +77,12 @@ class MinutesTask extends GrailsWebsiteTask {
     private static final String INDEX = 'index.html'
 
     private final ObjectFactory objects
+    private final FileSystemOperations fileSystemOperations
 
     @Inject
-    MinutesTask(ObjectFactory objects) {
+    MinutesTask(ObjectFactory objects, FileSystemOperations fileSystemOperations) {
         this.objects = objects
+        this.fileSystemOperations = fileSystemOperations
     }
 
     @InputFile
@@ -155,7 +158,7 @@ class MinutesTask extends GrailsWebsiteTask {
                 outputDir.dir('foundation/minutes').get().asFile.tap { it.mkdirs() },
                 document.get().asFile.text
         )
-        project.copy { CopySpec copy ->
+        fileSystemOperations.copy { CopySpec copy ->
             copy.from(assetsDir.dir('bgimages'))
             copy.into(outputDir.dir('dist/images'))
             copy.include(AssetsTask.assetTypes.images)

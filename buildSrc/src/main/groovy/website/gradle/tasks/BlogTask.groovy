@@ -37,6 +37,7 @@ import org.gradle.api.Project
 import org.gradle.api.file.CopySpec
 import org.gradle.api.file.Directory
 import org.gradle.api.file.DirectoryProperty
+import org.gradle.api.file.FileSystemOperations
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.ListProperty
@@ -88,10 +89,12 @@ class BlogTask extends GrailsWebsiteTask {
     private static final int MAX_TITLE_LENGTH = 45
 
     private final ObjectFactory objects
+    private final FileSystemOperations fileSystemOperations
 
     @Inject
-    BlogTask(ObjectFactory objects) {
+    BlogTask(ObjectFactory objects, FileSystemOperations fileSystemOperations) {
         this.objects = objects
+        this.fileSystemOperations = fileSystemOperations
     }
 
     @InputFile
@@ -174,7 +177,7 @@ class BlogTask extends GrailsWebsiteTask {
     }
 
     void copyImages(Provider<Directory> srcDir, Provider<Directory> dstDir) {
-        project.copy { CopySpec copy ->
+        fileSystemOperations.copy { CopySpec copy ->
             copy.from(srcDir)
             copy.into(dstDir)
             copy.include(AssetsTask.assetTypes.images)

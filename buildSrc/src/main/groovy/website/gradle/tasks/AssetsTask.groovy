@@ -25,6 +25,7 @@ import groovy.transform.CompileStatic
 import org.gradle.api.Project
 import org.gradle.api.file.CopySpec
 import org.gradle.api.file.DirectoryProperty
+import org.gradle.api.file.FileSystemOperations
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.InputDirectory
@@ -57,10 +58,12 @@ class AssetsTask extends GrailsWebsiteTask {
     ]
 
     private final ObjectFactory objects
+    private final FileSystemOperations fileSystemOperations
 
     @Inject
-    AssetsTask(ObjectFactory objects) {
+    AssetsTask(ObjectFactory objects, FileSystemOperations fileSystemOperations) {
         this.objects = objects
+        this.fileSystemOperations = fileSystemOperations
     }
 
     @InputDirectory
@@ -80,7 +83,7 @@ class AssetsTask extends GrailsWebsiteTask {
     @TaskAction
     void copyAssets() {
         assetTypes.each { dirName, extFilters ->
-            project.copy { CopySpec cs ->
+            fileSystemOperations.copy { CopySpec cs ->
                 cs.from(assetsDir.dir(dirName))
                 cs.into(outputDir.dir("dist/$dirName"))
                 cs.include(extFilters.collect { '**/' + it })
