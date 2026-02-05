@@ -3,7 +3,7 @@ plugins {
 }
 
 ext {
-    micronautVersion = '3.10.4'
+    micronautVersion = '4.10.4'
     flexmarkVersion = '0.64.8'
 }
 
@@ -13,22 +13,22 @@ repositories {
 
 dependencies {
 
-    annotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
-    implementation platform("io.micronaut:micronaut-bom:$micronautVersion")
-    testAnnotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
-    testImplementation platform("io.micronaut:micronaut-bom:$micronautVersion")
+    annotationProcessor platform("io.micronaut.platform:micronaut-platform:$micronautVersion")
+    implementation platform("io.micronaut.platform:micronaut-platform:$micronautVersion")
+    testAnnotationProcessor platform("io.micronaut.platform:micronaut-platform:$micronautVersion")
+    testImplementation platform("io.micronaut.platform:micronaut-platform:$micronautVersion")
 
     annotationProcessor 'io.micronaut:micronaut-inject-java'
-    annotationProcessor 'io.micronaut:micronaut-validation'
+    annotationProcessor 'io.micronaut.validation:micronaut-validation-processor'
 
-    implementation 'io.micronaut:micronaut-validation'
+    implementation 'io.micronaut.validation:micronaut-validation'
     implementation 'io.micronaut:micronaut-http-client'
     implementation 'io.micronaut:micronaut-http'
     implementation 'io.micronaut:micronaut-inject'
 
     implementation 'org.yaml:snakeyaml'
     implementation 'com.github.spotbugs:spotbugs-annotations'
-    implementation 'javax.validation:validation-api'
+    implementation 'jakarta.validation:jakarta.validation-api'
     implementation 'io.micronaut.rss:micronaut-rss-core'
     implementation "com.vladsch.flexmark:flexmark:$flexmarkVersion"
     implementation "com.vladsch.flexmark:flexmark-ext-tables:$flexmarkVersion"

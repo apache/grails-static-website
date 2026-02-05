@@ -20,7 +20,7 @@ package website.gradle.tasks
 
 import javax.annotation.Nonnull
 import javax.inject.Inject
-import javax.validation.constraints.NotNull
+import jakarta.validation.constraints.NotNull
 
 import groovy.time.TimeCategory
 import groovy.transform.CompileDynamic
