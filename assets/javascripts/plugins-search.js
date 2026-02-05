@@ -59,6 +59,9 @@ window.addEventListener('load', () => {
         const vcsUrl = elements[i].querySelector('h3.name > a').href
         const metaInfo = elements[i].querySelector("p")?.outerHTML
         const ghStar = elements[i].querySelector(gitHubStarsSelector)?.outerHTML
+        // Collect all Grails versions from the version dropdown items
+        const grailsCompatElements = elements[i].querySelectorAll('.grails-compat, .compat')
+        const allGrailsVersions = [...grailsCompatElements].map(el => el.textContent).filter(v => v)
         allPlugins.push({
             pluginData: pluginData,
             name: name[0]?.textContent,
@@ -67,7 +70,9 @@ window.addEventListener('load', () => {
             labels: labelsAtPlugin(labels),
             vcsUrl: vcsUrl,
             metaInfo: metaInfo,
-            ghStar: ghStar
+            ghStar: ghStar,
+            grailsVersions: allGrailsVersions,
+            element: elements[i]
         })
     }
 
@@ -76,7 +81,7 @@ window.addEventListener('load', () => {
         const searchBox = queryInput.closest('.search-box-inline')
         const clearBtn = searchBox?.querySelector('.search-clear-btn')
 
-        queryInput.addEventListener('input', onQueryChanged)
+        queryInput.addEventListener('input', onFilterChanged)
 
         // Update the has-value class on input
         queryInput.addEventListener('input', () => {
@@ -90,14 +95,19 @@ window.addEventListener('load', () => {
             clearBtn.addEventListener('click', () => {
                 queryInput.value = ''
                 searchBox.classList.remove('has-value')
-                resetDefault()
+                onFilterChanged()
                 queryInput.focus()
             })
         }
     }
     if (document.getElementById(mobileQueryInputFieldId)) {
         document.getElementById(mobileQueryInputFieldId)
-            .addEventListener('input', onQueryChanged)
+            .addEventListener('input', onFilterChanged)
+    }
+
+    const grailsVersionSelect = document.getElementById('grails-version-select')
+    if (grailsVersionSelect) {
+        grailsVersionSelect.addEventListener('change', onFilterChanged)
     }
 });
 
@@ -139,65 +149,92 @@ function clearSearchResultsDiv() {
     searchResultsDiv.innerHTML = ''
 }
 
-function onQueryChanged() {
-    let query = queryValue()?.trim()
-    const matchingPlugins = []
-    if (query === null || query === '') {
+function getSelectedGrailsVersion() {
+    const select = document.getElementById('grails-version-select')
+    return select ? select.value : ''
+}
+
+function doesGrailsVersionMatch(plugin, majorVersion) {
+    if (!majorVersion) return true // No filter = show all
+    const grailsVersions = plugin.grailsVersions || []
+    if (grailsVersions.length === 0) return false
+    // Check if any version matches the major version
+    return grailsVersions.some(version => {
+        return version.startsWith(majorVersion + '.') || version === majorVersion
+    })
+}
+
+function onFilterChanged() {
+    const query = (queryValue() || '').trim()
+    const grailsVersion = getSelectedGrailsVersion()
+
+    // If no filters are active, show default
+    if (!query && !grailsVersion) {
         resetDefault()
-        return
-    } else if (query.length < 2) {
         return
     }
 
-    if (query !== '') {
-        for (let i = 0; i <= allPlugins.length - 1; i++) {
-            const plugin = allPlugins[i]
-            if (doesPluginMatchesQuery(plugin, query)) {
-                matchingPlugins.push(plugin)
-            }
-        }
+    // For search query, require at least 2 characters
+    if (query && query.length < 2 && !grailsVersion) {
+        return
     }
+
+    // Filter plugins based on both search query and Grails version
+    const matchingPlugins = allPlugins.filter(plugin => {
+        const matchesQuery = !query || query.length < 2 || doesPluginMatchQuery(plugin, query)
+        const matchesVersion = doesGrailsVersionMatch(plugin, grailsVersion)
+        return matchesQuery && matchesVersion
+    })
+
     if (searchResultsDiv) {
         if (matchingPlugins.length > 0) {
-            if (searchResultsDiv.parentNode.getElementsByClassName(searchResultsLabelSelector).length === 0) {
-                const searchResultHeadingLabel = document.querySelector(searchResultsLabelSelector)
+            hideElementsToDisplaySearchResults()
+
+            // Update search results heading
+            const searchResultHeadingLabel = document.querySelector(searchResultsLabelSelector)
+            if (searchResultHeadingLabel) {
                 const querySpan = searchResultHeadingLabel.querySelector('span')
-                querySpan.innerHTML = queryValue()
+                let filterText = []
+                if (query && query.length >= 2) filterText.push(`"${query}"`)
+                if (grailsVersion) filterText.push(`Grails ${grailsVersion}.x`)
+                querySpan.innerHTML = filterText.join(' + ')
                 showElementsByClassName(searchResultsHeadingLabelClassName)
             }
-            hideElementsToDisplaySearchResults()
+
             searchResultsDiv.innerHTML = renderPlugins(matchingPlugins)
-            paginate(Array.from(searchResultsDiv.getElementsByClassName(pluginContainerDivClassName)), max, searchResultsDiv, paginationContainerClass)
+            const searchResultsList = searchResultsDiv.querySelector('ul.plugin-list')
+            paginate(Array.from(searchResultsList.getElementsByClassName(pluginContainerDivClassName)), max, searchResultsList, paginationContainerClass)
             showElementsByClassName(searchResultsDivClassName)
             hideElementsByClassName(noresultsDivClassName)
-        } else if (matchingPlugins.length === 0) {
+        } else {
             clearSearchResultsDiv()
             hideElementsToDisplaySearchResults()
             showElementsByClassName(noresultsDivClassName)
+            hideElementsByClassName(searchResultsHeadingLabelClassName)
             const pagination = document.querySelector(paginationContainerClass)
-            pagination.innerHTML = ''
+            if (pagination) pagination.innerHTML = ''
         }
     }
 }
 
-function doesTagsMatchesQuery(tags, query) {
+function doesTagsMatchQuery(tags, query) {
     const q = query.toLowerCase()
     return tags.some(tag => tag.toLowerCase().includes(q))
 }
 
-function doesTitleMatchesQuery(title, query) {
+function doesTitleMatchQuery(title, query) {
     if (title == null) return false
     const t = title.toLowerCase()
     const q = query.toLowerCase()
     return t.includes(q) || (q.includes(" ") && q.split(" ").every(term => t.includes(term)))
 }
 
-function doesOwnerMatchesQuery(owner, query) {
+function doesOwnerMatchQuery(owner, query) {
     return owner != null && owner.toLowerCase().includes(query.toLowerCase())
 }
 
-function doesPluginMatchesQuery(guide, query) {
-    return doesTitleMatchesQuery(guide.name, query) || doesOwnerMatchesQuery(guide.owner, query) || doesTagsMatchesQuery(guide.labels, query)
+function doesPluginMatchQuery(guide, query) {
+    return doesTitleMatchQuery(guide.name, query) || doesOwnerMatchQuery(guide.owner, query) || doesTagsMatchQuery(guide.labels, query)
 }
 
 function queryValue() {
@@ -206,7 +243,7 @@ function queryValue() {
 }
 
 function renderPlugins(plugins) {
-    return `  <ul>${plugins.map(p => `    ${renderPluginAsHtmlLi(p)}`).join('')}  </ul>`
+    return `<ul class="plugin-list">${plugins.map(p => renderPluginAsHtmlLi(p)).join('')}</ul>`
 }
 
 function renderPluginAsHtmlLi(plugin) {

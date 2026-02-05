@@ -59,6 +59,26 @@ class PluginsPage {
                 .findAll { it.githubStars != null && it.githubStars > 0 }
                 .toSorted { a, b -> b.githubStars <=> a.githubStars }.take(5)
 
+        // Extract unique Grails major versions from plugins, sorted descending
+        def grailsMajorVersions = (plugins ?: [])
+                .collectMany { plugin ->
+                    // Get versions from all plugin versions if available
+                    def versions = plugin.versions?.collect { it.grailsVersion } ?: []
+                    // Also include the top-level grailsVersion
+                    if (plugin.grailsVersion) versions << plugin.grailsVersion
+                    versions
+                }
+                .findAll() // Remove nulls
+                .collect { version ->
+                    // Extract major version number (e.g., "6.2.0" -> "6", "5.x" -> "5")
+                    def match = version =~ /^(\d+)/
+                    match ? match[0][1] : null
+                }
+                .findAll() // Remove nulls
+                .unique()
+                .collect { it as Integer }
+                .sort { -it }
+
         renderHtml {
             div(class: 'header-bar chalices-bg') {
                 div(class: 'content') {
@@ -90,9 +110,20 @@ class PluginsPage {
                     // ALL tab content
                     div(class: 'tab-content active', id: 'all') {
                         div(class: 'search-pagination-row') {
-                            div(class: 'search-box-inline') {
-                                input(type: 'text', id: 'query', placeholder: 'Search plugins...')
-                                button(type: 'button', class: 'search-clear-btn', title: 'Clear search', '×')
+                            div(class: 'search-filter-group') {
+                                div(class: 'search-box-inline') {
+                                    input(type: 'text', id: 'query', placeholder: 'Search plugins...')
+                                    button(type: 'button', class: 'search-clear-btn', title: 'Clear search', '×')
+                                }
+                                div(class: 'grails-version-filter') {
+                                    label(for: 'grails-version-select', 'Grails:')
+                                    select(id: 'grails-version-select') {
+                                        option(value: '', 'All Versions')
+                                        grailsMajorVersions.each { ver ->
+                                            option(value: ver, "Grails ${ver}.x")
+                                        }
+                                    }
+                                }
                             }
                             div(class: 'pagination-container top', '')
                         }

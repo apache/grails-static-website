@@ -10,7 +10,7 @@ function paginate(items, itemsPerPage, itemsContainer, paginationContainer) {
         const endIndex = startIndex + itemsPerPage
         const pageItems = items.slice(startIndex, endIndex)
 
-        itemsContainer.innerHTML = ""
+        itemsContainer.innerHTML = ''
 
         pageItems.forEach((item) => {
             const li = document.createElement('li')
