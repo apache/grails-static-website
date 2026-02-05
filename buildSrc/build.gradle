@@ -27,7 +27,7 @@ dependencies {
     implementation 'io.micronaut:micronaut-inject'
 
     implementation 'org.yaml:snakeyaml'
-    implementation 'com.github.spotbugs:spotbugs-annotations'
+    implementation 'jakarta.annotation:jakarta.annotation-api'
     implementation 'jakarta.validation:jakarta.validation-api'
     implementation 'io.micronaut.rss:micronaut-rss-core'
     implementation "com.vladsch.flexmark:flexmark:$flexmarkVersion"

@@ -18,7 +18,7 @@
  */
 package website.model
 
-import edu.umd.cs.findbugs.annotations.Nullable
+import jakarta.annotation.Nullable
 import groovy.transform.CompileStatic
 
 @CompileStatic

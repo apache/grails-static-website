@@ -18,7 +18,7 @@
  */
 package website.gradle.tasks
 
-import javax.annotation.Nonnull
+import jakarta.annotation.Nonnull
 import javax.inject.Inject
 import jakarta.validation.constraints.NotNull
 
@@ -26,7 +26,7 @@ import groovy.time.TimeCategory
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 
-import edu.umd.cs.findbugs.annotations.Nullable
+import jakarta.annotation.Nullable
 import org.gradle.api.Project
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.RegularFileProperty

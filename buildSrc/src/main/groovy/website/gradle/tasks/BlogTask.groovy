@@ -23,7 +23,7 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.util.regex.Pattern
 
-import javax.annotation.Nonnull
+import jakarta.annotation.Nonnull
 import javax.inject.Inject
 
 import groovy.transform.CompileDynamic
