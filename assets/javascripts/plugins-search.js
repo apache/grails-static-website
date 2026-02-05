@@ -145,7 +145,7 @@ function onQueryChanged() {
     if (query === null || query === '') {
         resetDefault()
         return
-    } else if (query.length < 3) {
+    } else if (query.length < 2) {
         return
     }
 
