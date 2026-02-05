@@ -12,7 +12,7 @@ const allPlugins = []
 const elementsClassNames = [allPluginsContainerDivClass, allPluginsHeadingLabelClassName]
 
 // Tab navigation
-document.addEventListener('DOMContentLoaded', () =>{
+document.addEventListener('DOMContentLoaded', () => {
     const tabs = document.querySelectorAll('.plugins-nav .nav-tab')
     const tabContents = document.querySelectorAll('.tab-content')
     tabs.forEach(tab => {
