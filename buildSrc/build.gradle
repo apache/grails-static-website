@@ -1,11 +1,10 @@
 plugins {
-    id 'java-gradle-plugin'
-    id 'groovy'
+    id 'groovy-gradle-plugin'
 }
 
 ext {
-    micronautVersion = '3.10.4'
     flexmarkVersion = '0.64.8'
+    micronautVersion = '4.10.4'
 }
 
 repositories {
@@ -14,32 +13,29 @@ repositories {
 
 dependencies {
 
-    annotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
-    implementation platform("io.micronaut:micronaut-bom:$micronautVersion")
-    testAnnotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
-    testImplementation platform("io.micronaut:micronaut-bom:$micronautVersion")
+    implementation platform("io.micronaut.platform:micronaut-platform:$micronautVersion")
 
-    annotationProcessor 'io.micronaut:micronaut-inject-java'
-    annotationProcessor 'io.micronaut:micronaut-validation'
-
-    implementation 'io.micronaut:micronaut-validation'
-    implementation 'io.micronaut:micronaut-http-client'
-    implementation 'io.micronaut:micronaut-http'
-    implementation 'io.micronaut:micronaut-inject'
-
-    implementation 'org.yaml:snakeyaml'
-    implementation 'com.github.spotbugs:spotbugs-annotations'
-    implementation 'javax.validation:validation-api'
-    implementation 'io.micronaut.rss:micronaut-rss-core'
     implementation "com.vladsch.flexmark:flexmark:$flexmarkVersion"
     implementation "com.vladsch.flexmark:flexmark-ext-tables:$flexmarkVersion"
+    implementation 'io.micronaut.rss:micronaut-rss-core'
+    implementation 'io.micronaut.validation:micronaut-validation'
+    implementation 'jakarta.annotation:jakarta.annotation-api'
+    implementation 'org.yaml:snakeyaml'
 
-    testImplementation 'io.micronaut:micronaut-http-server-netty'
     testImplementation 'org.spockframework:spock-core'
+
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-tasks.withType(Jar).configureEach {
-    it.duplicatesStrategy = DuplicatesStrategy.INCLUDE
+gradlePlugin {
+    plugins {
+        register('grails-website') {
+            id = 'grails-website'
+            implementationClass = 'website.gradle.GrailsWebsitePlugin'
+            displayName = 'Grails Website Plugin'
+            description = 'Creates tasks to generate the Grails Website'
+        }
+    }
 }
 
 tasks.withType(Test).configureEach {

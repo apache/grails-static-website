@@ -553,6 +553,6 @@ tbody tr td:first-child {
   min-width: 130px;
 }
 
-body.foundation h3.columnheader {
+body.foundation h3.column-header {
     margin-bottom: 0
 }
