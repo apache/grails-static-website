@@ -108,7 +108,9 @@ class RenderSiteTask extends DefaultTask {
 
     static void renderPages(Map<String, String> sitemeta, List<Page> listOfPages, File outputDir, final String templateText) {
         for (Page page : listOfPages) {
-            Map<String, String> resolvedMetadata = processMetadata(sitemeta + page.metadata)
+            String permalink = sitemeta['url'] + page.path
+            Map<String, String> pageMeta = sitemeta + page.metadata + [ogurl: permalink]
+            Map<String, String> resolvedMetadata = processMetadata(pageMeta)
             String html = renderHtmlWithTemplateContent(page.content, resolvedMetadata, templateText)
             html = highlightMenu(html, sitemeta, page.path)
             if (page.body) {
@@ -166,6 +168,18 @@ class RenderSiteTask extends DefaultTask {
         if (!resolvedMetadata.containsKey("robots")) {
             resolvedMetadata.put('robots', "all")
         }
+        
+        if (!resolvedMetadata.containsKey('ogimage')) {
+            if (resolvedMetadata.containsKey('image')) {
+                resolvedMetadata.put('ogimage', resolvedMetadata['url'] + '/images/' + resolvedMetadata['image'])
+            } else if (resolvedMetadata.containsKey('video') && parseVideoId(resolvedMetadata)) {
+                String videoId = parseVideoId(resolvedMetadata)
+                resolvedMetadata.put('ogimage', "https://img.youtube.com/vi/${videoId}/maxresdefault.jpg".toString())
+            } else {
+                resolvedMetadata.put('ogimage', resolvedMetadata['url'] + '/images/grails.png')
+            }
+        }
+        
         resolvedMetadata.put('twittercard', twitterCard('summary_large_image'))
         if (resolvedMetadata.containsKey('video')) {
             String videoId = parseVideoId(resolvedMetadata)
