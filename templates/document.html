@@ -1,31 +1,30 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>[%title]</title>
-    <meta name="keywords" content="[%keywords]"/>
-    <meta name="description" content="[%description]"/>
-    <meta name="date" content="[%date]"/>
-    <meta name="robots" content="[%robots]"/>
-    <link rel="alternate" type="application/rss+xml" title="RSS" href="[%url]/rss.xml"/>
-    <meta charset='UTF-8'/>
-    <link rel='icon' href='[%url]/images/favicon.ico'/>
+    <meta name="keywords" content="[%keywords]" />
+    <meta name="description" content="[%description]" />
+    <meta name="date" content="[%date]" />
+    <meta name="robots" content="[%robots]" />
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="[%url]/rss.xml" />
+    <meta charset='UTF-8' />
+    <link rel='icon' href='[%url]/images/favicon.ico' />
     [%twittercard]
-    <meta name='twitter:site' content='@grailsframework'/>
-    <meta name='twitter:description' content='[%description]'/>
-    <meta name='twitter:creator' content='@grailsframework'/>
-    <meta property='og:image' content='[%url]/images/grails.png'/>
-    <meta property='og:image:width' content='300'/>
-    <meta property='og:image:height' content='300'/>
-    <meta property='og:url' content='[%url]'/>
-    <meta property='og:title' content='[%title]'/>
-    <meta property='og:description' content='[%description]'/>
-    <meta property='og:type' content='website'/>
+    <meta name='twitter:site' content='@grailsframework' />
+    <meta name='twitter:description' content='[%description]' />
+    <meta name='twitter:creator' content='@grailsframework' />
+    <meta property='og:image' content='[%ogimage]' />
+    <meta property='og:url' content='[%ogurl]' />
+    <meta property='og:title' content='[%title]' />
+    <meta property='og:description' content='[%description]' />
+    <meta property='og:type' content='website' />
 
-    <meta name='viewport' content='width=device-width, initial-scale=1'/>
-    <link rel='mask-icon' href='[%url]/images/grails-pinned-icon.svg' color='feb672'/>
-    <link rel='stylesheet' href='[%url]/stylesheets/screen.css'/>
-    <link rel='stylesheet' href='[%url]/stylesheets/plugin.css'/>
-    <link rel='stylesheet' href='[%url]/stylesheets/paginate.css'/>
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <link rel='mask-icon' href='[%url]/images/grails-pinned-icon.svg' color='feb672' />
+    <link rel='stylesheet' href='[%url]/stylesheets/screen.css' />
+    <link rel='stylesheet' href='[%url]/stylesheets/plugin.css' />
+    <link rel='stylesheet' href='[%url]/stylesheets/paginate.css' />
     <script src='[%url]/javascripts/navigation.js'></script>
     <script src='[%url]/javascripts/paginate.js'></script>
     [%HTML header]
@@ -35,121 +34,116 @@
 
     <!-- Matomo -->
     <script>
-      var _paq = window._paq = window._paq || [];
-      /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-      _paq.push(["setDoNotTrack", true]);
-      _paq.push(["disableCookies"]);
-      _paq.push(['trackPageView']);
-      _paq.push(['enableLinkTracking']);
-      (function() {
-        var u="https://analytics.apache.org/";
-        _paq.push(['setTrackerUrl', u+'matomo.php']);
-        _paq.push(['setSiteId', '79']);
-        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-        g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-      })();
+        var _paq = window._paq = window._paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push(["setDoNotTrack", true]);
+        _paq.push(["disableCookies"]);
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function () {
+            var u = "https://analytics.apache.org/";
+            _paq.push(['setTrackerUrl', u + 'matomo.php']);
+            _paq.push(['setSiteId', '79']);
+            var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+            g.async = true; g.src = u + 'matomo.js'; s.parentNode.insertBefore(g, s);
+        })();
     </script>
     <!-- End Matomo Code -->
 
-    <script
-        async
-        src="https://widget.kapa.ai/kapa-widget.bundle.js"
-        data-website-id="d804a9f2-51a2-414c-97f7-12f2a1ba4609"
-        data-project-name="Apache Grails"
+    <script async src="https://widget.kapa.ai/kapa-widget.bundle.js"
+        data-website-id="d804a9f2-51a2-414c-97f7-12f2a1ba4609" data-project-name="Apache Grails"
         data-project-color="#3F4346"
         data-font-family="system-ui,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,Segoe UI,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;"
-        data-project-logo="https://grails.apache.org/images/grails.png"
-        data-modal-override-open-id="ask-ai-input"
-        data-modal-override-open-class="search-input"
-        data-user-analytics-fingerprint-enabled="true"
-        data-modal-title="Apache Grails AI Assistant"
-        data-modal-example-questions-title="Try asking me..."
+        data-project-logo="https://grails.apache.org/images/grails.png" data-modal-override-open-id="ask-ai-input"
+        data-modal-override-open-class="search-input" data-user-analytics-fingerprint-enabled="true"
+        data-modal-title="Apache Grails AI Assistant" data-modal-example-questions-title="Try asking me..."
         data-modal-disclaimer="This is a custom LLM for Apache Grails using [documentation](https://docs.grails.org/latest/), [groovy documentation](https://docs.groovy-lang.org/docs/groovy-4.0.28/html/documentation/) [github issues](https://github.com/apache/grails-core/issues) and more.
 
 Companies deploy assistants like this [](https://kapa.ai) on docs via [website widget](https://docs.kapa.ai/integrations/website-widget) (Docker, Reddit), in [support forms](https://docs.kapa.ai/integrations/support-form-deflector) for ticket deflection (Monday.com, Mapbox), or as [an internal assistant](https://docs.kapa.ai/integrations/internal-assistant) with access to private sources."
         data-modal-example-questions="How does database migration work?,How does Spring Security work?"
-        data-button-text-color="#FBB576"
-        data-modal-header-bg-color="#FFFFFF"
-        data-modal-title-color="#FBB576"
+        data-button-text-color="#FBB576" data-modal-header-bg-color="#FFFFFF" data-modal-title-color="#FBB576"
         data-consent-required="true"
         data-consent-screen-disclaimer="By clicking &quot;I agree, let&#39;s chat&quot;, you consent to the use of the AI assistant in accordance with kapa.ai&#39;s [Privacy Policy](https://www.kapa.ai/content/privacy-policy). This service uses reCAPTCHA, which requires your consent to Google&#39;s [Privacy Policy](https://policies.google.com/privacy) and [Terms of Service](https://policies.google.com/terms). By proceeding, you explicitly agree to both kapa.ai&#39;s and Google&#39;s privacy policies.">
     ></script>
 </head>
-<body>
-<header class='mainheader'>
-    <div class='content'>
-        <a href='[%url]/index.html'><img class='grailslogo' src='[%url]/images/grails_logo.svg' alt='Grails Logo'/></a>
-        <a href='javascript:show(&apos;topmenus&apos;, &apos;showNavigationLink&apos;)' id='showNavigationLink'
-           class='mobile align-center'>Show Navigation</a>
-        <div id='topmenus'>
-            <nav class='secondarymenu' id='secondarymenu'>
-                <ul>
-                    <li><a href='[%url]/casestudies/index.html'>Case Studies</a></li>
-                    <li><a href='[%url]/blog/index.html'>Blog</a></li>
-                    <li><a href='[%url]/learning.html'>Learning</a></li>
-                    <li><a href='[%url]/community.html'>Community</a></li>
-                    <li><a href='[%url]/search.html'>Search</a></li>
-                </ul>
-            </nav>
-            <nav class='mainmenu' id='mainmenu'>
-                <ul>
-                    <li><a href='[%url]/documentation.html'>Documentation</a></li>
-                    <li><a href='[%url]/download.html'>Download</a></li>
-                    <li><a href='[%url]/plugins.html'>Plugins</a></li>
-                    <li><a href='https://guides.grails.org/index.html'>Guides</a></li>
-                    <li><a href='[%url]/faq.html'>FAQ</a></li>
-                    <li><a href='[%url]/support.html'>Support</a></li>
-                    <li><a href='https://start.grails.org'>Forge App</a></li>
-                </ul>
-            </nav>
-        </div>
-    </div>
-</header>
-<article data-document>&nbsp;</article>
-<footer>
-    <div class='content'>
-        <div class='apache-grails'>            
-            <p>Apache Grails is supported by the Apache Software Foundation and the Grails community.</p>
-            <a href='https://apache.org'><img class='' src='https://www.apache.org/img/asf_logo.png' width='300px'
-                                              alt='Apache Software Foundation'/></a>
-            <p>The Apache Software Foundation</p>
-            <p>Apache, Apache Grails, Grails, Groovy, and the ASF logo are either registered trademarks or trademarks
-                of The Apache Software Foundation.
-            </p>
 
+<body>
+    <header class='mainheader'>
+        <div class='content'>
+            <a href='[%url]/index.html'><img class='grailslogo' src='[%url]/images/grails_logo.svg' alt='Grails Logo'
+                    loading="lazy" /></a>
+            <a href='javascript:show(&apos;topmenus&apos;, &apos;showNavigationLink&apos;)' id='showNavigationLink'
+                class='mobile align-center'>Show Navigation</a>
+            <div id='topmenus'>
+                <nav class='secondarymenu' id='secondarymenu'>
+                    <ul>
+                        <li><a href='[%url]/casestudies/index.html'>Case Studies</a></li>
+                        <li><a href='[%url]/blog/index.html'>Blog</a></li>
+                        <li><a href='[%url]/learning.html'>Learning</a></li>
+                        <li><a href='[%url]/community.html'>Community</a></li>
+                        <li><a href='[%url]/search.html'>Search</a></li>
+                    </ul>
+                </nav>
+                <nav class='mainmenu' id='mainmenu'>
+                    <ul>
+                        <li><a href='[%url]/documentation.html'>Documentation</a></li>
+                        <li><a href='[%url]/download.html'>Download</a></li>
+                        <li><a href='[%url]/plugins.html'>Plugins</a></li>
+                        <li><a href='https://guides.grails.org/index.html'>Guides</a></li>
+                        <li><a href='[%url]/faq.html'>FAQ</a></li>
+                        <li><a href='[%url]/support.html'>Support</a></li>
+                        <li><a href='https://start.grails.org'>Forge App</a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
-        <nav class='socialmedianav'>
-            <ul>
-                <li>
-                    <a href='mailto:dev@grails.apache.org'><img class='' src='[%url]/images/email.svg' alt='Email Icon'/></a>
-                </li>
-                <li>
-                    <a href='https://slack.grails.org'><img class='' src='[%url]/images/slack.svg'
-                                                            alt='Slack Icon'/></a>
-                </li>
-                <li>
-                    <a href='https://www.youtube.com/@GrailsFramework'><img class='' src='[%url]/images/youtube.svg'
-                                                                             alt='Youtube Icon'/></a>
-                </li>
-                <li>
-                    <a href='https://www.linkedin.com/showcase/official-grails/'><img class=''
-                                                                                      src='[%url]/images/linkedin.svg'
-                                                                                      alt='LinkedIn Icon'/></a>
-                </li>
-                <li>
-                    <a href='https://github.com/apache/grails-core'><img class='' src='[%url]/images/github.svg'
-                                                              alt='Github Icon'/></a>
-                </li>
-                <li style="margin-bottom:10px;">
-                    <a href='https://twitter.com/grailsframework'><img class='' src='[%url]/images/x-twitter.svg'
-                                                                       alt='Twitter Icon'/></a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-    <div class="content">
-        <nav class='footer' style="margin-bottom: 10px">
-                <p>© 2005-2026 the Apache Grails project — Grails is Open Source: 
+    </header>
+    <article data-document>&nbsp;</article>
+    <footer>
+        <div class='content'>
+            <div class='apache-grails'>
+                <p>Apache Grails is supported by the Apache Software Foundation and the Grails community.</p>
+                <a href='https://apache.org'><img class='' src='https://www.apache.org/img/asf_logo.png' width='300px'
+                        alt='Apache Software Foundation' /></a>
+                <p>The Apache Software Foundation</p>
+                <p>Apache, Apache Grails, Grails, Groovy, and the ASF logo are either registered trademarks or
+                    trademarks
+                    of The Apache Software Foundation.
+                </p>
+
+            </div>
+            <nav class='socialmedianav'>
+                <ul>
+                    <li>
+                        <a href='mailto:dev@grails.apache.org'><img class='' src='[%url]/images/email.svg'
+                                alt='Email Icon' loading="lazy" /></a>
+                    </li>
+                    <li>
+                        <a href='https://slack.grails.org'><img class='' src='[%url]/images/slack.svg' alt='Slack Icon'
+                                loading="lazy" /></a>
+                    </li>
+                    <li>
+                        <a href='https://www.youtube.com/@GrailsFramework'><img class='' src='[%url]/images/youtube.svg'
+                                alt='Youtube Icon' loading="lazy" /></a>
+                    </li>
+                    <li>
+                        <a href='https://www.linkedin.com/showcase/official-grails/'><img class=''
+                                src='[%url]/images/linkedin.svg' alt='LinkedIn Icon' loading="lazy" /></a>
+                    </li>
+                    <li>
+                        <a href='https://github.com/apache/grails-core'><img class='' src='[%url]/images/github.svg'
+                                alt='Github Icon' loading="lazy" /></a>
+                    </li>
+                    <li style="margin-bottom:10px;">
+                        <a href='https://twitter.com/grailsframework'><img class='' src='[%url]/images/x-twitter.svg'
+                                alt='Twitter Icon' loading="lazy" /></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="content">
+            <nav class='footer' style="margin-bottom: 10px">
+                <p>© 2005-2026 the Apache Grails project — Grails is Open Source:
                     <a href='https://www.apache.org/licenses/'>License</a>,
                     <a href='https://privacy.apache.org/policies/privacy-policy-public.html'>Privacy Policy</a>,
                     <a href='https://www.apache.org/foundation/sponsorship'>Sponsor Apache</a>,
@@ -158,11 +152,12 @@ Companies deploy assistants like this [](https://kapa.ai) on docs via [website w
                     <a href='https://www.apache.org/foundation/thanks.html'>Thanks</a>,
                     <a href='[%url]/support-schedule.html'>Support Schedule</a>
                 </p>
-        </nav>
-    </div>
-</footer>
-<div>
+            </nav>
+        </div>
+    </footer>
+    <div>
 
-</div>
+    </div>
 </body>
+
 </html>
