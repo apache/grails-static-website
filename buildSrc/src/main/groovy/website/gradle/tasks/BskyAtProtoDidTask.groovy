@@ -19,6 +19,7 @@
 package website.gradle.tasks
 
 import groovy.transform.CompileStatic
+import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.tasks.CacheableTask
@@ -69,10 +70,14 @@ abstract class BskyAtProtoDidTask extends GrailsWebsiteTask {
 
     private Map getSocialProperties() {
         File socialFile = social.get().asFile
-        new Yaml().load(socialFile.newDataInputStream()) as Map
+        socialFile.withInputStream { is -> new Yaml().load(is) } as Map
     }
     
     private String getBskyAtProtoDidText() {
-        socialProperties['bsky']['did']
+        try {
+            socialProperties['bsky']['did']
+        } catch (NullPointerException ignore) {
+            throw new GradleException('Missing property [bsky.did]')
+        }
     }
 }
