@@ -25,6 +25,7 @@ import org.gradle.api.Project
 
 import website.gradle.tasks.AssetsTask
 import website.gradle.tasks.BlogTask
+import website.gradle.tasks.BskyAtProtoDidTask
 import website.gradle.tasks.DocumentationTask
 import website.gradle.tasks.DownloadTask
 import website.gradle.tasks.GrailsWebsiteTask
@@ -55,6 +56,7 @@ class GrailsWebsitePlugin implements Plugin<Project> {
         DownloadTask.register(project, siteExt)
         GuidesTask.register(project, siteExt)
         HtaccessTask.register(project, siteExt)
+        BskyAtProtoDidTask.register(project, siteExt)
         MinutesTask.register(project, siteExt)
         PluginsTask.register(project, siteExt)
         ProfilesTask.register(project, siteExt)
@@ -68,6 +70,7 @@ class GrailsWebsitePlugin implements Plugin<Project> {
             it.dependsOn(MinutesTask.NAME)
             it.dependsOn(PluginsTask.NAME)
             it.dependsOn(HtaccessTask.NAME)
+            it.dependsOn(BskyAtProtoDidTask.NAME )
         }
 
         RenderSiteTask.register(project, siteExt).configure {
@@ -85,6 +88,7 @@ class GrailsWebsitePlugin implements Plugin<Project> {
             it.finalizedBy(BlogTask.NAME)
             it.finalizedBy(MinutesTask.NAME)
             it.finalizedBy(HtaccessTask.NAME)
+            it.finalizedBy(BskyAtProtoDidTask.NAME)
             it.finalizedBy(PluginsTask.NAME)
             it.finalizedBy(SitemapTask.NAME)
         }

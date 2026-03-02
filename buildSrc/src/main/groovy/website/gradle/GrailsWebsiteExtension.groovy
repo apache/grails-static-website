@@ -18,10 +18,7 @@
  */
 package website.gradle
 
-import javax.inject.Inject
-
 import groovy.transform.CompileStatic
-
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.ProjectLayout
 import org.gradle.api.file.RegularFileProperty
@@ -30,17 +27,21 @@ import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.provider.ProviderFactory
 
+import javax.inject.Inject
+
 @CompileStatic
 class GrailsWebsiteExtension {
 
     public static final String NAME = 'grailsWebsite'
 
     final RegularFileProperty htaccess
+    final RegularFileProperty bskyAtProtoDid
     final RegularFileProperty modules
     final RegularFileProperty profiles
     final RegularFileProperty questions
     final RegularFileProperty releases
     final RegularFileProperty template
+    final RegularFileProperty social
 
     final DirectoryProperty assetsDir
     final DirectoryProperty minutesDir
@@ -61,6 +62,9 @@ class GrailsWebsiteExtension {
         htaccess = objects.fileProperty()
         htaccess.convention(layout.buildDirectory.file('dist/.htaccess'))
 
+        bskyAtProtoDid = objects.fileProperty()
+        bskyAtProtoDid.convention(layout.buildDirectory.file('dist/.well-known/atproto-did'))
+
         modules = objects.fileProperty()
         modules.convention(layout.projectDirectory.file('conf/modules.yml'))
 
@@ -72,6 +76,9 @@ class GrailsWebsiteExtension {
 
         releases = objects.fileProperty()
         releases.convention(layout.projectDirectory.file('conf/releases.yml'))
+
+        social = objects.fileProperty()
+        social.convention(layout.projectDirectory.file('conf/social.yml'))
 
         template = objects.fileProperty()
         template.convention(layout.projectDirectory.file('templates/document.html'))
@@ -104,8 +111,8 @@ class GrailsWebsiteExtension {
 
         url = objects.property(String)
         url.convention(
-            providers.environmentVariable('GRAILS_WS_URL')
-                .orElse('https://grails.apache.org')
+                providers.environmentVariable('GRAILS_WS_URL')
+                        .orElse('https://grails.apache.org')
         )
 
         // List property with convention
