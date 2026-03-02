@@ -19,10 +19,8 @@
 package website.gradle
 
 import groovy.transform.CompileStatic
-
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-
 import website.gradle.tasks.AssetsTask
 import website.gradle.tasks.BlogTask
 import website.gradle.tasks.BskyAtProtoDidTask
@@ -70,7 +68,7 @@ class GrailsWebsitePlugin implements Plugin<Project> {
             it.dependsOn(MinutesTask.NAME)
             it.dependsOn(PluginsTask.NAME)
             it.dependsOn(HtaccessTask.NAME)
-            it.dependsOn(BskyAtProtoDidTask.NAME )
+            it.dependsOn(BskyAtProtoDidTask.NAME)
         }
 
         RenderSiteTask.register(project, siteExt).configure {

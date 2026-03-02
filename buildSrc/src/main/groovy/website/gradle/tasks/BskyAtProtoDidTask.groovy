@@ -64,7 +64,7 @@ abstract class BskyAtProtoDidTask extends GrailsWebsiteTask {
     void generateAtProtoDid() {
         bskyAtProtoDid.get().asFile.tap {
             parentFile.mkdirs()
-            text = getBskyAtProtoDidText() 
+            text = getBskyAtProtoDidText()
         }
     }
 
@@ -72,7 +72,7 @@ abstract class BskyAtProtoDidTask extends GrailsWebsiteTask {
         File socialFile = social.get().asFile
         socialFile.withInputStream { is -> new Yaml().load(is) } as Map
     }
-    
+
     private String getBskyAtProtoDidText() {
         try {
             socialProperties['bsky']['did']
