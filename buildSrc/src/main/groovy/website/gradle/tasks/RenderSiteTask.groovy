@@ -176,7 +176,7 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
     ) {
         for (def page : listOfPages) {
             def resolvedMetadata = processMetadata(
-                    siteMeta + page.metadata
+                    siteMeta + page.metadata + [ogurl: siteMeta['url'] + page.path]
             )
             def html = renderHtmlWithTemplateContent(
                     page.content,
@@ -258,6 +258,17 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
                                         TWITTER_CARD_PLAYER_HEIGHT
                                 )
                 )
+            }
+        }
+
+        if (!resolvedMetadata.containsKey('ogimage')) {
+            if (resolvedMetadata.containsKey('image')) {
+                resolvedMetadata.put('ogimage', resolvedMetadata['url'] + '/images/' + resolvedMetadata['image'])
+            } else if (resolvedMetadata.containsKey('video') && parseVideoId(resolvedMetadata)) {
+                String videoId = parseVideoId(resolvedMetadata)
+                resolvedMetadata.put('ogimage', "https://img.youtube.com/vi/${videoId}/maxresdefault.jpg".toString())
+            } else {
+                resolvedMetadata.put('ogimage', resolvedMetadata['url'] + '/images/grails.png')
             }
         }
         resolvedMetadata

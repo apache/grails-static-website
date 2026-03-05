@@ -238,6 +238,7 @@ abstract class BlogTask extends GrailsWebsiteTask {
         }
 
         def metadata = htmlPost.metadata.toMap()
+        metadata['ogurl'] = postLink(htmlPost)
         html = RenderSiteTask.renderHtmlWithTemplateContent(html, metadata, templateText)
         html = RenderSiteTask.highlightMenu(html, metadata, htmlPost.path)
 
