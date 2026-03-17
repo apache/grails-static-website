@@ -74,20 +74,30 @@ The output can be found in the `build/dist` directory.
 
 ```bash
 ./gradlew buildGuide --console=plain
-
 ```
 The output can be found in the `build/dist` directory.
 
+This will generate links to https://grails.apache.org if you want the links to point to your local webserver you need to
+set this environment variable before running the build commands (port number depend on webserver...):
+
+```bash
+export GRAILS_WS_URL=http://127.0.0.1:8000
+```
+
 ## Running the website locally
 
-The easiest way to work locally is to generate the site and setup your Webserver to serve build/dist.
+The easiest way to work locally is to generate the site and set up your Webserver to serve build/dist.
 
+### Using jwebserver
 
-### Using MAMP
+JDK 19+ comes with a simpel webserver called [jwebserver](https://docs.oracle.com/en/java/javase/25/docs/specs/man/jwebserver.html) that can be used for serving static files:
 
-Go to [MAMP](https://www.mamp.info/en/mamp/) for installation instructions:
-
-![](docs/mamp.png)
+```bash
+$ jwebserver -d $(pwd)/build/dist
+Binding to loopback by default. For all interfaces use "-b 0.0.0.0" or "-b ::".
+Serving /home/user/grails-static-website/build/dist and subdirectories on 127.0.0.1 port 8000
+URL http://127.0.0.1:8000/
+```
 
 ### Using Python
 
