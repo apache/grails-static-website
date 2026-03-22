@@ -1,21 +1,11 @@
-import org.grails.gradle.GrailsWebsitePlugin
-
-apply plugin: GrailsWebsitePlugin
-
-grails {
-    assets = file("assets")
-    profiles = file("conf/profiles.yml")
-    modules = file("conf/modules.yml")
-    releases = file("conf/releases.yml")
-    questions = file("conf/questions.yml")
-    posts = file("posts")
-    minutes = file("minutes")
-    pages = file("pages")
-    template = file("templates/document.html")
-    output = project.buildDir
-    title = 'Grails framework'
-    url = System.getenv("GRAILS_WS_URL") ?: 'https://grails.apache.org'
-    description = 'A powerful Groovy-based web application framework for the JVM built on top of Spring Boot'
-    keywords = ['grails','jvm','framework','groovy', 'gradle', 'spring-boot', 'gorm']
-    robots = 'all'
+plugins {
+    id 'grails-website'
 }
+
+// All properties now have sensible defaults via conventions.
+// Only configure if you need to override them:
+//
+// grailsWebsite {
+//     url = 'https://custom-domain.com'
+//     title = 'Custom Title'
+// }
