@@ -163,7 +163,7 @@ questions:
     slug: 'question_develocity'
     title: 'Where can I view the Develocity instance for the Grails framework?'
     answer: |
-      Our Develocity instance can be found at [https://ge.grails.org](https://ge.grails.org).
+      Our Develocity instance can be found at [https://develocity.apache.org/](https://develocity.apache.org/scans?scanList.help=project&search.rootProjectNames=grails*).
   -
     slug: 'question_sponsors'
     title: 'Who sponsors Grails development?'

@@ -1,4 +1,7 @@
 .idea
+!.idea/codeStyles/
+!.idea/codeStyles/Project.xml
+!.idea/codeStyles/codeStyleConfig.xml
 *.iml
 *.ipr
 *.iws
