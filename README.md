@@ -167,7 +167,7 @@ The process to deploy Grails 3.1 applications to JBoss 6.4 EAP is largely simila
 
 If you write often to Grails's blog, we recommend you to create a [Text Expander](https://textexpander.com) snippet:
 
- ![](docs/textexpander.png)
+ ![TextExpander snippet example](docs/textexpander.png)
 
 
 #### Title Metadata
@@ -223,7 +223,7 @@ image: 2018-05-23.jpg
 
 Place the images at `assets/bgimages`
 
-![](docs/blogimages.png)
+![Blog images directory structure](docs/blogimages.png)
 
 ### Tags
 
