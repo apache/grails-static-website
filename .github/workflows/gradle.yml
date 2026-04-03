@@ -23,7 +23,7 @@ jobs:
           distribution: liberica
           java-version: 17
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v5
+        uses: gradle/actions/setup-gradle@0723195856401067f7a2779048b490ace7a47d7c # v5.0.2
         with:
           develocity-access-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
       - name: Run Tests
@@ -31,7 +31,7 @@ jobs:
           (set -x; ./gradlew clean check --no-daemon)
       - name: Publish Test Report
         if: failure()
-        uses: scacap/action-surefire-report@v1
+        uses: scacap/action-surefire-report@5609ce4db72c09db044803b344a8968fd1f315da # v1.9.1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           report_paths: '**/build/test-results/test/TEST-*.xml'
