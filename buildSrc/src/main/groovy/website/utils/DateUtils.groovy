@@ -40,6 +40,11 @@ class DateUtils {
     static Date parseDate(String date) {
         if (date == null) { throw new GradleException('Date cannot be null') }
 
+        // Try ISO 8601 (e.g., "2024-01-15"). The schema documented in
+        // conf/guides.yml uses this format.
+        try { return parse(date, DateTimeFormatter.ISO_LOCAL_DATE) }
+        catch (DateTimeParseException ignore) {}
+
         // Try MMM d, yyyy HH:mm (e.g., "Jan 15, 2024 14:30")
         try { return parse(date, MMM_D_YYYY_HHMM) }
         catch (DateTimeParseException ignore) {}

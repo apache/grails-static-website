@@ -1,12 +1,7 @@
-# Single source of truth for guide metadata.
-#
-# Replaces the runtime fetch of guides.json with a local YAML file.
-# The build's `GuidesFetcher` will be swapped in a follow-up PR to
-# parse this file via SnakeYAML instead of going to the network.
-#
-# This file currently holds one bootstrap entry for the migrated
-# fixture guide. As more guides land in `guides/<name>/v{N}/`, they
-# get appended to the `guides:` list below.
+# Source of truth for guide metadata. Consumed by GuidesFetcher.
+# Auto-imported from a one-time snapshot of the upstream guides.json
+# (frozen content from gh-pages of grails-guides/grails-guides-template).
+# Hand edits are welcome; the schema is documented in conf/guides.schema.md (TBD).
 
 defaults:
   category: 'Getting Started'
@@ -14,23 +9,1779 @@ defaults:
   tags: []
 
 guides:
-  - name: creating-your-first-grails-app
+  - name: 'adding-commit-info'
+    title: 'Adding Commit Info to your Grails Application'
+    subtitle: 'Knowing the exact version of code that your application is running is important'
+    authors:
+      - 'Colin Harrington'
+    category: 'Grails + DevOps'
+    publicationDate: '2017-03-06'
+    versions:
+      '3':
+        sourcePath: guides/adding-commit-info/v3
+        publicationDate: '2017-03-06'
+        tags:
+          - 'git'
+          - 'actuator'
+          - 'commit-info'
+          - 'grails3'
+      '4':
+        sourcePath: guides/adding-commit-info/v4
+        publicationDate: '2017-03-06'
+        tags:
+          - 'git'
+          - 'actuator'
+          - 'commit-info'
+          - 'grails4'
+
+  - name: 'angular2-combined'
+    title: 'Combining the Angular Profile Projects'
+    subtitle: 'This guide will take you through the process of creating a single build starting with the Angular 2 profile.'
+    authors:
+      - 'James Kleeh'
+    category: 'Grails + Angular'
+    publicationDate: '2016-12-04'
+    versions:
+      '4':
+        sourcePath: guides/angular2-combined/v4
+        publicationDate: '2016-12-04'
+        tags:
+          - 'angular'
+          - 'javascript'
+
+  - name: 'building-a-react-app'
+    title: 'Building a React App'
+    subtitle: 'Use the React 1.x profile to create a Grails app with React views'
+    authors:
+      - 'Zachary Klein'
+    category: 'Grails + React'
+    publicationDate: '2017-01-07'
+    versions:
+      '4':
+        sourcePath: guides/building-a-react-app/v4
+        publicationDate: '2017-01-07'
+        tags:
+          - 'react'
+          - 'node'
+          - 'javascript'
+          - 'json views'
+
+  - name: 'building-a-vue-app'
+    title: 'Building a Vue.js app with Grails'
+    subtitle: 'Learn how to add a Vue.js frontend to your application'
+    authors:
+      - 'Ben Rhine, Zachary Klein'
+    category: 'Grails + Vue.js'
+    publicationDate: '2018-03-26'
+    versions:
+      '4':
+        sourcePath: guides/building-a-vue-app/v4
+        publicationDate: '2018-03-26'
+        tags:
+          - 'vue'
+          - 'grails'
+          - 'javascript'
+          - 'rest-api'
+
+  - name: 'building-an-android-client-powered-by-a-grails-backend'
+    title: 'Building an Android client powered by a Grails backend'
+    subtitle: 'This guide demonstrates how you can use Grails as a backend for an Android app'
+    authors:
+      - 'Sergio del Amo'
+    category: 'Grails + Android'
+    publicationDate: '2017-02-13'
+    versions:
+      '4':
+        sourcePath: guides/building-an-android-client-powered-by-a-grails-backend/v4
+        publicationDate: '2017-02-13'
+        tags:
+          - 'android'
+          - 'java'
+          - 'rest-api'
+          - 'api-versioning'
+          - 'grails4'
+
+  - name: 'building-an-ios-objectc-client-powered-by-a-grails-backend'
+    title: 'Building a Objective-C iOS Client powered by a Grails backend'
+    subtitle: 'This guide demonstrates how you can use Grails as a backend for an iOS app built with Objective-C'
+    authors:
+      - 'Sergio del Amo'
+    category: 'Grails + iOS'
+    publicationDate: '2017-02-13'
+    versions:
+      '4':
+        sourcePath: guides/building-an-ios-objectc-client-powered-by-a-grails-backend/v4
+        publicationDate: '2017-02-13'
+        tags:
+          - 'objective-c'
+          - 'ios'
+          - 'api-versioning'
+          - 'rest-api'
+
+  - name: 'building-an-ios-swift-client-powered-by-a-grails-backend'
+    title: 'Building a Swift iOS Client powered by a Grails backend'
+    subtitle: 'This guide demonstrates how you can use Grails as the backend of an iOS app built with Swift'
+    authors:
+      - 'Sergio del Amo'
+    category: 'Grails + iOS'
+    publicationDate: '2017-02-13'
+    versions:
+      '4':
+        sourcePath: guides/building-an-ios-swift-client-powered-by-a-grails-backend/v4
+        publicationDate: '2017-02-13'
+        tags:
+          - 'swift'
+          - 'ios'
+          - 'api-versioning'
+          - 'rest-api'
+
+  - name: 'command-objects-and-forms'
+    title: 'Using Command Objects To Handle Form Data'
+    subtitle: 'This guide will explain how you can use command objects to validate input data in a Grails application'
+    authors:
+      - 'Matthew Moss'
+    category: 'Grails Apprentice'
+    publicationDate: '2017-01-09'
+    versions:
+      '3':
+        sourcePath: guides/command-objects-and-forms/v3
+        publicationDate: '2017-01-09'
+        tags:
+          - 'command-object'
+          - 'binding'
+          - 'validation'
+          - 'grails3'
+      '4':
+        sourcePath: guides/command-objects-and-forms/v4
+        publicationDate: '2017-01-09'
+        tags:
+          - 'command-object'
+          - 'binding'
+          - 'validation'
+          - 'grails4'
+
+  - name: 'creating-your-first-grails-app'
     title: 'Creating your first Grails Application'
     subtitle: 'Learn how to create your first Grails app'
     authors:
       - 'Zachary Klein'
-    category: 'Getting Started'
+    category: 'Grails Apprentice'
     publicationDate: '2017-01-23'
-
     versions:
-      '6':
-        sourcePath: guides/creating-your-first-grails-app/v6
+      '3':
+        sourcePath: guides/creating-your-first-grails-app/v3
         publicationDate: '2017-01-23'
         tags:
-          - mysql
-          - gsp
-          - grails6
-        sampleRef:
-          repo: grails-guides/creating-your-first-grails-app
-          branch: master
-          sha: '84422f5d162f3deffb89978a3e9127382ce7eeea'
+          - 'mysql'
+          - 'gsp'
+          - 'grails3'
+      '4':
+        sourcePath: guides/creating-your-first-grails-app/v4
+        publicationDate: '2017-01-23'
+        tags:
+          - 'mysql'
+          - 'gsp'
+          - 'grails4'
+
+  - name: 'database-per-tenant'
+    title: 'Database per Tenant Multi-Tenancy'
+    subtitle: 'Learn how to leverage Multi-Tenancy features of GORM 6.1 to build an application using a unique database per tenant'
+    authors:
+      - 'Graeme Rocher'
+    category: 'GORM'
+    publicationDate: '2017-05-15'
+    versions:
+      '4':
+        sourcePath: guides/database-per-tenant/v4
+        publicationDate: '2017-05-15'
+        tags:
+          - 'multi-tenancy'
+          - 'hibernate'
+          - 'gorm'
+
+  - name: 'discriminator-per-tenant'
+    title: 'Single Database Multi-Tenancy - Discriminator Column'
+    subtitle: 'Learn how to leverage Multi-Tenancy features of GORM to build an application which uses a single database, but it partitions its data using a discriminator column.'
+    authors:
+      - 'Sergio del Amo'
+    category: 'GORM'
+    publicationDate: '2017-06-26'
+    versions:
+      '4':
+        sourcePath: guides/discriminator-per-tenant/v4
+        publicationDate: '2017-06-26'
+        tags:
+          - 'multi-tenancy'
+          - 'hibernate'
+          - 'gorm'
+          - 'grails4'
+
+  - name: 'gorm-event-listeners'
+    title: 'GORM Event Listeners'
+    subtitle: 'Learn to write and test GORM event listeners'
+    authors:
+      - 'Zachary Klein, Sergio del Amo'
+    category: 'GORM'
+    publicationDate: '2018-02-19'
+    versions:
+      '3':
+        sourcePath: guides/gorm-event-listeners/v3
+        publicationDate: '2018-02-19'
+        tags:
+          - 'gorm'
+          - 'async'
+          - 'events'
+          - 'grails3'
+      '4':
+        sourcePath: guides/gorm-event-listeners/v4
+        publicationDate: '2018-02-19'
+        tags:
+          - 'gorm'
+          - 'async'
+          - 'events'
+          - 'grails4'
+
+  - name: 'gorm-graphql-with-react-and-apollo'
+    title: 'Building a GORM/GraphQL App with React and Apollo'
+    subtitle: 'Build a Grails app and use GORM''s GraphQL support to serve React app using Apollo'
+    authors:
+      - 'Zachary Klein'
+    category: 'Grails + React'
+    publicationDate: '2017-12-18'
+    versions:
+      '4':
+        sourcePath: guides/gorm-graphql-with-react-and-apollo/v4
+        publicationDate: '2017-12-18'
+        tags:
+          - 'react'
+          - 'graphql'
+          - 'gorm'
+          - 'javascript'
+          - 'apollo'
+
+  - name: 'gorm-ratpack'
+    title: 'Build a Ratpack application which uses GORM'
+    subtitle: 'Learn how to build a Ratpack application which uses GORM as data access toolkit'
+    authors:
+      - 'Sergio del Amo'
+    category: 'GORM'
+    publicationDate: '2017-08-28'
+    versions:
+      '3':
+        sourcePath: guides/gorm-ratpack/v3
+        publicationDate: '2017-08-28'
+        tags:
+          - 'ratpack'
+          - 'gorm'
+          - 'hibernate'
+      '4':
+        sourcePath: guides/gorm-ratpack/v4
+        publicationDate: '2017-08-28'
+        tags:
+          - 'ratpack'
+          - 'gorm'
+          - 'hibernate'
+
+  - name: 'gorm-without-grails'
+    title: 'Build a Spring Boot application with GORM'
+    subtitle: 'Learn how to build a Spring Boot application using GORM'
+    authors:
+      - 'Ben Rhine, Sergio del Amo'
+    category: 'GORM'
+    publicationDate: '2017-07-31'
+    versions:
+      '4':
+        sourcePath: guides/gorm-without-grails/v4
+        publicationDate: '2017-07-31'
+        tags:
+          - 'spring boot'
+          - 'backend'
+          - 'GORM'
+          - 'hibernate'
+
+  - name: 'grails_i18n'
+    title: 'How to change languages in a Grails app?'
+    subtitle: 'Learn how to change the default language used in your application, switch between languages or access the current locale.'
+    authors:
+      - 'Sergio del Amo'
+    category: 'Grails Apprentice'
+    publicationDate: '2017-05-08'
+    versions:
+      '3':
+        sourcePath: guides/grails_i18n/v3
+        publicationDate: '2017-05-08'
+        tags:
+          - 'i18n'
+          - 'locale'
+          - 'grails3'
+          - 'language'
+      '4':
+        sourcePath: guides/grails_i18n/v4
+        publicationDate: '2017-05-08'
+        tags:
+          - 'i18n'
+          - 'locale'
+          - 'grails4'
+          - 'language'
+
+  - name: 'grails_url_mappings'
+    title: 'Grails URL Mappings'
+    subtitle: 'Learn to configure routes and endpoints'
+    authors:
+      - 'Zachary Klein'
+    category: 'Grails Apprentice'
+    publicationDate: '2018-01-17'
+    versions:
+      '4':
+        sourcePath: guides/grails_url_mappings/v4
+        publicationDate: '2018-01-17'
+        tags:
+          - 'url-mappings'
+          - 'grails4'
+
+  - name: 'grails-as-docker-container'
+    title: 'Grails as a Docker Container'
+    subtitle: 'Learn how to distribute your Grails application as a Docker container.'
+    authors:
+      - 'Iván López'
+    category: 'Advanced Grails'
+    publicationDate: '2018-01-15'
+    versions:
+      '3':
+        sourcePath: guides/grails-as-docker-container/v3
+        publicationDate: '2018-01-15'
+        tags:
+          - 'docker'
+          - 'gradle'
+          - 'grails3'
+      '4':
+        sourcePath: guides/grails-as-docker-container/v4
+        publicationDate: '2018-01-15'
+        tags:
+          - 'docker'
+          - 'gradle'
+          - 'grails4'
+
+  - name: 'grails-async-promises'
+    title: 'Grails Promises'
+    subtitle: 'Learn how to use Grails Promises and load multiple REST payloads in parallel.'
+    authors:
+      - 'Sergio del Amo'
+    category: 'Grails Async'
+    publicationDate: '2017-08-21'
+    versions:
+      '3':
+        sourcePath: guides/grails-async-promises/v3
+        publicationDate: '2017-08-21'
+        tags:
+          - 'promise'
+          - 'async'
+          - 'rest'
+          - 'openweather'
+          - 'grails3'
+      '4':
+        sourcePath: guides/grails-async-promises/v4
+        publicationDate: '2017-08-21'
+        tags:
+          - 'promise'
+          - 'async'
+          - 'rest'
+          - 'openweather'
+          - 'grails4'
+
+  - name: 'grails-basicauth'
+    title: 'Grails Basic Auth'
+    subtitle: 'Learn how to secure a Grails app using ''Basic'' HTTP Authentication Scheme.'
+    authors:
+      - 'Sergio del Amo'
+    category: 'Advanced Grails'
+    publicationDate: '2018-05-28'
+    versions:
+      '3':
+        sourcePath: guides/grails-basicauth/v3
+        publicationDate: '2018-05-28'
+        tags:
+          - 'spring-security'
+          - 'basicauth'
+          - 'grails3'
+      '4':
+        sourcePath: guides/grails-basicauth/v4
+        publicationDate: '2018-05-28'
+        tags:
+          - 'spring-security'
+          - 'basicauth'
+          - 'grails4'
+
+  - name: 'grails-code-coverage'
+    title: 'Grails Code Coverage'
+    subtitle: 'In this guide you''ll learn how to improve your code coverage using Clover.'
+    authors:
+      - 'Sergio del Amo'
+    category: 'Grails Testing'
+    publicationDate: '2017-07-03'
+    versions:
+      '3':
+        sourcePath: guides/grails-code-coverage/v3
+        publicationDate: '2017-07-03'
+        tags:
+          - 'clover'
+          - 'code-coverage'
+          - 'grails3'
+      '4':
+        sourcePath: guides/grails-code-coverage/v4
+        publicationDate: '2017-07-03'
+        tags:
+          - 'clover'
+          - 'code-coverage'
+          - 'grails4'
+
+  - name: 'grails-codenarc'
+    title: 'Static code analysis in a Grails app with CodeNarc'
+    subtitle: 'In this guide, you''ll learn how to improve your code with static analysis using CodeNarc.'
+    authors:
+      - 'Iván López'
+    category: 'Grails Testing'
+    publicationDate: '2017-06-05'
+    versions:
+      '4':
+        sourcePath: guides/grails-codenarc/v4
+        publicationDate: '2017-06-05'
+        tags:
+          - 'codenarc'
+          - 'static-analysis'
+          - 'grails4'
+
+  - name: 'grails-configuration-properties'
+    title: 'SpringBoot @ConfigurationProperties in Grails App'
+    subtitle: 'Grails 5 apps are Spring Boot apps. Learn how property values can be bound to structured objects through @ConfigurationProperties.'
+    authors:
+      - 'Sergio del Amo'
+    category: 'Grails Apprentice'
+    publicationDate: '2018-10-11'
+    versions:
+      '3':
+        sourcePath: guides/grails-configuration-properties/v3
+        publicationDate: '2018-10-11'
+        tags:
+          - 'spring-boot'
+          - 'configuration'
+          - 'configuration-properties'
+          - 'grails3'
+      '4':
+        sourcePath: guides/grails-configuration-properties/v4
+        publicationDate: '2018-10-11'
+        tags:
+          - 'spring-boot'
+          - 'configuration'
+          - 'configuration-properties'
+          - 'grails4'
+
+  - name: 'grails-configuration-properties-micronaut'
+    title: 'Micronaut @ConfigurationProperties in Grails App'
+    subtitle: 'Grails 4 apps can access many Micronaut features. Learn how property values can be bound to structured objects through @ConfigurationProperties.'
+    authors:
+      - 'Sergio del Amo'
+    category: 'Grails Apprentice'
+    publicationDate: '2019-12-16'
+    versions:
+      '4':
+        sourcePath: guides/grails-configuration-properties-micronaut/v4
+        publicationDate: '2019-12-16'
+        tags:
+          - 'micronaut'
+          - 'configuration'
+          - 'configuration-properties'
+          - 'grails4'
+      '6':
+        sourcePath: guides/grails-configuration-properties-micronaut/v6
+        publicationDate: '2023-07-07'
+        tags:
+          - 'micronaut'
+          - 'configuration'
+          - 'configuration-properties'
+          - 'grails6'
+
+  - name: 'grails-controller-testing'
+    title: 'Grails Controller Testing'
+    subtitle: 'In this guide, we explore Controller testing in Grails.'
+    authors:
+      - 'Nirav Assar, Sergio del Amo'
+    category: 'Grails Testing'
+    publicationDate: '2017-06-19'
+    versions:
+      '3':
+        sourcePath: guides/grails-controller-testing/v3
+        publicationDate: '2017-06-19'
+        tags:
+          - 'unit-test'
+          - 'functional-test'
+          - 'spock'
+          - 'grails3'
+      '4':
+        sourcePath: guides/grails-controller-testing/v4
+        publicationDate: '2017-06-19'
+        tags:
+          - 'unit-test'
+          - 'functional-test'
+          - 'spock'
+          - 'grails4'
+
+  - name: 'grails-custom-security-tenant-resolver'
+    title: 'Custom Tenant Resolver by Current Logged in User'
+    subtitle: 'Learn how to create a custom tenant resolver and use Grails Multi-Tenancy capabilities to switch tenants based on the current logged user or by a JWT.'
+    authors:
+      - 'Sergio del Amo'
+    category: 'Advanced Grails'
+    publicationDate: '2017-09-11'
+    versions:
+      '3':
+        sourcePath: guides/grails-custom-security-tenant-resolver/v3
+        publicationDate: '2017-09-11'
+        tags:
+          - 'spring-security'
+          - 'spring-security-rest'
+          - 'jwt'
+          - 'multi-tenancy'
+          - 'rest-api'
+          - 'grails3'
+      '4':
+        sourcePath: guides/grails-custom-security-tenant-resolver/v4
+        publicationDate: '2017-09-11'
+        tags:
+          - 'spring-security'
+          - 'spring-security-rest'
+          - 'jwt'
+          - 'multi-tenancy'
+          - 'rest-api'
+          - 'grails4'
+
+  - name: 'grails-database-migration'
+    title: 'Grails Database Migration'
+    subtitle: 'In this guide we will learn how to use the Grails Database Migration Plugin'
+    authors:
+      - 'Nirav Assar, Sergio del Amo'
+    category: 'Advanced Grails'
+    publicationDate: '2017-08-07'
+    versions:
+      '3':
+        sourcePath: guides/grails-database-migration/v3
+        publicationDate: '2017-08-07'
+        tags:
+          - 'liquibase'
+          - 'database'
+          - 'gorm'
+          - 'migration'
+          - 'grails3'
+      '4':
+        sourcePath: guides/grails-database-migration/v4
+        publicationDate: '2017-08-07'
+        tags:
+          - 'liquibase'
+          - 'database'
+          - 'gorm'
+          - 'migration'
+          - 'grails4'
+      '6':
+        sourcePath: guides/grails-database-migration/v6
+        publicationDate: '2023-06-22'
+        tags:
+          - 'liquibase'
+          - 'database'
+          - 'gorm'
+          - 'migration'
+          - 'grails6'
+
+  - name: 'grails-docker-external-services'
+    title: 'Use docker to provide external services to your Grails app'
+    subtitle: 'Learn how to use a Postgresql database in your Grails application with a Docker container'
+    authors:
+      - 'Iván López,Sergio del Amo'
+    category: 'Advanced Grails'
+    publicationDate: '2018-01-08'
+    versions:
+      '4':
+        sourcePath: guides/grails-docker-external-services/v4
+        publicationDate: '2018-01-08'
+        tags:
+          - 'docker'
+          - 'postgresql'
+          - 'gradle'
+
+  - name: 'grails-dynamic-multiple-datasources'
+    title: 'Configure Datasources dynamically while using DATABASE Multi-tenancy'
+    subtitle: 'Learn how to use Grails Multi-Tenancy capabilities DATABASE mode while creating a new datasource connection per registered user dynamically. '
+    authors:
+      - 'Sergio del Amo'
+    category: 'Advanced Grails'
+    publicationDate: '2017-09-18'
+    versions:
+      '3':
+        sourcePath: guides/grails-dynamic-multiple-datasources/v3
+        publicationDate: '2017-09-18'
+        tags:
+          - 'spring-security-rest'
+          - 'jwt'
+          - 'multi-tenancy'
+          - 'rest-api'
+          - 'multi-datasource'
+          - 'gorm-event'
+          - 'grails3'
+      '4':
+        sourcePath: guides/grails-dynamic-multiple-datasources/v4
+        publicationDate: '2017-09-18'
+        tags:
+          - 'spring-security-rest'
+          - 'jwt'
+          - 'multi-tenancy'
+          - 'rest-api'
+          - 'multi-datasource'
+          - 'gorm-event'
+          - 'grails4'
+
+  - name: 'grails-elasticbeanstalk'
+    title: 'Deploy to AWS ElasticBeanstalk'
+    subtitle: 'Learn how easy is to deploy a Grails App to Elastic Beanstalk.'
+    authors:
+      - 'Sergio del Amo'
+    category: 'Grails + DevOps'
+    publicationDate: '2018-10-29'
+    versions:
+      '4':
+        sourcePath: guides/grails-elasticbeanstalk/v4
+        publicationDate: '2018-10-29'
+        tags:
+          - 'actuator'
+          - 'health'
+          - 'aws'
+          - 'aws-elasticbeanstlak'
+
+  - name: 'grails-elasticsearch'
+    title: 'Grails ElasticSearch'
+    subtitle: 'Learn how to use ElasticSearch within a Grails application'
+    authors:
+      - 'Puneet Behl, Sergio del Amo'
+    category: 'Advanced Grails'
+    publicationDate: '2018-02-12'
+    versions:
+      '4':
+        sourcePath: guides/grails-elasticsearch/v4
+        publicationDate: '2018-02-12'
+        tags:
+          - 'elasticsearch'
+          - 'rest-api'
+
+  - name: 'grails-email'
+    title: 'Send Email and Spock Spring'
+    subtitle: 'Learn how to send emails with AWS SES and SendGrid from a Grails app and leverage Spock Spring integration to verify interaction.'
+    authors:
+      - 'Sergio del Amo'
+    category: 'Grails Testing'
+    publicationDate: '2018-06-04'
+    versions:
+      '3':
+        sourcePath: guides/grails-email/v3
+        publicationDate: '2018-06-04'
+        tags:
+          - 'spock-spring'
+          - 'email'
+          - 'sendgrid'
+          - 'aws'
+          - 'ses'
+          - 'grails3'
+      '4':
+        sourcePath: guides/grails-email/v4
+        publicationDate: '2018-06-04'
+        tags:
+          - 'spock-spring'
+          - 'email'
+          - 'sendgrid'
+          - 'aws'
+          - 'ses'
+          - 'grails4'
+
+  - name: 'grails-events'
+    title: 'Grails Events'
+    subtitle: 'Grails Events to handle a common scenario. A user registers himself in an application and the app sends the user a welcome email.'
+    authors:
+      - 'Sergio del Amo'
+    category: 'Grails Async'
+    publicationDate: '2017-09-04'
+    versions:
+      '3':
+        sourcePath: guides/grails-events/v3
+        publicationDate: '2017-09-04'
+        tags:
+          - 'async'
+          - 'events'
+          - 'grails3'
+      '4':
+        sourcePath: guides/grails-events/v4
+        publicationDate: '2017-09-04'
+        tags:
+          - 'async'
+          - 'events'
+          - 'grails4'
+
+  - name: 'grails-file-download-excel'
+    title: 'Download an Excel file in Grails App'
+    subtitle: 'Learn how to download an excel file with Grails and Spreadsheet Builder library.'
+    authors:
+      - 'Sergio del Amo'
+    category: 'Grails Apprentice'
+    publicationDate: '2018-09-03'
+    versions:
+      '3':
+        sourcePath: guides/grails-file-download-excel/v3
+        publicationDate: '2018-09-03'
+        tags:
+          - 'spreadsheet-builder-poi'
+          - 'spock'
+          - 'geb'
+          - 'excel'
+          - 'file-transfer'
+          - 'grails3'
+      '4':
+        sourcePath: guides/grails-file-download-excel/v4
+        publicationDate: '2018-09-03'
+        tags:
+          - 'spreadsheet-builder-poi'
+          - 'spock'
+          - 'geb'
+          - 'excel'
+          - 'file-transfer'
+          - 'grails4'
+
+  - name: 'grails-geb-multiple-browsers'
+    title: 'Run Grails Geb Functional Tests with multiple Browsers'
+    subtitle: 'Run tests with Firefox, HtmlUnit, Chrome'
+    authors:
+      - 'Sergio del Amo'
+    category: 'Grails Testing'
+    publicationDate: '2017-01-30'
+    versions:
+      '3':
+        sourcePath: guides/grails-geb-multiple-browsers/v3
+        publicationDate: '2017-01-30'
+        tags:
+          - 'functional-test'
+          - 'geb'
+          - 'firefox'
+          - 'chrome'
+          - 'phantomjs'
+          - 'htmlunit'
+          - 'grails3'
+      '4':
+        sourcePath: guides/grails-geb-multiple-browsers/v4
+        publicationDate: '2017-01-30'
+        tags:
+          - 'functional-test'
+          - 'geb'
+          - 'firefox'
+          - 'chrome'
+          - 'phantomjs'
+          - 'htmlunit'
+          - 'grails4'
+
+  - name: 'grails-google-cloud'
+    title: 'Deploy a Grails app to Google Cloud'
+    subtitle: 'Learn how to deploy a Grails 3 application to Google App Engine Java Flexible Environment, integrate with Google Cloud Storage and Google Cloud SQL'
+    authors:
+      - 'Sergio del Amo, Mathew Moss'
+    category: 'Grails + Google Cloud'
+    publicationDate: '2017-05-01'
+    versions:
+      '4':
+        sourcePath: guides/grails-google-cloud/v4
+        publicationDate: '2017-05-01'
+        tags:
+          - 'mysql'
+          - 'cloud-sql'
+          - 'cloud-storage'
+          - 'google-app-engine'
+          - 'logs'
+
+  - name: 'grails-google-home'
+    title: 'Google Home Guide'
+    subtitle: 'Learn to make a Goole action using Grails'
+    authors:
+      - 'Ryan Vanderwerf, Sergio del Amo'
+    category: 'Grails + Google Cloud'
+    publicationDate: '2017-05-29'
+    versions:
+      '4':
+        sourcePath: guides/grails-google-home/v4
+        publicationDate: '2017-05-29'
+        tags:
+          - 'conversation'
+          - 'ai'
+          - 'google-home'
+          - 'google-app-engine'
+          - 'web-profile'
+
+  - name: 'grails-gorm-data-services'
+    title: 'Grails GORM Data Services'
+    subtitle: 'In this guide, we will learn how to create GORM Data Services in a Grails Application.'
+    authors:
+      - 'Nirav Assar, Sergio del Amo'
+    category: 'GORM'
+    publicationDate: '2018-08-20'
+    versions:
+      '3':
+        sourcePath: guides/grails-gorm-data-services/v3
+        publicationDate: '2018-08-20'
+        tags:
+          - 'gorm'
+          - 'database'
+          - 'jpq-ql'
+          - 'data-services'
+          - 'grails3'
+      '4':
+        sourcePath: guides/grails-gorm-data-services/v4
+        publicationDate: '2018-08-20'
+        tags:
+          - 'gorm'
+          - 'database'
+          - 'jpq-ql'
+          - 'data-services'
+          - 'grails4'
+
+  - name: 'grails-javamelody'
+    title: 'JavaMelody monitoring with Grails 3'
+    subtitle: 'Learn how to setup and monitor your application using JavaMelody'
+    authors:
+      - 'Ben Rhine'
+    category: 'Grails + DevOps'
+    publicationDate: '2018-04-02'
+    versions:
+      '4':
+        sourcePath: guides/grails-javamelody/v4
+        publicationDate: '2018-04-02'
+        tags:
+          - 'javamelody'
+          - 'monitoring'
+
+  - name: 'grails-logicaldelete'
+    title: 'GORM Logical delete'
+    subtitle: 'Learn how to use GORM Logical delete plugin'
+    authors:
+      - 'Sergio del Amo'
+    category: 'GORM'
+    publicationDate: '2018-04-09'
+    versions:
+      '3':
+        sourcePath: guides/grails-logicaldelete/v3
+        publicationDate: '2018-04-09'
+        tags:
+          - 'logical-delete'
+          - 'gorm'
+          - 'geb'
+          - 'grails3'
+      '4':
+        sourcePath: guides/grails-logicaldelete/v4
+        publicationDate: '2018-04-09'
+        tags:
+          - 'logical-delete'
+          - 'gorm'
+          - 'geb'
+          - 'grails4'
+
+  - name: 'grails-micronaut-http'
+    title: 'Grails with Micronaut HTTP Client'
+    subtitle: 'In this guide, we will learn how to use the Micronaut HTTP Client in a Grails app.'
+    authors:
+      - 'Nirav Assar'
+    category: 'Grails Apprentice'
+    publicationDate: '2019-12-03'
+    versions:
+      '5':
+        sourcePath: guides/grails-micronaut-http/v5
+        publicationDate: '2019-12-03'
+        tags:
+          - 'rest'
+          - 'test'
+          - 'client'
+          - 'micronaut'
+          - 'grails5'
+
+  - name: 'grails-micronaut-kafka'
+    title: 'Message Queues with Grails and Micronaut Kafka'
+    subtitle: 'Learn how to use message queues with Grails and Micronaut Kafka'
+    authors:
+      - 'Sergio del Amo'
+    category: 'Advanced Grails'
+    publicationDate: '2021-10-14'
+    versions:
+      '4':
+        sourcePath: guides/grails-micronaut-kafka/v4
+        publicationDate: '2021-10-14'
+        tags:
+          - 'kafka'
+          - 'message-queues'
+
+  - name: 'grails-mock-basics'
+    title: 'Grails Service Testing'
+    subtitle: 'In this guide we are going to explore Service testing in Grails. Unit test GORM, Integration Tests, Mocking collaborators...'
+    authors:
+      - 'Nirav Assar'
+    category: 'Grails Testing'
+    publicationDate: '2017-04-24'
+    versions:
+      '3':
+        sourcePath: guides/grails-mock-basics/v3
+        publicationDate: '2017-04-24'
+        tags:
+          - 'unit-test'
+          - 'mock'
+          - 'spock'
+          - 'grails3'
+      '4':
+        sourcePath: guides/grails-mock-basics/v4
+        publicationDate: '2017-04-24'
+        tags:
+          - 'unit-test'
+          - 'mock'
+          - 'spock'
+          - 'grails4'
+
+  - name: 'grails-mock-http-server'
+    title: 'Consume and test a third-party REST API'
+    subtitle: 'Use Ersatz, a "mock" HTTP library, for testing code dealing with HTTP requests'
+    authors:
+      - 'Sergio del Amo'
+    category: 'Grails Testing'
+    publicationDate: '2017-08-14'
+    versions:
+      '3':
+        sourcePath: guides/grails-mock-http-server/v3
+        publicationDate: '2017-08-14'
+        tags:
+          - 'ersatz'
+          - 'mock'
+          - 'rest'
+          - 'grails3'
+      '4':
+        sourcePath: guides/grails-mock-http-server/v4
+        publicationDate: '2017-08-14'
+        tags:
+          - 'ersatz'
+          - 'mock'
+          - 'rest'
+          - 'grails4'
+
+  - name: 'grails-mock-logging-slf4j-test'
+    title: 'Grails Mock Logging with Slf4j Test'
+    subtitle: 'In this guide, we will learn how to mock and verify log statements in Grails.'
+    authors:
+      - 'Nirav Assar'
+    category: 'Grails Testing'
+    publicationDate: '2018-06-11'
+    versions:
+      '3':
+        sourcePath: guides/grails-mock-logging-slf4j-test/v3
+        publicationDate: '2018-06-11'
+        tags:
+          - 'spock'
+          - 'slf4j'
+          - 'mock'
+          - 'log'
+          - 'test'
+          - 'grails3'
+      '4':
+        sourcePath: guides/grails-mock-logging-slf4j-test/v4
+        publicationDate: '2018-06-11'
+        tags:
+          - 'spock'
+          - 'slf4j'
+          - 'mock'
+          - 'log'
+          - 'test'
+          - 'grails4'
+
+  - name: 'grails-multi-datasource'
+    title: 'Grails Multi-datasource'
+    subtitle: 'Learn how to consume and handle transactions to multiple data sources from a Grails application. '
+    authors:
+      - 'Sergio del Amo'
+    category: 'Advanced Grails'
+    publicationDate: '2017-10-10'
+    versions:
+      '3':
+        sourcePath: guides/grails-multi-datasource/v3
+        publicationDate: '2017-10-10'
+        tags:
+          - 'multi-datasource'
+          - 'json-views'
+          - 'grails3'
+      '4':
+        sourcePath: guides/grails-multi-datasource/v4
+        publicationDate: '2017-10-10'
+        tags:
+          - 'multi-datasource'
+          - 'json-views'
+          - 'grails4'
+
+  - name: 'grails-multi-project-build'
+    title: 'Grails Multi-Project Build'
+    subtitle: 'Learn how to leverage Gradle capabilities in a Grails application to create Multi-Project builds'
+    authors:
+      - 'Sergio del Amo'
+    category: 'Advanced Grails'
+    publicationDate: '2017-05-22'
+    versions:
+      '4':
+        sourcePath: guides/grails-multi-project-build/v4
+        publicationDate: '2017-05-22'
+        tags:
+          - 'gradle'
+          - 'multi-project'
+          - 'grails4'
+
+  - name: 'grails-oauth-google'
+    title: 'Google OAuth2 with Grails 3 and Spring Security REST'
+    subtitle: 'Learn how to use Google OAuth2 with Grails 3 and Spring Security REST plugin'
+    authors:
+      - 'Ben Rhine'
+    category: 'Grails + Google Cloud'
+    publicationDate: '2018-03-19'
+    versions:
+      '4':
+        sourcePath: guides/grails-oauth-google/v4
+        publicationDate: '2018-03-19'
+        tags:
+          - 'spring-security-rest'
+          - 'google'
+          - 'oauth'
+
+  - name: 'grails-oauth-twitter'
+    title: 'Twitter OAuth with Grails 3 and Spring Security REST'
+    subtitle: 'Learn how to use Twitter OAuth with Grails 3 and Spring Security REST plugin'
+    authors:
+      - 'Ben Rhine, Sergio del Amo'
+    category: 'Advanced Grails'
+    publicationDate: '2018-04-30'
+    versions:
+      '4':
+        sourcePath: guides/grails-oauth-twitter/v4
+        publicationDate: '2018-04-30'
+        tags:
+          - 'spring-security-rest'
+          - 'oauth'
+          - 'twitter'
+
+  - name: 'grails-on-circleci-basics'
+    title: 'Grails on Circle CI Basics'
+    subtitle: 'In this guide, we will learn how to setup Circle CI to build and test a Grails application.'
+    authors:
+      - 'Nirav Assar, Sergio del Amo'
+    category: 'Grails + DevOps'
+    publicationDate: '2018-07-16'
+    versions:
+      '4':
+        sourcePath: guides/grails-on-circleci-basics/v4
+        publicationDate: '2018-07-16'
+        tags:
+          - 'circleci'
+          - 'ci'
+          - 'testing'
+          - 'chrome'
+          - 'firefox'
+          - 'geb'
+          - 'grails4'
+
+  - name: 'grails-on-github-actions'
+    title: 'Grails on Github Actions'
+    subtitle: 'In this guide, we will learn how to setup Github Actions to build and test a Grails application.'
+    authors:
+      - 'Sergio del Amo'
+    category: 'Grails + DevOps'
+    publicationDate: '2019-12-16'
+    versions:
+      '4':
+        sourcePath: guides/grails-on-github-actions/v4
+        publicationDate: '2019-12-16'
+        tags:
+          - 'github'
+          - 'github-actions'
+          - 'ci'
+          - 'testing'
+          - 'chrome'
+          - 'firefox'
+          - 'geb'
+          - 'grails4'
+
+  - name: 'grails-on-travis-basics'
+    title: 'Grails on Travis Basics'
+    subtitle: 'In this guide, we will learn how to setup Travis CI to build and test a Grails application.'
+    authors:
+      - 'Nirav Assar, Sergio del Amo'
+    category: 'Grails + DevOps'
+    publicationDate: '2018-06-25'
+    versions:
+      '3':
+        sourcePath: guides/grails-on-travis-basics/v3
+        publicationDate: '2018-06-25'
+        tags:
+          - 'travis'
+          - 'ci'
+          - 'testing'
+          - 'chrome'
+          - 'firefox'
+          - 'geb'
+          - 'grails3'
+      '4':
+        sourcePath: guides/grails-on-travis-basics/v4
+        publicationDate: '2018-06-25'
+        tags:
+          - 'travis'
+          - 'ci'
+          - 'testing'
+          - 'chrome'
+          - 'firefox'
+          - 'geb'
+          - 'grails3'
+
+  - name: 'grails-quickcast-logging'
+    title: 'Grails Logging'
+    subtitle: 'Grails Quickcast #7'
+    authors:
+      - 'Sergio del Amo'
+    category: 'Grails Apprentice'
+    publicationDate: '2017-07-18'
+    versions:
+      '4':
+        sourcePath: guides/grails-quickcast-logging/v4
+        publicationDate: '2017-07-18'
+        tags:
+          - 'quickcast'
+          - 'logging'
+
+  - name: 'grails-quickcasts-angularjs-scaffolding-with-grails-3'
+    title: 'AngularJS Scaffolding with Grails 3'
+    subtitle: 'Grails Quickcast #4'
+    authors:
+      - 'James Kleeh'
+    category: 'Grails + AngularJS'
+    publicationDate: '2016-07-05'
+    versions:
+      '4':
+        sourcePath: guides/grails-quickcasts-angularjs-scaffolding-with-grails-3/v4
+        publicationDate: '2016-07-05'
+        tags:
+          - 'quickcast'
+          - 'angularjs'
+
+  - name: 'grails-quickcasts-developing-grails-3-applications-with-intellij-idea'
+    title: 'Developing Grails 3 Applications with IntelliJ IDEA'
+    subtitle: 'Grails Quickcast #6'
+    authors:
+      - 'Jeff Scott Brown'
+    category: 'Grails Apprentice'
+    publicationDate: '2016-10-14'
+    versions:
+      '4':
+        sourcePath: guides/grails-quickcasts-developing-grails-3-applications-with-intellij-idea/v4
+        publicationDate: '2016-10-14'
+        tags:
+          - 'quickcast'
+          - 'intellij-idea'
+          - 'ide'
+
+  - name: 'grails-quickcasts-interceptors'
+    title: 'Grails Interceptors'
+    subtitle: 'Grails Quickcast #1'
+    authors:
+      - 'Jeff Scott Brown'
+    category: 'Advanced Grails'
+    publicationDate: '2016-01-25'
+    versions:
+      '4':
+        sourcePath: guides/grails-quickcasts-interceptors/v4
+        publicationDate: '2016-01-25'
+        tags:
+          - 'quickcast'
+          - 'interceptor'
+
+  - name: 'grails-quickcasts-json-views'
+    title: 'JSON Views'
+    subtitle: 'Grails Quickcast #2'
+    authors:
+      - 'Jeff Scott Brown'
+    category: 'Grails Apprentice'
+    publicationDate: '2016-03-24'
+    versions:
+      '4':
+        sourcePath: guides/grails-quickcasts-json-views/v4
+        publicationDate: '2016-03-24'
+        tags:
+          - 'quickcast'
+          - 'json-view'
+
+  - name: 'grails-quickcasts-multi-project-builds'
+    title: 'Grails Multi Project Builds'
+    subtitle: 'Grails Quickcast #3'
+    authors:
+      - 'Graeme Rocher'
+    category: 'Advanced Grails'
+    publicationDate: '2016-05-23'
+    versions:
+      '4':
+        sourcePath: guides/grails-quickcasts-multi-project-builds/v4
+        publicationDate: '2016-05-23'
+        tags:
+          - 'quickcast'
+          - 'gradle'
+
+  - name: 'grails-quickcasts-retrieving-config-values'
+    title: 'Retrieving Config Values'
+    subtitle: 'Grails Quickcast #5'
+    authors:
+      - 'Jeff Scott Brown'
+    category: 'Advanced Grails'
+    publicationDate: '2016-09-01'
+    versions:
+      '4':
+        sourcePath: guides/grails-quickcasts-retrieving-config-values/v4
+        publicationDate: '2016-09-01'
+        tags:
+          - 'quickcast'
+          - 'configuration'
+
+  - name: 'grails-rabbitmq'
+    title: 'Message Queues with Grails 3 and RabbitMQ'
+    subtitle: 'Learn how to use message queues with Grails 3 and RabbitMQ-Native plugin'
+    authors:
+      - 'Ben Rhine,Sergio del Amo'
+    category: 'Advanced Grails'
+    publicationDate: '2018-03-05'
+    versions:
+      '4':
+        sourcePath: guides/grails-rabbitmq/v4
+        publicationDate: '2018-03-05'
+        tags:
+          - 'rabbitMQ'
+          - 'message-queues'
+
+  - name: 'grails-restapi-angularjs'
+    title: 'Building a REST API with Grails and AngularJS 1.x'
+    subtitle: 'Build a backend for an already existing AngularJS application (Angular 1) with Grails rest api profile'
+    authors:
+      - 'Sergio del Amo'
+    category: 'Grails + AngularJS'
+    publicationDate: '2017-02-20'
+    versions:
+      '4':
+        sourcePath: guides/grails-restapi-angularjs/v4
+        publicationDate: '2017-02-20'
+        tags:
+          - 'cors'
+          - 'angularjs'
+
+  - name: 'grails-scheduled'
+    title: 'Grails + @Scheduled'
+    subtitle: 'Learn how to use Spring Task Execution and Scheduling to schedule periodic tasks inside your Grails applications'
+    authors:
+      - 'Ben Rhine'
+    category: 'Advanced Grails'
+    publicationDate: '2018-02-26'
+    versions:
+      '3':
+        sourcePath: guides/grails-scheduled/v3
+        publicationDate: '2018-02-26'
+        tags:
+          - 'spring'
+          - 'spring-boot'
+          - 'task'
+          - 'execution'
+          - 'scheduling'
+          - 'job'
+          - 'cron'
+          - 'grails3'
+      '4':
+        sourcePath: guides/grails-scheduled/v4
+        publicationDate: '2018-02-26'
+        tags:
+          - 'spring'
+          - 'spring-boot'
+          - 'task'
+          - 'execution'
+          - 'scheduling'
+          - 'job'
+          - 'cron'
+          - 'grails4'
+
+  - name: 'grails-schwartz'
+    title: 'Schedule periodic tasks inside your Grails applications'
+    subtitle: 'Learn how to use Schwartz to schedule periodic tasks inside your Grails applications'
+    authors:
+      - 'Iván López, Sergio del Amo'
+    category: 'Advanced Grails'
+    publicationDate: '2018-01-23'
+    versions:
+      '4':
+        sourcePath: guides/grails-schwartz/v4
+        publicationDate: '2018-01-23'
+        tags:
+          - 'quartz'
+          - 'job'
+          - 'schwatz'
+
+  - name: 'grails-soap'
+    title: 'Grails & SOAP'
+    subtitle: 'Learn how to consume a SOAP endpoint from a Grails Application'
+    authors:
+      - 'Sergio del Amo'
+    category: 'Advanced Grails'
+    publicationDate: '2017-10-03'
+    versions:
+      '3':
+        sourcePath: guides/grails-soap/v3
+        publicationDate: '2017-10-03'
+        tags:
+          - 'soap'
+          - 'geb'
+          - 'grails3'
+      '4':
+        sourcePath: guides/grails-soap/v4
+        publicationDate: '2017-10-03'
+        tags:
+          - 'soap'
+          - 'geb'
+          - 'grails4'
+
+  - name: 'grails-spring-security-core-plugin-custom-authentication'
+    title: 'Grails Spring Security Core Plugin Custom Authentication'
+    subtitle: 'Shows how to create a custom authentication with Spring Security Core Plugin'
+    authors:
+      - 'Sergio del Amo'
+    category: 'Advanced Grails'
+    publicationDate: '2017-04-10'
+    versions:
+      '3':
+        sourcePath: guides/grails-spring-security-core-plugin-custom-authentication/v3
+        publicationDate: '2017-04-10'
+        tags:
+          - 'spring-security-core'
+          - 'grails3'
+      '4':
+        sourcePath: guides/grails-spring-security-core-plugin-custom-authentication/v4
+        publicationDate: '2017-04-10'
+        tags:
+          - 'spring-security-core'
+          - 'grails4'
+
+  - name: 'grails-taglib-wyswyg-trix'
+    title: 'Create and test a Grails 5 TagLib; integrate the Trix WYSWYG editor'
+    subtitle: 'Learn how to integrate Trix (the rich text editor created by Basecamp) with your Grails app with the help of a custom TagLib'
+    authors:
+      - 'Sergio del Amo'
+    category: 'Grails Apprentice'
+    publicationDate: '2017-02-06'
+    versions:
+      '3':
+        sourcePath: guides/grails-taglib-wyswyg-trix/v3
+        publicationDate: '2017-02-06'
+        tags:
+          - 'taglib'
+          - 'trix-editor'
+          - 'grails3'
+      '4':
+        sourcePath: guides/grails-taglib-wyswyg-trix/v4
+        publicationDate: '2017-02-06'
+        tags:
+          - 'taglib'
+          - 'trix-editor'
+          - 'grails4'
+
+  - name: 'grails-test-domain-class-constraints'
+    title: 'How to test Domain class constraints?'
+    subtitle: ''
+    authors:
+      - 'Sergio del Amo'
+    category: 'Grails Testing'
+    publicationDate: '2017-04-03'
+    versions:
+      '3':
+        sourcePath: guides/grails-test-domain-class-constraints/v3
+        publicationDate: '2017-04-03'
+        tags:
+          - 'unit-test'
+          - 'grails3'
+      '4':
+        sourcePath: guides/grails-test-domain-class-constraints/v4
+        publicationDate: '2017-04-03'
+        tags:
+          - 'unit-test'
+          - 'grails4'
+
+  - name: 'grails-test-security'
+    title: 'Testing a Secured Grails Application'
+    subtitle: 'In this guide you will see how to test the security constraints you added with Grails Spring Security REST Plugin and Grails Spring Security Core Plugin.'
+    authors:
+      - 'Sergio del Amo'
+    category: 'Grails Testing'
+    publicationDate: '2017-01-16'
+    versions:
+      '3':
+        sourcePath: guides/grails-test-security/v3
+        publicationDate: '2017-01-16'
+        tags:
+          - 'spring-security-rest'
+          - 'rest-api'
+          - 'functional-test'
+          - 'geb'
+          - 'spring-security-core'
+          - 'micronaut-http-client'
+          - 'grails3'
+      '4':
+        sourcePath: guides/grails-test-security/v4
+        publicationDate: '2017-01-16'
+        tags:
+          - 'spring-security-rest'
+          - 'rest-api'
+          - 'functional-test'
+          - 'geb'
+          - 'spring-security-core'
+          - 'micronaut-http-client'
+          - 'grails4'
+
+  - name: 'grails-tvmlapp'
+    title: 'Build a TVML App with Grails'
+    subtitle: 'Build an app for Apple TV with Grails. Leverage markup views, asset-pipeline and internazionalization capabilities of Grails to streamline TVML development'
+    authors:
+      - 'Sergio del Amo'
+    category: 'Advanced Grails'
+    publicationDate: '2017-03-20'
+    versions:
+      '3':
+        sourcePath: guides/grails-tvmlapp/v3
+        publicationDate: '2017-03-20'
+        tags:
+          - 'tvml'
+          - 'apple-tv'
+          - 'tvmljs'
+          - 'tvos'
+          - 'grails3'
+      '4':
+        sourcePath: guides/grails-tvmlapp/v4
+        publicationDate: '2017-03-20'
+        tags:
+          - 'tvml'
+          - 'apple-tv'
+          - 'tvmljs'
+          - 'tvos'
+          - 'grails4'
+
+  - name: 'grails-upload-file'
+    title: 'How to upload a file with Grails 4'
+    subtitle: 'Learn how to upload files with Grails 4; transfer them to a folder, save them as byte[] in the database or upload them to AWS S3.'
+    authors:
+      - 'Sergio del Amo'
+    category: 'Grails Apprentice'
+    publicationDate: '2017-03-13'
+    versions:
+      '3':
+        sourcePath: guides/grails-upload-file/v3
+        publicationDate: '2017-03-13'
+        tags:
+          - 'command-object'
+          - 'aws'
+          - 's3'
+          - 'grails3'
+      '4':
+        sourcePath: guides/grails-upload-file/v4
+        publicationDate: '2017-03-13'
+        tags:
+          - 'command-object'
+          - 'aws'
+          - 's3'
+          - 'grails4'
+
+  - name: 'grails-vs-nodejs'
+    title: 'Replacing a Node/Express API with Grails'
+    subtitle: 'Learn how to replace a RESTful API in Node/Express with Grails'
+    authors:
+      - 'Zachary Klein, Sergio del Amo'
+    category: 'Grails + React'
+    publicationDate: '2017-07-17'
+    versions:
+      '4':
+        sourcePath: guides/grails-vs-nodejs/v4
+        publicationDate: '2017-07-17'
+        tags:
+          - 'react'
+          - 'rest'
+          - 'authentication'
+          - 'security'
+          - 'ssl'
+          - 'websockets'
+
+  - name: 'grails-vue-combined'
+    title: 'Combining the Grails Vue profile client and server projects'
+    subtitle: 'Learn how to generate a JAR file which combines Vue and Grails production artefacts.'
+    authors:
+      - 'Nirav Assar, Zachary Klein'
+    category: 'Grails + Vue.js'
+    publicationDate: '2018-11-05'
+    versions:
+      '4':
+        sourcePath: guides/grails-vue-combined/v4
+        publicationDate: '2018-11-05'
+        tags:
+          - 'vue'
+          - 'javascript'
+          - 'gradle'
+          - 'multi-project'
+
+  - name: 'grails-yourkit-profiling'
+    title: 'Grails YourKit Profiling'
+    subtitle: 'In this guide you will learn how to profile Memory and CPU on a Grails applications using the YourKit Java Profiler tool.'
+    authors:
+      - 'Nirav Assar'
+    category: 'Grails + DevOps'
+    publicationDate: '2017-12-04'
+    versions:
+      '4':
+        sourcePath: guides/grails-yourkit-profiling/v4
+        publicationDate: '2017-12-04'
+        tags:
+          - 'yourkit'
+          - 'profiling'
+          - 'heap-memory'
+          - 'garbage-collection'
+          - 'cpu'
+          - 'web-profile'
+          - 'grails4'
+
+  - name: 'neo4j-movies'
+    title: 'Building a Graph application with Grails and Neo4j'
+    subtitle: 'This guide with demonstrate how to build the Neo4j Movies example application with Grails and GORM'
+    authors:
+      - 'Graeme Rocher'
+    category: 'GORM'
+    publicationDate: '2017-03-27'
+    versions:
+      '4':
+        sourcePath: guides/neo4j-movies/v4
+        publicationDate: '2017-03-27'
+        tags:
+          - 'neo4j'
+          - 'nosql'
+          - 'graph'
+          - 'gorm'
+
+  - name: 'querying-gorm-dynamic-finders'
+    title: 'Querying the Database using GORM Dynamic Finders'
+    subtitle: 'This guide will demostrate how to efficiently query your database using GORM''s dynamic finders.'
+    authors:
+      - 'Matthew Moss'
+    category: 'GORM'
+    publicationDate: '2017-09-25'
+    versions:
+      '3':
+        sourcePath: guides/querying-gorm-dynamic-finders/v3
+        publicationDate: '2017-09-25'
+        tags:
+          - 'gorm'
+          - 'query'
+          - 'database'
+          - 'grails3'
+      '4':
+        sourcePath: guides/querying-gorm-dynamic-finders/v4
+        publicationDate: '2017-09-25'
+        tags:
+          - 'gorm'
+          - 'query'
+          - 'database'
+          - 'grails4'
+
+  - name: 'react-combined'
+    title: 'Combining the React profile projects'
+    subtitle: 'Learn how to generate a JAR file which combines React and Grails production artefacts.'
+    authors:
+      - 'Zachary Klein'
+    category: 'Grails + React'
+    publicationDate: '2017-06-12'
+    versions:
+      '4':
+        sourcePath: guides/react-combined/v4
+        publicationDate: '2017-06-12'
+        tags:
+          - 'react'
+          - 'javascript'
+          - 'gradle'
+          - 'multi-project'
+
+  - name: 'react-spring-security'
+    title: 'Creating a React app with Spring Security'
+    subtitle: 'Learn how to add Spring Security to your React app'
+    authors:
+      - 'Ben Rhine, Zachary Klein'
+    category: 'Grails + React'
+    publicationDate: '2018-02-10'
+    versions:
+      '4':
+        sourcePath: guides/react-spring-security/v4
+        publicationDate: '2018-02-10'
+        tags:
+          - 'react'
+          - 'grails'
+          - 'javascript'
+          - 'security'
+          - 'spring-security-rest'
+          - 'rest-api'
+
+  - name: 'rest-hibernate'
+    title: 'Building a REST application with GORM and Hibernate 5'
+    subtitle: 'This guide will demonstrate how you can use Grails, GORM and Hibernate 5 to build a REST application'
+    authors:
+      - 'Graeme Rocher'
+    category: 'GORM'
+    publicationDate: '2016-11-23'
+    versions:
+      '3':
+        sourcePath: guides/rest-hibernate/v3
+        publicationDate: '2016-11-23'
+        tags:
+          - 'hibernate'
+          - 'rest-api'
+          - 'json'
+          - 'gorm'
+          - 'grails3'
+      '4':
+        sourcePath: guides/rest-hibernate/v4
+        publicationDate: '2016-11-23'
+        tags:
+          - 'hibernate'
+          - 'rest-api'
+          - 'json'
+          - 'gorm'
+          - 'grails4'
+
+  - name: 'rest-mongodb'
+    title: 'Building a REST application with MongoDB'
+    subtitle: 'This guide will demonstrate how you can use Grails, GORM and MongoDB to build a REST application'
+    authors:
+      - 'Graeme Rocher'
+    category: 'GORM'
+    publicationDate: '2016-11-23'
+    versions:
+      '4':
+        sourcePath: guides/rest-mongodb/v4
+        publicationDate: '2016-11-23'
+        tags:
+          - 'mongodb'
+          - 'rest-api'
+          - 'json'
+          - 'gorm'
+          - 'grails4'
+
+  - name: 'server-sent-events'
+    title: 'Sending Server Sent Events with Grails '
+    subtitle: 'This guide walks you through how to send Server Sent Events using Grails and RxJava.'
+    authors:
+      - 'Graeme Rocher'
+    category: 'Grails Async'
+    publicationDate: '2016-11-11'
+    versions:
+      '3':
+        sourcePath: guides/server-sent-events/v3
+        publicationDate: '2016-11-11'
+        tags:
+          - 'rxjava'
+          - 'reactive'
+          - 'html5'
+          - 'grails3'
+      '4':
+        sourcePath: guides/server-sent-events/v4
+        publicationDate: '2016-11-11'
+        tags:
+          - 'rxjava'
+          - 'reactive'
+          - 'html5'
+          - 'grails4'
+
+  - name: 'using-hal-with-json-views'
+    title: 'Using HAL with JSON Views'
+    subtitle: 'Learn to build discoverable APIs with Grails'
+    authors:
+      - 'ZacharyKlein'
+    category: 'Advanced Grails'
+    publicationDate: '2017-04-17'
+    versions:
+      '3':
+        sourcePath: guides/using-hal-with-json-views/v3
+        publicationDate: '2017-04-17'
+        tags:
+          - 'hal'
+          - 'rest'
+          - 'json views'
+          - 'grails3'
+      '4':
+        sourcePath: guides/using-hal-with-json-views/v4
+        publicationDate: '2017-04-17'
+        tags:
+          - 'hal'
+          - 'rest'
+          - 'json views'
+          - 'grails4'
+
+  - name: 'using-the-react-profile'
+    title: 'Using the React Profile'
+    subtitle: 'This guide introduces the React profile for Grails.'
+    authors:
+      - 'Zachary Klein'
+    category: 'Grails + React'
+    publicationDate: '2016-11-24'
+    versions:
+      '4':
+        sourcePath: guides/using-the-react-profile/v4
+        publicationDate: '2016-11-24'
+        tags:
+          - 'react'
+          - 'node'
+          - 'javascript'
+          - 'grails4'
+
+  - name: 'using-the-vue-profile'
+    title: 'Using the Vue.js Grails Profile'
+    subtitle: 'This guide introduces the Vue.js profile for Grails.'
+    authors:
+      - 'Zachary Klein'
+    category: 'Grails + Vue.js'
+    publicationDate: '2018-03-12'
+    versions:
+      '3':
+        sourcePath: guides/using-the-vue-profile/v3
+        publicationDate: '2018-03-12'
+        tags:
+          - 'vue'
+          - 'node'
+          - 'javascript'
+          - 'vue-profile'
+          - 'grails3'
+      '4':
+        sourcePath: guides/using-the-vue-profile/v4
+        publicationDate: '2018-03-12'
+        tags:
+          - 'vue'
+          - 'node'
+          - 'javascript'
+          - 'vue-profile'
+          - 'grails4'
+
+  - name: 'vaadin-grails'
+    title: 'Build a Grails 3 application with the Vaadin 8 Framework'
+    subtitle: 'Learn how to build a Grails 3 application with the Vaadin 8 Framework'
+    authors:
+      - 'Ben Rhine'
+    category: 'Grails + RIA (Rich Internet Application)'
+    publicationDate: '2017-07-24'
+    versions:
+      '4':
+        sourcePath: guides/vaadin-grails/v4
+        publicationDate: '2017-07-24'
+        tags:
+          - 'vaadin'
+          - 'frontend'
+          - 'framework'
+
