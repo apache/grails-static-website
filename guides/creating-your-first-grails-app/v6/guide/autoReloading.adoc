@@ -1,0 +1,16 @@
+
+Currently the app simply displays a default index page with some information about the application. The default index page is located under `grails-app/views/index.gsp`.
+
+Go ahead and edit that file, and change some thing on the page, as shown below (line 54):
+
+[source, xml]
+----
+    <div id="content" role="main">
+        <section class="row colset-2-its">
+            <h1>Welcome to My First Grails Project</h1>  <1>
+----
+<1> Change the text of the `<h1>` tag.
+
+Save your changes and refresh the page in the browser. You should see your change on the home page. Grails will auto-reload changes to views, controllers, domain classes and other artefacts when it detects changes, so you don't need to restart the app upon every change.
+
+WARNING: Major changes to domain class associations, renaming classes, and other operations that affect the "wiring" of the application may not successfully reload.

@@ -1,0 +1,94 @@
+
+You can optionally specify a http://docs.grails.org/latest/guide/profiles.html[Profile] for your Grails app. Profiles are available for many common application types, including `rest-api`, `angular`, `react`, and others, and you can even create your own.
+
+To view of a list of what profiles are available, use the http://docs.grails.org/latest/ref/Command%20Line/list-profiles.html[`list-profiles`] command.
+
+[source, bash]
+----
+$ grails list-profiles
+
+| Available Profiles
+--------------------
+* angular - A profile for creating applications using AngularJS
+* rest-api - Profile for REST API applications
+* base - The base profile extended by other profiles
+* angular2 - A profile for creating Grails applications with Angular 2
+* plugin - Profile for plugins designed to work across all profiles
+* profile - A profile for creating new Grails profiles
+* react - A profile for creating Grails applications with a React frontend
+* rest-api-plugin - Profile for REST API plugins
+* web - Profile for Web applications
+* web-plugin - Profile for Plugins designed for Web applications
+* webpack - A profile for creating applications with node-based frontends using webpack
+----
+
+To use a profile, specify its name preceded by the `-profile` flag:
+
+[source, bash]
+----
+grails create-app myApp -profile rest-api
+----
+
+You may optionally specify a package and version (defaults to `org.grails.profiles` and the current version of the profile)
+
+[source, bash]
+----
+grails create-app myApp -profile org.grails.profiles:react:1.0.2
+----
+
+To get detailed information about a profile use the http://docs.grails.org/latest/ref/Command%20Line/profile-info.html[`profile-info`] command.
+
+[source, bash]
+----
+$ grails profile-info plugin
+
+Profile: plugin
+--------------------
+Profile for plugins designed to work across all profiles
+
+Provided Commands:
+--------------------
+| Error Error occurred loading commands: grails.dev.commands.ApplicationContextCommandRegistry (Use --stacktrace to see the full trace)
+| Error Error occurred loading commands: grails.dev.commands.ApplicationContextCommandRegistry (Use --stacktrace to see the full trace)
+* package-plugin - Packages the plugin into a JAR file
+* publish-plugin - Publishes the plugin to the Grails central repository
+* help - Prints help information for a specific command
+* open - Opens a file in the project
+* gradle - Allows running of Gradle tasks
+* clean - Cleans a Grails application's compiled sources
+* compile - Compiles a Grails application
+* create-command - Creates an Application Command
+* create-domain-class - Creates a Domain Class
+* create-service - Creates a Service
+* create-unit-test - Creates a unit test
+* install - Installs a Grails application or plugin into the local Maven cache
+* assemble - Creates a JAR or WAR archive for production deployment
+* bug-report - Creates a zip file that can be attached to issue reports for the current project
+* console - Runs the Grails interactive console
+* create-script - Creates a Grails script
+* dependency-report - Prints out the Grails application's dependencies
+* list-plugins - Lists available plugins from the Plugin Repository
+* plugin-info - Prints information about the given plugin
+* run-app - Runs a Grails application
+* run-command - Executes Grails commands
+* run-script - Executes Groovy scripts in a Grails context
+* shell - Runs the Grails interactive shell
+* stats - Prints statistics about the project
+* stop-app - Stops the running Grails application
+* test-app - Runs the applications tests
+
+Provided Features:
+--------------------
+* asset-pipeline - Adds Asset Pipeline to a Grails project
+* hibernate4 - Adds GORM for Hibernate 4 to the project
+* hibernate5 - Adds GORM for Hibernate 5 to the project
+* json-views - Adds support for JSON Views to the project
+* less-asset-pipeline - Adds LESS Transpiler Asset Pipeline to a Grails project
+* markup-views - Adds support for Markup Views to the project
+* mongodb - Adds GORM for MongoDB to the project
+* neo4j - Adds GORM for Neo4j to the project
+* rx-mongodb - Adds RxGORM for MongoDB to the project
+* asset-pipeline-plugin - Adds Asset Pipeline to a Grails Plugin for packaging
+----
+
+include::{commondir}/common-tipDefaultProfile.adoc[]

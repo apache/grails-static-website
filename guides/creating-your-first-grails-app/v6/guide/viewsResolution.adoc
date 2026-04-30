@@ -1,0 +1,29 @@
+How does Grails choose which view to render? By convention, Grails looks for views
+under the `grails-app/views` directory. It will attempt to resolve views to controller
+actions by matching the controller name with a directory under the `views` directory.
+E.g., `HomeController` will resolve to `grails-app/views/home`. Grails will then map
+actions to GSP pages with the same name. E.g, `index` will resolve to `index.gsp`.
+
+You can also render a particular view from your controller action (overriding Grails' conventions) using the `render` method:
+
+[source, groovy]
+----
+class SomeController {
+    def someAction() {
+        render view: 'anotherView'
+    }
+}
+----
+
+This will attempt to resolve to a `anotherView.gsp` page under `grails-app/views/some/`. If you would like to resolve a view that is not under the controller's own view directory, use a leading `/` to specifiy an absolute path from `grails-app/views`:
+
+[source, groovy]
+----
+class SomeController {
+    def someAction() {
+        render view: '/another/view'
+    }
+}
+----
+
+This will resolve to `view.gsp` under `grails-app/views/another/`.

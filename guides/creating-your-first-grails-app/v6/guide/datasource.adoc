@@ -1,0 +1,1 @@
+By default, Grails configures an in-memory H2 database, which is dropped and recreated every time the app is restarted. This will be sufficient for our purposes in this guide, however, you can easily change this to a local database instance by configuring your own datasource. We'll use MySQL as an example.

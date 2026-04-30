@@ -1,0 +1,59 @@
+Now that we have a home page, let's create controllers to manage the domain model we created earlier. Create 3 new controllers for each of the domain classes, `Vehicle`, `Make`, and `Model`.
+
+[source, bash]
+----
+$ ./grailsw create-controller Vehicle
+
+| Created grails-app/controllers/org/grails/guides/VehicleController.groovy
+| Created src/test/groovy/org/grails/guides/VehicleControllerSpec.groovy
+
+$ ./grailsw create-controller Make
+
+| Created grails-app/controllers/org/grails/guides/MakeController.groovy
+| Created src/test/groovy/org/grails/guides/MakeControllerSpec.groovy
+
+$ ./grailsw create-controller Model
+
+| Created grails-app/controllers/org/grails/guides/ModelController.groovy
+| Created src/test/groovy/org/grails/guides/ModelControllerSpec.groovy
+----
+
+
+To use scaffolding, edit the three controllers we just created, and replace the default `index` action with a `scaffolding` property as shown in the examples below.
+
+[source, groovy]
+.grails-app/controllers/org/grails/guides/VehicleController.groovy
+----
+package org.grails.guides
+
+class VehicleController {
+
+    static scaffold = Vehicle
+}
+----
+
+[source, groovy]
+.grails-app/controllers/org/grails/guides/MakeControler.groovy
+----
+package org.grails.guides
+
+class MakeControler {
+
+    static scaffold = Make
+}
+----
+
+[source, groovy]
+.grails-app/controllers/org/grails/guides/ModelController.groovy
+----
+package org.grails.guides
+
+class ModelController {
+
+    static scaffold = Model
+}
+----
+
+With the `scaffold` property set, Grails will now generate all necessary CRUD (Create, Read, Update, Delete) actions for the respective domain classes. It will also dynamically generate views with list, create, show and edit pages using our domain properties and associations. This can give you a big leg up when putting together the beginnings of an application.
+
+Restart the app, and browse to `http://localhost:8080/vehicle` - you should see a list of the `Vehicle` instances we added to our `BootStrap`. Try out the new views and create, view, edit and delete some instances. You can also do the same with the `Model` and `Make` controllers.
