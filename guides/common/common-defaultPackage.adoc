@@ -1,0 +1,8 @@
+If you don't specify a package, the app name will be used as the default package for the application (e.g., `myapp`).
+You can edit the default package at _grails-app/conf/application.yml_
+You can optionally specify a default package for the application:
+
+[source, bash]
+----
+$ grails create-app org.grails.guides.myApp
+----

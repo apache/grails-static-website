@@ -1,0 +1,11 @@
+[TIP]
+====
+Did you know you can download a complete Grails project without installing any additional tools? Go to http://start.grails.org[start.grails.org] and use the *Grails Application Forge* to generate your Grails project. You can choose your project type (Application or Plugin), pick a version of Grails, and choose a Profile - then click "Generate Project" to download a ZIP file. No Grails installation necessary!
+
+You can even download your project from the command line using a HTTP tool like `curl` (see http://start.grails.org[start.grails.org] for API documentation):
+
+[source, bash]
+----
+curl -O start.grails.org/myapp.zip -d version=5.1.6
+----
+====

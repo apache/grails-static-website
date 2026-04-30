@@ -1,0 +1,1 @@
+TIP: When you create an app without `-profile` the default profile used is the `web` profile.

@@ -1,0 +1,20 @@
+To deploy to Google App Engine, we need to add the file `src/main/appengine/app.yaml`
+
+It describes the application's deployment configuration:
+
+[source,groovy]
+./src/main/appengine/app.yaml
+----
+include::{sourceDir}/src/main/appengine/app.yaml[indent=0]
+----
+
+Here, `app.yaml` specifies the runtime used by the app, and sets `env: flex`,
+specifying that the app uses the https://cloud.google.com/appengine/docs/flexible/[flexible environment].
+
+NOTE: The minimal `app.yaml` application configuration file shown above is sufficient for a simple Grails application.
+Depending on the size, complexity, and features that your application uses, you may need to change and extend this basic
+configuration file. For more information on what can be configured via `app.yaml`, please see the
+https://cloud.google.com/appengine/docs/flexible/java/configuring-your-app-with-app-yaml[Configuring Your App with app.yaml]
+guide.
+
+For more information on how the Java runtime works, see https://cloud.google.com/appengine/docs/flexible/java/dev-jetty9[Java 8 / Jetty 9.3 Runtime].

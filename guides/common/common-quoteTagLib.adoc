@@ -1,0 +1,4 @@
+http://docs.grails.org/latest/guide/theWebLayer.html#taglibs[Grails Tag Libraries]
+____
+A tag library fulfills role of "view helper" in the Model View Controller (MVC) pattern and helps with GSP rendering. In Grails a tag library is a class with a name that ends in the convention "TagLib" and lives in the grails-app/taglib directory. Use the create-tag-lib command create a tag library
+___

@@ -1,0 +1,2 @@
+NOTE: The first time you run a `grails` command, application dependencies will be
+downloaded form the Internet. Subsequent calls will be much faster.
