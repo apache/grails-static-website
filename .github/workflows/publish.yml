@@ -6,6 +6,11 @@ on:
   schedule:
     - cron:  '0 */2 * * *'
   workflow_dispatch:
+# Prevent two simultaneous publishes from racing on the deploy branch.
+# cancel-in-progress=false so the in-flight deploy completes before the next.
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
 jobs:
   build:
     permissions:
