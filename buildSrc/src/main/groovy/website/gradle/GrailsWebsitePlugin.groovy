@@ -75,9 +75,7 @@ class GrailsWebsitePlugin implements Plugin<Project> {
 
         RenderSiteTask.register(project, siteExt).configure {
 
-            // The Grails Guides are not part of this site, they are published to https://guides.grails.org
-            // and hosted at gh-pages in https://github.com/grails/grails-guides-template
-            // The buildGuides task can be used to generate the guide site.
+            // The buildGuides task generates the guides site separately.
 
             it.dependsOn(AssetsTask.NAME)
             it.dependsOn(DocumentationTask.NAME)
@@ -94,14 +92,18 @@ class GrailsWebsitePlugin implements Plugin<Project> {
         }
 
         project.tasks.register('buildGuides') {
-            // Task for only generating the Grails Guides which are published to https://guides.grails.org
-            // and hosted at gh-pages in https://github.com/grails/grails-guides-template
             it.description = 'Build guides website - generates guides pages, copies assets and generates a sitemap'
             it.group = GrailsWebsiteTask.GROUP
             it.dependsOn(AssetsTask.NAME)
             it.dependsOn(GuidesTask.NAME)
             it.finalizedBy(SitemapTask.NAME)
+        }
 
+        // Backward-compatible alias for the historically-documented singular name.
+        project.tasks.register('buildGuide') {
+            it.description = 'Alias for buildGuides (kept for backward compatibility)'
+            it.group = GrailsWebsiteTask.GROUP
+            it.dependsOn('buildGuides')
         }
 
         project.tasks.named('build') {
