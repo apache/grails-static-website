@@ -1,0 +1,175 @@
+.codeButton {
+    -moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+    -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+    box-shadow:inset 0px 1px 0px 0px #ffffff;
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f9f9f9), color-stop(1, #e9e9e9));
+    background:-moz-linear-gradient(top, #f9f9f9 5%, #e9e9e9 100%);
+    background:-webkit-linear-gradient(top, #f9f9f9 5%, #e9e9e9 100%);
+    background:-o-linear-gradient(top, #f9f9f9 5%, #e9e9e9 100%);
+    background:-ms-linear-gradient(top, #f9f9f9 5%, #e9e9e9 100%);
+    background:linear-gradient(to bottom, #f9f9f9 5%, #e9e9e9 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f9f9f9', endColorstr='#e9e9e9',GradientType=0);
+    background-color:#f9f9f9;
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+    border-radius:4px;
+    border:1px solid #dcdcdc;
+    display:inline-block;
+    cursor:pointer;
+    color:#666666;
+    font-family:Arial;
+    font-size:15px;
+    padding:10px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #ffffff;
+}
+.codeButton:hover {
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #e9e9e9), color-stop(1, #f9f9f9));
+    background:-moz-linear-gradient(top, #e9e9e9 5%, #f9f9f9 100%);
+    background:-webkit-linear-gradient(top, #e9e9e9 5%, #f9f9f9 100%);
+    background:-o-linear-gradient(top, #e9e9e9 5%, #f9f9f9 100%);
+    background:-ms-linear-gradient(top, #e9e9e9 5%, #f9f9f9 100%);
+    background:linear-gradient(to bottom, #e9e9e9 5%, #f9f9f9 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#e9e9e9', endColorstr='#f9f9f9',GradientType=0);
+    background-color:#e9e9e9;
+}
+.codeButton:active {
+    position:relative;
+    top:1px;
+    background-color: white;
+}
+
+.form-control, input[type="text"], input[type="password"], input[type="email"], input[type="number"], input[type="tel"], input[type="url"], select, textarea {
+    background-color: #fff;
+    background-position: right 8px center;
+    background-repeat: no-repeat;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075) inset;
+    color: #333;
+    font-size: 13px;
+    min-height: 13px;
+    outline: medium none;
+    padding: 7px 8px;
+    vertical-align: middle;
+}
+
+.input-group {
+    display: table;
+    margin-top:10px;
+}
+
+.input-group input:first-child, .input-group-button:first-child .clipbtn {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+.input-group input, .input-group-button {
+    display: table-cell;
+}
+.input-group input {
+    position: relative;
+    width: 175px;
+}
+.input-group-button {
+    vertical-align: middle;
+    width: 1%;
+}
+.input-group input, .input-group-button {
+    display: table-cell;
+}
+.input-group-button:last-child .clipbtn {
+    margin-left: -1px;
+}
+.input-group input:last-child, .input-group-button:last-child .clipbtn {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+.clipbtn {
+    -moz-user-select: none;
+    background-color: #eee;
+    background-image: linear-gradient(#fcfcfc, #eee);
+    border: 1px solid #d5d5d5;
+    border-radius: 3px;
+    color: #333;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 20px;
+    padding: 6px 12px;
+    position: relative;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.downloadButton {
+    margin-left: 40px;
+    -moz-box-shadow:inset 0px 1px 0px 0px #a4e271;
+    -webkit-box-shadow:inset 0px 1px 0px 0px #a4e271;
+    box-shadow:inset 0px 1px 0px 0px #a4e271;
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #91dd70), color-stop(1, #54ae2e));
+    background:-moz-linear-gradient(top, #91dd70 5%, #54ae2e 100%);
+    background:-webkit-linear-gradient(top, #91dd70 5%, #54ae2e 100%);
+    background:-o-linear-gradient(top, #91dd70 5%, #54ae2e 100%);
+    background:-ms-linear-gradient(top, #91dd70 5%, #54ae2e 100%);
+    background:linear-gradient(to bottom, #91dd70 5%, #54ae2e 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#91dd70', endColorstr='#54ae2e',GradientType=0);
+    background-color:#91dd70;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    border-radius:6px;
+    border:1px solid #59ad35;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:15px;
+    font-weight:bold;
+    padding:6px 24px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #528009;
+}
+
+.downloadButton a {
+    color:#ffffff;
+}
+.downloadButton:hover {
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #54ae2e), color-stop(1, #91dd70));
+    background:-moz-linear-gradient(top, #54ae2e 5%, #91dd70 100%);
+    background:-webkit-linear-gradient(top, #54ae2e 5%, #91dd70 100%);
+    background:-o-linear-gradient(top, #54ae2e 5%, #91dd70 100%);
+    background:-ms-linear-gradient(top, #54ae2e 5%, #91dd70 100%);
+    background:linear-gradient(to bottom, #54ae2e 5%, #91dd70 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#54ae2e', endColorstr='#91dd70',GradientType=0);
+    background-color:#54ae2e;
+}
+.downloadButton:active {
+    position:relative;
+    top:1px;
+}
+
+#footer a, .menu a, .local .local-title a, .local .local-title .toggle {
+    color: #fff;
+}
+.local-title {
+    font-size: 1.4em;
+    font-weight: bold;
+}
+#table-of-content a {
+    padding: 4px 0px;
+}
+
+@media only screen and (max-device-width: 480px) and (orientation: portrait) { 
+  	#colset #col1 {
+  		margin: 0;
+  		padding: 0;
+  	}
+  	#main {
+    	width: 98%;		
+  		margin: 0;
+  		border: 0;
+  	}
+  	#colset #col2 {
+  		display: none;
+  	}
+}

@@ -1,0 +1,10 @@
+In order to use Multi-Tenancy you need to setup the Multi-Tenancy mode that GORM uses, given that three distinct modes are supported:
+
+* link:{gormapi}/org/grails/datastore/mapping/multitenancy/MultiTenancySettings.MultiTenancyMode.html#DATABASE[DATABASE] - Use a distinct database connection per tenant
+* link:{gormapi}/org/grails/datastore/mapping/multitenancy/MultiTenancySettings.MultiTenancyMode.html#SCHEMA[SCHEMA] - Use a single database, but different physical schemas per tenant
+* link:{gormapi}/org/grails/datastore/mapping/multitenancy/MultiTenancySettings.MultiTenancyMode.html#DISCRIMINATOR[DISCRIMINATOR] - Use a single database, but partition the data using a discriminator column
+
+
+Generally `DATABASE` and `SCHEMA` modes can both be considered to be physically separated, whilst `DISCRIMINATOR` mode requires more care since different tenants' data is stored in the same physical database:
+
+image::multi-tenancy-modes.png[]

@@ -1,0 +1,2 @@
+http://docs.grails.org/latest/guide/testing.html#functionalTesting[Functional Tests] involve making HTTP
+requests against the running application and verifying the resultant behaviour.

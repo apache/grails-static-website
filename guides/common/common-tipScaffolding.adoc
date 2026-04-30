@@ -1,0 +1,1 @@
+TIP: Learn more about scaffolding in the http://docs.grails.org/latest/guide/scaffolding.html[Grails documentation].

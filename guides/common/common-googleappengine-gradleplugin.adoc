@@ -1,0 +1,20 @@
+To deploy to App Engine, we are going to use the https://github.com/GoogleCloudPlatform/app-gradle-plugin[Google App Engine Gradle Plugin].
+
+We need to modify `build.gradle`, add the plugin as a buildscript dependency and apply the plugin:
+
+[source,groovy]
+.build.gradle
+----
+buildscript {
+    repositories {
+        mavenLocal()
+        maven { url "https://repo.grails.org/grails/core" }
+    }
+    dependencies {
+        classpath "org.grails:grails-gradle-plugin:$grailsVersion"
+        classpath 'com.google.cloud.tools:appengine-gradle-plugin:1.1.1' 
+    }
+}
+...
+apply plugin: 'com.google.cloud.tools.appengine' 
+----
