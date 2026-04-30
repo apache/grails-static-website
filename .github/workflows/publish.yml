@@ -47,12 +47,11 @@ jobs:
         with:
           develocity-access-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
       - name: Publish Main Site
-        run: ./publish.sh
+        run: ./gradlew clean publishMainSite --console=plain --no-daemon
         env:
           GITHUB_SLUG: apache/grails-website
           GH_TOKEN: ${{ secrets.GRAILS_GHTOKEN }}
           GH_BRANCH: asf-site-production
-          GRADLE_TASK: build
           GRAILS_WS_URL: https://grails.apache.org
       # NOTE: The previous "Publish Guides Site" step that pushed to
       # grails-guides/grails-guides-template gh-pages has been removed as part

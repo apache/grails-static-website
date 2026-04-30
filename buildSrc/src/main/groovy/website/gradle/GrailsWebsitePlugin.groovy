@@ -34,6 +34,7 @@ import website.gradle.tasks.HtaccessTask
 import website.gradle.tasks.MinutesTask
 import website.gradle.tasks.PluginsTask
 import website.gradle.tasks.ProfilesTask
+import website.gradle.tasks.PublishMainSiteTask
 import website.gradle.tasks.QuestionsTask
 import website.gradle.tasks.RenderSiteTask
 import website.gradle.tasks.SitemapTask
@@ -109,5 +110,10 @@ class GrailsWebsitePlugin implements Plugin<Project> {
         project.tasks.named('build') {
             it.dependsOn(RenderSiteTask.NAME)
         }
+
+        // Mirrors build/dist/ into the deploy repo and pushes when changed.
+        // Replaces the legacy publish.sh shell script; CI invokes
+        // `./gradlew clean publishMainSite` instead of `./publish.sh`.
+        PublishMainSiteTask.register(project)
     }
 }
