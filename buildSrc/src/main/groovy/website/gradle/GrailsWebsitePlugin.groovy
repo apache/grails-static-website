@@ -38,6 +38,7 @@ import website.gradle.tasks.PublishMainSiteTask
 import website.gradle.tasks.QuestionsTask
 import website.gradle.tasks.RenderSiteTask
 import website.gradle.tasks.SitemapTask
+import website.gradle.tasks.ValidateGuidesTask
 
 @CompileStatic
 class GrailsWebsitePlugin implements Plugin<Project> {
@@ -115,5 +116,9 @@ class GrailsWebsitePlugin implements Plugin<Project> {
         // Replaces the legacy publish.sh shell script; CI invokes
         // `./gradlew clean publishMainSite` instead of `./publish.sh`.
         PublishMainSiteTask.register(project)
+
+        // Validates conf/guides.yml against the schema.
+        // `-PvalidationMode=shape|existence|both` selects the rule set.
+        ValidateGuidesTask.register(project)
     }
 }
