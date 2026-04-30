@@ -9,6 +9,16 @@ ext {
 
 repositories {
     mavenCentral()
+    // Grails Foundation artifacts (e.g. grails-docs) are not on Maven Central.
+    // Restrict to the grails groups so this repo cannot accidentally serve
+    // unrelated artifacts (supply-chain hardening).
+    maven {
+        url = 'https://repo.grails.org/grails/core'
+        content {
+            includeGroup 'org.grails'
+            includeGroup 'org.grails.plugins'
+        }
+    }
 }
 
 dependencies {
@@ -20,7 +30,17 @@ dependencies {
     implementation 'io.micronaut.rss:micronaut-rss-core'
     implementation 'io.micronaut.validation:micronaut-validation'
     implementation 'jakarta.annotation:jakarta.annotation-api'
-    implementation 'org.yaml:snakeyaml'
+
+    // Explicit pin >= 2.0 mitigates CVE-2022-1471. Was previously transitive
+    // unversioned via the Micronaut platform BOM.
+    implementation 'org.yaml:snakeyaml:2.3'
+
+    // AsciiDoc parser used by the guides build (custom include resolver,
+    // include:: vendoring helpers).
+    implementation 'org.asciidoctor:asciidoctorj:2.5.13'
+
+    // HTML parser used by the guides verification harness.
+    implementation 'org.jsoup:jsoup:1.18.1'
 
     testImplementation 'org.spockframework:spock-core'
 
