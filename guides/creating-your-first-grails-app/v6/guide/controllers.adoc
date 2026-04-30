@@ -1,0 +1,61 @@
+This section will focus on the basics of creating a controller and defining actions.
+
+TIP: While not part of the "MVC" triad, Grails also provides support for http://docs.grails.org/latest/guide/single.html#services[services]. In a Grails application of any complexity, it is considered best practice to keep core application logic in services. We'll get to services later on in this guide.
+
+Following the convention over configuration principle, Grails will configure any Groovy classes under `grails-app/controllers/` as controllers, without any additional configuration. You can create the Groovy class yourself, or use the `create-controller` command to generate the controller and an associated test spec.
+
+[source, bash]
+----
+$ ./grailsw create-controller org.grails.guides.Home
+
+| Created grails-app/controllers/org/grails/guides/HomeController.groovy
+| Created src/test/groovy/org/grails/guides/HomeControllerSpec.groovy
+----
+
+TIP: Note that Grails adds the `*Controller` suffix automatically.
+
+Let's take a look at our new controller.
+
+[source, groovy]
+.grails-app/controllers/org/grails/guides/HomeController.groovy
+----
+package org.grails.guides
+
+class HomeController {
+
+    def index() { }
+}
+----
+
+Grails has created a controller with a single *action*. Actions are public methods in a controller, which can respond to requests. Typically, a controller action will receive a request, obtain some data (optionally using parameters or a body of the request, if present), and render the result to the browser (e.g, as a webpage). Controller actions can also redirect requests, forward, call service methods, and return HTTP response codes. See the http://docs.grails.org/latest/guide/theWebLayer.html#understandingControllersAndActions[Grails documentation] for more on controller actions.
+
+We don't have any need for logic in this particular action just yet, but we would like it to render a page. We'll look at GSP pages in more detail in the <<Views>> section, but for now, let's create a very simple GSP page for our `HomeController.index` action to display.
+
+Create the file `index.gsp` under the `grails-app/views/home` directory.
+
+[source, groovy]
+.grails-app/views/home/index.gsp
+----
+<html>
+<html>
+<head>
+    <meta name="layout" content="main"/>
+    <title>Home Page</title>
+</head>
+<body>
+
+<div id="content" role="main">
+    <section class="row colset-2-its">
+        <h1>Welcome to our Home Page!</h1>
+    </section>
+</div>
+
+</body>
+</html>
+----
+
+Run the application again and browser to `http:localhost:8080/home`. You should see your new page.
+
+By convention, Grails will map controller actions to views with the same name, in the `grails-app/views/[controller name]` directory.  You can override this and specify a particular view (or render different content altogether).
+
+We'll cover views and GSPs in more detail in the next section, but for now, you should note that our `index.gsp` file is basically an HTML page, with a couple unusual tags. Feel free to modify this new home page however you would like.

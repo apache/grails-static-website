@@ -1,0 +1,1 @@
+For this guide, you can either create the starting project yourself, or use the `initial` project included in the guide's repo to get started. If you choose to use the `initial` project, you can safely skip this section and continue to <<runningTheApp>> If you would like to install Grails on your computer, follow one of the options below.
