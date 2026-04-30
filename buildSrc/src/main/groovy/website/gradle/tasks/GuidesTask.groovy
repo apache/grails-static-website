@@ -62,6 +62,11 @@ abstract class GuidesTask extends GrailsWebsiteTask {
     @PathSensitive(PathSensitivity.RELATIVE)
     abstract RegularFileProperty getReleases()
 
+    /** The local YAML metadata source consumed by {@link GuidesFetcher}. */
+    @InputFile
+    @PathSensitive(PathSensitivity.RELATIVE)
+    abstract RegularFileProperty getGuidesYml()
+
     @Input
     abstract Property<String> getAbout()
 
@@ -94,13 +99,14 @@ abstract class GuidesTask extends GrailsWebsiteTask {
             it.releases.set(siteExt.releases)
             it.title.set(siteExt.title)
             it.url.set(siteExt.url)
+            it.guidesYml.set(project.layout.projectDirectory.file('conf/guides.yml'))
         }
     }
 
     @TaskAction
     void renderGuides() {
         def tempDir = outputDir.dir('temp').get().asFile.tap { it.mkdirs() }
-        generateGuidesPages(tempDir, url.get())
+        generateGuidesPages(tempDir, url.get(), guidesYml.get().asFile)
 
         def template = document.get().asFile
         def templateText = template.text
@@ -161,8 +167,8 @@ abstract class GuidesTask extends GrailsWebsiteTask {
         )
     }
 
-    static void generateGuidesPages(File pages, String url) {
-        def guides = GuidesFetcher.fetchGuides()
+    static void generateGuidesPages(File pages, String url, File guidesYml) {
+        def guides = GuidesFetcher.fetchGuides(guidesYml)
         def tags = TagUtils.populateTags(guides)
         new File(pages, PAGE_NAME_GUIDES).setText(
                 "title: Guides | Grails Framework\nbody: guides\nJAVASCRIPT: $url/javascripts/search.js\n---\n" +

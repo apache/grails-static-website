@@ -18,19 +18,16 @@
  */
 package website.model.guides
 
-import groovy.json.JsonSlurper
 import groovy.time.TimeCategory
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
+
+import org.yaml.snakeyaml.Yaml
 
 import website.utils.DateUtils
 
 @CompileStatic
 class GuidesFetcher {
-
-    /** URL to the remote JSON file containing guide metadata. */
-    public static final String GUIDES_JSON =
-            'https://raw.githubusercontent.com/grails-guides/grails-guides-template/gh-pages/guides.json'
 
     private static final String DEFAULT_BRANCH = 'master'
 
@@ -44,8 +41,10 @@ class GuidesFetcher {
     ]
 
     /**
-     * Internal DTO for deserializing guide entries from JSON.
-     * Mirrors the structure of the remote guides.json file.
+     * Internal DTO for a single guide-version. The metadata file is hierarchical
+     * (one entry per guide, with a nested {@code versions} map), but the
+     * downstream rendering logic expects a flat list of one DTO per
+     * (slug, branch) pair, so {@link #parseGuides} flattens during load.
      */
     private static final class GuideDto {
         String category
@@ -62,15 +61,16 @@ class GuidesFetcher {
     }
 
     /**
-     * Fetches and parses all guides from the remote JSON endpoint.
+     * Loads and parses all guides from the local YAML metadata file.
      * Groups guides by their GitHub slug and creates either a {@link SingleGuide}
      * or {@link GrailsVersionedGuide} depending on whether multiple branches exist.
      *
+     * @param guidesYml the YAML metadata file (typically {@code conf/guides.yml})
      * @param skipFuture if {@code true}, excludes guides with publication dates in the future
      * @return list of guides sorted by publication date in descending order (newest first)
      */
-    static List<Guide> fetchGuides(boolean skipFuture = true) {
-        def entries = parseGuides(GUIDES_JSON)
+    static List<Guide> fetchGuides(File guidesYml, boolean skipFuture = true) {
+        def entries = parseGuides(guidesYml)
         def slugsToBranches = [:] as Map<String, Set<String>>
         entries.each { entry ->
             def slug = entry.githubSlug
@@ -107,28 +107,79 @@ class GuidesFetcher {
     }
 
     /**
-     * Parses the remote JSON file and converts each entry into a {@link GuideDto}.
+     * Parses the local YAML metadata file and flattens each guide-version
+     * pair into a {@link GuideDto}.
      *
-     * @param url the URL of the guides JSON file
-     * @return list of parsed guide DTOs
+     * <p>The file's top-level shape is:
+     * <pre>
+     * defaults:
+     *   category: '...'
+     *   authors: []
+     *   tags: []
+     * guides:
+     *   - name: my-guide
+     *     title: '...'
+     *     subtitle: '...'
+     *     authors: ['Author']
+     *     category: '...'
+     *     publicationDate: '2020-01-15'
+     *     versions:
+     *       '3':
+     *         sourcePath: guides/my-guide/v3
+     *         tags: [grails3]
+     *         sampleRef:
+     *           repo: grails-guides/my-guide
+     *           branch: grails3
+     * </pre>
+     *
+     * Each {@code versions.<N>} entry produces one {@link GuideDto} whose
+     * {@code githubSlug} comes from {@code sampleRef.repo} (defaulting to
+     * "grails-guides/<name>") and {@code githubBranch} from
+     * {@code sampleRef.branch} (defaulting to "master").
+     *
+     * @param yamlFile the YAML metadata file
+     * @return list of parsed guide DTOs, one per (guide, version) pair
      */
-    private static List<GuideDto> parseGuides(String url) {
-        def json = new JsonSlurper().parseText(new URL(url).text)
-        def entries = json as List<Map<String, Object>>
-        entries.collect { entry ->
-            new GuideDto(
-                    grailsVersion: entry.grailsVersion,
-                    authors: (entry['authors'] ?: []) as List<String>,
-                    category: entry['category'],
-                    githubSlug: entry['githubSlug'],
-                    githubBranch: entry['githubBranch'],
-                    name: entry['name'],
-                    title: entry['title'],
-                    subtitle: entry['subtitle'],
-                    tags: (entry['tags'] ?: []) as List<String>,
-                    publicationDate: entry['publicationDate']
-            )
-        } as List<GuideDto>
+    @CompileDynamic
+    private static List<GuideDto> parseGuides(File yamlFile) {
+        Map root = yamlFile.withReader('UTF-8') { reader -> new Yaml().load(reader) as Map }
+        Map defaults = (root.defaults ?: [:]) as Map
+        List guides = (root.guides ?: []) as List
+
+        List<GuideDto> result = []
+        guides.each { Map guide ->
+            String name = guide.name as String
+            Map versions = (guide.versions ?: [:]) as Map
+            versions.each { Object versionKeyObj, Object versionObj ->
+                if (!(versionObj instanceof Map)) {
+                    return
+                }
+                Map version = versionObj as Map
+                Map sampleRef = (version.sampleRef ?: [:]) as Map
+
+                String slug = (sampleRef.repo ?: "grails-guides/${name}") as String
+                String branch = (sampleRef.branch ?: DEFAULT_BRANCH) as String
+
+                List<String> tags = (version.tags ?: defaults.tags ?: []) as List<String>
+                List<String> authors = (guide.authors ?: defaults.authors ?: []) as List<String>
+                String category = (guide.category ?: defaults.category) as String
+                String pubDate = (version.publicationDate ?: guide.publicationDate) as String
+
+                result << new GuideDto(
+                        grailsVersion: null,
+                        authors: authors,
+                        category: category,
+                        githubSlug: slug,
+                        githubBranch: branch,
+                        name: name,
+                        title: guide.title as String,
+                        subtitle: guide.subtitle as String,
+                        tags: tags,
+                        publicationDate: pubDate
+                )
+            }
+        }
+        result
     }
 
     /**
