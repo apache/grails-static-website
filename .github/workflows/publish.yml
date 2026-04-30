@@ -48,11 +48,13 @@ jobs:
           GH_TOKEN: ${{ secrets.GRAILS_GHTOKEN }}
           GH_BRANCH: asf-site-production
           GRADLE_TASK: build
-          GRAILS_WS_URL: https://grails.apache.org    
-      - name: Publish Guides Site
-        run: ./publish.sh
-        env:
-          GITHUB_SLUG: grails-guides/grails-guides-template
-          GH_BRANCH: gh-pages
-          GH_TOKEN: ${{ secrets.APACHE_GRAILS_BUILD_GH_TOKEN }}
-          GRADLE_TASK: buildGuide
+          GRAILS_WS_URL: https://grails.apache.org
+      # NOTE: The previous "Publish Guides Site" step that pushed to
+      # grails-guides/grails-guides-template gh-pages has been removed as part
+      # of the migration tracked in issue #354. The legacy guides site at
+      # https://guides.grails.org/ remains served from that gh-pages branch
+      # (now frozen) until the new canonical location at
+      # https://grails.apache.org/guides/ is fully cut over, at which point the
+      # main "Publish Main Site" step above will deploy guides as part of the
+      # unified site. See .sisyphus/plans/issue-354-publishing-migration-v7.md
+      # Phase 12 for the cutover details.
