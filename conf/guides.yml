@@ -1,0 +1,36 @@
+# Single source of truth for guide metadata.
+#
+# Replaces the runtime fetch of guides.json with a local YAML file.
+# The build's `GuidesFetcher` will be swapped in a follow-up PR to
+# parse this file via SnakeYAML instead of going to the network.
+#
+# This file currently holds one bootstrap entry for the migrated
+# fixture guide. As more guides land in `guides/<name>/v{N}/`, they
+# get appended to the `guides:` list below.
+
+defaults:
+  category: 'Getting Started'
+  authors: []
+  tags: []
+
+guides:
+  - name: creating-your-first-grails-app
+    title: 'Creating your first Grails Application'
+    subtitle: 'Learn how to create your first Grails app'
+    authors:
+      - 'Zachary Klein'
+    category: 'Getting Started'
+    publicationDate: '2017-01-23'
+
+    versions:
+      '6':
+        sourcePath: guides/creating-your-first-grails-app/v6
+        publicationDate: '2017-01-23'
+        tags:
+          - mysql
+          - gsp
+          - grails6
+        sampleRef:
+          repo: grails-guides/creating-your-first-grails-app
+          branch: master
+          sha: '84422f5d162f3deffb89978a3e9127382ce7eeea'
