@@ -58,7 +58,7 @@ import org.yaml.snakeyaml.Yaml
 class CspScanTask extends DefaultTask {
 
     static final String NAME = 'cspScan'
-    static final String GROUP = 'documentation'
+    static final String GROUP = 'migration'
 
     @InputDirectory
     @PathSensitive(PathSensitivity.RELATIVE)
@@ -205,9 +205,16 @@ class CspScanTask extends DefaultTask {
             task.allowlistFile.set(
                     project.rootProject.layout.projectDirectory.file('conf/csp-allowlist.yml'))
             task.reportFile.set(project.layout.buildDirectory.file('reports/csp-scan.md'))
+            task.failOnViolation.convention(isHardFailMode(project))
+            task.dependsOn('buildAllGuides')
             if (project.hasProperty('cspFailOnViolation')) {
                 task.failOnViolation.set(Boolean.parseBoolean(project.property('cspFailOnViolation') as String))
             }
         }
+    }
+
+    private static boolean isHardFailMode(Project project) {
+        String mode = (project.findProperty('verificationMode') ?: '') as String
+        mode.equalsIgnoreCase('hard-fail')
     }
 }

@@ -24,8 +24,11 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 
 import website.gradle.tasks.AssetsTask
+import website.gradle.tasks.AcceptanceReportTask
+import website.gradle.tasks.AsciidoctorWarningGateTask
 import website.gradle.tasks.BlogTask
 import website.gradle.tasks.BskyAtProtoDidTask
+import website.gradle.tasks.CrawlBuiltGuidesTask
 import website.gradle.tasks.CspScanTask
 import website.gradle.tasks.DocumentationTask
 import website.gradle.tasks.DownloadTask
@@ -39,6 +42,7 @@ import website.gradle.tasks.PublishMainSiteTask
 import website.gradle.tasks.QuestionsTask
 import website.gradle.tasks.RenderSiteTask
 import website.gradle.tasks.SitemapTask
+import website.gradle.tasks.StructuralDiffGuidesTask
 import website.gradle.tasks.ValidateGuidesTask
 
 @CompileStatic
@@ -131,5 +135,22 @@ class GrailsWebsitePlugin implements Plugin<Project> {
         // Scans build/dist/ HTML for non-allowlisted https:// references.
         // Allowlist: conf/csp-allowlist.yml. Report: build/reports/csp-scan.md.
         CspScanTask.register(project)
+
+        AsciidoctorWarningGateTask.register(project)
+        CrawlBuiltGuidesTask.register(project)
+        StructuralDiffGuidesTask.register(project)
+        AcceptanceReportTask.register(project)
+
+        project.tasks.register('verifyAllGuides') {
+            it.group = 'migration'
+            it.description = 'Runs the rendered-guide verification harness in report-only mode by default. Use -PverificationMode=hard-fail to fail on violations.'
+            it.notCompatibleWithConfigurationCache('Guide verification runs vendored PublishGuide tasks with log capture and aggregate reports.')
+            it.dependsOn('buildAllGuides')
+            it.dependsOn(AsciidoctorWarningGateTask.NAME)
+            it.dependsOn(CrawlBuiltGuidesTask.NAME)
+            it.dependsOn(StructuralDiffGuidesTask.NAME)
+            it.dependsOn(CspScanTask.NAME)
+            it.dependsOn(AcceptanceReportTask.NAME)
+        }
     }
 }
