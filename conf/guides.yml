@@ -182,6 +182,17 @@ guides:
           - 'mysql'
           - 'gsp'
           - 'grails4'
+      '6':
+        sourcePath: guides/creating-your-first-grails-app/v6
+        publicationDate: '2017-01-23'
+        tags:
+          - 'mysql'
+          - 'gsp'
+          - 'grails6'
+        sampleRef:
+          repo: grails-guides/creating-your-first-grails-app
+          branch: master
+          sha: '84422f5d162f3deffb89978a3e9127382ce7eeea'
 
   - name: 'database-per-tenant'
     title: 'Database per Tenant Multi-Tenancy'

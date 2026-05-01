@@ -2,29 +2,14 @@ plugins {
     id 'groovy-gradle-plugin'
 }
 
-ext {
-    flexmarkVersion = '0.64.8'
-    micronautVersion = '4.10.4'
-}
+// Dependency versions are centralized in buildSrc/gradle.properties so a
+// single edit there bumps every consumer here. Mirrors the spirit of
+// apache/grails-core's `dependencies.gradle` (single source of truth for
+// versions) while keeping the format simple given this repo's much smaller
+// dep set. Properties are referenced via `$name` interpolation below.
 
 repositories {
     mavenCentral()
-    // Grails Foundation artifacts and transitive deps that are mirrored only
-    // through the grails repo (e.g. xhtmlrenderer used by grails-docs PDF
-    // rendering). Scoped tightly so this repo cannot accidentally serve
-    // unrelated artifacts.
-    maven {
-        url = 'https://repo.grails.org/grails/core'
-        content {
-            includeGroup 'org.grails'
-            includeGroup 'org.grails.plugins'
-            // Specific transitive: xhtmlrenderer's `core-renderer` artifact
-            // is required by grails-docs PDF output and is not on Maven
-            // Central. Allowlist just that module rather than the whole
-            // group.
-            includeModule 'org.xhtmlrenderer', 'core-renderer'
-        }
-    }
 }
 
 dependencies {
@@ -39,25 +24,14 @@ dependencies {
 
     // Explicit pin >= 2.0 mitigates CVE-2022-1471. Was previously transitive
     // unversioned via the Micronaut platform BOM.
-    implementation 'org.yaml:snakeyaml:2.3'
+    implementation "org.yaml:snakeyaml:$snakeyamlVersion"
 
     // AsciiDoc parser used by the guides build (custom include resolver,
     // include:: vendoring helpers).
-    implementation 'org.asciidoctor:asciidoctorj:2.5.13'
+    implementation "org.asciidoctor:asciidoctorj:$asciidoctorjVersion"
 
     // HTML parser used by the guides verification harness.
-    implementation 'org.jsoup:jsoup:1.18.1'
-
-    // Grails Foundation's docs renderer. The 6.2.0 release brings
-    // `org.codehaus.groovy:groovy:3.0.21` transitively; this buildSrc runs
-    // on the Apache Groovy 4.x that Gradle 9 ships embedded with the
-    // `groovy-gradle-plugin`. Excluding the codehaus Groovy at the
-    // dependency level lets the embedded Apache Groovy 4 satisfy
-    // grails-docs at runtime; their public APIs are compatible enough for
-    // grails-docs's usage.
-    implementation('org.grails:grails-docs:6.2.0') {
-        exclude group: 'org.codehaus.groovy'
-    }
+    implementation "org.jsoup:jsoup:$jsoupVersion"
 
     testImplementation 'org.spockframework:spock-core'
 
