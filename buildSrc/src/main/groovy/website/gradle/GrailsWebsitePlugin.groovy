@@ -120,5 +120,11 @@ class GrailsWebsitePlugin implements Plugin<Project> {
         // Validates conf/guides.yml against the schema.
         // `-PvalidationMode=shape|existence|both` selects the rule set.
         ValidateGuidesTask.register(project)
+
+        // Wires per-version guide-rendering tasks against conf/guides.yml.
+        // Registers one renderGuide_<name>_<version> task per (guide, version)
+        // pair whose sourcePath/guide/ exists on disk; aggregate is buildAllGuides.
+        // Renderer is the vendored grails.doc.* subtree -- see buildSrc/VENDOR.md.
+        RenderGuidesPlugin.apply(project)
     }
 }
