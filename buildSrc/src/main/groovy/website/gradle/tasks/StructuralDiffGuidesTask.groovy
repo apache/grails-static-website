@@ -58,8 +58,10 @@ class StructuralDiffGuidesTask extends DefaultTask {
     @PathSensitive(PathSensitivity.RELATIVE)
     final DirectoryProperty guidesDir = project.objects.directoryProperty()
 
-    @Input
-    final Property<String> baselineDirPath = project.objects.property(String)
+    @Optional
+    @InputDirectory
+    @PathSensitive(PathSensitivity.RELATIVE)
+    final DirectoryProperty baselineDir = project.objects.directoryProperty()
 
     @OutputDirectory
     final DirectoryProperty fingerprintDir = project.objects.directoryProperty()
@@ -73,7 +75,7 @@ class StructuralDiffGuidesTask extends DefaultTask {
     @TaskAction
     void diff() {
         File guidesRoot = guidesDir.get().asFile
-        File baselinesRoot = new File(baselineDirPath.get())
+        File baselinesRoot = baselineDir.isPresent() ? baselineDir.get().asFile : null
         File fingerprintsRoot = fingerprintDir.get().asFile
         File report = reportFile.get().asFile
 
@@ -104,7 +106,13 @@ class StructuralDiffGuidesTask extends DefaultTask {
             task.group = GROUP
             task.description = 'Extracts structural fingerprints from rendered guides and compares them with available baselines.'
             task.guidesDir.convention(project.layout.buildDirectory.dir('dist/guides'))
-            task.baselineDirPath.convention(project.rootProject.layout.projectDirectory.dir('buildSrc/src/test/resources/structural-baseline').asFile.absolutePath)
+            // baselineDir is optional. If the directory exists at config time we point at it;
+            // otherwise we leave the property unset so structuralDiff still produces fingerprints
+            // without attempting baseline comparison (every row lands as REVIEW pending a snapshot).
+            File defaultBaseline = project.rootProject.layout.projectDirectory.dir('buildSrc/src/test/resources/structural-baseline').asFile
+            if (defaultBaseline.isDirectory()) {
+                task.baselineDir.convention(project.rootProject.layout.projectDirectory.dir('buildSrc/src/test/resources/structural-baseline'))
+            }
             task.fingerprintDir.convention(project.layout.buildDirectory.dir('reports/structural-fingerprints'))
             task.reportFile.convention(project.layout.buildDirectory.file('reports/structural-diff-guides.csv'))
             task.failOnViolation.convention(isHardFailMode(project))
@@ -237,7 +245,7 @@ class StructuralDiffGuidesTask extends DefaultTask {
 
     private static File resolveBaselineFile(File baselinesRoot, String guideName, String version) {
         // TODO: Integrate captured production baseline snapshots from https://guides.grails.org/<guide>/<version>/ once they are committed.
-        if (!baselinesRoot.isDirectory()) {
+        if (baselinesRoot == null || !baselinesRoot.isDirectory()) {
             return null
         }
         List<String> candidates = [
