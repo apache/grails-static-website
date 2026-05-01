@@ -1,0 +1,17 @@
+training:
+  title: Grails Training
+gettingStarted:
+  title: Getting Started
+  requirements: What you will need
+  howto: How to complete the guide
+writingTheApp:
+  title: Writing the Application
+  gebConfig: Geb Config
+  test: Geb Test
+runningTheApp:
+  title: Running the Application
+  runFirefox: Run Tests with Firefox
+  runChrome: Run Tests with Chrome
+  runHtmlUnit: Run Tests with HtmlUnit
+helpWithGrails:
+  title: Do you need help with Grails?  

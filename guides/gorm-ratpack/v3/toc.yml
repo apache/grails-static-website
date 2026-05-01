@@ -1,0 +1,16 @@
+training:
+  title: Grails Training
+gettingStarted:
+  title: Getting Started
+  requirements: What you will need
+  howto: How to complete the guide
+writingTheAppPartOne:
+  title: Writing the Application
+  configuringTheApp: Configuring your Build
+  application: GORM Configuration
+  creatingTheDomain: Creating the domain
+  creatingTestData: Seed Data
+  creatingTheServices: Creating a Handler
+  creatingTheControllers: Ratpack.groovy
+helpWithGrails:
+  title: Do you need help with GORM or Grails?

@@ -1,0 +1,2 @@
+Read https://grails-plugins.github.io/grails-spring-security-core/3.2.x/index.html#authentication[Basic and Digest Authentication] section
+of the Grails Springs Security Core Plugin documentation to learn about the different configuration options available for Basic Authentication.

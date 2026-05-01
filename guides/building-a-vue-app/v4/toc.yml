@@ -1,0 +1,25 @@
+training:
+  title: Training
+gettingStarted:
+  title: Getting Started
+  requirements: What you will need
+  howto: How to complete the guide
+runningTheApp:
+  title: Running the Application
+writingTheServer:
+  title: Building the Server
+  testingApi: Testing the API
+  customizingApi: Customizing the API
+writingTheClient:
+  title: Building the Client
+  clientAppLayout: Default Vue.js App layout
+  writingVueComponents: Vue Components
+  headers: UI Header Component
+  displayComponents: Select & Table Components
+  postComponents: Form Component
+  oneMoreComponent: Vehicle Display
+  puttingItAllTogether: Routing
+nextSteps:
+  title: Next Steps
+helpWithGrails:
+  title: Do you need help with Grails?

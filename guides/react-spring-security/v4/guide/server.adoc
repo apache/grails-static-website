@@ -1,0 +1,5 @@
+NOTE: The `initial` project is based on the completed project from the http://guides.grails.org/building-a-react-app/guide/index.html[Building a React App] Guide. Please refer to that guide for details on the provided code.
+
+Our first step in adding security to this project is to install the Spring Security plugin/s in our Grails app, and secure our API endpoints. The Spring Security REST plugin supports a stateless, token-based authentication model that is ideal for securing APIs and Single Page Applications. See the diagram below for an overview of the security model.
+
+image::rest.png[Stateless Authentication Model]

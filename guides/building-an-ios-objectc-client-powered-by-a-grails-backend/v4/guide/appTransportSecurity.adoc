@@ -1,0 +1,3 @@
+We are going to connect to our local machine running a Grails server. We need to disable https://developer.apple.com/news/?id=12212016b[App Transport Security] as illustrated below:
+
+image::apptransportsecurity.png[]

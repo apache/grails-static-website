@@ -1,0 +1,3 @@
+`grails create-app example.grails.complete --features=events,geb2,hibernate5`
+
+NOTE: we are using `geb2` feature which includes http://www.gebish.org[Geb 2] and https://plugins.gradle.org/plugin/com.energizedwork.webdriver-binaries[Gradle WebDriver Binaries plugin]. Geb 2 requires JDK 1.8 or greater.

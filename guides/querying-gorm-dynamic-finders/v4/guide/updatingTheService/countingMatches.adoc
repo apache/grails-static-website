@@ -1,0 +1,26 @@
+Sometimes, you don't need the actual results of a query, but rather just
+how many instances *did* match. As before, this inefficient implementation loads
+all the records, then counts how many match a predicate.
+
+[source,groovy]
+----
+include::initial/grails-app/services/demo/QueryService.groovy[tag=countByGreaterThan,indent=0]
+----
+
+A more efficient implementation of the above would call the dynamic finder
+`Game.findAllByRatingGreaterThanEquals(rating)`, then return the size of the
+resulting list. But if all you need is a single number -- the count of matching
+records -- it is inefficient to fetch the results of the database query into memory.
+
+In this case, use the prefix `countBy`. It works very much like `findAllBy`, but
+instead of returning the matching instances, it returns the number of instances matched.
+So to count how many games rated a certain value or higher:
+[source,groovy]
+----
+include::complete/grails-app/services/demo/QueryService.groovy[tag=countByGreaterThan,indent=0]
+----
+
+NOTE: By now, you've probably noticed that the `QueryService` methods, when implemented
+efficiently using dynamic finders, is not really useful as-is. That said, Grails services
+often do much more business logic that what this guide attempts to teach. The use of the
+service here helps to separate the work from the tests.

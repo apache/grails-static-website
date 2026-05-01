@@ -1,0 +1,14 @@
+gettingStarted:
+  title: Getting Started
+  requirements: What you will need
+  howto: How to complete the guide
+writingTheApp:
+  title: Writing the App
+  dependencies: Add Security Dependencies
+  controller: Controller
+  views: Views
+  services: GORM Data Service
+  test: Test
+  next: Next Steps
+helpWithGrails:
+  title: Do you need help with Grails?

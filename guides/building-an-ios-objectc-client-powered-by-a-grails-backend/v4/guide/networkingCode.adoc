@@ -1,0 +1,89 @@
+
+We use _NSURLSession_ to connect to the Grails API. Several constants are set in _GrailsFetcher_
+
+[source,objectivec]
+./complete-objectivec-ios-v1/IntranetClient/GrailsFetcher.h
+----
+include::{sourcedir}/../complete-objectivec-ios-v1/IntranetClient/GrailsFetcher.h[]
+----
+
+<1> Grails App server url
+<2> The path we configured in the Grails app in _UrlMappings.groovy_
+<3> The version of the API
+
+NOTE: You may need to change the ip address to match your local machine.
+
+
+[source,objectivec]
+./complete-objectivec-ios-v1/IntranetClient/GrailsFetcher.m
+----
+include::{sourcedir}/../complete-objectivec-ios-v1/IntranetClient/GrailsFetcher.m[]
+----
+
+<1> We set the _Accept-Version_ Http header for every request.
+
+[source,objectivec]
+./complete-objectivec-ios-v1/IntranetClient/AnnouncementsFetcher.h
+----
+include::{sourcedir}/../complete-objectivec-ios-v1/IntranetClient/AnnouncementsFetcher.h[]
+----
+
+[source,objectivec]
+./complete-objectivec-ios-v1/IntranetClient/AnnouncementsFetcher.m
+----
+include::{sourcedir}/../complete-objectivec-ios-v1/IntranetClient/AnnouncementsFetcher.m[]
+----
+
+Once we get a list of announcements, we communicate the response to classes implementing the delegate
+
+[source,objectivec]
+./complete-objectivec-ios-v1/IntranetClient/AnnouncementsFetcherDelegate.h
+----
+include::{sourcedir}/../complete-objectivec-ios-v1/IntranetClient/AnnouncementsFetcherDelegate.h[]
+----
+
+The _MasterViewController_ implements fetcher delegate protocol, thus it receives the announcements
+
+[source,objectivec]
+./complete-objectivec-ios-v1/IntranetClient/MasterViewController.h
+----
+include::{sourcedir}/../complete-objectivec-ios-v1/IntranetClient/MasterViewController.h[]
+----
+
+[source,objectivec]
+./complete-objectivec-ios-v1/IntranetClient/MasterViewController.m
+----
+include::{sourcedir}/../complete-objectivec-ios-v1/IntranetClient/MasterViewController.m[]
+----
+
+<1> Triggers announcements fetching
+<2> Refreshes the UI once we get a list of announcements
+
+MasterViewController sets its UITableView's data source and delegate to the next classes:
+
+[source,objectivec]
+./complete-objectivec-ios-v1/IntranetClient/AnnouncementsTableViewDataSource.h
+----
+include::{sourcedir}/../complete-objectivec-ios-v1/IntranetClient/AnnouncementsTableViewDataSource.h[]
+----
+
+[source,objectivec]
+./complete-objectivec-ios-v1/IntranetClient/AnnouncementsTableViewDataSource.m
+----
+include::{sourcedir}/../complete-objectivec-ios-v1/IntranetClient/AnnouncementsTableViewDataSource.m[]
+----
+
+[source,objectivec]
+./complete-objectivec-ios-v1/IntranetClient/AnnouncementsTableViewDelegate.h
+----
+include::{sourcedir}/../complete-objectivec-ios-v1/IntranetClient/AnnouncementsTableViewDelegate.h[]
+----
+
+[source,objectivec]
+./complete-objectivec-ios-v1/IntranetClient/AnnouncementsTableViewDelegate.m
+----
+include::{sourcedir}/../complete-objectivec-ios-v1/IntranetClient/AnnouncementsTableViewDelegate.m[]
+----
+
+<1> When the user taps an announcement a _NSNotification_ is raised. It is captured in _MasterViewController_ and
+initiates the segue to the DetailViewController

@@ -1,0 +1,24 @@
+Once the application has started up you can create a `Product` instance using your preferred HTTP client. In the following examples we will be using the https://curl.haxx.se[curl].
+
+To submit a `POST` request use the following in a terminal window:
+
+[source,bash]
+----
+$ curl -i -H "Content-Type:application/json" -X POST localhost:8080/products -d '{"name":"Orange","price":2.0}'
+----
+
+The resulting output will be:
+
+[source,bash]
+----
+HTTP/1.1 201
+X-Application-Context: application:development
+Location: http://localhost:8080/products/2
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Wed, 23 Nov 2016 08:46:40 GMT
+
+{"name":"Orange","price":"$2.0"}
+----
+
+As you can see an HTTP 201 status code is returned.

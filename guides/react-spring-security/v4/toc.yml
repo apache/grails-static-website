@@ -1,0 +1,38 @@
+training:
+  title: Grails Training
+gettingStarted:
+  title: Getting Started
+  requirements: What you will need
+  howto: How to complete the guide
+writingTheApp:
+  title: Writing the Application
+runningTheApp:
+  title: Running the Application
+server:
+  title: Building the Server
+  serverDependencies: Installing Spring Security
+  springSecurityConfig: Configuring Spring Security
+  appSecurityConfig: Securing our API
+  bootstrapData: Updating our Initial Data
+  runningTheSecuredApp: Test-driving our Secured API
+client:
+  title: Building the Client
+  loginScreen: Stateless Login Component
+writingTheSecurity:
+  title: Adding Client security
+  clientSecurityConfig: Creating our Configuration
+  writingAuth: Handling Authentication
+  writingHandlers: Writing the Response Handlers
+  writingResponseHandlers: Creating our Response Handlers
+  writingErrorHandlers: Creating a Default Error Handler
+puttingItAllTogether:
+  title: Putting it all together
+  appState: Creating our state
+  lifecycle: React Lifecycle Methods
+  inputChangeHandler: Login Form Change Handler
+  login: Handling Login
+  logout: Handling Logout
+  routing: Routing
+  garage: Authenticating our REST Calls
+helpWithGrails:
+  title: Do you need help with Grails?

@@ -1,0 +1,10 @@
+First thing, let's build our `App` state object. This is done in the component constructor. You should recognize our user and error fields in our state as
+we have used them already in some of our functions. In addition, we'll add a `route` variable for use later on.
+
+[source, javascript]
+.client/src/App.js
+----
+include::../snippets/client/src/App.js[indent=0,tag=state]
+----
+<1> We've added a `reset` function so that we can easily return
+to our initial state when needed:

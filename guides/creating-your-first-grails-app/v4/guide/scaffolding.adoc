@@ -1,0 +1,3 @@
+We'd like to have actions to allow us to create new domain class instances and persist them to the database. In addition, we'd like to have the ability to edit existing instances and even delete them. Normally all this functionality would require a lot of coding, but Grails gives us a headstart with scaffolding.
+
+include::{commondir}/common-tipScaffolding.adoc[]

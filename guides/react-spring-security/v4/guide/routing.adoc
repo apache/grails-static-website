@@ -1,0 +1,12 @@
+Routing, in Single Page Applications, gives the user the ability to navigate through your application as though it were made of multiple "pages". In many React apps, the https://reacttraining.com/react-router/[React Router] library is used to handle this requirement. However, we will take a simplistic approach for this guide by storing our current "route" in our state, and choosing which component to render based on that variable.
+
+[source, javascript]
+.client/src/App.js
+----
+include::../snippets/client/src/App.js[indent=0,tag=routing]
+----
+<1> We've created a `contentForRoute` function, which will select the proper component to render based on `this.state.route`. If there is no route set yet, we display a "Loading..." message.
+<2> Note that this is where we are passing in our `inputChangeHandler`, `login`, and `logoutHandler` handlers into those components as props.
+<3> Finally, in our `render` function, we render out the content that we calculated earlier based on our route.
+
+WARNING: Note how we pass our handler functions as *references* (`onSubmit={this.login}`), not function calls (`onSubmit={this.login()}`). This is because we want our child components to have access to these functions and call them later - we don't want to call them when the component is rendered!

@@ -1,0 +1,12 @@
+The first step is to configure the necessary Gradle dependencies. This basically means adding a dependency on the http://plugins.grails.org/plugin/rxjava[RxJava plugin] for Grails and Micronaut `reactivex`in the `build.gradle` file:
+
+[source,groovy]
+----
+dependencies {
+    ...
+include::../snippets/build.gradle[tags=rxjava]
+}
+
+----
+
+RxJava is used to facilitate a reactive programming model for sending events to the JavaScript client.

@@ -1,0 +1,17 @@
+training:
+  title: Grails Training
+gettingStarted: 
+  title: Getting Started
+  requirements: What you will need
+  howto: How to complete the guide
+  initial: Initial Project
+writingTheApp:
+  title: Writing the Application
+  topcities: Top Cities
+  service: Open Weather Service
+  controller: Cities Controller
+  view: View
+runningTheApp:
+  title: Running the Application
+helpWithGrails:
+  title: Help with Grails

@@ -1,0 +1,14 @@
+training:
+  title: Training
+gettingStarted:
+  title: Getting Started
+  requirements: What you will need
+  solution: Solution
+writingTheApp:
+  title: Writing the App
+  configurationProperties: Configuration Properties
+  taglib: Tag Lib
+  acceptanceTests: Acceptance Tests
+testTheApp: Test the app
+helpWithGrails:
+  title: Help with Grails

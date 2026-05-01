@@ -1,0 +1,21 @@
+training:
+  title: Grails Training
+gettingStarted:
+  title: Getting Started
+  requirements: What you will need
+  howto: How to complete the guide
+writingTheApp:
+  title: Writing the Application
+  unitTest: Unit Test
+  integrationTest: Integration Test
+  testLogging: Verbose Test Output
+  runTests: Run Tests
+createGitHubRepo:
+  title: Create GitHub Repo
+  grantPermissions: Grant File Permissions for Execution
+integrateTravis:
+  title: Integrate Travis CI
+  createTravisConfig: Create Travis Config File
+  delegateToScript: Delegate to Script File
+helpWithGrails:
+  title: Help with Grails

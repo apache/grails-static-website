@@ -1,0 +1,42 @@
+This profile also defines a set of custom Gradle tasks, including a bootRun task to startup the client app. You can either start up the server and client apps separately:
+
+[source,bash]
+----
+./gradlew server:bootRun
+----
+
+This will start the Grails application, which will be available at `http://localhost:8080`.
+
+[source,bash]
+.in another terminal
+----
+./gradlew client:start
+----
+
+This will start the dev server for the Vue application, which will be available at `http://localhost:3000`.
+
+The client `build.gradle` file also includes a `bootRun` (for consistency with the `server` project), which means  you can take advantage of Gradle’s parallel execution to run both client and server apps in a single command:
+
+[source,bash]
+----
+./gradlew bootRun -parallel
+----
+
+There are several more `client` tasks which "wrap" the npm scripts in `package.json`, for building and testing the Vue app. You can run them with the Gradle wrapper, or run the scripts directly if you have `npm` installed.
+
+[source,bash]
+----
+$ ./gradlew client:test
+$ ./gradlew client:build
+----
+
+[source,bash]
+.from the client directory:
+----
+$ npm test
+$ npm run build
+----
+
+Again, please see the http://vuejs-templates.github.io/webpack/[template documentation] for more information on leveraging these scripts and the other features provided by Vue-CLI.
+
+Rember to check https://grails-profiles.github.io/vue/latest/guide/index.html[Grails Vue Profile] documentation to learn more.

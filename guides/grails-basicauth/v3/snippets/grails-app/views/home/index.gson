@@ -1,0 +1,7 @@
+model {
+    String name
+}
+
+json {
+    username name
+}

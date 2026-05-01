@@ -1,0 +1,15 @@
+In this guide, we use the https://github.com/bmuschko/gradle-docker-plugin[Gradle Docker Plugin]; a
+Gradle plugin for managing Docker images and containers.
+
+To install the Gradle plugin, modify `build.gradle`:
+
+[source, groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[indent=0, tag=buildscript]
+include::../snippets/build.gradle[indent=0, tag=apply]
+----
+
+<1> Gradle Docker Plugin
+<2> Remove `war` plugin because we'll generate a runnable jar
+

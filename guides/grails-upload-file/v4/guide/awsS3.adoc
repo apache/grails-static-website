@@ -1,0 +1,40 @@
+For `Hotel` domain class we are going to upload the file to https://aws.amazon.com/s3/[Amazon AWS S3].
+
+image::s3.png[]
+
+First, Install https://github.com/agorapulse/grails-aws-sdk/tree/master/grails-aws-sdk-s3[Grails AWS SDK S3 Plugin]
+
+Modify you `build.grade` file
+
+[source, groovy]
+.build.gradle
+----
+repositories {
+...
+..
+include::../snippets/build.gradle[tag=awssdkrepo]
+}
+dependencies {
+...
+..
+.
+include::../snippets/build.gradle[tag=awssdk]
+}
+----
+
+Define `awsSdkS3Version` in `gradle.properties`
+
+[source, groovy]
+.gradle.properties
+----
+include::../snippets/gradle.properties[]
+----
+
+We are going to upload our files to an already existing bucket.
+
+[source, groovy]
+./grails-app/conf/application.yml
+----
+include::../snippets/grails-app/conf/application.yml[tag=awsbucket]
+----
+

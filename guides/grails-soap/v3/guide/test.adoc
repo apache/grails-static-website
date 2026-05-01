@@ -1,0 +1,40 @@
+Add several Geb dependencies. Read our guide http://guides.grails.org/grails-geb-multiple-browsers/guide/index.html[Run Grails Geb Functional Tests with Multiple Browsers] to learn more.
+
+[source,groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[tag=geb, indent=0]
+----
+
+Ensure you can pass system properties to the Gradle Task _integrationTest_. You can supply the geb enviroment via the
+System Property _geb.env_.
+
+[source,groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[tag=systemProperties]
+----
+
+Configure different browser drivers per Geb environment.
+
+[source,groovy]
+.src/integration-test/groovy/GebConfig.groovy
+----
+include::../snippets/src/integration-test/groovy/GebConfig.groovy[]
+----
+
+Create a Geb Page to encapsulate the form markup. The use of Geb pages makes our tests easier to maintain.
+
+[source,groovy]
+.src/integration-test/groovy/demo/VatFormPage.groovy
+----
+include::../snippets/src/integration-test/groovy/demo/VatFormPage.groovy[]
+----
+
+Create a functional test which submits the form with several values:
+
+[source,groovy]
+.src/integration-test/groovy/demo/VatControllerSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/demo/VatControllerSpec.groovy[]
+----

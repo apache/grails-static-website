@@ -1,0 +1,36 @@
+Grails integrates with and builds on the http://spring.io/[Spring Framework].
+
+You can easily register new (or override existing) beans by configuring them in `grails-app/conf/spring/resources.groovy` which uses the http://docs.grails.org/snapshot/guide/single.html#springdsl[Grails Spring DSL].
+
+Depending on the presence of the required system properties we are going to enable SendGrid or AWS SES integration.
+
+[source,groovy]
+.grails-app/conf/spring/resources.groovy
+----
+include::../../snippets/grails-app/conf/spring/resources.groovy[]
+----
+
+Add a logger to get more visibility:
+
+[source,groovy]
+.grails-app/conf/logback.groovy
+----
+...
+..
+.
+include::../../snippets/grails-app/conf/logback.groovy[tag=logger]
+----
+
+To use SendGrid, start the app with the necessary system properties:
+
+[source, bash]
+----
+$ ./gradlew -DSENDGRID_FROM_EMAIL=email@email.com -DSENDGRID_APIKEY=XXXXXX bootRun
+----
+
+To use AWS SES, start the app with the necessary system properties:
+
+[source, bash]
+----
+$ ./gradlew -DAWS_REGION=eu-west-1 -DAWS_SOURCE_EMAIL=email@email.com -DAWS_ACCESS_KEY_ID=XXXXXXXX -DAWS_SECRET_KEY=XXXXXXXX  bootRun
+----

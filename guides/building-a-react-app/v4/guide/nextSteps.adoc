@@ -1,0 +1,5 @@
+There's plenty of opportunities to expand the scope of this application. Here are a few ideas for improvements you can make on your own:
+
+ - Create a modal dialog form to add new Drivers, Makes & Models. Use React-Bootstrap's `Modal` component to give you a headstart.
+ - Add support for updates to existing Vehicles. A modal dialog might work well for this as well, or perhaps an editable table row
+ - Currently Makes & Models are independent. Add an appropriate GORM association between Make & Model, and change the select lists to only display Models for the currently select Make. You will want to make use of the JavaScript https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter[`Array.filter`] method.

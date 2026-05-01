@@ -1,0 +1,4 @@
+GORM Multi-Tenancy Support includes
+http://gorm.grails.org/latest/hibernate/manual/index.html#_built_in_tenant_resolvers[several Built-In Tenant resolvers].
+In this guide, you are going to create your own tenant resolver to switch tenants based on the logged user in a Grails rest-api application
+which uses http://alvarosanchez.github.io/grails-spring-security-rest/latest/docs/[Spring Security REST plugin].

@@ -1,0 +1,63 @@
+Create several JAVA POJOs (Plain Old Java Objects) to map the `OpenWeatherMap` JSON response to classes.
+
+[source, groovy]
+.src/main/java/org/openweathermap/CurrentWeather.java
+----
+include::{sourcedir}/src/main/java/org/openweathermap/CurrentWeather.java[tag=clazz]
+//getters and setters
+}
+----
+
+[source, groovy]
+.src/main/java/org/openweathermap/Clouds.java
+----
+include::{sourcedir}/src/main/java/org/openweathermap/Clouds.java[tag=clazz]
+//getters and setters
+}
+----
+
+[source, groovy]
+.src/main/java/org/openweathermap/Coordinate.java
+----
+include::{sourcedir}/src/main/java/org/openweathermap/Coordinate.java[tag=clazz]
+//getters and setters
+}
+----
+
+[source, groovy]
+.src/main/java/org/openweathermap/Rain.java
+----
+include::{sourcedir}/src/main/java/org/openweathermap/Rain.java[tag=clazz]
+//getters and setters
+}
+----
+
+[source, groovy]
+.src/main/java/org/openweathermap/Unit.java
+----
+include::{sourcedir}/src/main/java/org/openweathermap/Unit.java[]
+----
+
+[source, groovy]
+.src/main/java/org/openweathermap/Weather.java
+----
+include::{sourcedir}/src/main/java/org/openweathermap/Weather.java[tag=clazz]
+//getters and setters
+}
+----
+
+[source, groovy]
+.src/main/java/org/openweathermap/Sys.java
+----
+include::{sourcedir}/src/main/java/org/openweathermap/Sys.java[tag=clazz]
+//getters and setters
+}
+----
+
+[source, groovy]
+.src/main/java/org/openweathermap/Wind.java
+----
+include::{sourcedir}/src/main/java/org/openweathermap/Wind.java[tag=clazz]
+//getters and setters
+}
+----

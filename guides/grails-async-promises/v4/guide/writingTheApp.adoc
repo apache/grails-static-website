@@ -1,0 +1,12 @@
+____
+Added Grails 2.3 and since 3.3 an external project, the Async features of Grails aim to simplify concurrent programming within the framework and include the concept of Promises and a unified event model. 
+____
+
+Your project already contains the async dependency:
+[source, groovy]
+.build.gradle
+----
+include::{sourcedir}/build.gradle[tag=async]
+----
+
+Grails Async capabilites documentation can be found in http://async.grails.org[async.grails.org].

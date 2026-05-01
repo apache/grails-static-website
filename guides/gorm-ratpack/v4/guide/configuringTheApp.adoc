@@ -1,0 +1,12 @@
+Edit _build.gradle_ file to include GORM dependencies.
+
+[source,groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[tag=repositories]
+include::../snippets/build.gradle[tag=dependencies]
+----
+
+For this guide, use H2; an in-memory database. 
+
+Read http://gorm.grails.org/latest/hibernate/manual/index.html#outsideGrails[GORM documentation] to learn more.

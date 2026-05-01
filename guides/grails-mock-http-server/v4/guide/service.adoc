@@ -1,0 +1,23 @@
+Create the next service: 
+
+[source, groovy]
+.grails-app/services/org/openweathermap/OpenweathermapService.groovy
+----
+include::{sourcedir}/grails-app/services/org/openweathermap/OpenweathermapService.groovy[tag=packageAndImports]
+
+include::{sourcedir}/grails-app/services/org/openweathermap/OpenweathermapService.groovy[tag=grailsConfigurationAware]
+include::{sourcedir}/grails-app/services/org/openweathermap/OpenweathermapService.groovy[tag=currentWeather]
+}
+----
+
+<1> To get the current weather, do a GET request providing the city name, country code and API Key as query parameters.
+<2> In case of a 200 - OK - response, parse the JSON data into Groovy classes. 
+<3> if the answer is not 200. For example, 401; the method returns null.
+
+The previous service uses several configuration parameters. Define them in `application.yml`
+
+[source, yaml]
+.grails-app/conf/application.yml
+----
+include::{sourcedir}/grails-app/conf/application.yml[tag=openweathermap]
+----

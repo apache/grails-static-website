@@ -1,0 +1,30 @@
+Replace the content of `src/ratpack/Ratpack.groovy`.
+
+[source,groovy]
+.src/ratpack/Ratpack.groovy
+----
+include::../snippets/src/ratpack/Ratpack.groovy[]
+----
+
+The previous code registers the `Module` which configures GORM, the `Service` which populates the database on start-up and the `Handler`.
+
+Run the app: 
+
+`./gradlew run`
+
+
+You should be able to call the endpoints: 
+
+`curl "http://localhost:5050"`
+
+and get the response: 
+
+`["audi","ford"]`
+
+Or retrieve the vehicles of a manufacturer:
+
+`curl "http://localhost:5050/audi/vehicles"`
+
+and get the response: 
+
+`["A3","A4"]`

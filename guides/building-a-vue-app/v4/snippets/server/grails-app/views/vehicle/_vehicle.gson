@@ -1,0 +1,19 @@
+import demo.Vehicle
+
+model {
+    Vehicle vehicle
+}
+json {
+    id vehicle.id
+
+    name vehicle.name
+
+    make name: vehicle.make.name,
+        id: vehicle.make.id
+
+    model name: vehicle.model.name,
+            id: vehicle.model.id
+
+    driver name: vehicle.driver.name,
+        id: vehicle.driver.id
+}

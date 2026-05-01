@@ -1,0 +1,16 @@
+The following table contains all of the `TenantResolver` implementations that ship with GORM and are usable out of the box. The package name has been shorted from `org.grails.datastore.mapping` to `o.g.d.m` for brevity:
+
+[format="csv", options="header"]
+|===
+name,description
+`o.g.d.m.multitenancy.resolvers.FixedTenantResolver`, Resolves against a fixed tenant id
+`o.g.d.m.multitenancy.resolvers.SystemPropertyTenantResolver`, Resolves the tenant id from a system property called `gorm.tenantId`
+`o.g.d.m.multitenancy.web.SubDomainTenantResolver`, Resolves the tenant id from the subdomain via DNS
+`o.g.d.m.multitenancy.web.CookieTenantResolver`, Resolves the current tenant from an HTTP cookie named `gorm.tenantId` by default
+`o.g.d.m.multitenancy.web.SessionTenantResolver`, Resolves the current tenant from the HTTP session using the attribute `gorm.tenantId` by default
+|===
+
+However, you have the flexibility to create your a custom tenant resolver is easy. In order to do that, create a class which implements
+`org.grails.datastore.mapping.multitenancy.TenantResolver`. 
+
+The next sections will show you how to create two custom tenant resolvers. 

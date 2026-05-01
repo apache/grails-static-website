@@ -1,0 +1,21 @@
+training:
+  title: Grails Training
+gettingStarted: 
+  title: Getting Started
+  requirements: What you will need
+  howto: How to complete the guide
+writingTheApp:
+  title: Writing the Application
+  openweather: Open Weather Map   
+  pogos: Parse Response into Groovy classes
+  service: Open Weather Service
+  parse: Parse Response into Groovy Classes
+  ersatz: Ersatz
+  testapp: Run Tests
+  controller: Root Url to Weather Controller
+  taglib: TagLib
+  view: View
+runningTheApp:
+  title: Running the Application
+helpWithGrails:
+  title: Help with Grails

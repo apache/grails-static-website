@@ -1,0 +1,12 @@
+Believe it or not, we're done with the server-side security portion of our application! The last thing we need to do is to create the `ROLE_DRIVER` role that we mentioned earlier. We also should prepopulate our database with some user/passwords that we can use to login.
+
+Edit `server/grails-app/init/demo/BootStrap.groovy`:
+
+[source,groovy]
+.server/grails-app/init/demo/BootStrap.groovy
+----
+include::../snippets/server/grails-app/init/demo/BootStrap.groovy[indent=0,lines=5..25]
+----
+<1> Since we've extended the `User` class, we can now set a `username` and `password` property on our `Driver` domain objects. The `password` will be encrypted prior to persistence.
+<2> Here we're creating our `ROLE_DRIVER` role - we can create as many roles as we need, and even create role hierarchies to support complex access controls.
+<3> `UserRole` represents the join table between `User` and `Role`. The class includes a `create` method which we can use to quickly associate our `User` and `Role` objects.

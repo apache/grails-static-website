@@ -1,0 +1,26 @@
+import com.example.Order
+
+import java.text.SimpleDateFormat
+
+SimpleDateFormat simpleDateFormat = new SimpleDateFormat('M-dd-yyy')
+
+model {
+    Order order
+}
+json {
+    hal.links(self: order, customer: order.customer)
+
+    id order.orderId
+    shippingCost order.shippingCost
+    date simpleDateFormat.format(order.orderPlaced)
+
+    shippingAddress {
+        street order.shippingAddress.street
+        street2 order.shippingAddress.street2
+        city order.shippingAddress.city
+        state order.shippingAddress.state
+        zip order.shippingAddress.zip
+    }
+
+    products tmpl.product(order.products) //<1>
+}

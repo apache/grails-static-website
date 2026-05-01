@@ -1,0 +1,10 @@
+We do a simple http://gebish.org[Geb] functional test. It verifies that there is _<h1>_ header with the text _Welcome to Grails_ when we visit the home page.
+
+image::welcomeToGrails.png[]
+
+
+[source,groovy]
+./src/integration-test/groovy/grails/geb/multiple/browsers/DefaultHomePageSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/grails/geb/multiple/browsers/DefaultHomePageSpec.groovy[indent=0]
+----

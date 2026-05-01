@@ -1,0 +1,14 @@
+training:
+  title: Help with Grails
+gettingStarted:
+  title: Getting Started
+  requirements: What you will need
+  howto: How to complete the guide
+writingTheApp:
+  title: Writing the Application
+  soapLibrary: SOAP library
+  countries: Countries
+  controllerandview: Controller and View
+  test: Functional Test
+helpWithGrails:
+  title: Help with Grails

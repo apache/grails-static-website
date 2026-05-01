@@ -1,0 +1,52 @@
+Let's continue by editing `auth.js`. This file is a "plain" JavaScript file (not a React component), and will contain four core authentication-related functions (`logIn`, `logOut`, ``refreshToken`, and `isLoggedIn`). These functions will be exported as a http://2ality.com/2014/09/es6-modules-final.html[*module*], so they can be imported and used in any React component (or JavaScript file).  We will be making use of HTML5's `localStorage` object to store the user's token after a successful login.
+
+[source, javascript]
+.client/src/security/auth.js
+----
+include::../snippets/client/src/security/auth.js[]
+----
+<1> The `export` keyword indicates that this is a JavaScript *module*, which can be imported using the **import** keyword. A single JavaScript file can export multiple modules, so the `default` indicates which module is imported by default (without specifying a particular module).
+<2> `logIn` takes in an auth object, converts it into a JSON string, and stores it in our `localStorage` for later use.
+use.
+<3> `logOut` is  even simpler - we simply remove the object that was stored at `localStorage.auth`.
+<4> `refreshToken` is the most complex function. It makes a `POST` request against the `/oauth/access_token` endpoint (which is set up by default by Spring Security REST), including the `refresh_token` as a URL parameter. If successful, it will receive the same JWT token response that a normal login would have - in which case we store the new token in our `localStorage` as before (overwriting the earlier one).
+<5> Because the refresh endpoint expects `form-urlencoded` body, we're using the `stringify` function from the https://www.npmjs.com/package/qs[`qs`] package to convert our JavaScript object into the correct format.
+<6> `isLoggedIn` returns whether we have an `auth` object in `localStorage`, and in addition verifies that our token is still valid by making a `fetch` request against the secured API and checking the response (in a real-world app, you would probably have a special endpoint for this purpose). If the `checkResponseStatus` function throws an error, the first `catch` statement is called, which will call the `refreshToken` function described above. If *that* function throws another error, the final `catch` statement will fire and the authentication will fail.
+<7> We are using backticks instead of quotes to denote our strings. This is an ES6 syntax called https://developers.google.com/web/updates/2015/01/ES6-Template-Strings["template strings"], and they allow us to write multi-line strings as well as use expressions in our strings with the `${expression}` syntax.
+
+WARNING: The server's `api/login` endpoint responds us with an `access_token` which will expire and a refresh token which never expires and which allows us to refresh the `access_token` via the `oauth/access_token` endpoint. Checkout the http://alvarosanchez.github.io/grails-spring-security-rest/latest/docs/#_token_storage[plugin documentation] to learn more about access token expiration and refresh options. 
+
+
+=== Write the headers() function
+Notice that in our `fetch` call in `isLoggedIn`, we are calling a `headers()` function (imported from `headers.js`). This function will return an object containing our request headers, including the token from `localStorage`. Let's create this function now.
+
+Create a new JavaScript file under `client/src/security`, called `headers.js`.
+
+[source, javascript]
+.client/src/security/headers.js
+----
+include::../snippets/client/src/security/headers.js[]
+----
+<1> Again we're exporting a module, but this time the module is itself a function (using the ES6 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions["arrow function"] syntax, which is analogous to a Groovy closure). The function is anonymous, so the name will be whatever variable is used to `import` the module (e.g, `import headers from './headers'`).
+
+The function from the `headers.js` module returns an object with an "Authorization" header, and adds the `access_token` (which is obtained by parsing the `localStorage.auth` JSON object). We will use this function later on when it's time to authenticate our API calls.
+
+
+=== Install the qs package
+Remember that we used the https://www.npmjs.com/package/qs[`qs` package] in our `refreshToken()` function above. This is a useful utility package that performs many types of conversions. In `refreshToken` we are using this package to convert our request body to `form-urlencoded` format. Now we need to add that package to our `package.json`:
+
+[source, javascript]
+.client/package.json
+----
+include::../snippets/client/package.json[]
+----
+<1> Add this line to add the `qs` dependency to our project.
+
+If you have `yarn` or `npm` installed locally, you may run the `install` command to install the new package.
+
+[source, bash]
+----
+~ yarn install
+----
+
+However, the Gradle tasks for running the `client` app will perform the install automatically, so you are not required to perform the above step.

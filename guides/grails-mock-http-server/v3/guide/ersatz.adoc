@@ -1,0 +1,48 @@
+To test the networking code, add a dependency to http://stehno.com/ersatz/[Ersatz]
+
+[source, groovy]
+.build.gradle
+----
+include::{sourcedir}/build.gradle[tag=ersatz]
+----
+
+____
+Ersatz Server is a "mock" HTTP server library for testing HTTP clients. It allows for server-side request/response expectations to be configured so that your client library can make real HTTP calls and get back real pre-configured responses rather than fake stubs.
+____
+
+First, implement a test which verifies that the `OpenweathermapService.currentWeather` method returns
+null when the REST API returns `401`. For example, when the API Key is invalid.
+
+[source, groovy]
+.src/test/groovy/org/openweathermap/OpenweathermapServiceSpec.groovy
+----
+include::{sourcedir}/src/test/groovy/org/openweathermap/OpenweathermapServiceSpec.groovy[tag=classdeclaration]
+
+include::{sourcedir}/src/test/groovy/org/openweathermap/OpenweathermapServiceSpec.groovy[tag=401]
+}
+----
+
+<1> Declare expectations, a GET request to the `OpenWeather` path with query parameters.
+<2> Declare conditions to be verified, in this example we want to to verify the endpoint is hit only one time.
+<3> Tell the mock server to return 401 for this test.
+<4> Ersatz starts an embedded Undertow server, root the networking requests to this server instead of to the OpenWeather API server.
+<5> Verify the ersatz servers conditions.
+<6> Rember to stop the server
+
+
+Next, test that when the server returns 200 and a JSON payload, the JSON payload is parsed correctly into Groovy classes.
+
+[source, groovy]
+.src/test/groovy/org/openweathermap/OpenweathermapServiceSpec.groovy
+----
+include::{sourcedir}/src/test/groovy/org/openweathermap/OpenweathermapServiceSpec.groovy[tag=classdeclaration]
+
+include::{sourcedir}/src/test/groovy/org/openweathermap/OpenweathermapServiceSpec.groovy[tag=200]
+
+}
+----
+
+<1> Declare a response encoder to convert a `Map` into `application/json` content using an Ersatz-provided encoder.
+<2> Define the response content as a `Map` which will be converted to JSON by the defined encoder (above).
+
+WARNING: As of Ersatz version 1.5.0 the internal Undertow embedded server version is out of sync with Grails. If you use Undertow as your server for Grails you may have classpath collisions or odd errors. This can be avoided by using the "safe" (shadowed) version of the Ersatz dependency (see the http://stehno.com/ersatz/asciidoc/html5/#_shadow_jar[Shadow Jar section of the Ersatz User Guide] for more details).

@@ -1,0 +1,16 @@
+training:
+  title: Training
+gettingStarted:
+  title: Getting Started
+  requirements: What you will need
+  solution: Solution
+writingTheApp:
+  title: Writing the App
+  books: Books
+  spreadsheetBuilder: Spreadsheet Builder
+  excel: Excel Creation
+  controller: Controller
+  tests: Tests
+runningTheApp: Running the app
+helpWithGrails:
+  title: Help with Grails

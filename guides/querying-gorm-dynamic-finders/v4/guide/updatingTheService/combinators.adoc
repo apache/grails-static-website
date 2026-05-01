@@ -1,0 +1,80 @@
+There will be times when you want to find records by more than one property. Let's take
+an example: we want to find all the board games that support a certain number of players.
+Our inefficient implementation looks like this:
+[source,groovy]
+----
+include::initial/grails-app/services/demo/QueryService.groovy[tag=findCombinatorAnd]
+----
+
+These implementation use equality and less-than-or-equals operators; we already know how
+to search for these things independently. For example, to find where the minimum number of
+players is no higher than the requested player count, we would do this:
+[source,groovy]
+----
+    List<Game> games = Game.findAllByMinPlayersLessThanEqual(playerCount)
+----
+
+Or to find those games where the maximum number of players is no less than the requested
+player count, we would do this:
+[source,groovy]
+----
+    List<Game> games = Game.findAllByMaxPlayersGreaterThanEqual(playerCount)
+----
+
+Because `minPlayers` and `maxPlayers` are different properties, we can't use the `Between`
+or `InRange` comparators, as they operate on a single property.
+
+Instead, we introduce here *combinators*. These are the boolean operators `And` and `Or`.
+So if we want to combine two requirements (i.e. a property and its comparator), we join them
+using `And` if we require both requirements to pass, or `Or` if only one is required to pass.
+
+For our current example, we want to combine `findAllByMinPlayersLessThanEqual` and
+`findAllByMaxPlayersGreaterThanEqual`, requiring both statements to pass (which matches the
+boolean-and operator `&&` of the inefficient implementation). When joining these, the prefix
+(e.g. `findAllBy`) only needs to be specified once; then, our `And` combined query becomes
+`findAllByMinPlayersLessThanEqualAndMaxPlayersGreaterThanEqual`, and the final dynamic finder
+method call will take two arguments: one for `minPlayers` and one for `maxPlayers`.
+[source,groovy]
+----
+include::complete/grails-app/services/demo/QueryService.groovy[tag=findCombinatorAnd]
+----
+
+Another similar example: find all board games supporting an exact number of players (i.e.
+where `minPlayers` and `maxPlayers` are equal to the same number). The original implementation:
+[source,groovy]
+----
+include::initial/grails-app/services/demo/QueryService.groovy[tag=findCombinatorAnd2]
+----
+
+and the improved implementation:
+[source,groovy]
+----
+include::complete/grails-app/services/demo/QueryService.groovy[tag=findCombinatorAnd2]
+----
+
+NOTE: You are not limited to two predicates in your dynamic finder. You can use the `And` multiple
+times to join as many predicates (i.e. query requirements) as you need. However, past two or
+three predicates, you may find that your dynamic finder becomes difficult to read. Complex queries
+may be implemented more legibly by using
+http://gorm.grails.org/latest/hibernate/manual/index.html#querying[other query techniques]; these will
+be the topics of future guides.
+
+If we don't require *both* parts of the combination to pass, we can use the `Or` combiner
+(which compares to the boolean-or operator `||`). In `QueryService.queryGamesConsideredFamilyOrParty`,
+the original implementation:
+[source,groovy]
+----
+include::initial/grails-app/services/demo/QueryService.groovy[tag=findCombinatorOr]
+----
+
+can be replaced with an improved implementation:
+[source,groovy]
+----
+include::complete/grails-app/services/demo/QueryService.groovy[tag=findCombinatorOr]
+----
+
+WARNING: While a dynamic finder may use any number of `And` combiners or any number of `Or`
+combiners, you *cannot* use `And` and `Or` together in the same dynamic finder. So this query
+and those like it are invalid: `Game.findByMinPlayersAndMaxPlayersOrParty(2, 5, true)`. To
+specify a condition such as this, you need to use
+http://gorm.grails.org/latest/hibernate/manual/index.html#querying[other query techniques].

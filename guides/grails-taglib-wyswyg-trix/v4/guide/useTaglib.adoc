@@ -1,0 +1,22 @@
+Use Trix in _create_ and _edit_ GSPs. Those were generated with the static scaffolding _generate-all_ command.
+
+Replace:
+
+[source,groovy]
+----
+<f:all bean="announcement"/>
+----
+
+with:
+
+[source,groovy]
+./grails-app/views/announcement/create.gsp
+----
+include::../snippets/grails-app/views/announcement/create.gsp[indent=0,lines=30..37]
+----
+
+[source,groovy]
+./grails-app/views/announcement/edit.gsp
+----
+include::../snippets/grails-app/views/announcement/edit.gsp[indent=0,lines=32..39]
+----

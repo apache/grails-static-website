@@ -1,0 +1,17 @@
+training:
+  title: Training
+gettingStarted: 
+  title: Getting Started
+  howto: How to complete the guide
+writing:
+  title: Writing the Guide
+  docker: Install and configure Docker
+  gradle: Gradle Docker plugin
+  appEntry: App Entry Script
+  gradleDockerTasks: Gradle Docker Tasks
+building:
+  title: Building the app
+usingOnlyDocker:
+  title: Using only Docker
+helpWithGrails:
+  title: Help with Grails  

@@ -1,0 +1,11 @@
+Modify `UrlMappings` to map the endpoints which handle User registration.
+
+[source,groovy]
+.grails-app/controllers/demo/UrlMappings.groovy
+----
+include::../snippets/grails-app/controllers/demo/UrlMappings.groovy[tag=urlMappings]
+----
+
+`/signup` presents a registration form.
+
+`/register` handles a POST submission which saves a user.

@@ -1,0 +1,12 @@
+Our first handler will be `checkResponseStatus`. This function will check the HTTP status of a response, and either return the JSON of the response or throw an error. We can chain this function with our REST calls using the `fetch` API.
+
+[source, javascript]
+.client/src/handlers/responseHandlers.js
+----
+include::../snippets/client/src/handlers/responseHandlers.js[]
+----
+<1> The `export` keyword makes this function available to any JavaScript file that imports this file.
+
+The `checkResponseStatus` function takes an HTTP response and checks that the status code is in the successful range, then returns the JSON body of the response. If the HTTP status code is outside that range then an error will be thrown.
+
+`loginResponseHandler` uses the `Auth.login(response)` function that we wrote previously. If an additional function is passed in as the second argument, it will then execute that function.

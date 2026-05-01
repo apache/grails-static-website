@@ -1,0 +1,51 @@
+Create a persistent entity to store _Hotel_ entities. Most common way to handle persistence in Grails is the use of https://docs.grails.org/latest/ref/Domain%20Classes/Usage.html[Grails Domain Classes]:
+
+include::{commondir}/common-quoteDomainClass.adoc[]
+
+[source,bash]
+----
+./grailsw create-domain-class Hotel
+CONFIGURE SUCCESSFUL
+
+| Created grails-app/domain/demo/Hotel.groovy
+| Created src/test/groovy/demo/HotelSpec.groovy
+----
+
+The `Hotel` domain class is our data model. We define different properties to store the `Hotel` characteristics.
+
+[source,javascript]
+./grails-app/domain/demo/Hotel.groovy
+----
+include::../snippets/grails-app/domain/demo/Hotel.groovy[indent=0]
+----
+
+We define multiple https://docs.grails.org/latest/ref/Constraints/Usage.html[validation constraints]
+
+____
+Constraints provide Grails with a declarative DSL for defining validation rules, schema generation and CRUD generation meta data.
+____
+
+Grails comes with multiple constraints ready to use:
+
+* https://docs.grails.org/latest/ref/Constraints/attributes.html[attributes]
+* https://docs.grails.org/latest/ref/Constraints/bindable.html[bindable]
+* https://docs.grails.org/latest/ref/Constraints/blank.html[blank]
+* https://docs.grails.org/latest/ref/Constraints/creditCard.html[creditCard]
+* https://docs.grails.org/latest/ref/Constraints/email.html[email]
+* https://docs.grails.org/latest/ref/Constraints/inList.html[inList]
+* https://docs.grails.org/latest/ref/Constraints/matches.html[matches]
+* https://docs.grails.org/latest/ref/Constraints/max.html[max]
+* https://docs.grails.org/latest/ref/Constraints/maxSize.html[maxSize]
+* https://docs.grails.org/latest/ref/Constraints/min.html[min]
+* https://docs.grails.org/latest/ref/Constraints/minSize.html[minSize]
+* https://docs.grails.org/latest/ref/Constraints/notEqual.html[notEqual]
+* https://docs.grails.org/latest/ref/Constraints/nullable.html[nullable]
+* https://docs.grails.org/latest/ref/Constraints/range.html[range]
+* https://docs.grails.org/latest/ref/Constraints/scale.html[scale]
+* https://docs.grails.org/latest/ref/Constraints/size.html[size]
+* https://docs.grails.org/latest/ref/Constraints/unique.html[unique]
+* https://docs.grails.org/latest/ref/Constraints/url.html[url]
+* https://docs.grails.org/latest/ref/Constraints/validator.html[validator]
+* https://docs.grails.org/latest/ref/Constraints/widget.html[widget]
+
+NOTE: You can define your https://docs.grails.org/latest/ref/Constraints/validator.html[custom validators] if needed.

@@ -1,0 +1,13 @@
+import com.example.Product
+
+model {
+    Product product
+}
+json {
+    hal.links(product)
+    hal.embedded(category: product.category) //<1>
+
+    id product.inventoryId
+    name product.name
+    price product.price
+}

@@ -1,0 +1,47 @@
+The `index()` action method returns a `studentList` and `studentCount` as a model back to the view.
+
+Next code sample, shows the _index_ method of the _StudentController_.
+
+[source, groovy]
+.grails-app/controllers/demo/StudentController.groovy
+----
+include::../snippets/grails-app/controllers/demo/StudentController.groovy[tag=controllerPackageImport]
+
+include::../snippets/grails-app/controllers/demo/StudentController.groovy[tag=controllerImports]
+
+include::../snippets/grails-app/controllers/demo/StudentController.groovy[tag=classDeclaration]
+
+include::../snippets/grails-app/controllers/demo/StudentController.groovy[tag=allowedMethods]
+
+include::../snippets/grails-app/controllers/demo/StudentController.groovy[tag=injectedStudentService]
+
+include::../snippets/grails-app/controllers/demo/StudentController.groovy[tag=indexAction]
+
+include::../snippets/grails-app/controllers/demo/StudentController.groovy[tag=close]
+----
+
+The previous action uses a service (the collaborator) to get some objects. Then, it returns
+those objects as the model. We are going verify that the objects returned by the service are
+indeed used as the model. To see this we will use a Stub to help us.
+
+**When should I use a Mock, and when should I use a Stub?**
+
+From the book http://shop.oreilly.com/product/0636920038597.do[Spock Up & Running]
+____
+If the test is concerned with proving that the test subject interacts with a collaborator
+in a particular way, use a mock. If the fact that a collaborator behaves in a certain way exposes
+a particular behavior in the test subject the outcome of _that_ behavior is what you are testing, use a stub
+____
+
+[source, groovy]
+.src/test/groovy/demo/StudentControllerSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/StudentControllerSpec.groovy[tag=unitTestPackageImport]
+include::../snippets/src/test/groovy/demo/StudentControllerSpec.groovy[tag=unitTestImports]
+include::../snippets/src/test/groovy/demo/StudentControllerSpec.groovy[tag=unitTestClassDeclaration]
+include::../snippets/src/test/groovy/demo/StudentControllerSpec.groovy[tag=testIndex]
+include::../snippets/src/test/groovy/demo/StudentControllerSpec.groovy[tag=specEnding]
+----
+
+<1> We can verify the model contains the information we expect
+

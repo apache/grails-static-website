@@ -1,0 +1,4 @@
+In this guide you are going to learn how to create an app
+whose interface is translated in four languages.
+
+You will learn how to change the default language used in your application and how to switch between languages while using the app.

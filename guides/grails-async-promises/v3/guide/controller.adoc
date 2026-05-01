@@ -1,0 +1,11 @@
+Create a controller named `CitiesController` which uses the previous service method:
+
+[source, groovy]
+.grails-app/controllers/demo/CitiesController.groovy
+----
+include::{sourcedir}/grails-app/controllers/demo/CitiesController.groovy[]
+----
+
+<1> If the `async` parameter is `true` then use the previously created service method that returns a promise.
+<2> A set of named tasks is returned from the controller where each key becomes a resolved value in the model of the view. Grails will detect the fact that a promise is returned a create a non-blocking response. The `createBoundPromise` method is used to define a `Promise` that is already bound and doesn't need to be resolved asynchronously.
+<3> If the `async` parameter is `false` then create the model synchronously.

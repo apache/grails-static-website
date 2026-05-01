@@ -1,0 +1,23 @@
+You may have noticed a few `<asset>` tags in our GSP pages. These tags are provided by the Asset Pipeline plugin, which is Grails' default tool for managing static assets (images, CSS, JavaScript files, etc). The Asset Pipeline plugin provides a set of custom GSP tags, but unlike the tags we've been exploring, it uses the `asset` prefix (or namespace).
+
+The most common `<asset>` tags are listed below:
+
+[source,xml]
+----
+
+<asset:javascript src="myscript.js" /> //<1>
+
+<asset:image src="myimage.png" /> //<2>
+
+<asset:stylesheet src="mystyles.css" /> //<3>
+
+----
+<1> This tag loads JavaScript files from `grails-app/assets/javascripts`
+<2> This tag loads images from `grails-app/assets/images`
+<3> This tag loads CSS files from `grails-app/assets/stylesheets`
+
+As you can see, the Asset Pipeline follows a convention over configuration approach, following the precedent of Grails. However, Asset Pipeline is a very powerful framework, and includes a rich plugin ecosystem - you can find plugins to render LESS and SASS files, CoffeeScript, Ember, Angular, JSX (React), and more.
+
+Asset Pipeline also supports minification and compression of your assets, and much more.
+
+TIP: Visit http://www.asset-pipeline.com/[asset-pipeline.com] for much more information on using the Asset Pipeline, including a directory of http://www.asset-pipeline.com/plugins[available plugins].

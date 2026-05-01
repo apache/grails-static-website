@@ -1,0 +1,30 @@
+This guide uses https://github.com/bertramdev/asset-pipeline[Asset Pipeline] Plugin
+____
+The Asset-Pipeline is a plugin used for managing and processing static assets in JVM applications primarily via Gradle (however not mandatory). Asset-Pipeline functions include processing and minification of both CSS and JavaScript files
+____
+
+Create a javascript file which will be the entry to our TVML Grails App:
+
+[source,javascript]
+./grails-app/assets/javascripts/application.js
+----
+include::../snippets/grails-app/assets/javascripts/application.js[indent=0]
+----
+
+Please note, how the line displayed in the next Listing includes the TVMLKit JS file discussed in the previous section.
+
+[source,javascript]
+./grails-app/assets/javascripts/application.js
+----
+include::../snippets/grails-app/assets/javascripts/application.js[indent=0, lines=8]
+----
+
+The initial TVML document is the XML rendered at `http://localhost:8080/quickcast`.
+
+The next line designates the initial document:
+
+[source,javascript]
+./grails-app/assets/javascripts/application.js
+----
+include::../snippets/grails-app/assets/javascripts/application.js[indent=0, lines=15]
+----

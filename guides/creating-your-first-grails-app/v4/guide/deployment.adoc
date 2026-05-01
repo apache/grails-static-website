@@ -1,0 +1,28 @@
+The final step in developing a Grails application is building the finished project into a deployable package. Typically Java web applications are deployed as WAR files, and Grails makes this easy with the `war` command:
+
+[source, bash]
+----
+$ ./grailsw war
+...
+BUILD SUCCESSFUL
+
+| Built application to build/libs using environment: production
+----
+
+[TIP]
+====
+We didn't cover the topic of http://docs.grails.org/latest/guide/conf.html[configuration] in this guide (although we did make some edits to our config files), but it's worth mentioning here that Grails supports to concept of Environments, such as "development", "test", and "production". Each environment can have its own config properties and values, so you can have different settings between your development and production systems. By default, the `war` command uses the "production" environment - you can override this using the `-Dgrails.env` flag, like so:
+
+[source, bash]
+----
+$ ./grailsw war -Dgrails.env=development
+...
+BUILD SUCCESSFUL
+
+| Built application to build/libs using environment: development
+----
+====
+
+Once we have our WAR file, we can deploy it in any JEE container, such as http://tomcat.apache.org[Tomcat].
+
+Congratulations! You've built your first Grails application.

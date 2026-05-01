@@ -1,0 +1,5 @@
+To complete this guide you will need the following:
+
+* 10 minutes or less
+* Grails 3.2.1 or greater installed
+* JDK 1.7 or greater installed with `JAVA_HOME` configured appropriately

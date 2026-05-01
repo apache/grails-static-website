@@ -1,0 +1,41 @@
+http://docs.grails.org/latest/guide/testing.html[Grails makes testing easier] from low level unit testing to high
+level functional tests.
+
+We are going to test the constraints we defined in the Announcement domain Class in constraints property. In particular
+nullability and length of both title and body properties.
+
+[source,groovy]
+.src/test/groovy/intranet/backend/AnnouncementSpec.groovy
+----
+include::../snippets/src/test/groovy/intranet/backend/AnnouncementSpec.groovy[indent=0,lines="1..5, 9..50"]
+----
+
+We can run the every test, including the one we just created, with the command test_app
+
+[source,bash]
+----
+ ./grailsw test-app
+ | Resolving Dependencies. Please wait...
+ CONFIGURE SUCCESSFUL
+ Total time: 2.534 secs
+ :complete:compileJava UP-TO-DATE
+ :complete:compileGroovy
+ :complete:buildProperties
+ :complete:processResources
+ :complete:classes
+ :complete:compileTestJava UP-TO-DATE
+ :complete:compileTestGroovy
+ :complete:processTestResources UP-TO-DATE
+ :complete:testClasses
+ :complete:test
+ :complete:compileIntegrationTestJava UP-TO-DATE
+ :complete:compileIntegrationTestGroovy UP-TO-DATE
+ :complete:processIntegrationTestResources UP-TO-DATE
+ :complete:integrationTestClasses UP-TO-DATE
+ :complete:integrationTest UP-TO-DATE
+ :complete:mergeTestReports
+
+ BUILD SUCCESSFUL
+
+ | Tests PASSED
+----

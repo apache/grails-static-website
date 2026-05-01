@@ -1,0 +1,42 @@
+The first method to update is `QueryService.queryGame` which takes a single `name` parameter.
+The existing code loads all instances of the `Game` domain class, and searches for the single
+instance whose name matches the parameter. (We only expect to find one, since the `name` property
+of `Game` is unique.)
+
+[source,groovy]
+----
+include::initial/grails-app/services/demo/QueryService.groovy[tag=findByProp, indent=0]
+----
+
+The `all` property on `Game` does exactly what it sounds like: it fetches all of the instances
+from the database into memory. This terrible implementation fetches all of the instances
+when only one is needed; this is highly inefficient code! Let's get exactly the one instance we
+want (i.e. the one with the provided name) using a dynamic finder.
+
+Every dynamic finder starts with a prefix. Since we expect to find only one game (because
+the name is constrained to be unique), we can use `findBy`, which will
+return the matching instance if one is found or a `null` if no match is found.
+
+NOTE: `findBy` can also be used to retrieve only the first of many matching instances.
+However, you should consider adding a sort column, described in
+<<queryParameters,Parameterizing Queries>>, to make your query robust.
+
+After determining the prefix, next we need the property to match against. The `Game` domain class
+has a `name` property that the inefficient implementation used; by appending (using camel-case) the
+property name to the prefix, we create the dynamic finder `findByName` to find the desired game.
+This method should be called on the domain class of interest: in this case, `Game`. So our dynamic
+finder call will be `Game.findByName(...)`.
+
+At the same time we add a property name to the dynamic finder method _name_, we should also add an
+argument to the dynamic finder method _call_; in this case, we want to use the `name` parameter
+provided by the `queryGame` method. So the final, efficient implementation of `queryGame` is:
+[source,groovy]
+----
+include::complete/grails-app/services/demo/QueryService.groovy[tag=findByProp, indent=0]
+----
+
+Change the implementation and run the tests to see that they still pass.
+
+NOTE: When you append a property name to a dynamic finder method, you also append a corresponding
+argument to the method call **in most cases**. The few cases that differ in this respect will be
+pointed out in later sections of this guide.

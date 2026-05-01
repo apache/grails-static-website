@@ -1,0 +1,7 @@
+Create a GSP file which contains the user registration form.
+
+[source,groovy]
+.grails-app/views/register/index.gsp
+----
+include::../snippets/grails-app/views/register/index.gsp[]
+----

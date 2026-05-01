@@ -1,0 +1,45 @@
+____
+Amazon Simple Email Service (Amazon SES) is a cloud-based email sending service designed to help digital marketers and application developers send marketing, notification, and transactional emails. It is a reliable, cost-effective service for businesses of all sizes that use email to keep in contact with their customers.
+____
+
+There is a http://plugins.grails.org/plugin/agorapulse/aws-sdk-ses[AWS SDK SES Grails plugin]. However, in this guide we are going to integrate AWS SDK SES directly.
+
+Add a dependency to AWS SES SDK:
+
+[source,groovy]
+.build.gradle
+----
+include::../../../snippets/build.gradle[tag=awsses]
+----
+
+Also, add configuration properties which can be passed via system properties / command line arguments:
+
+[source,groovy]
+.grails-app/conf/application.yml
+----
+include::../../../snippets/grails-app/conf/application.yml[tag=awsses]
+----
+
+Create one service which encapsulates the integration with SES. There are several way to provide programmatic credentials.
+
+____
+The client searches for credentials using the default credentials provider chain, in the following order:
+
+In the Java system properties: aws.accessKeyId and aws.secretKey.
+
+In system environment variables: AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY.
+
+In the default credentials file (the location of this file varies by platform).
+
+In the Amazon ECS environment variable: AWS_CONTAINER_CREDENTIALS_RELATIVE_URI.
+
+In the instance profile credentials, which exist within the instance metadata associated with the IAM role for the EC2 instance.
+____
+
+[source,groovy]
+.grails-app/services/example/grails/AwsSesMailService.groovy
+----
+include::../../../snippets/grails-app/services/example/grails/AwsSesMailService.groovy[]
+----
+
+<1> http://grailsblog.objectcomputing.com/posts/2016/08/31/retrieving-config-values.html[Retrieve configuration values] with `GrailsConfigurationAware`

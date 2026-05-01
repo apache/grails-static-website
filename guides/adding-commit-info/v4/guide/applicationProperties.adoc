@@ -1,0 +1,11 @@
+Grails 2.x and below has an `application.properties` that can be utilized to store commit properties.
+This is the same place that Grails used to store its application name and version.
+
+In this example some mechanism needs to be in place to append/update the commit info to the `application.properties`
+It could be the build system that appends git commit info as a build step before producing a war.
+
+After the commit info is added to `application.properties` We can access that metadata in several ways:
+
+* GrailsApplication via `grailsApplication.metadata['git.sha']`
+* Utilizing the taglib `<g:meta name='git.sha'/>` in a view.
+

@@ -1,0 +1,12 @@
+include::{commondir}/common-howto.adoc[]
+
+Alternatively, if you already have Grails {grailsVersion} installed then you can create a new application using the following command in a Terminal window:
+
+[source,bash]
+----
+$ grails create-app hibernate-example --profile rest-api
+$ cd hibernate-example
+----
+
+When the `create-app` command completes, Grails will create a `hibernate-example` directory with an application configured to create a REST application by default (using the `rest-api` profile) and configured to use the `hibernate` feature.
+

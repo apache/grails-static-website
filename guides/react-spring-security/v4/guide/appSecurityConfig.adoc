@@ -1,0 +1,33 @@
+Our first step in securing our API is to update our `Driver` Domain Class. In our app, `Driver` would be a "user", however Spring Security has generated a `User` class for authentication purposes. We could modify the configuration to use `Driver` instead, however we'll take another approach and make `Driver` a subclass of `User`.
+
+Edit `server/grails-app/domain/demo/Driver.groovy`:
+
+[source, groovy]
+.server/grails-app/domain/demo/Driver.groovy
+----
+include::../snippets/server/grails-app/domain/demo/Driver.groovy[]
+----
+
+In addition to extending the `User` class, we have also restricted access to this domain resource to users with the `ROLE_DRIVER` role, using the `@Secured` annotation. We haven't created this role yet, but we'll fix that shortly.
+
+If you were now to run the server application, you would get a 401 response to any attempt to access `/api/driver`.
+
+Let's secure the remaining domain resources, as shown below:
+
+[source, groovy]
+.server/grails-app/domain/demo/Make.groovy
+----
+include::../snippets/server/grails-app/domain/demo/Make.groovy[]
+----
+
+[source, groovy]
+.server/grails-app/domain/demo/Model.groovy
+----
+include::../snippets/server/grails-app/domain/demo/Model.groovy[]
+----
+
+[source, groovy]
+.server/grails-app/domain/demo/Vehicle.groovy
+----
+include::../snippets/server/grails-app/domain/demo/Vehicle.groovy[]
+----

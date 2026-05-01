@@ -1,0 +1,40 @@
+Often, a developer will need to query the database to see if a particular instance
+exists and, if it does not, wants it created or saved before additional work is done.
+How many times have you seen or written this sort of code?
+[source,groovy]
+----
+    def category = Category.findByName('Zombies')
+    if (!category) {
+        category = new Category(name: 'Zombies')
+        category.save(flush: true)
+    }
+    // Now do something useful with `category`.
+
+    def game = Game.findByNameAndMinPlayersAndMaxPlayers('SET', 2, 20)
+    if (!game) {
+        game = new Game(name: 'SET', minPlayers: 2, maxPlayers: 20)
+    }
+    // Now do something useful with `game`.
+----
+
+GORM provides two prefixes for dynamic finders that help to eliminate this sort of
+boilerplate: `findOrCreateBy` and `findOrSaveBy`. Both of these attempt to use the query
+specified to find a matching instance. If found, that instance is returned. If not found,
+a new instance is created and its properties set with the query-named property values. If
+`findOrSaveBy` is used, the instance is also saved. The following is equivalent to the
+above:
+[source,groovy]
+----
+    Category category = Category.findOrSaveByName('Zombies')
+
+    Game game = Game.findOrCreateByNameAndMinPlayersAndMaxPlayers('SET', 2, 20)
+----
+
+Often, `findOrCreateBy` may be more appropriate, if you need to fill in additional properties,
+build relationships, or ensure certain constraints are met before saving. Remember, though, that
+`findOrCreateBy` does *not* save, so call `save` on the instance to persist your changes.
+
+NOTE: When using the prefixes `findOrCreateBy` and `findOrSaveBy`, only exact matches are allowed,
+since if not found, your dynamic finder will attempt to create a new instance using the values
+provided in the query. So, for example, `Game.findOrCreateByRating(5.5)` is a valid, but the
+creating dynamic finder `Game.findOrCreateByRatingGreaterThan(5.5)` is not.

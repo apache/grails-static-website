@@ -1,0 +1,1 @@
+In this guide you are going to consume a SOAP webservice from a Grails Application.

@@ -1,0 +1,15 @@
+Now we can finally wire these pieces together in order to get our client-side security functioning. Here's the steps we need to take:
+
+* [ ] Update our `App` component's state to include the user details for the `Login` form.
+* [ ] Check whether we're logged in, and display the `Login` component if the user is not authenticated.
+* [ ] Submit the `Login` form details to the server and obtain (and store) the resulting token
+* [ ] Provide a way to logout (delete the token from `localStorage`)
+* [ ] Use the token in our REST calls to the API
+
+For your reference the full `App.js` file is shown below - in the remaining sections  we will go piece by piece through this component (going from top to bottom) and show how to complete the above steps.
+
+[source, javascript]
+.client/src/App.js
+----
+include::../snippets/client/src/App.js[]
+----

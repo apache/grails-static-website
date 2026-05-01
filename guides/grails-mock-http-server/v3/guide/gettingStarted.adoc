@@ -1,0 +1,1 @@
+In this guide you are going to create a Grails app which consumes a third party REST API. Moreover, we will use a "mock" HTTP library to test the code which interacts with this external service.

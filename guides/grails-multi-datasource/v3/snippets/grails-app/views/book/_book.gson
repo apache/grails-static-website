@@ -1,0 +1,10 @@
+import demo.Book
+
+model {
+    Book book
+}
+
+json {
+    title book.title
+    keywords book.keywords*.name
+}

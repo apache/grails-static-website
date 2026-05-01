@@ -1,0 +1,22 @@
+training:
+  title: Grails Training
+gettingStarted:
+  title: Getting Started
+  title: Getting Started
+  architecture: Architecture
+  requirements: What you will need
+  howto: How to complete the guide
+writingTheTvOSApp:
+  title: Writing the TVML Client
+writingTheApp:
+  title: Writing the TVML Grails Application
+  tvmlUtils: TVMLKit JS Utils
+  tvBootURL: TV Boot Url
+  domainClass: Domain class
+  controllerIndex: Stack Template
+  controllerShow: Product Template
+  internationalization: Internationalization
+runningTheApp:
+  title: Running the Application
+helpWithGrails:
+  title: Do you need help with Grails?  

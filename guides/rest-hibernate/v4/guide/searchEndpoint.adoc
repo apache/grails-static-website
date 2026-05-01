@@ -1,0 +1,27 @@
+If you wish to add an additional endpoint to your REST API then it is simply a matter of implementing the corresponding action.
+
+For example, say you wanted to be able to search for products using the `/products/search` URI and a query. To do so the first step is to implement a `search` action in the controller:
+
+
+[source,groovy]
+.grails-app/controllers/hibernate/example/ProductController.groovy
+----
+include::../snippets/grails-app/controllers/hibernate/example/ProductController.groovy[tags=searchAction,indent=0]
+----
+
+<1> An action called `search` is defined that takes a query parameter, called `q`, and a `max` parameter
+<2> A http://gorm.grails.org/latest/hibernate/manual/index.html#whereQueries[where] query is executed that uses a SQL `like` query.
+<3> The `respond` method is used to respond with a list of results
+<4> For the case where no query is specified we `respond` with an empty list
+
+With the action written you now need to expose the `/products/search` endoint by defining the appropriate mapping in `grails-app/conf/hibernate/example/UrlMappings.groovy`:
+
+[source,groovy]
+.grails-app/controllers/hibernate/example/UrlMappings.groovy
+----
+include::../snippets/grails-app/controllers/hibernate/example/UrlMappings.groovy[tags=productMapping,indent=0]
+----
+
+The above example uses the `collection` method to nest URIs directly underneath the `/products` URI (for example `/product/search`) instead of nesting it below the resource identifier (for example `/product/1/search`).
+
+TIP: See the Grails user guide on link:{userGuide}/theWebLayer.html#restfulMappings[Mapping REST Resources] for more information on controlling how URIs map to controllers.

@@ -1,0 +1,32 @@
+The Spock framework gives the ability to mock collaborators. We are able to substitute dependencies within a service with a mock implementation. This gives the advantage of focusing on the functionality under test, while delegating the dependent functionality to a mock object. In addition, mock collaborators can be verified to see how many times they are called and which parameters are being sent.
+
+Implement the code to test email with a mock collaborator. Essentially, we want to verify the email service is called for each `Student` in a `Classroom`.
+
+[source, groovy]
+.src/test/groovy/grails/mock/basics/ClassroomGradesNotificationServiceSpec.groovy
+----
+include::../snippets/src/test/groovy/grails/mock/basics/ClassroomGradesNotificationServiceSpec.groovy[tags=ClassroomGradesNotificationServiceSpecPackageImport]
+
+include::../snippets/src/test/groovy/grails/mock/basics/ClassroomGradesNotificationServiceSpec.groovy[tags=ClassroomGradesNotificationServiceSpecImport]
+
+include::../snippets/src/test/groovy/grails/mock/basics/ClassroomGradesNotificationServiceSpec.groovy[tags=ClassroomGradesNotificationServiceSpecClassDeclaration]
+
+include::../snippets/src/test/groovy/grails/mock/basics/ClassroomGradesNotificationServiceSpec.groovy[tags=ClassroomGradesNotificationServiceSpecShared]
+
+include::../snippets/src/test/groovy/grails/mock/basics/ClassroomGradesNotificationServiceSpec.groovy[tags=ClassroomGradesNotificationServiceSpecSetup]
+
+include::../snippets/src/test/groovy/grails/mock/basics/ClassroomGradesNotificationServiceSpec.groovy[tags=testEmailMock]
+
+include::../snippets/src/test/groovy/grails/mock/basics/ClassroomGradesNotificationServiceSpec.groovy[tags=ClassroomGradesNotificationServiceCloseBrace]
+
+----
+
+<1> Mock domain classes
+<2> Instantiate the mock implementation of `EmailService`.
+<3> Inject the mock into the service.
+<4> Invoke the service under test, which now has a mock implementation of `EmailService`.
+<5> Use the spock syntax to verify invocation, params, and return a value.
+
+In the `then:` clause, we use spock to verify the mock was called. With `1 *`, this verfies it was called once. The parameters defined verify what was passed in during execution. The `>> 1` give the mock stub capability where it will return 1.
+
+Essentially, we are verifying the mock was called three different times with different `Student` parameters.

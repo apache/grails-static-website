@@ -1,0 +1,18 @@
+training:
+  title: Training
+gettingStarted:
+  title: Getting Started
+  requirements: What you will need
+  howto: How to complete the guide
+writingTheApp:
+  title: Writing the Application
+  configuration: Configuration
+  domain: Domain Classes
+  services: Services
+  controllers: Controllers
+  views: Views
+  test: Functional Test
+testingTheApp:
+  title: Testing the Application
+helpWithGrails:
+  title: Help with Grails

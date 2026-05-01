@@ -1,0 +1,29 @@
+training:
+  title: Grails Training
+gettingStarted:
+  title: Getting Started
+  requirements: What you will need
+  howto: How to complete the guide
+writingTheApp:
+  title: Writing the Application
+  featuredImageCommand: Featured Image Command Object
+  increaseFileSize: Increase allowed file size
+restaurant:
+  title: Restaurant - Upload and save as byte[]
+  restaurantDomainClass: Restaurant Domain Class
+  restaurantView: Restaurant Views
+  restaurantUploadFeaturedImageService: Upload Featured Image Service
+  loadByteArrayImage: Load byte array Image
+pointOfInterest:
+  title: Point of Interest - Upload and transfer
+  pointOfInterestDomainClass: Point of Interest Domain Class
+  pointOfInterestView: Point of Interest  Views
+  pointOfInterestUploadFeaturedImageService: Upload Featured Image Service
+awsS3:
+  title: Hotel - Upload to AWS S3
+  hotelDomainClass: Hotel Domain Class
+  hotelView: Hotel Views
+  hotelUploadFeaturedImageService: Upload image to S3
+  awsAccessAndSecret: Run the App with AWS Access and Secret
+helpWithGrails:
+  title: Do you need help with Grails?  

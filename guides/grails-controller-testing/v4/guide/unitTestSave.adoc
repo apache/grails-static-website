@@ -1,0 +1,91 @@
+The `save()` action method use a command object as a parameter.
+
+Check the guide http://guides.grails.org/command-objects-and-forms/guide/index.html[Using Command Objects to handle form data] to learn more about command objects.
+
+[source, groovy]
+.grails-app/controllers/demo/StudentSaveCommand.groovy
+----
+include::../snippets/grails-app/controllers/demo/StudentSaveCommand.groovy[]
+----
+
+[source, groovy]
+.grails-app/controllers/demo/StudentController.groovy
+----
+include::../snippets/grails-app/controllers/demo/StudentController.groovy[tag=controllerPackageImport]
+
+include::../snippets/grails-app/controllers/demo/StudentController.groovy[tag=controllerImports]
+
+include::../snippets/grails-app/controllers/demo/StudentController.groovy[tag=classDeclaration]
+
+include::../snippets/grails-app/controllers/demo/StudentController.groovy[tag=allowedMethods]
+
+include::../snippets/grails-app/controllers/demo/StudentController.groovy[tag=injectedStudentService]
+
+include::../snippets/grails-app/controllers/demo/StudentController.groovy[tag=saveAction]
+
+include::../snippets/grails-app/controllers/demo/StudentController.groovy[tag=close]
+----
+
+<1> Grails binds the parameters in the command object and calls  _validate()_ before the controller's _save_ action starts.
+<2> If the command object is valid, it tries to save the new student with the help of a service (a collaborator).
+<3> Inspect the collaborator response. The action result depends on the collaborator's response.
+<4> If everything went well, it would return a different answer depending on the Content Type.
+<5> For example, for _"application/x-www-form-urlencoded_ Content Type, it redirect to the _show_ action to display the Student.
+
+
+We could unit test it with the next feature methods:
+
+[source, groovy]
+.src/test/groovy/demo/StudentControllerSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/StudentControllerSpec.groovy[tag=unitTestPackageImport]
+
+include::../snippets/src/test/groovy/demo/StudentControllerSpec.groovy[tag=unitTestImports]
+
+include::../snippets/src/test/groovy/demo/StudentControllerSpec.groovy[tag=unitTestClassDeclaration]
+
+include::../snippets/src/test/groovy/demo/StudentControllerSpec.groovy[tag=testSave1]
+
+include::../snippets/src/test/groovy/demo/StudentControllerSpec.groovy[tag=specEnding]
+----
+
+<1> Thanks to the _@TestFor_ annotation, we change the request content type. The action under test outputs a different status code depending on the ContentType see _request.withFormat_ closure.
+<2> Thanks to the _@TestFor_ annotation, we change the request method
+<3> We can verify the view used.
+
+[source, groovy]
+.src/test/groovy/demo/StudentControllerSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/StudentControllerSpec.groovy[tag=unitTestPackageImport]
+
+include::../snippets/src/test/groovy/demo/StudentControllerSpec.groovy[tag=unitTestImports]
+
+include::../snippets/src/test/groovy/demo/StudentControllerSpec.groovy[tag=unitTestClassDeclaration]
+
+include::../snippets/src/test/groovy/demo/StudentControllerSpec.groovy[tag=testSave2]
+
+include::../snippets/src/test/groovy/demo/StudentControllerSpec.groovy[tag=specEnding]
+----
+<1> Supply the parameters as you would normally do.
+<2> Don't supply parameters to the action method. Call the action method without parameters. Grails does the binding. It simulates more closely what happens in real code.
+<3> You can check that a flash message has been populated
+<4> Verify the redirected url is what we expected.
+<5> You can verify the expected status code is present.
+
+
+[source, groovy]
+.src/test/groovy/demo/StudentControllerSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/StudentControllerSpec.groovy[tag=unitTestPackageImport]
+
+include::../snippets/src/test/groovy/demo/StudentControllerSpec.groovy[tag=unitTestImports]
+
+include::../snippets/src/test/groovy/demo/StudentControllerSpec.groovy[tag=unitTestClassDeclaration]
+
+include::../snippets/src/test/groovy/demo/StudentControllerSpec.groovy[tag=testSave3]
+
+include::../snippets/src/test/groovy/demo/StudentControllerSpec.groovy[tag=specEnding]
+----
+
+<1> Grails supports data binding of JSON requests to command objects.
+<2> You can verify the expected status code is present.

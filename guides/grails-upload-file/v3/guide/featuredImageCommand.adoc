@@ -1,0 +1,11 @@
+Each of our application entities ( hotels, restaurants and point of interest )  will have a featured image.
+
+To encapsulate the validation of the file being uploaded; we use a http://guides.grails.org/command-objects-and-forms/guide/index.html[Grails Command Object]
+
+[source, groovy]
+./grails-app/controllers/example/grails/FeaturedImageCommand.groovy
+----
+include::../snippets/grails-app/controllers/example/grails/FeaturedImageCommand.groovy[indent=0]
+----
+
+<1> Only files ending with JPG or PNG are allowed

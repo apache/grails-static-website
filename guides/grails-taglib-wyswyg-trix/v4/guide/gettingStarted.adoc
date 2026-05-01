@@ -1,0 +1,1 @@
+In this guide you are going to integrate a third party WYSWYG editor into your Grails 3 application with the help of a TagLib.

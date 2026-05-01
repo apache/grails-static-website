@@ -1,0 +1,11 @@
+Add two more tests to cover the other scenarios.
+
+[source, groovy]
+.src/integration-test/groovy/example/grails/PersonControllerIntSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/grails/PersonControllerIntSpec.groovy[tag=PersonControllerIntSpecCreateUnsuccess]
+
+include::../snippets/src/integration-test/groovy/example/grails/PersonControllerIntSpec.groovy[tag=PersonControllerIntSpecAdvice]
+----
+
+<1> Notice we are accessing the logger for `example.grails.AgeAdvisor`. The factory is able to access any logger to verify activity.

@@ -1,0 +1,35 @@
+Now that our `Garage` component is set up and rendering the `Vehicles` table on our page, we can finally hook up our API to load data into our React views. We'll use the `fetch` API for this purpose.
+
+Edit `src/main/webapp/app/Garage.js`:
+
+[source,javascript]
+.src/main/webapp/app/Garage.js
+----
+//...
+import 'whatwg-fetch';    // <1>
+
+class Garage extends React.Component {
+
+  constructor() {
+    super();
+
+    this.state = {
+      vehicles: [] // <2>
+    }
+  }
+
+  componentDidMount() { // <3>
+    fetch('/vehicle')
+      .then(r => r.json())
+      .then(json => this.setState({vehicles: json}))
+      .catch(error => console.error('Error retrieving vehicles: ' + error));
+  }
+//...
+----
+<1> Import the `fetch` library
+<2> Remove the hard-coded data.
+<3> Load data from the API
+
+`componentDidMount` is one of React's component lifecycle methods. It is fired as soon as the component is loaded on a page.  In this method, we use `fetch` to make a request (a GET request by default) to our `/vehicle` endpoint, parse the JSON payload, and call `this.setState` to update our `vehicles` collection with the data.
+
+Restart the app (or wait for webpack to reload) to see the changes. You should now see the list of Vehicles from the Grails app displayed in the React `Vehicles` table.

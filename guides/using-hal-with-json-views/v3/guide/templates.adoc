@@ -1,0 +1,46 @@
+`Order` includes a one-many relationship with `Product`, and right now our API returns a simple list of ids to represent products in an order. Ideally we'd like to include links to these products as well, so that clients of our API can retrieve the details of each product by following the links we provide. We can use JSON views' template functionality.
+
+In the `grails-app/views/order` directory, create a new JSON template with the name `_product.gson`:
+
+[source,groovy]
+.grails-app/views/order/_product.gson
+----
+include::../snippets/grails-app/views/order/_product.gson[]
+----
+
+Now in our `order/show.gson` view, we can pass `order.products` to the `tmpl` helper, using our new `_product` template:
+
+[source,groovy]
+.grails-app/views/order/show_v3.gson
+----
+include::../snippets/grails-app/views/order/show_v3.gson[]
+----
+<1> The `tmpl` helper will resolve a method name to a template in the current view directory - e.g, `tmpl.product` will resolve to `/order/_product.gson`. If you want to access a template from outside the current directory, you can use an absolute path (relative to the `views` directory) as a string: `tmpl."/customer/order"()` will resolve to `grails-app/views/customer/_order.gson`.
+
+
+TIP: For more information on using templates in JSON views, see the http://views.grails.org/latest/#_templates[Grails Views documentation].
+
+Make a request to `http://localhost:8080/api/orders/1`, and you should see `_links` for each product in the `products` array:
+
+
+[source, groovy]
+----
+include::../snippets/src/integration-test/groovy/com/example/OrderShowV3IntegrationSpec.groovy[indent=0,lines=23..78]
+----
+
+
+Let's use the same technique for the `Customer`'s orders - create a new template at `grails-app/views/customer/_order.gson`:
+[source,groovy]
+.grails-app/views/customer/_order.gson
+----
+include::../snippets/grails-app/views/customer/_order.gson[]
+----
+
+Edit the `customer/show.gson` view to use the new `_order` template:
+
+Let's use the same technique for the `Customer`'s orders - create a new template at `grails-app/views/customer/_order.gson`:
+[source,groovy]
+.grails-app/views/customer/show.gson
+----
+include::../snippets/grails-app/views/customer/show.gson[]
+----

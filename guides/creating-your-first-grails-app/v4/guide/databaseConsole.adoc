@@ -1,0 +1,11 @@
+If you run the app again, you should see the same page as before. However, you can login to the DB Console and view your new database table.
+
+Browse to `http://localhost:8080/dbconsole` and login. The default username is `sa`, without a password. The default JDBC URL is: `jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE`
+
+image::dbconsole.png[DB Console]
+
+NOTE: You can view the JDBC url in `application.yml`, under `environments` `development` `dataSource` `url`
+
+Once you've logged in to the DB Console, you should see your new `VEHICLES` table in the left-hand sidebar. Click the `+` icon to expand the table - you should see a list of columns, including the three `String` fields we just defined, `name`, `make,` and `model`.
+
+image::dbconsole-2.png[DB Console]

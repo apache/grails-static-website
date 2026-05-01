@@ -1,0 +1,102 @@
+Often you will want to access and even modify properties on a domain object within an event listener. For example, you may wish to encode a user's password prior to saving to the database, or check the value of a string property against a blacklist of forbidden words/characters. GORM events provide an `entityAccess` object which allows you to make get and set properties on the entity that triggered the event.
+
+We'll see how we can use `entityAccess` in our next GORM event listener. 
+
+We need to generate and assign a serial number to instances of our `Book` domain class. For this sample, the serial number will simply be a random, all-caps string, prefixed by the first few characters of the book's title. For example, a book with a title of `Groovy in Action` might have a serial number of `GROO-WKVLEQEDK`.
+
+Create a new Grails service, called `SerialNumberGeneratorService`:
+
+[source,bash]
+----
+~ grails create-service demo.SerialNumberGeneratorService
+----
+
+[source,groovy]
+.grails-app/services/demo/SerialNumberGeneratorService.groovy
+----
+include::../snippets/grails-app/services/demo/SerialNumberGeneratorService.groovy[]
+----
+<1> We use the `take` method to safely grab the first 4 characters from the title (`take` will not throw an `IndexOutOfBoundsException` if the string length is shorter than the desired range)
+
+
+Moreover, we want to generate friendly, human-readable urls for a our book titles. Instead of using urls such as `http://localhost:8080/book/show/1`, we want to use `http://localhost:8080/book/practical-grails-3`
+
+Create a new Grails service, called `FriendlyUrlService`:
+
+[source,bash]
+----
+~ grails create-service demo.FriendlyUrlService
+----
+
+[source,groovy]
+.grails-app/services/demo/FriendlyUrlService.groovy
+----
+include::../snippets/grails-app/services/demo/FriendlyUrlService.groovy[]
+---- 
+
+Edit the generated unit test spec for our `FriendlyUrlService` as shown below:
+
+[source,groovy]
+.src/test/groovy/demo/FriendlyUrlServiceSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/FriendlyUrlServiceSpec.groovy[]
+---- 
+
+Now we will create a listener to handle new and updated book titles. Create a Grails service named `TitleListenerService`
+
+[source,bash]
+----
+~ grails create-service demo.TitleListenerService
+----
+
+We want to populate the serialNumber synchronously: whenever we insert a new `Book` instance. To capture GORM events synchronously, we can use the  `@Listener` annotation instead of `@Subscriber`.
+
+[source,groovy]
+.grails-app/services/demo/TitleListenerService.groovy
+----
+include::../snippets/grails-app/services/demo/TitleListenerService.groovy[]
+----
+<1> The `@Listener` annotation will transform this method into a GORM event listener. When GORM fires a persistence event, any methods marked `@Listener` (and with the appropriate method signature) will be called. The annotation takes a value argument, which can be either a single domain class or a list of domain classes for which to "listen" - in this case, only events fired for `Book` instances will trigger this method.
+<2> The `onBookPreUpdate` listener checks whether the title the book is "dirty" (meaning the property has been changed). If so, update the `friendlyUrl` property.
+<3> The `isDirty` method allows us to check for properties that have been changed on the persisted object.
+<4> We retrieve the `title` property from the domain object using the `event.entityAccess.getProperty()` method. 
+<5> To set the `serialNumber` property on the domain object, we use the `event.entityAccess.setProperty()` method.
+
+WARNING: You may wonder why couldn't simply cast the `event.entityObject` as a `Book` and then set the `serialNumber` property directly. The reason for avoiding that approach here is that the direct assignment would itself trigger another event, potentially causing the same event listener to fire multiple times.  By using the `entityAccess` object, any changes we make will be synchronized with the current persistence session, and will be saved at the same time as the original object.
+
+Again, the use of GORM data services eases unit testing. In the next test we Stub the GORM Data Service and we verify the serial number is populated.
+
+[source,groovy]
+.src/test/groovy/demo/TitleListenerServiceSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/TitleListenerServiceSpec.groovy[]
+----
+<1> To provide or replace beans in the context, you can override the doWithSpring method in your test.
+
+== Integration Testing
+
+Next, let's create an integration test to verify that the `friendlyUrl` property gets refreshed when `title` property is updated.
+
+[source,groovy]
+.src/integration-test/groovy/demo/TitleListenerServiceIntegrationSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/demo/TitleListenerServiceIntegrationSpec.groovy[]
+----
+
+== Advanced Unit Testing
+
+Arguably, a test for correct handling of events should be an *integration test* as shown previously. However you can create an equivalent Unit Test. We can can wire together just the parts of the application that we need to verify that our listeners are being called when we expect, without the expense of a full-fledged integration test (which would require the entire application to start up in order to execute the test).
+
+Create the file `TitleListenerServiceGrailsUnitSpec` under `src/test/groovy/demo`, and edit the contents as shown below:
+
+[source,groovy]
+.src/test/groovy/demo/TitleListenerServiceGrailsUnitSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/TitleListenerServiceGrailsUnitSpec.groovy[]
+----
+
+<1> Because we will be wiring up GORM, the Spring context and the event system ourselves, we will simply implement the basic `GrailsUnitTest` trait rather than the more specific `ServiceUnitTest` trait.
+<2> We declare a `Shared` and `AutoCleanup` property for our datastore. In the `setupSpec` method, we obtain the `HibernateDatastore` instance contained within the `applicationContext` (provided by the `GrailsUnitTest` trait). We also set the `transactionManager` shared property we defined in our spec.
+<3> In our overridden `doWithSpring` method, we create the Spring beans for our `friendlyUrlService`, `serialNumberGeneratorService`, `titleListenerService` as well as our `dataStore`, instantiating the latter with a list of domain classes we need for our test. This will configure our service and GORM datastore in the Spring context of our test.
+<4> Our test is now trivial and almost identical as the previous integration test. 
+

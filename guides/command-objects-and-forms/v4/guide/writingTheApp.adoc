@@ -1,0 +1,3 @@
+This guide will lead you through the process of creating a controller with actions
+that use command objects. With those command objects, you will learn to handle form
+inputs safely and easily, with a minimum of boilerplate.

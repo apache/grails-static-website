@@ -1,0 +1,74 @@
+The `initial` and `complete` projects are *not* full Grails applications.
+Instead, there is the Grails service `QueryService` which you will edit.
+With any changes you make, you should strive to ensure all of the unit tests
+in `QueryServiceSpec` continue to pass.
+
+To run the unit tests:
+[source,bash]
+----
+$ ./gradlew :initial:test
+Starting a Gradle Daemon (subsequent builds will be faster)
+:initial:compileJava NO-SOURCE
+:initial:compileGroovy
+:initial:buildProperties
+:initial:processResources
+:initial:classes
+:initial:compileTestJava NO-SOURCE
+:initial:compileTestGroovy
+:initial:processTestResources NO-SOURCE
+:initial:testClasses
+:initial:test
+
+BUILD SUCCESSFUL
+----
+
+The above is what you should see if all the unit tests pass. A full HTML report can be found at +
+`initial/build/reports/tests/test/index.html`.
+
+If you make changes to the service that cause the unit tests to fail, you will
+see output like this:
+[source,bash]
+----
+$ ./gradlew test
+Starting a Gradle Daemon (subsequent builds will be faster)
+:initial:compileJava NO-SOURCE
+:initial:compileGroovy
+:initial:buildProperties
+:initial:processResources
+:initial:classes
+:initial:compileTestJava NO-SOURCE
+:initial:compileTestGroovy
+:initial:processTestResources NO-SOURCE
+:initial:testClasses
+:initial:test
+
+
+demo.QueryServiceSpec > test what players have last name Klein FAILED
+    org.spockframework.runtime.ConditionFailedWithExceptionError at QueryServiceSpec.groovy:123
+        Caused by: groovy.lang.MissingPropertyException at QueryServiceSpec.groovy:123
+
+demo.QueryServiceSpec > test what players have last name King FAILED
+    org.spockframework.runtime.ConditionFailedWithExceptionError at QueryServiceSpec.groovy:123
+        Caused by: groovy.lang.MissingPropertyException at QueryServiceSpec.groovy:123
+
+37 tests completed, 2 failed
+:initial:test FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':initial:test'.
+> There were failing tests. See the report at:
+  file:///<...path...>/querying-gorm-dynamic-finders/initial/build/reports/tests/test/index.html
+
+* Try:
+Run with --stacktrace option to get the stack trace. Run with --info or --debug option to get more log output.
+
+BUILD FAILED
+
+----
+
+In that case, open the HTML report file to see which tests are failing and why.
+
+Your goal for this guide is to update every `QueryService` method with an implementation
+that uses Dynamic Finders and still passes all of the `QueryServiceSpec` unit tests.

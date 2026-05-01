@@ -1,0 +1,25 @@
+To build a Model object from a JSON String we use several builder classes.
+
+[source,objectivec]
+./complete-objectivec-ios-v1/IntranetClient/AnnouncementBuilder.h
+----
+include::{sourcedir}/../complete-objectivec-ios-v1/IntranetClient/AnnouncementBuilder.h[]
+----
+
+[source,objectivec]
+./complete-objectivec-ios-v1/IntranetClient/AnnouncementBuilder.m
+----
+include::{sourcedir}/../complete-objectivec-ios-v1/IntranetClient/AnnouncementBuilder.m[]
+----
+
+[source,objectivec]
+./complete-objectivec-ios-v1/IntranetClient/ElementBuilder.h
+----
+include::{sourcedir}/../complete-objectivec-ios-v1/IntranetClient/ElementBuilder.h[]
+----
+
+[source,objectivec]
+./complete-objectivec-ios-v1/IntranetClient/ElementBuilder.m
+----
+include::{sourcedir}/../complete-objectivec-ios-v1/IntranetClient/ElementBuilder.m[]
+----

@@ -1,0 +1,18 @@
+training:
+  title: Grails Training
+gettingStarted:
+  title: Getting Started
+  requirements: What you will need
+  howto: How to complete the guide
+initialAngularApplication:
+  title: Initial Angular Application
+writingTheApp:
+  title: Writing the Grails Application
+  domainClass: Domain Class
+  enableCors: Enable CORS
+completeAngularApplication:
+    title: Connect Angular Application to Grails
+runningTheApp:
+  title: Running the Application
+helpWithGrails:
+  title: Do you need help with Grails?

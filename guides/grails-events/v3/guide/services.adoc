@@ -1,0 +1,22 @@
+Add a service which handles the registration of a user in the database. 
+
+[source,groovy]
+.grails-app/services/demo/RegisterService.groovy
+----
+include::../snippets/grails-app/services/demo/RegisterService.groovy[]
+----
+
+<1> Annotate the method with `@Publisher`. The event Id uses the method name `saveUser`
+<2> Raise an exception if the validation fails. This rollbacks the transaction. If the transaction is rollbacked, no event is triggered.
+
+We consume the event in a different service. The consumer is completely decoupled from the sender.
+In a real application you will probably send an email to the user who just registered asking him to verify his email address.
+In this guide, we save a `Notification` in the database.
+
+[source,groovy]
+.grails-app/services/demo/WelcomeEmailService.groovy
+----
+include::../snippets/grails-app/services/demo/WelcomeEmailService.groovy[]
+----
+
+<1> To consume an event use the https://async.grails.org/latest/api/grails/events/annotation/Subscriber.html[Subscriber] annotation. The method name `saveUser` is  used by default for the event id, although it can start with the word "on". In other words either a method name of `saveUser` or `onSaveUser` would work for the this guide example.

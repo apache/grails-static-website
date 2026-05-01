@@ -1,0 +1,105 @@
+Testing is a vital part of web application development. Grails provides support for three types of testing: unit tests, integration tests, and functional tests. http://docs.grails.org/latest/guide/testing.html#unitTesting[Unit tests] are usually the simplest kind, focusing on a specific piece of code without depending on other parts of your app. http://docs.grails.org/latest/guide/testing.html#integrationTesting[Integration tests] require the Grails environment to be up and running, and are used to test features that depend on database or network resources. http://docs.grails.org/latest/guide/testing.html#functionalTesting[Functional tests] require the app to be running, and are designed to exercise the application almost as a user would, by making HTTP requests against it. These tend to be the most complex tests to write.
+
+The testing framework used by Grails is http://spockframework.org[Spock]. Spock provides an expressive syntax for writing test cases, based on the Groovy language, and so is a great fit for Grails. It includes a JUnit runner, which means IDE support is effectively universal (any IDE that can run JUnit tests can run Spock tests).
+
+TIP: Spock is a rich framework (even outside of Grails applications) and well worth your time to master, if you haven't already. Check out the http://docs.spockframework.org[extensive documentation] for an introduction to Spock.
+
+Grails tests are stored (by convention) in the `src/test/groovy` directory (unit tests) and `src/integration-test/groovy` directory (integration/functional tests).
+
+You can run your Grails tests using the http://docs.grails.org/latest/ref/Command%20Line/test-app.html[`test-app`] command:
+
+[source, bash]
+----
+$ ./grailsw test-app
+----
+
+If you want to run only unit tests or integration/functional tests, you can pass in a command line flag to choose one or the other.
+
+[source, bash]
+----
+$ ./grailsw test-app -unit
+$ ./grailsw test-app -integration
+----
+
+You can also run a specific test by passing the test class as an argument:
+
+[source, bash]
+----
+$ ./grailsw test-app org.grails.guides.MyTestSpec
+----
+
+Writing tests is a very broad topic and worthy of its own guide. In practice, the simplest (and often most useful) tests are unit tests, so let's write a simple unit test to exercise our `ValueEstimateService`.
+
+Grails automatically creates a test spec for services created with the `create-service` command. Open `src/test/groovy/org/grails/guides/ValueEstimateServiceSpec`.
+
+[source,groovy]
+.src/test/groovy/org/grails/guides/ValueEstimateServiceSpec
+----
+package org.grails.guides
+
+import grails.testing.gorm.DataTest
+import grails.testing.services.ServiceUnitTest
+import spock.lang.Specification
+
+class ValueEstimateServiceSpec extends Specification implements ServiceUnitTest<ValueEstimateService>, DataTest {
+
+    def setup() {
+    }
+
+    def cleanup() {
+    }
+
+    void "test something"() {
+        expect:"fix me"
+            true == false
+    }
+}
+----
+
+Currently our test spec has one test, `"test something"`, which asserts that `true == false`. Grails is helpfully encouraging you to do the right thing by kicking things off with a failing test.
+
+Try running the test, just to confirm it fails:
+
+[source, bash]
+----
+$ /grailsw test-app org.grails.guides.ValueEstimateServiceSpec
+
+...
+> There were failing tests. See the report at: file:///Users/dev/projects/creating-your-first-grails-app/complete/build/reports/tests/test/index.html
+
+BUILD FAILED
+
+Total time: 6.353 secs
+| Tests FAILED Test execution failed
+----
+
+Now that we've confirmed our test is failing, let's edit this test case to exercise our `getEstimate` method. Edit `src/test/groovy/org/grails/guides/ValueEstimateServiceSpec`.
+
+[source,groovy]
+.src/test/groovy/org/grails/guides/ValueEstimateServiceSpec.groovy
+----
+include::../snippets/src/test/groovy/org/grails/guides/ValueEstimateServiceSpec.groovy[]
+----
+<1> When mocking multiple objects using the updated testing framework in Grails 3.3 we now perform mocks during setup and no
+longer require the @Mock annotation.
+
+
+We've kept things pretty simple in this test, since we don't have very complex logic to test, but also so you can focus on the basic formula of the Spock test case. Spock provides a set of keywords which allow you to lay out your test in a very human-readable form.
+
+- `given` indicates a "setup" block - here you can set up any objects or variables needed to complete your test.
+- `when` and `then` are one of the most common "pairings" in Spock (another one, not used here, is `expect`/`where` - they define a statement and an expected result.
+- `and` simply continues on the current `then` block, but it allows you to specify your expectations for multiple assertions. Note that all of these blocks accept (optionally) a string description, which makes your test even more readable. E.g., `when: "this method is called"`, `then: "expect this result"`.
+
+
+Go ahead and rerun this test - if all's well, it should pass with flying colors.
+
+[source, bash]
+----
+$ ./grailsw test-app org.grails.guides.ValueEstimateServiceSpec
+
+...
+
+BUILD SUCCESSFUL
+
+| Tests PASSED
+----

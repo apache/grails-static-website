@@ -1,0 +1,68 @@
+Now that we have our new "home" page, it would be nice if it was the app's landing page instead of the Grails default. To do that, we'll need to change our `UrlMappings.groovy` file.
+
+Grails uses the `UrlMappings.groovy` file to route request to the proper controller and action. They can be as simple as URI strings that redirect to a controller and/or action, or they can include wildcards and constraints and become quite sophisticated.
+
+TIP: Learn much more about URL Mappings from the http://docs.grails.org/latest/guide/theWebLayer.html#urlmappings[Grails documentation]
+
+Let's look at the default `URLMappings.groovy` file.
+
+[source,groovy]
+.grails-app/controllers/org/grails/guides/UrlMappings.groovy
+----
+package org.grails.guides
+
+class UrlMappings {
+
+    static mappings = {
+        "/$controller/$action?/$id?(.$format)?"{  <1>
+            constraints {
+                // apply constraints here
+            }
+        }
+
+        "/"(view:"/index")   <2>
+        "500"(view:'/error')
+        "404"(view:'/notFound')
+    }
+}
+----
+<1> Grails default URL mapping - this rule causes requests to be mapped to controller and action (and optionally ID and/or format) based on names. So `home/index` will map to `HomeController`, `index` action
+<2> This URL mapping points the root URI (`/`) to a specific view.
+
+Let's change the `/` rule to point to our new `HomeController`. Edit the line as follows:
+[source,groovy]
+.grails-app/controllers/org/grails/guides/UrlMappings.groovy
+----
+package org.grails.guides
+
+class UrlMappings {
+
+    static mappings = {
+//...
+
+        "/"(controller:"home")   <1>
+//...
+    }
+}
+----
+<1> Change `view: "/index"` to `controller: "home"`
+
+
+By convention, a request to a controller without an action name will go to an `index` action, if it exists (if not, an error will be thrown). You can change this behavior if you want by specifying a `defaultAction` property in the controller:
+
+[source, groovy]
+.grails-app/controllers/org/grails/guides/HomeController.groovy
+----
+package org.grails.guides
+
+class HomeController {
+
+    static defaultAction = "homePage"
+
+    def homePage() { } <1>
+}
+----
+<1> Don't make this change, this is just for demonstration purposes
+
+Now that you've changed the `/` rule to point to your new `HomeController`, if you restart the app and browser to `http://localhost:8080`, you should be presented with your new home page.
+

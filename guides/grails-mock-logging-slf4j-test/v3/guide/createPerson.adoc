@@ -1,0 +1,10 @@
+Let's implement functionality to create a `Person`. We can inject the `PersonDataService` into a `PersonController` to save a person.
+Upon a successful save, log a message. On an unsuccessful save, catch the exception and log an error message.  We have added
+`static scaffold = Person` to the controller for the convenience sake of a quick UI.
+
+[source, groovy]
+.grails-app/controllers/example/grails/PersonController.groovy
+----
+include::../snippets/grails-app/controllers/example/grails/PersonController.groovy[tag=personControllerCreate]
+include::../snippets/grails-app/controllers/example/grails/PersonController.groovy[tag=personControllerEnd]
+----

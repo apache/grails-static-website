@@ -1,0 +1,4 @@
+We are going to write a simple CRUD application involving one domain class `Student`.
+
+We will have one Controller and one Service class. We will be able to explore
+Controller testing approaches within this context.

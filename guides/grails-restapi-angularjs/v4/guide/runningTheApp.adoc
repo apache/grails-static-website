@@ -1,0 +1,6 @@
+include::{commondir}/common-runapp.adoc[]
+
+Open you angular app and you will enjoy a todo manager powered by a Grails backend.
+You can refresh your browser without losing the changes.
+
+image::complete.gif[]

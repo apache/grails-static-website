@@ -1,0 +1,95 @@
+The GORM GraphQL plugin provides an interactive  GraphQL browser (https://github.com/graphql/graphiql[GraphiQL]) which makes it easy to explore the GraphQL schema. The browser is available when the Grails app is running, at the URL `/graphql/browser`. The browser features include autocompletion based on your schema, making it easy to explore the available types of queries and *mutations* (GraphQL terminology for requests that create/update/delete data from the schema).
+
+Start up the app with either `grails run-app` or `./gradlew bootRun`, and browse to `http://localhost:8080/graphql/browser`.
+
+You can now run queries against your new GraphQL schema, as well as mutations. Here's a few queries and mutations to get your started - refer to the GORM GraphQL plugin documentation and the http://graphql.org[GraphQL project website] to learn more about the syntax and features of GraphQL.
+
+
+== Queries
+```
+//List speaker ids
+query {
+  speakerList(max: 10) {
+    id
+  }
+}
+```
+
+```
+//Return total speakers
+query {
+	speakerCount
+}
+```
+
+
+```
+//Retrieve speaker details by id
+query {
+  speaker(id: 1) {
+    firstName
+    lastName
+    bio
+  }
+}
+```
+
+```
+//Return list of talks with speaker details embedded
+query {
+	talkList(max:10) {
+    title
+    speaker {
+      firstName
+      lastName
+    }
+  }
+}
+```
+
+== Mutations
+
+```
+//Update speaker by id, return any error messages (if any)
+mutation {
+  speakerUpdate(id: 1, speaker: {
+    bio: "Updated bio!"
+  }) {
+    id
+    bio
+    errors {
+      field
+      message
+    }
+  }
+}'
+```
+
+```
+//Create speaker - this mutation will return an error due to missing property
+mutation {
+  speakerCreate(speaker: {
+    firstName: "James"
+    lastName: "Kleeh"
+  }) {
+    id
+    firstName
+    lastName
+    errors {
+      field
+      message
+    }
+  }
+}
+```
+
+```
+//Delete speaker by id
+mutation {
+  speakerDelete(id: 2) {
+    error
+  }
+}
+
+```
+

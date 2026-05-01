@@ -1,0 +1,60 @@
+image::treehouse.png[link="https://teamtreehouse.com/library/angularjs-3"]
+
+This section displays the code developed during the https://teamtreehouse.com/library/angularjs-3[Treehouse AngularJS course].
+During that course an AngularJS application is developed. The application is a todo list manager.
+
+NOTE: The initial AngularJS app is not connected to any backend. If you refreshed the browser, todo list changes are lost.
+
+image::initial.gif[]
+
+`index.html` is the entry point to our AngularJS app.
+
+[source,html]
+./initial-angularjs/index.html
+----
+include::../snippets/../initial-angularjs/index.html[indent=0]
+----
+
+We create the AngularJS application, in `app.js`
+
+[source,javascript]
+./initial-angularjs/scripts/app.js
+----
+include::../snippets/../initial-angularjs/scripts/app.js[indent=0]
+----
+
+An AngularJS controller manages the application flow:
+
+[source,javascript]
+./initial-angularjs/scripts/controllers/main.js
+----
+include::../snippets/../initial-angularjs/scripts/controllers/main.js[indent=0]
+----
+
+We have a `todos` directive. This directive uses the previous controller and the next template:
+
+[source,javascript]
+./initial-angularjs/scripts/directives/todos.js
+----
+include::../snippets/../initial-angularjs/scripts/directives/todos.js[indent=0]
+----
+
+[source,javascript]
+./initial-angularjs/templates/todos.html
+----
+include::../snippets/../initial-angularjs/templates/todos.html[indent=0]
+----
+
+Our data service is currently loading todos from a mock json file.
+
+[source,javascript]
+./initial-angularjs/scripts/services/data.js
+----
+include::../snippets/../initial-angularjs/scripts/services/data.js[indent=0]
+----
+
+[source,javascript]
+./initial-angularjs/mock/todos.json
+----
+include::../snippets/../initial-angularjs/mock/todos.json[indent=0]
+----

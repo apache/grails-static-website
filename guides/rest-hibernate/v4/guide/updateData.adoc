@@ -1,0 +1,43 @@
+To update data you can use a `PUT` request with the id and in the URI and data you want to change:
+
+[source,bash]
+----
+$ curl -i -H "Content-Type:application/json" -X PUT localhost:8080/products/1 -d '{"price":3.0}'
+----
+
+In this case the resulting output will be:
+
+[source,bash]
+----
+HTTP/1.1 200
+X-Application-Context: application:development
+Location: http://localhost:8080/products/1
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Wed, 23 Nov 2016 08:52:14 GMT
+
+{"id":1,"name":"Orange","price":"$3.0"}
+----
+
+If you were to attempt update the data with an invalid value:
+
+[source,bash]
+----
+$ curl -i -H "Content-Type:application/json" -X PUT localhost:8080/products/1 -d '{"price":-2.0}'
+----
+
+Then an error response will be received:
+
+[source,bash]
+----
+HTTP/1.1 422
+X-Application-Context: application:development
+Location: http://localhost:8080/products/1
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Wed, 23 Nov 2016 08:54:25 GMT
+
+{"message":"Property [price] of class [class hibernate.example.Product] with value [-2] does not fall within the valid range from [0] to [1,000]","path":"","_links":{"self":{"href":"http://localhost:8080/products/1"}}}
+----
+
+TIP: The error response is rendered by the `grails-app/views/error.gson` view and the messages are obtained from the message bundles located at `grails-app/i18n`

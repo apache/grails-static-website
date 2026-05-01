@@ -1,0 +1,10 @@
+Generate static scaffolding (Controller and Views) for the Domain class you created in the previous section.
+
+[source, bash]
+----
+ ./grailsw generate-all Announcement
+| Created grails-app/domain/demo/Announcement.groovy
+| Created src/test/groovy/demo/AnnouncementSpec.groov
+----
+
+include::{commondir}/common-tipScaffolding.adoc[]

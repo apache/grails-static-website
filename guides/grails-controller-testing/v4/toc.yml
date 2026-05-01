@@ -1,0 +1,20 @@
+training:
+  title: Grails Training
+gettingStarted:
+  title: Getting Started
+  requirements: What you will need
+  howto: How to complete the guide
+writingTheApp:
+  title: Writing the Application
+  domainClassAndScaffold: Domain Class and Scaffold
+  staticScaffolding: Static Scaffolding
+  unitTestIndex: Unit Test - Index Method
+  unitTestSave: Unit Test - Save Method
+  allowedMethods: Test Allowed Methods
+  functionalTestController: Functional Test
+summary:
+  title: Summary
+runningTheApp:
+  title: Running the Application
+helpWithGrails:
+  title: Help with Grails  

@@ -1,0 +1,7 @@
+We are going to populate our database with some seed data:
+
+[source,groovy]
+./grails-app/init/demo/BootStrap.groovy
+----
+include::../snippets/grails-app/init/demo/BootStrap.groovy[indent=0]
+----

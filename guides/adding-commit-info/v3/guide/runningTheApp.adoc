@@ -1,0 +1,21 @@
+include::{commondir}/common-runapp.adoc[]
+
+After enabling the actuator endpoints, when you run the application you can go to the `/info` endpoint at http://localhost:8080/info
+and you should see some JSON formatted info like:
+
+```json
+{
+    app: {
+        name: "complete",
+        grailsVersion: "3.2.6",
+        version: "0.1"
+    },
+    git: {
+        commit: {
+            time: "2017-02-16T10:31-0600",
+            id: "2f27f2c"
+        },
+        branch: "master"
+    }
+}
+```

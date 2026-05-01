@@ -1,0 +1,73 @@
+While the Grails app is running, we can try out the RESTful API that Grails has generated for us, using cURL or another API tool.
+
+Make a `GET` request to `/vehicle` to get a list of Vehicles:
+
+[source,bash]
+----
+$ curl -X "GET" "http://localhost:8080/vehicle"
+
+HTTP/1.1 200
+X-Application-Context: application:development
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Fri, 06 Jan 2017 19:28:49 GMT
+Connection: close
+
+[{"id":1,"driver":{"id":1},"make":{"id":1},"model":{"id":1},"name":"Pickup"},
+{"id":2,"driver":{"id":1},"make":{"id":1},"model":{"id":2},"name":"Economy"},
+{"id":3,"driver":{"id":2},"make":{"id":2},"model":{"id":3},"name":"Minivan"}]
+----
+
+Make a `GET` request to `/driver/1` to get a particular Driver instance:
+
+[source,bash]
+----
+$ curl -X "GET" "http://localhost:8080/driver/1"
+
+HTTP/1.1 200
+X-Application-Context: application:development
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Fri, 06 Jan 2017 22:10:33 GMT
+Connection: close
+
+{"id":1,"name":"Susan","vehicle":[{"id":2},{"id":1}]}
+----
+
+Make a `POST` request to `/driver` to create a new Driver instance:
+
+[source,bash]
+----
+$ curl -X "POST" "http://localhost:8080/driver" \
+      -H "Content-Type: application/json; charset=utf-8" \
+      -d '{"name":"Edward"}'
+
+HTTP/1.1 201
+X-Application-Context: application:development
+Location: http://localhost:8080/driver/3
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Fri, 06 Jan 2017 21:55:59 GMT
+Connection: close
+
+{"id":3,"name":"Edward"}
+----
+
+Make a `PUT` request to `/vehicle` to update a Vehicle instance:
+
+[source,bash]
+----
+$ curl -X "PUT" "http://localhost:8080/vehicle/1" \
+       -H "Content-Type: application/json; charset=utf-8" \
+       -d '{"name":"Truck","id":1}'
+
+HTTP/1.1 200
+X-Application-Context: application:development
+Location: http://localhost:8080/vehicle/1
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Fri, 06 Jan 2017 22:12:31 GMT
+Connection: close
+
+{"id":1,"driver":{"id":1},"make":{"id":1},"model":{"id":1},"name":"Truck"}
+----
