@@ -141,14 +141,9 @@ class AsciidoctorWarningGateTask extends DefaultTask {
     }
 
     private static void wireLogCapture(Project project) {
-        // The listener is added in doFirst on each PublishGuide task. We deliberately
-        // do NOT register a finalizer cleanup task: removing the listener would
-        // require the cleanup task to access the renderTask's extensions/logging at
-        // execution time, which Gradle's configuration cache disallows when the
-        // cleanup is wired across tasks. Leaving the listener attached for the
-        // remainder of the JVM lifetime is harmless: each `gradle` invocation runs
-        // in a single-use Daemon (see publish.yml: --no-daemon) so the listener is
-        // GC'd when the process exits, never crossing build boundaries.
+        // Attach a per-task output listener that mirrors render output to a
+        // log file under build/logs/. The listener is GC'd at JVM exit, so
+        // no cross-task finalizer cleanup is required.
         project.tasks.withType(PublishGuideTask).configureEach { PublishGuideTask renderTask ->
             File logsRoot = project.layout.buildDirectory.dir('logs').get().asFile
             File logFile = new File(logsRoot, "asciidoctor-${renderTask.name}.log")
