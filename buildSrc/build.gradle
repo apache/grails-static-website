@@ -59,6 +59,24 @@ gradlePlugin {
     }
 }
 
+// Package the vendored grails-doc templates (style/, css/, js/, fonts/, img/)
+// into a jar that the vendored DocPublisher loads at runtime via
+// `getClassLoader().getResource('grails-doc-files.jar')`. The inner jar is
+// nested inside the outer buildSrc jar so the classloader can resolve it
+// by name. Mirrors apache/grails-core 7.2.x build-logic/docs-core's
+// docFilesJar pattern; required to unblock DocPublisher.unpack().
+def docFilesJar = tasks.register('docFilesJar', Jar) {
+    description = 'Package vendored grails-doc templates so DocPublisher can locate them on the runtime classpath.'
+    archiveBaseName = 'grails-doc-files'
+    archiveVersion = ''
+    from 'src/main/template'
+}
+
+tasks.named('jar', Jar) {
+    dependsOn docFilesJar
+    from(docFilesJar.flatMap { it.archiveFile })
+}
+
 tasks.withType(Test).configureEach {
     useJUnitPlatform()
     testLogging {

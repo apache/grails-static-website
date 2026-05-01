@@ -110,12 +110,41 @@ class RenderGuidesPlugin {
                 Map<String, Object> attributes = manifestToAttributes(
                         manifestFile, guide, version, versionKey)
 
-                String taskName = renderTaskName(guideName, versionKey)
-                project.tasks.register(taskName, PublishGuideTask) { task ->
+                String safeName = sanitize(guideName)
+                String safeVersion = sanitize(versionKey)
+                String stageTaskName = "stageGuideSource_${safeName}_${safeVersion}"
+                String renderTaskName = "renderGuide_${safeName}_${safeVersion}"
+                String stagedRelPath = "staged-guides/${guideName}/${versionKey}"
+
+                // Stage the per-version source into a working layout that
+                // DocPublisher expects: <staged>/guide/*.adoc + toc.yml.
+                // Our fixture stores toc.yml at the version root (alongside
+                // manifest.yml) for self-containedness; the renderer wants
+                // it inside guide/. The Sync task does the rearrangement
+                // without mutating the fixture in source control.
+                project.tasks.register(stageTaskName, org.gradle.api.tasks.Sync) { stage ->
+                    stage.group = GROUP
+                    stage.description = "Stages ${guideName} v${versionKey} source for the vendored grails-doc renderer"
+                    stage.into(project.layout.buildDirectory.dir(stagedRelPath))
+                    stage.from(versionDir) {
+                        // Top-level toc.yml is repositioned into guide/ below.
+                        exclude 'toc.yml'
+                    }
+                    File rootToc = new File(versionDir, 'toc.yml')
+                    if (rootToc.isFile()) {
+                        stage.from(rootToc) {
+                            into 'guide'
+                        }
+                    }
+                }
+
+                project.tasks.register(renderTaskName, PublishGuideTask) { task ->
                     task.group = GROUP
                     task.description =
                             "Renders ${guideName} v${versionKey} via the vendored grails-doc renderer"
-                    task.sourceDir.set(adocDir)
+                    task.dependsOn(stageTaskName)
+                    task.sourceDir.set(
+                            project.layout.buildDirectory.dir(stagedRelPath))
                     task.resourcesDir.set(templateRoot)
                     task.targetDir.set(
                             project.layout.buildDirectory.dir(
@@ -123,11 +152,15 @@ class RenderGuidesPlugin {
                     task.asciidoc.set(true)
                     task.properties.set(attributes)
                 }
-                registeredTaskNames << taskName
+                registeredTaskNames << renderTaskName
             }
         }
 
         registeredTaskNames
+    }
+
+    private static String sanitize(String value) {
+        value.replaceAll(/[^A-Za-z0-9]/, '_')
     }
 
     private static void registerAggregateTask(
@@ -148,9 +181,7 @@ class RenderGuidesPlugin {
      * names containing hyphens or dots remain valid Gradle task names.
      */
     static String renderTaskName(String guideName, String versionKey) {
-        String safeName = guideName.replaceAll(/[^A-Za-z0-9]/, '_')
-        String safeVersion = versionKey.replaceAll(/[^A-Za-z0-9]/, '_')
-        "renderGuide_${safeName}_${safeVersion}"
+        "renderGuide_${sanitize(guideName)}_${sanitize(versionKey)}"
     }
 
     /**
