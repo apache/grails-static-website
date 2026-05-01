@@ -1,0 +1,20 @@
+training:
+  title: Grails Training
+gettingStarted: 
+  title: Getting Started
+  requirements: What you will need
+  howto: How to complete the guide
+writingTheApp:
+  title: Writing the Application
+  installDatabase: Install Database
+  domainClassAndController: Domain Class
+  installPlugin: Install Database Migration Plugin
+  databaseMigrationInAction: Database Migration In Action  
+  baseline: Baseline for Database Migration
+  makeColumnNullable: Make Column Nullable
+  addAttributes: Add Attributes
+  redesignTables: Redesign Tables
+summary:
+    title: Summary
+helpWithGrails:
+  title: Do you need help with Grails?  

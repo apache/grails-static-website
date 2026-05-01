@@ -1,0 +1,42 @@
+We have a domain class
+
+[source, groovy]
+.grails-app/domain/demo/Person.groovy
+----
+include::{sourcedir}/grails-app/domain/demo/Person.groovy[]
+----
+
+We have also a service which encapsulates the GORM queries against the previous domain class.
+
+[source, groovy]
+.grails-app/services/demo/PersonGormService.groovy
+----
+include::{sourcedir}/grails-app/services/demo/PersonGormService.groovy[]
+----
+
+We have a Groovy POJO.
+
+[source, groovy]
+.src/main/groovy/demo/Name.groovy
+----
+include::{sourcedir}/src/main/groovy/demo/Name.groovy[]
+----
+
+The business logic of this app is in the `NameService` which
+guesses the `firstName` and `lastName` of each of the `Person` instances.
+
+[source, groovy]
+.grails-app/services/demo/NameService.groovy
+----
+include::{sourcedir}/grails-app/services/demo/NameService.groovy[]
+----
+
+We have written a test for this service:
+
+[source, groovy]
+.src/test/groovy/demo/NameServiceSpec.groovy
+----
+include::{sourcedir}/src/test/groovy/demo/NameServiceSpec.groovy[]
+----
+
+<1> Uncomment this line to increase your code coverage.

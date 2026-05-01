@@ -1,0 +1,53 @@
+=== Create a MySQL Database
+
+Let's setup a physical database with MySql, instead of relying on the default H2 in memory database.
+
+- Go to http://www.mysql.com/downloads[MySql] to install a database
+- Create your admin access with id of `root` and password `root`
+- Open the MySql Command Line Client
+
+Run these commands in the command line client in order to create and use the database. The `show tables` command should
+return an empty set.
+
+INFO: Please read through MySQL Documentation to configure database user for upto-date instructions.
+
+=== Setup Grails to use a MySQL database 
+
+[source, sql]
+----
+> CREATE USER 'devel'@'%' IDENTIFIED BY 's3cur3';
+> CREATE DATABASE devDb character set utf8 collate utf8_general_ci;
+> GRANT ALL ON data.* TO 'devel'@'%';
+> USE devDb;
+> SHOW DATABASES;
+> SHOW TABLES;
+----
+
+Now we need to configure the Grails application to point to the new `devDb` database. We will be editing
+the `build.gradle`, `application.yml` files, export environment variables MYSQL_USER, and MYSQL_PASSWORD.
+
+[source, groovy]
+.build.gradle
+----
+dependencies {
+...
+include::../snippets/build.gradle[tags=mysqlConnector]
+...
+}
+----
+
+[source, yaml]
+.grails-app/conf/application.yml
+----
+include::../snippets/grails-app/conf/application.yml[tags=dataSource]
+include::../snippets/grails-app/conf/application.yml[tags=dbUrl]
+----
+
+[source, bash]
+----
+$ export MYSQL_USER='devel'
+$ export MYSQL_PASSWORD='s3cur3'
+----
+
+<1> `dbCreate` defines whether we want to auto-generate the database from the domain model. We set it to `none` since we are going to manage the 
+management of the database schema with Grails Database Migration Plugin. 

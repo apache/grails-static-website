@@ -554,9 +554,10 @@ guides:
           - 'clover'
           - 'code-coverage'
           - 'grails3'
-        # sampleRef intentionally omitted in this PR.
-        # Upstream guide has unresolvable include at the pinned SHA (same upstream issue as v4).
-        # Tracked for follow-up.
+        sampleRef:
+          repo: 'grails-guides/grails-code-coverage'
+          branch: 'grails3'
+          sha: 'b2725c0'
       '4':
         sourcePath: guides/grails-code-coverage/v4
         publicationDate: '2017-07-03'
@@ -564,9 +565,10 @@ guides:
           - 'clover'
           - 'code-coverage'
           - 'grails4'
-        # sampleRef intentionally omitted in this PR.
-        # Upstream guide has unresolvable include at the pinned SHA. Needs upstream patch or earlier-SHA pinning.
-        # Tracked for follow-up.
+        sampleRef:
+          repo: 'grails-guides/grails-code-coverage'
+          branch: 'master'
+          sha: '35f4689'
 
   - name: 'grails-codenarc'
     title: 'Static code analysis in a Grails app with CodeNarc'
@@ -767,9 +769,10 @@ guides:
           - 'gorm'
           - 'migration'
           - 'grails6'
-        # sampleRef intentionally omitted in this PR.
-        # Upstream guide on grails6 branch has unresolvable include at the pinned SHA.
-        # Tracked for follow-up.
+        sampleRef:
+          repo: 'grails-guides/grails-database-migration'
+          branch: 'grails6'
+          sha: '9688dc2'
 
   - name: 'grails-docker-external-services'
     title: 'Use docker to provide external services to your Grails app'
@@ -1053,12 +1056,10 @@ guides:
           - 'google-home'
           - 'google-app-engine'
           - 'web-profile'
-        # sampleRef intentionally omitted in this PR.
-        # Upstream guide includes complete/grails-app/controllers/demo/AiDataController.groovy which does not exist at the pinned SHA.
-        # Tracked for follow-up.
-        # sampleRef intentionally omitted in this PR.
-        # Upstream guide at master@4e741eac includes complete/grails-app/controllers/demo/AiDataController.groovy which does not exist on disk at the pinned SHA. Vendoring fails until upstream is patched or we pin to an earlier SHA.
-        # Tracked for follow-up.
+        sampleRef:
+          repo: 'grails-guides/grails-google-home'
+          branch: 'grails4'
+          sha: '9de7244'
 
   - name: 'grails-gorm-data-services'
     title: 'Grails GORM Data Services'
@@ -1130,9 +1131,10 @@ guides:
           - 'gorm'
           - 'geb'
           - 'grails3'
-        # sampleRef intentionally omitted in this PR.
-        # Upstream guide has unresolvable include at the pinned SHA (same upstream issue as v4).
-        # Tracked for follow-up.
+        sampleRef:
+          repo: 'grails-guides/grails-logicaldelete'
+          branch: 'grails3'
+          sha: '21a3a76'
       '4':
         sourcePath: guides/grails-logicaldelete/v4
         publicationDate: '2018-04-09'
@@ -1141,9 +1143,10 @@ guides:
           - 'gorm'
           - 'geb'
           - 'grails4'
-        # sampleRef intentionally omitted in this PR.
-        # Upstream guide has unresolvable include at the pinned SHA. Needs upstream patch or earlier-SHA pinning.
-        # Tracked for follow-up.
+        sampleRef:
+          repo: 'grails-guides/grails-logicaldelete'
+          branch: 'master'
+          sha: '5d61442'
 
   - name: 'grails-micronaut-http'
     title: 'Grails with Micronaut HTTP Client'

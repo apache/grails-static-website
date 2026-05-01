@@ -1,0 +1,17 @@
+Data services is the concept you write an application that calls a Google Action and returns the result. This result may be used for your app to make decisions on what to do next or maybe it's just a datapoint to provide a service.
+
+
+These are very simple to use. You just need to set up the client access token (From your API AI Agent's settings page) in grails config as 'apiAiKey=<key>'.
+
+Once you have that set, you can create a controller that uses the Grails API AI plugin's trait AiServiceController.
+
+[source,groovy]
+./grails-app/controllers/demo/AiDataController.groovy
+----
+include::../snippets/grails-app/controllers/demo/AiDataController.groovy[indent=0]
+----
+
+This controller is simply called with the query parameter, which will be a URL encoded query string you would type into the API AI console to test your Action.
+The Service will call API-AI backend and return the result.
+
+image::dataservice-demo.png[]

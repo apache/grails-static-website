@@ -1,0 +1,7 @@
+Add plugin dependency to `build.gradle`.
+
+[source,groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[tag=mqDependency]
+----

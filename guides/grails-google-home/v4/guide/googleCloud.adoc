@@ -1,0 +1,3 @@
+include::{commondir}/common-creategooglecloudproject.adoc[]
+
+include::{commondir}/common-installgooglecloudsdk.adoc[]

@@ -1,0 +1,15 @@
+Logical Deletion:
+____
+Reference to a record that remains in the database, but is not included in comparisons or retrieved in searches.
+____
+
+In this guide, we use the http://plugins.grails.org/plugin/grails/gorm-logical-delete[GORM Logical Delete] plugin to create
+Logical deletion into a Grails application.
+
+We will create a delete button and undo functionality in a book collection.
+
+image::undo.png[]
+
+NOTE: We have already added the necessary assets (book cover images) to the `initial/grails-app/assets/images` folder for you.
+
+

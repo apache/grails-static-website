@@ -1,0 +1,89 @@
+In this section we will do a simple change to make a column nullable. The `age` column currently requires a value. We
+make it nullable, and proceed to migrate the database to reflect that.
+
+image::migration1.jpg[400,400]
+
+In the `Person` domain object, make the age attribute nullable:
+
+[source, groovy]
+.grails-app/domain/grails/dbmigration/Person.groovy
+----
+include::../snippets/grails-app/domain/grails/dbmigration/Person.groovy[tag=package]
+
+include::../snippets/grails-app/domain/grails/dbmigration/Person.groovy[tag=import]
+
+include::../snippets/grails-app/domain/grails/dbmigration/Person.groovy[tag=class]
+
+include::../snippets/grails-app/domain/grails/dbmigration/Person.groovy[tag=properties]
+
+include::../snippets/grails-app/domain/grails/dbmigration/Person.groovy[tag=openConstraints]
+include::../snippets/grails-app/domain/grails/dbmigration/Person.groovy[tag=ageConstraints]
+include::../snippets/grails-app/domain/grails/dbmigration/Person.groovy[tag=closeConstraints]
+
+include::../snippets/grails-app/domain/grails/dbmigration/Person.groovy[tag=closeClass]
+----
+
+
+Note that making the change in the domain object does not affect the database. We must generate additions to the `changelog.groovy`
+for the change to take effect. Run the next command:
+
+[source, bash]
+----
+$ ./gradlew runCommand "-Pargs=dbm-gorm-diff change-age-constraint-to-nullable.groovy --add"
+----
+
+A new include statement has been added to `changelog.groovy`
+
+[source, groovy]
+.grails-app/migrations/changelog.groovy
+----
+databaseChangeLog = {
+include::../snippets/grails-app/migrations/changelog.groovy[tag=createPersonTable]
+include::../snippets/grails-app/migrations/changelog.groovy[tag=changeAgeConstraintToNullable]
+}
+----
+
+An individual changeset is created too:
+
+[source, groovy]
+.grails-app/migrations/change-age-constraint-to-nullable.groovy
+----
+include::../snippets/grails-app/migrations/change-age-constraint-to-nullable.groovy[]
+----
+
+if we run the migration
+
+[source, bash]
+----
+$ ./gradlew runCommand "-Pargs=dbm-update"
+----
+
+The column `age` in the `person` table is nullable as expressed in the constraint:
+
+|===
+|Field|Type|Null|Key|Default|Extra
+|id
+|bigint(20)
+|NO
+|Pri
+|<null>
+|auto_increment
+|version
+|bigint(20)
+|NO
+|
+|<null>
+|
+|age
+|int(11)
+|YES
+|
+|<null>
+|
+|name
+|varchar(255)
+|NO
+|
+|<null>
+|
+|===
