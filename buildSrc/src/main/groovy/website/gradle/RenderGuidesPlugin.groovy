@@ -26,6 +26,7 @@ import org.gradle.api.file.Directory
 import org.yaml.snakeyaml.Yaml
 
 import grails.doc.gradle.PublishGuideTask
+import website.gradle.tasks.ParityCheckGuideTask
 
 /**
  * Wires guide-rendering tasks onto a Gradle project.
@@ -57,8 +58,10 @@ class RenderGuidesPlugin {
 
     static final String GROUP = 'documentation'
     static final String AGGREGATE_TASK = 'buildAllGuides'
+    static final String PARITY_AGGREGATE_TASK = 'parityCheckAllGuides'
     static final String GUIDES_YML_PATH = 'conf/guides.yml'
     static final String VENDOR_TEMPLATE_PATH = 'buildSrc/src/main/template'
+    static final String PARITY_BASELINE_ROOT = 'buildSrc/src/test/resources/parity-baseline'
 
     static void apply(Project project) {
         File guidesYml = project.rootProject.layout.projectDirectory
@@ -71,14 +74,24 @@ class RenderGuidesPlugin {
         Directory templateRoot = project.rootProject.layout.projectDirectory
                 .dir(VENDOR_TEMPLATE_PATH)
 
-        List<String> registeredTaskNames = registerPerVersionTasks(
+        Wiring wiring = registerPerVersionTasks(
                 project, templateRoot, guidesYml)
 
-        registerAggregateTask(project, registeredTaskNames)
+        registerAggregateTask(project, AGGREGATE_TASK,
+                'Renders every wired-up guide-version pair under build/dist/guides/',
+                wiring.renderTaskNames)
+        registerAggregateTask(project, PARITY_AGGREGATE_TASK,
+                'Runs renderer parity checks for every guide-version that has a baseline snapshot under buildSrc/src/test/resources/parity-baseline/',
+                wiring.parityTaskNames)
+    }
+
+    private static class Wiring {
+        List<String> renderTaskNames = []
+        List<String> parityTaskNames = []
     }
 
     @CompileDynamic
-    private static List<String> registerPerVersionTasks(
+    private static Wiring registerPerVersionTasks(
             Project project, Directory templateRoot, File guidesYml) {
 
         Map root = guidesYml.withReader('UTF-8') { reader ->
@@ -86,7 +99,7 @@ class RenderGuidesPlugin {
         }
         List guides = (root.guides ?: []) as List
 
-        List<String> registeredTaskNames = []
+        Wiring wiring = new Wiring()
 
         for (Map guide : guides) {
             String guideName = guide.name as String
@@ -152,11 +165,33 @@ class RenderGuidesPlugin {
                     task.asciidoc.set(true)
                     task.properties.set(attributes)
                 }
-                registeredTaskNames << renderTaskName
+                wiring.renderTaskNames << renderTaskName
+
+                // Parity check vs the legacy snapshot, when one exists on disk.
+                File baselineFile = project.rootProject.layout.projectDirectory
+                        .file("${PARITY_BASELINE_ROOT}/${guideName}-v${versionKey}/index.html").asFile
+                if (baselineFile.isFile()) {
+                    String parityTaskName = "parityCheckGuide_${safeName}_${safeVersion}"
+                    String renderedSinglePage = "dist/guides/${guideName}/${versionKey}/guide/single.html"
+                    String reportRelPath = "reports/parity/${guideName}/${versionKey}.md"
+                    project.tasks.register(parityTaskName, ParityCheckGuideTask) { ParityCheckGuideTask task ->
+                        task.group = GROUP
+                        task.description = "Compares rendered ${guideName} v${versionKey} against the legacy snapshot at ${baselineFile.name}"
+                        task.dependsOn(renderTaskName)
+                        task.localFile.set(project.layout.buildDirectory.file(renderedSinglePage))
+                        task.baselineFile.set(baselineFile)
+                        task.reportFile.set(project.layout.buildDirectory.file(reportRelPath))
+                        task.guideLabel.set("${guideName}@v${versionKey}")
+                        if (project.hasProperty('parityFailOnDiff')) {
+                            task.failOnDiff.set(Boolean.parseBoolean(project.property('parityFailOnDiff') as String))
+                        }
+                    }
+                    wiring.parityTaskNames << parityTaskName
+                }
             }
         }
 
-        registeredTaskNames
+        wiring
     }
 
     private static String sanitize(String value) {
@@ -164,11 +199,10 @@ class RenderGuidesPlugin {
     }
 
     private static void registerAggregateTask(
-            Project project, List<String> taskNames) {
-        project.tasks.register(AGGREGATE_TASK) { task ->
+            Project project, String aggregateName, String description, List<String> taskNames) {
+        project.tasks.register(aggregateName) { task ->
             task.group = GROUP
-            task.description =
-                    'Renders every wired-up guide-version pair under build/dist/guides/'
+            task.description = description
             for (String name : taskNames) {
                 task.dependsOn(name)
             }
