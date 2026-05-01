@@ -1,0 +1,2 @@
+include::{commondir}/common-requirements.adoc[]
+* An https://www.mongodb.com/download-center[installation] of http://mongodb.org[MongoDB] {mongodbVersion} or above

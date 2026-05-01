@@ -1,0 +1,41 @@
+Start Kafka:
+
+[source, bash]
+----
+$ cd docker
+docker$ docker-compose up
+----
+
+Start the `books` microservice:
+
+[source, bash]
+----
+$ cd complete
+complete$ ./gradlew bootRun
+----
+
+Start the `analytics` microservice:
+
+[source, bash]
+----
+$ cd complete-analytics
+complete-analytics$ ./gradlew bootRun
+----
+
+Execute a curl request to get one book:
+
+[source, bash]
+----
+$ curl http://localhost:8080/books/1491950358
+{"isbn":"1491950358","name":"Building Microservices"}
+----
+
+Now, use curl to see the analytics:
+
+[source,bash]
+----
+$ curl http://localhost:8081/analytics
+[{"bookIsbn":"1491950358","count":1}]
+----
+
+Update the curl command to the books microservice to retrieve other books and repeat the invocations, then re-run the curl command to the analytics microservice to see that the counts increase.

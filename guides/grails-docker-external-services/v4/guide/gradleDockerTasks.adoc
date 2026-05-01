@@ -1,0 +1,24 @@
+Configure several Gradle tasks which allow us to pull a Docker image and create/start/stop a PostgreSQL container with Gradle
+
+[source, groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[indent=0, tag=import]
+...
+..
+.
+include::../snippets/build.gradle[indent=0, tag=pullPostgresImage]
+include::../snippets/build.gradle[indent=0, tag=createPostgresContainer]
+include::../snippets/build.gradle[indent=0, tag=startPostgresContainer]
+include::../snippets/build.gradle[indent=0, tag=stopPostgresContainer]
+----
+
+<1> Group related tasks in a group. It helps to visualize Gradle tasks when you run `gradlew tasks --all`
+<2> Docker Image Name
+<3> Docker Image Tag
+<4> Docker container name
+<5> Database name
+<6> Database port
+<7> Database user's password. By default, username is `postgres`
+<8> Don't fail if the container is already created, started or stopped and the Gradle task is invoked
+

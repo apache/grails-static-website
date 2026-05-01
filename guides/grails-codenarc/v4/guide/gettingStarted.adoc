@@ -1,0 +1,7 @@
+When we write code, it's important to follow some rules, right practices, style rules, etc. However, sometimes it is not that
+simple. It is even more important when we work in a team, in which every member has his preferences. One way of
+improving this is adding a static analysis tool for the code.
+
+In this guide, you are going to install and configure http://codenarc.sourceforge.net/[Codenarc] to help you improve the
+ quality of your Grails code, and you are also going to learn how to create a custom CodeNarc rule.
+ CodeNarc analyzes the Groovy code and reports potential bugs and code problems.

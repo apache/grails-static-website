@@ -1,0 +1,18 @@
+// tag::configureCodeNarc[]
+apply plugin: 'codenarc' // <1>
+
+codenarc {
+    toolVersion = '1.4' // <2>
+    configFile = file("${rootProject.projectDir}/config/codenarc/rules.groovy") // <3>
+    reportFormat = 'html' // <4>
+    ignoreFailures = true // <5>
+}
+// end::configureCodeNarc[]
+
+// tag::codeNarcClasspath[]
+codenarcMain.dependsOn ':codenarc-rule:jar' // <1>
+
+tasks.withType(CodeNarc) { // <2>
+    codenarcClasspath += files("${rootProject.projectDir}/codenarc-rule/build/libs/codenarc-rule.jar")
+}
+// end::codeNarcClasspath[]

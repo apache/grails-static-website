@@ -1,0 +1,10 @@
+At this point we will create our book data so we have something to work with moving forward. Go ahead and make your
+`BootStrap.groovy` match the following.
+
+NOTE: The required image resources are already added to the initial project for you.
+
+[source,groovy]
+.grails-app/init/demo/BootStrap.groovy
+----
+include::../snippets/grails-app/init/demo/BootStrap.groovy[]
+----

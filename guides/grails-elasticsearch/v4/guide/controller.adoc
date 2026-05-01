@@ -1,0 +1,17 @@
+Implement a `search` action in `BookController.groovy` which will query Elasticsearch.
+
+[source, groovy]
+.grails-app/controllers/demo/BookController.groovy
+----
+include::../snippets/grails-app/controllers/demo/BookController.groovy[]
+----
+
+<1> If no query string is passed within the request then simply return  `Not Found(404)`.
+
+Create a test which verifies the controller only responds to HTTP GET requests.
+
+[source, groovy]
+.src/test/groovy/demo/BookControllerSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/BookControllerSpec.groovy[]
+----

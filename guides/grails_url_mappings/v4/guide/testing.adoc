@@ -1,0 +1,15 @@
+The http://testing.grails.org[Grails Testing Support] library is the recommended way to write tests for most Grails artefacts, including URL mappings. The library is included in the current version of Grails, and it provides a `UrlMappingsUnitTest` trait that makes it easy to test URL mappings.
+
+TIP: *Traits* are a powerful feature of the Groovy programming language, and many Grails features utilize them. You can create your own traits as well as part of your application code. See the http://docs.groovy-lang.org/next/html/documentation/core-traits.html[Groovy documentation] for more information.
+
+Let's write a unit test for our `ConferenceUrlMappings`. Create a new Groovy file under `src/test/groovy/demo/`, named `ConferenceUrlMappingsSpec.groovy`. Edit the file with the content below:
+
+[source,groovy]
+.src/test/groovy/demo/ConferenceUrlMappingsSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/ConferenceUrlMappingsSpec.groovy[]
+----
+<1> Our test is a standard Spock `Specification`, which then *implements* the `UrlMappingsUnitTest` trait (provided by the testing support library). Note that the trait accepts a generic, which is the URL mapping class that we wish to test; in this case, `ConferenceUrlMappings`
+<2> The testing library provides mocking helpers, such as `mockController` to wire up an instance of a controller for testing.
+<3> The `UrlMappingsUnitTest` trait provides several testing methods, including `verifyUrlMapping`, which simply returns true or false if the URL mapping matches the expected controller/action.
+<4> Another test method is `assertUrlMapping`. This performs the same check as `verifyUrlMapping`, but it allows you to use the method as part of assertion (such as a Spock `when`/`then` block).

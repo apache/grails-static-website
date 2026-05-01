@@ -1,0 +1,11 @@
+model {
+    Long total
+    List searchResults
+    Map scores
+}
+
+json {
+    totalCount total
+    results g.render(searchResults)
+    scores g.render(scores)
+}

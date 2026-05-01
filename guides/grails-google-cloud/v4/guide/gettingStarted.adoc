@@ -1,0 +1,4 @@
+In this guide, you are going to deploy a Grails 3 application
+to https://cloud.google.com/appengine/docs/flexible/[Google App Engine Flexible Environment], upload
+images to https://cloud.google.com/storage/[Google Cloud Storage]
+and use a MySQL database provided by https://cloud.google.com/sql/[Cloud SQL].

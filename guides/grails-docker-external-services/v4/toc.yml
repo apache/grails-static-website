@@ -1,0 +1,18 @@
+training:
+  title: Training
+gettingStarted: 
+  title: Getting Started
+  howto: How to complete the guide
+writing:
+  title: Writing the Guide
+  docker: Install and configure Docker
+  domainClass: Domain Class
+  gradle: Gradle Docker plugin
+  gradleDockerTasks: Gradle Docker Tasks
+  postgresql: Configure PostgreSQL
+running:
+  title: Running the app
+usingOnlyDocker:
+  title: Using only Docker
+helpWithGrails:
+  title: Help with Grails  

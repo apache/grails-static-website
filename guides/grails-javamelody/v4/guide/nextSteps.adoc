@@ -1,0 +1,3 @@
+To further your understanding, read through the https://github.com/javamelody/javamelody/wiki/UserGuide[Java Melody's project documentation],
+Additionally feel free browse the https://github.com/javamelody/javamelody/wiki[wiki]. If you
+have more advanced needs look https://github.com/javamelody/javamelody/wiki/UserGuideAdvanced[Java Melody User Advanced Guide].

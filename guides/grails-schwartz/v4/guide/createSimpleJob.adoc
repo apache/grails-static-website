@@ -1,0 +1,71 @@
+The plugin provides a new Grails command to create a new job. Just execute:
+
+[source, bash]
+----
+./grailsw create-job HelloWorld
+----
+
+This will create the file `grails-app/services/demo/HelloWorldJobService.groovy` with a few examples commented out of
+how to trigger the job.
+
+Please note that Schwartz jobs are not Grails artifacts but the plugin uses the convention of naming the job with the
+sufix _JobService_. The job files are placed by default in `grails-app/services` directory although there are different
+options to create just a POGO.
+
+The very basic skeleton of a Schwartz Job is:
+
+[source, groovy]
+.grails-app/services/demo/HelloWorldJobService.groovy
+----
+class HelloWorldJobService implements SchwartzJob { // <1>
+
+    void execute(JobExecutionContext context) throws JobExecutionException {
+        // <2>
+    }
+
+    void buildTriggers() {
+        // <3>
+    }
+}
+----
+<1> Implement `SchwartzJob`
+<2> The job logic goes here
+<3> The different triggers of the job
+
+
+Let's modify the previous code and add the following:
+
+[source, groovy]
+.grails-app/services/demo/HelloWorldJobService.groovy
+----
+include::../snippets/grails-app/services/demo/HelloWorldJobService.groovy[indent=0, tag=helloWorldJob]
+----
+<1> The name of the job and the date
+<2> Create a trigger every 10 seconds
+<3> Create another trigger every 45 seconds with an initial delay of 5 seconds (5000 millis)
+
+Now start the application:
+
+[source, bash]
+----
+./gradlew bootRun
+----
+
+And after a few seconds you will see the following output:
+
+[source, bash]
+----
+DEFAULT.Simple Job every 10 seconds -> Fri Jan 19 13:24:53 CET 2018 # <1>
+DEFAULT.Simple Job every 45 seconds -> Fri Jan 19 13:24:58 CET 2018 # <2>
+DEFAULT.Simple Job every 10 seconds -> Fri Jan 19 13:25:03 CET 2018 # <3>
+DEFAULT.Simple Job every 10 seconds -> Fri Jan 19 13:25:13 CET 2018
+DEFAULT.Simple Job every 10 seconds -> Fri Jan 19 13:25:23 CET 2018
+DEFAULT.Simple Job every 10 seconds -> Fri Jan 19 13:25:33 CET 2018
+DEFAULT.Simple Job every 10 seconds -> Fri Jan 19 13:25:43 CET 2018
+DEFAULT.Simple Job every 45 seconds -> Fri Jan 19 13:25:43 CET 2018 # <4>
+DEFAULT.Simple Job every 10 seconds -> Fri Jan 19 13:25:53 CET 2018
+----
+<1> First execution of 10 seconds job just after the application starts
+<2> The 45 seconds job just starts 5 seconds after the app starts. See `startDelay` in the trigger configuration.
+<3> Second execution of 10 seconds job just 10 seconds after the first execution
+<4> Second execution of 45 seconds job just 45 seconds after the first execution

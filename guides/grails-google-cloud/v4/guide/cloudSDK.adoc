@@ -1,0 +1,15 @@
+Signup for https://console.cloud.google.com/[Google Cloud Platform] and create a new project:
+
+image::create-project.png[]
+
+image::create-project-2.png[]
+
+We named the project `grailsgooglecloud`
+
+Install https://cloud.google.com/sdk/downloads[Cloud SDK] for your operating system.
+
+After you have installed the SDK, run the init command in your terminal:
+
+`$ gcloud init`
+
+It will prompt you to select the Google account and the project which you want to use.

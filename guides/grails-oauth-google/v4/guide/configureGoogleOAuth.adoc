@@ -1,0 +1,66 @@
+To get Google OAuth2 up and running on your application will take a bit of work and configuration on the
+https://developers.google.com/[Google Developer Console].
+
+image::googleDevelopersHome.png[]
+
+Go ahead and sign in and then scroll to the bottom of the page to select
+https://console.developers.google.com[Google API Console]
+
+image::apiConsoleSelect.png[]
+
+Select `Create Project`
+
+image::googleCreateProject.png[]
+
+Give your Google project a name. In this case we name it `Oauth-Test`
+
+image::projectName.png[]
+
+Wait a moment while Google creates your new project
+
+image::waitWhileProjectIsCreated.png[]
+
+Select `ENABLE APIS AND SERVICES`
+
+image::dashboardPostProjectCreate.png[]
+
+At the search screen search for google+
+
+image::apiSearch.png[]
+
+Select `Google+ API`
+
+image::searchGooglePlus.png[]
+
+Click `ENABLE` and wait a moment while it turns on.
+
+image::enableApi.png[]
+
+Now back on the Dashboard click `Create credentials`
+
+image::dashboardPostApi.png[]
+
+Step 1: Make sure `Google+ API` is selected with the `Web server` options and `User data` then click
+`What credentials do I need?
+
+image::addCredentials1.png[]
+
+Step 2: Enter your chosen name or leave default, set your front end url and the plugin `oauth/callback/google` url then
+click `Create client ID`
+
+image::addCredentials2.png[]
+
+Step 3: Select your gmail and give the product a name so users will know what they are authenticating into. Click `Continue`
+
+image::addCredentials4.png[]
+
+Step 4: Download your credentials JSON and click `Done`
+
+image::addCredentials5.png[]
+
+That will bring you back to the credentials home page.
+
+image::credentialsHome.png[]
+
+This is all the setup that needs to be done in Google. Now we will take a look at setting up our applicatin and the
+credentials we downloaded to connect our app.

@@ -1,0 +1,11 @@
+To deploy the app to Google App Engine run:
+
+`$ ./gradlew appengineDeploy`
+
+Initial deployment may take a while. When finished, you will be able to
+access your app:
+
+image::welcometograils.png[]
+
+If you go to the https://console.cloud.google.com/appengine/versions[Versions] section
+in the App Engine administration panel, you will see the deployed app.

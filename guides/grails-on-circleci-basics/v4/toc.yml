@@ -1,0 +1,21 @@
+training:
+  title: Grails Training
+gettingStarted:
+  title: Getting Started
+  requirements: What you will need
+  howto: How to complete the guide
+writingTheApp:
+  title: Writing the Application
+  unitTest: Unit Test
+  integrationTest: Integration Test
+  testLogging: Verbose Test Output
+  runTests: Run Tests
+createGitHubRepo:
+  title: Create GitHub Repo
+integrateCircle:
+  title: Integrate Circle CI
+  createCircleConfig: Create Circle Config File
+wheretoGoFromHere:
+  title: Where to Go From Here?
+helpWithGrails:
+  title: Help with Grails

@@ -1,0 +1,1 @@
+At this point you should be comfortable with the concept of URL mappings, and you have a good handle on the most important features. You can learn much more about the capabilities of URL mappings from the http://docs.grails.org/3.3.2/guide/single.html#urlmappings[Grails Documentation], including *namespaces*, RESTful *resource* mappings, *constraints*, and *wildcards*.

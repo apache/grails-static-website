@@ -1,0 +1,19 @@
+To setup Github Actions, create a file:
+
+[source,yaml]
+----
+#.github/workflows/gradle.yml
+include::../snippets/../.github/workflows/gradle.yml[]
+----
+
+<1> Run Github action for pushes to branch `master`.
+<2> Run Github action for pull requests targeting branch `master`.
+<3> Run Github action for JDK 8 and 11
+<4> GitHub cache Action allows caching dependencies and build outputs to improve workflow execution time.
+<5> Run tests
+
+When you push the code to Github you will see the Grails tests run with both JDK 8 and JDK 11.
+
+image::githubactions-1.png[]
+
+image::githubactions-2.png[]

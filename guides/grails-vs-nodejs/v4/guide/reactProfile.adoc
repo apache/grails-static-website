@@ -1,0 +1,81 @@
+Every Grails project begins with a single `create-app` command. For the
+purposes of following along with this guide, you may choose to https://grails.org/download.html[install]
+Grails via the official website, or using http://sdkman.io[sdkman] (recommended).
+However, there is no need to install the framework on your machine to
+create your Grails app - instead, let's browse to
+http://start.grails.org and create our application using the *Grails
+Application Forge*.
+
+Choose the latest version of Grails ({grailsVersion} as of the time of writing)
+and select the `react` profile.
+
+TIP: With the use of **application profiles**, Grails allows you to build modern web applications. There are profiles to facilitate the construction 
+of REST APIs or Web applications with a Javascript front-end
+
+
+=== Start both client and server applications 
+
+Once you've downloaded your application, expand it into a directory of
+your choice, `cd` into the project, and run the following two commands
+(in two separate terminal sessions):
+
+
+[source, bash]
+----
+~ ./gradlew server:bootRun   //Windows users use "gradlew.bat"
+
+//in a second terminal session
+~ ./gradlew client:bootRun
+----
+
+The `gradlew` command launches the Gradle "wrapper”, which is provided
+by the https://gradle.org/[Gradle build tool] that is used in all Grails projects since Grails 3.0.
+The wrapper is a special script that actually download and install the Gradle
+build tool (if necessary) before running your commands. Gradle will then
+download all needed dependencies (including Grails) and install them in your project (caching them for future
+use as well). This is why you don’t need to install Grails on your
+machine: if your project includes the Gradle wrapper, it will handle
+that for you.
+
+TIP: You can think of Gradle roughly as an alternative to npm (which "does
+not" stand for https://www.npmjs.com[Node Package Manager]). It doesn't
+provide the CLI that npm offers but it fulfills a similar purpose in dependency
+management and build-processing. When a Gradle command (or "task") is run,
+Gradle will first download all dependencies listed in the project's `build.gradle`
+file, similar to running `npm install`.
+
+What about the `server` and `client` portion of those two commands?
+Because we’re using the `react` profile, Grails has actually created two
+separate “apps” for us - the backend Grails application, and the React
+application (which in turn is generated via `create-react-app`). Gradle
+treats these two apps as independent subprojects, with the above names.
+This is called a
+http://guides.grails.org/grails-quickcasts-multi-project-builds/guide/index.html[multi-project
+build].
+
+When running a Gradle “task” from the project root directory, anything
+after `./gradlew [project_name]:` will match a task specific to that
+subproject. The `bootRun` task is configured in both projects to start
+the respective app.
+
+
+TIP: Where does `bootRun` come from? This Gradle task is inherited from the Spring Boot framework, upon which Grails is based. Of course
+`create-react-app` projects don’t have such a task by default. The React profile provides the `client:bootRun` task as a wrapper around the npm/yarn `start` script.
+This allows you to use advanced Gradle features like running both `server` and `client` in
+parallel mode with one command. For developers, running `../gradlew client:bootRun` is the same
+as running `npm start` (or `yarn start`) in a stock `create-react-app`
+project, and in fact you can run the `client` app exactly that way if
+you have `npm`/`yarn` installed on your machine.
+
+
+Once the `gradlew` commands have completed downloading dependencies and
+launching their respective apps, you should be able to browse to
+`http://localhost:8080` to see the Grails backend application, and
+`http://localhost:3000` to view the React app.
+
+Before we continue implementing our application, take a moment to
+explore the app we have right now. The Grails application by default is
+providing some useful metadata in JSON format, and the React app is
+consuming that data via a REST call and displaying it via the app’s
+navigation menus. This isn’t a very useful app, but you can see
+a lot of boilerplate has already been set up for you.

@@ -1,0 +1,4 @@
+In this guide we will show you how to setup and use
+https://github.com/javamelody/javamelody/wiki[JavaMelody] with a Grails 3 application.
+We will be using the
+http://plugins.grails.org/plugin/sergiomichels/grails-melody-plugin[grails-melody-plugin]

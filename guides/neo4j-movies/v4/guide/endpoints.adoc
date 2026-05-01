@@ -1,0 +1,37 @@
+As mentioned previously, the REST endpoints to be implemented are:
+
+* single movie listing by title
+* movie search by title
+* graph visualization of the domain
+
+To implement these various REST endpoints first create a controller called `MovieController`. You can do so with the `grails` CLI or via your favourite text editor or IDE by creating a class within the `grails-app/controllers/neo4j/movies` directory whose name ends with `Controller`:
+
+
+[source,bash]
+----
+$ grails create-controller neo4j.movies.MovieController
+----
+
+The initial contents of the controller should look like the following:
+
+[source,groovy]
+.grails-app/controllers/neo4j/movies/MovieController.groovy
+----
+include::../snippets/grails-app/controllers/neo4j/movies/MovieController.groovy[tags=controller]
+   ...
+}
+----
+
+To map the various endpoints to the controller add the following to the `grails-app/controllers/neo4j/movies/UrlMappings.groovy` file:
+
+[source,groovy]
+.grails-app/controllers/neo4j/movies/UrlMappings.groovy
+----
+include::../snippets/grails-app/controllers/neo4j/movies/UrlMappings.groovy[tags=endpoints]
+----
+
+<1> Maps the `/movie/{title}` URI to an action called `show` of `MovieController`
+<2> Maps the `/search` URI to an action called `search` of `MovieController`
+<3> Maps the `/graph` URI to an action called `graph` of `MovieController`
+
+Of course, none of these controller actions are implemented yet. Let's start with the first requirement.

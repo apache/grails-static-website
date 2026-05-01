@@ -1,0 +1,79 @@
+There is another option that does not requires the usage of a Gradle plugin. With this approach we can just use _plain Docker_
+to build a Docker image and start a container.
+
+== Defining the Docker file
+
+Create the following `Dockerfile`:
+
+[source, Dockerfile]
+.src/main/docker/Dockerfile
+----
+FROM postgres:9.6.6 # <1>
+
+VOLUME /var/lib/postgresql/data # <2>
+
+COPY ["setup.sh", "/docker-entrypoint-initdb.d/"] # <3>
+
+EXPOSE 5432 # <4>
+----
+<1> Use the same PostgreSQL image and version as before
+<2> Define a volume to store the data
+<3> Copy a script to the entrypoint directory. Any `.sh` or `.sql` file in this directory will be executing when starting the container
+<4> Expose the port
+
+Also create the file `setup.sh`:
+
+[source, bash]
+.src/main/docker/setup.sh
+----
+include::../snippets/src/main/docker/setup.sh[]
+----
+<1> Create the database, user and password for development environment
+<2> Define another database, user and password for the test environment
+
+
+== Building the image
+
+With those files created, let's build the docker image:
+
+[source, bash]
+----
+$ docker build -t postgres-custom src/main/docker/
+----
+
+== Start a container
+
+To create and start a container for the first time based on the image we have just created:
+
+[source, bash]
+----
+$ docker run -d -p 5432:5432 --name demo-postgres postgres-custom
+----
+
+From now on, every time we want to start/stop the container, we only need to execute:
+
+[source, bash]
+----
+$ docker start demo-postgres
+
+$ docker stop demo-postgres
+----
+
+TIP: Keep in mind that you also need to change `application.yml` to use the new credentials defined in `setup.sh` file.
+
+Replace the database development environment configuration with:
+
+[source, yaml]
+.grails-app/conf/application.yml
+----
+environments:
+    development:
+        dataSource:
+            dialect: org.hibernate.dialect.PostgreSQLDialect
+            driverClassName: org.postgresql.Driver
+            username: dev_user
+            password: dev_password
+            dbCreate: update
+            url: jdbc:postgresql://localhost:5432/dev_demo_db
+----
+

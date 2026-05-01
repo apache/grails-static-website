@@ -1,0 +1,88 @@
+Create a Grails application with the `rest-api` profile. 
+
+[source,bash]
+----
+grails create-app example.grails.complete --profile=rest-api
+----
+
+First, add a `Book` domain:
+
+[source,groovy]
+.grails-app/domain/example/grails/Book.groovy
+----
+include::../snippets/grails-app/domain/example/grails/Book.groovy[]
+----
+
+Create default CRUD actions for `Book` leveraging http://gorm.grails.org/latest/hibernate/manual/index.html#dataServices[GORM data services]:
+
+[source,groovy]
+.grails-app/services/example/grails/BookGormService.groovy
+----
+include::../snippets/grails-app/services/example/grails/BookGormService.groovy[]
+----
+
+Then we need to actually create the book data with our `Bootstrap.groovy`:
+
+[source,groovy]
+.grails-app/init/example/grails/Bootstrap.groovy
+----
+include::../snippets/grails-app/init/example/grails/BootStrap.groovy[]
+----
+
+Add the Micronaut Kafka dependency: 
+
+[source,groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[tag=kafka]
+----
+
+The app connects to a Kafka broker running on localhost:9092. Add the following configuration:
+
+
+[source,groovy]
+.grails-app/conf/application.yml
+----
+include::../snippets/grails-app/conf/application.yml[tag=kafka]
+----
+
+Create an interface to send messages to Kafka. The Micronaut framework will implement the interface at compilation time:
+
+[source,groovy]
+.src/main/groovy/example/grails/AnalyticsClient.groovy
+----
+include::../snippets/src/main/groovy/example/grails/AnalyticsClient.groovy[]
+----
+
+<1> Set the topic name
+<2> Send the book information. The Micronaut Framework will automatically convert it to JSON before sending it.
+
+Create a controller which fetches books and notifies Kafka with the `AnalyticsClient`:
+
+[source,groovy]
+.grails-app/controllers/example/grails/BooksController.groovy
+----
+include::../snippets/grails-app/controllers/example/grails/BooksController.groovy[]
+----
+
+Add the following mapping to `UrlMappings`: 
+
+[source,groovy]
+.grails-app/controllers/example/grails/UrlMappings.groovy
+----
+include::../snippets/grails-app/controllers/example/grails/UrlMappings.groovy[tag=isbn]
+----
+
+Create two http://views.grails.org/latest/#_json_views[JSON Views] for the controller's actions:
+
+[source,groovy]
+.grails-app/views/books/_book.gson
+----
+include::../snippets/grails-app/views/books/_book.gson[]
+----
+
+[source,groovy]
+.grails-app/views/books/index.gson
+----
+include::../snippets/grails-app/views/books/index.gson[]
+----

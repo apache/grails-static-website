@@ -1,0 +1,17 @@
+Deployment is a big topic on its own and one that we won’t cover
+in-depth. As with many Java web apps, our Grails backend can be deployed
+to any JEE container as a WAR file (this will require some additional
+configuration), or more cleanly as a self-contained JAR file (which
+doesn’t require a separate server to run).
+
+Our React app can be built just like any `create-react-app` project
+using `npm run build` (or `yarn build`), and deployed to a standard web
+server. Obviously attention must be given to making sure the React
+client can reach the API backend (and the `SERVER_URL` variable may need
+to be set accordingly).
+
+An attractive way to package and deploy a Grails/React app is to bundle
+both apps together into a single executable JAR file. This approach is
+documented in tutorial form in the
+http://guides.grails.org/react-combined/guide/index.html[“Combining the
+React profile projects”] Grails Guide.

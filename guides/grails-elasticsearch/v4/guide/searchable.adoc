@@ -1,0 +1,44 @@
+In order to create the index for this domain in Elasticsearch, define a `static` property called `searchable` in the previoulsy defined `Book` domain class
+
+[source, groovy]
+.grails-app/domain/demo/Book.groovy
+----
+include::../snippets/grails-app/domain/demo/Book.groovy[tag=searchable]
+----
+
+<1> 'boost' is commonly used to fine-tune the the relevance `_score` for each document by giving more weight to documents. In this case, if the search query matches with the `title` of the document then the relevance `_score` of the document will be double when compared to other results.
+
+<2> If the search query matches with the `about` field then the relevant `_score` will be `1.0` times the others results.
+
+<3> The `href` property is included in the list of properties that are not `searchable`.
+
+
+The previous example will create the following Elasticsearch mappings:
+
+[source, json]
+----
+{
+  "mappings": {
+    "book": {
+      "properties": {
+        "author": {
+          "include_in_all": true,
+          "term_vector": "with_positions_offsets",
+          "type": "text"
+        },
+        "about": {
+          "include_in_all": true,
+          "term_vector": "with_positions_offsets",
+          "type": "text"
+        },
+        "title": {
+          "include_in_all": true,
+          "term_vector": "with_positions_offsets",
+          "boost": 2,
+          "type": "text"
+        }
+      }
+    }
+  }
+}
+----

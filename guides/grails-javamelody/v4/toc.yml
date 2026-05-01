@@ -1,0 +1,14 @@
+training:
+  title: Training
+gettingStarted:
+  title: Getting Started
+  requirements: What you will need
+  howto: How to complete the guide
+runningTheApp:
+  title: Application Overview
+  originalAppGrails: Books Application
+melody: Adding Melody
+nextSteps:
+  title: Next Steps
+helpWithGrails:
+  title: Do you need help with Grails?

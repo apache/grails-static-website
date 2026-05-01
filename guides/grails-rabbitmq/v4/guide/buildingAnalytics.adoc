@@ -1,0 +1,42 @@
+Create a new Grails 3 application for this additional app. For example by using
+http://start.grails.org/[Grails Application Forge] or the command line:
+
+[source,bash]
+----
+$ grails create-app initial-analytics --profile=rest-api
+----
+
+For the multi app part of this guide we will need to be able to run both apps simultaneously. To avoid a running port conflict update your `initial-analytics` app `application.yml` to include the following.
+
+[source,yml]
+.grails-app/conf/application.yml
+----
+include::complete-analytics/grails-app/conf/application.yml[indent=0, tag=serverPort]
+----
+
+Create a Domain class `BookPageView` which will keep track of how many times a book has been viewed.
+
+[source,groovy]
+.grails-app/domain/demo/BookPageView.groovy
+----
+include::complete-analytics/grails-app/domain/demo/BookPageView.groovy[]
+----
+
+As before create default actions for our `BookPageView` leveraging data services.
+
+[source,groovy]
+.grails-app/services/demo/BookPageViewDataService.groovy
+----
+include::complete-analytics/grails-app/services/demo/BookPageViewDataService.groovy[]
+----
+
+<1> Use JPA-QL query to perform a projection
+<2> Implement update operations using JPA-QL
+
+Add an integration test:
+
+[source,groovy]
+.complete-analytics/src/integration-test/groovy/demo/BookPageViewDataServiceSpec.groovy
+----
+include::complete-analytics/src/integration-test/groovy/demo/BookPageViewDataServiceSpec.groovy[]
+----

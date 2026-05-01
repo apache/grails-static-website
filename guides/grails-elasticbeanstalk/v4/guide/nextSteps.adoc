@@ -1,0 +1,3 @@
+Grails 3 apps are Spring Boot apps. Read https://aws.amazon.com/blogs/devops/deploying-a-spring-boot-application-on-aws-using-aws-elastic-beanstalk/[Deploying a Spring Boot Application on AWS Using AWS Elastic Beanstalk] tutorial to learn more.
+
+Explore more features with http://guides.grails.org[Grails Guides].

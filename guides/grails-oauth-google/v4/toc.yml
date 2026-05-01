@@ -1,0 +1,28 @@
+gettingStarted:
+  title: Getting Started
+  requirements: What you will need
+  howto: How to complete the guide
+oauth2:
+  title: OAuth2 Authentication
+  configureGoogleOAuth: Setup and Configure Google OAuth2
+appConfig:
+  title: Setting up your app
+  dependencies: Add Security Dependencies
+  tokenReader: Custom Token Reader
+  oauthConfig: Configure Security
+  logout: Logout Handlers
+  authController: JWT Cookie
+  logging: Enhanced Logging
+buildingTheApp:
+  title: Building your app
+  domain: Your Domain
+  data: Your Data
+  services: Your Services
+  controllers: Your Controllers
+  views: Your Views
+runningTheCompleteApp:
+  title: Running your Completed App
+nextSteps:
+  title: Next Steps
+helpWithGrails:
+  title: Do you need help with Grails?

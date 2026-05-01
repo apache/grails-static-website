@@ -1,0 +1,34 @@
+To write a unit test for the `search` action your can use the `create-unit-test` command of the CLI to create one:
+
+[source,bash]
+----
+$ ./grailsw create-unit-test demo.ProductController
+----
+
+Or alternatively just create a `src/test/groovy/demo/ProductControllerSpec.groovy` file using your favourite text editor or IDE.
+
+Write the next unit test:
+
+[source,groovy]
+.src/test/groovy/demo/ProductControllerSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/ProductControllerSpec.groovy[tag=imports]
+
+include::../snippets/src/test/groovy/demo/ProductControllerSpec.groovy[tag=clazz]
+----
+
+<1> MongoSpec is an abstract class that will initialise GORM in the setup phase of the specification being executed
+<2> Override the `createMongoClient` method of the `MongoSpec` base class. Use something such as https://github.com/fakemongo/fongo[Fongo]; an in-memory java implementation of MongoDB.
+<3> Use the https://testing.grails.org/latest/guide/index.html#unitTestingControllers[grails.testing.web.controllers.ControllerUnitTest] trait to unit test controllers.
+<4> The `setup` method uses the `saveAll` method to save multiple domain classes to serve as test data.
+
+The test performs a search by executing the `search` method, passing appropriate arguments and verifying the JSON written to the response.
+The tests asserts the value of the `json` property of the `response`. The resulting JSON rendered by Grails looks like:
+
+[source,json]
+----
+[{"id":1,"name":"Apple","price":2.0}]
+----
+
+Let's take a look at how we can customize this JSON.
+

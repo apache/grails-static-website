@@ -1,0 +1,43 @@
+The Micronaut Client can also be used for testing purposes with Spock. In our music app let's create a domain object to capture
+record labels. We will use the grails built-in https://docs.grails.org/latest/guide/REST.html#domainResources[REST API for domain classes].
+
+Create a domain object and tag it with `@Resource` and a given URI. This will expose REST functionality for the object.
+
+[source, groovy]
+.grails-app/domain/example/grails/RecordLabel.groovy
+----
+include::../snippets/grails-app/domain/example/grails/RecordLabel.groovy[]
+----
+
+In the `BootStrap.groovy`, add some seed data for testing purposes:
+
+[source, groovy]
+.grails-app/services/example/grails/RecordLabelService.groovy
+----
+include::../snippets/grails-app/services/example/grails/RecordLabelService.groovy[]
+----
+
+[source, groovy]
+.grails-app/init/example/grails/BootStrap.groovy
+----
+include::../snippets/grails-app/init/example/grails/BootStrap.groovy[]
+----
+
+Let's create an integration test suite that first does a `GET` request to retrieve the existing list of RecordLabels. The test will
+also issue a `POST` to insert one more record label, with a map of data passed in. In both tests, we will verify that the response comes back correctly.
+
+[source, groovy]
+.src/integration-test/groovy/example/grails/RecordLabelControllerSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/grails/RecordLabelControllerSpec.groovy[]
+----
+
+<1> Initialize the client once for all tests. Give it a URL with `serverPort` which is the assigned port of the integration test.
+<2> Issue a `GET`. The expected body type will be a List of Maps.
+<3> Verify the status and body elements of the JSON.
+<4> Send a map of data to the `POST`, which will be interpreted as JSON.
+<5> Verify the status and returned data for the test.
+
+'''
+
+Test the app with `./gradlew check`.

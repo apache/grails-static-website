@@ -1,0 +1,14 @@
+The Micronaut HTTP Client dependency is included in the grails `rest-api` profile and replaces the `datastore-rest-client`.
+As of Grails 4, it is the recommended HTTP Client for Grails. (The old HTTP client is still backward compatible in Grails 4).
+
+In our music app we will be using the Micronaut HTTP client in both service functionality and testing so we must change
+the qualifier in `build.gradle` to `compile`:
+
+[source, groovy]
+.build.gradle
+----
+dependencies {
+    ...
+include::../snippets/build.gradle[tag=micronautDependency]
+}
+----

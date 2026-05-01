@@ -1,0 +1,7 @@
+Create some books by modifying the `BootStrap.groovy` as follows:
+
+[source, groovy]
+.grails-app/init/demo/BootStrap.groovy
+----
+include::../snippets/grails-app/init/demo/BootStrap.groovy[]
+----

@@ -1,0 +1,3 @@
+In this guide you are going to learn how to execute an HTTP client to make external rest API calls as well perform spock testing.
+You will use https://docs.micronaut.io/snapshot/guide/index.html#httpClient[Micronaut's HTTP Client], which has both a low-level API
+and a higher level AOP-driven API.

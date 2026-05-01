@@ -1,0 +1,49 @@
+To get RabbitMQ up and running on your system there are multiple different ways to get setup and going. You may choose
+to follow the directions from RabbitMQ themselves located https://www.rabbitmq.com/download.html[here], but we would
+recommend following the way we set it up for parity.
+
+To have a similar to real world setup we have chosen to setup our RabbitMQ using https://www.docker.com/[Docker] as its
+quick, simple, and easy to tear down and setup again if you run into any issues. Docker is a container engine which allows
+for quick and simple installs of many different frameworks and products and helps avoid differences in local systems to
+provide a guaranteed clean instance of the product you are tying to run. We will assume you already have Docker
+installed on your system moving forward but if you do not you can install it from https://www.docker.com/community-edition[here].
+
+Make sure Docker is running on your local system (You should see a little whale)
+
+image::dockerIcon.png[]
+
+Once you know Docker is up and running from your terminal run the following command.
+
+[source,bash]
+----
+$ docker run -d --hostname my-rabbit --name some-rabbit -p 15672:15672 -p 4369:4369 -p 5671:5671 -p 5672:5672 -p 15671:15671 -p 25672:25672 rabbitmq:3-management
+----
+
+The above command does a lot for you, it downloads and runs a dockerized instance of RabbitMQ, sets the hostname, gives
+the instance a name, configures the ports you will need to successfully access RabbitMQ, and includes the management
+interface so we can have more insight to how the message queue works. Once the command completes you will see output
+similar to the following.
+
+image::dockerCmdSuccess.png[]
+
+In addition to Docker you may like a more visual interface to see your RabbitMQ container in action. If thats the case go
+ahead and download "Kitematic" which is a GUI interface for your underlying Docker service. Docker will even help you get
+Kitematic from its menu.
+
+image::dockerMenu.png[]
+
+If you installed Kitematic you should now see your RabbitMQ instance running on the lefthand side.
+
+image::kitematicRabbit.png[]
+
+As mentioned above we included the RabbitMQ admin interface so we can see some details about our message queues. You can
+access the admin interface located at `localhost:15672`.
+
+image::rabbitMQAdminLogin.png[]
+
+To login use the username / pass of guest / guest. After a successful login you will see the following page
+
+image::rabbitAdminHome.png[]
+
+For more information on this specific docker container please view the documentation
+https://docs.docker.com/samples/library/rabbitmq/[here].

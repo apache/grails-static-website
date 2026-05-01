@@ -1,0 +1,14 @@
+For your domain we will need to domain objects `Book` and `BookFavourite`. Create as follows
+
+[source,groovy]
+.grails-app/domain/demo/Book.groovy
+----
+include::../snippets/grails-app/domain/demo/Book.groovy[]
+----
+
+[source,groovy]
+.grails-app/domain/demo/BookFavourite.groovy
+----
+include::../snippets/grails-app/domain/demo/BookFavourite.groovy[]
+----
+

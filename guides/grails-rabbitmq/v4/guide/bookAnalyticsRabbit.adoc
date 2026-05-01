@@ -1,0 +1,25 @@
+We need to create a new consumer, we will create the consumer in
+the `initial-analytics` application. First navigate to the analytics application
+
+[source,bash]
+----
+$ cd ~/yourProjectLocation/initial-analytics
+----
+
+Then as before create a new consumer
+
+[source,bash]
+----
+$ ./grailsw create-consumer demo.BookPageViewConsumer
+----
+
+Edit the generated consumer to look as follows
+
+[source,groovy]
+.grails-app/rabbit-consumers/demo/BookPageViewConsumer.groovy
+----
+include::complete-analytics/grails-app/rabbit-consumers/demo/BookPageViewConsumer.groovy[]
+----
+<1> Add our page view service
+<2> Tell our consumer which queue to connect to
+<3> Tell our consumer what to do when it receives a message. Call our custom increment action.
