@@ -33,6 +33,16 @@ dependencies {
     // HTML parser used by the guides verification harness.
     implementation "org.jsoup:jsoup:$jsoupVersion"
 
+    // Runtime dependencies for the vendored grails/doc/* renderer.
+    // The renderer (DocPublisher, DocEngine, AsciiDocEngine, macros, filters)
+    // was vendored from apache/grails-core 7.2.x build-logic/docs-core.
+    // See buildSrc/VENDOR.md for source SHA + re-vendor procedure.
+    implementation "org.apache.commons:commons-text:$commonsTextVersion"
+    implementation "org.apache.ant:ant:$antVersion"
+    implementation "org.grails:grails-gdoc-engine:$grailsGdocEngineVersion"
+    implementation "org.slf4j:slf4j-api:$slf4jVersion"
+    implementation "org.slf4j:jcl-over-slf4j:$slf4jVersion"
+
     testImplementation 'org.spockframework:spock-core'
 
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

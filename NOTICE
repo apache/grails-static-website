@@ -1,0 +1,16 @@
+Apache Grails Static Website
+Copyright 2024-2026 The Apache Software Foundation
+
+This product includes software developed at
+The Apache Software Foundation (https://www.apache.org/).
+
+Portions of this product include code derived from apache/grails-core
+(https://github.com/apache/grails-core), specifically the
+`build-logic/docs-core/` subproject from the 7.2.x release line, vendored
+into `buildSrc/src/main/groovy/grails/doc/`,
+`buildSrc/src/main/resources/grails/doc/`,
+`buildSrc/src/main/resources/radeox_messages_en.properties`, and
+`buildSrc/src/main/template/`. Source commit:
+3d2d795680f43e129ce4a736f7e2388ef04166ca (apache/grails-core@7.2.x).
+Used under the Apache License 2.0. See `buildSrc/VENDOR.md` for the
+full vendored-file inventory and re-vendor procedure.
