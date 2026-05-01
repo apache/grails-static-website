@@ -26,7 +26,20 @@ import org.gradle.api.file.Directory
 import org.yaml.snakeyaml.Yaml
 
 import grails.doc.gradle.PublishGuideTask
+import website.gradle.tasks.AssetsTask
+import website.gradle.tasks.BlogTask
+import website.gradle.tasks.BskyAtProtoDidTask
+import website.gradle.tasks.DocumentationTask
+import website.gradle.tasks.DownloadTask
+import website.gradle.tasks.GuidesTask
+import website.gradle.tasks.HtaccessTask
+import website.gradle.tasks.MinutesTask
 import website.gradle.tasks.ParityCheckGuideTask
+import website.gradle.tasks.PluginsTask
+import website.gradle.tasks.ProfilesTask
+import website.gradle.tasks.QuestionsTask
+import website.gradle.tasks.RenderSiteTask
+import website.gradle.tasks.SitemapTask
 import website.gradle.tasks.VendorGuideTask
 
 /**
@@ -230,6 +243,22 @@ class RenderGuidesPlugin {
                     // copy byte-clean for re-vendor.
                     task.notCompatibleWithConfigurationCache(
                             'Vendored grails.doc.gradle.PublishGuideTask references Project + AntBuilder')
+                    // Several main-site rendering tasks declare build/ as their
+                    // @OutputDirectory (they write to build/dist/<x>.html), which
+                    // overlaps with build/staged-guides/<name>/<v>/. Without
+                    // explicit ordering, Gradle 9.4 raises a fatal validation
+                    // error: 'renderGuide_* uses output of :renderSite/:genPlugins/
+                    // :renderBlog/:renderMinutes/:genProfilesPage without declaring
+                    // dependency'. mustRunAfter resolves the ordering without
+                    // forcing those tasks to be invoked when only renderGuide_* is
+                    // scheduled. Names come from each task class's NAME constant
+                    // so a future task rename surfaces as a compile error here.
+                    task.mustRunAfter(RenderSiteTask.NAME, PluginsTask.NAME,
+                            BlogTask.NAME, MinutesTask.NAME, ProfilesTask.NAME,
+                            HtaccessTask.NAME, BskyAtProtoDidTask.NAME,
+                            SitemapTask.NAME, AssetsTask.NAME,
+                            DocumentationTask.NAME, DownloadTask.NAME,
+                            QuestionsTask.NAME, GuidesTask.NAME)
                 }
                 wiring.renderTaskNames << renderTaskName
 
