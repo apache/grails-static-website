@@ -1,0 +1,46 @@
+# SPDX-License-Identifier: Apache-2.0
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# CSP allowlist for the rendered site under build/dist/.
+# The :cspScan task walks every *.html file in build/dist/ and reports
+# any <script src>, <link href>, <iframe src>, or <img src> that
+# references an https:// origin not listed below.
+#
+# Adding a host here is a security decision -- prefer same-origin
+# self-hosted assets where feasible. Each hostname must be
+# accompanied by a one-line justification.
+#
+# The matching is host-only (path is ignored). Subdomain matches are
+# explicit -- adding "grails.apache.org" does NOT cover
+# "guides.grails.apache.org".
+
+allowedHosts:
+  - host: 'grails.apache.org'
+    reason: 'The site itself; outbound links to other pages on this domain are expected.'
+  - host: 'www.apache.org'
+    reason: 'Apache Software Foundation links (license, downloads, sponsorship, etc.).'
+  - host: 'github.com'
+    reason: 'Outbound links to source repositories and issue tracker (apache/grails-*).'
+  - host: 'raw.githubusercontent.com'
+    reason: 'Same as github.com but for raw asset URLs occasionally referenced from docs.'
+  - host: 'guides.grails.org'
+    reason: 'Legacy guides site; transitional cross-references during the migration. Remove after Phase 15 redirect cutover.'
+
+# Tags whose src/href URLs are scanned. The defaults cover the four
+# CSP-relevant directives (script-src, style-src, frame-src, img-src).
+scannedTags:
+  - script
+  - link
+  - iframe
+  - img

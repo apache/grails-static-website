@@ -26,6 +26,7 @@ import org.gradle.api.Project
 import website.gradle.tasks.AssetsTask
 import website.gradle.tasks.BlogTask
 import website.gradle.tasks.BskyAtProtoDidTask
+import website.gradle.tasks.CspScanTask
 import website.gradle.tasks.DocumentationTask
 import website.gradle.tasks.DownloadTask
 import website.gradle.tasks.GrailsWebsiteTask
@@ -126,5 +127,9 @@ class GrailsWebsitePlugin implements Plugin<Project> {
         // pair whose sourcePath/guide/ exists on disk; aggregate is buildAllGuides.
         // Renderer is the vendored grails.doc.* subtree -- see buildSrc/VENDOR.md.
         RenderGuidesPlugin.apply(project)
+
+        // Scans build/dist/ HTML for non-allowlisted https:// references.
+        // Allowlist: conf/csp-allowlist.yml. Report: build/reports/csp-scan.md.
+        CspScanTask.register(project)
     }
 }
