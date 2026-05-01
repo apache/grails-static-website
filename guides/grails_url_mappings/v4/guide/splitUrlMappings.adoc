@@ -1,0 +1,50 @@
+Over time, your applications might end up with many similar URL mappings, or large numbers of mappings that are specific to one part of the app. There are a few ways to organize URL mappings, including the `group` method, as well as using multiple `UrlMapping.groovy` files.
+
+=== URL Groups
+
+If you have a large number of mappings that fall under a particular path, you can use the `group` method to specify the shared portion of the URL pattern, and list the right-hand portion of each pattern separately.
+
+Edit the `UrlMappings.groovy` file again, and group the three URL mappings we've added under a shared path: `/conf`.
+
+[source,groovy]
+.grails-app/controllers/demo/UrlMappings.groovy
+----
+package demo
+
+class UrlMappings {
+
+    static mappings = {
+        //...
+
+        group "/conf", {
+            get "/talks/$id?"(controller: 'conference', action: 'talks')
+            get "/speakers/$id?"(controller: 'conference', action: 'speakers')
+            get "/agenda"(controller: 'conference', action: 'agenda')
+        }
+
+        //...
+    }
+}
+----
+
+If you restart the application, you can see that these mappings now require `/conf` as the first part of the URL pattern. E.g., `http://localhost:8080/conf/talks`
+
+=== Multiple UrlMappings files
+
+Grails supports multiple `UrlMappings` files. The only requirements are that each file must be uniquely named, reside within `grails-app/controllers`, and the file name must end with `UrlMappings.groovy`.
+
+Let's create a second `UrlMappings` file for our `ConferenceController` mappings. Create a new file named `ConferenceUrlMappings.groovy`, end edit its contents as shown below:
+
+[source,groovy]
+.grails-app/controllers/demo/ConferenceUrlMappings.groovy
+----
+include::../snippets/grails-app/controllers/demo/ConferenceUrlMappings.groovy[]
+----
+
+Now, *delete* the `/conf` URL mappings from the original `UrlMappings.groovy` file, so it matches the version below:
+
+[source,groovy]
+.grails-app/controllers/demo/UrlMappings.groovy
+----
+include::../snippets/grails-app/controllers/demo/UrlMappings.groovy[]
+----

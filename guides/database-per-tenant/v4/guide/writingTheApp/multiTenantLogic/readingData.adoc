@@ -1,0 +1,59 @@
+To implement Multi-Tenant queries in a GORM Data Service simply add abstract methods that correspond to link:{gormdocs}#_data_service_queries[one of the supported conventions in GORM]:
+
+[source, groovy]
+.grails-app/services/example/VehicleService.groovy
+----
+include::{sourcedir}/grails-app/services/example/VehicleService.groovy[tags=queries, indent=0]
+----
+
+<1> Each query method is annotated with `@Join`
+<2> The `list` method returns a list of `Vehicle` instances and takes optional arguments as a map to perform pagination
+<3> The `count` method counts the number of `Vehicle` instances
+<4> The `find` method finds a single `Vehicle` by `id`
+
+The usage of `@Join` warrants further explanation. Recall that in a Multi-Tenant application a new Hibernate session is created for the connection found for the current tenant id.
+
+Once the method completes however, this session is closed which means that any associations not loaded by the query could lead to a `LazyInitializationException` due to the closed session.
+
+It is therefore critical that your queries always return the data that is required to render the view. This typically leads to better performing queries anyway and will in fact help you design a better performing application.
+
+The `@Join` annotation is a simple way to achieve a join query, but in some cases it may be simpler to use link:{gormdocs}#_query_joins[a JPA-QL query].
+
+Now it is time to write a controller that can use these newly defined methods. First, create a new `grails-app/controllers/example/VehicleController.groovy` class with either the `create-controller` command or your preferred IDE.
+
+The `VehicleController` should define a property referencing the previously created `VehicleService`:
+
+[source, groovy]
+.grails-app/controllers/example/VehicleController.groovy
+----
+include::{sourcedir}/grails-app/controllers/example/VehicleController.groovy[tags=class, indent=0]
+    ...
+}
+----
+
+Now run `grails generate-views` to generate some default GSP views that can render the `Vehicle` instances:
+
+[source,bash]
+----
+$ grails generate-views example.Vehicle
+----
+
+Next add an entry into the `UrlMappings.groovy` file to map the `/vehicles` URI:
+
+[source, groovy]
+.grails-app/controllers/example/UrlMappings.groovy
+----
+include::{sourcedir}/grails-app/controllers/example/UrlMappings.groovy[tag=vehicles, indent=0]
+----
+
+Now you are ready to add the query logic to read `Vehicle` instances for each tenant. Update `VehicleController` with the following read operations:
+
+[source, groovy]
+.grails-app/controllers/example/VehicleController.groovy
+----
+include::{sourcedir}/grails-app/controllers/example/VehicleController.groovy[tags=index, indent=0]
+
+include::{sourcedir}/grails-app/controllers/example/VehicleController.groovy[tags=show, indent=0]
+----
+
+Both the `find` and `show` actions use the `VehicleService` to locate `Vehicle` instances. The `VehicleService` will ensure the correct tenant is resolved and the correct data returned for each tenant.

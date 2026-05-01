@@ -1,0 +1,6 @@
+We are going to setup a multi-project build with a Grails application and a custom
+CodeNarc Rule as shown in the next image:
+
+image::multiproject.png[]
+
+Check our http://guides.grails.org/grails-multi-project-build/guide/index.html[Grails Multi-Project Build] Guide, to learn more.

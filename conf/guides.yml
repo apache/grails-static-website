@@ -209,6 +209,10 @@ guides:
           - 'multi-tenancy'
           - 'hibernate'
           - 'gorm'
+        sampleRef:
+          repo: 'grails-guides/database-per-tenant'
+          branch: 'master'
+          sha: 'd5deac3fc9e7377b07212fbcd403988ac03d67f8'
 
   - name: 'discriminator-per-tenant'
     title: 'Single Database Multi-Tenancy - Discriminator Column'
@@ -226,6 +230,13 @@ guides:
           - 'hibernate'
           - 'gorm'
           - 'grails4'
+        # sampleRef intentionally omitted in this PR.
+        # Upstream guide at master@1c0ea34a has an unresolvable include
+        # `complete/grails-app/init/example/ManufacturerService.groovy`
+        # which does not exist on disk at that SHA (the file lives in a
+        # different package). Vendoring will fail until either the
+        # upstream guide is patched or we pin to a SHA where the path is
+        # valid. Tracked for follow-up.
 
   - name: 'gorm-event-listeners'
     title: 'GORM Event Listeners'
@@ -309,6 +320,14 @@ guides:
           - 'backend'
           - 'GORM'
           - 'hibernate'
+        # sampleRef intentionally omitted in this PR.
+        # Upstream guide at master@bafdfdc8 has an unresolvable include
+        # `include::{sourceDir}/src/main/resources/application.properties[]`,
+        # but the upstream sample app uses application.yml -- application.properties
+        # does not exist on disk at that SHA. Vendoring will fail until either:
+        #   - the upstream guide is patched to reference application.yml, OR
+        #   - we pin to an earlier SHA where application.properties existed.
+        # Tracked for follow-up.
 
   - name: 'grails_i18n'
     title: 'How to change languages in a Grails app?'
@@ -349,6 +368,10 @@ guides:
         tags:
           - 'url-mappings'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails_url_mappings'
+          branch: 'master'
+          sha: '363287cf8ade9e179d3a5504d77368f95305b319'
 
   - name: 'grails-as-docker-container'
     title: 'Grails as a Docker Container'
@@ -461,6 +484,10 @@ guides:
           - 'codenarc'
           - 'static-analysis'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-codenarc'
+          branch: 'master'
+          sha: '3145e967154895cdb6a349bb10160309a29ac03b'
 
   - name: 'grails-configuration-properties'
     title: 'SpringBoot @ConfigurationProperties in Grails App'

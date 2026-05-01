@@ -1,0 +1,23 @@
+Please choose from the following options to create your project:
+
+=== 1. Create a new Application via the Grails CLI
+
+If you have Grails (>= 3.3.0) installed, you can create your application on the command line:
+
+[source,bash]
+----
+~ grails create-app agenda
+----
+
+=== 2. Create a new Application via the Application Forge
+
+You can download your project from http://start.grails.org, either by using the online wizard, or the following `curl` command:
+
+[source,bash]
+----
+~ curl -O start.grails.org/agenda.zip -d version=3.3.2
+----
+
+=== 3. Use the Initial Project from the Guide Repo
+
+Within the guide directory, copy the `initial` project to a directory of your choice, rename it (e.g., `agenda`), and follow along with the guide from within that project.

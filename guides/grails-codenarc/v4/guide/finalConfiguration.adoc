@@ -1,0 +1,25 @@
+If you install CodeNarc in a medium-big size project, which has not use any static analysis tool before, you may have hundreds or event thousands of violations. It is possible that your team has not been careful enough while writing code. Moreover, it is likely that CodeNarc default configuration contains some rules you don't agree with. Rules which might not be a good fit for the team. 
+
+My advice is to review all the violations, read their documentation and then decide if you want to disable them,
+configure with another option and finally fix and respect them.
+
+Once the team decides the rules and the configuration the next step is to choose the thresholds to make the build fail.
+These thresholds allow having successful builds with some violations but, once we reach these levels, the build will fail.
+
+To do that, just edit the `build.gradle` file:
+
+[source, groovy]
+./app/build.gradle
+----
+codenarc {
+    ...
+    // We need to remove the following line
+    //ignoreFailures = true
+
+    maxPriority1Violations = 0
+    maxPriority2Violations = 5
+    maxPriority3Violations = 9
+}
+----
+
+With this configuration the build will fail once we reach these thresholds.

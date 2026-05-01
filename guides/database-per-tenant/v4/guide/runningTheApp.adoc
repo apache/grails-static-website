@@ -1,0 +1,9 @@
+include::{commondir}/common-runapp.adoc[]
+
+Now perform the following steps:
+
+1. Navigate to the home page and select "Audi"
+2. Enter data for a `Vehicle` to create a new `Vehicle`
+3. Note that the data will be created within the `audi` database.
+
+If you then navigate back to the homepage and select "Ford" the current tenant is switched and you can see that if you view the data for the Vehicles for "Ford" the application is now using the `ford` database, effectively isolating the data between the two tenants.
