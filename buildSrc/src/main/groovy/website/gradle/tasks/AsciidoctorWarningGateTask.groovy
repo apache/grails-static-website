@@ -69,31 +69,41 @@ class AsciidoctorWarningGateTask extends DefaultTask {
     @Input
     final ListProperty<String> guideTaskMappings = project.objects.listProperty(String)
 
+    @Input
+    @Optional
+    final ListProperty<String> allowlistPatterns = project.objects.listProperty(String)
+
     @TaskAction
     void gate() {
         File logsRoot = logDir.get().asFile
         File report = reportFile.get().asFile
 
-        if (!logsRoot.isDirectory()) {
-            writeCsv(report, [])
-            return
-        }
-
         Map<String, GuideTaskMetadata> metadataByTaskName = parseGuideTaskMappings(guideTaskMappings.get())
+        List<Pattern> compiledAllowlist = compileAllowlist(allowlistPatterns.getOrElse([] as List<String>))
         List<GuideSummary> results = []
 
         for (GuideTaskMetadata metadata : metadataByTaskName.values()) {
             File logFile = new File(logsRoot, "asciidoctor-${metadata.taskName}.log")
-            List<String> violations = logFile.isFile() ? findViolations(logFile) : []
-            String status = statusFor(violations.isEmpty())
-            String details = violations.isEmpty()
-                    ? 'No unallowlisted warning or error lines detected.'
-                    : abbreviate(violations.join(' | '))
+            String status
+            int issueCount
+            String details
+            if (!logFile.isFile()) {
+                status = 'REVIEW'
+                issueCount = 0
+                details = "Missing captured log output for ${metadata.taskName}; rerun the renderer or invalidate Gradle caches before trusting this verdict.".toString()
+            } else {
+                List<String> violations = findViolations(logFile, compiledAllowlist)
+                status = statusFor(violations.isEmpty())
+                issueCount = violations.size()
+                details = violations.isEmpty()
+                        ? 'No unallowlisted warning or error lines detected.'
+                        : abbreviate(violations.join(' | '))
+            }
             results << new GuideSummary(
                     guide: metadata.guide,
                     version: metadata.version,
                     status: status,
-                    issueCount: violations.size(),
+                    issueCount: issueCount,
                     details: details,
             )
         }
@@ -106,6 +116,17 @@ class AsciidoctorWarningGateTask extends DefaultTask {
         }
     }
 
+    private static List<Pattern> compileAllowlist(List<String> patterns) {
+        List<Pattern> compiled = []
+        for (String raw : patterns) {
+            String trimmed = raw?.trim()
+            if (trimmed) {
+                compiled.add(Pattern.compile(trimmed))
+            }
+        }
+        compiled
+    }
+
     static TaskProvider<AsciidoctorWarningGateTask> register(Project project) {
         wireLogCapture(project)
         project.tasks.register(NAME, AsciidoctorWarningGateTask) { AsciidoctorWarningGateTask task ->
@@ -116,6 +137,7 @@ class AsciidoctorWarningGateTask extends DefaultTask {
             task.reportFile.convention(project.layout.buildDirectory.file('reports/asciidoctor-warning-gate.csv'))
             task.failOnViolation.convention(isHardFailMode(project))
             task.guideTaskMappings.set(buildGuideTaskMappings(project))
+            task.allowlistPatterns.convention(parseAllowlistProperty(project))
             task.dependsOn('buildAllGuides')
         }
     }
@@ -163,9 +185,8 @@ class AsciidoctorWarningGateTask extends DefaultTask {
         }
     }
 
-    private static List<String> findViolations(File logFile) {
+    private static List<String> findViolations(File logFile, List<Pattern> excludeAllowlist) {
         List<String> violations = []
-        List<Pattern> excludeAllowlist = []
         int lineNumber = 0
         logFile.eachLine('UTF-8') { String line ->
             lineNumber++
@@ -174,6 +195,14 @@ class AsciidoctorWarningGateTask extends DefaultTask {
             }
         }
         violations
+    }
+
+    private static List<String> parseAllowlistProperty(Project project) {
+        Object raw = project.findProperty('asciidoctorAllowlist')
+        if (!raw) {
+            return [] as List<String>
+        }
+        ((raw as String).split(',') as List<String>).collect { String token -> token?.trim() }.findAll { String token -> token } as List<String>
     }
 
     private static boolean isAllowlisted(String line, List<Pattern> excludeAllowlist) {
