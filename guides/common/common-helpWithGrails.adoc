@@ -1,21 +1,10 @@
-++++
-<h3 style="color: #333; margin-bottom:25px;"><a href="https://objectcomputing.com/" target="_blank">Object Computing, Inc.</a> (OCI) sponsored the creation of this Guide. A variety of consulting and support services are available.</h3>
+== Help with Apache Grails
 
-<!-- BEGIN HubSpot Consultation Form -->
+Apache Grails is supported by an active community of contributors and the Apache Software Foundation. If you need help working through a guide, want to discuss the framework, or have run into something that looks like a bug, the channels below are the right place to start.
 
-<!--[if lte IE 8]>
-<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2-legacy.js"></script>
-<![endif]-->
-<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2.js"></script>
-<script>
-  hbspt.forms.create({
-	portalId: "4547412",
-	formId: "f8bc9b16-d5f6-4226-a24e-da0eb8b73363"
-});
-</script>
+* https://slack.grails.org[Slack] - real-time conversation with the Apache Grails community.
+* https://lists.apache.org/list.html?dev@grails.apache.org[Developer mailing list] - design discussions and contributor coordination.
+* https://lists.apache.org/list.html?users@grails.apache.org[Users mailing list] - end-user questions and answers.
+* https://github.com/apache/grails-core/issues[Issue tracker on GitHub] - file a bug or feature request against the framework.
 
-<!-- END HubSpot Consultation Form -->
-
-<h3 style="color: #333;">OCI is Home to Grails</h3>
-
-<p><a href="https://objectcomputing.com/products/2gm-team" target="_blank">Meet the Team</a></p>
+For Grails plugins, see the matching project on https://github.com/apache?q=grails[the apache org] or the plugin's own GitHub repository.

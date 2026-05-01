@@ -195,19 +195,6 @@ class GuidesPage {
     }
 
     @CompileDynamic
-    static String guideSuggestion() {
-        renderHtml {
-            div(class: 'guide-suggestion') {
-                h3(class: 'column-header', 'Which topic would you like us to cover?')
-                def formHtml = ReadFileUtils.readFileContent('guidesuggestionform.html')
-                if (formHtml) {
-                    mkp.yieldUnescaped(formHtml)
-                }
-            }
-        }
-    }
-
-    @CompileDynamic
     static String leftColumn(Tag tag, Category category, Set<Tag> tags) {
         renderHtml {
             div {
