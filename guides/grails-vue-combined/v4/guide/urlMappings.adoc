@@ -2,7 +2,7 @@ Our final change needs to happen in `UrlMappings.groovy`. If you recall, by defa
  application metadata at the root context. However, in order for our combined build to work, we need to load our Vue app
  at the root context. Fortunately, this is a very simple change as well.
 
-Edit `server/grails-app/controllers/demo/UrlMappings.groovy`:
+Edit `server/grails-app/controllers/example/grails/UrlMappings.groovy`:
 
 Delete this line:
 

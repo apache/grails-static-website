@@ -1,4 +1,4 @@
-To generate the unified executable JAR, file, simply run the following command:
+To generate the unified executable JAR file, simply run the following command:
 
 [source, bash]
 ----
@@ -30,5 +30,5 @@ TIP: To run the application in development mode: +
 ----
 - ./gradlew client:start - for the client Vue app
 - ./gradlew server:bootRun - for the server Grails app
-- ./gradlew bootRun -parallel - to launch them at the same time with one command
+- ./gradlew bootRun --parallel - to launch them at the same time with one command
 ----

@@ -27,6 +27,6 @@ include::../snippets/src/test/groovy/grails/mock/basics/ClassroomGradesNotificat
 <4> Invoke the service under test, which now has a mock implementation of `EmailService`.
 <5> Use the spock syntax to verify invocation, params, and return a value.
 
-In the `then:` clause, we use spock to verify the mock was called. With `1 *`, this verfies it was called once. The parameters defined verify what was passed in during execution. The `>> 1` give the mock stub capability where it will return 1.
+In the `then:` clause, we use spock to verify the mock was called. With `1 *`, this verifies it was called once. The parameters defined verify what was passed in during execution. The `>> 1` give the mock stub capability where it will return 1.
 
 Essentially, we are verifying the mock was called three different times with different `Student` parameters.

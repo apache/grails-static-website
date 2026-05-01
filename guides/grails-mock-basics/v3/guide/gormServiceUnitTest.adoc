@@ -1,4 +1,4 @@
-We are going to use an integration test to test the query:
+We are going to use a unit test to test the query:
 
 [source, groovy]
 .src/test/groovy/grails/mock/basics/StudentServiceSpec.groovy
