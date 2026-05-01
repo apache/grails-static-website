@@ -21,10 +21,11 @@ package website.gradle.tasks
 import groovy.time.TimeCategory
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
-
 import jakarta.annotation.Nonnull
 import jakarta.annotation.Nullable
 import jakarta.validation.constraints.NotNull
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 import org.gradle.api.Project
 import org.gradle.api.file.DirectoryProperty
@@ -365,9 +366,33 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
             @Nonnull @NotNull Map<String, String> meta,
             @NotNull @Nonnull String templateText
     ) {
-        def outputHtml = templateText
+        def outputHtml = expandPartials(templateText)
         def result = outputHtml.replace(' data-document>', '>' + html)
         return replaceLineWithMetadata(result, meta)
+    }
+
+    /**
+     * Replace [%PARTIAL:&lt;name&gt;] tokens with the contents of
+     * templates/partials/&lt;name&gt;.html, so shared chrome (header, footer,
+     * head scripts) lives in a single source of truth.
+     */
+    static String expandPartials(String templateText) {
+        Pattern token = Pattern.compile(/\[%PARTIAL:([\w\-]+)\]/)
+        Matcher m = token.matcher(templateText)
+        StringBuilder out = new StringBuilder()
+        int last = 0
+        while (m.find()) {
+            out.append(templateText, last, m.start())
+            File partial = new File("templates/partials/${m.group(1)}.html")
+            if (partial.isFile()) {
+                out.append(partial.getText('UTF-8'))
+            } else {
+                out.append("<!-- missing partial: ${m.group(1)} -->")
+            }
+            last = m.end()
+        }
+        out.append(templateText, last, templateText.length())
+        out.toString()
     }
 
     static String formatDate(String date) {

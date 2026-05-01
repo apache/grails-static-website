@@ -200,17 +200,22 @@ class RenderGuidesPlugin {
                 File manifestFile = new File(versionDir, 'manifest.yml')
                 Map<String, Object> attributes = manifestToAttributes(
                         manifestFile, guide, version, versionKey)
+                injectSitePartials(project, attributes)
 
                 String stageTaskName = "stageGuideSource_${safeName}_${safeVersion}"
                 String renderTaskName = "renderGuide_${safeName}_${safeVersion}"
                 String stagedRelPath = "staged-guides/${guideName}/${versionKey}"
 
+                // {commondir} resolves relative to each guide's .adoc file,
+                // pointing at the staged copy of guides/common/.
+                attributes.put('commondir', 'common')
+
                 // Stage the per-version source into a working layout that
-                // DocPublisher expects: <staged>/guide/*.adoc + toc.yml.
-                // Our fixture stores toc.yml at the version root (alongside
-                // manifest.yml) for self-containedness; the renderer wants
-                // it inside guide/. The Sync task does the rearrangement
-                // without mutating the fixture in source control.
+                // DocPublisher expects: <staged>/guide/*.adoc + toc.yml. The
+                // shared guides/common/ snippets are copied alongside as
+                // <staged>/guide/common/ so {commondir} resolves cleanly.
+                File commonDirSrc = project.rootProject.layout.projectDirectory
+                        .dir('guides/common').asFile
                 project.tasks.register(stageTaskName, org.gradle.api.tasks.Sync) { stage ->
                     stage.group = GROUP
                     stage.description = "Stages ${guideName} v${versionKey} source for the vendored grails-doc renderer"
@@ -223,6 +228,11 @@ class RenderGuidesPlugin {
                     if (rootToc.isFile()) {
                         stage.from(rootToc) {
                             into 'guide'
+                        }
+                    }
+                    if (commonDirSrc.isDirectory()) {
+                        stage.from(commonDirSrc) {
+                            into 'guide/common'
                         }
                     }
                 }
@@ -333,6 +343,21 @@ class RenderGuidesPlugin {
      * must be scalar.</p>
      */
     @CompileDynamic
+    /**
+     * Reads the shared chrome partials from {@code templates/partials/} and
+     * exposes them as {@code siteHead}, {@code siteHeader}, {@code siteFooter}
+     * so the legacy guide layout can substitute them via Groovy {@code ${...}}.
+     */
+    private static void injectSitePartials(Project project, Map<String, Object> attrs) {
+        ['siteHead': 'site-head', 'siteHeader': 'site-header', 'siteFooter': 'site-footer'].each { key, partial ->
+            File f = project.rootProject.layout.projectDirectory
+                    .file("templates/partials/${partial}.html").asFile
+            if (f.isFile()) {
+                attrs.put(key, f.getText('UTF-8'))
+            }
+        }
+    }
+
     private static Map<String, Object> manifestToAttributes(
             File manifestFile, Map guide, Map version, String versionKey) {
         Map<String, Object> attrs = [:]
