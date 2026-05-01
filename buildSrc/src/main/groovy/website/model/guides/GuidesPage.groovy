@@ -32,7 +32,7 @@ import static website.utils.RenderUtils.renderHtml
 class GuidesPage {
 
     public static final Integer NUMBER_OF_LATEST_GUIDES = 8
-    public static final String GUIDES_URL = 'https://guides.grails.org'
+    public static final String GUIDES_URL = 'https://grails.apache.org/guides'
 
     static Map<String, Category> categories = [
             advanced: new Category(name: 'Advanced Grails', image: 'advancedgrails.svg'),
