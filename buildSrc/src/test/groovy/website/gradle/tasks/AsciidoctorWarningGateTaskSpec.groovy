@@ -30,7 +30,7 @@ class AsciidoctorWarningGateTaskSpec extends Specification {
     @TempDir
     File tempDir
 
-    def 'captures a clean log as VERIFIED and wires cleanup finalizer'() {
+    def 'captures a clean log as VERIFIED'() {
         given:
         def project = ProjectBuilder.builder().withProjectDir(tempDir).build()
         String renderTaskName = registerRenderTask(project, 'demo-guide', '1')
@@ -46,7 +46,6 @@ class AsciidoctorWarningGateTaskSpec extends Specification {
         then:
         gateTask.group == AsciidoctorWarningGateTask.GROUP
         gateTask.reportFile.get().asFile.text.contains('demo-guide,1,VERIFIED,0')
-        project.tasks.findByName("cleanup-${renderTaskName}-logs") != null
     }
 
     def 'writes only the header when no logs directory exists'() {

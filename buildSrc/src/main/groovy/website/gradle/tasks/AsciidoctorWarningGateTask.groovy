@@ -23,10 +23,8 @@ import groovy.transform.CompileStatic
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.Project
-import org.gradle.api.Task
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.RegularFileProperty
-import org.gradle.api.plugins.ExtraPropertiesExtension
 import org.gradle.api.provider.Property
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.tasks.Input
@@ -143,7 +141,15 @@ class AsciidoctorWarningGateTask extends DefaultTask {
     }
 
     private static void wireLogCapture(Project project) {
-        project.tasks.withType(PublishGuideTask).all { PublishGuideTask renderTask ->
+        // The listener is added in doFirst on each PublishGuide task. We deliberately
+        // do NOT register a finalizer cleanup task: removing the listener would
+        // require the cleanup task to access the renderTask's extensions/logging at
+        // execution time, which Gradle's configuration cache disallows when the
+        // cleanup is wired across tasks. Leaving the listener attached for the
+        // remainder of the JVM lifetime is harmless: each `gradle` invocation runs
+        // in a single-use Daemon (see publish.yml: --no-daemon) so the listener is
+        // GC'd when the process exits, never crossing build boundaries.
+        project.tasks.withType(PublishGuideTask).configureEach { PublishGuideTask renderTask ->
             File logsRoot = project.layout.buildDirectory.dir('logs').get().asFile
             File logFile = new File(logsRoot, "asciidoctor-${renderTask.name}.log")
 
@@ -157,31 +163,7 @@ class AsciidoctorWarningGateTask extends DefaultTask {
 
                 renderTask.logging.addStandardOutputListener(writeListener)
                 renderTask.logging.addStandardErrorListener(writeListener)
-
-                ExtraPropertiesExtension extraProperties = renderTask.extensions.extraProperties
-                extraProperties.set('logFile', logFile)
-                extraProperties.set('logListener', writeListener)
             }
-
-            String cleanupTaskName = "cleanup-${renderTask.name}-logs"
-            if (project.tasks.findByName(cleanupTaskName) == null) {
-                project.tasks.register(cleanupTaskName) { Task cleanupTask ->
-                    cleanupTask.notCompatibleWithConfigurationCache('Removes StandardOutputListener instances from PublishGuide tasks.')
-                    cleanupTask.doLast {
-                        try {
-                            ExtraPropertiesExtension extraProperties = renderTask.extensions.extraProperties
-                            if (extraProperties.has('logListener')) {
-                                StandardOutputListener writeListener = extraProperties.get('logListener') as StandardOutputListener
-                                renderTask.logging.removeStandardOutputListener(writeListener)
-                                renderTask.logging.removeStandardErrorListener(writeListener)
-                            }
-                        } catch (Exception e) {
-                            project.logger.warn("Listener cleanup failed for ${renderTask.name}: ${e.message}")
-                        }
-                    }
-                }
-            }
-            renderTask.finalizedBy(cleanupTaskName)
         }
     }
 
