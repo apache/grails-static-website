@@ -2290,6 +2290,6 @@ guides:
           - 'framework'
         sampleRef:
           repo: 'grails-guides/vaadin-grails'
-          branch: 'master'
-          sha: 'a239a804e6b9811247a3a8290c7c779e096b5eb9'
+          branch: 'grails4'
+          sha: 'ffe260205df173a6d214e86ccc1d845c371d3290'
 

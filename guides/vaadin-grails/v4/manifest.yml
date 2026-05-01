@@ -12,6 +12,6 @@ tags:
 - framework
 publicationDate: '2017-07-24'
 githubSlug: grails-guides/vaadin-grails
-githubBranch: master
-githubSha: a239a804e6b9811247a3a8290c7c779e096b5eb9
+githubBranch: grails4
+githubSha: ffe260205df173a6d214e86ccc1d845c371d3290
 sourceCommitDate: '2026-05-01T08:44:13-04:00'
