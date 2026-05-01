@@ -159,6 +159,9 @@ abstract class PublishMainSiteTask extends DefaultTask {
     static TaskProvider<PublishMainSiteTask> register(Project project) {
         project.tasks.register(NAME, PublishMainSiteTask) { PublishMainSiteTask task ->
             task.dependsOn('build')
+            // Also include the vendored guide corpus so build/dist/guides/<name>/<v>/
+            // ships alongside the main site under https://grails.apache.org/guides/.
+            task.dependsOn('buildAllGuides')
             task.gitHubSlug.convention(
                     project.providers.environmentVariable('GITHUB_SLUG')
                             .orElse(DEFAULT_GITHUB_SLUG))

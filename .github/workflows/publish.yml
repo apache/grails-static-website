@@ -53,8 +53,11 @@ jobs:
           GH_TOKEN: ${{ secrets.GRAILS_GHTOKEN }}
           GH_BRANCH: asf-site-production
           GRAILS_WS_URL: https://grails.apache.org
-      # NOTE: A previous "Publish Guides Site" step that pushed to
-      # grails-guides/grails-guides-template gh-pages was removed as part
-      # of issue #354. https://guides.grails.org/ is served from that
-      # frozen gh-pages branch until the new canonical location at
-      # https://grails.apache.org/guides/ is fully cut over.
+      # The publishMainSite Gradle task depends on both `build` and
+      # `buildAllGuides`, so the rendered guide corpus under
+      # build/dist/guides/<name>/<v>/ is mirrored into the deploy repo as
+      # part of the same step, making https://grails.apache.org/guides/
+      # the canonical guide location served by apache/grails-website.
+      # https://guides.grails.org/ remains alive serving frozen content
+      # from grails-guides/grails-guides-template gh-pages until Phase 15
+      # of issue #354 swaps it for redirect stubs.
