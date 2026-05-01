@@ -1,0 +1,48 @@
+Imagine the following scenario. You want to send every user an email 2 hours after they registered into your app. You want to ask him about his experiences during this first interaction with your service.
+
+For this guide, we are going to schedule a Job to trigger after one minute. 
+
+Modify `BootStrap.groovy` to call twice a new service named `RegisterService`.
+
+[source, groovy]
+.grails-app/init/demo/BootStrap.groovy
+----
+include::../snippets/grails-app/init/demo/BootStrap.groovy[]
+----
+
+Create `RegisterService.groovy`
+
+
+[source, groovy]
+.grails-app/services/demo/RegisterService.groovy
+----
+include::../snippets/grails-app/services/demo/RegisterService.groovy[]
+----
+
+<1> This method returns a date one minute into the future
+<2> We can find the necessary `Jobkey` with the JobService's simpleName
+<3> We can pass data into a Job execution.
+<4> Schedule the trigger
+
+
+Create `FollowupEmailJobService.groovy`
+
+
+[source, groovy]
+.grails-app/services/demo/FollowupEmailJobService.groovy
+----
+include::../snippets/grails-app/services/demo/FollowupEmailJobService.groovy[]
+----
+
+<1> Extract the job data 
+
+If you execute the above code you will see the Job being executed one minute after we schedule it and with the supplied email address.
+
+[source, bash]
+----
+INFO demo.RegisterService         : saving harry@howards.com at 23/1/2018 07:55:21
+INFO demo.RegisterService         : saving ron@howards.com at 23/1/2018 07:55:41
+INFO demo.FollowupEmailJobService : Sending followup email to: harry@howards.com at 23/1/2018 07:56:21
+INFO demo.FollowupEmailJobService : Sending followup email to: ron@howards.com at 23/1/2018 07:56:41
+----
+ 

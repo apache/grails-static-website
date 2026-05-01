@@ -1,0 +1,4 @@
+In this guide we will show you how to add Google OAuth2 authentication to your app using the
+https://alvarosanchez.github.io/grails-spring-security-rest/latest/docs/index.html[Spring Security Rest] plugin.
+
+We will be using the http://plugins.grails.org/plugin/grails/spring-security-rest[Spring Security Rest] plugin

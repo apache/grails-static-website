@@ -1,0 +1,19 @@
+training:
+  title: Training
+gettingStarted:
+  title: Getting Started
+  requirements: What you will need
+  howto: How to complete the guide
+runningTheApp:
+  title: Application Overview
+kakfaDocker:
+  title: Running Kafka
+originalAppGrails:
+  title: Books Application
+buildingAnalytics:
+  title: Building Analytics app
+running: Running the apps
+nextSteps:
+  title: Next Steps
+helpWithGrails:
+  title: Do you need help with Grails?

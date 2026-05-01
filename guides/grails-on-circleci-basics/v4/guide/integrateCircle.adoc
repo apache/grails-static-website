@@ -1,0 +1,14 @@
+Circle CI integrates directly with your GitHub account. Follow the directions on the Circle CI website for
+https://circleci.com/docs/2.0/#creating-a-repository[creating a repo to integrate Circle CI]
+
+In short you will need to:
+
+. Use your GitHub account to sign into Circle CI.
+. Give permission to Circle to access your repositories.
+. Enable the repository with Circle CI.
+. Create a `.circleci/config.yml`
+
+The next image shows how to enable the repository with Circle CI (Click Setup Project).
+
+image::circle.png[]
+

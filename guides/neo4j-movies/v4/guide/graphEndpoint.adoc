@@ -1,0 +1,30 @@
+The final endpoint to implement is the `graph` endpoint. This endpoint outputs data about the graph in a JSON format that can be interpreted by the https://d3js.org[D3 JavaScript Library] used by the example application's UI.
+
+
+The first step is to write a query for the data that we need. The nice thing about GORM for Neo4j is it has powerful integration with the Cypher query language.
+
+To execute a Cypher query simply define an `abstract` method called `findMovieTitlesAndCast` that using the `@Cypher` annotation:
+
+[source,groovy]
+.grails-app/services/neo4j/movies/MovieService.groovy
+----
+include::../snippets/grails-app/services/neo4j/movies/MovieService.groovy[tags=graph, indent=0]
+----
+
+Using the `@Cypher` annotation GORM can automatically implement methods that execute Cypher queries for you. Notice how you can use class names and reference properties within the body of the query and these will be type checked ensuring the query is valid.
+
+The next step is to convert the result of this query into a format expected by D3:
+
+[source,groovy]
+.grails-app/services/neo4j/movies/MovieService.groovy
+----
+include::../snippets/grails-app/services/neo4j/movies/MovieService.groovy[tags=d3format, indent=0]
+----
+
+The `graph` method takes the Neo4j results and converts it to an appropriate format. Finally we can add a method to `MovieController` to return the required data:
+
+[source,groovy]
+.grails-app/controllers/neo4j/movies/MovieController.groovy
+----
+include::../snippets/grails-app/controllers/neo4j/movies/MovieController.groovy[tags=graph, indent=0]
+----

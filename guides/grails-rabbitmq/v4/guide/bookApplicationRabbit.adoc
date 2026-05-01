@@ -1,0 +1,36 @@
+Add RabbitMQ Native plugin to the `initial` app.
+
+[source,groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[indent=0, tag=mqDependency]
+----
+
+Once we have added the dependency we can go ahead and add the necessary config to connect to RabbitMQ.
+
+[source,yml]
+.grails-app/conf/application.yml
+----
+include::../snippets/grails-app/conf/application.yml[indent=0, tag=mqConfig]
+----
+<1> All connections require a name but you can name it whatever you want
+<2> Where RabbitMQ is located. In this case on our local system but this can also be a web url or ip address
+<3> Default username `guest`
+<4> Default password `guest`
+<5> Creation of a `bookqueue`
+
+When a book's details is viewed we publish a message to RabbitMQ. In order to do that we create
+an http://docs.grails.org/latest/guide/single.html#interceptors[interceptor].
+
+Create a new interceptor in the `grails-app/controllers/demo` called `BookShowInterceptor.groovy`.
+
+[source,groovy]
+.grails-app/controllers/demo/BookShowInterceptor.groovy
+----
+include::../snippets/grails-app/controllers/demo/BookShowInterceptor.groovy[]
+----
+<1> Inject the rabbitMessagePublisher
+<2> Intercept when the book controller show method is called
+<3> `after` method executes after the action but prior to view rendering. It returns true to continue processing to the view.
+<4> Model is available in the `after` method to retrieve data about the current object
+<5> Send specified message using a specific queue. When sending a message using send no return message is expected.

@@ -1,0 +1,75 @@
+Because Grails is based upon Spring Boot, it is compatible with many
+other projects in the Spring Ecosystem. One of the most popular such
+projects is https://projects.spring.io/spring-security/[Spring
+Security]. It provides powerful authentication and access control for
+Java web apps, and supports many authentication methods, from LDAP to
+OAuth2. Even better, there is a set of
+http://plugins.grails.org/plugin/grails/spring-security-core[Grails
+plugins] that make Spring Security a breeze to set up.
+
+Edit `server/build.gradle` again, and add the following two lines:
+`server/build.gradle`
+
+[source, groovy]
+./server/build.gradle
+----
+include::../snippets/server/build.gradle[indent=0,tag=securityDependency]
+----
+
+We have placed the Spring Security Core and REST plugins configuration in `application.yml`
+
+[source, groovy]
+./server/grails-app/conf/application.yml
+----
+include::../snippets/server/grails-app/conf/application.yml[tag=springsecurity]
+----
+
+Please consult the
+https://docs.spring.io/spring-security/site/docs/3.0.x/reference/security-filter-chain.html[Spring
+Security docs] and the
+http://grails-plugins.github.io/grails-spring-security-core/3.2.x/index.html[Grails
+Spring Security plugin] docs for more information.
+
+We have modified slightly the `User` domain class. Moreover, we added two other domain classes to map roles and the relationship 
+between roles and users. 
+
+[source, groovy]
+./server/grails-app/domain/demo/User.groovy
+----
+include::../snippets/server/grails-app/domain/demo/User.groovy[]
+----
+
+<1> We'll use this property to keep track of expired sessions
+
+[source, groovy]
+./server/grails-app/domain/demo/Role.groovy
+----
+include::../snippets/server/grails-app/domain/demo/Role.groovy[]
+----
+
+[source, groovy]
+./server/grails-app/domain/demo/UserRole.groovy
+----
+include::../snippets/server/grails-app/domain/demo/UserRole.groovy[]
+----
+
+We have added a “listener” which will encrypt our `password` field whenever a new `User` is created.
+
+[source, groovy]
+./server/src/main/groovy/demo/UserPasswordEncoderListener.groovy
+----
+include::../snippets/server/src/main/groovy/demo/UserPasswordEncoderListener.groovy[]
+----
+
+We register this listener as a Bean in `resources.groovy`
+
+[source, groovy]
+./server/grails-app/conf/spring/resources.groovy
+----
+import demo.UserPasswordEncoderListener
+
+// Place your Spring DSL code here
+beans = {
+    userPasswordEncoderListener(UserPasswordEncoderListener) 
+}
+----

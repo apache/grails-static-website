@@ -1,0 +1,22 @@
+With the data model defined now it time to write http://docs.grails.org/latest/guide/theWebLayer.html#controllers[a controller].
+
+The quickest way to do that is with the `create-restful-controller` command from a terminal window:
+
+[source,bash]
+----
+$ ./grailsw create-restful-controller demo.Product
+| Created grails-app/controllers/demo/ProductController.groovy
+----
+
+However, you can also simply create the controller with your favourite text editor or IDE.
+
+The contents of the controller should look like the following:
+
+[source,groovy]
+.grails-app/controllers/demo/ProductController.groovy
+----
+include::../snippets/grails-app/controllers/demo/ProductController.groovy[tag=controller, indent=0]
+}
+----
+
+The `RestfulController` super class will implement all the necessary operations to perform the common REST verbs such as `GET`, `POST`, `PUT` and `DELETE`. If is you wish to override or forbid certain verbs you can override the equivalent method from the super (for example the `delete` method for `DELETE`) to return an alternative or forbidden response.

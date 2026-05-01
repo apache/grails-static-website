@@ -1,0 +1,25 @@
+//tag::appversiongroup[]
+version "0.1"
+group "app"
+//end::appversiongroup[]
+
+apply from: "${rootProject.projectDir}/gradle/codenarc.gradle"
+
+dependencies {
+    //tag::dependency_datastore_rest_client[]
+    testCompile "io.micronaut:micronaut-http-client"
+    //end::dependency_datastore_rest_client[]
+}
+
+assets {
+    minifyJs = true
+    minifyCss = true
+}
+
+// tag::grailsplugins[]
+grails {
+    plugins {
+        compile project(':plugin')
+    }
+}
+// end::grailsplugins[]

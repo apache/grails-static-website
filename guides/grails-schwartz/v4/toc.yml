@@ -1,0 +1,16 @@
+training:
+  title: Training
+gettingStarted: 
+  title: Getting Started
+  howto: How to complete the guide
+writing:
+  title: Writing the Guide
+  install: Installing the plugin
+  logchanges: Set log level INFO for package demo
+  createSimpleJob: Creating a simple Job
+  logicInService: Business logic in Services
+  triggerManually: Scheduling a Job with data manually 
+  concurrentExecution: Concurrent Job execution
+  summary: Summary
+helpWithGrails:
+  title: Help with Grails  

@@ -1,0 +1,30 @@
+* To install the plugin add following properties to `build.gradle`:
+
+[source, groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[tag=elasticSearchVersion]
+----
+<1> Define Elasticsearch version.
+
+* Also, add the following to `dependencies` block:
+
+[source, groovy, indent=0]
+----
+include::../snippets/build.gradle[tag=elasticSearchPlugin]
+----
+
+* In order to connect Application to Elasticsearch, define Elasticsearch plugin configurations in `application.yml` as follows:
+
+[source, groovy]
+.grails-app/conf/application.yml
+----
+include::../snippets/grails-app/conf/application.yml[tag=elasticSearchConfig]
+----
+
+<1> The Hibernate datastore implementation should be watched for storage events.
+<2> The plugin creates a transport client that will connect to a remote ElasticSearch instance without joining the cluster. The `TransportClient` connects remotely to an Elasticsearch cluster using the transport module and communicates with them in round robin fashion on each action.
+<3> Host address for `TransportClient` to connect to.
+<4> Name of the Elasticsearch cluster.
+<5> Determines if the plugin should reflect any database save/update/delete automatically on the ES instance. Default to false.
+<6> Application should launch a bulk index operation upon startup.

@@ -1,0 +1,54 @@
+To see our two apps communicate asynchronously using RabbitMQ we have to run both apps simultaneously. To do that open
+two separate terminals. In terminal one ...
+
+[source,bash]
+----
+$ cd ~/yourProjectLocation/initial
+----
+
+then
+
+[source,bash]
+----
+$ ./gradlew bootRun
+----
+
+Next in terminal two ...
+
+[source,bash]
+----
+$ cd ~/yourProjectLocation/initial-analytics
+----
+
+then
+
+[source,bash]
+----
+$ ./gradlew bootRun
+----
+
+Now with both apps running open two browser tabs. In tab one navigate to `http://localhost:8080` and you should see a
+list of books available.
+
+image::booksHome.png[]
+
+then in your second tab navigate to `http://localhost:8090/BookPageView` and you should see an empty array.
+
+image::analyticsHome.png[]
+
+Select a book to click and after clicking you should see the book description
+
+image::bookDescription.png[]
+
+And if you go refresh the analytics page you will now see that book 1 has been viewed 1 time.
+
+image::viewCountUpdate.png[]
+
+Try this on several books, and go back and revisit a previous book and then refresh your analytics page to see how many
+views each book has.
+
+image::multiView.png[]
+
+Additionally if you view the terminal where you are running the analytics app you can see the messages it received.
+
+image::consumerMessageReceived.png[]

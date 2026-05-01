@@ -1,0 +1,5 @@
+In this guide you are going to learn how to build the Neo4j https://neo4j.com/developer/example-project/[Movies example application], which is implemented in https://github.com/neo4j-examples?query=movies[a variety of languages] as the official example application for using Neo4j.
+
+For those unfamiliar with Neo4j, it is a https://en.wikipedia.org/wiki/Graph_database[Graph database] that optimizes Graph traversal, something that is relatively slow on a traditional relational database.
+
+The goal of GORM for Neo4j is to make it easy to map an existing Groovy domain model with Neo4j nodes and relationships.

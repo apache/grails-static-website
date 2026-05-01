@@ -1,0 +1,8 @@
+import example.grails.BookAnalytics
+model {
+    BookAnalytics bookAnalytics
+}
+json {
+    isbn bookAnalytics.id
+    count bookAnalytics.count
+}

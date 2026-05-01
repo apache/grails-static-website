@@ -1,0 +1,6 @@
+Performance issues are a bear to identify, troubleshoot and eventually solve. In my experience bottlenecks often show up
+with large dataset processing or algorithmic issues.  Tools can only help identify the issue, they cannot interpret the data
+for you. By systematically breaking down the problem space, analyzing the code and using a capable toolset, we can forge a smoother
+to the solution space.
+
+

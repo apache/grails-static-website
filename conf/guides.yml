@@ -644,6 +644,10 @@ guides:
           - 'docker'
           - 'postgresql'
           - 'gradle'
+        sampleRef:
+          repo: 'grails-guides/grails-docker-external-services'
+          branch: 'master'
+          sha: '6f73df5d63dea0212269dd56027bf7d53cc5f80a'
 
   - name: 'grails-dynamic-multiple-datasources'
     title: 'Configure Datasources dynamically while using DATABASE Multi-tenancy'
@@ -692,6 +696,10 @@ guides:
           - 'health'
           - 'aws'
           - 'aws-elasticbeanstlak'
+        sampleRef:
+          repo: 'grails-guides/grails-elasticbeanstalk'
+          branch: 'master'
+          sha: '17455a37c5816f89d5ba81a164a96cb3e1c951bb'
 
   - name: 'grails-elasticsearch'
     title: 'Grails ElasticSearch'
@@ -707,6 +715,10 @@ guides:
         tags:
           - 'elasticsearch'
           - 'rest-api'
+        sampleRef:
+          repo: 'grails-guides/grails-elasticsearch'
+          branch: 'master'
+          sha: 'd79483a0eead4caf1347351d31671c45672f7896'
 
   - name: 'grails-email'
     title: 'Send Email and Spock Spring'
@@ -837,6 +849,10 @@ guides:
           - 'cloud-storage'
           - 'google-app-engine'
           - 'logs'
+        sampleRef:
+          repo: 'grails-guides/grails-google-cloud'
+          branch: 'master'
+          sha: '3112a1a40500a59624df49e9527e3b58be824743'
 
   - name: 'grails-google-home'
     title: 'Google Home Guide'
@@ -855,6 +871,9 @@ guides:
           - 'google-home'
           - 'google-app-engine'
           - 'web-profile'
+        # sampleRef intentionally omitted in this PR.
+        # Upstream guide at master@4e741eac includes complete/grails-app/controllers/demo/AiDataController.groovy which does not exist on disk at the pinned SHA. Vendoring fails until upstream is patched or we pin to an earlier SHA.
+        # Tracked for follow-up.
 
   - name: 'grails-gorm-data-services'
     title: 'Grails GORM Data Services'
@@ -897,6 +916,10 @@ guides:
         tags:
           - 'javamelody'
           - 'monitoring'
+        sampleRef:
+          repo: 'grails-guides/grails-javamelody'
+          branch: 'master'
+          sha: '3b1fd033b6a255d5ebd679fb6a0e1bd535c2daf5'
 
   - name: 'grails-logicaldelete'
     title: 'GORM Logical delete'
@@ -940,6 +963,10 @@ guides:
           - 'client'
           - 'micronaut'
           - 'grails5'
+        sampleRef:
+          repo: 'grails-guides/grails-micronaut-http'
+          branch: 'grails5'
+          sha: 'fbae42124f5ed64e78810acfd9c0d731827622d1'
 
   - name: 'grails-micronaut-kafka'
     title: 'Message Queues with Grails and Micronaut Kafka'
@@ -955,6 +982,10 @@ guides:
         tags:
           - 'kafka'
           - 'message-queues'
+        sampleRef:
+          repo: 'grails-guides/grails-micronaut-kafka'
+          branch: 'master'
+          sha: '2533ac46edfa5328d385af08c9e757f7abf35466'
 
   - name: 'grails-mock-basics'
     title: 'Grails Service Testing'
@@ -1077,6 +1108,10 @@ guides:
           - 'gradle'
           - 'multi-project'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-multi-project-build'
+          branch: 'master'
+          sha: 'b5cad5286ded0e2435e5a69593d0a463a08d8acf'
 
   - name: 'grails-oauth-google'
     title: 'Google OAuth2 with Grails 3 and Spring Security REST'
@@ -1093,6 +1128,10 @@ guides:
           - 'spring-security-rest'
           - 'google'
           - 'oauth'
+        sampleRef:
+          repo: 'grails-guides/grails-oauth-google'
+          branch: 'master'
+          sha: 'b91e2110a815356f339b71757258f352e16d729d'
 
   - name: 'grails-oauth-twitter'
     title: 'Twitter OAuth with Grails 3 and Spring Security REST'
@@ -1109,6 +1148,10 @@ guides:
           - 'spring-security-rest'
           - 'oauth'
           - 'twitter'
+        sampleRef:
+          repo: 'grails-guides/grails-oauth-twitter'
+          branch: 'master'
+          sha: 'c853056340bee3be58d998b67472126f05827161'
 
   - name: 'grails-on-circleci-basics'
     title: 'Grails on Circle CI Basics'
@@ -1129,6 +1172,10 @@ guides:
           - 'firefox'
           - 'geb'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-on-circleci-basics'
+          branch: 'master'
+          sha: 'adfee1c12e51d5e27f97067a7ba81119765bb649'
 
   - name: 'grails-on-github-actions'
     title: 'Grails on Github Actions'
@@ -1150,6 +1197,10 @@ guides:
           - 'firefox'
           - 'geb'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-on-github-actions'
+          branch: 'master'
+          sha: 'dfda6eb9f360547650c559a0a92510d0c8dcd700'
 
   - name: 'grails-on-travis-basics'
     title: 'Grails on Travis Basics'
@@ -1196,6 +1247,10 @@ guides:
         tags:
           - 'quickcast'
           - 'logging'
+        sampleRef:
+          repo: 'grails-guides/grails-quickcast-logging'
+          branch: 'master'
+          sha: 'bcee2c60a25083ec2e084e9877c369ae5ed8cda0'
 
   - name: 'grails-quickcasts-angularjs-scaffolding-with-grails-3'
     title: 'AngularJS Scaffolding with Grails 3'
@@ -1227,6 +1282,10 @@ guides:
           - 'quickcast'
           - 'intellij-idea'
           - 'ide'
+        sampleRef:
+          repo: 'grails-guides/grails-quickcasts-developing-grails-3-applications-with-intellij-idea'
+          branch: 'master'
+          sha: 'f7f55f7bec0a95aee70f582eb782e7bc2e0d186a'
 
   - name: 'grails-quickcasts-interceptors'
     title: 'Grails Interceptors'
@@ -1242,6 +1301,10 @@ guides:
         tags:
           - 'quickcast'
           - 'interceptor'
+        sampleRef:
+          repo: 'grails-guides/grails-quickcasts-interceptors'
+          branch: 'master'
+          sha: 'd4b47e3cfd6d218d2c76d4e5ee283a24e93ee84a'
 
   - name: 'grails-quickcasts-json-views'
     title: 'JSON Views'
@@ -1257,6 +1320,10 @@ guides:
         tags:
           - 'quickcast'
           - 'json-view'
+        sampleRef:
+          repo: 'grails-guides/grails-quickcasts-json-views'
+          branch: 'master'
+          sha: '7402e7bb77ce7877be2e39cb5d20ef4266180591'
 
   - name: 'grails-quickcasts-multi-project-builds'
     title: 'Grails Multi Project Builds'
@@ -1272,6 +1339,10 @@ guides:
         tags:
           - 'quickcast'
           - 'gradle'
+        sampleRef:
+          repo: 'grails-guides/grails-quickcasts-multi-project-builds'
+          branch: 'master'
+          sha: '40860e78a753d11c8a54b4fab3d51e4d8a5f9d80'
 
   - name: 'grails-quickcasts-retrieving-config-values'
     title: 'Retrieving Config Values'
@@ -1287,6 +1358,10 @@ guides:
         tags:
           - 'quickcast'
           - 'configuration'
+        sampleRef:
+          repo: 'grails-guides/grails-quickcasts-retrieving-config-values'
+          branch: 'master'
+          sha: 'f714bea77ae16b0ae04f098980f0e00f801a43e4'
 
   - name: 'grails-rabbitmq'
     title: 'Message Queues with Grails 3 and RabbitMQ'
@@ -1302,6 +1377,10 @@ guides:
         tags:
           - 'rabbitMQ'
           - 'message-queues'
+        sampleRef:
+          repo: 'grails-guides/grails-rabbitmq'
+          branch: 'master'
+          sha: '64d475b2b3a02ffdb2b51438a27224337f22353f'
 
   - name: 'grails-restapi-angularjs'
     title: 'Building a REST API with Grails and AngularJS 1.x'
@@ -1366,6 +1445,10 @@ guides:
           - 'quartz'
           - 'job'
           - 'schwatz'
+        sampleRef:
+          repo: 'grails-guides/grails-schwartz'
+          branch: 'master'
+          sha: 'c53e627f2712de66ba94559724f0d04d28ca14df'
 
   - name: 'grails-soap'
     title: 'Grails & SOAP'
@@ -1556,6 +1639,10 @@ guides:
           - 'security'
           - 'ssl'
           - 'websockets'
+        sampleRef:
+          repo: 'grails-guides/grails-vs-nodejs'
+          branch: 'master'
+          sha: '2488ed1c8566c3bb6526a45c4f13ed0a8826d68f'
 
   - name: 'grails-vue-combined'
     title: 'Combining the Grails Vue profile client and server projects'
@@ -1597,6 +1684,10 @@ guides:
           - 'cpu'
           - 'web-profile'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-yourkit-profiling'
+          branch: 'master'
+          sha: 'ba74a0bab6fcac4c7f32721c404bfd39be8bc36d'
 
   - name: 'neo4j-movies'
     title: 'Building a Graph application with Grails and Neo4j'
@@ -1614,6 +1705,10 @@ guides:
           - 'nosql'
           - 'graph'
           - 'gorm'
+        sampleRef:
+          repo: 'grails-guides/neo4j-movies'
+          branch: 'master'
+          sha: 'f18f115dc4cc36951984a9b3c6d400f939f6e596'
 
   - name: 'querying-gorm-dynamic-finders'
     title: 'Querying the Database using GORM Dynamic Finders'
@@ -1720,6 +1815,10 @@ guides:
           - 'json'
           - 'gorm'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/rest-mongodb'
+          branch: 'master'
+          sha: 'f4d4709ca0e07a9f6ff672814d7dd189dbc6d38a'
 
   - name: 'server-sent-events'
     title: 'Sending Server Sent Events with Grails '
@@ -1830,4 +1929,7 @@ guides:
           - 'vaadin'
           - 'frontend'
           - 'framework'
+        # sampleRef intentionally omitted in this PR.
+        # Upstream guide at master@c69a3137 includes complete/src/main/webapp/VAADIN/themes/vaadin-grails-theme/styles.scss which does not exist on disk at the pinned SHA. Vendoring fails until upstream is patched or we pin to an earlier SHA.
+        # Tracked for follow-up.
 

@@ -1,0 +1,66 @@
+=== Signup
+
+To signup into the application the React app sends a _POST_ request to the _/signup_ endpoint.
+It includes a JSON  Payload containing username and password. We are going to map this with Grails. 
+
+First, we register the endpoint in URLMappings by adding the next line into the mappings:
+
+[source,groovy]
+./server/grails-app/controllers/demo/UrlMappings.groovy
+----
+include::../snippets/server/grails-app/controllers/demo/UrlMappings.groovy[tag=signup]
+----
+
+Next we create an controller which binds the JSON payload with the help of a command object. 
+
+[source,groovy]
+./server/grails-app/controllers/demo/SignupCommand.groovy
+----
+include::../snippets/server/grails-app/controllers/demo/SignupCommand.groovy[]
+----
+
+[source,groovy]
+./server/grails-app/controllers/demo/SignupController.groovy
+----
+include::../snippets/server/grails-app/controllers/demo/SignupController.groovy[]
+----
+<1> The `@Secured` annotation specifies the access controls for this controller - anonymous access is permitted
+<2> Check for duplicate usernames
+<3> Authenticate the newly created user, and generate the authentication token. This step saves the React app from having to make a second login request after the `/signup` request
+
+The controller uses several services as collaborators:
+
+[source, groovy]
+./server/grails-app/services/demo/RoleService.groovy
+----
+include::../snippets/server/grails-app/services/demo/RoleService.groovy[tag=package]
+include::../snippets/server/grails-app/services/demo/RoleService.groovy[tag=import]
+
+include::../snippets/server/grails-app/services/demo/RoleService.groovy[tag=class]
+include::../snippets/server/grails-app/services/demo/RoleService.groovy[tag=findByRoleName]
+}
+----
+
+[source, groovy]
+./server/grails-app/services/demo/UserService.groovy
+----
+include::../snippets/server/grails-app/services/demo/UserService.groovy[tag=package]
+include::../snippets/server/grails-app/services/demo/UserService.groovy[tag=import]
+
+include::../snippets/server/grails-app/services/demo/UserService.groovy[tag=class]
+include::../snippets/server/grails-app/services/demo/UserService.groovy[tag=existsUserByUsername]
+include::../snippets/server/grails-app/services/demo/UserService.groovy[tag=findQueryByUsername]
+include::../snippets/server/grails-app/services/demo/UserService.groovy[tag=createUser]
+}
+----
+
+[source, groovy]
+./server/grails-app/services/demo/UserRoleService.groovy
+----
+include::../snippets/server/grails-app/services/demo/UserRoleService.groovy[tag=package]
+include::../snippets/server/grails-app/services/demo/UserRoleService.groovy[tag=import]
+
+include::../snippets/server/grails-app/services/demo/UserRoleService.groovy[tag=class]
+include::../snippets/server/grails-app/services/demo/UserRoleService.groovy[tag=saveUserRole]
+}
+----

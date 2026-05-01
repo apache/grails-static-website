@@ -1,0 +1,32 @@
+From the http://grails.org[official website]:
+
+[quote, Grails.org]
+____
+ "Grails is a powerful web framework, for the Java platform aimed at multiplying developers’ productivity."
+____
+
+Web frameworks provide an array of features which hopefully make
+developers lives easier when building web applications. Sometimes
+however, web frameworks get in the way or force developers to write
+boilerplate or framework-specific code that's not relevant to the
+business need of the app. Understandably, many developers are wary of
+"yet another web framework" and of the hidden costs that using one might
+incur.
+
+In the case of web applications, Grails is truly different. The Grails
+framework goes the extra mile by providing developers with a set of
+sensible, but customizable, defaults, encouraging a "convention over
+configuration" approach to development, while providing a powerful set
+of tools that make developing data-driven web apps fun again.
+
+TIP: Grails 3.x is based on the Spring Boot framework, but includes substantial features and improvements to the developer's experience over a "plain" Spring Boot project. See https://objectcomputing.com/news/2017/06/28/grails-vs-spring-boot[this article for more on the differences between Grails & Spring Boot].
+
+Much of Grails' "magic" comes from its use of the Groovy programming
+language. From the http://www.groovy-lang.org[official website], Groovy
+is a "powerful, optionally typed and dynamic language, with
+static-typing and static compilation capabilities, for the Java
+platform." Grails apps can be written using Java, however Groovy's
+flexibility and developer-friendly features can make your code much more
+expressive and readable. If you are familiar at all with Java syntax,
+you will be able to read (and write) Groovy code. All of our server-side
+code in this article will be written in Groovy.

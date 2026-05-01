@@ -1,0 +1,83 @@
+The guide comes built with a simple application created for you.  The purpose of the application is to have ready-made
+contrived examples of code which trigger performance issues and cause the tool to display memory, CPU, and heap problems.
+
+The application is titled Grails YourKit Profile and has a simple domain object `Student`. The application has several links
+that trigger operations for the purpose of inducing performance issues. In summary, the application has the ability to:
+
+- insert a large amount of students in the database (with random names and grades)
+- delete students that have a grade less that an A
+- print the students to the screen
+- import a spreadsheet of student entries
+
+=== Browse the Code
+
+Please take a moment to browse through the code and familiarize yourself with the important classes of the application.
+
+`StudentController` which routes to service functionality of insert, delete, print, import.
+
+[source, groovy]
+.grails-app/controllers/demo/StudentController.groovy
+----
+include::../snippets/../initial/grails-app/controllers/demo/StudentController.groovy[]
+----
+
+`StudentDataService`: a http://gorm.grails.org/latest/hibernate/manual/index.html#dataServices[GORM Data Service] which
+ takes the work out of implemented service layer logic.
+
+[source, groovy]
+.grails-app/services/demo/StudentDataService.groovy
+----
+include::../snippets/../initial/grails-app/services/demo/StudentDataService.groovy[]
+----
+
+`Student` - Domain object used to store a student
+[source, groovy]
+.grails-app/domain/demo/Student.groovy
+----
+include::../snippets/../initial/grails-app/domain/demo/Student.groovy[]
+----
+
+`StudentService` - Service which implements the operations of the application
+
+[source, groovy]
+.grails-app/services/demo/StudentService.groovy
+----
+include::../snippets/../initial/grails-app/services/demo/StudentService.groovy[]
+----
+
+`index.gsp` - The UI of the application which contains the links of the front page
+
+[source, groovy]
+.grails-app/views/index.gsp
+----
+include::../snippets/../initial/grails-app/views/index.gsp[]
+----
+
+`StudentServiceSpec` and `StudentServiceIntegrationSpec` - Test classes used to validate the functionality of the service. (For convenience)
+
+[source, groovy]
+.src/test/groovy/demo/StudentServiceSpec.groovy
+----
+include::../snippets/../initial/src/test/groovy/demo/StudentServiceSpec.groovy[]
+----
+
+
+[source, groovy]
+.src/integration-test/groovy/demo/StudentServiceIntegrationSpec.groovy
+----
+include::../snippets/../initial/src/integration-test/groovy/demo/StudentServiceIntegrationSpec.groovy[]
+----
+
+
+=== Run the application
+
+Use the command below to run the app. Trigger some of the functionality initially to get familiar. Later we will run the
+operation within the context of the profiler.
+
+[source, bash]
+----
+$ ./gradlew bootRun
+----
+
+===== Application Front Page
+image:app_front.png[792,518]

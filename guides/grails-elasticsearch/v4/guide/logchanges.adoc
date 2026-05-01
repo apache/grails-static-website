@@ -1,0 +1,7 @@
+Add at the end of `logback.groovy` the next statement to see ElasticSearch related logs
+
+[source, groovy]
+.grails-app/conf/logback.groovy
+----
+include::../snippets/grails-app/conf/logback.groovy[indent=0, tag=logGrailsPluginElasticsearch]
+----

@@ -1,0 +1,58 @@
+If you do not already have Docker installed, you’ll need to https://docs.docker.com/engine/installation/[install it].
+
+Depending on your environment you may need to increase Docker’s available memory to 4GB or more.
+
+* Make sure Docker machine is running by executing following command:
+[source, bash]
+----
+docker-machine status default
+----
+
+* If `default` Docker machine is not running then start the machine by executing following bash command:
+[source,bash]
+----
+docker-machine start default
+----
+
+After executing the above command you should see something on the terminal as follows:
+
+[soruce, bash]
+----
+Starting "default"...
+(default) Check network to re-create if needed...
+(default) Waiting for an IP...
+Machine "default" was started.
+Waiting for SSH to be available...
+Detecting the provisioner...
+Started machines may have new IP addresses. You may need to re-run the `docker-machine env` command.
+----
+
+* Now we have started Docker machine successfully. So let's note down the IP address of `default` Docker machine, which we will use in future to connect our application to the Elasticsearch. Run the following command to see IP address of Docker machine:
+
+[source, bash]
+----
+docker-machine ls
+NAME      ACTIVE   DRIVER       STATE     URL                         SWARM   DOCKER        ERRORS
+default   -        virtualbox   Running   tcp://192.168.99.100:2376           v17.12.0-ce
+----
+
+* Start the Elasticsearch Docker container
+
+[source, bash]
+----
+eval $(docker-machine env default)
+
+docker run \
+    -p 9200:9200 \
+    -p 9300:9300 \
+    -e "discovery.type=single-node" \
+    -e ES_JAVA_OPTS="-Xms512m -Xmx512m" \
+    -e "http.cors.enabled=true" \
+    -e "http.cors.allow-origin=/https?:\/\/192.168.99.100(:[0-9]+)?/" \
+    -e "http.cors.allow-headers=Authorization,X-Requested-With,Content-Length,Content-Type" \
+    -e "http.cors.allow-credentials=true" \
+    -e "cluster.name=elasticsearch" \
+    -e "xpack.security.enabled=false" \
+    docker.elastic.co/elasticsearch/elasticsearch:5.4.3
+
+----

@@ -1,0 +1,24 @@
+{
+  "name": "ice-cream-app",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "eslint": "^3.17.1",
+    "eslint-plugin-flowtype": "^2.30.3",
+    "eslint-plugin-react": "^6.10.0",
+    "react-scripts": "0.8.4"
+  },
+  "dependencies": {
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "sockjs-client": "^1.1.4",
+    "stompjs": "^2.3.3"
+  },
+  "scripts": {
+    "build": "react-scripts build",
+    "coverage": "npm test -- --coverage",
+    "lint": "eslint src/**/*.js server/**/*.js",
+    "start": "react-scripts start",
+    "test": "react-scripts test --env=jsdom"
+  }
+}

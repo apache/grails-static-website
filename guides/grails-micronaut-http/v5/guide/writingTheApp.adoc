@@ -1,0 +1,12 @@
+The `/initial` folder is a grails app created with the `rest-api` profile. It is a simple app that queries the
+https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api[Apple iTunes API].
+The app takes in a `searchTerm` and is layered with:
+
+- `example.grails.SearchController`
+- `example.grails.ItunesSearchService`
+
+The call is stubbed out until we implement it in this guide.
+
+Verify the functionality by running `./gradlew bootRun` and then going to the URL `http://localhost:8080/search/searchWithApi?searchTerm=U2`.
+
+You should see dummy data JSON returned.

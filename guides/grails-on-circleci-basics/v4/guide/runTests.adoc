@@ -1,0 +1,4 @@
+Verify everything executes correctly up to this point.
+
+`./gradlew -Dgeb.env=chromeHeadless check`.
+include::{commondir}/common-testApp.adoc[]

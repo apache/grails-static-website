@@ -1,0 +1,5 @@
+The construct of message queues provides for asynchronous communications, meaning that the sender and receiver
+do not need to interact with the message queue concurrently. When a message is sent it will be added to the queue and stored
+until the recipient retrieves them. Message queues can be used internally in an app or externally with multiple applications.
+A number of different implementations of message queues exist but one of the more popular and the one we will use for
+this guide is RabbitMQ.

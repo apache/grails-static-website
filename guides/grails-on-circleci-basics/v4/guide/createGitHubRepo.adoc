@@ -1,0 +1,17 @@
+We will need to place the Grails application on GitHub so that Circle CI can access it.
+
+Proceed to GitHub and follow the directions to https://help.github.com/articles/creating-a-new-repository/[create a new repository].
+
+NOTE: When creating the repo, make it public. Option not to create a LICENSE and .gitignore. We are importing an existing
+code base so we want to avoid conflicts.
+
+Import the code into the repo on GitHub by executing the following commands:
+
+[source, bash]
+----
+> git init
+> git add .
+> git commit -m "first commit"
+> git remote add origin <Your repo URL>
+> git push -u origin master
+----

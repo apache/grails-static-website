@@ -1,0 +1,13 @@
+To run the app:
+
+[source, bash]
+----
+./gradlew app:bootRun
+----
+
+To run tests:
+
+[source, bash]
+----
+./gradlew check
+----

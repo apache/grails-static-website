@@ -1,0 +1,25 @@
+training:
+  title: Training
+gettingStarted:
+  title: Getting Started
+  esfeatures: Features
+  requirements: What will you need
+  howto: How to complete the guide
+writing:
+  title: Writing the Guide
+  docker: Install Elasticsearch via Docker
+  install: Configure ElasticSearch plugin
+  logchanges: Elasticsearch logs
+  domain: Create a Domain Class
+  searchable: Mark Domain Searchable
+  gormDataService: GORM Data Service
+  bootstrap: Save Initial Data
+  service: Create Service
+  controller: Create Controller
+  jsonview: JSON View
+  modifyUrlMappings: Modify UrlMapping
+  functionalTest: Functional Test
+summary:
+  title: Summary
+helpWithGrails:
+  title: Help with Grails

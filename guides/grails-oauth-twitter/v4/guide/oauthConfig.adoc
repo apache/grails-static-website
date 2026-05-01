@@ -1,0 +1,55 @@
+With our dependencies added, we need to configure security.
+
+Create a file `application.groovy` with the following content `staticRules` configuration.
+
+[source,groovy]
+.grails-app/conf/application.groovy
+----
+include::../snippets/grails-app/conf/application.groovy[indent=0,tag=staticRules]
+----
+
+Add the next block to configure Grails Spring Security Rest Plugin:
+
+[source,groovy]
+.grails-app/conf/application.groovy
+----
+include::../snippets/grails-app/conf/application.groovy[indent=0,tag=grailsPluginSpringSecurityRest]
+----
+<1> You must disable bearer token support to register your own tokenReader implementation.
+<2> Enable anonymous access to URL's where the Grails Spring Security Rest plugin's filters are applied
+<3> Required secret which is used to sign the JWT tokens.
+<4> Callback url - after authentication with Twitter, this callback url will be invoked with a JWT token which authenticates the user
+<5> Which pac4j client to use; in our case the Twitter client
+<6> Supply your Twitter Consumer Key (API Key) as the System Property `TWITTER_KEY` when you start the app.
+<7> Supply your Twitter Consumer Secret (API Secret) as the System Property `TWITTER_SECRET` when you start the app.
+<8> Specific roles that Twitter authenticated users get.
+<9> We are going to authenticate our users only against Twitter. Thus, we use only the anonymous authentication provider. Read more about https://grails-plugins.github.io/grails-spring-security-core/latest/#authenticationProviders[Authentication Providers] in Spring Security Core Plugin documentation.
+
+To start the app you will need to supply `client_id` and `client_secret` as system properties. e.g.:
+
+`./gradlew -DTWITTER_KEY=XXXXXX -DTWITTER_SECRET=XXXX bootRun
+
+We want our app stateless by default with some endpoints which allow anonymous access.
+
+[source,groovy]
+.grails-app/conf/application.groovy
+----
+include::../snippets/grails-app/conf/application.groovy[indent=0,tag=filterChain]
+----
+
+<1> stateless chain that allows anonymous access when no token is sent. If however a token is on the request, it will be validated.
+
+<2> /** is a stateless chain that doesn't allow anonymous access. Thus, the token will always be required, and if missing, a Bad Request reponse will be sent back to the client.
+
+
+NOTE: We are not persisting User information in the database. You may have noticed we don't have `User`, `Role`, `UserRole` domain classes in the project. Neither we setup configuration values such as `userLookUp.userDomainClass` etc.
+
+Now we override the `login/auth` view. So that we no longer show a username/password form in that page.
+
+[source,groovy]
+.grails-app/views/login/auth.gsp
+----
+include::../snippets/grails-app/views/login/auth.gsp[indent=0]
+----
+
+We don't include a button to SignIn with Twitter in that page because we have included that button in root layout _main.gsp_ file.

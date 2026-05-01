@@ -1,0 +1,9 @@
+import groovy.transform.Field
+import neo4j.movies.Movie
+
+@Field Movie movie // <1>
+
+json {
+    title movie.title // <2>
+    cast tmpl.cast( 'castMember', movie.cast ) // <3>
+}

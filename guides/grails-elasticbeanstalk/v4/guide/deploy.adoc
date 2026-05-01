@@ -1,0 +1,56 @@
+Let's do a FAT Jar deployment.
+
+Edit `build.gradle`. Don't apply `war` Gradle plugin.
+
+[source, groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[tag=jarinsteadofwar]
+----
+
+Generate a Fat Jar with gradle command.
+
+[source, bash]
+----
+$ ./gradlew assemble
+$ du -h build/libs/complete-0.1.jar
+40M    build/libs/complete-0.1.jar
+----
+
+The next screenshots illustrate the steps necessary to deploy an Grails app to AWS Elastic Beanstalk:
+
+image::elasticbeanstalk1.png[]
+
+image::elasticbeanstalk2.png[]
+
+image::elasticbeanstalk3.png[]
+
+* Select Java Platform.
+
+* Click _Upload_ button
+
+image::elasticbeanstalk4.png[]
+
+Upload your JAR.
+
+image::elasticbeanstalk5.png[]
+
+Before you create the enviroment click "Configure more options". If you forget, you could change this after you created the environment.
+
+By default, Grails applications will listen on port 8080. Elastic Beanstalk assumes that the application will listen on port 5000. There are two ways to fix this discrepancy: change the port Elastic Beanstalk is configured to use, or change the port the Grails application listens on. For this post, we will change the port the Grails application listens on.
+
+The easiest way to do this is to specify the **SERVER_PORT** environment variable in the Elastic Beanstalk environment and set the value to 5000.
+
+On the Configuration page in your environment, under Software Configuration, click the settings icon.
+
+image::elasticbeanstalk6.png[]
+
+image::elasticbeanstalk7.png[]
+
+Now you are ready to click **Create Environment**.
+
+image::elasticbeanstalk8.png[]
+
+After a few minutes you will be able to access the `/health` endpoint.
+
+image::elasticbeanstalk9.png[]

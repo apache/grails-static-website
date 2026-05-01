@@ -1,0 +1,24 @@
+Before running the application, first start PostgreSQL:
+
+`./gradlew startPostgresContainer`
+
+and then start the Grails App:
+
+`./gradlew bootRun`
+
+If you connect to the database, you will see the expected database schema.
+
+image::db.png[Database created]
+
+== bootRun depends on PostgreSQL
+
+You could configure the `bootRun` task to depends on the `startPostgresContainer` task adding the following to `build.gradle`:
+
+`bootRun.dependsOn startPostgresContainer`
+
+This will create the next dependency path:
+
+`bootRun -> startPostgresContainer -> createPostgresContainer -> pullPostgresImage`
+
+Such a path may be of interest for a continuous integration environment.
+

@@ -1,0 +1,39 @@
+The first thing to do before we can get going is populate the data model. To do this head over to the Neo4j browser at http://localhost:7474/browser/ and type `:play movies`:
+
+image::neo4j-playmovies.png[]
+
+This will bring up a preview of the https://neo4j.com/developer/example-project/#_domain_model[domain model] that represents the movies database represented by a series of https://neo4j.com/developer/cypher-query-language/[Cypher] statements `CREATE` statements.
+
+Cypher is the query language used by Neo4j. The following statement for example creates two new Neo4j nodes in the graph (one that represents a `Movie` and another that represents a `Person`):
+
+[source,cypher]
+----
+CREATE (TheMatrix:Movie {title:'The Matrix', released:1999, tagline:'Welcome to the Real World'})
+CREATE (Keanu:Person {name:'Keanu Reeves', born:1964})
+----
+
+The value of the left side of the expression `TheMatrix:Movie` is the name of the node, like a variable name and is not stored in the database.
+
+The value of the right side is the `Node` label (in this case `Movie`).
+
+The values within the curly brackets are the node attributes.
+
+The names of the nodes can be used in later statements to create relationships between the nodes:
+
+[source,cypher]
+----
+CREATE (Keanu)-[:ACTED_IN {roles:['Neo']}]->(TheMatrix)
+----
+
+The above `CREATE` statement creates a relationship between the `Keanu` node and the `TheMatrix` node. The relationship type is `ACTED_IN` and like nodes relationships can have attributes (in this case a `roles` attribute).
+
+Click on the code to populate it into Neo4j browser editor:
+
+image::neo4j-clickcode.png[]
+
+This will place the necessary https://neo4j.com/developer/cypher-query-language/[Cypher] statements into the Neo4j browser editor that will populate the example database. You can then press the "Play" button to run the code and in the window below will appear a Graph visualization of the database model:
+
+image::neo4j-runcode.png[]
+
+
+

@@ -1,0 +1,55 @@
+Edit the file `server/grails-app/init/demo/BootStrap.groovy` and add the
+following code:
+
+[source, groovy]
+./server/grails-app/init/demo/BootStrap.groovy
+----
+include::../snippets/server/grails-app/init/demo/BootStrap.groovy[]
+----
+
+
+As you can see, we use several Grails Services (more about services in the next section) as collaborators. Grails encourages 
+to keep all your business logic in the service layer.
+
+
+[source, groovy]
+./server/grails-app/services/demo/IceCreamService.groovy
+----
+include::../snippets/server/grails-app/services/demo/IceCreamService.groovy[tag=package]
+include::../snippets/server/grails-app/services/demo/IceCreamService.groovy[tag=import]
+
+include::../snippets/server/grails-app/services/demo/IceCreamService.groovy[tag=class]
+include::../snippets/server/grails-app/services/demo/IceCreamService.groovy[tag=saveIcream]
+include::../snippets/server/grails-app/services/demo/IceCreamService.groovy[tag=count]
+----
+
+[source, groovy]
+./server/grails-app/services/demo/RoleService.groovy
+----
+include::../snippets/server/grails-app/services/demo/RoleService.groovy[tag=package]
+include::../snippets/server/grails-app/services/demo/RoleService.groovy[tag=import]
+
+include::../snippets/server/grails-app/services/demo/RoleService.groovy[tag=class]
+include::../snippets/server/grails-app/services/demo/RoleService.groovy[tag=saveRole]
+include::../snippets/server/grails-app/services/demo/RoleService.groovy[tag=count]
+----
+
+[source, groovy]
+./server/grails-app/services/demo/UserService.groovy
+----
+include::../snippets/server/grails-app/services/demo/UserService.groovy[tag=package]
+include::../snippets/server/grails-app/services/demo/UserService.groovy[tag=import]
+
+include::../snippets/server/grails-app/services/demo/UserService.groovy[tag=class]
+include::../snippets/server/grails-app/services/demo/UserService.groovy[tag=createUser]
+----
+
+[source, groovy]
+./server/grails-app/services/demo/UserRoleService.groovy
+----
+include::../snippets/server/grails-app/services/demo/UserRoleService.groovy[tag=package]
+include::../snippets/server/grails-app/services/demo/UserRoleService.groovy[tag=import]
+
+include::../snippets/server/grails-app/services/demo/UserRoleService.groovy[tag=class]
+include::../snippets/server/grails-app/services/demo/UserRoleService.groovy[tag=saveUserRole]
+----

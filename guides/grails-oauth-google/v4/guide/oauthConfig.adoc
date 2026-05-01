@@ -1,0 +1,61 @@
+With our dependencies added, we need to configure security.
+
+Create a file `application.groovy` with the following content `staticRules` configuration.
+
+[source,groovy]
+.grails-app/conf/application.groovy
+----
+include::../snippets/grails-app/conf/application.groovy[indent=0,tag=staticRules]
+----
+
+Add the next block to configure Grails Spring Security Rest Plugin:
+
+[source,groovy]
+.grails-app/conf/application.groovy
+----
+include::../snippets/grails-app/conf/application.groovy[indent=0,tag=grailsPluginSpringSecurityRest]
+----
+<1> You must disable bearer token support to register your own tokenReader implementation.
+<2> Enable anonymous access to URL's where the Grails Spring Security Rest plugin's filters are applied
+<3> Required secret which is used to sign the JWT tokens.
+<4> Callback url, after selecting your google user this is callback url will be invoked with a JWT token which authenticates the user
+<5> Which pac4j client to use; in our case the Google client
+<6> Open your `client_id.json` you downloaded while setting up Google. You will supply `client_id` as the System Property `GOOGLE_KEY` when you start the app.
+<7> Open your `client_id.json` you downloaded while setting up Google. You will supply `client_secret` as the System Property `GOOGLE_KEY` when you start the app.
+<8> The scope can be from any value of the enum org.pac4j.oauth.client.Google2Client.Google2Scope
+<9> Specific roles that Google authentication is allowed to access
+<10> We are going to authenticate our users only against Google. Thus, we use only the anonymous authentication provider. Read more about https://grails-plugins.github.io/grails-spring-security-core/latest/#authenticationProviders[Authentication Providers] in Spring Security Core Plugin documentation.
+
+To start the app you will need to supply `client_id` and `client_secret` as system properties. e.g.:
+
+`./gradlew -DGOOGLE_KEY=XXXXXX -DGOOGLE_SECRET=XXXX bootRun
+
+
+WARNING: While the scope can be from any value of the enum org.pac4j.oauth.client.Google2Client.Google2Scope, if you use
+the default OauthUserDetailsService, you need to use EMAIL_AND_PROFILE. That is because the default implementation uses
+the profile ID as the username, and that is only returned by Google if EMAIL_AND_PROFILE scope is used.
+
+We want our app stateless by default with some endpoints which allow anonymous access.
+
+[source,groovy]
+.grails-app/conf/application.groovy
+----
+include::../snippets/grails-app/conf/application.groovy[indent=0,tag=filterChain]
+----
+
+<1> stateless chain that allows anonymous access when no token is sent. If however a token is on the request, it will be validated.
+
+<2> /** is a stateless chain that doesn't allow anonymous access. Thus, the token will always be required, and if missing, a Bad Request reponse will be sent back to the client.
+
+
+NOTE: We are not persisting User information in the database. You may have noticed we don't have `User`, `Role`, `UserRole` domain classes in the project. Neither we setup configuration values such as `userLookUp.userDomainClass` etc.
+
+Now we override the `login/auth` view. So that we no longer show a username/password form in that page.
+
+[source,groovy]
+.grails-app/views/login/auth.gsp
+----
+include::../snippets/grails-app/views/login/auth.gsp[indent=0]
+----
+
+We don't include a button to SignIn with Google in that page because we have included that button in root layout _main.gsp_ file.
