@@ -1,0 +1,7 @@
+Create sample data in `Bootstrap.groovy` when we run the app in the development environment.
+
+[source,groovy]
+.grails-app/init/demo/BootStrap.groovy
+----
+include::../snippets/grails-app/init/demo/BootStrap.groovy[]
+----

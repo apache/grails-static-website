@@ -1,0 +1,25 @@
+training:
+  title: Grails Training
+gettingStarted:
+  title: Getting Started
+  requirements: What you will need
+  howto: How to complete the guide
+writingTheApp:
+  title: Writing the Application
+  setupMultitenancy:
+    title: Setup Multi-Tenancy
+    multiTenancyMode: The Multi-Tenancy Mode
+    multiTenancyResolver: The TenantResolver
+  domainClasses: Creating the Domain Classes
+  seedData: Setup Test Data
+  tenantSelection: Implementing Tenant Selection
+  multiTenantLogic:
+    title: Writing Multi-Tenant Aware Data Logic
+    readingData: Executing Multi-Tenant Aware Queries
+    writingData: Executing Multi-Tenant Updates
+testingTheApp: Multi-Tenancy Unit Testing
+integrationTest: Functional Tests
+runningTheApp:
+  title: Running the Application
+helpWithGrails:
+  title: Do you need help with Grails?

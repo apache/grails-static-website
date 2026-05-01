@@ -1,0 +1,8 @@
+The SDK is at https://github.com/frogermcs/Google-Actions-Java-SDK however all we need to do is edit our build.gradle to include the library.
+
+[source,gradle]
+./build.gradle
+----
+include::../snippets/build.gradle[indent=0, tag=gactionsDependency]
+----
+

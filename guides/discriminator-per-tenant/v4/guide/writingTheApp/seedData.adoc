@@ -1,0 +1,14 @@
+To setup some test data you can modify the `Application` class to implement the `ApplicationRunner` interface to run transactional logic on startup:
+
+[source, groovy]
+.grails-app/controllers/example/Application.groovy
+----
+include::{sourcedir}/grails-app/init/example/Application.groovy[]
+----
+
+<1> Implement the `ApplicationRunner` interface
+<2> Mark the `run` method as transactional with `@Transactional`
+<3> Use `saveAll` to save two `Manufacturer` instances
+
+In the example about two `Manufacturer` instances are saved that will correspond
+to the two tenants supported by this application. 

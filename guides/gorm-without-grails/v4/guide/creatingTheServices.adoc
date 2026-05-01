@@ -1,0 +1,26 @@
+Next lets create our service layer for our application.
+
+[source,bash]
+----
+  $ cd src/main/groovy/demo/service
+  $ touch ManufacturerService
+  $ touch VehicleService
+----
+
+We are going to use GORM Data Services.
+
+____
+Data Services take the work out of implemented service layer logic by adding the ability to automatically implement abstract classes or interfaces using GORM logic.
+____
+
+[source,groovy]
+./src/main/groovy/demo/service/ManufacturerService.groovy
+----
+include::../snippets/src/main/groovy/demo/service/ManufacturerService.groovy[]
+----
+
+[source,groovy]
+./src/main/groovy/demo/service/VehicleService.groovy
+----
+include::../snippets/src/main/groovy/demo/service/VehicleService.groovy[]
+----

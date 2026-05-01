@@ -1,0 +1,15 @@
+Once you have created and wired the TaskScheduler you will need to create runnable tasks for it to execute.
+
+Create the following task
+
+[source, groovy]
+.grails-app/tasks/demo/EmailTask.groovy
+----
+include::../snippets/grails-app/tasks/demo/EmailTask.groovy[]
+----
+<1> Implement `Runnable`
+<2> Store incoming email address for later use
+<3> Store incoming message
+<4> Store incoming service
+<5> Task constructor: set `email`, `message` and `emailService`
+<6> Run the task

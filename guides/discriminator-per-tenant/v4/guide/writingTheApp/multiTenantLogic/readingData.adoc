@@ -1,0 +1,52 @@
+To implement Multi-Tenant queries in a GORM Data Service simply add abstract methods that correspond to link:{gormdocs}#_data_service_queries[one of the supported conventions in GORM]:
+
+[source, groovy]
+.grails-app/services/example/VehicleService.groovy
+----
+include::{sourcedir}/grails-app/services/example/VehicleService.groovy[tags=queries, indent=0]
+----
+
+<1> The `list` method returns a list of `Vehicle` instances and takes optional arguments as a map to perform pagination
+<2> The `count` method counts the number of `Vehicle` instances
+<3> The `find` method finds a single `Vehicle` by `id`
+
+Now it is time to write a controller that can use these newly defined methods. First, create a
+new `grails-app/controllers/example/VehicleController.groovy` class with either
+the `create-controller` command or your preferred IDE.
+
+The `VehicleController` should define a property referencing the previously created `VehicleService`:
+
+[source, groovy]
+.grails-app/controllers/example/VehicleController.groovy
+----
+include::{sourcedir}/grails-app/controllers/example/VehicleController.groovy[tags=class, indent=0]
+    ...
+}
+----
+
+Now run `grails generate-views` to generate some default GSP views that can render the `Vehicle` instances:
+
+[source,bash]
+----
+$ grails generate-views example.Vehicle
+----
+
+Next add an entry into the `UrlMappings.groovy` file to map the `/vehicles` URI:
+
+[source, groovy]
+.grails-app/controllers/example/UrlMappings.groovy
+----
+include::{sourcedir}/grails-app/controllers/example/UrlMappings.groovy[tag=vehicles, indent=0]
+----
+
+Now you are ready to add the query logic to read `Vehicle` instances for each tenant. Update `VehicleController` with the following read operations:
+
+[source, groovy]
+.grails-app/controllers/example/VehicleController.groovy
+----
+include::{sourcedir}/grails-app/controllers/example/VehicleController.groovy[tags=index, indent=0]
+
+include::{sourcedir}/grails-app/controllers/example/VehicleController.groovy[tags=show, indent=0]
+----
+
+Both the `find` and `show` actions use the `VehicleService` to locate `Vehicle` instances. The `VehicleService` will ensure the correct tenant is resolved and the correct data returned for each tenant.

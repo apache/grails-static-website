@@ -1,0 +1,11 @@
+include::{commondir}/common-multitenancymode.adoc[]
+
+In this case the required Multi-Tenancy mode is `DISCRIMINATOR` and it can be configured using the `grails.gorm.multiTenancy.mode` setting:
+
+[source, groovy]
+.grails-app/conf/application.yml
+----
+include::{sourcedir}/grails-app/conf/application.yml[tag=grails]
+include::{sourcedir}/grails-app/conf/application.yml[tag=gorm]
+include::{sourcedir}/grails-app/conf/application.yml[tag=multiTenancy]
+----

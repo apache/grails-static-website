@@ -1,0 +1,20 @@
+training:
+  title: Training
+gettingStarted:
+  title: Getting Started
+  requirements: What you will need
+  howto: How to complete the guide
+runningTheApp:
+  title: Application Overview
+  install: Install Plugin
+  domain: Domain
+  controllers: Controller
+  services: Services
+  views: Views
+  bootstrap: BootStrap
+  urlMappings: URLMappings
+  test: Integration Test
+conclusion:
+  title: Conclusion
+helpWithGrails:
+  title: Do you need help with Grails?

@@ -1,0 +1,17 @@
+We will use `gactions CLI` to test our app. 
+
+Go to https://developers.google.com/actions/tools/gactions-cli[gactions CLI] and download it:
+
+image::gactions-cli.png[]
+
+Make the gactions binary executable (chmod +x on linux and OSX).
+
+After you have installed gactions, run the init command in your terminal:
+
+[source, bash]
+----
+$ gactions init --force
+----
+
+Other commands you can run: `preview`, `update`, `deploy`, `test`, and `list`.
+

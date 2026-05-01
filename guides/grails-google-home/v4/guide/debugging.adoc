@@ -1,0 +1,8 @@
+Sometimes the web simulator isn't helpful if your application is crashing. So we have some code that writes the incoming request from google to a file. We can use curl to replay this into your grails app so you can set breakpoints to debug what the issue is.
+
+[source, bash]
+---
+$ curl -vX POST https://color-finder-167203.appspot.com/assistantAction/index -d @tellmesomething.json --header "Content-Type: application/json"
+---
+
+Good luck and go make some cool Actions!

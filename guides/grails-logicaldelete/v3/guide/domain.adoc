@@ -1,0 +1,9 @@
+Add a `Book` domain class:
+
+[source,groovy]
+.grails-app/domain/demo/Book.groovy
+----
+include::../snippets/grails-app/domain/demo/Book.groovy[]
+----
+
+<1> Implement `gorm.logical.delete.LogicalDelete` trait, which can applied to any domain class to indicate that the domain class should participate in logical deletes. The trait adds a boolean persistent property named `deleted` to the domain class. When this property has a value of true, it indicates that the record has been logically deleted and as such will be excluded from query results by default.

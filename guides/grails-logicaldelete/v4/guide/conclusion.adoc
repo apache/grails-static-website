@@ -1,0 +1,4 @@
+NOTE: The goal of this guide is to show you the potential of the logical delete plugin, not a perfect implementation of undo functionality. For example, in this app we should protect the `undoDelete` action to be randomly invoked.
+
+To learn more, read more http://grailsblog.objectcomputing.com/posts/2018/04/05/introducing-the-grails-3-gorm-logical-delete-plugin.html[Introducing the Grails 3 GORM Logical Delete plugin]'s blog post and
+read the http://plugins.grails.org/plugin/grails/gorm-logical-delete[plugin docs].

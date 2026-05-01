@@ -1,0 +1,5 @@
+* Some time on your hands
+* A decent text editor or IDE
+* A Google account
+* A https://cloud.google.com[Google Cloud] account
+* curl command to help debugging

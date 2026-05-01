@@ -1,0 +1,15 @@
+When the application starts we save some data. 
+
+[source,groovy]
+./src/main/groovy/demo/Application.groovy
+----
+include::../snippets/src/main/groovy/demo/Application.groovy[]
+----
+
+<1> Disable Auto-configuration for Hibernate JPA.
+
+[source,groovy]
+./src/main/groovy/demo/init/BootStrap.groovy
+----
+include::../snippets/src/main/groovy/demo/init/BootStrap.groovy[]
+----

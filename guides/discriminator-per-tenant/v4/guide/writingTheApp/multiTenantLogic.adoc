@@ -1,0 +1,20 @@
+include::{commondir}/common-multitenancytransforms.adoc[]
+
+To implement the logic to save and retrieve `Vehicle` instances create a new  +
+`grails-app/services/example/VehicleService.groovy`
+file and annotate it within the link:{gormapi}/grails/gorm/multitenancy/CurrentTenant.html[CurrentTenant]
+and link:{gormapi}/grails/gorm/services/Service.html[Service] annotations:
+
+[source, groovy]
+.grails-app/services/example/VehicleService.groovy
+----
+include::{sourcedir}/grails-app/services/example/VehicleService.groovy[tags=class, indent=0]
+}
+----
+<1> The link:{gormapi}/grails/gorm/services/Service.html[Service] transformation will ensure any abstract methods that can be implemented by GORM are implemented
+<2> The link:{gormapi}/grails/gorm/multitenancy/CurrentTenant.html[CurrentTenant] transformation will ensure any method that is executed on the service resolves the current tenant first and binds a Hibernate session.
+
+NOTE: The class is `abstract` because many of the methods will be implemented for you by GORM.
+
+
+Now lets take a look at how to implement querying logic for a Multi-Tenant application.

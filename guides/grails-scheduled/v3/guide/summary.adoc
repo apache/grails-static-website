@@ -1,0 +1,7 @@
+During this guide, we learned how to configure Jobs using the `@Scheduled` annotation using fixedDelay, initialDelay,
+and cron as well as manually configuring jobs with a TaskScheduler and tasks. Moreover, we learned that
+default configuration for `@Scheduled` or the TaskScheduler prevents concurrent execution.
+
+For more information review the
+https://docs.spring.io/spring/docs/current/spring-framework-reference/integration.html#scheduling[Spring Task Execution and Scheduling documentation] to learn more.
+

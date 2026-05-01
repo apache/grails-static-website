@@ -1,0 +1,74 @@
+Testing controller logic that uses Multi-Tenancy requires special considerations.
+
+Luckily GORM 6.1 makes it relatively simple to write unit tests.
+
+To write a unit test for the `VehicleController` class create a new +
+`src/test/groovy/example/VehicleControllerSpec.groovy` Spock specification:
+
+
+[source, groovy]
+.src/test/groovy/example/VehicleControllerSpec.groovy
+----
+include::{sourcedir}/src/test/groovy/example/VehicleControllerSpec.groovy[tags=class, indent=0]
+	...
+}
+----
+
+As you can see above the test extends `HibernateSpec`.
+
+To make testing simpler override the `tenantResolverClass` by overriding the `getConfiguration()` method of `HibernateSpec`:
+
+[source, groovy]
+.src/test/groovy/example/VehicleControllerSpec.groovy
+----
+include::{sourcedir}/src/test/groovy/example/VehicleControllerSpec.groovy[tags=config, indent=0]
+----
+
+This will allow you to use link:{gormapi}/org/grails/datastore/mapping/multitenancy/resolvers/SystemPropertyTenantResolver.html[SystemPropertyTenantResolver] for changing the tenant id within the test.
+
+Next step is to provide a `setup` method that configures the `VehicleService` for the controller:
+
+[source, groovy]
+.src/test/groovy/example/VehicleControllerSpec.groovy
+----
+include::{sourcedir}/src/test/groovy/example/VehicleControllerSpec.groovy[tags=setup, indent=0]
+----
+
+<1> Define a `vehicleService` as a property of the unit test
+<2> Set the tenant id to `audi` for the purposes of the test
+<3> Lookup the `VehicleService` implementation from GORM
+<4> Assign the `VehicleService` to the controller under test
+
+To ensure proper cleanup you should also clear the tenant id in a `cleanup` method:
+
+[source, groovy]
+.src/test/groovy/example/VehicleControllerSpec.groovy
+----
+include::{sourcedir}/src/test/groovy/example/VehicleControllerSpec.groovy[tags=cleanup, indent=0]
+----
+
+With that done it is trivial to test the controller logic, for example to test the `index` action with no data:
+
+[source, groovy]
+.src/test/groovy/example/VehicleControllerSpec.groovy
+----
+include::{sourcedir}/src/test/groovy/example/VehicleControllerSpec.groovy[tags=index, indent=0]
+----
+
+You can also write tests to test the case where no tenant id is present by clearing the tenant id:
+
+[source, groovy]
+.src/test/groovy/example/VehicleControllerSpec.groovy
+----
+include::{sourcedir}/src/test/groovy/example/VehicleControllerSpec.groovy[tags=noTenant, indent=0]
+----
+
+Testing more complex interactions like saving data is possible too:
+
+[source, groovy]
+.src/test/groovy/example/VehicleControllerSpec.groovy
+----
+include::{sourcedir}/src/test/groovy/example/VehicleControllerSpec.groovy[tags=save, indent=0]
+----
+
+Note that within the assertions of the above test we use the `vehicleService` which makes sure the correct tenant is used when making the assertion.

@@ -1,0 +1,26 @@
+Although the previous example is valid, usually you don't want to put your business logic in a Job. A better approach is to create an additional service which the `JobService` invokes. This approach decouples your business logic from the scheduling logic. Moreover, it facilities testing and maintenance. Let's see an example:
+
+Create the following service:
+
+[source, groovy]
+.grails-app/services/demo/EmailService.groovy
+----
+include::../snippets/grails-app/services/demo/EmailService.groovy[]
+----
+
+And then the job:
+
+[source, groovy]
+.grails-app/services/demo/DailyEmailJobService.groovy
+----
+include::../snippets/grails-app/services/demo/DailyEmailJobService.groovy[tag=dailyEmailJobService]
+----
+<1> Force service to initialize, without forcing the service to be initialized the jobs will not execute
+<2> Inject the service
+<3> Call it
+<4> Trigger the job once a day at 04:30 AM
+
+
+Cron notation is often confusing so to assist in having clear logic and to make more advanced scheduling easier next we will
+take a look at job execution using a TaskScheduler.
+

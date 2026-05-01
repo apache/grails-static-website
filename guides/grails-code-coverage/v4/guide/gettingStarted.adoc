@@ -1,0 +1,7 @@
+Atlassian Clover provides Java and Groovy developers a reliable source for code coverage analysis.
+
+Since April 11, 2017, https://www.atlassian.com/blog/announcements/atlassian-clover-open-source[Clover is Open Source].
+
+Grails 3 uses the Gradle Build System for build related tasks, such as compilation, running tests, and producing binary distributions of your project.
+
+In this guide we are going to install a Gradle plugin to get code coverage of our Grails application.

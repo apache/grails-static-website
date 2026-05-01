@@ -1,0 +1,20 @@
+Create a http://gebish.org[Geb] functional test which verifies the undo button works:
+
+[source,groovy]
+.src/integration-test/groovy/demo/BooksUndoSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/demo/BooksUndoSpec.groovy[]
+----
+
+The previous test uses a Geb Page and Module to encapsulate implementation details and focus in behaviour being verified.
+[source,groovy]
+.src/integration-test/groovy/demo/BookModule.groovy
+----
+include::../snippets/src/integration-test/groovy/demo/BookModule.groovy[]
+----
+
+[source,groovy]
+.src/integration-test/groovy/demo/BooksPage.groovy
+----
+include::../snippets/src/integration-test/groovy/demo/BooksPage.groovy[]
+----

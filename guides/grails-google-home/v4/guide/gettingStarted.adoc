@@ -1,0 +1,3 @@
+In this guide you are going to learn how to create a Grails application to host a https://developers.google.com/actions/[Google Action] for your https://madeby.google.com/home/[Google Home] device to interact with. We will build, deploy, and set up everything necessary to facilitate this on https://cloud.google.com/appengine/docs/flexible/[Google App Engine Flexible] and Google APIs.
+
+We will be using the https://github.com/frogermcs/Google-Actions-Java-SDK[early access unofficial Java SDK] to build actions. This is because the only official SDK is built with node.
