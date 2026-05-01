@@ -137,6 +137,12 @@ abstract class VendorGuideTask extends DefaultTask {
         SnippetVendoringIncludeProcessor processor =
                 new SnippetVendoringIncludeProcessor(sampleRoot, destSnippetsDir, common)
 
+        // Walk recursively. Some upstream guides nest adocs under
+        // subdirectories (e.g. writingTheApp/setupMultitenancy/foo.adoc)
+        // and reference them from toc.yml as dotted keys. We must process
+        // and copy every .adoc, not just the ones at guide/ root.
+        List<File> upstreamAdocs = collectAdocs(guideSrcDir)
+
         Asciidoctor asciidoctor = Asciidoctor.Factory.create()
         try {
             asciidoctor.javaExtensionRegistry().includeProcessor(processor)
@@ -144,13 +150,12 @@ abstract class VendorGuideTask extends DefaultTask {
                     .attribute('sourceDir', new File(sampleRoot, 'complete').absolutePath)
                     .attribute('commondir', common.absolutePath)
                     .build()
-            File[] adocs = guideSrcDir.listFiles({ File f -> f.name.endsWith('.adoc') } as FileFilter)
-            for (File adoc : adocs) {
+            for (File adoc : upstreamAdocs) {
                 Options options = Options.builder()
                         .safe(SafeMode.UNSAFE)
                         .standalone(false)
                         .toFile(false)
-                        .baseDir(guideSrcDir)
+                        .baseDir(adoc.parentFile)
                         .attributes(attributes)
                         .build()
                 asciidoctor.convert(adoc.text, options)
@@ -159,16 +164,26 @@ abstract class VendorGuideTask extends DefaultTask {
             asciidoctor.shutdown()
         }
 
-        // The .adoc files in our DESTINATION tree carry the rewritten
-        // include paths -- read upstream contents and apply the same
-        // text-level replacement that the IncludeProcessor effectively
-        // does, so the on-disk fixture matches what AsciiDoctor sees.
-        // We do this AFTER the AsciiDoctor pass so any unresolvable
-        // includes have already raised on the original text.
-        File[] upstreamAdocs = guideSrcDir.listFiles({ File f -> f.name.endsWith('.adoc') } as FileFilter)
+        // Mirror the upstream guide/ tree into our destination, applying
+        // the include-path rewrite to every .adoc. Directory structure is
+        // preserved so toc.yml's dotted keys resolve to nested files in
+        // the staged tree at render time.
         for (File adoc : upstreamAdocs) {
+            String rel = guideSrcDir.toPath().relativize(adoc.toPath()).toString().replace('\\', '/')
+            File destAdoc = new File(destGuideDir, rel)
+            if (!destAdoc.parentFile.exists()) {
+                destAdoc.parentFile.mkdirs()
+            }
             String rewritten = adoc.text.replaceAll(/include::\{sourceDir\}\//, 'include::../snippets/')
-            new File(destGuideDir, adoc.name).text = rewritten
+            // For nested adocs the relative '../snippets/' breaks: a file
+            // at guide/writingTheApp/setupMultitenancy/foo.adoc needs to
+            // walk up further. Compute the depth-aware prefix.
+            int depth = rel.length() - rel.replace('/', '').length()
+            if (depth > 0) {
+                String upPrefix = ('../' * (depth + 1))
+                rewritten = rewritten.replaceAll(/include::\.\.\/snippets\//, "include::${upPrefix}snippets/".toString())
+            }
+            destAdoc.text = rewritten
         }
 
         // Augment manifest data with the upstream commit timestamp,
@@ -188,6 +203,26 @@ abstract class VendorGuideTask extends DefaultTask {
 
         logger.lifecycle('Vendored {} -> {} ({} snippet(s))',
                 sampleRoot.name, dest.name, processor.manifest.size())
+    }
+
+    @CompileDynamic
+    private static List<File> collectAdocs(File root) {
+        List<File> out = []
+        Deque<File> stack = new ArrayDeque<>()
+        stack.push(root)
+        while (!stack.empty) {
+            File dir = stack.pop()
+            File[] entries = dir.listFiles()
+            if (entries == null) continue
+            for (File f : entries) {
+                if (f.isDirectory()) {
+                    stack.push(f)
+                } else if (f.name.endsWith('.adoc')) {
+                    out << f
+                }
+            }
+        }
+        out
     }
 
     private static String readUpstreamCommitDate(File repoRoot, String sha) {
