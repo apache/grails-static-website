@@ -26,7 +26,20 @@ import org.gradle.api.file.Directory
 import org.yaml.snakeyaml.Yaml
 
 import grails.doc.gradle.PublishGuideTask
+import website.gradle.tasks.AssetsTask
+import website.gradle.tasks.BlogTask
+import website.gradle.tasks.BskyAtProtoDidTask
+import website.gradle.tasks.DocumentationTask
+import website.gradle.tasks.DownloadTask
+import website.gradle.tasks.GuidesTask
+import website.gradle.tasks.HtaccessTask
+import website.gradle.tasks.MinutesTask
 import website.gradle.tasks.ParityCheckGuideTask
+import website.gradle.tasks.PluginsTask
+import website.gradle.tasks.ProfilesTask
+import website.gradle.tasks.QuestionsTask
+import website.gradle.tasks.RenderSiteTask
+import website.gradle.tasks.SitemapTask
 import website.gradle.tasks.VendorGuideTask
 
 /**
@@ -238,11 +251,14 @@ class RenderGuidesPlugin {
                     // :renderBlog/:renderMinutes/:genProfilesPage without declaring
                     // dependency'. mustRunAfter resolves the ordering without
                     // forcing those tasks to be invoked when only renderGuide_* is
-                    // scheduled.
-                    task.mustRunAfter('renderSite', 'genPlugins', 'renderBlog',
-                            'renderMinutes', 'genProfilesPage', 'genHtaccess',
-                            'genBskyAtProtoDid', 'genSitemap', 'copyAssets',
-                            'genDocsPage', 'genDownloads', 'genFaq', 'genGuides')
+                    // scheduled. Names come from each task class's NAME constant
+                    // so a future task rename surfaces as a compile error here.
+                    task.mustRunAfter(RenderSiteTask.NAME, PluginsTask.NAME,
+                            BlogTask.NAME, MinutesTask.NAME, ProfilesTask.NAME,
+                            HtaccessTask.NAME, BskyAtProtoDidTask.NAME,
+                            SitemapTask.NAME, AssetsTask.NAME,
+                            DocumentationTask.NAME, DownloadTask.NAME,
+                            QuestionsTask.NAME, GuidesTask.NAME)
                 }
                 wiring.renderTaskNames << renderTaskName
 
