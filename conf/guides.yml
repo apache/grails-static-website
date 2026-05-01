@@ -1546,6 +1546,10 @@ guides:
           - 'javascript'
           - 'gradle'
           - 'multi-project'
+        sampleRef:
+          repo: 'grails-guides/grails-vue-combined'
+          branch: 'master'
+          sha: '25feedc9fbb814dde1542e25e71e8d72f57e52ee'
 
   - name: 'grails-yourkit-profiling'
     title: 'Grails YourKit Profiling'
