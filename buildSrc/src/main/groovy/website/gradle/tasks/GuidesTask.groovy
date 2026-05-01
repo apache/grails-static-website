@@ -128,18 +128,26 @@ abstract class GuidesTask extends GrailsWebsiteTask {
         def f = new File(tempDir, PAGE_NAME_GUIDES)
         def page = pageWithFile(f)
         page.filename = 'index.html'
-        RenderSiteTask.renderPages(meta, [page], distDir, templateText)
+        // Resolve [%PARTIAL:<name>] tokens against the same partial bundle
+        // RenderSiteTask uses, so guides/index.html, tag, and category pages
+        // share the main-site chrome.
+        File partialsRoot = project.rootProject.layout.projectDirectory
+                .dir('templates/partials').asFile
+        File partialsArg = partialsRoot.isDirectory() ? partialsRoot : null
+        RenderSiteTask.renderPages(meta, [page], distDir, templateText, partialsArg)
         RenderSiteTask.renderPages(
                 meta,
                 parseCategoryPages(tempDir),
                 new File(distDir, 'categories').tap { it.mkdirs() },
-                templateText
+                templateText,
+                partialsArg
         )
         RenderSiteTask.renderPages(
                 meta,
                 parseTagsPages(tempDir),
                 new File(distDir, 'tags').tap { it.mkdirs() },
-                templateText
+                templateText,
+                partialsArg
         )
     }
 
