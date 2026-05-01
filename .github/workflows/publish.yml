@@ -47,7 +47,15 @@ jobs:
         with:
           develocity-access-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
       - name: Publish Main Site
-        run: ./gradlew clean publishMainSite --console=plain --no-daemon
+        # --no-configuration-cache is required because the vendored
+        # grails.doc.gradle.PublishGuideTask (instantiated as renderGuide_*)
+        # holds non-serializable state (Logger, Stack, Vector, ReferenceQueue).
+        # Even when each task declares notCompatibleWithConfigurationCache,
+        # Gradle 9.4.1's parallel-config-cache STORE step still attempts to
+        # serialize a snapshot of the task state and fails. Disabling the
+        # cache for the deploy run trades a small startup cost for a
+        # deterministic publish.
+        run: ./gradlew clean publishMainSite --console=plain --no-daemon --no-configuration-cache
         env:
           GITHUB_SLUG: apache/grails-website
           GH_TOKEN: ${{ secrets.GRAILS_GHTOKEN }}
