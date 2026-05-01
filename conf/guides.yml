@@ -662,6 +662,10 @@ guides:
           - 'configuration'
           - 'configuration-properties'
           - 'grails6'
+        sampleRef:
+          repo: 'grails-guides/grails-configuration-properties-micronaut'
+          branch: 'grails6'
+          sha: 'e2625ba609664bf2b8d7ae9fe53280a0fa5c27b1'
 
   - name: 'grails-controller-testing'
     title: 'Grails Controller Testing'
@@ -776,6 +780,9 @@ guides:
           - 'gorm'
           - 'migration'
           - 'grails6'
+        # sampleRef intentionally omitted in this PR.
+        # Upstream guide on grails6 branch has unresolvable include at the pinned SHA.
+        # Tracked for follow-up.
 
   - name: 'grails-docker-external-services'
     title: 'Use docker to provide external services to your Grails app'
