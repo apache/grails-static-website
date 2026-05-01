@@ -64,8 +64,12 @@ import website.gradle.tasks.VendorGuideTask
  *
  * <p>The renderer itself is the vendored {@code grails.doc.*} subtree (see
  * {@code buildSrc/VENDOR.md}). Templates and theme assets live in
- * {@code buildSrc/src/main/template/} and are passed to
- * {@link PublishGuideTask#getResourcesDir()} as a filesystem path.</p>
+ * {@code guides/resources/} and are passed to
+ * {@link PublishGuideTask#getResourcesDir()} as a filesystem path. The
+ * {@code guides/resources/style/layout.html} template renders the legacy
+ * single-page guide chrome; {@code guideItem.html}, {@code section.html},
+ * {@code index.html}, {@code menu.html}, and {@code referenceItem.html}
+ * round out the bundle DocPublisher expects.</p>
  */
 @CompileStatic
 class RenderGuidesPlugin {
@@ -76,7 +80,7 @@ class RenderGuidesPlugin {
     static final String PARITY_AGGREGATE_TASK = 'parityCheckAllGuides'
     static final String VENDOR_AGGREGATE_TASK = 'vendorAllGuides'
     static final String GUIDES_YML_PATH = 'conf/guides.yml'
-    static final String VENDOR_TEMPLATE_PATH = 'buildSrc/src/main/template'
+    static final String GUIDE_TEMPLATE_PATH = 'guides/resources'
     static final String PARITY_BASELINE_ROOT = 'buildSrc/src/test/resources/parity-baseline'
     /**
      * Default upstream-checkout root, relative to the project root's
@@ -95,7 +99,7 @@ class RenderGuidesPlugin {
         }
 
         Directory templateRoot = project.rootProject.layout.projectDirectory
-                .dir(VENDOR_TEMPLATE_PATH)
+                .dir(GUIDE_TEMPLATE_PATH)
 
         Wiring wiring = registerPerVersionTasks(
                 project, templateRoot, guidesYml)
@@ -236,6 +240,8 @@ class RenderGuidesPlugin {
                                     "dist/guides/${guideName}/${versionKey}"))
                     task.asciidoc.set(true)
                     task.properties.set(attributes)
+                    // Drives the "Improve this doc" buttons in section.html.
+                    task.sourceRepo.set("https://github.com/apache/grails-static-website/edit/master/${sourcePath}".toString())
                     task.notCompatibleWithConfigurationCache(
                             'Vendored grails.doc.gradle.PublishGuideTask references Project + AntBuilder')
                     // Order after the main-site tasks since they share build/ as @OutputDirectory.
@@ -245,6 +251,16 @@ class RenderGuidesPlugin {
                             SitemapTask.NAME, AssetsTask.NAME,
                             DocumentationTask.NAME, DownloadTask.NAME,
                             QuestionsTask.NAME, GuidesTask.NAME)
+                    // The DocPublisher emits the legacy single-page chrome to
+                    // single.html and a TOC-only stub to index.html. Promote the
+                    // single page to the canonical /guide/index.html URL.
+                    task.doLast {
+                        File singleHtml = new File(task.targetDir.get().asFile, 'guide/single.html')
+                        if (singleHtml.isFile()) {
+                            File indexHtml = new File(task.targetDir.get().asFile, 'guide/index.html')
+                            indexHtml.bytes = singleHtml.bytes
+                        }
+                    }
                 }
                 wiring.renderTaskNames << renderTaskName
 
@@ -353,7 +369,11 @@ class RenderGuidesPlugin {
         // Always surface the version key so :version{} attribute resolutions work.
         attrs.putIfAbsent('version', versionKey)
         attrs.putIfAbsent('grails.version', versionKey)
-
+        // Legacy guide layout templates expect these names directly.
+        attrs.putIfAbsent('grailsVersion', versionKey)
+        if (guide.authors instanceof List) {
+            attrs.putIfAbsent('authors', (guide.authors as List).join(', '))
+        }
         attrs
     }
 }
