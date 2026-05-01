@@ -164,6 +164,13 @@ class RenderGuidesPlugin {
                                     "dist/guides/${guideName}/${versionKey}"))
                     task.asciidoc.set(true)
                     task.properties.set(attributes)
+                    // The vendored PublishGuideTask holds a Project reference
+                    // and an AntBuilder, neither of which serialize for
+                    // Gradle's configuration cache. Annotating here (instead
+                    // of editing the vendored source) keeps the upstream
+                    // copy byte-clean for re-vendor.
+                    task.notCompatibleWithConfigurationCache(
+                            'Vendored grails.doc.gradle.PublishGuideTask references Project + AntBuilder')
                 }
                 wiring.renderTaskNames << renderTaskName
 
