@@ -1,0 +1,91 @@
+Links are the key in the HAL standard. HAL resources include a special field called `_links`, which contains an array of JSON objects that define links to related resources. A HAL link contains (at least) two pieces of information - a relationship, and an `href` containing the URL to access the related resource. Other metadata can be included as well.
+
+Here's a sample of a JSON body with a `_links` field, and two links:
+
+[source, javascript]
+----
+{
+    title: "Groovy Recipes",
+    author: "Scott Davis",
+    pages: 100,
+
+    "_links": {
+        "self": {
+            "href": "http://localhost:8080/book/show/1",    //<1>
+        },
+        "author": {
+            "href": "http://localhost:8080/author/show/1", //<2>
+        }
+    }
+}
+----
+<1> `self` is a special link that every HAL resource should include - it specifies the URL "back" to the current resource.
+<2> Here we're defining a custom link called `author` that specifies the URL for the `author` field
+
+When a HAL resource is accessed by a client, it is possible to "browse" the relationships expressed in the `_links` field without the client knowing the exact makeup of the API endpoint.
+
+[source, groovy]
+----
+//examples are using the fetch API: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+
+//retrieve a book instance from the API
+fetch("http://localhost:8080/api/book/1").then(function(response) {
+    return response.json();
+}).then(function(data) {
+    this.book = data;
+});
+
+//retrieve book's author using links
+var author;
+fetch(book._links.author.href).then(function(response) {
+    return response.json();
+}).then(function(data) {
+    author = data;
+});
+----
+
+JSON views implement a Groovy trait http://views.grails.org/latest/api/grails/plugin/json/view/api/HalView.html[`HalView`], which exposes a `hal` helper with several methods for outputting HAL-compliant JSON. One of those is the `links` method:
+
+[source,groovy]
+----
+model {
+    Order order
+}
+json {
+    hal.links(order)
+    //...
+}
+----
+
+Calling `hal.links()` on our domain resource produces the following JSON output:
+
+[source, javascript]
+----
+{
+    _links: {
+        self: {
+            href: "http://localhost:8080/api/orders/1",
+            hreflang: "en_US",
+            type: "application/hal+json"
+        }
+    }
+}
+----
+
+Let's edit our `order/show.gson` view to include a `self` link as well as a link to the associated customer:
+
+[source,groovy]
+.grails-app/views/order/show.gson
+----
+include::../snippets/grails-app/views/order/show_v2.gson[]
+----
+<1> The `links` method can take a domain resource instance, or a map of link names and objects to link.
+
+Make a request to `http://localhost:8080/api/orders/1`:
+
+[source, groovy]
+----
+include::../snippets/src/integration-test/groovy/com/example/OrderShowV2IntegrationSpec.groovy[indent=0,lines=31..68]
+    //...
+}
+----

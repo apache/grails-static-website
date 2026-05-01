@@ -1,0 +1,74 @@
+Create the following four domain classes.
+
+[source,bash]
+----
+$ grails create-domain-class demo.Vehicle
+$ grails create-domain-class demo.Driver
+$ grails create-domain-class demo.Make
+$ grails create-domain-class demo.Model
+----
+
+Edit the domain classes as follows:
+
+[source,groovy]
+.server/grails-app/domain/demo/Vehicle.groovy
+----
+include::../snippets/server/grails-app/domain/demo/Vehicle.groovy[]
+----
+
+[source,groovy]
+.server/grails-app/domain/demo/Driver.groovy
+----
+include::../snippets/server/grails-app/domain/demo/Driver.groovy[]
+----
+
+[source,groovy]
+.server/grails-app/domain/demo/Make.groovy
+----
+include::../snippets/server/grails-app/domain/demo/Make.groovy[]
+----
+
+[source,groovy]
+.server/grails-app/domain/demo/Model.groovy
+----
+include::../snippets/server/grails-app/domain/demo/Model.groovy[]
+----
+
+Since we've added the `@Resource` annotation to our domain classes, Grails will generate RESTful URL mappings for each of them.
+Let's preload some data with the help of
+http://gorm.grails.org/latest/hibernate/manual/index.html#dataServices[GORM Data Services].
+
+[source,groovy]
+.server/grails-app/services/demo/MakeDataService.groovy
+----
+include::../snippets/server/grails-app/services/demo/MakeDataService.groovy[]
+----
+
+[source,groovy]
+.server/grails-app/services/demo/ModelDataService.groovy
+----
+include::../snippets/server/grails-app/services/demo/ModelDataService.groovy[]
+----
+
+[source,groovy]
+.server/grails-app/services/demo/DriverDataService.groovy
+----
+include::../snippets/server/grails-app/services/demo/DriverDataService.groovy[]
+----
+
+[source,groovy]
+.server/grails-app/services/demo/VehicleDataService.groovy
+----
+include::../snippets/server/grails-app/services/demo/VehicleDataService.groovy[]
+----
+
+[source,groovy]
+.server/grails-app/init/demo/BootStrap.groovy
+----
+include::../snippets/server/grails-app/init/demo/BootStrap.groovy[]
+----
+
+Restart the `server` project to load the test data in the default datasource.
+
+NOTE: If you wish to run the `server` app using the Grails wrapper `./grailsw run-app` instead of the Gradle wrapper, make sure that
+you are in your `server` directory when starting up the app.

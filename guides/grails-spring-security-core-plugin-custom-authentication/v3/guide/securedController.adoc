@@ -1,0 +1,7 @@
+This controller is restricted to users with role `ROLE_CLIENT`
+
+[source,groovy]
+.grails-app/controllers/demo/BankController.groovy
+----
+include::../snippets/grails-app/controllers/demo/BankController.groovy[indent=0]
+----

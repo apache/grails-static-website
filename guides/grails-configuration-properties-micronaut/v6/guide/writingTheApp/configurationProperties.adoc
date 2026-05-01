@@ -1,0 +1,29 @@
+In this section we are going to explore how property values can be bound to structured objects through `@ConfigurationProperties`.
+
+Make sure you have the `micronaut-inject-groovy` dependency in `build.gradle`.
+
+[source, groovy]
+.build.gradle
+----
+include::../../snippets/build.gradle[tag=micronaut-inject-groovy]
+----
+
+Create a file named `AddressConfiguration.groovy`.
+
+[source, groovy]
+.src/main/groovy/example/grails/AddressConfiguration.groovy
+----
+include::../../snippets/src/main/groovy/example/grails/AddressConfiguration.groovy[]
+----
+
+<1> `@ConfigurationProperties` annotation takes the configuration prefix.
+
+Any properties defined in the property file that has the prefix `address` and the same name as one of the properties are automatically assigned to this object.
+
+Add some properties to `application.yml`
+
+[source, groovy]
+.grails-app/conf/application.yml
+----
+include::../../snippets/grails-app/conf/application.yml[tag=address]
+----

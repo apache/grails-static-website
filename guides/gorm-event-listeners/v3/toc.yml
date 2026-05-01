@@ -1,0 +1,17 @@
+training: 
+  title: Training
+gettingStarted: 
+  title: Getting Started
+  requirements: What you will need
+  howto: How to complete the guide
+writingTheApp:
+  title: Writing the Application
+  dataServices: Data Services
+  async: Listening to events from GORM asynchronously
+  sync: Listening to events from GORM synchronously
+runningTheTests:
+  title: Running the Tests
+conclusion:
+  title: Conclusion
+helpWithGrails: 
+  title: Help with Grails 

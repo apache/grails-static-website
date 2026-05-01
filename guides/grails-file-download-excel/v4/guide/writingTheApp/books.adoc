@@ -1,0 +1,15 @@
+Create `Book` POGO:
+
+[source, groovy]
+.src/main/groovy/example/grails/Book.groovy
+----
+include::../../snippets/src/main/groovy/example/grails/Book.groovy[]
+----
+
+Create a sample service which fetches several books:
+
+[source, groovy]
+.grails-app/services/example/grails/BookService.groovy
+----
+include::../../snippets/grails-app/services/example/grails/BookService.groovy[]
+----

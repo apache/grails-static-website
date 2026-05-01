@@ -1,0 +1,14 @@
+Let's start with a `Vehicles` component, which will render a table of our Vehicle instances.
+
+Create a new JavaScript file under `src/main/webapp/app/` called `Vehicles.js`.
+
+Here's our `Vehicles` component:
+
+[source,javascript]
+----
+include::../snippets/src/main/webapp/app/Vehicles.js[]
+----
+
+Note that in the `renderVehicleRow` function we are accessing the customized JSON representation of our Vehicle instances, so we can use `vehicle.make.name`, for example.
+
+The React profile includes http://react-bootstrap.github.io[React-Bootstrap] by default, so we're using the Bootstrap `Table` component to streamline our code.

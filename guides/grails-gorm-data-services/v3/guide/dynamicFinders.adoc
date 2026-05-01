@@ -1,0 +1,39 @@
+If you have worked with GORM in the past, it is probable that you have you used http://gorm.grails.org/latest/hibernate/manual/index.html#finders[Dynamic Finders] to query.
+
+____
+A dynamic finder looks like a static method invocation, but the methods themselves don’t actually exist in any form at the code level.
+Instead, a method is auto-magically generated using code synthesis at runtime, based on the properties of a given class
+____
+
+
+With GORM Data Services, you can create an interface with methods with the same expressiveness as Dynamic Finders but
+without the disadvantages. E.g. you get type safety since GORM Data services are statically compiled.
+
+To find a `Person` by name with a Dynamic finder you will use
+`Person.findByName`. Let's implement a Data Service to achieve the same query.
+
+Create an interface annotated with `import grails.gorm.services.Service` and declare a method with the same signature.
+
+[source, groovy]
+.grails-app/services/example/grails/PersonDataService.groovy
+----
+include::../snippets/grails-app/services/example/grails/PersonDataService.groovy[tag=packageDeclaration]
+
+include::../snippets/grails-app/services/example/grails/PersonDataService.groovy[tag=serviceImport]
+
+@Service(Person) // <1>
+interface PersonDataService {
+
+include::../snippets/grails-app/services/example/grails/PersonDataService.groovy[tag=findByName]
+
+include::../snippets/grails-app/services/example/grails/PersonDataService.groovy[tag=count]
+
+include::../snippets/grails-app/services/example/grails/PersonDataService.groovy[tag=delete]
+
+}
+----
+
+<1> Qualify the `@Service` with the domain class you want to use.
+<2> In the method `findByName`, the stem is `find` which tells GORM it's a query (thus a read-only transaction will be used), and `Name` matches the domain property.
+<3> The method `delete` takes the `id` of the person which should be removed. It will automatically be wrapped in a writable transaction.
+

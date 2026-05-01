@@ -1,0 +1,60 @@
+You may have noticed that the `/info` endpoint is only a subset of the properties in `git.properties` such as the abbreviated sha, commit time and branch.
+You can display the full git properties via configuration by setting `management.info.git.mode=full`
+
+You'll set these values in `grails-app/conf/application.yml`
+
+[source,yaml]
+./complete/grails-app/conf/application.yml
+----
+include::../snippets/grails-app/conf/application.yml[tag=cmpYmlP1]
+----
+
+Then when you restart the application and access the `/info` endpoint at http://localhost:8080/info you should see something like:
+
+```json
+{
+    app: {
+        name: "complete",
+        grailsVersion: "3.2.6",
+        version: "0.1"
+    },
+    git: {
+        commit: {
+            message: {
+                full: "Enabling Spring Actuator Endpoints",
+                short: "Enabling Spring Actuator Endpoints"
+            },
+            time: "2017-02-16T11:46-0600",
+            id: "1695eb2c925e486acb962acf771f813a36568719",
+            id.abbrev: "1695eb2",
+            user: {
+                email: "colin.harrington@gmail.com",
+                name: "Colin Harrington"
+            }
+        },
+        branch: "master"
+    }
+}
+```
+Check the documentation for more configuration http://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html#production-ready-application-info-git
+
+NOTE: Under the hood there this behavior is handled by the https://github.com/spring-projects/spring-boot/blob/master/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/info/GitInfoContributor.java[GitInfoContributor].
+The https://github.com/spring-projects/spring-boot/blob/master/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/endpoint/InfoEndpoint.java[InfoEndpoint] is extensible and will aggregate all enabled beans implementing `org.springframework.boot.actuate.info.InfoContributor`
+
+'''
+
+Moreover, we can add a *functional test* to verify that Git information appears in the rest response.
+
+Add `grails-datastore-rest-client` plugin to your `dependencies` block
+
+[source,groovy]
+./complete/build.gradle
+----
+include::../snippets/build.gradle[tag=gradleBuildscriptP5]
+----
+
+[source,groovy]
+./complete/src/integration-test/groovy/demo/InfoSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/demo/InfoSpec.groovy[]
+----

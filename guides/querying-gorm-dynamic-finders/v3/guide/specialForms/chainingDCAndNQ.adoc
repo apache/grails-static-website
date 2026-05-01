@@ -1,0 +1,42 @@
+While dynamic finders are very convenient for simple queries, more complex queries
+will require other techniques. While these advanced query techniques are not discussed
+here, it can be useful to further restrict the results of these advanced techniques
+by _chaining_ (i.e. appending) dynamic finders to them.
+
+For example, let us find all the games that
+use involve the "Hand Management" mechanic and have an average duration of less than 120
+minutes. Finding all games using a specific mechanic can be done with the `Game` domain class
+http://docs.grails.org/latest/ref/Domain%20Classes/namedQueries.html[Named Query], `gamesWithMechanic`.
+[source,groovy]
+----
+include::complete/grails-app/domain/demo/Game.groovy[tag=gameNamedQueries]
+
+    // Find all games using the "Hand Management" game mechanic.
+    Mechanic m = Mechanic.findByName("Hand Management")
+    def games = Game.gamesWithMechanic(m)
+----
+
+To find games with an average duration of less than 120 minutes, we know to use the
+call `Game.findAllByAverageDurationLessThan(120)`. But that searches for *all* games under
+120 minutes, regardless of the game's mechanics. To find games that match both conditions,
+append the dynamic finder to the named query.
+[source,groovy]
+----
+include::complete/grails-app/services/demo/QueryService.groovy[tag=namedQueryChaining]
+----
+
+Similarly, dynamic finders can be appended to
+http://gorm.grails.org/latest/hibernate/manual/index.html#detachedCriteria[Detached Criteria] and
+http://gorm.grails.org/latest/hibernate/manual/index.html#whereQueries[Where Queries]
+to further restrict the results of the criteria query.
+[source,groovy]
+----
+include::complete/grails-app/services/demo/QueryService.groovy[tag=detachedCriteriaChaining]
+
+    // Find all "Economic" games of approximately 120 minutes.
+    def category = Category.findByName("Economic")
+    def games = queryGamesInCategoryWithAverageDuration(category, 120)
+----
+
+NOTE: These various, more advanced techniques -- Named Queries, Where Queries, Criteria
+and Detached Criteria Queries, and HQL -- will be explored in depth in future Grails Guides.

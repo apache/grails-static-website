@@ -1,0 +1,31 @@
+Generate a Controller and Views for this domain class with the help
+of Grails Static scaffolding capabilities.
+
+include::{commondir}/common-tipScaffolding.adoc[]
+
+[source, bash]
+----
+> grails generate-all demo.Student
+----
+
+The previous command generates a sample controller and GSP views. It generates a Spock Specification
+for the generated controller.
+
+[source, groovy]
+----
+.grails-app/controllers/demo/StudentController.groovy
+.grails-app/views/student/create.gsp
+.grails-app/views/student/edit.gsp
+.grails-app/views/student/index.gsp
+.grails-app/views/student/show.gsp
+.src/test/groovy/demo/StudentControllerSpec.groovy
+----
+
+Those artifacts provide CRUD functionality for the `Student` domain class.
+
+We have edited the generated controller and moved the code dealing with Transactional behavior into a service.
+You can check the complete solution in the `complete` folder.
+
+**The Grails team discourages the embedding of core application logic inside controllers, as
+it does not promote reuse and a clean separation of concerns. A controller's responsibility should be to handle a request and create or prepare a response.
+A controller can generate the response directly or delegate to a view.**

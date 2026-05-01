@@ -1,0 +1,15 @@
+Add a dependency to http://spreadsheet.dsl.builders[Spreadsheet builder]
+____
+Spreadsheet builder provides convenient way how to read and create MS Excel OfficeOpenXML Documents (XSLX) focus not only on content side but also on easy styling.
+____
+
+[source, groovy]
+.build.gradle
+----
+dependencies {
+    ...
+    ..
+    .
+include::../../snippets/build.gradle[tag=spreadsheetbuilder]
+}
+----

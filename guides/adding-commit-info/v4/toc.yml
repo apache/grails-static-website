@@ -1,0 +1,24 @@
+training:
+  title: Grails Training
+gettingStarted:
+  title: Getting Started
+  requirements: What you will need
+  howto: How to complete the guide
+history:
+  title: History
+  earlyDays: Early approaches
+  applicationProperties: application.properties
+  buildInfoPlugin: Build Info Plugin
+writingTheApp:
+  title: Writing the Application
+  gradlePlugin: Gradle Plugin
+  actuator: Spring Boot Actuator endpoints
+runningTheApp:
+  title: Running the Application
+configuration:
+  title: Configuration
+  configuringGitInfoContributor: Configuring the commit info shown
+  perEnvironmentConfig: Environment Configuration
+  secured: Secure your endpoints if neccesary
+tldr:
+  title: tl;dr (Too long; didn't read)

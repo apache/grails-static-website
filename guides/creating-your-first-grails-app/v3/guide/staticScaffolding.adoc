@@ -1,0 +1,50 @@
+Dynamic scaffolding is powerful and sometimes will provide all the functionality you need (especially for an administrative site where data access is more important than presentation). But it's quite likely that you will feel the need to customize the generated views and controllers, either to change their appearance or to add custom logic and functionality. Grails anticipates this need and provides a set of `generate` commands that can generate the controllers and/or views that you just saw, allowing you to modify them to suite your needs.
+
+To generate the views (and continue to use the dynamic scaffolding):
+
+[source, bash]
+----
+$ ./grailsw generate-views Vehicle
+----
+
+To generate the controller (and continue to use the dynamic GSP views):
+
+[source, bash]
+----
+$ ./grailsw generate-controller Vehicle
+----
+
+To both views and controllers (bypassing all dynamic generation):
+
+[source, bash]
+----
+$ ./grailsw generate-all Vehicle
+----
+
+The generated controller will be placed under `grails-app/controller`, and the generated views will be placed under `grails-app/views/vehicle`.
+
+TIP: To override existing files, use th `-force` flag along with the `generate-*` command: `./grailsw generate-all com.example.Vehicle -force`
+
+Let's generate the controller and views for `Vehicle` and take a look at the resulting controller.
+
+[source, bash]
+----
+$ ./grailsw generate-all Vehicle -force
+----
+
+Open the `VehicleController.groovy` file at `grails-app/controllers/org/grails/guides/`.
+
+[source, groovy]
+----
+include::../snippets/grails-app/controllers/org/grails/guides/scaffolding/VehicleController.groovy[indent=0,lines="4..8,10..114"]
+----
+
+<1> The http://docs.grails.org/latest/api/grails/transaction/Transactional.html[`@Transactional`] annotation configures the transactional behavior of the controller or method. Transactions are used to manage persistence and other complicated operations that should be completed together (and potentially rolled-back if any one of the steps fails).  For more information on transactions, see the http://docs.grails.org/latest/guide/single.html#declarativeTransactions[Grails documentation]
+<2> The `params` object is available to all controllers, and contains a map of any URL parameters on the request. You can refer to any parameter by name to retrieve the value: `params.myCustomParameter` will match this URL parameter: `[url]?myCustomParameter=hello`. See the https://docs.grails.org/latest/ref/Controllers/params.html[Grails documentation] for more detail.
+<3> The `respond` method takes an object to return to the requestor, using https://docs.grails.org/latest/guide/theWebLayer.html#contentNegotiation[content negotiation] to choose the correct type (for example, a request's `Accept` header might specify JSON or XML). `respond` also can accept a map of arguments, such as `model` (which defines the way the data is loaded on a page). For more on how to use the `respond` method, see the https://docs.grails.org/latest/ref/Controllers/respond.html[Grails documentation].
+<4> `request` is available on all controllers, and is an instance of the Servlet API’s https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] class. You can access request headers, store properties in the request scope, and get information about the requestor using this object. For more see the https://docs.grails.org/latest/ref/Controllers/request.html[Grails documentation on `request`].
+<5> `flash` is a map that stores objects within the session for the *next* request, automatically clearing them after that next request completes. This is useful for passing error messages or other data that you want the next request to access. For more, see the https://docs.grails.org/latest/ref/Controllers/flash.html[Grails documentation on `flash`].
+<6> The `redirect` method is a simple one - it allows the action to redirect the request to another action, controller, or a URI. You can also pass along parameters with the redirect. See the https://docs.grails.org/latest/ref/Controllers/redirect.html[Grails documentation on `redirect`] for more.
+<7> The `render` method is a less sophisticated version of `respond` - it doesn't perform content negotiation, so you have to specify exactly what you want to render. You can render plain text, a view or template, an HTTP response code, or any object that has a String representation. See the https://docs.grails.org/latest/ref/Controllers/render.html[Grails documentation].
+
+That's a lot of code! Generating and modifying a scaffold controller is a good learning exercise, so feel free to experiment and modify this code - you can always revert back to the version in the `completed` project of this guide.

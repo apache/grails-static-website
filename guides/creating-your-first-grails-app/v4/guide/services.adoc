@@ -1,0 +1,79 @@
+Grails provides a "service layer", which are classes that encapsulate business logic and are wired (using https://en.wikipedia.org/wiki/Dependency_injection[dependency injection]) into the application context, so that any controller can inject and use them. Services are the preferred vehicle for most application logic, *not* controllers.
+
+If this seems confusing, think of it this way: controllers are intended to respond to the request and return a response. Services can be reused across many controllers (as well as in domain classes and from other services). Services are more versatile and can help you keep your controllers clean and prevent duplication of business logic. It is often easier to write unit tests against service methods than against controller actions, as well.
+
+TIP: Controllers are for "web logic", services for "business logic"
+
+Again by convention, Grails will configure any Groovy classes within the `grails-app/services` directory as services. Services will be "wired" as https://docs.spring.io/spring/docs/current/spring-framework-reference/html/beans.html[Spring beans] in the Grails application context, which means you can refer to them simply by name from any other Spring bean (including controllers and domain classes).
+
+Let's add a feature to generate an estimated value for `Vehicle`, based on the make, model and year. We'll put this logic in a service and call it from our application code.
+
+Create a new service using the `create-service` Grails command:
+
+[source, bash]
+----
+$ ./grailsw create-service ValueEstimateService
+
+| Created grails-app/services/org/grails/guides/ValueEstimateService.groovy
+| Created src/test/groovy/org/grails/guides/ValueEstimateServiceSpec.groovy
+----
+
+Edit `grails-app/services/org/grails/guides/ValueEstimateService.groovy`
+
+[source,groovy]
+.grails-app/services/org/grails/guides/ValueEstimateService.groovy
+----
+package org.grails.guides
+
+import grails.gorm.transactions.Transactional
+
+@Transactional
+class ValueEstimateService {
+
+    def serviceMethod() {
+
+    }
+}
+----
+
+Grails has provided a `serviceMethod` stub as an example. Delete it and replace it with the following content:
+
+[source,groovy]
+.grails-app/services/org/grails/guides/ValueEstimateService.groovy
+----
+include::../snippets/grails-app/services/org/grails/guides/ValueEstimateService.groovy[]
+----
+
+Obviously this method of estimating a vehicle's value is pretty contrived! In reality you would likely call a third-party webservice to get a valuation, or perhaps run a query against your own database.  However, the point of this example is to show the sort of "business logic" that can be placed in services, rather than being calculated within a controller or view.
+
+Now, let's use our new service.
+
+Edit `grails-app/controllers/org/grails/guides/VehicleController.groovy` (the scaffolded controller we generated earlier), and add the property shown below:
+
+[source,groovy]
+.grails-app/controllers/org/grails/guides/VehicleController.groovy
+----
+include::../snippets/grails-app/controllers/org/grails/guides/scaffolding/VehicleController.groovy[indent=0,lines="6..11"]
+----
+<1> By simply defining a property in our controller with the same name as our service class, Grails will inject a reference to the service for us.
+
+
+Now (still editing `VehicleController.groovy`), modify the `show` action as seen below:
+
+[source,groovy]
+.grails-app/controllers/org/grails/guides/VehicleController.groovy
+----
+include::../snippets/grails-app/controllers/org/grails/guides/VehicleController.groovy[indent=0,lines="18..20"]
+----
+
+We've added new property to the `model`, called `estimatedValue`. The value of this property is the result of calling our service method, `getEstimate`, to which we pass the `vehicle` property we are about to render.
+
+Now, on the `show` page, we can access the `estimatedValue` property and display it on the page. Edit `grails-app/views/vehicle/show.gsp` as shown below:
+
+[source,groovy]
+.grails-app/views/vehicle/show.gsp
+----
+include::../snippets/grails-app/views/vehicle/show.gsp[indent=0,lines="17..20"]
+----
+
+Restart the application and browse to the show page for a `Vehicle`, such as `http://localhost:8080/vehicle/show/1`. You should see the "Estimated Value" on the page

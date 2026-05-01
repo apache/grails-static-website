@@ -1,0 +1,11 @@
+Create a unit test for the TagLib:
+
+[source,groovy]
+.src/test/groovy/example/grails/AddressTagLibSpec.groovy
+----
+include::../../snippets/src/test/groovy/example/grails/AddressTagLibSpec.groovy[]
+----
+
+<1> Tag libraries and GSP pages can be tested with the `grails.testing.web.taglib.TagLibUnitTest` trait.
+<2> To provide or replace beans in the context, you can override the `doWithSpring` method in your test.
+<3> Adding the `TagLibUnitTest` trait to a test causes a new `tagLib` field to be automatically created for the TagLib class under test. The `tagLib` property can be used to test calling tags as function calls.

@@ -1,0 +1,16 @@
+Every software project needs https://docs.travis-ci.com/user/for-beginners#What-is-Continuous-Integration-(CI)[Continuous Integration (CI)].
+
+[quote, Travis CI Docs]
+Continuous Integration is the practice of merging in small code changes frequently - rather than merging in a large change
+at the end of a development cycle. The goal is to build healthier software by developing and testing in smaller increments.
+
+Travis CI is a continuous integration platform seamlessly integrated with GitHub.  It supports your development process by automatically
+building, testing and deploying code changes.
+
+In this guide you are going to create a Grails application on GitHub and use https://www.travis-ci.com/[Travis CI] to build
+and test your code. This guide assumes you are familiar with Git and GitHub. It also assumes that you already have a https://github.com/features#documentation[GitHub] account.
+The guide will cover only build and test an Grails application with Travis.  However, Travis CI has the https://docs.travis-ci.com/user/customizing-the-build[ability to deploy, send notifications, and
+highly customize CI jobs].
+
+Travis has a free plan for open source projects. Thus, it is really convenient to build and test an open source Grails Plugin which you may wish to
+contribute to the community.

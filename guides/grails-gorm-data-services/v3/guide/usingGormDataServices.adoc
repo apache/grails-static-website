@@ -1,0 +1,4 @@
+To write a Data Service, create an interface and annotate it with `grails.gorm.services.Service` with the applied domain class.
+ The `@Service` transformation looks at the method signatures of the interface to surmise what implementation should be generated.
+ It looks at the return type along with the method stem to implement functionality. Check
+http://gorm.grails.org/latest/hibernate/manual/index.html#_data_service_queries[Data Service Conventions] for details.

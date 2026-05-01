@@ -1,0 +1,7 @@
+Create `HomeController` which returns the username of the authenticated user.
+
+[source,groovy]
+.grails-app/controllers/example/grails/HomeController.groovy
+----
+include::../../snippets/grails-app/controllers/example/grails/HomeController.groovy[]
+----

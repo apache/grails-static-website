@@ -1,0 +1,7 @@
+In this guide you are going to learn how to use the Grails Database Migration Plugin. We will create an application with
+simple domain classes and extend them to achieve the following:
+
+- Baseline the database for database migration
+- Change a column to nullable
+- Add columns to an existing table
+- Redesign the table and migrate the existing data

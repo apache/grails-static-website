@@ -1,0 +1,52 @@
+As mentioned earlier, *mutations* are GraphQL's mechanism for changing the data via the GraphQL schema. The available mutations are defined in the schema. The GORM GraphQL plugin generates several basic mutations, described in the documentation. For example, for our `Speaker` domain class, the plugin provides the following mutations:
+
+- `speakerCreate(book: {})`
+- `speaker(id: .., book: {})`
+- `speaker(id: ..)`
+
+Of course, custom mutations can be defined as well - the https://grails.github.io/gorm-graphql/snapshot/guide/index.html#operations[plugin documentation] describes how.
+
+Our React app already uses REST calls to create and delete talks for a given speaker. Let's replace these REST calls with GraphQL mutations.
+
+Edit `/client/src/Speaker.js`:
+
+
+[source, javascript]
+./client/src/Speaker.js
+----
+include::../snippets/client/src/Speaker.js[indent=0, tag=mutations]
+----
+
+We've defined GraphQL fragments for two mutations, `talkCreate` and `talkDelete`. These fragments specify the inputs required by each mutation, and their types. You can type these mutations into the GraphiQL browser and see their required inputs.
+
+Now we need to bind these mutations to our component props, so we can call them from our component. Again, we use the higher-order `graphql` component for this task. Because we have multiple mutations, we will import Apollo's `compose` function to streamline the "chaining" of these mutations.
+
+First, import the `compose` function at the top of `Speaker.js`:
+
+```
+import {graphql, compose} from 'react-apollo'
+import gql from 'graphql-tag'
+
+```
+
+Now we can use `compose` to bind these mutations to our `Speaker` component.
+
+[source, javascript]
+.client/src/Speaker.js
+----
+include::../snippets/client/src/Speaker.js[indent=0, tag=compose]
+----
+
+NOTE: For more information regarding the use of mutations and `compose`, please refer to https://www.apollographql.com/docs/react/basics/mutations.html[the Apollo documentation].
+
+The last step is to call our mutations in place of REST calls. Find the `addNewTalk` and `deleteTalk` functions in `Speaker.js`, and edit them as shown below:
+
+[source, javascript]
+.client/src/Speaker.js
+----
+include::../snippets/client/src/Speaker.js[indent=0, tag=calling]
+----
+
+Each of the mutations we've bound to our component are available as functions off of `this.props`: `talkCreate()` and `talkDelete()`. Each function takes a single argument, which is a JavaScript object containing all the parameters required by our mutation. When the mutation resolves, the `then()` function will be called with the data that is returned by the mutation. For this sample, we are simply logging out the data, but you could also use this to update the Apollo cache as https://www.apollographql.com/docs/react/basics/mutations.html#store-updates[described in the documentation].
+
+WARNING: For simplicity, this guide is relying on the `pollingInterval` we set up earlier to refresh the data and remove/add talks from the cache. In a real-world application, you will want to update the data in memory using the result of the mutation.

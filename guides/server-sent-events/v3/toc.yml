@@ -1,0 +1,16 @@
+training: 
+  title: Grails Training
+gettingStarted: 
+  title: Getting Started
+  requirements: What you will need
+  howto: How to complete the guide
+writingTheApp:
+  title: Writing the Application
+  gradleConfig: Add RxJava dependency 
+  createController: Create a Controller
+  implementController: Implement the Controller 
+  implementTheClient: Implement the Client
+runningTheApp:
+  title: Running the Application
+helpWithGrails:
+  title: Do you need help with Grails?  

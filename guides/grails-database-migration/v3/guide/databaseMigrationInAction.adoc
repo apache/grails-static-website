@@ -1,0 +1,18 @@
+Database migrations are schema changes to the database while preserving the existing data.
+Without a tool to manage database migrations, teams may rely on manual sql, error prone communication processes, and
+costly risk management to implement solutions. The database migration plugin lets you manage structural changes made to the database.
+It automates incremental changes, makes them repeatable, visible and trackable. You can commit these changes in to source control.
+
+The general workflow involved in using the plugin is as follow:
+
+*Baseline*
+
+1. Define the current state of the domain
+2. Create the database from the changelog using liquibase
+3. Set configuration options in the application to use the database migration plugin
+
+*Development Workflow*
+
+1. Make changes to domain objects
+2. Use the plugin to generate changelog additions for the database
+3. Update the database using the plugin

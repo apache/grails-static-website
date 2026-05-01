@@ -1,0 +1,45 @@
+To test REST part of the application, we use https://docs.micronaut.io/snapshot/guide/index.html#httpClient[Micronaut's HttpClient]. We need to add the dependency:
+
+[source,groovy]
+./build.gradle
+----
+include::../snippets/build.gradle[tags=micronaut]
+----
+
+Micronaut HTTP client makes easy to bind JSON Payloads to POGOs. Create several POGOs which we will use in the test:
+
+[source,groovy]
+./src/integration-test/groovy/example/grails/BearerToken.groovy
+----
+include::../snippets/src/integration-test/groovy/example/grails/BearerToken.groovy[indent=0]
+----
+
+[source,groovy]
+./src/integration-test/groovy/example/grails/CustomError.groovy
+----
+include::../snippets/src/integration-test/groovy/example/grails/CustomError.groovy[indent=0]
+----
+
+[source,groovy]
+./src/integration-test/groovy/example/grails/UserCredentials.groovy
+----
+include::../snippets/src/integration-test/groovy/example/grails/UserCredentials.groovy[indent=0]
+----
+
+Our first test will verify that the _/api/announcements_ endpoint is only accessible to users with role _ROLE_BOSS_.
+
+
+[source,groovy]
+./src/integration-test/groovy/example/grails/ApiAnnouncementControllerSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/grails/ApiAnnouncementControllerSpec.groovy[indent=0]
+----
+
+<1> The `grails.testing.spock.OnceBefore` annotation is a shorthand way of accomplishing the same behavior that would be accomplished by applying both the `@RunOnce` and `@Before` annotations to a fixture method.
+<2> _serverPort_ property is automatically injected and it contains the random port where the app will be running for the functional test.
+<3> With Micronaut HTTP client you can bind POJOs to the response body easily.
+<4> The server returns a 401, indicating that the resource is secured.
+<5> Call the authentication endpoint
+<6> We pass the _access_token_ we obtained from the authentication endpoint in the request headers.
+<7> An authenticated user with the role `ROLE_BOSS` can access the resource.
+<8> An authenticated user but without the role `ROLE_BOSS` is not allowed to access the resource.

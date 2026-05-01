@@ -1,0 +1,21 @@
+Since our databases and Grails domain classes can contain properties that might
+hold null values, we need ways to query those situations. For example, in our original
+service implementations, we have two methods used to find which games played are complete
+and which are still ongoing.
+[source,groovy]
+----
+include::initial/grails-app/services/demo/QueryService.groovy[tag=findByNull,indent=0]
+
+include::initial/grails-app/services/demo/QueryService.groovy[tag=findByNotNull,indent=0]
+----
+
+The comparators for checking null values are `IsNull` and `IsNotNull`. These are
+special in that they require no arguments for the dynamic finder. Here is the
+improved implementation:
+
+[source,groovy]
+----
+include::complete/grails-app/services/demo/QueryService.groovy[tag=findByNull,indent=0]
+
+include::complete/grails-app/services/demo/QueryService.groovy[tag=findByNotNull,indent=0]
+----

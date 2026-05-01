@@ -1,0 +1,1 @@
+In this guide you are going to build a http://grails.org[Grails application] that uses http://gorm.grails.org/latest/hibernate[GORM for Hibernate] to access a SQL database and produce a JSON response in a RESTful manner.

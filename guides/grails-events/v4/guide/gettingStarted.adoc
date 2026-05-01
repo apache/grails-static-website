@@ -1,0 +1,2 @@
+In this guide, you are going to use https://async.grails.org/latest/guide/index.html#events[Grails Events] to handle a common scenario. A user registers in an application and the app sends the user a welcome email. For example, asking him to verify his email address. 
+We are going to trigger the Email Notification by publishing an event when the user is registered.

@@ -1,0 +1,1 @@
+Thanks to Grails ease of API versioning we can now support two iOS applications running different versions.

@@ -1,0 +1,15 @@
+____
+Grails 3.3 introduces a new Events API that replaces the previous implementation that was based on Reactor 2.x (which is no longer maintained and deprecated).
+
+In Grails 3.3 and above a new EventBus abstraction has been introduced. Like the PromiseFactory notion, there are implementations of the EventBus interface for common asynchronous frameworks like GPars and RxJava.
+____
+
+Your project already contains the events dependency:
+
+[source,groovy]
+.build.gradle
+----
+    compile "org.grails.plugins:events"
+----
+
+Grails Events capabilites documentation can be found in https://async.grails.org/latest/guide/index.html#events[async.grails.org].

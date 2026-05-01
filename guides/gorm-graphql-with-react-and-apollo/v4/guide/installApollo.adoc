@@ -1,0 +1,19 @@
+Now that you have a GraphQL schema, it is time to replace the existing RESTful integration in the React app using GraphQL. Of course we could compose GraphQL queries manually, however in most cases you will be better served by using a library to abstract away the details of making these requests. One option is the https://facebook.github.io/relay/[Relay framework], which is developed by Facebook (the creators of React). Another popular library is https://www.apollographql.com/[Apollo], which offers bindings for numerous JavaScript frameworks, including Angular and React. This guide will be using Apollo in the following steps.
+
+Install the necessary packages using either `npm` or `yarn`:
+
+[source, bash]
+----
+~ npm install apollo-client-preset react-apollo graphql-tag graphql --save
+----
+
+The first requirement to use Apollo is to configure a *provider*, which will encapsulate the details needed to actual make requests to the GraphQL schema. Edit the file `src/main/webapp/index.js` as shown below:
+
+[source,javascript]
+.client/src/index.js
+----
+include::../snippets/client/src/index.js[indent=0]
+----
+<1> We create an instance of `ApolloClient`, which requires two objects - an `HttpLink` (which represents the URL of the GraphQL schema) and a cache store.
+<2> This client will send queries to the `${SERVER_URL}/graphql` endpoint - which conveniently happens to be where the GORM GraphQL plugin exposes the GraphQL schema
+<3> Finally, we wrap our `App` component with an `ApolloProvider` component, passing our `ApolloClient` instance as a prop to the latter. Now all child components will be able to query/mutate the GraphQL schema pointed to by the `client`.

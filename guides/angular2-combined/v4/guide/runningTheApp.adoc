@@ -1,0 +1,3 @@
+That is everything required to combine the Angular 2 multi project build into a single project.
+
+include::{commondir}/common-runapp.adoc[]

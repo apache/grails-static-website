@@ -1,0 +1,89 @@
+Data Services can also implement a join query using the `grails.gorm.services.Join` annotation.
+Grails associations are lazily loaded by default. For a one to many relationship, loading
+of the many side can cause https://dzone.com/articles/hibernate-gorm-solving-the-n1-problem[n + 1] problems resulting in
+many select statements. This can severely hinder performance.
+
+Essentially we can perform an eager load with `@Join`. Apply this to concept to a query on `Person` and `Address`.
+
+[source, groovy]
+.grails-app/services/example/grails/PersonDataService.groovy
+----
+include::../snippets/grails-app/services/example/grails/PersonDataService.groovy[tag=findEagerly, indent=false]
+----
+
+Until this point we have defined the Person GORM Data Service with an interface. You can use an abstract class instead.
+A combination of interface and an abstract class implementing the interface with some custom methods is a common pattern. Rewrite
+`PersonDataService` as shown below:
+
+[source, groovy]
+.grails-app/services/example/grails/PersonDataService.groovy
+----
+include::../snippets/grails-app/services/example/grails/PersonDataService.groovy[tag=packageDeclaration]
+
+include::../snippets/grails-app/services/example/grails/PersonDataService.groovy[tag=serviceImport]
+include::../snippets/grails-app/services/example/grails/PersonDataService.groovy[tag=joinImport]
+include::../snippets/grails-app/services/example/grails/PersonDataService.groovy[tag=miscImports]
+
+include::../snippets/grails-app/services/example/grails/PersonDataService.groovy[tag=IPersonDataService]
+
+    Person findByName(String name)
+
+include::../snippets/grails-app/services/example/grails/PersonDataService.groovy[tag=findPersonAge]
+
+include::../snippets/grails-app/services/example/grails/PersonDataService.groovy[tag=countPerson]
+
+include::../snippets/grails-app/services/example/grails/PersonDataService.groovy[tag=findEagerly]
+
+    void delete(Serializable id)
+
+include::../snippets/grails-app/services/example/grails/PersonDataService.groovy[tag=savePerson]
+
+include::../snippets/grails-app/services/example/grails/PersonDataService.groovy[tag=save]
+
+}
+
+include::../snippets/grails-app/services/example/grails/PersonDataService.groovy[tag=abstractClass]
+----
+
+Create an integration test:
+
+[source, groovy]
+.src/integration-test/groovy/example/grails/PersonDataServiceIntSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/grails/PersonDataServiceIntSpec.groovy[tag=clazz]
+
+include::../snippets/src/integration-test/groovy/example/grails/PersonDataServiceIntSpec.groovy[tag=findEagerly]
+
+}
+----
+
+<1> Place your integration tests in `src/integration-test` and annotate them with `grails.testing.mixin.integration.Integration`.
+<2> Inject the Data Service.
+
+In order to observe how Data Service operations translate into SQL statements, we will adjust the logger configuration.
+
+In the `logback.groovy`, append the next line line to get a more verbose output of the SQL queries being executed:
+
+[source, groovy]
+.grails-app/conf/logback.groovy
+----
+include::../snippets/grails-app/conf/logback.groovy[tag=hqlLogger]
+----
+
+Execute the integration test `./gradlew integrationTest --tests example.grails.PersonDataServiceIntSpec`
+
+The previous tests outputted SQL log statement which demonstrates a join has been issued. Below is a sample.
+
+[source, bash]
+.log output
+----
+2018-08-20 16:28:40.460 DEBUG --- [    Test worker] org.hibernate.SQL                        : insert into person (id, version, age, name) values (null, ?, ?, ?)
+2018-08-20 16:28:40.472 DEBUG --- [    Test worker] org.hibernate.SQL                        : insert into address (id, version, person_id, street_name, city, country, state) values (null, ?, ?, ?, ?, ?, ?)
+2018-08-20 16:28:40.474 DEBUG --- [    Test worker] org.hibernate.SQL                        : insert into address (id, version, person_id, street_name, city, country, state) values (null, ?, ?, ?, ?, ?, ?)
+2018-08-20 16:28:40.474 DEBUG --- [    Test worker] org.hibernate.SQL                        : insert into address (id, version, person_id, street_name, city, country, state) values (null, ?, ?, ?, ?, ?, ?)
+2018-08-20 16:28:40.533 DEBUG --- [    Test worker] org.hibernate.SQL                        : select this_.id as id1_1_1_, this_.version as version2_1_1_, this_.age as age3_1_1_, this_.name as name4_1_1_, addresses2_.person_id as person_i3_0_3_, addresses2_.id as id1_0_3_, addresses2_.id as id1_0_0_, addresses2_.version as version2_0_0_, addresses2_.person_id as person_i3_0_0_, addresses2_.street_name as street_n4_0_0_, addresses2_.city as city5_0_0_, addresses2_.country as country6_0_0_, addresses2_.state as state7_0_0_ from person this_ left outer join address addresses2_ on this_.id=addresses2_.person_id where this_.name=?
+----
+
+As you can see only one select query is performed. A query which joins the addresses.
+
+You can see those statements in the tests reports `build/reports/tests/classes/example.grails.PersonDataServiceIntSpec.html` standard output.

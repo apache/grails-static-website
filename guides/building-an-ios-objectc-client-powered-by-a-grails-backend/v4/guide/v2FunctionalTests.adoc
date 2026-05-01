@@ -1,0 +1,16 @@
+We want to test the Api version 2.0 does not include the body property when receiving a GET request to the _announcements_
+endpoint. The next functional test verifies that behaviour.
+
+{sourceDir}
+
+[source,groovy]
+./src/integration-test/groovy/intranet/backend/AnnouncementControllerSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/intranet/backend/AnnouncementControllerSpec.groovy[indent=0,lines="1..15, 39..60, 99"]
+----
+
+<1> serverPort property is automatically injected. It contains the random port where the Grails application runs during the functional test 
+<2> Body is not present in the JSON paylod
+
+Grails command _test-app_ runs unit, integration and functional tests.
+

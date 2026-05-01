@@ -1,0 +1,20 @@
+training:
+  title: Grails Training
+gettingStarted:
+  title: Getting Started
+  requirements: What you will need
+  howto: How to complete the guide
+writingTheApp:
+  title: Writing the Application
+  personDomainAndDataService: Person Domain and Data Service
+  createPerson: Create a Person
+  offerAdvice: Offer Advice to a Person
+mockLogging:
+    title: Mock Logging with Slf4j Test
+    verifyLogsInController: Verify Logs in Controller
+    verifyLogsInController2: Verify More Logs
+    verifyLogsInGroovyPogo: Verify Logs in Groovy POGO
+runningTheApp:
+  title: Running the Application
+helpWithGrails:
+  title: Help with Grails

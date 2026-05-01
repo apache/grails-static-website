@@ -1,0 +1,10 @@
+sudo: false # // <1>
+before_cache:
+  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/ # // <2>
+language: groovy # // <3>
+jdk:
+  - oraclejdk8 # // <4>

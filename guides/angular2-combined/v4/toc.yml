@@ -1,0 +1,15 @@
+training:
+  title: Grails Training
+gettingStarted: 
+  title: Getting Started
+  requirements: What you will need
+  howto: How to complete the guide
+writingTheApp:
+  title: Writing the Application
+  combining: Combining the Applications
+  build: Combining the Builds
+  configuration: Changing Configuration
+runningTheApp:
+  title: Running the Application
+helpWithGrails:
+  title: Do you need help with Grails?

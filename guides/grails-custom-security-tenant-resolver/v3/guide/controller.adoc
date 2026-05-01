@@ -1,0 +1,21 @@
+Create a simple controller which uses with the previously defined `PlanService` service.
+
+[source,groovy]
+.grails-app/controllers/demo/PlanController.groovy
+----
+include::../snippets/grails-app/controllers/demo/PlanController.groovy[]
+----
+
+We render the `Plan` instances as JSON with the help of http://views.grails.org[JSON Views]
+
+[source,groovy]
+.grails-app/views/plan/index.gson
+----
+include::../snippets/grails-app/views/plan/index.gson[]
+----
+
+[source,groovy]
+.grails-app/views/plan/_plan.gson
+----
+include::../snippets/grails-app/views/plan/_plan.gson[]
+----

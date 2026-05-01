@@ -1,0 +1,9 @@
+Since this guide utilizes `DATABASE` Multi-Tenancy where each tenants has a separate database, you no longer need to configure a column to deal with `tenantId`, hence the `tenantId` property can be removed:
+
+[source,groovy]
+.grails-app/domain/demo/Plan.groovy
+----
+include::../snippets/grails-app/domain/demo/Plan.groovy[]
+----
+
+<1> Implement http://gorm.grails.org/latest/hibernate/api/grails/gorm/MultiTenant.html[MultiTenant] trait to regard this domain class as multi tenant.

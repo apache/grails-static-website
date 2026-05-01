@@ -1,0 +1,178 @@
+Let's say we would like to redesign `Person` to split the address fields into its own domain object.  The idea behind this
+would be that now a `Person` can have many `Address` 's. When doing this type of domain object redesign we have to consider a few aspects:
+
+1. The database table schema definition will change
+2. Existing data in the table will have to be split amongst the new database tables created
+3. We can write custom sql in the changelog files to transfer existing data
+
+The image below depicts the redesign:
+
+image::migration3.jpg[400,400]
+
+The `Person` and `Address` domain objects can be coded as below:
+
+[source, groovy]
+.grails-app/domain/demo/Person.groovy
+----
+include::../snippets/grails-app/domain/demo/Person.groovy[tag=package]
+
+include::../snippets/grails-app/domain/demo/Person.groovy[tag=import]
+
+include::../snippets/grails-app/domain/demo/Person.groovy[tag=class]
+
+include::../snippets/grails-app/domain/demo/Person.groovy[tag=properties]
+include::../snippets/grails-app/domain/demo/Person.groovy[tag=hasMany]
+
+include::../snippets/grails-app/domain/demo/Person.groovy[tag=openConstraints]
+include::../snippets/grails-app/domain/demo/Person.groovy[tag=ageConstraints]       
+include::../snippets/grails-app/domain/demo/Person.groovy[tag=closeConstraints]
+
+
+include::../snippets/grails-app/domain/demo/Person.groovy[tag=closeClass]
+----
+
+[source, groovy]
+.grails-app/domain/demo/Address.groovy
+----
+include::../snippets/grails-app/domain/demo/Address.groovy[indent=0]
+----
+
+Run the database migration command that will compare the new domain objects to the existing database and generate
+the liquibase declarations to migrate the schema:
+
+[source, bash]
+----
+> grails dbm-gorm-diff create-address-table.groovy –add
+----
+
+The command adds a new include statement to `changelog.groovy`
+
+[source, groovy]
+.grails-app/migrations/changelog.groovy
+----
+databaseChangeLog = {
+include::../snippets/grails-app/migrations/changelog.groovy[tag=createPersonTable]
+include::../snippets/grails-app/migrations/changelog.groovy[tag=changeAgeConstraintToNullable]
+include::../snippets/grails-app/migrations/changelog.groovy[tag=addAddressFieldsToPerson]
+include::../snippets/grails-app/migrations/changelog.groovy[tag=createAddressTable]
+}
+----
+
+An individual changeset is created too:
+
+[source, groovy]
+.grails-app/migrations/create-address-table.groovy.groovy
+----
+include::../snippets/grails-app/migrations/create-address-table.groovy[tag=createAddressTable]
+include::../snippets/grails-app/migrations/create-address-table.groovy[tag=foreignKey]
+include::../snippets/grails-app/migrations/create-address-table.groovy[tag=dropColumns]
+----
+
+We are going to add manually a changeset to move the existing data from the old tables to the new.
+
+The final version of `create-address-table.groovy.groovy` looks like:
+
+[source, groovy]
+.grails-app/migrations/create-address-table.groovy.groovy
+----
+include::../snippets/grails-app/migrations/create-address-table.groovy[tag=createAddressTable]
+include::../snippets/grails-app/migrations/create-address-table.groovy[tag=foreignKey]
+include::../snippets/grails-app/migrations/create-address-table.groovy[tag=customDataSql]
+include::../snippets/grails-app/migrations/create-address-table.groovy[tag=dropColumns]
+----
+
+<1> The changeset we added, executes after the creation of the `Address` table but before the
+dropping of columns from the `Person` table.
+
+Run the migration
+
+[source, bash]
+----
+$ grails dbm-update
+----
+
+The person table looks like:
+
+[source, sql]
+----
+$ describe person
+----
+
+|===
+|Field|Type|Null|Key|Default|Extra
+|id
+|bigint(20)
+|NO
+|Pri
+|<null>
+|auto_increment
+|version
+|bigint(20)
+|NO
+|
+|<null>
+|
+|age
+|int(11)
+|YES
+|
+|<null>
+|
+|name
+|varchar(255)
+|NO
+|
+|<null>
+|
+|===
+
+
+The address table looks like:
+
+
+[source, sql]
+----
+$ describe address
+----
+
+
+|===
+|Field|Type|Null|Key|Default|Extra
+|id
+|bigint(20)
+|NO
+|Pri
+|<null>
+|auto_increment
+|version
+|bigint(20)
+|NO
+|
+|<null>
+|
+|person_id
+|bigint(20)
+|NO
+|MUL
+|<null>
+|
+|city
+|varchar(255)
+|YES
+|
+|<null>
+|
+|street_name
+|varchar(255)
+|YES
+|
+|<null>
+|
+|zip_code
+|varchar(255)
+|YES
+|
+|<null>
+|
+|===
+

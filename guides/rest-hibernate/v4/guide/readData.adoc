@@ -1,0 +1,26 @@
+You can read all of the `Product` instances back using a `GET` request:
+
+[source,bash]
+----
+$ curl -i  localhost:8080/products
+----
+
+Or read only a single instance by `id`:
+
+[source,bash]
+----
+$ curl -i  localhost:8080/products/1
+----
+
+Which will return:
+
+[source,bash]
+----
+HTTP/1.1 200
+X-Application-Context: application:development
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Wed, 23 Nov 2016 08:50:58 GMT
+
+{"id":1,"name":"Orange","price":"$2.0"}
+----

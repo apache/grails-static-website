@@ -1,0 +1,19 @@
+By default the controller will be exposed under the `/product` URI. This is due to the default `grails-app/conf/hibernate/example/UrlMappings.groovy` class:
+
+[source,groovy]
+.grails-app/controllers/hibernate/example/UrlMappings.groovy
+----
+include::../snippets/grails-app/controllers/hibernate/example/UrlMappings.groovy[tags=defaultMappings,indent=0]
+----
+
+As you can see above each HTTP verb is mapped such that the controller name is established from the URI itself using the `$controller` syntax.
+
+If you wish to use another name or be explicit about the URI used you can define an additional mapping using the `resources` mapping:
+
+[source,groovy]
+.grails-app/controllers/hibernate/example/UrlMappings.groovy
+----
+"/products"(resources:"product")
+----
+
+In this case the controller will be mapped to `/products` instead of `/product`.

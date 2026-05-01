@@ -1,0 +1,23 @@
+To create the `Announcement` API controller we'll use the http://docs.grails.org/latest/ref/Command%20Line/create-controller.html[create-controller command]
+[source, bash]
+----
+./grailsw create-controller ApiAnnouncement
+Created grails-app/controllers/example/grails/ApiAnnouncementController.groovy
+| Created src/test/groovy/example/grails/ApiAnnouncementControllerSpec.groovy
+----
+
+We want this controller to handle any requests to _/api/announcements_. We'll need to add the following line to our `UrlMappings`.
+
+[source,groovy]
+.grails-app/controllers/example/grails/UrlMappings.groovy
+----
+include::../snippets/grails-app/controllers/example/grails/UrlMappings.groovy[indent=0,lines="12"]
+----
+
+The controller will be a http://docs.grails.org/latest/guide/webServices.html#extendingRestfulController[RestfulController], and will only respond with JSON.
+
+[source,groovy]
+.grails-app/controllers/example/grails/ApiAnnouncementController.groovy
+----
+include::../snippets/grails-app/controllers/example/grails/ApiAnnouncementController.groovy[indent=0]
+----

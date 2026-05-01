@@ -1,0 +1,9 @@
+Modify `PointOfInterest` domain class. Add a property `featuredImageUrl`
+
+[source, groovy]
+./grails-app/domain/example/grails/PointOfInterest.groovy
+----
+include::../snippets/grails-app/domain/example/grails/PointOfInterest.groovy[indent=0]
+----
+
+<1> Use this property to save the url where the image can be retrieved.

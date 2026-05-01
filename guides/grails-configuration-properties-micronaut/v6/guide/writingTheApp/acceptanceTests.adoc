@@ -1,0 +1,21 @@
+Edit `grails-app/views/index.gsp`, the GSP that is currently rendered when you visit the home page `/` and add the next snippet:
+
+[source, groovy]
+.grails-app/views/index.gsp
+----
+...
+ <div id="content" role="main">
+ ....
+ ...
+         <app:address/>
+ </div>
+ ...
+----
+
+Now we can create an acceptance test with Geb to verify the address is rendered in the home page:
+
+[source,groovy]
+.src/integration-test/groovy/example/grails/AddressSpec.groovy
+----
+include::../../snippets/src/integration-test/groovy/example/grails/AddressSpec.groovy[]
+----

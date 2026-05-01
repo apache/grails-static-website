@@ -1,0 +1,22 @@
+Now we are going to execute a Functional Test using the http://gebish.org[Geb framework].
+
+To make this test easier to read and maintain we've created two Geb Pages: a _LoginPage_ and an
+_AnnouncementListingPage_.
+
+[source,groovy]
+./src/integration-test/groovy/example/grails/LoginPage.groovy
+----
+include::../snippets/src/integration-test/groovy/example/grails/LoginPage.groovy[indent=0]
+----
+
+[source,groovy]
+./src/integration-test/groovy/example/grails/AnnouncementListingPage.groovy
+----
+include::../snippets/src/integration-test/groovy/example/grails/AnnouncementListingPage.groovy[indent=0]
+----
+
+[source,groovy]
+./src/integration-test/groovy/example/grails/AnnouncementControllerSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/grails/AnnouncementControllerSpec.groovy[indent=0]
+----

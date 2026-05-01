@@ -1,0 +1,14 @@
+Grails integrate seamlessly with http://gebish.org[Geb]. Thus it is easy to develop
+a functional test for our custom login form.
+
+[source,groovy]
+./src/integration-test/groovy/demo/BankControllerSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/demo/BankControllerSpec.groovy[indent=0]
+----
+
+[source,groovy]
+./src/integration-test/groovy/demo/LoginPage.groovy
+----
+include::../snippets/src/integration-test/groovy/demo/LoginPage.groovy[indent=0]
+----

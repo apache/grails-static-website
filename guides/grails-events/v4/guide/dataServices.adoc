@@ -1,0 +1,15 @@
+Introduced in GORM 6.1, http://gorm.grails.org/latest/hibernate/manual/index.html#dataServices[Data Services] take the work out of implemented service layer logic by adding the ability to automatically implement abstract classes or interfaces using GORM logic.
+
+Add two data services classes for the previous domain classes.
+
+[source,groovy]
+.grails-app/services/demo/UserService.groovy
+----
+include::../snippets/grails-app/services/demo/UserService.groovy[]
+----
+
+[source,groovy]
+.grails-app/services/demo/NotificationService.groovy
+----
+include::../snippets/grails-app/services/demo/NotificationService.groovy[]
+----

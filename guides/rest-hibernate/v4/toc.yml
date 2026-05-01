@@ -1,0 +1,24 @@
+training:
+  title: Grails Training 
+gettingStarted: 
+  title: Getting Started
+  requirements: What you will need
+  howto: How to complete the guide
+writingTheApp:
+  title: Writing the Application
+  configure: Configure the Application
+  domainClass: Create a Domain Class
+  applyConstraints: Apply Domain Constraints
+  controller: Create a Controller
+  mapController: Map the Controller to a URI
+  searchEndpoint: Implement a Search Endpoint
+  testing: Testing the Search Endpoint
+  json: Customizing the JSON Output
+runningTheApp:
+  title: Running the Application
+  createData: Creating Data with POST
+  readData: Reading Data with GET
+  updateData: Updating Data with PUT
+  deleteData: Deleting Data with DELETE
+helpWithGrails:
+  title: Do you need help with Grails?  

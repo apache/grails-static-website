@@ -1,0 +1,13 @@
+include::{commondir}/common-runapp.adoc[]
+
+Remember to setup a valid Open Weather Map API Key in `application.yml`
+
+To fetch the weather forecast of the top largest USA cities leveraging the async capabilities of Grails visit:
+
+If you visit `http://localhost:8080/cities?async=true`
+
+image::runasync.png[]
+
+Visit `http://localhost:8080/cities?async=false` to fetch weather forecasts synchronously.
+
+image::runsync.png[]

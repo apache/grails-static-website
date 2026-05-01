@@ -1,0 +1,9 @@
+As described in the http://docs.grails.org/latest/guide/theWebLayer.html#commandObjects[Grails documentation],
+____
+A command object is a class that is used in conjunction with data binding, usually to
+allow validation of data that may not fit into an existing domain class. *A class is only
+considered to be a command object when it is used as a parameter of an action.*
+____
+
+While a domain class *can* be used as a command object, so also can non-domain classes defined
+in other files (or even classes defined in the same file as the controller using the class).

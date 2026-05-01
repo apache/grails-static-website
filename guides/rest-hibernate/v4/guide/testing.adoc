@@ -1,0 +1,56 @@
+To write a unit test for the `search` action your can use the `create-unit-test` command of the CLI to create one:
+
+[source,bash]
+----
+$ ./grailsw create-unit-test hibernate.example.ProductController
+----
+
+Or alternatively just create a `src/test/groovy/hibernate/example/ProductControllerSpec.groovy` file using your favourite text editor or IDE.
+
+Like the previously implemented `ProductSpec` it should extend `HibernateSpec`, but this time the `TestFor` definition should be for `ProductController`:
+
+[source,groovy]
+.src/test/groovy/hibernate/example/ProductControllerSpec.groovy
+----
+include::../snippets/src/test/groovy/hibernate/example/ProductControllerSpec.groovy[tags=spec,indent=0]
+    ...
+}
+----
+
+In addition, the test should define a `doWithSpring` block to enable JSON views:
+
+[source,groovy]
+.src/test/groovy/hibernate/example/ProductControllerSpec.groovy
+----
+include::../snippets/src/test/groovy/hibernate/example/ProductControllerSpec.groovy[tags=config,indent=0]
+----
+
+The `doWithSpring` block is used to register additional Spring configuration (beans) for the context of the test. In this case we wish to test the controller responds with JSON views, so a `jsonSmartViewResolver` bean is registered.
+
+Next in order to prepare the test we setup some test data using the `setup` method:
+
+[source,groovy]
+.src/test/groovy/hibernate/example/ProductControllerSpec.groovy
+----
+include::../snippets/src/test/groovy/hibernate/example/ProductControllerSpec.groovy[tags=setup,indent=0]
+----
+
+The `setup` method uses the `saveAll` method to save multiple domain classes to serve as test data.
+
+Finally, we are ready to implement the test and can perform a search by executing the `search` method, passing appropriate arguments and verifying the JSON written to the response:
+
+[source,groovy]
+.src/test/groovy/hibernate/example/ProductControllerSpec.groovy
+----
+include::../snippets/src/test/groovy/hibernate/example/ProductControllerSpec.groovy[tags=test,indent=0]
+----
+
+As you can see from the example above, we are asserting the value of the `json` property of the `response`. The resulting JSON rendered by Grails looks like:
+
+[source,json]
+----
+[{"id":1,"name":"Apple","price":2.0}]
+----
+
+Let's take a look at how we can customize this JSON.
+

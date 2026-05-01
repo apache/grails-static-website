@@ -1,0 +1,44 @@
+Alternatively, you may want to use a combination of Stateless 
+endpoints secured by Spring Security REST and Stateful endpoints secured by Spring Security Core. You will be interested to 
+create a custom resolver by the current logged in user.
+
+[source,groovy]
+.src/main/groovy/demo/CurrentUserTenantResolver.groovy
+----
+include::../snippets/../complete-currentuser/src/main/groovy/demo/CurrentUserTenantResolver.groovy[]
+----
+
+<1> When using discriminator-based multi-tenancy then you may need to implement the http://gorm.grails.org/latest/hibernate/api/org/grails/datastore/mapping/multitenancy/AllTenantsResolver.html[AllTenantsResolver] interface in your TenantResolver implentation if you want to at any point iterate over all available tenants. `AllTenantsResolver extends `TenantResolver`. To create your own tenant resolver implement `org.grails.datastore.mapping.multitenancy.TenantResolver`.
+
+Define the Custom Tenant Resolver as a bean:
+
+[source,groovy]
+.grails-app/conf/spring/resources.groovy
+----
+include::../snippets/../complete-currentuser/grails-app/conf/spring/resources.groovy[tag=currentUserTenantResolverImport]
+include::../snippets/../complete-currentuser/grails-app/conf/spring/resources.groovy[tag=beans]
+include::../snippets/../complete-currentuser/grails-app/conf/spring/resources.groovy[tag=currentUserTenantResolver]
+}
+----
+
+Create an Integration Test to test the custom Tenant Resolver.
+
+[source,groovy]
+.src/integration-test/groovy/demo/CurrentUserTenantResolverSpec.groovy
+----
+include::../snippets/../complete-currentuser/src/integration-test/groovy/demo/CurrentUserTenantResolverSpec.groovy[]
+----
+
+Next were are going to configure our app to use this custom tenant resolver. 
+
+Configure Multi-Tenancy by modifying `application.yml`.
+
+[source,yml]
+.grails-app/conf/application.yml
+----
+grails
+include::../snippets/../complete-currentuser/grails-app/conf/application.yml[tag=multiTenancyConfiguration]
+----
+
+<1> Define Multi-Tenancy mode as `DISCRIMINATOR`
+<2> Set the Tenant Resolver class with a custom class which you will write later in this guide.

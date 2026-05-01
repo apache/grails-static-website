@@ -1,0 +1,3 @@
+We are going to write a simple application involving a class `Person`. The `Person` class will initially have its own
+attributes that also contain information for an address. As we evolve the domain we will split attributes into its own
+`Address` domain class. We will use Grails Database Migration Plugin to manage these transitions. 

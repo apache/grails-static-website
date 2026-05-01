@@ -1,0 +1,16 @@
+Create a domain class in the appropriate package:
+
+
+[source, groovy]
+.grails-app/domain/demo/Person.groovy
+----
+include::../snippets/grails-app/domain/demo/Person.groovy[tag=package]
+
+include::../snippets/grails-app/domain/demo/Person.groovy[tag=import]
+
+include::../snippets/grails-app/domain/demo/Person.groovy[tag=class]
+
+include::../snippets/grails-app/domain/demo/Person.groovy[tag=properties]
+
+include::../snippets/grails-app/domain/demo/Person.groovy[tag=closeClass]
+----

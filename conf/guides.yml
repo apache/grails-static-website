@@ -25,6 +25,10 @@ guides:
           - 'actuator'
           - 'commit-info'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/adding-commit-info'
+          branch: 'grails3'
+          sha: '7c0a7f906f1e2d7444c876ef9d87249e7054b544'
       '4':
         sourcePath: guides/adding-commit-info/v4
         publicationDate: '2017-03-06'
@@ -33,6 +37,10 @@ guides:
           - 'actuator'
           - 'commit-info'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/adding-commit-info'
+          branch: 'grails4'
+          sha: '810a3a7d1dbf7a05916b1dd5cc61501bf75b0602'
 
   - name: 'angular2-combined'
     title: 'Combining the Angular Profile Projects'
@@ -48,6 +56,10 @@ guides:
         tags:
           - 'angular'
           - 'javascript'
+        sampleRef:
+          repo: 'grails-guides/angular2-combined'
+          branch: 'master'
+          sha: '4d11ab5a2fcb07bfe696efd9f4f2e5a7695d10c0'
 
   - name: 'building-a-react-app'
     title: 'Building a React App'
@@ -65,6 +77,10 @@ guides:
           - 'node'
           - 'javascript'
           - 'json views'
+        sampleRef:
+          repo: 'grails-guides/building-a-react-app'
+          branch: 'master'
+          sha: '78cfdf647c4613438c4b3f5d4c88ecaee1b3e598'
 
   - name: 'building-a-vue-app'
     title: 'Building a Vue.js app with Grails'
@@ -82,6 +98,10 @@ guides:
           - 'grails'
           - 'javascript'
           - 'rest-api'
+        sampleRef:
+          repo: 'grails-guides/building-a-vue-app'
+          branch: 'master'
+          sha: '9d445e7798938be51b2a3a1bd653428a905c050c'
 
   - name: 'building-an-android-client-powered-by-a-grails-backend'
     title: 'Building an Android client powered by a Grails backend'
@@ -100,6 +120,10 @@ guides:
           - 'rest-api'
           - 'api-versioning'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/building-an-android-client-powered-by-a-grails-backend'
+          branch: 'master'
+          sha: 'b895fd715f5332ad92076b28d2920b98fef57309'
 
   - name: 'building-an-ios-objectc-client-powered-by-a-grails-backend'
     title: 'Building a Objective-C iOS Client powered by a Grails backend'
@@ -117,6 +141,10 @@ guides:
           - 'ios'
           - 'api-versioning'
           - 'rest-api'
+        sampleRef:
+          repo: 'grails-guides/building-an-ios-objectc-client-powered-by-a-grails-backend'
+          branch: 'grails4'
+          sha: 'f9c6847ec4d60653030f7d6c9b2897cd2d5fa725'
 
   - name: 'building-an-ios-swift-client-powered-by-a-grails-backend'
     title: 'Building a Swift iOS Client powered by a Grails backend'
@@ -134,6 +162,10 @@ guides:
           - 'ios'
           - 'api-versioning'
           - 'rest-api'
+        sampleRef:
+          repo: 'grails-guides/building-an-ios-swift-client-powered-by-a-grails-backend'
+          branch: 'grails4'
+          sha: '58043350dc3345619ef47c58f2abe251032cc9e6'
 
   - name: 'command-objects-and-forms'
     title: 'Using Command Objects To Handle Form Data'
@@ -151,6 +183,10 @@ guides:
           - 'binding'
           - 'validation'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/command-objects-and-forms'
+          branch: 'grails3'
+          sha: '9266e29f6db785ee6a556238ec09fac28bab5f0a'
       '4':
         sourcePath: guides/command-objects-and-forms/v4
         publicationDate: '2017-01-09'
@@ -159,6 +195,10 @@ guides:
           - 'binding'
           - 'validation'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/command-objects-and-forms'
+          branch: 'grails4'
+          sha: '897c3df53eda7d8d22edce0086d08866f8973c0e'
 
   - name: 'creating-your-first-grails-app'
     title: 'Creating your first Grails Application'
@@ -175,6 +215,10 @@ guides:
           - 'mysql'
           - 'gsp'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/creating-your-first-grails-app'
+          branch: 'grails3'
+          sha: 'da04cd2996cfacb6268028df68e1c8301d5fa8f5'
       '4':
         sourcePath: guides/creating-your-first-grails-app/v4
         publicationDate: '2017-01-23'
@@ -182,6 +226,10 @@ guides:
           - 'mysql'
           - 'gsp'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/creating-your-first-grails-app'
+          branch: 'grails4'
+          sha: '35a2468be99286a6953ddfac5ac7039e05f23107'
       '6':
         sourcePath: guides/creating-your-first-grails-app/v6
         publicationDate: '2017-01-23'
@@ -231,6 +279,9 @@ guides:
           - 'gorm'
           - 'grails4'
         # sampleRef intentionally omitted in this PR.
+        # Upstream guide includes complete/grails-app/init/example/ManufacturerService.groovy which does not exist at the pinned SHA.
+        # Tracked for follow-up.
+        # sampleRef intentionally omitted in this PR.
         # Upstream guide at master@1c0ea34a has an unresolvable include
         # `complete/grails-app/init/example/ManufacturerService.groovy`
         # which does not exist on disk at that SHA (the file lives in a
@@ -254,6 +305,10 @@ guides:
           - 'async'
           - 'events'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/gorm-event-listeners'
+          branch: 'grails3'
+          sha: '7b622fc0b5f71bed7ee388870b49bf1da5c76930'
       '4':
         sourcePath: guides/gorm-event-listeners/v4
         publicationDate: '2018-02-19'
@@ -262,6 +317,10 @@ guides:
           - 'async'
           - 'events'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/gorm-event-listeners'
+          branch: 'grails4'
+          sha: 'ec8eb00f5c9872d7092fb858639a1d34de861c31'
 
   - name: 'gorm-graphql-with-react-and-apollo'
     title: 'Building a GORM/GraphQL App with React and Apollo'
@@ -280,6 +339,10 @@ guides:
           - 'gorm'
           - 'javascript'
           - 'apollo'
+        sampleRef:
+          repo: 'grails-guides/gorm-graphql-with-react-and-apollo'
+          branch: 'grails4'
+          sha: '3bd0f629f571f6fbb0aeea0dc744640300fcce60'
 
   - name: 'gorm-ratpack'
     title: 'Build a Ratpack application which uses GORM'
@@ -296,6 +359,10 @@ guides:
           - 'ratpack'
           - 'gorm'
           - 'hibernate'
+        sampleRef:
+          repo: 'grails-guides/gorm-ratpack'
+          branch: 'grails3'
+          sha: 'c5498016a1606292f0421a1f68dbb6841129bc4b'
       '4':
         sourcePath: guides/gorm-ratpack/v4
         publicationDate: '2017-08-28'
@@ -303,6 +370,10 @@ guides:
           - 'ratpack'
           - 'gorm'
           - 'hibernate'
+        sampleRef:
+          repo: 'grails-guides/gorm-ratpack'
+          branch: 'master'
+          sha: '0a27ee00e150844b2c7defbb7eeec714de49b2e5'
 
   - name: 'gorm-without-grails'
     title: 'Build a Spring Boot application with GORM'
@@ -320,6 +391,9 @@ guides:
           - 'backend'
           - 'GORM'
           - 'hibernate'
+        # sampleRef intentionally omitted in this PR.
+        # Upstream guide includes complete/src/main/resources/application.properties but the upstream sample app uses application.yml.
+        # Tracked for follow-up.
         # sampleRef intentionally omitted in this PR.
         # Upstream guide at master@bafdfdc8 has an unresolvable include
         # `include::{sourceDir}/src/main/resources/application.properties[]`,
@@ -345,6 +419,10 @@ guides:
           - 'locale'
           - 'grails3'
           - 'language'
+        sampleRef:
+          repo: 'grails-guides/grails_i18n'
+          branch: 'grails3'
+          sha: 'e70d6899bdb550218e4ff2e45af07d2166337c42'
       '4':
         sourcePath: guides/grails_i18n/v4
         publicationDate: '2017-05-08'
@@ -353,6 +431,10 @@ guides:
           - 'locale'
           - 'grails4'
           - 'language'
+        sampleRef:
+          repo: 'grails-guides/grails_i18n'
+          branch: 'master'
+          sha: '58fccd02de69b87ef95a2135bf3cc356b36c0bef'
 
   - name: 'grails_url_mappings'
     title: 'Grails URL Mappings'
@@ -388,6 +470,10 @@ guides:
           - 'docker'
           - 'gradle'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/grails-as-docker-container'
+          branch: 'grails3'
+          sha: 'b9daa46d6838a4b092595cff97dd0c618abebb19'
       '4':
         sourcePath: guides/grails-as-docker-container/v4
         publicationDate: '2018-01-15'
@@ -395,6 +481,10 @@ guides:
           - 'docker'
           - 'gradle'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-as-docker-container'
+          branch: 'grails4'
+          sha: '737a252246fd57643074d41c13d982ca462bc44a'
 
   - name: 'grails-async-promises'
     title: 'Grails Promises'
@@ -413,6 +503,10 @@ guides:
           - 'rest'
           - 'openweather'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/grails-async-promises'
+          branch: 'grails3'
+          sha: '95a9d42b108daec0f670e8322bbc770fe7ed35c5'
       '4':
         sourcePath: guides/grails-async-promises/v4
         publicationDate: '2017-08-21'
@@ -422,6 +516,10 @@ guides:
           - 'rest'
           - 'openweather'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-async-promises'
+          branch: 'master'
+          sha: '557d63937c4d9fe9019d92cb148c34d1df532376'
 
   - name: 'grails-basicauth'
     title: 'Grails Basic Auth'
@@ -438,6 +536,10 @@ guides:
           - 'spring-security'
           - 'basicauth'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/grails-basicauth'
+          branch: 'grails3'
+          sha: 'b238dc1e74ba2f94ba2fa64de734ee7218d7b123'
       '4':
         sourcePath: guides/grails-basicauth/v4
         publicationDate: '2018-05-28'
@@ -445,6 +547,10 @@ guides:
           - 'spring-security'
           - 'basicauth'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-basicauth'
+          branch: 'master'
+          sha: '763b905e0bd201675771c6835aa78028ecfc1c36'
 
   - name: 'grails-code-coverage'
     title: 'Grails Code Coverage'
@@ -461,6 +567,9 @@ guides:
           - 'clover'
           - 'code-coverage'
           - 'grails3'
+        # sampleRef intentionally omitted in this PR.
+        # Upstream guide has unresolvable include at the pinned SHA (same upstream issue as v4).
+        # Tracked for follow-up.
       '4':
         sourcePath: guides/grails-code-coverage/v4
         publicationDate: '2017-07-03'
@@ -468,6 +577,9 @@ guides:
           - 'clover'
           - 'code-coverage'
           - 'grails4'
+        # sampleRef intentionally omitted in this PR.
+        # Upstream guide has unresolvable include at the pinned SHA. Needs upstream patch or earlier-SHA pinning.
+        # Tracked for follow-up.
 
   - name: 'grails-codenarc'
     title: 'Static code analysis in a Grails app with CodeNarc'
@@ -505,6 +617,10 @@ guides:
           - 'configuration'
           - 'configuration-properties'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/grails-configuration-properties'
+          branch: 'grails3'
+          sha: '61827aab4459f04c6fcd2a11966c4b05227cce09'
       '4':
         sourcePath: guides/grails-configuration-properties/v4
         publicationDate: '2018-10-11'
@@ -513,6 +629,10 @@ guides:
           - 'configuration'
           - 'configuration-properties'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-configuration-properties'
+          branch: 'master'
+          sha: '0f5c2beb66c244e9db4f99827e8a761c6e0b53fa'
 
   - name: 'grails-configuration-properties-micronaut'
     title: 'Micronaut @ConfigurationProperties in Grails App'
@@ -530,6 +650,10 @@ guides:
           - 'configuration'
           - 'configuration-properties'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-configuration-properties-micronaut'
+          branch: 'grails4'
+          sha: '84637fe2c3f83086f5b37179486dd2b51a3b10ce'
       '6':
         sourcePath: guides/grails-configuration-properties-micronaut/v6
         publicationDate: '2023-07-07'
@@ -538,6 +662,10 @@ guides:
           - 'configuration'
           - 'configuration-properties'
           - 'grails6'
+        sampleRef:
+          repo: 'grails-guides/grails-configuration-properties-micronaut'
+          branch: 'grails6'
+          sha: 'e2625ba609664bf2b8d7ae9fe53280a0fa5c27b1'
 
   - name: 'grails-controller-testing'
     title: 'Grails Controller Testing'
@@ -555,6 +683,10 @@ guides:
           - 'functional-test'
           - 'spock'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/grails-controller-testing'
+          branch: 'grails3'
+          sha: '1907cd8dceb82e850252ad5919efb39962b2ed06'
       '4':
         sourcePath: guides/grails-controller-testing/v4
         publicationDate: '2017-06-19'
@@ -563,6 +695,10 @@ guides:
           - 'functional-test'
           - 'spock'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-controller-testing'
+          branch: 'master'
+          sha: '0740e3bf33ea6180b2a6aa4de9c330eef84f5bce'
 
   - name: 'grails-custom-security-tenant-resolver'
     title: 'Custom Tenant Resolver by Current Logged in User'
@@ -582,6 +718,10 @@ guides:
           - 'multi-tenancy'
           - 'rest-api'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/grails-custom-security-tenant-resolver'
+          branch: 'grails3'
+          sha: 'f7bbeb88f2329cded16e997f58408345c4ad5454'
       '4':
         sourcePath: guides/grails-custom-security-tenant-resolver/v4
         publicationDate: '2017-09-11'
@@ -592,6 +732,10 @@ guides:
           - 'multi-tenancy'
           - 'rest-api'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-custom-security-tenant-resolver'
+          branch: 'master'
+          sha: '2fbfda44c0c6206bffc4ab984622e927b49e7cc2'
 
   - name: 'grails-database-migration'
     title: 'Grails Database Migration'
@@ -610,6 +754,10 @@ guides:
           - 'gorm'
           - 'migration'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/grails-database-migration'
+          branch: 'grails3'
+          sha: '094ae2023304d49d9b14150e49ea2eeda2bedd1c'
       '4':
         sourcePath: guides/grails-database-migration/v4
         publicationDate: '2017-08-07'
@@ -619,6 +767,10 @@ guides:
           - 'gorm'
           - 'migration'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-database-migration'
+          branch: 'master'
+          sha: '3695f5334f7839e14d3860fcb2c2080d465f4ebf'
       '6':
         sourcePath: guides/grails-database-migration/v6
         publicationDate: '2023-06-22'
@@ -628,6 +780,9 @@ guides:
           - 'gorm'
           - 'migration'
           - 'grails6'
+        # sampleRef intentionally omitted in this PR.
+        # Upstream guide on grails6 branch has unresolvable include at the pinned SHA.
+        # Tracked for follow-up.
 
   - name: 'grails-docker-external-services'
     title: 'Use docker to provide external services to your Grails app'
@@ -668,6 +823,10 @@ guides:
           - 'multi-datasource'
           - 'gorm-event'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/grails-dynamic-multiple-datasources'
+          branch: 'grails3'
+          sha: 'dc4e7f8992ffa44e5e9bae0a4424d785f22db645'
       '4':
         sourcePath: guides/grails-dynamic-multiple-datasources/v4
         publicationDate: '2017-09-18'
@@ -679,6 +838,10 @@ guides:
           - 'multi-datasource'
           - 'gorm-event'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-dynamic-multiple-datasources'
+          branch: 'master'
+          sha: 'ad141e32d4a877b3e7b4841f459ac915928e6580'
 
   - name: 'grails-elasticbeanstalk'
     title: 'Deploy to AWS ElasticBeanstalk'
@@ -738,6 +901,10 @@ guides:
           - 'aws'
           - 'ses'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/grails-email'
+          branch: 'grails3'
+          sha: 'ecb97ec2a5042603e06cf382ecc46113aa62481d'
       '4':
         sourcePath: guides/grails-email/v4
         publicationDate: '2018-06-04'
@@ -748,6 +915,10 @@ guides:
           - 'aws'
           - 'ses'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-email'
+          branch: 'master'
+          sha: 'dbde655816c37cdd4409dbcb64a11c0d03d241bf'
 
   - name: 'grails-events'
     title: 'Grails Events'
@@ -764,6 +935,10 @@ guides:
           - 'async'
           - 'events'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/grails-events'
+          branch: 'grails3'
+          sha: 'b57ab605c052dadf96985dc03c1ded556f5e0de4'
       '4':
         sourcePath: guides/grails-events/v4
         publicationDate: '2017-09-04'
@@ -771,6 +946,10 @@ guides:
           - 'async'
           - 'events'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-events'
+          branch: 'master'
+          sha: '8467011d15bf134a8c2a5903c21b194c2f9bc1ea'
 
   - name: 'grails-file-download-excel'
     title: 'Download an Excel file in Grails App'
@@ -790,6 +969,10 @@ guides:
           - 'excel'
           - 'file-transfer'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/grails-file-download-excel'
+          branch: 'grails3'
+          sha: '2e9a5217c9e26757a99e956612f38b788b70d745'
       '4':
         sourcePath: guides/grails-file-download-excel/v4
         publicationDate: '2018-09-03'
@@ -800,6 +983,10 @@ guides:
           - 'excel'
           - 'file-transfer'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-file-download-excel'
+          branch: 'master'
+          sha: 'a76c1a57952c2a21ad434a21f0108be05ba471c9'
 
   - name: 'grails-geb-multiple-browsers'
     title: 'Run Grails Geb Functional Tests with multiple Browsers'
@@ -820,6 +1007,10 @@ guides:
           - 'phantomjs'
           - 'htmlunit'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/grails-geb-multiple-browsers'
+          branch: 'grails3'
+          sha: 'e3ad935377c4410ae7e778e8747afa3292c4b3c0'
       '4':
         sourcePath: guides/grails-geb-multiple-browsers/v4
         publicationDate: '2017-01-30'
@@ -831,6 +1022,10 @@ guides:
           - 'phantomjs'
           - 'htmlunit'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-geb-multiple-browsers'
+          branch: 'master'
+          sha: 'b62e6d79b464c1b04d183a8ec476f8153a60cc5f'
 
   - name: 'grails-google-cloud'
     title: 'Deploy a Grails app to Google Cloud'
@@ -872,6 +1067,9 @@ guides:
           - 'google-app-engine'
           - 'web-profile'
         # sampleRef intentionally omitted in this PR.
+        # Upstream guide includes complete/grails-app/controllers/demo/AiDataController.groovy which does not exist at the pinned SHA.
+        # Tracked for follow-up.
+        # sampleRef intentionally omitted in this PR.
         # Upstream guide at master@4e741eac includes complete/grails-app/controllers/demo/AiDataController.groovy which does not exist on disk at the pinned SHA. Vendoring fails until upstream is patched or we pin to an earlier SHA.
         # Tracked for follow-up.
 
@@ -892,6 +1090,10 @@ guides:
           - 'jpq-ql'
           - 'data-services'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/grails-gorm-data-services'
+          branch: 'grails3'
+          sha: '1b5c12cd4d55c1c51be7b73ecacee57b3b68aa2e'
       '4':
         sourcePath: guides/grails-gorm-data-services/v4
         publicationDate: '2018-08-20'
@@ -901,6 +1103,10 @@ guides:
           - 'jpq-ql'
           - 'data-services'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-gorm-data-services'
+          branch: 'grails4'
+          sha: '639fb66d5a00731ec391e64aa326d0be2d130575'
 
   - name: 'grails-javamelody'
     title: 'JavaMelody monitoring with Grails 3'
@@ -937,6 +1143,9 @@ guides:
           - 'gorm'
           - 'geb'
           - 'grails3'
+        # sampleRef intentionally omitted in this PR.
+        # Upstream guide has unresolvable include at the pinned SHA (same upstream issue as v4).
+        # Tracked for follow-up.
       '4':
         sourcePath: guides/grails-logicaldelete/v4
         publicationDate: '2018-04-09'
@@ -945,6 +1154,9 @@ guides:
           - 'gorm'
           - 'geb'
           - 'grails4'
+        # sampleRef intentionally omitted in this PR.
+        # Upstream guide has unresolvable include at the pinned SHA. Needs upstream patch or earlier-SHA pinning.
+        # Tracked for follow-up.
 
   - name: 'grails-micronaut-http'
     title: 'Grails with Micronaut HTTP Client'
@@ -1015,6 +1227,10 @@ guides:
           - 'mock'
           - 'spock'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-mock-basics'
+          branch: 'master'
+          sha: 'c666e2b9252c85c20bf09adfb6e8b078624c54df'
 
   - name: 'grails-mock-http-server'
     title: 'Consume and test a third-party REST API'
@@ -1032,6 +1248,10 @@ guides:
           - 'mock'
           - 'rest'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/grails-mock-http-server'
+          branch: 'grails3'
+          sha: '4d7d125a60096f9e1cd0af31d6550339b97bd9c7'
       '4':
         sourcePath: guides/grails-mock-http-server/v4
         publicationDate: '2017-08-14'
@@ -1040,6 +1260,10 @@ guides:
           - 'mock'
           - 'rest'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-mock-http-server'
+          branch: 'master'
+          sha: '40f65bb3c6508d4326fb5775764f67e26dec0c07'
 
   - name: 'grails-mock-logging-slf4j-test'
     title: 'Grails Mock Logging with Slf4j Test'
@@ -1059,6 +1283,10 @@ guides:
           - 'log'
           - 'test'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/grails-mock-logging-slf4j-test'
+          branch: 'grails3'
+          sha: '9f877cb198c714227c48332f2876faac1d7a5d65'
       '4':
         sourcePath: guides/grails-mock-logging-slf4j-test/v4
         publicationDate: '2018-06-11'
@@ -1069,6 +1297,10 @@ guides:
           - 'log'
           - 'test'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-mock-logging-slf4j-test'
+          branch: 'grails4'
+          sha: '84a003f3156803a3e1398d4b42227d9b4aac6062'
 
   - name: 'grails-multi-datasource'
     title: 'Grails Multi-datasource'
@@ -1085,6 +1317,10 @@ guides:
           - 'multi-datasource'
           - 'json-views'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/grails-multi-datasource'
+          branch: 'grails3'
+          sha: '55320dfdf49c177ecab476c05ab9c921c621ecd2'
       '4':
         sourcePath: guides/grails-multi-datasource/v4
         publicationDate: '2017-10-10'
@@ -1092,6 +1328,10 @@ guides:
           - 'multi-datasource'
           - 'json-views'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-multi-datasource'
+          branch: 'master'
+          sha: 'a3c857519dd0dd1f47d3268823bf41d5ee5b863b'
 
   - name: 'grails-multi-project-build'
     title: 'Grails Multi-Project Build'
@@ -1221,6 +1461,10 @@ guides:
           - 'firefox'
           - 'geb'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/grails-on-travis-basics'
+          branch: 'grails3'
+          sha: '31b0512e0379437a681b5a65c784c0def1df0400'
       '4':
         sourcePath: guides/grails-on-travis-basics/v4
         publicationDate: '2018-06-25'
@@ -1232,6 +1476,10 @@ guides:
           - 'firefox'
           - 'geb'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/grails-on-travis-basics'
+          branch: 'master'
+          sha: '366f9d6c3c7ef88c42e6c23eaff5aa5e620b56aa'
 
   - name: 'grails-quickcast-logging'
     title: 'Grails Logging'
@@ -1266,6 +1514,10 @@ guides:
         tags:
           - 'quickcast'
           - 'angularjs'
+        sampleRef:
+          repo: 'grails-guides/grails-quickcasts-angularjs-scaffolding-with-grails-3'
+          branch: 'master'
+          sha: '57e45091ee382e00f86d89dd49d6649e59228054'
 
   - name: 'grails-quickcasts-developing-grails-3-applications-with-intellij-idea'
     title: 'Developing Grails 3 Applications with IntelliJ IDEA'
@@ -1396,6 +1648,10 @@ guides:
         tags:
           - 'cors'
           - 'angularjs'
+        sampleRef:
+          repo: 'grails-guides/grails-restapi-angularjs'
+          branch: 'grails4'
+          sha: '5638ac4ae74d6ccfcc072ba8342614c5b199e9dd'
 
   - name: 'grails-scheduled'
     title: 'Grails + @Scheduled'
@@ -1417,6 +1673,9 @@ guides:
           - 'job'
           - 'cron'
           - 'grails3'
+        # sampleRef intentionally omitted in this PR.
+        # Upstream guide has unresolvable include at the pinned SHA (same upstream issue as v4).
+        # Tracked for follow-up.
       '4':
         sourcePath: guides/grails-scheduled/v4
         publicationDate: '2018-02-26'
@@ -1429,6 +1688,9 @@ guides:
           - 'job'
           - 'cron'
           - 'grails4'
+        # sampleRef intentionally omitted in this PR.
+        # Upstream guide has unresolvable include at the pinned SHA. Needs upstream patch or earlier-SHA pinning.
+        # Tracked for follow-up.
 
   - name: 'grails-schwartz'
     title: 'Schedule periodic tasks inside your Grails applications'
@@ -1465,6 +1727,10 @@ guides:
           - 'soap'
           - 'geb'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/grails-soap'
+          branch: 'grails3'
+          sha: '3556aaaa1ff025c897ed51989732621ac4827f7e'
       '4':
         sourcePath: guides/grails-soap/v4
         publicationDate: '2017-10-03'
@@ -1472,6 +1738,10 @@ guides:
           - 'soap'
           - 'geb'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-soap'
+          branch: 'master'
+          sha: '32e5e3df32b6165be99a34f379fb0db6d8c2e6e3'
 
   - name: 'grails-spring-security-core-plugin-custom-authentication'
     title: 'Grails Spring Security Core Plugin Custom Authentication'
@@ -1487,12 +1757,20 @@ guides:
         tags:
           - 'spring-security-core'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/grails-spring-security-core-plugin-custom-authentication'
+          branch: 'grails3'
+          sha: 'cc0f60f6df2a1688ea1be0cc94582af2c5989548'
       '4':
         sourcePath: guides/grails-spring-security-core-plugin-custom-authentication/v4
         publicationDate: '2017-04-10'
         tags:
           - 'spring-security-core'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-spring-security-core-plugin-custom-authentication'
+          branch: 'master'
+          sha: 'ca5e2f0f8c1004f60db6234f3383fe66d084e8dc'
 
   - name: 'grails-taglib-wyswyg-trix'
     title: 'Create and test a Grails 5 TagLib; integrate the Trix WYSWYG editor'
@@ -1509,6 +1787,10 @@ guides:
           - 'taglib'
           - 'trix-editor'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/grails-taglib-wyswyg-trix'
+          branch: 'grails3'
+          sha: '117e0e11d1f0ec584336ddda057da84693bcb978'
       '4':
         sourcePath: guides/grails-taglib-wyswyg-trix/v4
         publicationDate: '2017-02-06'
@@ -1516,6 +1798,10 @@ guides:
           - 'taglib'
           - 'trix-editor'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-taglib-wyswyg-trix'
+          branch: 'grails4'
+          sha: 'c451c5ec86cd72ca57d1063835d6bce896a8d38e'
 
   - name: 'grails-test-domain-class-constraints'
     title: 'How to test Domain class constraints?'
@@ -1531,12 +1817,20 @@ guides:
         tags:
           - 'unit-test'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/grails-test-domain-class-constraints'
+          branch: 'grails3'
+          sha: 'e0dc1b7ce33a49517a581afc19b6f7bf9cb1d667'
       '4':
         sourcePath: guides/grails-test-domain-class-constraints/v4
         publicationDate: '2017-04-03'
         tags:
           - 'unit-test'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-test-domain-class-constraints'
+          branch: 'grails4'
+          sha: '8ebe9bf926225f52fb444463b46c84ebc9057788'
 
   - name: 'grails-test-security'
     title: 'Testing a Secured Grails Application'
@@ -1557,6 +1851,10 @@ guides:
           - 'spring-security-core'
           - 'micronaut-http-client'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/grails-test-security'
+          branch: 'grails3'
+          sha: 'fbc5c1205210dae86d59074e7720215cfde062ea'
       '4':
         sourcePath: guides/grails-test-security/v4
         publicationDate: '2017-01-16'
@@ -1568,6 +1866,10 @@ guides:
           - 'spring-security-core'
           - 'micronaut-http-client'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-test-security'
+          branch: 'master'
+          sha: '57054ed62c67e68284442275f82457ba49a3c025'
 
   - name: 'grails-tvmlapp'
     title: 'Build a TVML App with Grails'
@@ -1586,6 +1888,10 @@ guides:
           - 'tvmljs'
           - 'tvos'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/grails-tvmlapp'
+          branch: 'grails3'
+          sha: '62d432b4c6b920a83cfd642d79d653dfd7a849a8'
       '4':
         sourcePath: guides/grails-tvmlapp/v4
         publicationDate: '2017-03-20'
@@ -1595,6 +1901,10 @@ guides:
           - 'tvmljs'
           - 'tvos'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-tvmlapp'
+          branch: 'master'
+          sha: '963011677ae99484dfffe152f0acacfed0b050e3'
 
   - name: 'grails-upload-file'
     title: 'How to upload a file with Grails 4'
@@ -1612,6 +1922,10 @@ guides:
           - 'aws'
           - 's3'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/grails-upload-file'
+          branch: 'grails3'
+          sha: 'd20a475c54992358d803971ba9ccb60d64b95bd8'
       '4':
         sourcePath: guides/grails-upload-file/v4
         publicationDate: '2017-03-13'
@@ -1620,6 +1934,10 @@ guides:
           - 'aws'
           - 's3'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/grails-upload-file'
+          branch: 'grails4'
+          sha: 'd05380391e039a719b8ed5b1c095c3c065878d08'
 
   - name: 'grails-vs-nodejs'
     title: 'Replacing a Node/Express API with Grails'
@@ -1726,6 +2044,10 @@ guides:
           - 'query'
           - 'database'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/querying-gorm-dynamic-finders'
+          branch: 'grails3'
+          sha: '417cf0c02853ab6700ffe3d5c9eca069ebce0126'
       '4':
         sourcePath: guides/querying-gorm-dynamic-finders/v4
         publicationDate: '2017-09-25'
@@ -1734,6 +2056,10 @@ guides:
           - 'query'
           - 'database'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/querying-gorm-dynamic-finders'
+          branch: 'master'
+          sha: '79fb2ebd0c14931196411a172cfe939d7cc0942d'
 
   - name: 'react-combined'
     title: 'Combining the React profile projects'
@@ -1751,6 +2077,10 @@ guides:
           - 'javascript'
           - 'gradle'
           - 'multi-project'
+        sampleRef:
+          repo: 'grails-guides/react-combined'
+          branch: 'grails4'
+          sha: '187cfee5deda3815642eb28855940428de453152'
 
   - name: 'react-spring-security'
     title: 'Creating a React app with Spring Security'
@@ -1770,6 +2100,10 @@ guides:
           - 'security'
           - 'spring-security-rest'
           - 'rest-api'
+        sampleRef:
+          repo: 'grails-guides/react-spring-security'
+          branch: 'master'
+          sha: '61b494fb45b6038f4c3db51032cf6c3cf02bc42a'
 
   - name: 'rest-hibernate'
     title: 'Building a REST application with GORM and Hibernate 5'
@@ -1788,6 +2122,10 @@ guides:
           - 'json'
           - 'gorm'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/rest-hibernate'
+          branch: 'grails3'
+          sha: '1ecff72406deed1fef4283a519216c3543687b8f'
       '4':
         sourcePath: guides/rest-hibernate/v4
         publicationDate: '2016-11-23'
@@ -1797,6 +2135,10 @@ guides:
           - 'json'
           - 'gorm'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/rest-hibernate'
+          branch: 'grails4'
+          sha: '2e081c2778fbb5b34b211787f475e3232ff2814b'
 
   - name: 'rest-mongodb'
     title: 'Building a REST application with MongoDB'
@@ -1836,6 +2178,10 @@ guides:
           - 'reactive'
           - 'html5'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/server-sent-events'
+          branch: 'grails3'
+          sha: '57561b9251e8f05c3177047514f463241c4eb7a7'
       '4':
         sourcePath: guides/server-sent-events/v4
         publicationDate: '2016-11-11'
@@ -1844,6 +2190,10 @@ guides:
           - 'reactive'
           - 'html5'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/server-sent-events'
+          branch: 'grails4'
+          sha: '912c0de2c66d8d98379a39cad46186c8f25ab71f'
 
   - name: 'using-hal-with-json-views'
     title: 'Using HAL with JSON Views'
@@ -1861,6 +2211,10 @@ guides:
           - 'rest'
           - 'json views'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/using-hal-with-json-views'
+          branch: 'grails3'
+          sha: 'c240a3081ac2499a3226728a6a302b84fc5f9354'
       '4':
         sourcePath: guides/using-hal-with-json-views/v4
         publicationDate: '2017-04-17'
@@ -1869,6 +2223,10 @@ guides:
           - 'rest'
           - 'json views'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/using-hal-with-json-views'
+          branch: 'master'
+          sha: 'a6e65807c683135769787d8cbd5a4b75d5eed31f'
 
   - name: 'using-the-react-profile'
     title: 'Using the React Profile'
@@ -1886,6 +2244,10 @@ guides:
           - 'node'
           - 'javascript'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/using-the-react-profile'
+          branch: 'master'
+          sha: 'e7b1cb8e1a7895d5f9204065a0b8acf26c306e0c'
 
   - name: 'using-the-vue-profile'
     title: 'Using the Vue.js Grails Profile'
@@ -1904,6 +2266,10 @@ guides:
           - 'javascript'
           - 'vue-profile'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/using-the-vue-profile'
+          branch: 'grails3'
+          sha: '4f60803c5ac9aefc6965eb0c05aec4b7ab6ead96'
       '4':
         sourcePath: guides/using-the-vue-profile/v4
         publicationDate: '2018-03-12'
@@ -1913,6 +2279,10 @@ guides:
           - 'javascript'
           - 'vue-profile'
           - 'grails4'
+        sampleRef:
+          repo: 'grails-guides/using-the-vue-profile'
+          branch: 'master'
+          sha: 'c92ffad31cd225280311c32e0c170c08703e41d2'
 
   - name: 'vaadin-grails'
     title: 'Build a Grails 3 application with the Vaadin 8 Framework'
@@ -1929,6 +2299,9 @@ guides:
           - 'vaadin'
           - 'frontend'
           - 'framework'
+        # sampleRef intentionally omitted in this PR.
+        # Upstream guide includes complete/src/main/webapp/VAADIN/themes/vaadin-grails-theme/styles.scss which does not exist at the pinned SHA.
+        # Tracked for follow-up.
         # sampleRef intentionally omitted in this PR.
         # Upstream guide at master@c69a3137 includes complete/src/main/webapp/VAADIN/themes/vaadin-grails-theme/styles.scss which does not exist on disk at the pinned SHA. Vendoring fails until upstream is patched or we pin to an earlier SHA.
         # Tracked for follow-up.

@@ -1,0 +1,25 @@
+To create a TVML application and connect it to a Grails Server we need to modify the variables `tvBaseURL` and `tvBootURL`.
+
+Create a TvOS project with the TVML application template.
+
+image::tvOSProjectTemplateTvml.png[]
+
+Choose Swift as the language.
+
+image::projectOptions.png[]
+
+Add a new value _App Transport Security Settings_ (case sensitive), and as its child, add _Allow Arbitrary Loads_, and set that value to YES.
+
+image::appTransportSecurity.png[]
+
+NOTE: Adding this key to your Info.plist is necessary because as of iOS 9, your app will prevent linking to non-HTTPS servers to encourage best practices. In this tutorial, you’ll be testing against a local server without HTTPS enabled, so you’ll disable the default behavior.
+
+Modify `AppDelegate.swift` and set the static variables `tvBaseURL` and `tvBootURL`.
+
+[source,swift]
+----
+static let tvBaseURL = "http://localhost:8080/"
+static let tvBootURL = "\(AppDelegate.tvBaseURL)/assets/application.js"
+----
+
+image::tvBaseUrl.png[]

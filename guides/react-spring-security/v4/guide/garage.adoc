@@ -1,0 +1,10 @@
+At this point our login and logout functionality is complete. The last step is to authenticate our REST calls back to our API. This takes place in the `Garage` component, which is shown below.
+
+[source, javascript]
+.client/src/Garage.js
+----
+include::../snippets/client/src/Garage.js[]
+----
+<1> Note the use of the `headers()` function again to return our token-bearing request headers for all of our API calls.
+<2> The logout button will execute the `logoutHandler` function when clicked.
+Start up the app and verify that you can login and authenticate successfully. Congratulations! You have secured your React app with Grails and Spring Security!

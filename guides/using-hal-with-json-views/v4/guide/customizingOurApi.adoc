@@ -1,0 +1,49 @@
+Let's create a JSON view to customize the output from the `/api/orders/$id` endpoint. Right now, the default JSON renderer includes ids of all associated objects. However, we don't want to expose the `id` of the `shippingAddress` property (which is an instance of our `Address` domain class) - it's not exposed as a domain resource in our API and it's only relevant to users of API as part of an `Order` or `Customer`. Ideally, we'd like to include the `shippingAddress` fields in the JSON output of our `Order` API.
+
+In addition, we'd like to express the `orderId` property as the order's `id`, rather than the actual id from the database.
+
+Create a new directory under `grails-app/views`, called `order`:
+
+[source, bash]
+----
+$ mkdir grails-app/views/order
+----
+
+TIP: If you're familiar with Grails' view resolution, you may be thinking we need to create an `OrderController` in order to use views from our `order` directory. We could do that, however because we're making use of the `@Resource` annotation on our domain class, Grails will generate an associated `OrderController` (which will in turn inherit from `RestfulController`) for us. So at this point, we don't need to create a controller for our `Order` class.
+
+Create a new JSON view called `show.gson`. This will resolve to the `show` action in our controller, just as a `show.gsp` page would in a normal Grails application. Edit the new view with the following content:
+
+[source,groovy]
+.grails-app/views/order/show.gson
+----
+include::../snippets/grails-app/views/order/show_v1.gson[]
+----
+<1> Here we're filling out our `shippingAddress` with the fields from the `Address` class
+<2> Notice that we're iterating over a collect (`order.products`) with the `collect` method and returning a map - this will create a JSON array of objects
+
+Now if you make a request to `/api/orders/1`, you should see the following output:
+
+[source, bash]
+----
+curl -H "Accept: application/json" localhost:8080/api/orders/1
+----
+
+[source, groovy]
+----
+include::../snippets/src/test/groovy/com/example/OrderShowV1Spec.groovy[indent=0,lines=25..50]
+----
+
+Let's create another JSON view for our `Customer` domain class. Create a new directory under `grails-app/views`, called `customer`, and a new JSON view `show.gson`
+
+[source, bash]
+----
+$ mkdir grails-app/views/customer
+----
+
+Create a new JSON view called `show.gson`. This will resolve to the `show` action in our controller, just as a `show.gsp` page would in a normal Grails application. Edit the new view with the following content:
+
+[source,groovy]
+.grails-app/views/customer/show.gson
+----
+include::../snippets/grails-app/views/customer/show_v1.gson[]
+----

@@ -1,0 +1,16 @@
+In this guide you are going to explore https://en.wikipedia.org/wiki/Hypertext_Application_Language[HAL] (Hypertext Application Language) support in Grails, using JSON views (provided by the http://views.grails.org/latest/[Grails Views] library).
+
+[quote#wiki, Wikipedia]
+____
+Hypertext Application Language (HAL) is an Internet Draft (a "work in progress") standard convention for defining hypermedia such as links to external resources within JSON or XML code.
+____
+
+The purpose of HAL is make APIs "discoverable" - it defines a set of conventions that allow consumers of your API to follow links between resources, as well as providing pagination and other convenience features for "exploring" an API. HAL is a popular standard for implementing https://en.wikipedia.org/wiki/HATEOAS[HATEOAS] (Hypermedia As The Engine Of Application State) architecture, which is an extension of basic REST architecture.
+
+image::http://stateless.co/info-model.png[title="HAL Resource Structure, from http://stateless.co", alt="HAL Resource Structure", width="640", link="http://stateless.co/hal_specification.html"]
+
+TIP: For a thorough introduction to HAL, check out the overview and specification at the following URL: http://stateless.co/hal_specification.html
+
+Grails provides support for HAL through JSON views, which are part of the Grails Views library. You can use this library in an existing application following the installation steps in the documentation, or you can create a new application using either the `rest-api` profile or one of the frontend profiles (`angular`, `angular2` and `react`) which extend the `rest-api` profile.
+
+In this guide, we have provided a basic Grails {grailsVersion} application using the `rest-api` profile in the `initial` project. We have also included a few domain classes to expose via our API. You may generate your own project if you wish (in which case you will need to copy the domain classes from `initial/grails-app/domain/` into your own project), or simply use the `initial` project to follow along with the guide.

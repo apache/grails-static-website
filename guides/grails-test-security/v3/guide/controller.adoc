@@ -1,0 +1,14 @@
+We are going to use static Scaffolding to generate a controller for the web app.
+
+[source, bash]
+----
+./grailsw generate-all Announcement
+| Rendered template Controller.groovy to destination grails-app/controllers/example/grails/AnnouncementController.groovy
+| Rendered template Spec.groovy to destination src/test/groovy/example/grails/AnnouncementControllerSpec.groovy
+| Scaffolding completed for grails-app/domain/example/grails/Announcement.groovy
+| Rendered template edit.gsp to destination grails-app/views/announcement/edit.gsp
+| Rendered template create.gsp to destination grails-app/views/announcement/create.gsp
+| Rendered template index.gsp to destination grails-app/views/announcement/index.gsp
+| Rendered template show.gsp to destination grails-app/views/announcement/show.gsp
+| Views generated for grails-app/domain/example/grails/Announcement.groovy
+----

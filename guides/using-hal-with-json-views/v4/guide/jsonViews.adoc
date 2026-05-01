@@ -1,0 +1,29 @@
+Here's a trivial example of a JSON view:
+
+[source, groovy]
+----
+json.message {
+    hello "world"
+}
+----
+
+This JSON view would produce the following ouput when rendered:
+
+[source, javascript]
+----
+{"message":{ "hello":"world"}}
+----
+
+JSON views also support a `model` which references the data passed in to the view, as seen below:
+
+[source, groovy]
+----
+model {
+    String message
+}
+json.message {
+    hello message
+}
+----
+
+JSON views are Groovy files with the file extension `gson`, and they reside in the `grails-app/views` directory, just like GSP views. They are resolved (by convention) to a controller with the same name as the view directory, again like GSP views.

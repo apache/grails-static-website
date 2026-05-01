@@ -1,0 +1,10 @@
+We are going to use a unit test for the dynamic finder with the help of `HibernateSpec`. It allows Hibernate to be used in Grails unit tests. It uses a H2 in-memory database.
+
+[source, groovy]
+.src/test/groovy/grails/mock/basics/StudentServiceSpec.groovy
+----
+include::../snippets/src/test/groovy/grails/mock/basics/StudentServiceSpec.groovy[indent=0]
+----
+
+<1>  Test a limited set of domain classes, override `getDomainClasses` method and specify exactly which ones you wish to test.
+<2>  If the service under test uses `@Transactional` you will need to assign the transaction manager within the unit test’s setup method.

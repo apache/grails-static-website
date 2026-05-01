@@ -1,0 +1,20 @@
+In order to create a custom authentication, we often need a custom `Authentication`.
+
+`org.springframework.security.core.Authentication`
+
+Authentication represents the token for an authentication request or an authenticated principal
+once the request has been processed by the method:
+
+`AuthenticationManager.authenticate(Authentication)`
+
+This generally means:
+
+- Either extend an existing implementation.
+
+`org.springframework.security.authentication.UsernamePasswordAuthenticationToken`
+
+- Or directly implement the interface `Authentication`
+
+What we are trying to achieve is an extension of the common username/password functionality offered
+already by the plugin. We don't need a custom authentication object. Instead, we are going to use
+the `UsernamePasswordAuthenticationToken` object and place in the `details` property our custom information; the coordinate.

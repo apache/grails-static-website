@@ -1,0 +1,16 @@
+This guide features a client-server architecture. The client is a tvOS application. The server is a Grails application. The client connects to the server, which responds with TVMLKit JS and TVML documents.
+
+image::architecture.png[]
+
+We have separated the Grails application from the data ( mp4 files and Png files ); videos and thumbnails.
+We use https://www.mamp.info[MAMP] to run a local apache server at port 8888 pointing to the folder data.
+During this guide you will see references to mp4 files such as:
+
+[source,groovy]
+
+----
+include::../snippets/grails-app/init/com/ociweb/quickcasts/BootStrap.groovy[tags=dataServerLink]
+----
+
+In a Production environment, you may want to host
+those files in a service such as http://docs.aws.amazon.com/AmazonS3/latest/dev/Welcome.html[Amazon Simple Store Service - AWS S3]

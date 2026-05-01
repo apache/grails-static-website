@@ -1,0 +1,25 @@
+To consume the SOAP Web Service we use **groovy-wslite**. A library for Groovy that provides no-frills SOAP and REST webservice clients.
+
+Add _wslite_ dependency:
+
+[source,groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[tag=wslite, indent=0]
+----
+
+We encapsulate the SOAP code in Grails service:
+
+[source,groovy]
+.grails-app/services/demo/VatService.groovy
+----
+include::../snippets/grails-app/services/demo/VatService.groovy[]
+----
+
+We test it using the http://testing.grails.org[Grails Testing Framework]
+
+[source,groovy]
+.src/test/groovy/demo/VatServiceSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/VatServiceSpec.groovy[]
+----

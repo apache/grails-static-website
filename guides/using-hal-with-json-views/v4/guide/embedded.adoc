@@ -1,0 +1,97 @@
+Let's take a look at our `Product` domain resource. `Product` has a `belongsTo` relationship with `Category`, which is expressed in our default JSON output in a simple object with the category id:
+
+[source,javascript]
+----
+{
+    id: 1,
+    category: {
+        id: 1
+    },
+    inventoryId: "CLOTH001",
+    name: "Cargo Pants",
+    price: 15
+}
+----
+
+Again we'd like to make it easier for consumers of the API to obtain the category for the product. We have several options:
+
+ 1. We could simply *include the `category` details in our JSON view*: This approach obscures the boundary between the `Product` and `Category` resources in our API - it gives the (incorrect) impression to the client that `category.name` is a property of `Product`, rather than a API resource in its own right.
+
+ 2. We could provide a *link to the category*: This approach would require clients to make a new request to get the category details, and it's likely that most clients will want both the product and the category details in the same request.
+
+TIP: You may recall that in the case of an order's `shippingAddress`, we used the first of these two approaches (including the associated object's details in the JSON view) - this is because `Address` is not exposed in our API as a resource, so an `Address` is effectively part of either an `Order` (`shippingAddress`) or a `Customer` (`address`) as far as our API is concerned.
+
+HAL specifies an `_embedded` property to represent cross-resource relationships in a nested format. With an embedded approach, we could include the `Category` in the same HAL+JSON response, but the category would be in a separate element to make it clear that these are separate resources.
+
+JSON views provide an `embedded` method (via the `hal` helper) that will generate an `_embedded` element in our JSON view. It will include the default JSON output for the embedded objects as well as a `_self` link for each object.  Let's use this to embed the category in our product output.
+
+Create a new directory under `grails-app/views`, called `product`:
+
+[source,bash]
+----
+$ mkdir grails-app/views/product/
+----
+
+Create a new JSON view under this directory, called `show.gson`:
+
+[source,groovy]
+.grails-app/views/product/show.gson
+----
+include::../snippets/grails-app/views/product/show.gson[]
+----
+<1> We're passing `embedded` method a map of element names (in this case `category`) to objects to embed (`product.category`)
+
+Now make a request to `http://localhost:8080/api/products/1`:
+
+[source, groovy]
+----
+include::../snippets/src/integration-test/groovy/com/example/ProductsShowFuncSpec.groovy[indent=0,lines=30..54]
+----
+
+In previous code snippet, the `category` object includes the default JSON renderer output for our `Category` resource, as well as a `_self` link so clients can request the category directly if needed.
+
+Let's use the `embedded method on the `order/show.gson` view, and embed the `order.customer` resource:
+
+[source,groovy]
+.grails-app/views/order/show.gson
+----
+include::../snippets/grails-app/views/order/show_v4.gson[indent=0]
+----
+
+Make a request to `http://localhost:8080/api/orders/1`:
+
+[source, groovy]
+----
+include::../snippets/src/integration-test/groovy/com/example/OrdersShowFuncSpec.groovy[lines=33..99]
+----
+
+Now clients of our API can access the details of embedded resources, without making additional requests.
+
+[source, groovy]
+----
+//examples are using the fetch API: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+
+//retrieve an order instance from the API
+fetch("http://localhost:8080/api/orders/1").then(function(response) {
+    return response.json();
+}).then(function(data) {
+    this.order = data;
+});
+
+var customer = this.order._embedded.customer;
+
+console.log("Order ID: " + this.order.id);
+console.log("Customer: " + customer.firstName + " " + customer.lastName);
+
+//retrieve a product instance from the API
+fetch("http://localhost:8080/api/products/1").then(function(response) {
+    return response.json();
+}).then(function(data) {
+    this.product = data;
+});
+
+console.log("Product: " + this.product.name);
+console.log("Category:" + this.order._embedded.category.name);
+
+
+----

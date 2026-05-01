@@ -1,0 +1,40 @@
+To complete this guide, you will need to checkout the source from Github and work through the steps presented by the guide.
+
+To get started do the following:
+
+* link:https://github.com/{githubSlug}/archive/master.zip[Download] and unzip the source or if you already have https://git-scm.com/[Git]: `git clone https://github.com/{githubSlug}.git`
+
+### To follow the Grails part:
+
+* `cd` into `{githubSlug}/initial`
+
+Alternatively, if you already have Grails installed then you can create a new application using the
+following command in a Terminal window:
+
+    $ grails create-app intranet.backend.grails-app --profile rest-api
+    $ cd grails-app
+
+When the create-app command completes, Grails will create a grails-app directory with an
+application configured to create a REST application (due to the use of the parameter profile=rest-api )
+and configured to use the hibernate feature with an H2 database.
+
+TIP: You can go right to the completed Grails example if you `cd` into `{githubSlug}/complete`
+
+### To follow the iOS part:
+
+* `cd` into `{githubSlug}/initial-objectivec-ios`
+
+* Head on over to the next section
+
+
+Alternatively, you can create an iOS app using the New Project Wizard of Xcode Studio as illustrated in the next screenshots.
+
+image::create_new_project.png[]
+
+image::choose_master-detail-application.png[]
+
+image::choose_objective_c.png[]
+
+TIP: You can go right to the completed version 1 of the iOS example if you `cd` into `{githubSlug}/complete-objectivec-ios-v1`
+
+TIP: You can go right to the completed version 2 of the iOS example if you `cd` into `{githubSlug}/complete-objectivec-ios-v2`

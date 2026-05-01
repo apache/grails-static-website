@@ -1,0 +1,61 @@
+Message bundles in Grails are located inside the `grails-app/i18n` directory and
+are simple Java properties files.
+
+We want to support English, Spanish, Italian and German in our application.
+We are going to define the localizations in the different message bundles.
+
+
+=== Default Message Bundle
+[source, groovy]
+.grails-app/i18n/messages.properties
+----
+include::{sourcedir}/grails-app/i18n/messages.properties[tag=navbarEn]
+
+include::{sourcedir}/grails-app/i18n/messages.properties[tag=languageEn]
+
+include::{sourcedir}/grails-app/i18n/messages.properties[tag=welcomeEn]
+----
+
+=== Spanish Message Bundle
+
+[source, groovy]
+.grails-app/i18n/messages_es.properties
+----
+include::{sourcedir}/grails-app/i18n/messages_es.properties[tag=navbarEs]
+
+include::{sourcedir}/grails-app/i18n/messages_es.properties[tag=languageEs]
+
+include::{sourcedir}/grails-app/i18n/messages_es.properties[tag=welcomeEs]
+----
+
+=== Italian Message Bundle
+
+[source, groovy]
+.grails-app/i18n/messages_it.properties
+----
+include::{sourcedir}/grails-app/i18n/messages_it.properties[tag=navbarIt]
+
+include::{sourcedir}/grails-app/i18n/messages_it.properties[tag=languageIt]
+
+include::{sourcedir}/grails-app/i18n/messages_it.properties[tag=welcomeIt]
+----
+
+=== German Message Bundle
+
+[source, groovy]
+.grails-app/i18n/messages_de.properties
+----
+include::{sourcedir}/grails-app/i18n/messages_de.properties[tag=navbarDe]
+
+include::{sourcedir}/grails-app/i18n/messages_de.properties[tag=languageDe]
+
+include::{sourcedir}/grails-app/i18n/messages_de.properties[tag=welcomeDe]
+----
+
+In the home page we use those message codes:
+
+[source, groovy]
+.grails-app/views/index.gsp
+----
+include::{sourcedir}/grails-app/views/index.gsp[tag=welcomeGsp, indent=0]
+----

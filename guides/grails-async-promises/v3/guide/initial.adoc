@@ -1,0 +1,9 @@
+The _initial_ folder contains the sample Grails application developed during the Grails Guide: http://guides.grails.org/grails-mock-http-server/guide/index.html[Consume and test a third-party REST API].
+
+It contains code to invoke the https://openweathermap.org/api[Open Weather Map API] to retrieve the weather forecast for a city.
+
+The `OpenWeathermapService.currentWeather` does a network request and builds a Groovy Object with the received JSON Payload.
+
+The goal is to display a grid of forecasts:
+
+image::cities.png[]

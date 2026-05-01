@@ -1,0 +1,25 @@
+We handle http://www.gebish.org/manual/current/#configuration[Geb Configuration] with a GebConfig.groovy file
+
+[source,groovy]
+./src/integration-test/resources/GebConfig.groovy
+----
+include::../snippets/src/integration-test/resources/GebConfig.groovy[indent=0]
+----
+
+We need to add the different browser dependencies
+
+[source,groovy]
+./build.gradle
+----
+include::../snippets/build.gradle[indent=0,tag=gebDependencies]
+----
+
+We are going to change the Geb environment passing a system property.
+Because of that, we pass system properties to integration tests:
+
+
+[source,groovy]
+./build.gradle
+----
+include::../snippets/build.gradle[indent=0,tag=systemProperties]
+----

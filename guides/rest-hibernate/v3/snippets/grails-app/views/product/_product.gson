@@ -1,0 +1,12 @@
+import hibernate.example.Product
+
+model {
+	Product product
+}
+
+Currency currency = locale?.country ? Currency.getInstance(locale) : Currency.getInstance('USD')
+json {
+    id product.id
+    name product.name
+    price "${currency.symbol}${product.price}"
+}

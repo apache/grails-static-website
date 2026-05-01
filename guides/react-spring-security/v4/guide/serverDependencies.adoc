@@ -1,0 +1,8 @@
+To secure our application, we will use the Spring Security Core plugin as well as the Spring Security REST plugin. Install these plugins in the project by adding these lines to `server/build.gradle` (under the `dependencies` section):
+
+[source, groovy]
+----
+include::../snippets/server/build.gradle[indent=0,lines=51..52]
+----
+
+NOTE: Please see the documentation for more information on the https://grails-plugins.github.io/grails-spring-security-core/v3/index.html[Spring Security Core plugin] and https://alvarosanchez.github.io/grails-spring-security-rest/latest/docs/[Spring Security REST plugin].

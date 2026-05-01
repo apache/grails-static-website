@@ -1,0 +1,16 @@
+
+https://developer.apple.com/reference/tvmljs[TVMLKit JS]
+____
+TVMLKit JS is a JavaScript API framework specifically designed to work with Apple TV and TVML. TVMLKit JS incorporates the basic functionality found in JavaScript along with specialized APIs designed for Apple TV. Using TVMLKit JS, you are able to load and display TVML templates, play media streams, load customized content, and control the flow of your app. For more information, see TVJS Framework Reference.
+____
+
+Add a JavaScript file to our project. It defines a series of methods nearly identical as those described in the section Playing Media of
+https://developer.apple.com/library/prerelease/content/documentation/TVMLKitJS/Conceptual/TVMLProgrammingGuide/PlayingVideo.html[TVML Programming Guide].
+
+These methods allow to push pages into the navigation stack, fetch documents and play media.
+
+[source,javascript]
+./grails-app/assets/javascripts/tvmlkit.js
+----
+include::../snippets/grails-app/assets/javascripts/tvmlkit.js[indent=0]
+----

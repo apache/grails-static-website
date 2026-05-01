@@ -1,0 +1,48 @@
+When we select the first Quickcast, the document residing in `http://localhost:8080/quickast/1` is pushed into the navigation stack
+
+To render a Quickcast, we use the
+https://developer.apple.com/library/prerelease/content/documentation/LanguagesUtilities/Conceptual/ATV_Template_Guide/ProductTemplate.html[Apple TVML Product Template].
+
+image::productTemplate.png[]
+
+A request to `http://localhost:8080/quickcast/1` executes the `show` action of `QuickcastController`.
+
+[source,groovy]
+./grails-app/controllers/com/ociweb/quickcasts/QuickcastController.groovy
+----
+include::../snippets/grails-app/controllers/com/ociweb/quickcasts/QuickcastController.groovy[]
+----
+
+The model passed to our view is the requested Quickcast and a series of related videos.
+
+In `application.yml`, we configure how many related Quickcasts we want to show.
+
+[source,yaml]
+./grails-app/conf/application.yml
+----
+include::../snippets/grails-app/conf/application.yml[indent=0,tag=relatedquickcast]
+----
+
+Fetching of related quickcasts is encapsulated in a Service.
+
+[source,groovy]
+./grails-app/services/com/ociweb/quickcasts/RelatedQuickcastsService.groovy
+----
+include::../snippets/grails-app/services/com/ociweb/quickcasts/RelatedQuickcastsService.groovy[indent=0]
+----
+
+The `QuickcastController` index method renders a `Quickcast` using the next http://views.grails.org/latest/#_markup_views[Markup View]
+
+[source,groovy]
+./grails-app/views/quickcast/show.gml
+----
+include::../snippets/grails-app/views/quickcast/show.gml[indent=0]
+----
+
+With a functional test, we test the XML rendered is what we expected.
+
+[source,groovy]
+./src/integration-test/groovy/com/ociweb/quickcasts/QuickcastControllerShowSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/com/ociweb/quickcasts/QuickcastControllerShowSpec.groovy[indent=0]
+----

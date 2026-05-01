@@ -1,0 +1,5 @@
+There's plenty of opportunities to expand the scope of this application. Here are a few ideas for improvements you can make on your own:
+
+ - Improve the form (or create new form components) for adding Makes, Models, and Drivers.
+ - Add support for editing existing Vehicles, perhaps using a modal dialog for an edit form.
+ - Currently the Makes & Model domain classes are independent. Add an appropriate GORM association between Make & Model, and change the select lists to only display Models for the currently select Make. You will want to make use of the JavaScript https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter[`Array.filter`] method.

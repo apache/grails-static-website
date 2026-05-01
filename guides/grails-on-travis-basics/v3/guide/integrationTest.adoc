@@ -1,0 +1,10 @@
+The `initial` application contains a functional test which uses Geb to verify that the Home Page
+displays the sentence `Welcome to Grails`.
+
+[source, groovy]
+.src/integration-test/groovy/example/grails/DefaultHomePageSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/grails/DefaultHomePageSpec.groovy[]
+----
+
+<1> Ignore test unless system property `geb.env` is present.

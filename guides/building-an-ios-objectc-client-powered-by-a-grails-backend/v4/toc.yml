@@ -1,0 +1,34 @@
+training:
+  title: Grails Training
+gettingStarted:
+  title: Getting Started
+  requirements: What you will need
+  howto: How to complete the guide
+overview:
+  title: Overview
+writingTheGrailsApp:
+  title: Writing the Grails Application
+  domainClass: Create a Domain Class - Persistent Entities
+  domainClassTest: Domain Class Unit Testing
+  versioning: Versioning
+  v1Controller: Create a Controller
+  bootstrap: Loading test data
+  v1FunctionalTests: Functional tests
+  runningTheApp: Running the Application
+writingTheiOSApp:
+    title: Writing the iOS Application
+    ios-overview: Fetching the Announcements
+    iosModel: Model
+    iosJsonToModel: Json to Model
+    appTransportSecurity: App Transport Security
+    networkingCode: Networking code
+    detailViewController: Detail View Controller
+version2:
+    title: API version 2.0
+    v2Controller: Grails V2 Changes
+    v2FunctionalTests: Api 2.0 Functional tests
+    v2iOS: iOS V2 Changes
+conclusion:
+    title: Conclusion
+helpWithGrails:
+  title: Do you need help with Grails?    

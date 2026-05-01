@@ -1,0 +1,10 @@
+import demo.Movie
+
+model {
+    Movie movie
+}
+
+json {
+    title movie.title
+    keywords movie.keywords*.name
+}

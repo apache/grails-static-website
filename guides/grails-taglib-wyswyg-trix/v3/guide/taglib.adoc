@@ -1,0 +1,29 @@
+include::{commondir}/common-quoteTagLib.adoc[]
+
+[source,groovy]
+----
+./grailsw create-taglib Trix
+----
+
+The TagLib https://github.com/basecamp/trix#integrating-with-forms[integrates Trix with forms] as described in their documentation:
+
+[source,groovy]
+./grails-app/taglib/demo/TrixTagLib.groovy
+----
+include::../snippets/grails-app/taglib/demo/TrixTagLib.groovy[indent=0]
+----
+
+<1> We use a http://docs.grails.org/latest/guide/theWebLayer.html#namespaces[custom name space]; _trix_
+<2> By default we encode as _Text_ but the value, if present, is encoded as _Html_
+
+And we test the _TagLib_:
+
+[source,groovy]
+./src/test/groovy/demo/TrixTagLibSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/TrixTagLibSpec.groovy[indent=0]
+----
+
+<1> `applyTemplate` gets as an argument anything that would be valid in a GSP. That code gets evaluated as if it were in a GSP and what's get returned is the result of evaluating that.
+<2> Because this test is annotated with `@TestFor(TrixTagLib)` the compiler will add a property called `tagLib`. You can interact with that `tagLib` property and  invoke `editor` tag as it were a method.
+You could pass a map which will be passed to the `args` or a closure as the last method parameter which will be used as the `body` of the tag.

@@ -1,0 +1,81 @@
+Often, file transfers remain untested in many applications. In this section, you will see how
+easy is to test that the file downloads but also that the downloaded file contents match our expectations.
+
+We use also, Geb; a browser automation solution.
+
+We told Grails CLI to use `geb2` feature when we created the app in <<writingTheApp, Writing the App>> section.
+
+Grails `geb2` feature includes the necessary Geb dependencies:
+
+[source, groovy]
+.build.gradle
+----
+include::../../snippets/build.gradle[tag=geb]
+----
+
+Grails `geb2` feature generates a `src/integration-test/resources/GebConfig.groovy` file to configure different environments for Geb. Modify it to configure some chrome options to control the download path.
+
+[source, groovy]
+.src/integration-test/resources/GebConfig.groovy
+----
+include::../../snippets/src/integration-test/resources/GebConfig.groovy[]
+----
+
+<1> Disable confirmation popups
+<2> Configure the download folder
+
+Geb uses the Page concept pattern - The Page Object Pattern gives us a common sense way to model content in a reusable and maintainable way. Create a Geb Page to encapsulate the Excel link:
+
+[source, groovy]
+.src/integration-test/groovy/example/grails/HomePage.groovy
+----
+include::../../snippets/src/integration-test/groovy/example/grails/HomePage.groovy[]
+----
+
+`geb2` feature installs also https://plugins.gradle.org/plugin/com.energizedwork.webdriver-binaries[webdriver-binaries Gradle plugin]; a plugin that downloads and caches WebDriver binaries specific to the OS the build runs on.
+
+
+[source,groovy]
+.build.gradle
+----
+buildscript {
+    repositories {
+...
+..
+    }
+    dependencies {
+include::../../snippets/build.gradle[tag=buildscriptDependenciesWebdriverBinaries]
+    }
+}
+
+include::../../snippets/build.gradle[tag=applyPluginWebdriverBinaries]
+
+dependencies {
+...
+..
+.
+}
+
+include::../../snippets/build.gradle[tag=webdriverBinaries]
+
+include::../../snippets/build.gradle[tag=taskWithTypeTest]
+----
+
+<1> Pass system property `geb.env` to the tests.
+<2> Pass system property `download.folder` to the tests.
+
+Create a test which verifies the Excel file is downloaded and the content matches our expectations.
+
+[source, groovy]
+.src/integration-test/groovy/example/grails/DownloadExcelSpec.groovy
+----
+include::../../snippets/src/integration-test/groovy/example/grails/DownloadExcelSpec.groovy[]
+----
+
+To run the tests:
+
+[source,bash]
+----
+$ ./gradlew -Dgeb.env=chrome -Ddownload.folder=/Users/sdelamo/Downloads integrationTest
+$ open build/reports/tests/test/index.html
+----

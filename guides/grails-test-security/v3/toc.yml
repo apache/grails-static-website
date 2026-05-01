@@ -1,0 +1,20 @@
+training:
+  title: Grails Training
+gettingStarted:
+  title: Getting Started
+  requirements: What you will need
+  howto: How to complete the guide
+writingTheApp:
+  title: Writing the Application
+  domainClass: Domain Class
+  controller: Web Controller
+  apiController: Api Controller
+  securingTheApp: Securing the App
+  testRestApi: Test Rest Api
+  testing: Test Web Endpoint
+runningTheApp:
+  title: Running the Application
+appendixA:
+  title: Appendix A
+helpWithGrails:
+  title: Do you need help with Grails?

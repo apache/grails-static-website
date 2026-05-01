@@ -1,0 +1,58 @@
+
+We use _NSURLSession_ to connect to the Grails API. Several constants are set in _GrailsFetcher_
+
+[source,swift]
+./complete-swift-ios-v1/IntranetClient/GrailsFetcher.swift
+----
+include::{sourcedir}/../complete-swift-ios-v1/IntranetClient/GrailsApi.swift[]
+----
+
+<1> Grails App server url. 
+<2> The path we configured in the Grails app in _UrlMappings.groovy_
+<3> The version of the API
+
+NOTE: You may need to change the ip address to match your local machine.
+
+[source,swift]
+./complete-swift-ios-v1/IntranetClient/AnnouncementsFetcher.swift
+----
+include::{sourcedir}/../complete-swift-ios-v1/IntranetClient/AnnouncementsFetcher.swift[]
+----
+
+<1> We set the _Accept-Version_ Http header for every request.
+
+Once we get a list of announcements, we communicate the response to classes implementing the delegate
+
+[source,swift]
+./complete-swift-ios-v1/IntranetClient/AnnouncementsFetcherDelegate.swift
+----
+include::{sourcedir}/../complete-swift-ios-v1/IntranetClient/AnnouncementsFetcherDelegate.swift[]
+----
+
+The _MasterViewController_ implements fetcher delegate protocol, thus it receives the announcements
+
+[source,swift]
+./complete-swift-ios-v1/IntranetClient/MasterViewController.swift
+----
+include::{sourcedir}/../complete-swift-ios-v1/IntranetClient/MasterViewController.swift[]
+----
+
+<1> Triggers announcements fetching
+<2> Refreshes the UI once we get a list of announcements
+
+MasterViewController sets its UITableView's data source and delegate to the next classes:
+
+[source,swift]
+./complete-swift-ios-v1/IntranetClient/AnnouncementsTableViewDataSource.swift
+----
+include::{sourcedir}/../complete-swift-ios-v1/IntranetClient/AnnouncementsTableViewDataSource.swift[]
+----
+
+[source,swift]
+./complete-swift-ios-v1/IntranetClient/AnnouncementsTableViewDelegate.swift
+----
+include::{sourcedir}/../complete-swift-ios-v1/IntranetClient/AnnouncementsTableViewDelegate.swift[]
+----
+
+<1> When the user taps an announcement a _Notification_ is raised. It is captured in _MasterViewController_ and
+initiates the segue to the DetailViewController

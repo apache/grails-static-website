@@ -1,0 +1,72 @@
+Another convention specified by the HAL standard is pagination. When serving a list of resources, the `_links` element can provide `first`, `prev`, `next` and `last` links, which can be used to navigate the resource list.
+
+The `hal` helper provides a `paginate` method that will generate these links and handle the pagination of resources. This method requires a bit more information in the `model` of our JSON view, in order to keep track of the current offset, max number of records per page, and the total number of resources. In order to do this, we'll need to create a controller so that we can pass in the needed model parameters.
+
+Let's use HAL pagination links on our `Product` resource.
+
+Because we'll be creating our own `ProductController` to supply the parameters needed for pagination, we'll need to remove the `@Resource` annotation we've been using on our `Product` domain class. Edit `grails-app/domain/com/example/Product.groovy`:
+
+[source,groovy]
+.grails-app/domain/com/example/Product.groovy
+----
+include::../snippets/grails-app/domain/com/example/Product.groovy[]
+----
+
+TIP: You'll often find when developing a RESTful API that the generated controllers and URL mappings from `@Resource` are a great way to get started, but at some point you'll want more control over the API - generating the `RestfulController` yourself is a good solution at that point.
+
+Now, create a new `RestfulController` using the `create-restful-controller` command (supplied by the `rest-api` profile):
+
+[source, bash]
+----
+$ ./grailsw create-restful-controller com.example.ProductController
+----
+
+Edit this new controller with the following content:
+
+[source,groovy]
+.grails-app/controllers/com/example/ProductController.groovy
+----
+include::../snippets/grails-app/controllers/com/example/ProductController.groovy[]
+----
+<1> `listAllResource()` is a method provided by `RestfulController` to return a list of all domain resources - you can override this method to control how this list is generated
+<2> `countResources()` is another `RestfulController` method - again, you can override the implementation to suite your API
+<3> Total number of results per page
+<4> Offset (used to calculate current page)
+<5> Property to sort by
+<6> Direction of sorting
+
+Finally, we need to edit our `UrlMappings` to create the rest endpoints that were formerly generated using the `@Resource` annotation. Grails supports a `resource` property on URL mappings that will generate these URLs automatically. Edit `UrlMappings.groovy` and add the following rule to the `mappings` block:
+
+[source,groovy]
+.grails-app/controller/com/example/UrlMappings.groovy
+----
+include::../snippets/grails-app/controllers/com/example/UrlMappings.groovy[indent=0,tag=urlMappingsWithResources]
+----
+
+Now, we can create our new JSON view using pagination. Create the following view and template under `grails-app/views/product`:
+
+[source,groovy]
+.grails-app/views/product/index.gson
+----
+include::../snippets/grails-app/views/product/index.gson[]
+----
+<1> List of product resources
+<2> Pagination params from our controller
+<3> Here we pass the pagination parameters to the `paginate` method, which will generate the HAL pagination links
+
+[source,groovy]
+.grails-app/views/product/_product.gson
+----
+include::../snippets/grails-app/views/product/_product.gson[]
+----
+
+Make a request to `http://locahost:8080/api/products`:
+
+[source, groovy]
+----
+include::../snippets/src/integration-test/groovy/com/example/ProductsListFuncSpec.groovy[indent=0,tag=paginatedJSON]
+----
+
+Make a request to the `next` link, `http://localhost:8080/product/index?offset=10&max=10`, and you'll see the next page of results. Due to the small number of resources in our sample data there will only be 2 pages - try changing the `max` parameter in your request to 4 - you'll now retrieve additional pages to reflect the smaller page size.
+
+If you'd like, repeat these steps to enable pagination for the other domain resources, such as `Order` and `Customer`.

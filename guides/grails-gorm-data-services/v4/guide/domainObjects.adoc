@@ -1,0 +1,16 @@
+Create the `Person` and `Address` domain classes. They have a one-to-many relationship.
+
+[source, groovy]
+.grails-app/domain/example/grails/Person.groovy
+----
+include::../snippets/grails-app/domain/example/grails/Person.groovy[]
+----
+
+<1> You normally don't need to specify default type `java.util.Set` in a `hasMany` association. However,
+we query the association in a JPA-QL query later in this tutorial and thus we need to be explicit here.
+
+[source, groovy]
+.grails-app/domain/example/grails/Address.groovy
+----
+include::../snippets/grails-app/domain/example/grails/Address.groovy[]
+----

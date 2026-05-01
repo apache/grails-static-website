@@ -1,0 +1,39 @@
+____
+Amazon Simple Email Service (Amazon SES) is a cloud-based email sending service designed to help digital marketers and application developers send marketing, notification, and transactional emails. It is a reliable, cost-effective service for businesses of all sizes that use email to keep in contact with their customers.
+____
+
+There is a http://plugins.grails.org/plugin/agorapulse/aws-sdk-ses[AWS SDK SES Grails plugin]. However, in this guide we are going to integrate AWS SDK SES directly.
+
+Add a dependency to AWS SES SDK:
+
+[source,groovy]
+.build.gradle
+----
+include::../../../snippets/build.gradle[tag=awsses]
+----
+
+Add configuration properties which can be passed via system properties / command line arguments:
+
+[source,groovy]
+.grails-app/conf/application.yml
+----
+include::../../../snippets/grails-app/conf/application.yml[tag=awsses]
+----
+
+Create two services which encapsulate the integration with SES:
+
+[source,groovy]
+.grails-app/services/example/grails/AwsCredentialsProviderService.groovy
+----
+include::../../../snippets/grails-app/services/example/grails/AwsCredentialsProviderService.groovy[]
+----
+
+<1> http://grailsblog.objectcomputing.com/posts/2016/08/31/retrieving-config-values.html[Retrieve configuration values] with `GrailsConfigurationAware`
+
+[source,groovy]
+.grails-app/services/example/grails/AwsSesMailService.groovy
+----
+include::../../../snippets/grails-app/services/example/grails/AwsSesMailService.groovy[]
+----
+
+<1> http://grailsblog.objectcomputing.com/posts/2016/08/31/retrieving-config-values.html[Retrieve configuration values] with `GrailsConfigurationAware`
