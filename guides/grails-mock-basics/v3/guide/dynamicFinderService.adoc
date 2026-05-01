@@ -1,0 +1,7 @@
+The next service uses a http://gorm.grails.org/latest/hibernate/manual/index.html#finders[GORM Dynamic Finder] to get a list of students with a grade above a threshold.
+
+[source, groovy]
+.grails-app/services/grails/mock/basics/StudentService.groovy
+----
+include::../snippets/grails-app/services/grails/mock/basics/StudentService.groovy[indent=0]
+----

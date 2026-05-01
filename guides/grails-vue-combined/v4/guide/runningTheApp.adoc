@@ -1,0 +1,34 @@
+To generate the unified executable JAR file, simply run the following command:
+
+[source, bash]
+----
+~ ./gradlew assembleServerAndClient
+
+...
+JAR generated at build. It combines the server and client projects.
+
+----
+
+To run the application, use the `java -jar` command:
+
+[source, bash]
+----
+~ java -jar build/server-0.1.jar
+
+...
+Grails application running at http://localhost:8080 in environment: production
+----
+
+Browse to `http://localhost:8080`, and you should see the Vue application.
+
+Make a GET request to `http://localhost:8080/application/`, and you should see the application metadata from the Grails application.
+
+Congratulations, you have a unified Grails/Vue production build!
+
+TIP: To run the application in development mode: +
+[source, bash]
+----
+- ./gradlew client:start - for the client Vue app
+- ./gradlew server:bootRun - for the server Grails app
+- ./gradlew bootRun --parallel - to launch them at the same time with one command
+----

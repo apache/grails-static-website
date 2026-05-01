@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: Apache-2.0
+#
+# Per-guide-version metadata. Mirrors the upstream grails-guides
+# repository pinned at the SHA below. Updated only when the upstream
+# repository advances and we choose to re-vendor.
+
+name: 'grails-mock-basics'
+version: '3'
+title: 'Grails Service Testing'
+subtitle: 'In this guide we are going to explore Service testing in Grails. Unit test GORM, Integration Tests, Mocking collaborators...'
+authors:
+  - 'Nirav Assar'
+category: 'Grails Testing'
+tags:
+  - 'unit-test'
+  - 'mock'
+  - 'spock'
+  - 'grails3'
+publicationDate: '2017-04-24'
+
+githubSlug: 'grails-guides/grails-mock-basics'
+githubBranch: 'master'
+githubSha: '08f844a5a37be73fa0f0f07288095fdcfd10f1e6'
+sourceCommitDate: '2021-11-09T12:34:02+00:00'

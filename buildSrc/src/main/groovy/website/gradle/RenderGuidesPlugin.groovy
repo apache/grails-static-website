@@ -27,6 +27,7 @@ import org.yaml.snakeyaml.Yaml
 
 import grails.doc.gradle.PublishGuideTask
 import website.gradle.tasks.ParityCheckGuideTask
+import website.gradle.tasks.VendorGuideTask
 
 /**
  * Wires guide-rendering tasks onto a Gradle project.
@@ -57,11 +58,20 @@ import website.gradle.tasks.ParityCheckGuideTask
 class RenderGuidesPlugin {
 
     static final String GROUP = 'documentation'
+    static final String MIGRATION_GROUP = 'migration'
     static final String AGGREGATE_TASK = 'buildAllGuides'
     static final String PARITY_AGGREGATE_TASK = 'parityCheckAllGuides'
+    static final String VENDOR_AGGREGATE_TASK = 'vendorAllGuides'
     static final String GUIDES_YML_PATH = 'conf/guides.yml'
     static final String VENDOR_TEMPLATE_PATH = 'buildSrc/src/main/template'
     static final String PARITY_BASELINE_ROOT = 'buildSrc/src/test/resources/parity-baseline'
+    /**
+     * Default upstream-checkout root, relative to the project root's
+     * sibling. Maps to {@code C:\Users\james\Documents\IdeaProjects\grails-guides-org\}
+     * for the canonical workspace layout. Overridable via
+     * {@code -PguidesWorkspaceRoot=/path/to/grails-guides-org}.
+     */
+    static final String DEFAULT_GUIDES_WORKSPACE_REL = '../grails-guides-org'
 
     static void apply(Project project) {
         File guidesYml = project.rootProject.layout.projectDirectory
@@ -77,17 +87,21 @@ class RenderGuidesPlugin {
         Wiring wiring = registerPerVersionTasks(
                 project, templateRoot, guidesYml)
 
-        registerAggregateTask(project, AGGREGATE_TASK,
+        registerAggregateTask(project, GROUP, AGGREGATE_TASK,
                 'Renders every wired-up guide-version pair under build/dist/guides/',
                 wiring.renderTaskNames)
-        registerAggregateTask(project, PARITY_AGGREGATE_TASK,
+        registerAggregateTask(project, GROUP, PARITY_AGGREGATE_TASK,
                 'Runs renderer parity checks for every guide-version that has a baseline snapshot under buildSrc/src/test/resources/parity-baseline/',
                 wiring.parityTaskNames)
+        registerAggregateTask(project, MIGRATION_GROUP, VENDOR_AGGREGATE_TASK,
+                'Re-vendors every guide-version whose upstream sample repo is checked out under the workspace root (default ../grails-guides-org/, override with -PguidesWorkspaceRoot=...).',
+                wiring.vendorTaskNames)
     }
 
     private static class Wiring {
         List<String> renderTaskNames = []
         List<String> parityTaskNames = []
+        List<String> vendorTaskNames = []
     }
 
     @CompileDynamic
@@ -174,6 +188,48 @@ class RenderGuidesPlugin {
                 }
                 wiring.renderTaskNames << renderTaskName
 
+                // Re-vendor task: only registered when the upstream sample
+                // repo is checked out at the workspace path AND the conf/guides.yml
+                // entry has a sampleRef block. Skip-if-missing keeps the
+                // build green for guides whose source isn't local yet.
+                Map sampleRef = (version.sampleRef ?: [:]) as Map
+                String repoSlug = sampleRef.repo as String
+                String repoSha = sampleRef.sha as String
+                String repoBranch = sampleRef.branch as String
+                if (repoSlug && repoSha) {
+                    String workspaceRoot = project.findProperty('guidesWorkspaceRoot') as String ?:
+                            new File(project.rootProject.layout.projectDirectory.asFile, DEFAULT_GUIDES_WORKSPACE_REL).canonicalPath
+                    String repoName = repoSlug.tokenize('/').last()
+                    File checkoutDir = new File(workspaceRoot, repoName)
+                    if (checkoutDir.isDirectory()) {
+                        String vendorTaskName = "vendorGuide_${safeName}_${safeVersion}"
+                        File commonDir = project.rootProject.layout.projectDirectory.dir('guides/common').asFile
+                        File destDir = new File(versionDir.parentFile, versionDir.name)
+                        Map<String, Object> manifestData = [
+                                name: guideName,
+                                version: versionKey,
+                                title: guide.title,
+                                subtitle: guide.subtitle,
+                                authors: guide.authors,
+                                category: guide.category,
+                                tags: version.tags ?: [],
+                                publicationDate: version.publicationDate ?: guide.publicationDate,
+                                githubSlug: repoSlug,
+                                githubBranch: repoBranch,
+                                githubSha: repoSha,
+                        ] as Map<String, Object>
+                        project.tasks.register(vendorTaskName, VendorGuideTask) { VendorGuideTask task ->
+                            task.group = MIGRATION_GROUP
+                            task.description = "Re-vendor ${guideName} v${versionKey} from upstream ${repoSlug}@${repoSha[0..6]}. Overwrites ${versionDir.name}/."
+                            task.sampleRepoRoot.set(checkoutDir)
+                            task.commonDir.set(commonDir)
+                            task.destDir.set(destDir)
+                            task.manifest.set(manifestData)
+                        }
+                        wiring.vendorTaskNames << vendorTaskName
+                    }
+                }
+
                 // Parity check vs the legacy snapshot, when one exists on disk.
                 File baselineFile = project.rootProject.layout.projectDirectory
                         .file("${PARITY_BASELINE_ROOT}/${guideName}-v${versionKey}/index.html").asFile
@@ -206,9 +262,9 @@ class RenderGuidesPlugin {
     }
 
     private static void registerAggregateTask(
-            Project project, String aggregateName, String description, List<String> taskNames) {
+            Project project, String taskGroup, String aggregateName, String description, List<String> taskNames) {
         project.tasks.register(aggregateName) { task ->
-            task.group = GROUP
+            task.group = taskGroup
             task.description = description
             for (String name : taskNames) {
                 task.dependsOn(name)

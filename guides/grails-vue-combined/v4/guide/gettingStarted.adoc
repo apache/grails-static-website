@@ -1,0 +1,7 @@
+In this guide, you are going to create a combined build of the `server` and
+`client` projects from the Vue profile. By default, the Vue profile sets up
+separate frontend and backend apps, which can make for a more efficient development process.
+However, this may not fit your deployment needs, particularly if your entire app is
+being deployed to a servlet container such as Tomcat, or being executed as a "fat" JAR.
+Thanks to the flexibility of Grails and the Gradle build tool, we can configure a
+unified build of our Grails/Vue app with only a few changes.
