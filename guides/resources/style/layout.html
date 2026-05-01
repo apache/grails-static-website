@@ -1,72 +1,26 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta name='google-site-verification' content='REYQ1_I6HGowAE7LOLVqfQbnKaB4IfFpMlGzMbJj55Q' />
-    <meta name='viewport' content='width=device-width, initial-scale=1' />
-    <link rel='icon' href='/images/favicon.ico' />
-    <link rel='mask-icon' href='//images/grails-pinned-icon.svg' color='feb672' />
-    <meta charset='UTF-8' />
-    <title>${title} | Grails Guides | Grails Framework</title>
-    <meta name='description' content='${title}. ${subtitle}' />
-    <link rel='stylesheet' href='${resourcesPath}/css/main.css' />
-    <link rel='stylesheet' href='${resourcesPath}/css/screen.css' />
+<html lang="en">
+<head>
+    <title>${title.encodeAsHtml()} | Grails Guides | Apache Grails</title>
+    <meta name='description' content='${title.encodeAsHtml()}. ${subtitle?.encodeAsHtml()}'/>
+    ${siteHead}
+    <link rel='stylesheet' href='${resourcesPath}/css/guide.css'/>
+    <link rel='stylesheet' href='${resourcesPath}/css/main.css'/>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js'></script>
-  </head>
-  <body class='guide'><header class='mainheader'>
-  <div class='content'>
-    <a href='https://grails.apache.org/index.html'><img class='grailslogo' src='/images/grails_logo.svg' alt='Grails Logo' /></a>
-    <a href='javascript:show(&apos;topmenus&apos;, &apos;showNavigationLink&apos;)' id='showNavigationLink' class='mobile align-center'>Show Navigation</a>
-    <div id='topmenus'>
-      <nav class='secondarymenu' id='secondarymenu'><ul>
-  <li>
-    <a href='https://grails.apache.org/learning.html'>Learning</a>
-  </li>
-  <li>
-    <a href='https://grails.apache.org/community.html'>Community</a>
-  </li>
-  <li>
-    <a href='https://grails.apache.org/search.html'>Search</a>
-  </li>
-</ul></nav>
-      <nav class='mainmenu' id='mainmenu'><ul>
-  <li>
-    <a href='https://grails.apache.org/documentation.html'>Documentation</a>
-  </li>
-  <li>
-    <a href='https://grails.apache.org/download.html'>Download</a>
-  </li>
-  <li>
-    <a href='https://plugins.grails.org'>Plugins</a>
-  </li>
-  <li>
-    <a href='https://grails.apache.org/guides'>Guides</a>
-  </li>
-  <li>
-    <a href='https://grails.apache.org/faq.html'>FAQ</a>
-  </li>
-  <li>
-    <a href='https://grails.apache.org/support.html'>Support</a>
-  </li>
-</ul></nav>
-    </div>
-  </div>
-</header><div class='fullwidth'><article class="guide">
+</head>
+<body class='guide'>
+${siteHeader}
+<div class='fullwidth'><article class="guide">
     <aside>
-        <a href="https://travis-ci.org/${githubSlug}"><img src="https://travis-ci.org/${githubSlug}.svg?branch=master"></a>
-
-        <button type="button" class="btn btn-large" onclick="window.location.href=&quot;https://github.com/${githubSlug}&quot;"><img height="15" src="../img/github_white.svg" alt="Github"/><span>&nbsp;Get the Code</span></button>
-
-
+        <button type="button" class="btn btn-large" onclick="window.location.href=&quot;https://github.com/${githubSlug}&quot;"><img height="15" src="${resourcesPath}/img/github_white.svg" alt="GitHub"/><span>&nbsp;Get the Code</span></button>
         <ul class="githublinks">
-            <li><button type="button" class="btn btn-default" href="#" onclick="document.getElementById('github-url').value='git@github.com:${githubSlug}.git'" class="codeButton">SSH</button></li>
-            <li><button type="button" class="btn btn-default" onclick="document.getElementById('github-url').value='https://github.com/${githubSlug}.git'" class="codeButton">HTTPS</button></li>
+            <li><button type="button" class="btn btn-default codeButton" onclick="document.getElementById('github-url').value='git@github.com:${githubSlug}.git'">SSH</button></li>
+            <li><button type="button" class="btn btn-default codeButton" onclick="document.getElementById('github-url').value='https://github.com/${githubSlug}.git'">HTTPS</button></li>
         </ul>
         <div class="input-group">
-            <!-- Target -->
-            <input id="github-url" value="git@github.com:${githubSlug}.git" type="text" />
-            <!-- Trigger -->
-            <button type="button" class="clippy btn btn-default" type="button" data-clipboard-target="#github-url">
-                <img width="13" src="../img/clippy.svg" alt="Copy to clipboard">
+            <input id="github-url" value="git@github.com:${githubSlug}.git" type="text"/>
+            <button type="button" class="clippy btn btn-default" data-clipboard-target="#github-url">
+                <img width="13" src="${resourcesPath}/img/clippy.svg" alt="Copy to clipboard">
             </button>
         </div>
         <script>var clipboard = new Clipboard('.clippy');</script>
@@ -95,7 +49,7 @@
             sectionWriter.call(0, topSection, topSection, i + 1)
             }
             %>
-            <div style="clear:both" ></div>
+            <div style="clear:both"></div>
         </div>
         <% } %>
     </aside>
@@ -106,66 +60,7 @@
         <p><strong>Grails Version:</strong> ${grailsVersion}</p>
     </header>
     ${content}
-</article></div><footer>
-  <div class='content'>
-    <div class='ocihometograils'>
-      <span>Sponsored by</span>
-      <a href='https://objectcomputing.com/products/grails/'><img class='' src='/images/oci_home_to_grails.svg' alt='Object Computing - Home to Grails' width='300px' /></a>
-    </div>
-    <nav class='socialmedianav'><ul>
-  <li>
-    <a href='https://slack.grails.org'><img class='' src='/images/slack.svg' alt='Slack Icon' /></a>
-  </li>
-  <li>
-    <a href='https://www.youtube.com/watch?v=XnRNfDGkBVg&amp;list=PLI74De5M9T73uH3WilDCePP2qfSDpMaGu'><img class='' src='/images/youtube.svg' alt='Youtube Icon' /></a>
-  </li>
-  <li>
-    <a href='https://www.linkedin.com/groups/39757'><img class='' src='/images/linkedin.svg' alt='LinkedIn Icon' /></a>
-  </li>
-  <li>
-    <a href='https://github.com/grails/'><img class='' src='/images/github.svg' alt='Github Icon' /></a>
-  </li>
-  <li>
-    <a href='https://twitter.com/grailsframework'><img class='' src='/images/twitter.svg' alt='Twitter Icon' /></a>
-  </li>
-</ul></nav>
-    <nav class='partnersnav'><ul>
-  <li>Grails' repositories are hosted by
-    <a href='https://repo.grails.org/'>Artifactory</a>
-  </li>
-  <li>Website hosting provided by
-    <a href='https://aws.amazon.com/'>AWS</a>
-  </li>
-  <li>JetBrains supports Grails with its 
-    <a href='https://www.jetbrains.com/idea/'>IntelliJ IDEA IDE</a>
-  </li>
-  <li>YourKit supports Grails with its 
-    <a href='https://www.yourkit.com/java/profiler/index.jsp'>Java Profiler</a>
-  </li>
-  <li>Grails is Open Source
-    <a href='http://www.apache.org/licenses/LICENSE-2.0.html'>Apache 2 License</a>
-  </li>
-  <li>
-    <a href='https://grails.apache.org/buildstatus.html'>Build Status</a>
-  </li>
-</ul></nav>
-  </div>
-</footer><div>
-  <!-- Matomo -->
-  <script>
-    var _paq = window._paq = window._paq || [];
-    _paq.push(['setDoNotTrack', true]);
-    _paq.push(['disableCookies']);
-    _paq.push(['trackPageView']);
-    _paq.push(['enableLinkTracking']);
-    (function() {
-      var u = 'https://analytics.apache.org/';
-      _paq.push(['setTrackerUrl', u + 'matomo.php']);
-      _paq.push(['setSiteId', '79']);
-      var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
-      g.async = true; g.src = u + 'matomo.js'; s.parentNode.insertBefore(g, s);
-    })();
-  </script>
-  <!-- End Matomo Code -->
-</div></body>
+</article></div>
+${siteFooter}
+</body>
 </html>
