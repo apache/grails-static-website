@@ -30,6 +30,7 @@ import website.gradle.tasks.BlogTask
 import website.gradle.tasks.BskyAtProtoDidTask
 import website.gradle.tasks.CrawlBuiltGuidesTask
 import website.gradle.tasks.CspScanTask
+import website.gradle.tasks.GenerateRedirectStubsTask
 import website.gradle.tasks.DocumentationTask
 import website.gradle.tasks.DownloadTask
 import website.gradle.tasks.GrailsWebsiteTask
@@ -140,6 +141,7 @@ class GrailsWebsitePlugin implements Plugin<Project> {
         CrawlBuiltGuidesTask.register(project)
         StructuralDiffGuidesTask.register(project)
         AcceptanceReportTask.register(project)
+        GenerateRedirectStubsTask.register(project)
 
         project.tasks.register('verifyAllGuides') {
             it.group = 'migration'
