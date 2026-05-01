@@ -50,9 +50,15 @@ import org.yaml.snakeyaml.Yaml
  * <p>The intent is to catch resources loaded from third-party origins
  * before they become Content Security Policy violations on the live site.</p>
  *
- * <p>By default, presence of any unknown-host reference fails the build.
- * Use {@code -PcspFailOnViolation=false} to demote to warnings while
- * iterating.</p>
+ * <p>Failure mode is staged. Default is report-only (does not fail the build),
+ * matching the verification harness pattern from {@code verifyAllGuides}.
+ * Override precedence (highest first):</p>
+ * <ol>
+ *   <li>{@code -PcspFailOnViolation=true|false} - explicit per-task switch.</li>
+ *   <li>{@code -PverificationMode=hard-fail} - turns the verification harness
+ *       into hard-fail mode for every gate, including this one.</li>
+ *   <li>Default: report-only (build does not fail on violations).</li>
+ * </ol>
  */
 @CompileStatic
 class CspScanTask extends DefaultTask {
