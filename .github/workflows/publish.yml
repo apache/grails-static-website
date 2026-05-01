@@ -47,25 +47,11 @@ jobs:
         with:
           develocity-access-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
       - name: Publish Main Site
-        # --no-configuration-cache is required because the vendored
-        # grails.doc.gradle.PublishGuideTask (instantiated as renderGuide_*)
-        # holds non-serializable state (Logger, Stack, Vector, ReferenceQueue).
-        # Even when each task declares notCompatibleWithConfigurationCache,
-        # Gradle 9.4.1's parallel-config-cache STORE step still attempts to
-        # serialize a snapshot of the task state and fails. Disabling the
-        # cache for the deploy run trades a small startup cost for a
-        # deterministic publish.
+        # The vendored PublishGuideTask is not configuration-cache safe.
         run: ./gradlew clean publishMainSite --console=plain --no-daemon --no-configuration-cache
         env:
           GITHUB_SLUG: apache/grails-website
           GH_TOKEN: ${{ secrets.GRAILS_GHTOKEN }}
           GH_BRANCH: asf-site-production
           GRAILS_WS_URL: https://grails.apache.org
-      # The publishMainSite Gradle task depends on both `build` and
-      # `buildAllGuides`, so the rendered guide corpus under
-      # build/dist/guides/<name>/<v>/ is mirrored into the deploy repo as
-      # part of the same step, making https://grails.apache.org/guides/
-      # the canonical guide location served by apache/grails-website.
-      # https://guides.grails.org/ remains alive serving frozen content
-      # from grails-guides/grails-guides-template gh-pages until Phase 15
-      # of issue #354 swaps it for redirect stubs.
+

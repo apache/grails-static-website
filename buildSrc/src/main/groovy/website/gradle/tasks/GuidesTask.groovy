@@ -110,9 +110,7 @@ abstract class GuidesTask extends GrailsWebsiteTask {
 
         def template = document.get().asFile
         def templateText = template.text
-        // Guides landing, tag pages, and category pages live under /guides/ so they
-        // line up with https://grails.apache.org/guides/{index,tags,categories}.html.
-        // The main site index.html (rendered by RenderSiteTask) keeps build/dist/index.html.
+        // Guides landing, tag, and category pages live under /guides/.
         def distDir = outputDir.dir('dist/guides').get().asFile.tap { it.mkdirs() }
 
         def releasesFile = releases.get().asFile

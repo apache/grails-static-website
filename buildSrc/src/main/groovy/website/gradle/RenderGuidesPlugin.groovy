@@ -236,23 +236,9 @@ class RenderGuidesPlugin {
                                     "dist/guides/${guideName}/${versionKey}"))
                     task.asciidoc.set(true)
                     task.properties.set(attributes)
-                    // The vendored PublishGuideTask holds a Project reference
-                    // and an AntBuilder, neither of which serialize for
-                    // Gradle's configuration cache. Annotating here (instead
-                    // of editing the vendored source) keeps the upstream
-                    // copy byte-clean for re-vendor.
                     task.notCompatibleWithConfigurationCache(
                             'Vendored grails.doc.gradle.PublishGuideTask references Project + AntBuilder')
-                    // Several main-site rendering tasks declare build/ as their
-                    // @OutputDirectory (they write to build/dist/<x>.html), which
-                    // overlaps with build/staged-guides/<name>/<v>/. Without
-                    // explicit ordering, Gradle 9.4 raises a fatal validation
-                    // error: 'renderGuide_* uses output of :renderSite/:genPlugins/
-                    // :renderBlog/:renderMinutes/:genProfilesPage without declaring
-                    // dependency'. mustRunAfter resolves the ordering without
-                    // forcing those tasks to be invoked when only renderGuide_* is
-                    // scheduled. Names come from each task class's NAME constant
-                    // so a future task rename surfaces as a compile error here.
+                    // Order after the main-site tasks since they share build/ as @OutputDirectory.
                     task.mustRunAfter(RenderSiteTask.NAME, PluginsTask.NAME,
                             BlogTask.NAME, MinutesTask.NAME, ProfilesTask.NAME,
                             HtaccessTask.NAME, BskyAtProtoDidTask.NAME,

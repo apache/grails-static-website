@@ -159,16 +159,9 @@ abstract class PublishMainSiteTask extends DefaultTask {
     static TaskProvider<PublishMainSiteTask> register(Project project) {
         project.tasks.register(NAME, PublishMainSiteTask) { PublishMainSiteTask task ->
             task.dependsOn('build')
-            // The legacy `buildGuides` aggregate runs GuidesTask, which writes
-            // build/dist/guides/{index.html,tags/,categories/}. It used to be
-            // pushed by a separate "Publish Guides Site" step targeting
-            // guides.grails.org gh-pages. That step was removed in issue #354
-            // and the corresponding deploy edge dropped. Re-add it here so the
-            // guides landing, tag, and category pages ship into
-            // apache/grails-website asf-site-production alongside the main site.
+            // Guides landing/tags/categories.
             task.dependsOn('buildGuides')
-            // Also include the vendored guide corpus so build/dist/guides/<name>/<v>/
-            // ships alongside the main site under https://grails.apache.org/guides/.
+            // Per-version vendored guide corpus.
             task.dependsOn('buildAllGuides')
             task.gitHubSlug.convention(
                     project.providers.environmentVariable('GITHUB_SLUG')
@@ -224,11 +217,11 @@ abstract class PublishMainSiteTask extends DefaultTask {
         runGit(deployRoot, 'config', 'user.name', author)
         runGit(deployRoot, 'config', 'user.email', "${author}@users.noreply.github.com".toString())
 
-        // 4. Mirror the dist tree into the deploy clone (preserve .git/).
+        // 4. Layer the dist tree onto the deploy clone (additive overwrite).
+        // Files only present on the deploy branch (e.g. ASF .asf.yaml) are
+        // preserved; explicit removals must go through a separate cleanup.
         Path deployPath = deployRoot.toPath()
-        Path gitDir = deployPath.resolve('.git')
         Path distPath = distRoot.toPath()
-        deletePathExcept(deployPath, gitDir)
         copyTree(distPath, deployPath)
 
         // 5. Stage changes and detect any actual diff.
@@ -270,41 +263,9 @@ abstract class PublishMainSiteTask extends DefaultTask {
     }
 
     /**
-     * Recursively delete every file and directory under {@code root}
-     * except for {@code preserve} (and its descendants).
-     */
-    private static void deletePathExcept(Path root, Path preserve) {
-        Files.walkFileTree(root, new SimpleFileVisitor<Path>() {
-            @Override
-            FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
-                if (dir == preserve) {
-                    return FileVisitResult.SKIP_SUBTREE
-                }
-                return FileVisitResult.CONTINUE
-            }
-
-            @Override
-            FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
-                Files.delete(file)
-                return FileVisitResult.CONTINUE
-            }
-
-            @Override
-            FileVisitResult postVisitDirectory(Path dir, IOException exc) {
-                if (dir == root || dir == preserve) {
-                    return FileVisitResult.CONTINUE
-                }
-                if (Files.list(dir).withCloseable { it.findFirst().isEmpty() }) {
-                    Files.delete(dir)
-                }
-                return FileVisitResult.CONTINUE
-            }
-        })
-    }
-
-    /**
      * Copy every file and subdirectory under {@code source} into
-     * {@code target}, replacing existing files.
+     * {@code target}, overwriting existing files. Files only present
+     * on {@code target} are left in place.
      */
     private static void copyTree(Path source, Path target) {
         Files.walkFileTree(source, new SimpleFileVisitor<Path>() {
