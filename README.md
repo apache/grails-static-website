@@ -71,7 +71,7 @@ The output can be found in the `build/dist` directory.
 
 ## Generating the GUIDES site
 
-[https://guides.grails.org](https://guides.grails.org)
+[https://grails.apache.org/guides](https://grails.apache.org/guides)
 
 ```bash
 ./gradlew buildGuide --console=plain
