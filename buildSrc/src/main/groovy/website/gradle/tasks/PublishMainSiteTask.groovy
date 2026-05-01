@@ -159,6 +159,14 @@ abstract class PublishMainSiteTask extends DefaultTask {
     static TaskProvider<PublishMainSiteTask> register(Project project) {
         project.tasks.register(NAME, PublishMainSiteTask) { PublishMainSiteTask task ->
             task.dependsOn('build')
+            // The legacy `buildGuides` aggregate runs GuidesTask, which writes
+            // build/dist/guides/{index.html,tags/,categories/}. It used to be
+            // pushed by a separate "Publish Guides Site" step targeting
+            // guides.grails.org gh-pages. That step was removed in issue #354
+            // and the corresponding deploy edge dropped. Re-add it here so the
+            // guides landing, tag, and category pages ship into
+            // apache/grails-website asf-site-production alongside the main site.
+            task.dependsOn('buildGuides')
             // Also include the vendored guide corpus so build/dist/guides/<name>/<v>/
             // ships alongside the main site under https://grails.apache.org/guides/.
             task.dependsOn('buildAllGuides')
