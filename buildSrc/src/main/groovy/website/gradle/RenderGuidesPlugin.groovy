@@ -226,12 +226,17 @@ class RenderGuidesPlugin {
                     }
                     // The vendored grails-doc renderer drives AsciidoctorJ
                     // without a baseDir, so include::{commondir}/foo.adoc[]
-                    // never resolves. Inline the shared snippets into each
-                    // staged .adoc at config time instead.
+                    // and include::../snippets/...[] never resolve. Inline
+                    // both kinds of include into each staged .adoc at
+                    // config time instead. img/ is staged as part of the
+                    // top-level Sync.from(versionDir) above; the per-task
+                    // doLast (see renderTaskName) copies it into dist.
+                    File snippetsDirSrc = new File(versionDir, 'snippets')
                     stage.doLast {
                         File guideDir = project.layout.buildDirectory.dir(stagedRelPath).get().asFile
                         File guideAdocDir = new File(guideDir, 'guide')
                         RenderGuidesPlugin.inlineCommonIncludes(guideAdocDir, commonDirSrc)
+                        RenderGuidesPlugin.inlineSnippetIncludes(guideAdocDir, snippetsDirSrc)
                     }
                 }
 
@@ -262,11 +267,28 @@ class RenderGuidesPlugin {
                     // The DocPublisher emits the legacy single-page chrome to
                     // single.html and a TOC-only stub to index.html. Promote the
                     // single page to the canonical /guide/index.html URL.
+                    // Also propagate img/ from staged source into the
+                    // dist tree so `<img src="../img/foo.png">` resolves.
                     task.doLast {
-                        File singleHtml = new File(task.targetDir.get().asFile, 'guide/single.html')
+                        File targetRoot = task.targetDir.get().asFile
+                        File singleHtml = new File(targetRoot, 'guide/single.html')
                         if (singleHtml.isFile()) {
-                            File indexHtml = new File(task.targetDir.get().asFile, 'guide/index.html')
+                            File indexHtml = new File(targetRoot, 'guide/index.html')
                             indexHtml.bytes = singleHtml.bytes
+                        }
+                        File stagedImgDir = project.layout.buildDirectory
+                                .dir(stagedRelPath + '/img').get().asFile
+                        if (stagedImgDir.isDirectory()) {
+                            File destImgDir = new File(targetRoot, 'img')
+                            destImgDir.mkdirs()
+                            stagedImgDir.eachFileRecurse { File src ->
+                                if (!src.isFile()) return
+                                String relPath = stagedImgDir.toPath()
+                                        .relativize(src.toPath()).toString()
+                                File dest = new File(destImgDir, relPath)
+                                dest.parentFile.mkdirs()
+                                dest.bytes = src.bytes
+                            }
                         }
                     }
                 }
@@ -389,6 +411,232 @@ class RenderGuidesPlugin {
             out.append(text, last, text.length())
             f.setText(out.toString(), 'UTF-8')
         }
+    }
+
+    /**
+     * Replaces {@code include::../snippets/<path>[<attrs>]} directives in
+     * every staged .adoc with the literal contents of the snippet file under
+     * {@code snippetsDir}, with AsciiDoc-equivalent attribute filtering
+     * applied. The vendored renderer's AsciidoctorJ wrapper has no baseDir
+     * and runs in the default {@code SafeMode.SECURE}, so include resolution
+     * would otherwise fall through and AsciidoctorJ would emit literal
+     * {@code link:...[role=include]} text into the published HTML.
+     *
+     * <p>Supports the four attribute styles that account for 100% of usage
+     * across the vendored guides ({@code []}, {@code [indent=N]},
+     * {@code [tag(s)=foo,bar]}, {@code [lines=N..M[,P..Q]]}).</p>
+     */
+    @CompileDynamic
+    static void inlineSnippetIncludes(File guideAdocDir, File snippetsDir) {
+        if (!guideAdocDir.isDirectory()) {
+            return
+        }
+        Pattern pat = Pattern.compile(/include::\.\.\/snippets\/([^\[\s]+)\[([^\]]*)\]/)
+        guideAdocDir.eachFileRecurse { File f ->
+            if (!f.isFile() || !f.name.endsWith('.adoc')) return
+            String text = f.getText('UTF-8')
+            Matcher m = pat.matcher(text)
+            if (!m.find()) return
+            StringBuilder out = new StringBuilder()
+            int last = 0
+            m.reset()
+            while (m.find()) {
+                out.append(text, last, m.start())
+                String snippetRel = m.group(1)
+                String attrStr = m.group(2)
+                File snippet = snippetsDir != null ? new File(snippetsDir, snippetRel) : null
+                if (snippet != null && snippet.isFile()) {
+                    out.append(applySnippetAttributes(snippet.getText('UTF-8'), attrStr))
+                } else {
+                    out.append("// missing snippet: ${snippetRel}\n".toString())
+                }
+                last = m.end()
+            }
+            out.append(text, last, text.length())
+            f.setText(out.toString(), 'UTF-8')
+        }
+    }
+
+    /**
+     * Applies AsciiDoc include attribute filters ({@code tag}/{@code tags},
+     * {@code lines}, {@code indent}) to a snippet body. Order: tag/lines
+     * filtering first (selects which lines are kept), then indent
+     * normalisation on the survivors.
+     */
+    @CompileDynamic
+    static String applySnippetAttributes(String body, String attrStr) {
+        Map<String, String> attrs = parseIncludeAttributes(attrStr)
+        String tagAttr = attrs.get('tag') ?: attrs.get('tags')
+        String linesAttr = attrs.get('lines')
+        String indentAttr = attrs.get('indent')
+
+        String result = body
+        if (tagAttr) {
+            result = extractTaggedRegions(result, tagAttr)
+        } else if (linesAttr) {
+            result = extractLineRanges(result, linesAttr)
+        }
+        if (indentAttr != null) {
+            result = applyIndent(result, indentAttr)
+        }
+        // AsciiDoc include directives never include the trailing newline of
+        // the host line; the surrounding ---- delimiters supply their own
+        // line breaks. Trim a single trailing \n so re-emitted snippets
+        // don't add a stray blank line between the body and the closing
+        // ---- in source listing blocks.
+        if (result.endsWith('\n')) {
+            result = result.substring(0, result.length() - 1)
+        }
+        result
+    }
+
+    private static Map<String, String> parseIncludeAttributes(String attrStr) {
+        Map<String, String> attrs = [:]
+        if (!attrStr) return attrs
+        // Naive comma split is wrong because tags=a,b is a single attr with
+        // a comma-bearing value. Split on commas that precede a `name=`
+        // token instead. Each piece then splits on the first `=`.
+        List<String> parts = []
+        int start = 0
+        Pattern attrStart = Pattern.compile(/,(?=\s*[A-Za-z_][\w\-]*\s*=)/)
+        Matcher m = attrStart.matcher(attrStr)
+        while (m.find()) {
+            parts << attrStr.substring(start, m.start())
+            start = m.end()
+        }
+        parts << attrStr.substring(start)
+        parts.each { String piece ->
+            int eq = piece.indexOf('=')
+            if (eq < 0) {
+                String key = piece.trim()
+                if (key) attrs.put(key, '')
+            } else {
+                String key = piece.substring(0, eq).trim()
+                String val = piece.substring(eq + 1).trim()
+                if (val.startsWith('"') && val.endsWith('"') && val.length() >= 2) {
+                    val = val.substring(1, val.length() - 1)
+                }
+                attrs.put(key, val)
+            }
+        }
+        attrs
+    }
+
+    /**
+     * Extracts AsciiDoc-tagged regions ({@code tag::name[]} ...
+     * {@code end::name[]}). Honours the standard wildcards: {@code *}
+     * (everything except marker lines), {@code **} (regions inside any
+     * tagged block), and a leading {@code !} to exclude a tag.
+     */
+    @CompileDynamic
+    static String extractTaggedRegions(String body, String tagSpec) {
+        List<String> tokens = tagSpec.split(',').collect { it.trim() }.findAll { it }
+        Set<String> includeTags = tokens.findAll { !it.startsWith('!') } as Set
+        Set<String> excludeTags = tokens.findAll { it.startsWith('!') }.collect { it.substring(1) } as Set
+        boolean wildcardAll = includeTags.contains('*') || includeTags.contains('**')
+        Pattern markerPat = Pattern.compile(/(?:^|\W)(tag|end)::([\w\-]+)\[\]/)
+
+        List<String> outLines = []
+        List<String> activeTags = []
+        body.split(/\r?\n/, -1).each { String line ->
+            Matcher mm = markerPat.matcher(line)
+            if (mm.find()) {
+                String kind = mm.group(1)
+                String name = mm.group(2)
+                if (kind == 'tag') {
+                    activeTags << name
+                } else if (kind == 'end') {
+                    int idx = activeTags.lastIndexOf(name)
+                    if (idx >= 0) activeTags.remove(idx)
+                }
+                return  // marker lines themselves are never emitted
+            }
+            boolean inExcluded = activeTags.any { excludeTags.contains(it) }
+            if (inExcluded) return
+            boolean inIncluded = wildcardAll
+                    ? !activeTags.isEmpty() || includeTags.contains('*')
+                    : activeTags.any { includeTags.contains(it) }
+            if (inIncluded) {
+                outLines << line
+            }
+        }
+        outLines.join('\n')
+    }
+
+    /**
+     * Extracts AsciiDoc {@code lines=N..M[,P..Q]} ranges from a snippet body.
+     * Single-line specs ({@code lines=N}) and open-ended ranges
+     * ({@code lines=N..-1}) are honoured.
+     */
+    @CompileDynamic
+    static String extractLineRanges(String body, String linesSpec) {
+        String[] all = body.split(/\r?\n/, -1)
+        Set<Integer> keep = new TreeSet<>()
+        linesSpec.split(/[,;]/).each { String range ->
+            range = range.trim()
+            if (!range) return
+            int dotdot = range.indexOf('..')
+            if (dotdot < 0) {
+                int n = range.toInteger()
+                if (n >= 1 && n <= all.length) keep.add(n - 1)
+            } else {
+                int start = range.substring(0, dotdot).toInteger()
+                String endStr = range.substring(dotdot + 2)
+                int end = endStr ? endStr.toInteger() : all.length
+                if (end < 0) end = all.length
+                start = Math.max(1, start)
+                end = Math.min(all.length, end)
+                for (int i = start; i <= end; i++) keep.add(i - 1)
+            }
+        }
+        StringBuilder sb = new StringBuilder()
+        boolean first = true
+        keep.each { Integer i ->
+            if (!first) sb.append('\n')
+            sb.append(all[i])
+            first = false
+        }
+        sb.toString()
+    }
+
+    /**
+     * Applies the AsciiDoc {@code indent} attribute. {@code indent=0} strips
+     * the smallest common leading whitespace from every non-blank line.
+     * {@code indent=N} (N>0) strips that common indent and replaces it with
+     * N spaces.
+     */
+    @CompileDynamic
+    static String applyIndent(String body, String indentAttr) {
+        int target
+        try {
+            target = indentAttr.toInteger()
+        } catch (NumberFormatException ignored) {
+            return body
+        }
+        if (target < 0) return body
+        String[] lines = body.split(/\r?\n/, -1)
+        int common = Integer.MAX_VALUE
+        for (String line : lines) {
+            if (!line.trim()) continue
+            int n = 0
+            while (n < line.length() && line.charAt(n) == ' ') n++
+            if (n < common) common = n
+            if (common == 0) break
+        }
+        if (common == Integer.MAX_VALUE) common = 0
+        String pad = ' ' * target
+        StringBuilder sb = new StringBuilder()
+        for (int i = 0; i < lines.length; i++) {
+            String line = lines[i]
+            String stripped = line.length() >= common ? line.substring(common) : line.trim()
+            if (line.trim()) {
+                sb.append(pad).append(stripped)
+            } else {
+                sb.append(stripped)
+            }
+            if (i < lines.length - 1) sb.append('\n')
+        }
+        sb.toString()
     }
 
     private static Map<String, Object> manifestToAttributes(
