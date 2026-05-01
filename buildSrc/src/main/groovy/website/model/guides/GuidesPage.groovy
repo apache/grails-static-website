@@ -59,7 +59,7 @@ class GuidesPage {
                 if (guide instanceof SingleGuide) {
                     a(
                             class: (guide.tags.contains('quick-cast') ? 'quick-cast guide' : 'guide'),
-                            href: "$GUIDES_URL/$guide.name/guide/index.html", guide.title
+                            href: "$GUIDES_URL/${guide.name}/${guide.versionNumber}/guide/index.html", guide.title
                     )
                     guide.tags.each {
                         span(
@@ -76,7 +76,7 @@ class GuidesPage {
                             div(class: 'align-left') {
                                 a(
                                         class: 'grails-version',
-                                        href: "$GUIDES_URL/grails$grailsVersion/${multiGuide.githubSlug.replace('grails-guides', '')}/guide/index.html"
+                                        href: "$GUIDES_URL/${multiGuide.name}/${grailsVersion}/guide/index.html"
                                 ) {
                                     mkp.yield("grails$grailsVersion")
                                 }
@@ -247,7 +247,7 @@ class GuidesPage {
                                         mkp.yield(' - ')
                                         mkp.yield(guide.category)
                                     }
-                                    a(href: "$GUIDES_URL/$guide.name/guide/index.html", 'Read More')
+                                    a(href: "$GUIDES_URL/${guide.name}/${guide.versionNumber}/guide/index.html", 'Read More')
                                 }
                             }
                 }

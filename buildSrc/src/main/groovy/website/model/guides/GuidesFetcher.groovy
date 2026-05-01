@@ -166,7 +166,7 @@ class GuidesFetcher {
                 String pubDate = (version.publicationDate ?: guide.publicationDate) as String
 
                 result << new GuideDto(
-                        grailsVersion: null,
+                        grailsVersion: versionKeyObj as String,
                         authors: authors,
                         category: category,
                         githubSlug: slug,
