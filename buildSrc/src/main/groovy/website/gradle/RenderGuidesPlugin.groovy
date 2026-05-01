@@ -231,7 +231,7 @@ class RenderGuidesPlugin {
                     stage.doLast {
                         File guideDir = project.layout.buildDirectory.dir(stagedRelPath).get().asFile
                         File guideAdocDir = new File(guideDir, 'guide')
-                        inlineCommonIncludes(guideAdocDir, commonDirSrc)
+                        RenderGuidesPlugin.inlineCommonIncludes(guideAdocDir, commonDirSrc)
                     }
                 }
 
@@ -342,13 +342,28 @@ class RenderGuidesPlugin {
      */
     @CompileDynamic
     /**
+     * Reads the shared chrome partials from {@code templates/partials/} and
+     * exposes them as {@code siteHead}, {@code siteHeader}, {@code siteFooter}
+     * so the legacy guide layout can substitute them via Groovy {@code ${...}}.
+     */
+    private static void injectSitePartials(Project project, Map<String, Object> attrs) {
+        ['siteHead': 'site-head', 'siteHeader': 'site-header', 'siteFooter': 'site-footer'].each { key, partial ->
+            File f = project.rootProject.layout.projectDirectory
+                    .file("templates/partials/${partial}.html").asFile
+            if (f.isFile()) {
+                attrs.put(key, f.getText('UTF-8'))
+            }
+        }
+    }
+
+    /**
      * Replaces {@code include::{commondir}/common-*.adoc[]} directives in
      * every staged .adoc with the literal contents of the common snippet.
      * The vendored renderer's AsciidoctorJ wrapper has no baseDir, so
      * include resolution would otherwise fall through.
      */
     @CompileDynamic
-    private static void inlineCommonIncludes(File guideAdocDir, File commonDir) {
+    static void inlineCommonIncludes(File guideAdocDir, File commonDir) {
         if (!guideAdocDir.isDirectory() || !commonDir.isDirectory()) {
             return
         }
@@ -373,21 +388,6 @@ class RenderGuidesPlugin {
             }
             out.append(text, last, text.length())
             f.setText(out.toString(), 'UTF-8')
-        }
-    }
-
-    /**
-     * Reads the shared chrome partials from {@code templates/partials/} and
-     * exposes them as {@code siteHead}, {@code siteHeader}, {@code siteFooter}
-     * so the legacy guide layout can substitute them via Groovy {@code ${...}}.
-     */
-    private static void injectSitePartials(Project project, Map<String, Object> attrs) {
-        ['siteHead': 'site-head', 'siteHeader': 'site-header', 'siteFooter': 'site-footer'].each { key, partial ->
-            File f = project.rootProject.layout.projectDirectory
-                    .file("templates/partials/${partial}.html").asFile
-            if (f.isFile()) {
-                attrs.put(key, f.getText('UTF-8'))
-            }
         }
     }
 

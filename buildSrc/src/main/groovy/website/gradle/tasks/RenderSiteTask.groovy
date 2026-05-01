@@ -98,6 +98,10 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
     @OutputDirectory
     abstract DirectoryProperty getOutputDir()
 
+    @InputDirectory
+    @PathSensitive(PathSensitivity.RELATIVE)
+    abstract DirectoryProperty getPartialsDir()
+
     static TaskProvider<RenderSiteTask> register(
             Project project,
             GrailsWebsiteExtension siteExt,
@@ -113,6 +117,7 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
             it.robots.set(siteExt.robots)
             it.title.set(siteExt.title)
             it.url.set(siteExt.url)
+            it.partialsDir.set(project.rootProject.layout.projectDirectory.dir('templates/partials'))
         }
     }
 
@@ -142,7 +147,8 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
                 metaData,
                 listOfPages,
                 outputDir.dir('dist').get().asFile,
-                document.get().asFile.text
+                document.get().asFile.text,
+                partialsDir.isPresent() ? partialsDir.get().asFile : null
         )
     }
 
@@ -173,7 +179,8 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
             String> siteMeta,
             List<Page> listOfPages,
             File outputDir,
-            String templateText
+            String templateText,
+            @Nullable File partialsRoot = null
     ) {
         for (def page : listOfPages) {
             def resolvedMetadata = processMetadata(
@@ -182,7 +189,8 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
             def html = renderHtmlWithTemplateContent(
                     page.content,
                     resolvedMetadata,
-                    templateText
+                    templateText,
+                    partialsRoot
             )
             html = highlightMenu(html, siteMeta, page.path)
             if (page.bodyClassAttr) {
@@ -364,26 +372,30 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
     static String renderHtmlWithTemplateContent(
             @Nonnull @NotNull String html,
             @Nonnull @NotNull Map<String, String> meta,
-            @NotNull @Nonnull String templateText
+            @NotNull @Nonnull String templateText,
+            @Nullable File partialsRoot = null
     ) {
-        def outputHtml = expandPartials(templateText)
+        def outputHtml = expandPartials(templateText, partialsRoot)
         def result = outputHtml.replace(' data-document>', '>' + html)
         return replaceLineWithMetadata(result, meta)
     }
 
     /**
      * Replace [%PARTIAL:&lt;name&gt;] tokens with the contents of
-     * templates/partials/&lt;name&gt;.html, so shared chrome (header, footer,
+     * &lt;partialsRoot&gt;/&lt;name&gt;.html, so shared chrome (header, footer,
      * head scripts) lives in a single source of truth.
      */
-    static String expandPartials(String templateText) {
+    static String expandPartials(String templateText, @Nullable File partialsRoot) {
+        if (partialsRoot == null) {
+            return templateText
+        }
         Pattern token = Pattern.compile(/\[%PARTIAL:([\w\-]+)\]/)
         Matcher m = token.matcher(templateText)
         StringBuilder out = new StringBuilder()
         int last = 0
         while (m.find()) {
             out.append(templateText, last, m.start())
-            File partial = new File("templates/partials/${m.group(1)}.html")
+            File partial = new File(partialsRoot, "${m.group(1)}.html")
             if (partial.isFile()) {
                 out.append(partial.getText('UTF-8'))
             } else {
