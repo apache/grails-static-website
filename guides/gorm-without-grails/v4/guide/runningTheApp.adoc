@@ -1,0 +1,27 @@
+//include::{commondir}/common-runapp.adoc[]
+
+At this point a test run is suggested just to make sure everything is functioning properly.
+
+To run the application first
+
+[source,bash]
+----
+$ cd initial/
+----
+
+NOTE: To run the completed app `$ cd complete/` instead of `initial`.
+
+To launch the application, run the following command.
+
+[source,bash]
+----
+$ ./gradlew bootRun
+----
+
+At this point we have not configured any views so there is nothing to see in our browser
+yet but so long as your terminal looks similar to the following and you see that tomcat
+was started on 8080 everything should be good.
+
+image::initialStartup.png[]
+
+Now that we have checked the app starts, go ahead and shut it down for now `Ctrl-C`.

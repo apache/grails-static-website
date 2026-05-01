@@ -1,0 +1,39 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.2.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id 'groovy'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+	maven { url "https://repo.grails.org/grails/core" } // <1>
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.codehaus.groovy:groovy'
+
+	// <2>
+	implementation("org.grails:gorm-hibernate5-spring-boot:7.0.1.RELEASE")
+	implementation "org.hibernate:hibernate-core"
+	implementation "org.hibernate:hibernate-ehcache"
+
+	// <3>
+	runtime "org.apache.tomcat:tomcat-jdbc:8.5.0"
+	runtime "org.apache.tomcat.embed:tomcat-embed-logging-log4j:8.5.0"
+
+	runtimeOnly 'com.h2database:h2'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+
+	testImplementation "org.springframework.boot:spring-boot-starter-webflux" // <4>
+}
+
+test {
+	useJUnitPlatform()
+}

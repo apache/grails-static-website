@@ -1,0 +1,7 @@
+GORM for Hibernate can be configured with `src/main/resources/application.yml` file when using Spring Boot.
+
+[source,groovy]
+.src/main/resources/application.yml
+----
+include::../snippets/src/main/resources/application.yml[]
+----

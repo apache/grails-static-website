@@ -1,0 +1,25 @@
+To get started using more advance scheduling techniques first we need to create and register a TaskScheduler bean.
+
+Create the following configuration file containing a new task scheduler bean
+
+[source, groovy]
+.src/main/groovy/demo/SchedulingConfiguration.groovy
+----
+include::../snippets/src/main/groovy/demo/SchedulingConfiguration.groovy[]
+----
+<1> Make your config discoverable
+<2> All related threads will be prefixed with ThreadPoolTaskScheduler
+
+If you wish to allow for concurrent execution set the thread pools size ex. `threadPoolTaskScheduler.setPoolSize(5)`
+
+NOTE: By default ThreadPoolTaskScheduler only has a single thread available for execution, which means tasks will not execute concurrently
+
+Now configure your app to automatically discover the new configuration so your new bean will work with standard
+Grails dependency injection
+
+[source, groovy]
+.grails-app/init/demo/Application.groovy
+----
+include::../snippets/grails-app/init/demo/Application.groovy[]
+----
+<1> Enable discovery of additional configuration files. You may also use Spring `@EnableScheduling` here to trigger scheduling.

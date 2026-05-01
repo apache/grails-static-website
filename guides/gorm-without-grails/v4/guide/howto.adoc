@@ -1,0 +1,15 @@
+include::{commondir}/common-howto.adoc[]
+
+If you want to start from scratch, create a new Spring Boot application using
+https://start.spring.io/[Spring Initializr].
+
+Select a `Gradle Project` using `Groovy` with `Spring Boot 1.5.6`. Once you have selected
+your build and project type, set the Group to your organization ie. `com.example` in our case
+we will use `demo`. 
+
+Once that is done add the `Web` and `h2` dependencies to the project.
+
+image::buildAndMetadata.png[]
+
+
+Click `Generate Project`.

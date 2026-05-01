@@ -1,0 +1,7 @@
+
+We are going to create a package structure similar to the one you find in Grails application:
+
+ - demo.controller
+ - demo.domain
+ - demo.service
+ - demo.init

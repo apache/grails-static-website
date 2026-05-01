@@ -1,0 +1,1 @@
+In this guide you are going to build a Grails 3 application with the Vaadin 8 Framework.

@@ -1,0 +1,33 @@
+We map the CRUD pages with the help of Geb Pages: 
+
+[source, groovy]
+.src/integration-test/groovy/example/ManufacturersPage.groovy
+----
+include::{sourcedir}/src/integration-test/groovy/example/ManufacturersPage.groovy[]	
+----
+
+[source, groovy]
+.src/integration-test/groovy/example/NewVehiclePage.groovy
+----
+include::{sourcedir}/src/integration-test/groovy/example/NewVehiclePage.groovy[]	
+----
+
+[source, groovy]
+.src/integration-test/groovy/example/ShowVehiclePage.groovy
+----
+include::{sourcedir}/src/integration-test/groovy/example/ShowVehiclePage.groovy[]	
+----
+
+[source, groovy]
+.src/integration-test/groovy/example/VehiclesPage.groovy
+----
+include::{sourcedir}/src/integration-test/groovy/example/VehiclesPage.groovy[]	
+----
+
+We test tenant selection with the help of a functional test: 
+
+[source, groovy]
+.src/integration-test/groovy/example/TenantSelectionFuncSpec.groovy
+----
+include::{sourcedir}/src/integration-test/groovy/example/TenantSelectionFuncSpec.groovy[]	
+----

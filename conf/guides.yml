@@ -278,16 +278,10 @@ guides:
           - 'hibernate'
           - 'gorm'
           - 'grails4'
-        # sampleRef intentionally omitted in this PR.
-        # Upstream guide includes complete/grails-app/init/example/ManufacturerService.groovy which does not exist at the pinned SHA.
-        # Tracked for follow-up.
-        # sampleRef intentionally omitted in this PR.
-        # Upstream guide at master@1c0ea34a has an unresolvable include
-        # `complete/grails-app/init/example/ManufacturerService.groovy`
-        # which does not exist on disk at that SHA (the file lives in a
-        # different package). Vendoring will fail until either the
-        # upstream guide is patched or we pin to a SHA where the path is
-        # valid. Tracked for follow-up.
+        sampleRef:
+          repo: 'grails-guides/discriminator-per-tenant'
+          branch: 'master'
+          sha: 'bca6f1a42f1fc04e7a0d5f16304d2b77ff6c57cd'
 
   - name: 'gorm-event-listeners'
     title: 'GORM Event Listeners'
@@ -391,17 +385,10 @@ guides:
           - 'backend'
           - 'GORM'
           - 'hibernate'
-        # sampleRef intentionally omitted in this PR.
-        # Upstream guide includes complete/src/main/resources/application.properties but the upstream sample app uses application.yml.
-        # Tracked for follow-up.
-        # sampleRef intentionally omitted in this PR.
-        # Upstream guide at master@bafdfdc8 has an unresolvable include
-        # `include::{sourceDir}/src/main/resources/application.properties[]`,
-        # but the upstream sample app uses application.yml -- application.properties
-        # does not exist on disk at that SHA. Vendoring will fail until either:
-        #   - the upstream guide is patched to reference application.yml, OR
-        #   - we pin to an earlier SHA where application.properties existed.
-        # Tracked for follow-up.
+        sampleRef:
+          repo: 'grails-guides/gorm-without-grails'
+          branch: 'master'
+          sha: '14a7eea75d3292de56213d87ab34b14d6c87602e'
 
   - name: 'grails_i18n'
     title: 'How to change languages in a Grails app?'
@@ -1673,9 +1660,10 @@ guides:
           - 'job'
           - 'cron'
           - 'grails3'
-        # sampleRef intentionally omitted in this PR.
-        # Upstream guide has unresolvable include at the pinned SHA (same upstream issue as v4).
-        # Tracked for follow-up.
+        sampleRef:
+          repo: 'grails-guides/grails-scheduled'
+          branch: 'grails3'
+          sha: 'a77fe4cd8746c88c2865cdb15a85bb976f988e94'
       '4':
         sourcePath: guides/grails-scheduled/v4
         publicationDate: '2018-02-26'
@@ -1688,9 +1676,10 @@ guides:
           - 'job'
           - 'cron'
           - 'grails4'
-        # sampleRef intentionally omitted in this PR.
-        # Upstream guide has unresolvable include at the pinned SHA. Needs upstream patch or earlier-SHA pinning.
-        # Tracked for follow-up.
+        sampleRef:
+          repo: 'grails-guides/grails-scheduled'
+          branch: 'grails4'
+          sha: 'a0eb85a824bb304e47b92cf92a7359bd4576a89f'
 
   - name: 'grails-schwartz'
     title: 'Schedule periodic tasks inside your Grails applications'
@@ -2299,10 +2288,8 @@ guides:
           - 'vaadin'
           - 'frontend'
           - 'framework'
-        # sampleRef intentionally omitted in this PR.
-        # Upstream guide includes complete/src/main/webapp/VAADIN/themes/vaadin-grails-theme/styles.scss which does not exist at the pinned SHA.
-        # Tracked for follow-up.
-        # sampleRef intentionally omitted in this PR.
-        # Upstream guide at master@c69a3137 includes complete/src/main/webapp/VAADIN/themes/vaadin-grails-theme/styles.scss which does not exist on disk at the pinned SHA. Vendoring fails until upstream is patched or we pin to an earlier SHA.
-        # Tracked for follow-up.
+        sampleRef:
+          repo: 'grails-guides/vaadin-grails'
+          branch: 'master'
+          sha: 'a239a804e6b9811247a3a8290c7c779e096b5eb9'
 

@@ -1,0 +1,11 @@
+There’s plenty of opportunities to expand the scope of this application. Here are a few ideas for
+improvements you can make on your own:
+
+- Create a UI for better data visualization (feel free to look at the UI in the other guides mentioned
+at the start of this guide.
+
+- Add support to save new vehicles
+
+- Currently Makes & Models are independent. Add an appropriate GORM association between Make &
+Model, and create select lists to only display Models for the currently select Make. You will
+want to make use of the JavaScript Array.filter method.
