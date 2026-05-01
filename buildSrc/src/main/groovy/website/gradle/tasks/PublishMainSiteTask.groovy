@@ -33,6 +33,7 @@ import org.gradle.process.ExecOperations
 
 import javax.inject.Inject
 import java.nio.file.FileVisitResult
+import java.nio.file.LinkOption
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.SimpleFileVisitor
@@ -265,13 +266,17 @@ abstract class PublishMainSiteTask extends DefaultTask {
     /**
      * Copy every file and subdirectory under {@code source} into
      * {@code target}, overwriting existing files. Files only present
-     * on {@code target} are left in place.
+     * on {@code target} are left in place. Type conflicts (file where a
+     * directory is needed, or vice versa) replace the conflicting path.
      */
     private static void copyTree(Path source, Path target) {
         Files.walkFileTree(source, new SimpleFileVisitor<Path>() {
             @Override
             FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
                 Path dest = target.resolve(source.relativize(dir).toString())
+                if (Files.exists(dest, LinkOption.NOFOLLOW_LINKS) && !Files.isDirectory(dest, LinkOption.NOFOLLOW_LINKS)) {
+                    Files.delete(dest)
+                }
                 Files.createDirectories(dest)
                 return FileVisitResult.CONTINUE
             }
@@ -279,7 +284,26 @@ abstract class PublishMainSiteTask extends DefaultTask {
             @Override
             FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
                 Path dest = target.resolve(source.relativize(file).toString())
+                if (Files.isDirectory(dest, LinkOption.NOFOLLOW_LINKS)) {
+                    deleteRecursively(dest)
+                }
                 Files.copy(file, dest, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES)
+                return FileVisitResult.CONTINUE
+            }
+        })
+    }
+
+    private static void deleteRecursively(Path root) {
+        Files.walkFileTree(root, new SimpleFileVisitor<Path>() {
+            @Override
+            FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+                Files.delete(file)
+                return FileVisitResult.CONTINUE
+            }
+
+            @Override
+            FileVisitResult postVisitDirectory(Path dir, IOException exc) {
+                Files.delete(dir)
                 return FileVisitResult.CONTINUE
             }
         })
