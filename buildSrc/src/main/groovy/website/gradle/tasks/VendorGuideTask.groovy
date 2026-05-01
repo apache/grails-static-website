@@ -1,0 +1,205 @@
+/*
+ *  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements.  See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *    https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
+package website.gradle.tasks
+
+import groovy.transform.CompileDynamic
+import groovy.transform.CompileStatic
+
+import org.asciidoctor.Asciidoctor
+import org.asciidoctor.Attributes
+import org.asciidoctor.Options
+import org.asciidoctor.SafeMode
+
+import org.gradle.api.DefaultTask
+import org.gradle.api.GradleException
+import org.gradle.api.Project
+import org.gradle.api.file.DirectoryProperty
+import org.gradle.api.file.RegularFileProperty
+import org.gradle.api.provider.MapProperty
+import org.gradle.api.provider.Property
+import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.InputDirectory
+import org.gradle.api.tasks.Internal
+import org.gradle.api.tasks.OutputDirectory
+import org.gradle.api.tasks.PathSensitive
+import org.gradle.api.tasks.PathSensitivity
+import org.gradle.api.tasks.TaskAction
+
+import org.yaml.snakeyaml.DumperOptions
+import org.yaml.snakeyaml.Yaml
+
+import website.asciidoc.SnippetVendoringIncludeProcessor
+
+/**
+ * Bulk-migration tool: takes a pre-cloned upstream guide repo at a
+ * pinned SHA, walks every {@code .adoc} under {@code src/main/docs/guide/},
+ * runs them through AsciiDoctor with the
+ * {@link SnippetVendoringIncludeProcessor} extension, and emits
+ *
+ * <pre>
+ * guides/&lt;name&gt;/v&lt;version&gt;/
+ * |- toc.yml                       (copied verbatim from upstream)
+ * |- manifest.yml                  (per-version metadata; written here)
+ * |- guide/
+ * |  |- *.adoc                     (rewritten so include::{sourceDir}/...
+ * |                                 -> include::../snippets/...)
+ * `- snippets/
+ *    |- MANIFEST.yml               (audit record of every vendored snippet)
+ *    `- ...                        (snippet files copied verbatim from upstream,
+ *                                   directory layout preserved minus the leading
+ *                                   complete/ or initial/ segment)
+ * </pre>
+ *
+ * <p>Designed to be invoked once per guide-version during Phase 10
+ * (bulk migration of the remaining ~124 guides). Each invocation is a
+ * one-shot operation: the resulting tree is committed to git as the
+ * fixture, and the original upstream checkout is no longer needed for
+ * day-to-day building.</p>
+ */
+@CompileStatic
+abstract class VendorGuideTask extends DefaultTask {
+
+    static final String GROUP = 'migration'
+
+    /** Upstream sample repo's local working tree, checked out at a pinned SHA. */
+    @InputDirectory
+    @PathSensitive(PathSensitivity.RELATIVE)
+    abstract DirectoryProperty getSampleRepoRoot()
+
+    /** Common-snippets directory ({@code guides/common/}). */
+    @InputDirectory
+    @PathSensitive(PathSensitivity.RELATIVE)
+    abstract DirectoryProperty getCommonDir()
+
+    /** Where the vendored fixture tree should be written. */
+    @OutputDirectory
+    abstract DirectoryProperty getDestDir()
+
+    /** Per-version metadata serialised into {@code destDir/manifest.yml}. */
+    @Input
+    abstract MapProperty<String, Object> getManifest()
+
+    @TaskAction
+    void vendor() {
+        File sampleRoot = sampleRepoRoot.get().asFile
+        File common = commonDir.get().asFile
+        File dest = destDir.get().asFile
+        Map<String, Object> manifestData = manifest.get()
+
+        File guideSrcDir = new File(sampleRoot, 'src/main/docs/guide')
+        if (!guideSrcDir.isDirectory()) {
+            throw new GradleException(
+                    "Sample repo at ${sampleRoot} has no src/main/docs/guide/ -- " +
+                            'is the SHA correct? Has the upstream layout changed?')
+        }
+
+        File destGuideDir = new File(dest, 'guide')
+        File destSnippetsDir = new File(dest, 'snippets')
+        destGuideDir.mkdirs()
+        destSnippetsDir.mkdirs()
+
+        // Copy toc.yml verbatim from upstream guide/ into our v<n> root
+        // (matches the manual-fixture convention from PR #446 + Phase 9a).
+        File upstreamToc = new File(guideSrcDir, 'toc.yml')
+        if (upstreamToc.isFile()) {
+            new File(dest, 'toc.yml').bytes = upstreamToc.bytes
+        }
+
+        // Run AsciiDoctor with our extension. The extension copies snippet
+        // files into destSnippetsDir AND rewrites include paths in the
+        // adoc files. Since we want the rewrites in our DESTINATION
+        // (guide/*.adoc), we run AsciiDoctor in convert mode but discard
+        // the HTML; we keep only the side effects (snippet copies +
+        // manifest accumulation).
+        SnippetVendoringIncludeProcessor processor =
+                new SnippetVendoringIncludeProcessor(sampleRoot, destSnippetsDir, common)
+
+        Asciidoctor asciidoctor = Asciidoctor.Factory.create()
+        try {
+            asciidoctor.javaExtensionRegistry().includeProcessor(processor)
+            Attributes attributes = Attributes.builder()
+                    .attribute('sourceDir', new File(sampleRoot, 'complete').absolutePath)
+                    .attribute('commondir', common.absolutePath)
+                    .build()
+            File[] adocs = guideSrcDir.listFiles({ File f -> f.name.endsWith('.adoc') } as FileFilter)
+            for (File adoc : adocs) {
+                Options options = Options.builder()
+                        .safe(SafeMode.UNSAFE)
+                        .standalone(false)
+                        .toFile(false)
+                        .baseDir(guideSrcDir)
+                        .attributes(attributes)
+                        .build()
+                asciidoctor.convert(adoc.text, options)
+            }
+        } finally {
+            asciidoctor.shutdown()
+        }
+
+        // The .adoc files in our DESTINATION tree carry the rewritten
+        // include paths -- read upstream contents and apply the same
+        // text-level replacement that the IncludeProcessor effectively
+        // does, so the on-disk fixture matches what AsciiDoctor sees.
+        // We do this AFTER the AsciiDoctor pass so any unresolvable
+        // includes have already raised on the original text.
+        File[] upstreamAdocs = guideSrcDir.listFiles({ File f -> f.name.endsWith('.adoc') } as FileFilter)
+        for (File adoc : upstreamAdocs) {
+            String rewritten = adoc.text.replaceAll(/include::\{sourceDir\}\//, 'include::../snippets/')
+            new File(destGuideDir, adoc.name).text = rewritten
+        }
+
+        writeManifestYml(new File(dest, 'manifest.yml'), manifestData)
+        writeSnippetsManifestYml(new File(destSnippetsDir, 'MANIFEST.yml'), manifestData, processor.manifest)
+
+        logger.lifecycle('Vendored {} -> {} ({} snippet(s))',
+                sampleRoot.name, dest.name, processor.manifest.size())
+    }
+
+    @CompileDynamic
+    private static void writeManifestYml(File target, Map<String, Object> data) {
+        DumperOptions opts = new DumperOptions()
+        opts.defaultFlowStyle = DumperOptions.FlowStyle.BLOCK
+        opts.prettyFlow = true
+        target.text = '# Generated by :vendorGuide\n' + new Yaml(opts).dump(data)
+    }
+
+    @CompileDynamic
+    private static void writeSnippetsManifestYml(File target, Map<String, Object> guideData,
+            List<SnippetVendoringIncludeProcessor.ManifestEntry> entries) {
+        Map<String, Object> top = [:]
+        Map<String, Object> source = [:]
+        source['repo'] = guideData['githubSlug']
+        source['branch'] = guideData['githubBranch']
+        source['sha'] = guideData['githubSha']
+        source['capturedAt'] = guideData['sourceCommitDate']
+        top['source'] = source
+        top['entries'] = entries.collect { entry ->
+            Map<String, Object> e = [:]
+            e['vendoredPath'] = entry.vendoredPath
+            e['upstreamPath'] = entry.upstreamPath
+            if (entry.filterLines != null) e['filterLines'] = entry.filterLines
+            if (entry.filterTag != null) e['filterTag'] = entry.filterTag
+            return e
+        }
+        DumperOptions opts = new DumperOptions()
+        opts.defaultFlowStyle = DumperOptions.FlowStyle.BLOCK
+        opts.prettyFlow = true
+        target.text = '# Generated by :vendorGuide\n' + new Yaml(opts).dump(top)
+    }
+}
