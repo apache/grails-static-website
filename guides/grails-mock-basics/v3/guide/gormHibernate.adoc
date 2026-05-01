@@ -1,0 +1,29 @@
+We are using the GORM {gormVersion}.
+
+[source, groovy]
+.gradle.properties
+----
+include::../snippets/gradle.properties[indent=0]
+----
+
+
+[source, groovy]
+.build.gradle
+----
+buildscript {
+...
+    dependencies {
+        ...
+include::../snippets/build.gradle[tag=gradlepluginhibernate]
+    }
+}
+
+...
+dependencies {
+...
+include::../snippets/build.gradle[tag=dependencieshibernate]
+    }
+}
+----
+
+<1> For this guide we are using GORM Hibernate implementation

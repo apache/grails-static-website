@@ -945,6 +945,10 @@ guides:
           - 'mock'
           - 'spock'
           - 'grails3'
+        sampleRef:
+          repo: 'grails-guides/grails-mock-basics'
+          branch: 'master'
+          sha: '08f844a5a37be73fa0f0f07288095fdcfd10f1e6'
       '4':
         sourcePath: guides/grails-mock-basics/v4
         publicationDate: '2017-04-24'
