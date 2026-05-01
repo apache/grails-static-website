@@ -269,6 +269,9 @@ class RenderGuidesPlugin {
         project.tasks.register(aggregateName) { task ->
             task.group = taskGroup
             task.description = description
+            if (aggregateName == AGGREGATE_TASK) {
+                task.notCompatibleWithConfigurationCache('Runs vendored PublishGuide tasks and their log-capture finalizers.')
+            }
             for (String name : taskNames) {
                 task.dependsOn(name)
             }
