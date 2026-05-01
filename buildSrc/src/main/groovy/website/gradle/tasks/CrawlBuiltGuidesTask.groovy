@@ -234,7 +234,15 @@ class CrawlBuiltGuidesTask extends DefaultTask {
         Path candidate = decoded.startsWith('/')
                 ? siteRoot.toPath().resolve(decoded.substring(1))
                 : htmlFile.parentFile.toPath().resolve(decoded)
-        Path normalized = candidate.normalize()
+        Path normalized = candidate.normalize().toAbsolutePath()
+        Path siteRootCanonical = siteRoot.toPath().normalize().toAbsolutePath()
+        if (!normalized.startsWith(siteRootCanonical)) {
+            // The reference escapes the deployed site tree. Treat it as broken
+            // rather than probing arbitrary files on the build host. The caller
+            // checks isFile() on the return value, so a non-existent path under
+            // siteRoot triggers the "missing target" branch.
+            return siteRootCanonical.resolve('__path_traversal_rejected__/' + decoded.replace('/', '_').replace('\\', '_')).toFile()
+        }
         File target = normalized.toFile()
         if (target.isDirectory()) {
             return normalized.resolve('index.html').toFile()
