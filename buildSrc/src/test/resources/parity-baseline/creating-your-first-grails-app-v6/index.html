@@ -1,0 +1,2937 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name='google-site-verification' content='REYQ1_I6HGowAE7LOLVqfQbnKaB4IfFpMlGzMbJj55Q' />
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <link rel='icon' href='/images/favicon.ico' />
+    <link rel='mask-icon' href='//images/grails-pinned-icon.svg' color='feb672' />
+    <meta charset='UTF-8' />
+    <title>Creating your first Grails Application | Grails Guides | Grails Framework</title>
+    <meta name='description' content='Creating your first Grails Application. Learn how to create your first Grails app' />
+    <link rel='stylesheet' href='../css/main.css' />
+    <link rel='stylesheet' href='../css/screen.css' />
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js'></script>
+  </head>
+  <body class='guide'><header class='mainheader'>
+  <div class='content'>
+    <a href='https://grails.org/index.html'><img class='grailslogo' src='/images/grails_logo.svg' alt='Grails Logo' /></a>
+    <a href='javascript:show(&apos;topmenus&apos;, &apos;showNavigationLink&apos;)' id='showNavigationLink' class='mobile align-center'>Show Navigation</a>
+    <div id='topmenus'>
+      <nav class='secondarymenu' id='secondarymenu'><ul>
+  <li>
+    <a href='https://grails.org/learning.html'>Learning</a>
+  </li>
+  <li>
+    <a href='https://grails.org/community.html'>Community</a>
+  </li>
+  <li>
+    <a href='https://grails.org/search.html'>Search</a>
+  </li>
+</ul></nav>
+      <nav class='mainmenu' id='mainmenu'><ul>
+  <li>
+    <a href='https://grails.org/documentation.html'>Documentation</a>
+  </li>
+  <li>
+    <a href='https://grails.org/download.html'>Download</a>
+  </li>
+  <li>
+    <a href='https://plugins.grails.org'>Plugins</a>
+  </li>
+  <li>
+    <a href='https://guides.grails.org/index.html'>Guides</a>
+  </li>
+  <li>
+    <a href='https://grails.org/faq.html'>FAQ</a>
+  </li>
+  <li>
+    <a href='https://grails.org/support.html'>Support</a>
+  </li>
+</ul></nav>
+    </div>
+  </div>
+</header><div class='fullwidth'><article class="guide">
+    <aside>
+        <a href="https://travis-ci.org/grails-guides/creating-your-first-grails-app"><img src="https://travis-ci.org/grails-guides/creating-your-first-grails-app.svg?branch=master"></a>
+
+        <button type="button" class="btn btn-large" onclick="window.location.href=&quot;https://github.com/grails-guides/creating-your-first-grails-app&quot;"><img height="15" src="../img/github_white.svg" alt="Github"/><span>&nbsp;Get the Code</span></button>
+
+
+        <ul class="githublinks">
+            <li><button type="button" class="btn btn-default" href="#" onclick="document.getElementById('github-url').value='git@github.com:grails-guides/creating-your-first-grails-app.git'" class="codeButton">SSH</button></li>
+            <li><button type="button" class="btn btn-default" onclick="document.getElementById('github-url').value='https://github.com/grails-guides/creating-your-first-grails-app.git'" class="codeButton">HTTPS</button></li>
+        </ul>
+        <div class="input-group">
+            <!-- Target -->
+            <input id="github-url" value="git@github.com:grails-guides/creating-your-first-grails-app.git" type="text" />
+            <!-- Trigger -->
+            <button type="button" class="clippy btn btn-default" type="button" data-clipboard-target="#github-url">
+                <img width="13" src="../img/clippy.svg" alt="Copy to clipboard">
+            </button>
+        </div>
+        <script>var clipboard = new Clipboard('.clippy');</script>
+        <button type="button" class="btn btn-large" onclick="window.location.href=&quot;https://github.com/grails-guides/creating-your-first-grails-app/archive/master.zip&quot;">Download ZIP</button>
+        
+        <div id="table-of-content">
+            <h3>Table of Contents</h3>
+            
+            <div class="toc-item" style="margin-left:0px"><a href="#training"><strong>1</strong><span>Grails Training</span></a></div>
+            
+            <div class="toc-item" style="margin-left:0px"><a href="#gettingStarted"><strong>2</strong><span>Getting Started</span></a></div>
+            
+            <div class="toc-item" style="margin-left:10px"><a href="#requirements"><strong>2.1</strong><span>What you will need</span></a></div>
+            
+            <div class="toc-item" style="margin-left:10px"><a href="#howto"><strong>2.2</strong><span>How to complete the guide</span></a></div>
+            
+            <div class="toc-item" style="margin-left:0px"><a href="#creatingTheApp"><strong>3</strong><span>Creating your Grails App</span></a></div>
+            
+            <div class="toc-item" style="margin-left:10px"><a href="#installing"><strong>3.1</strong><span>Installing Grails</span></a></div>
+            
+            <div class="toc-item" style="margin-left:10px"><a href="#grailsApplicationForge"><strong>3.2</strong><span>Grails Application Forge</span></a></div>
+            
+            <div class="toc-item" style="margin-left:10px"><a href="#createApp"><strong>3.3</strong><span>Create the App</span></a></div>
+            
+            <div class="toc-item" style="margin-left:10px"><a href="#applicationProfile"><strong>3.4</strong><span>Application Profile</span></a></div>
+            
+            <div class="toc-item" style="margin-left:0px"><a href="#runningTheApp"><strong>4</strong><span>Running the App</span></a></div>
+            
+            <div class="toc-item" style="margin-left:10px"><a href="#changeDefaultPort"><strong>4.1</strong><span>Change Default Port</span></a></div>
+            
+            <div class="toc-item" style="margin-left:10px"><a href="#autoReloading"><strong>4.2</strong><span>Auto Reloading</span></a></div>
+            
+            <div class="toc-item" style="margin-left:0px"><a href="#domainClasses"><strong>5</strong><span>Domain Classes</span></a></div>
+            
+            <div class="toc-item" style="margin-left:10px"><a href="#creatingDomainClass"><strong>5.1</strong><span>Creating a Domain Class</span></a></div>
+            
+            <div class="toc-item" style="margin-left:10px"><a href="#databaseConsole"><strong>5.2</strong><span>DB Console</span></a></div>
+            
+            <div class="toc-item" style="margin-left:10px"><a href="#expandDomain"><strong>5.3</strong><span>Expanding the Domain Model</span></a></div>
+            
+            <div class="toc-item" style="margin-left:10px"><a href="#bootstrap"><strong>5.4</strong><span>Bootstrapping Data</span></a></div>
+            
+            <div class="toc-item" style="margin-left:10px"><a href="#datasource"><strong>5.5</strong><span>Datasources</span></a></div>
+            
+            <div class="toc-item" style="margin-left:10px"><a href="#mysqlAsDatasource"><strong>5.6</strong><span>Configure MySQL Datasource</span></a></div>
+            
+            <div class="toc-item" style="margin-left:10px"><a href="#console"><strong>5.7</strong><span>Grails Console</span></a></div>
+            
+            <div class="toc-item" style="margin-left:0px"><a href="#controllers"><strong>6</strong><span>Controllers</span></a></div>
+            
+            <div class="toc-item" style="margin-left:10px"><a href="#urlMappings"><strong>6.1</strong><span>URL Mappings</span></a></div>
+            
+            <div class="toc-item" style="margin-left:10px"><a href="#scaffolding"><strong>6.2</strong><span>Scaffolding</span></a></div>
+            
+            <div class="toc-item" style="margin-left:10px"><a href="#dynamicScaffolding"><strong>6.3</strong><span>Dynamic Scaffolding</span></a></div>
+            
+            <div class="toc-item" style="margin-left:10px"><a href="#staticScaffolding"><strong>6.4</strong><span>Static Scaffolding</span></a></div>
+            
+            <div class="toc-item" style="margin-left:10px"><a href="#respond"><strong>6.5</strong><span>Render a response</span></a></div>
+            
+            <div class="toc-item" style="margin-left:0px"><a href="#views"><strong>7</strong><span>Views</span></a></div>
+            
+            <div class="toc-item" style="margin-left:10px"><a href="#viewsResolution"><strong>7.1</strong><span>Views Resolution</span></a></div>
+            
+            <div class="toc-item" style="margin-left:10px"><a href="#gsp"><strong>7.2</strong><span>GSP</span></a></div>
+            
+            <div class="toc-item" style="margin-left:10px"><a href="#gspIteration"><strong>7.3</strong><span>GSP Tags Iteration</span></a></div>
+            
+            <div class="toc-item" style="margin-left:10px"><a href="#gspLinks"><strong>7.4</strong><span>GSP Tags Links</span></a></div>
+            
+            <div class="toc-item" style="margin-left:10px"><a href="#assetPipeline"><strong>7.5</strong><span>Asset Pipeline</span></a></div>
+            
+            <div class="toc-item" style="margin-left:10px"><a href="#addJavascriptAsset"><strong>7.6</strong><span>Add Javascript Asset</span></a></div>
+            
+            <div class="toc-item" style="margin-left:0px"><a href="#services"><strong>8</strong><span>Services</span></a></div>
+            
+            <div class="toc-item" style="margin-left:0px"><a href="#testing"><strong>9</strong><span>Testing your App</span></a></div>
+            
+            <div class="toc-item" style="margin-left:0px"><a href="#deployment"><strong>10</strong><span>Deploying your App</span></a></div>
+            
+            <div class="toc-item" style="margin-left:0px"><a href="#helpWithGrails"><strong>11</strong><span>Do you need help with Grails?</span></a></div>
+            
+            <div style="clear:both" ></div>
+        </div>
+        
+    </aside>
+    <header>
+        <h1>Creating your first Grails Application</h1>
+        <p>Learn how to create your first Grails app</p>
+        <p><strong>Authors:</strong> Zachary Klein</p>
+        <p><strong>Grails Version:</strong> 5.0.1</p>
+    </header>
+    
+
+<h1 id="training">1 Grails Training</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/training.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p><strong>Grails Training</strong> - Developed and delivered by the folks who created and actively maintain the Grails framework!.</p>
+</div>
+<div id="ocitraining"></div>
+<script type="text/javascript">
+var getJSON = function(url, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.responseType = 'json';
+    xhr.onload = function() {
+      var status = xhr.status;
+      if (status == 200) {
+        callback(null, xhr.response);
+      } else {
+        callback(status);
+      }
+    };
+    xhr.send();
+};
+getJSON('https://training.grails.org/training', function(err, data) {
+  var msg = '';
+  if (err != null) {
+      msg = 'Something went wrong while retrieving OCI training offerings';
+
+  } else {
+      if ( data.length == 0 ) {
+         msg = '<p><b>Nothing scheduled at the moment - please check back again soon!</b></p>.';
+
+      } else {
+        msg += '<table>';
+        msg += '<thead>';
+        msg += '<tr><th>Course</th><th>Date(s)</th><th>Instructor(s)</th><th>Hour(s)</th></tr>';
+        msg += '</thead>';
+        msg += '<tbody>';
+
+        var hrefs = new Array();
+        for (var i = 0; i < data.length; i++) {
+            var href = data[i].enrollmentLink;
+            if (hrefs.indexOf(href) == -1) {
+                msg += '<tr><td><a href="'+ href + '">'+ data[i].course + '</a></td><td>'+ data[i].dates + '</td><td>'+ data[i].instructors + '</td><td>'+ data[i].hours + '</td></tr>';
+                hrefs.push(href);
+            }
+
+        }
+        msg += '</tbody>';
+        msg += '</table>';
+      }
+  }
+  var ociTraining = document.getElementById("ocitraining");
+  ociTraining.innerHTML = msg;
+});
+</script>
+
+
+<h1 id="gettingStarted">2 Getting Started</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/gettingStarted.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>In this guide you are going to create your first Grails application. You will learn about domain classes, controllers, services, GSPs, and unit &amp; integration tests.  This guide is aimed at developers who are new to Grails or would like a refresher course on the framework.</p>
+</div>
+
+
+<h2 id="requirements">2.1 What you will need</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/requirements.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>To complete this guide, you will need the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Some time on your hands</p>
+</li>
+<li>
+<p>A decent text editor or IDE</p>
+</li>
+<li>
+<p>JDK 1.8 or greater installed with <code>JAVA_HOME</code> configured appropriately</p>
+</li>
+</ul>
+</div>
+
+
+<h2 id="howto">2.2 How to complete the guide</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/howto.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>To get started do the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/grails-guides/creating-your-first-grails-app/archive/master.zip">Download</a> and unzip the source</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>or</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Clone the <a href="https://git-scm.com/">Git</a> repository:<br>
+<code>git clone <a href="https://github.com/grails-guides/creating-your-first-grails-app.git" class="bare">https://github.com/grails-guides/creating-your-first-grails-app.git</a></code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The Grails guides repositories contain two folders:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>initial</code>  Initial project. Often a simple Grails app with some additional code to give you a head-start.</p>
+</li>
+<li>
+<p><code>complete</code> A completed example. It is the result of working through the steps presented by the guide and applying those changes to the <code>initial</code> folder.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To complete the guide, go to the <code>initial</code> folder</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>cd</code> into <code>grails-guides/creating-your-first-grails-app/initial</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>and follow the instructions in the next sections.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can go right to the <strong>completed example</strong> if you <code>cd</code> into <code>grails-guides/creating-your-first-grails-app/complete</code>
+</td>
+</tr>
+</table>
+</div>
+
+
+<h1 id="creatingTheApp">3 Creating your Grails App</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/creatingTheApp.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>For this guide, you can either create the starting project yourself, or use the <code>initial</code> project included in the guide&#8217;s repo to get started. If you choose to use the <code>initial</code> project, you can safely skip this section and continue to <a href="#runningTheApp">[runningTheApp]</a> If you would like to install Grails on your computer, follow one of the options below.</p>
+</div>
+
+
+<h2 id="installing">3.1 Installing Grails</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/installing.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="sect1">
+<h2 id="_installing_grails">Installing Grails</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_sdkman">SDKMan</h3>
+<div class="paragraph">
+<p><a href="http://sdkman.io">'sdkman'</a> is a popular command line utility for installing and managing Grails installations (as well as other JVM frameworks and languages). Install <code>sdkman</code> by running the following command in your Unix terminal:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ curl -s &quot;https://get.sdkman.io&quot; | bash</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once the installation is complete, install the latest version of Grails (this guide uses 4.0.1):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ sdk install grails 4.0.1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>sdkman</code> will prompt you to choose whether to set this version as the default (choose 'yes').</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ grails --version
+
+| Grails Version: 4.0.1
+| JVM Version: 1.8.0_77</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If you are running Windows, there is a clone project of <code>sdkman</code> available that follows the same conventions. You can download it from <a href="https://github.com/flofreud/posh-gvm">https://github.com/flofreud/posh-gvm</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_download_from_grails_org">Download from Grails.org</h3>
+<div class="paragraph">
+<p>This is not the recommend way to install Grails, but here are the manual installation steps, if the above methods fails.</p>
+</div>
+<div class="paragraph">
+<p>Download the Grails binary package from <a href="https://grails.org/download.html">https://grails.org</a>. Unpack the package in a convenient directory.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ unzip ~/Downloads/grails-4.0.1.zip</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Edit your <code>.bashrc</code> (most Linux flavors) or <code>.bash_profile</code> file with the following environment variables (add these to the end of the file)</p>
+</div>
+<div class="paragraph">
+<p>Set the <code>GRAILS_HOME</code> environment variable to the location where you extracted the zip</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">export GRAILS_HOME=/path/to/grails-4.0.1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>On Windows you can create an environment variable under <code>My Computer/Advanced/Environment Variables</code></p>
+</div>
+<div class="paragraph">
+<p>Now add the Grails <code>bin</code> directory to your <code>PATH</code> variable:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">export GRAILS_HOME=/path/to/grails-4.0.1
+export PATH=&quot;$PATH:$GRAILS_HOME/bin</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Again, on Windows you will need to modify the <code>Path</code> environment variable under <code>My Computer/Advanced/Environment Variables</code></p>
+</div>
+<div class="paragraph">
+<p>You should now be able to type grails -version in the terminal window and verify that Grails has been installed successfully:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ grails --version
+
+| Grails Version: 4.0.1
+| JVM Version: 1.8.0_77</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<h2 id="grailsApplicationForge">3.2 Grails Application Forge</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/grailsApplicationForge.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Did you know you can download a complete Grails project without installing any additional tools? Go to <a href="http://start.grails.org">start.grails.org</a> and use the <strong>Grails Application Forge</strong> to generate your Grails project. You can choose your project type (Application or Plugin), pick a version of Grails, and choose a Profile - then click "Generate Project" to download a ZIP file. No Grails installation necessary!</p>
+</div>
+<div class="paragraph">
+<p>You can even download your project from the command line using a HTTP tool like <code>curl</code> (see <a href="http://start.grails.org">start.grails.org</a> for API documentation):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">curl -O start.grails.org/myapp.zip -d version=4.0.1</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+
+
+<h2 id="createApp">3.3 Create the App</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/createApp.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Creating a Grails app is about as simple as could be - once you have installed Grails, simply run the <a href="http://docs.grails.org/latest/ref/Command%20Line/create-app.html"><code>create-app</code></a> command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ grails create-app myApp</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you don&#8217;t specify a package, the app name will be used as the default package for the application (e.g., <code>myapp</code>).
+You can edit the default package at <em>grails-app/conf/application.yml</em>
+You can optionally specify a default package for the application:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ grails create-app org.grails.guides.myApp</code></pre>
+</div>
+</div>
+
+
+<h2 id="applicationProfile">3.4 Application Profile</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/applicationProfile.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>You can optionally specify a <a href="http://docs.grails.org/latest/guide/profiles.html">Profile</a> for your Grails app. Profiles are available for many common application types, including <code>rest-api</code>, <code>angular</code>, <code>react</code>, and others, and you can even create your own.</p>
+</div>
+<div class="paragraph">
+<p>To view of a list of what profiles are available, use the <a href="http://docs.grails.org/latest/ref/Command%20Line/list-profiles.html"><code>list-profiles</code></a> command.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ grails list-profiles
+
+| Available Profiles
+--------------------
+* angular - A profile for creating applications using AngularJS
+* rest-api - Profile for REST API applications
+* base - The base profile extended by other profiles
+* angular2 - A profile for creating Grails applications with Angular 2
+* plugin - Profile for plugins designed to work across all profiles
+* profile - A profile for creating new Grails profiles
+* react - A profile for creating Grails applications with a React frontend
+* rest-api-plugin - Profile for REST API plugins
+* web - Profile for Web applications
+* web-plugin - Profile for Plugins designed for Web applications
+* webpack - A profile for creating applications with node-based frontends using webpack</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To use a profile, specify its name preceded by the <code>-profile</code> flag:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">grails create-app myApp -profile rest-api</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You may optionally specify a package and version (defaults to <code>org.grails.profiles</code> and the current version of the profile)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">grails create-app myApp -profile org.grails.profiles:react:1.0.2</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To get detailed information about a profile use the <a href="http://docs.grails.org/latest/ref/Command%20Line/profile-info.html"><code>profile-info</code></a> command.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ grails profile-info plugin
+
+Profile: plugin
+--------------------
+Profile for plugins designed to work across all profiles
+
+Provided Commands:
+--------------------
+| Error Error occurred loading commands: grails.dev.commands.ApplicationContextCommandRegistry (Use --stacktrace to see the full trace)
+| Error Error occurred loading commands: grails.dev.commands.ApplicationContextCommandRegistry (Use --stacktrace to see the full trace)
+* package-plugin - Packages the plugin into a JAR file
+* publish-plugin - Publishes the plugin to the Grails central repository
+* help - Prints help information for a specific command
+* open - Opens a file in the project
+* gradle - Allows running of Gradle tasks
+* clean - Cleans a Grails application's compiled sources
+* compile - Compiles a Grails application
+* create-command - Creates an Application Command
+* create-domain-class - Creates a Domain Class
+* create-service - Creates a Service
+* create-unit-test - Creates a unit test
+* install - Installs a Grails application or plugin into the local Maven cache
+* assemble - Creates a JAR or WAR archive for production deployment
+* bug-report - Creates a zip file that can be attached to issue reports for the current project
+* console - Runs the Grails interactive console
+* create-script - Creates a Grails script
+* dependency-report - Prints out the Grails application's dependencies
+* list-plugins - Lists available plugins from the Plugin Repository
+* plugin-info - Prints information about the given plugin
+* run-app - Runs a Grails application
+* run-command - Executes Grails commands
+* run-script - Executes Groovy scripts in a Grails context
+* shell - Runs the Grails interactive shell
+* stats - Prints statistics about the project
+* stop-app - Stops the running Grails application
+* test-app - Runs the applications tests
+
+Provided Features:
+--------------------
+* asset-pipeline - Adds Asset Pipeline to a Grails project
+* hibernate4 - Adds GORM for Hibernate 4 to the project
+* hibernate5 - Adds GORM for Hibernate 5 to the project
+* json-views - Adds support for JSON Views to the project
+* less-asset-pipeline - Adds LESS Transpiler Asset Pipeline to a Grails project
+* markup-views - Adds support for Markup Views to the project
+* mongodb - Adds GORM for MongoDB to the project
+* neo4j - Adds GORM for Neo4j to the project
+* rx-mongodb - Adds RxGORM for MongoDB to the project
+* asset-pipeline-plugin - Adds Asset Pipeline to a Grails Plugin for packaging</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+When you create an app without <code>-profile</code> the default profile used is the <code>web</code> profile.
+</td>
+</tr>
+</table>
+</div>
+
+
+<h1 id="runningTheApp">4 Running the App</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/runningTheApp.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Now that you&#8217;ve created (or downloaded) your Grails project, it&#8217;s time to run it and see what Grails has already given you.</p>
+</div>
+<div class="paragraph">
+<p>If you have a local installation of Grails, you can run the app using the <a href="http://docs.grails.org/latest/ref/Command%20Line/run-app.html">run-app</a> command from within your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ cd myApp/</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Run the App without Grails Installed</strong></p>
+</div>
+<div class="paragraph">
+<p>Thanks to the <a href="http://docs.grails.org/latest/guide/introduction.html#whatsNewGrailsWrapper">Grails Wrapper</a>, as of Grails version 3.2.3 or later, you can run any Grails command without having
+Grails installed. If you download it from the <a href="http://start.grails.org">Grails Application Forge</a>, the Grails Wrapper is included too.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ ./grailsw run-app</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Run the App with Grails</strong></p>
+</div>
+<div class="paragraph">
+<p>If you have Grails installed in your machine, simply type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ grails run-app</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Run the App with Grails Interactive Mode</strong></p>
+</div>
+<div class="paragraph">
+<p>You can also use Grails' <a href="http://docs.grails.org/latest/guide/commandLine.html#interactiveMode">Interactive Mode</a> to run the Grails runtime, from which you can issue any Grails command without waiting for the runtime to spin up for each task.</p>
+</div>
+<div class="paragraph">
+<p>In this guide we will be preferring the Grails wrapper for most commands.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ ./grailsw
+
+| Enter a command name to run. Use TAB for completion:
+grails&gt;run-app      //you can shutdown the app with the stop-app command</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Run the App with Gradle</strong></p>
+</div>
+<div class="paragraph">
+<p>Finally, because Grails is built upon <a href="https://projects.spring.io/spring-boot/">Spring Boot</a> and <a href="https://gradle.org/">Gradle</a>, you can also use Spring Boot commands like <code>bootRun</code> to interact with your Grails application. These commands are available as Gradle tasks. Just as with Grails itself, there&#8217;s no need to install Gradle on your machine. It will be downloaded automatically when using the the Gradle Wrapper (<code>gradlew</code>)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ ./gradlew bootRun</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After running any of the above commands, Grails will launch your application using an embedded Tomcat server, and make it available (by default) at <code><a href="http://localhost:8080" class="bare">http://localhost:8080</a></code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ ./grailsw run-app
+
+| Running application...
+Grails application running at http://localhost:8080 in environment: development</code></pre>
+</div>
+</div>
+
+
+<h2 id="changeDefaultPort">4.1 Change Default Port</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/changeDefaultPort.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>If you&#8217;d like to change the port number, simply edit the <code>application.yml</code> file under <code>grails-app/conf/</code>, and add the following line:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="yml"><span class="key">server</span>:
+    <span class="key">port</span>: <span class="string"><span class="content">8090</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can supply the port number directly in the command invocation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ ./grailsw run-app --port=8090
+
+| Running application...
+Grails application running at http://localhost:8090 in environment: development</code></pre>
+</div>
+</div>
+
+
+<h2 id="autoReloading">4.2 Auto Reloading</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/autoReloading.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Currently the app simply displays a default index page with some information about the application. The default index page is located under <code>grails-app/views/index.gsp</code>.</p>
+</div>
+<div class="paragraph">
+<p>Go ahead and edit that file, and change some thing on the page, as shown below (line 54):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml">    <span class="tag">&lt;div</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">content</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">role</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">main</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;section</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">row colset-2-its</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;h1&gt;</span>Welcome to My First Grails Project<span class="tag">&lt;/h1&gt;</span>  <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Change the text of the <code>&lt;h1&gt;</code> tag.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Save your changes and refresh the page in the browser. You should see your change on the home page. Grails will auto-reload changes to views, controllers, domain classes and other artefacts when it detects changes, so you don&#8217;t need to restart the app upon every change.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Major changes to domain class associations, renaming classes, and other operations that affect the "wiring" of the application may not successfully reload.
+</td>
+</tr>
+</table>
+</div>
+
+
+<h1 id="domainClasses">5 Domain Classes</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/domainClasses.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Grails is a <a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">Model View Controller</a> (MVC) framework, based upon the Spring Boot project. Typically an MVC application divides the responsibilities of the app into three categories:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Model - code that defines and manages the data</p>
+</li>
+<li>
+<p>View - code that manages the presentation of data (e.g, HTML page)</p>
+</li>
+<li>
+<p>Controller - code that defines the logic of the web application, and manages the communication between the model and the view. Controllers respond to requests, obtain data from the model, and pass it along to the view.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Typically an object-oriented MVC framework requires the developer to configure which classes correspond to each of the three categories above. However, Grails goes farther than most frameworks by following a <a href="https://en.wikipedia.org/wiki/Convention_over_configuration">"Convention over Configuration"</a> approach to development. This means that for many artefact types in Grails (controllers, views, etc), you simply create a file in a particular directory in your project, and Grails will automatically wire it into your application without any additional configuration on your part.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Handling the mapping of domain classes to database tables (and other persistent stores) is the job of <a href="http://gorm.grails.org/latest/">GORM</a>, the Grails Object Relational Mapper. GORM is a powerful tool in the Grails framework, and can even be used standalone outside of a Grails project. It supports relational databases (via Hibernate) as well as MongoDb, Neo4j, Redis and Cassandra datasources. Please see the <a href="http://gorm.grails.org/latest/hibernate/manual/index.html">GORM documentation</a> for more information.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>When building a MVC application, it is typical to start with the "M" (Model), also known as the "Domain model". In Grails, your domain model is defined with Groovy classes under <code>grails-app/domain</code>. Let&#8217;s create a domain class.</p>
+</div>
+
+
+<h2 id="creatingDomainClass">5.1 Creating a Domain Class</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/creatingDomainClass.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Domain classes can be generated by Grails (in which case Grails will helpfully create a unit test automatically), or you can simply create the file yourself.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ ./grailsw create-domain-class Vehicle
+
+| Created grails-app/domain/org/grails/guides/Vehicle.groovy
+| Created src/test/groovy/org/grails/guides/VehicleSpec.groovy</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will generate two Groovy files, one being our domain class, and the other a unit test. Let&#8217;s see what our domain class looks like.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> org.grails.guides
+
+<span class="type">class</span> <span class="class">Vehicle</span> {
+
+    <span class="directive">static</span> constraints = {
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Right now our domain class has no properties, and no constraints. That&#8217;s not very interesting, but it&#8217;s worth noting that this is all that&#8217;s needed to wire up a persistent domain class in our application. By default, Hibernate will be used to configure a datasource (an in-memory H2 database by default) and create tables and associations for all Groovy classes under <code>grails-app/domain</code>. Let&#8217;s add some properties to this domain class:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> org.grails.guides
+
+<span class="type">class</span> <span class="class">Vehicle</span> {
+
+    <span class="predefined-type">String</span> name <i class="conum" data-value="1"></i><b>(1)</b>
+
+    <span class="predefined-type">String</span> make
+    <span class="predefined-type">String</span> model
+
+    <span class="directive">static</span> constraints = { <i class="conum" data-value="2"></i><b>(2)</b>
+        name <span class="key">maxSize</span>: <span class="integer">255</span>
+        make <span class="key">inList</span>: [<span class="string"><span class="delimiter">'</span><span class="content">Ford</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Chevrolet</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Nissan</span><span class="delimiter">'</span></span>]
+        model <span class="key">nullable</span>: <span class="predefined-constant">true</span>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Properties will be used to create columns in the database (assuming a relational database is used)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Constraints are used to enforce valid data in each field - Grails provides a rich set of constraints for common scenarios, and you can define custom constraints as well</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Please see the Grails documentation for a complete list and documentation of how to use <a href="https://docs.grails.org/latest/ref/Domain%20Classes/Usage.html">domain classes</a> and <a href="https://docs.grails.org/latest/ref/Constraints/Usage.html">constraints</a></p>
+</div>
+
+
+<h2 id="databaseConsole">5.2 DB Console</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/databaseConsole.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>If you run the app again, you should see the same page as before. However, you can login to the DB Console and view your new database table.</p>
+</div>
+<div class="paragraph">
+<p>Browse to <code><a href="http://localhost:8080/dbconsole" class="bare">http://localhost:8080/dbconsole</a></code> and login. The default username is <code>sa</code>, without a password. The default JDBC URL is: <code>jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE</code></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../img/dbconsole.png" alt="DB Console">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You can view the JDBC url in <code>application.yml</code>, under <code>environments</code> <code>development</code> <code>dataSource</code> <code>url</code>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Once you&#8217;ve logged in to the DB Console, you should see your new <code>VEHICLES</code> table in the left-hand sidebar. Click the <code>+</code> icon to expand the table - you should see a list of columns, including the three <code>String</code> fields we just defined, <code>name</code>, <code>make,</code> and <code>model</code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../img/dbconsole-2.png" alt="DB Console">
+</div>
+</div>
+
+
+<h2 id="expandDomain">5.3 Expanding the Domain Model</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/expandDomain.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>For our <code>Vehicle</code> class, it doesn&#8217;t really make sense that <code>make</code> and <code>model</code> are plain Strings, since models should actually be associated with makes. Let&#8217;s update our domain model to be more robust.</p>
+</div>
+<div class="paragraph">
+<p>Create two new domain classes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ ./grailsw create-domain-class Make
+
+| Created grails-app/domain/org/grails/guides/Make.groovy
+| Created src/test/groovy/org/grails/guides/Make.groovy
+
+$ ./grailsw create-domain-class Model
+
+| Created grails-app/domain/org/grails/guides/Model.groovy
+| Created src/test/groovy/org/grails/guides/Model.groovy</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Edit these two files with the following content:</p>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/domain/org/grails/guides/Make.groovy</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> org.grails.guides
+
+<span class="type">class</span> <span class="class">Make</span> {
+
+    <span class="predefined-type">String</span> name
+
+    <span class="directive">static</span> constraints = {
+    }
+
+    <span class="predefined-type">String</span> toString() {
+        name
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/domain/org/grails/guides/Model.groovy</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> org.grails.guides
+
+<span class="type">class</span> <span class="class">Model</span> {
+
+    <span class="predefined-type">String</span> name
+
+    <span class="directive">static</span> belongsTo = [ <span class="key">make</span>: Make ]
+
+    <span class="directive">static</span> constraints = {
+    }
+
+    <span class="predefined-type">String</span> toString() {
+        name
+    }
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <code>belongsTo</code> property is one of several properties that GORM uses to determine associations between domain classes. Others include <code>hasMany</code> and <code>hasOne</code>. For more information please see the <a href="http://gorm.grails.org/6.0.x/hibernate/manual/#gormAssociation">GORM documentation</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Now, update <code>Vehicle.groovy</code> to use the new <code>Make</code> and <code>Model</code> classes instead of <code>String</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/domain/org/grails/guides/Vehicle.groovy</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> org.grails.guides
+
+<span class="annotation">@SuppressWarnings</span>(<span class="string"><span class="delimiter">'</span><span class="content">GrailsDomainReservedSqlKeywordName</span><span class="delimiter">'</span></span>)
+<span class="type">class</span> <span class="class">Vehicle</span> {
+
+    <span class="predefined-type">Integer</span> year
+
+    <span class="predefined-type">String</span> name
+    Model model
+    Make make
+
+    <span class="directive">static</span> constraints = {
+        year <span class="key">min</span>: <span class="integer">1900</span>
+        name <span class="key">maxSize</span>: <span class="integer">255</span>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Grails (via GORM) will now create three tables in our database, for our three domain classes, and create the necessary associations between the tables. Run the app again and open the DB Console to view the new tables.</p>
+</div>
+
+
+<h2 id="bootstrap">5.4 Bootstrapping Data</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/bootstrap.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Every Grails project includes a <code>BootStrap.groovy</code> file under <code>grails-app/init</code>. This file can be used for any custom logic you want to happen during application startup. One excellent use of the file is to preload some data in our database. Let&#8217;s create a few instances of our three domain classes.</p>
+</div>
+<div class="paragraph">
+<p>Edit <code>grails-app/init/org/grails/guides/BootStrap.groovy</code>, as shown below:</p>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/init/org/grails/guides/BootStrap.groovy</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> org.grails.guides
+
+<span class="keyword">import</span> <span class="include">groovy.transform.CompileStatic</span>
+
+<span class="annotation">@CompileStatic</span>
+<span class="type">class</span> <span class="class">BootStrap</span> {
+
+    MakeService makeService
+    ModelService modelService
+    VehicleService vehicleService
+    <span class="keyword">def</span> init = { servletContext -&gt;
+
+        Make nissan = makeService.save(<span class="string"><span class="delimiter">'</span><span class="content">Nissan</span><span class="delimiter">'</span></span>)
+        Make ford = makeService.save( <span class="string"><span class="delimiter">'</span><span class="content">Ford</span><span class="delimiter">'</span></span>)
+
+        Model titan = modelService.save(<span class="string"><span class="delimiter">'</span><span class="content">Titan</span><span class="delimiter">'</span></span>, nissan)
+        Model leaf = modelService.save(<span class="string"><span class="delimiter">'</span><span class="content">Leaf</span><span class="delimiter">'</span></span>, nissan)
+        Model windstar = modelService.save(<span class="string"><span class="delimiter">'</span><span class="content">Windstar</span><span class="delimiter">'</span></span>, ford)
+
+        vehicleService.save(<span class="string"><span class="delimiter">'</span><span class="content">Pickup</span><span class="delimiter">'</span></span>, nissan, titan, <span class="integer">2012</span>).save()
+        vehicleService.save(<span class="string"><span class="delimiter">'</span><span class="content">Economy</span><span class="delimiter">'</span></span>, nissan, leaf, <span class="integer">2014</span>).save()
+        vehicleService.save(<span class="string"><span class="delimiter">'</span><span class="content">Minivan</span><span class="delimiter">'</span></span>, ford, windstar, <span class="integer">1990</span>).save()
+    }
+    <span class="keyword">def</span> destroy = {
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now restart the application, and browse to the DBConsole, you should be able to expand the three tables and see our newly created data.</p>
+</div>
+
+
+<h2 id="datasource">5.5 Datasources</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/datasource.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>By default, Grails configures an in-memory H2 database, which is dropped and recreated every time the app is restarted. This will be sufficient for our purposes in this guide, however, you can easily change this to a local database instance by configuring your own datasource. We&#8217;ll use MySQL as an example.</p>
+</div>
+
+
+<h2 id="mysqlAsDatasource">5.6 Configure MySQL Datasource</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/mysqlAsDatasource.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Edit <code>build.gradle</code></p>
+</div>
+<div class="listingblock">
+<div class="title">build.gradle</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy">dependencies {
+    <span class="comment">//...</span>
+
+    runtime <span class="string"><span class="delimiter">'</span><span class="content">mysql:mysql-connector-java:5.1.40</span><span class="delimiter">'</span></span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Add the MySQL JDBC driver as a dependency</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Be sure to add the dependency to the <code>dependencies</code> section of the <code>build.gradle</code> file, and not the <code>buildscript</code>/<code>dependencies</code> section. The former is for application dependencies (needed at compile time, runtime, or for testing), whereas the <code>buildscript</code> <code>dependencies</code> is for those needed as part of the Gradle build process (managing static assets, for example).
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Edit <code>application.yml</code></p>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/conf/application.yml</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="yml"><span class="key">dataSource</span>:
+    <span class="key">pooled</span>: <span class="string"><span class="content">true</span></span>
+    <span class="key">jmxExport</span>: <span class="string"><span class="content">true</span></span>
+    <span class="key">driverClassName</span>: <span class="string"><span class="content">com.mysql.jdbc.Driver   </span></span><i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="key">dialect</span>: <span class="string"><span class="content">org.hibernate.dialect.MySQL5InnoDBDialect</span></span>
+    <span class="key">username</span>: <span class="string"><span class="content">sa</span></span>
+    <span class="key">password</span>: <span class="string"><span class="content">testing</span></span>
+<span class="key">environments</span>:
+    <span class="key">development</span>:
+        <span class="key">dataSource</span>:
+            <span class="key">dbCreate</span>: <span class="string"><span class="content">update</span></span>
+            <span class="key">url</span>: <span class="string"><span class="content">jdbc:mysql://127.0.0.1:3306/myapp </span></span> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Change the <code>driverClassName</code> and <code>dialect</code> to MySQL settings</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>This assumes you have a local MySQL instance with a database named <code>myapp</code></td>
+</tr>
+</table>
+</div>
+
+
+<h2 id="console">5.7 Grails Console</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/console.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Right now we don&#8217;t have any controllers or views set up to play with our domain model. We&#8217;ll get there shortly, but for now, let&#8217;s fire up the <a href="http://docs.grails.org/latest/ref/Command%20Line/console.html">Grails Console</a> so we can explore what Grails and GORM have to offer.</p>
+</div>
+<div class="paragraph">
+<p>If the application is still running, shut it down with either kbd:[Ctrl+C], or (if running Grails in <a href="http://docs.grails.org/latest/guide/commandLine.html#interactiveMode">Interactive Mode</a>, the <code>stop-app</code> command).</p>
+</div>
+<div class="paragraph">
+<p>Launch the Grails Console:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ ./grailsw console</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The Grails Console application will launch. This application is based on the <a href="http://groovy-lang.org/groovyconsole.html">Groovy Console</a>, but has the added benefit that our entire Grails application is up and running in the background, so we can access our domain classes and even persist to the database from the Console.</p>
+</div>
+<div class="paragraph">
+<p>Try playing with our new domain model from the Console. Here&#8217;s a simple script to get you started - again, refer to the <a href="http://gorm.grails.org/6.0.x/hibernate/manual">GORM documentation</a> for more details on querying, persistence, configuration and more.</p>
+</div>
+<div class="listingblock">
+<div class="title">docs/console.groovy</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">import</span> <span class="include">org.grails.guides.*</span>
+
+<span class="keyword">def</span> vehicles = Vehicle.list()
+
+println vehicles.size()
+
+<span class="keyword">def</span> pickup = Vehicle.findByName(<span class="string"><span class="delimiter">&quot;</span><span class="content">Pickup</span><span class="delimiter">&quot;</span></span>)
+
+println pickup.name
+println pickup.make.name
+println pickup.model.name
+
+<span class="keyword">def</span> nissan = Make.findByName(<span class="string"><span class="delimiter">&quot;</span><span class="content">Nissan</span><span class="delimiter">&quot;</span></span>)
+
+<span class="keyword">def</span> nissans = Vehicle.findAllByMake(nissan)
+
+println nissans.size()</code></pre>
+</div>
+</div>
+
+
+<h1 id="controllers">6 Controllers</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/controllers.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>This section will focus on the basics of creating a controller and defining actions.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+While not part of the "MVC" triad, Grails also provides support for <a href="http://docs.grails.org/latest/guide/single.html#services">services</a>. In a Grails application of any complexity, it is considered best practice to keep core application logic in services. We&#8217;ll get to services later on in this guide.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Following the convention over configuration principle, Grails will configure any Groovy classes under <code>grails-app/controllers/</code> as controllers, without any additional configuration. You can create the Groovy class yourself, or use the <code>create-controller</code> command to generate the controller and an associated test spec.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ ./grailsw create-controller org.grails.guides.Home
+
+| Created grails-app/controllers/org/grails/guides/HomeController.groovy
+| Created src/test/groovy/org/grails/guides/HomeControllerSpec.groovy</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Note that Grails adds the <code>*Controller</code> suffix automatically.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s take a look at our new controller.</p>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/controllers/org/grails/guides/HomeController.groovy</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> org.grails.guides
+
+<span class="type">class</span> <span class="class">HomeController</span> {
+
+    <span class="keyword">def</span> <span class="function">index</span>() { }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Grails has created a controller with a single <strong>action</strong>. Actions are public methods in a controller, which can respond to requests. Typically, a controller action will receive a request, obtain some data (optionally using parameters or a body of the request, if present), and render the result to the browser (e.g, as a webpage). Controller actions can also redirect requests, forward, call service methods, and return HTTP response codes. See the <a href="http://docs.grails.org/latest/guide/theWebLayer.html#understandingControllersAndActions">Grails documentation</a> for more on controller actions.</p>
+</div>
+<div class="paragraph">
+<p>We don&#8217;t have any need for logic in this particular action just yet, but we would like it to render a page. We&#8217;ll look at GSP pages in more detail in the <a href="#Views">[Views]</a> section, but for now, let&#8217;s create a very simple GSP page for our <code>HomeController.index</code> action to display.</p>
+</div>
+<div class="paragraph">
+<p>Create the file <code>index.gsp</code> under the <code>grails-app/views/home</code> directory.</p>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/views/home/index.gsp</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy">&lt;html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta name=<span class="string"><span class="delimiter">&quot;</span><span class="content">layout</span><span class="delimiter">&quot;</span></span> content=<span class="string"><span class="delimiter">&quot;</span><span class="content">main</span><span class="delimiter">&quot;</span></span>/&gt;
+    &lt;title&gt;Home Page&lt;<span class="regexp"><span class="delimiter">/</span><span class="content">title&gt;</span></span><span class="error">
+</span>&lt;<span class="regexp"><span class="delimiter">/</span><span class="content">head&gt;</span></span><span class="error">
+</span>&lt;body&gt;
+
+&lt;div id=<span class="string"><span class="delimiter">&quot;</span><span class="content">content</span><span class="delimiter">&quot;</span></span> role=<span class="string"><span class="delimiter">&quot;</span><span class="content">main</span><span class="delimiter">&quot;</span></span>&gt;
+    &lt;section <span class="type">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">row colset-2-its</span><span class="delimiter">&quot;</span></span>&gt;
+        &lt;<span class="class">h1</span>&gt;Welcome to our Home Page!&lt;<span class="regexp"><span class="delimiter">/</span><span class="content">h1&gt;</span></span><span class="error">
+</span>    &lt;<span class="regexp"><span class="delimiter">/</span><span class="content">section&gt;</span></span><span class="error">
+</span>&lt;<span class="regexp"><span class="delimiter">/</span><span class="content">div&gt;</span></span><span class="error">
+</span>
+&lt;<span class="regexp"><span class="delimiter">/</span><span class="content">body&gt;</span></span><span class="error">
+</span>&lt;<span class="regexp"><span class="delimiter">/</span><span class="content">html&gt;</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Run the application again and browser to <code>http:localhost:8080/home</code>. You should see your new page.</p>
+</div>
+<div class="paragraph">
+<p>By convention, Grails will map controller actions to views with the same name, in the <code>grails-app/views/[controller name]</code> directory.  You can override this and specify a particular view (or render different content altogether).</p>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll cover views and GSPs in more detail in the next section, but for now, you should note that our <code>index.gsp</code> file is basically an HTML page, with a couple unusual tags. Feel free to modify this new home page however you would like.</p>
+</div>
+
+
+<h2 id="urlMappings">6.1 URL Mappings</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/urlMappings.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Now that we have our new "home" page, it would be nice if it was the app&#8217;s landing page instead of the Grails default. To do that, we&#8217;ll need to change our <code>UrlMappings.groovy</code> file.</p>
+</div>
+<div class="paragraph">
+<p>Grails uses the <code>UrlMappings.groovy</code> file to route request to the proper controller and action. They can be as simple as URI strings that redirect to a controller and/or action, or they can include wildcards and constraints and become quite sophisticated.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Learn much more about URL Mappings from the <a href="http://docs.grails.org/latest/guide/theWebLayer.html#urlmappings">Grails documentation</a>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s look at the default <code>URLMappings.groovy</code> file.</p>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/controllers/org/grails/guides/UrlMappings.groovy</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> org.grails.guides
+
+<span class="type">class</span> <span class="class">UrlMappings</span> {
+
+    <span class="directive">static</span> mappings = {
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="inline"><span class="inline-delimiter">$</span>controller</span><span class="content">/</span><span class="inline"><span class="inline-delimiter">$</span>action</span><span class="content">?/</span><span class="inline"><span class="inline-delimiter">$</span>id</span><span class="content">?(.</span><span class="inline"><span class="inline-delimiter">$</span>format</span><span class="content">)?</span><span class="delimiter">&quot;</span></span>{  <i class="conum" data-value="1"></i><b>(1)</b>
+            constraints {
+                <span class="comment">// apply constraints here</span>
+            }
+        }
+
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>(<span class="key">view</span>:<span class="string"><span class="delimiter">&quot;</span><span class="content">/index</span><span class="delimiter">&quot;</span></span>)   <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">500</span><span class="delimiter">&quot;</span></span>(<span class="key">view</span>:<span class="string"><span class="delimiter">'</span><span class="content">/error</span><span class="delimiter">'</span></span>)
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">404</span><span class="delimiter">&quot;</span></span>(<span class="key">view</span>:<span class="string"><span class="delimiter">'</span><span class="content">/notFound</span><span class="delimiter">'</span></span>)
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Grails default URL mapping - this rule causes requests to be mapped to controller and action (and optionally ID and/or format) based on names. So <code>home/index</code> will map to <code>HomeController</code>, <code>index</code> action</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>This URL mapping points the root URI (<code>/</code>) to a specific view.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s change the <code>/</code> rule to point to our new <code>HomeController</code>. Edit the line as follows:</p>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/controllers/org/grails/guides/UrlMappings.groovy</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> org.grails.guides
+
+<span class="type">class</span> <span class="class">UrlMappings</span> {
+
+    <span class="directive">static</span> mappings = {
+<span class="comment">//...</span>
+
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>(<span class="key">controller</span>:<span class="string"><span class="delimiter">&quot;</span><span class="content">home</span><span class="delimiter">&quot;</span></span>)   <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="comment">//...</span>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Change <code>view: "/index"</code> to <code>controller: "home"</code></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>By convention, a request to a controller without an action name will go to an <code>index</code> action, if it exists (if not, an error will be thrown). You can change this behavior if you want by specifying a <code>defaultAction</code> property in the controller:</p>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/controllers/org/grails/guides/HomeController.groovy</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> org.grails.guides
+
+<span class="type">class</span> <span class="class">HomeController</span> {
+
+    <span class="directive">static</span> defaultAction = <span class="string"><span class="delimiter">&quot;</span><span class="content">homePage</span><span class="delimiter">&quot;</span></span>
+
+    <span class="keyword">def</span> <span class="function">homePage</span>() { } <i class="conum" data-value="1"></i><b>(1)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Don&#8217;t make this change, this is just for demonstration purposes</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Now that you&#8217;ve changed the <code>/</code> rule to point to your new <code>HomeController</code>, if you restart the app and browser to <code><a href="http://localhost:8080" class="bare">http://localhost:8080</a></code>, you should be presented with your new home page.</p>
+</div>
+
+
+<h2 id="scaffolding">6.2 Scaffolding</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/scaffolding.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>We&#8217;d like to have actions to allow us to create new domain class instances and persist them to the database. In addition, we&#8217;d like to have the ability to edit existing instances and even delete them. Normally all this functionality would require a lot of coding, but Grails gives us a headstart with scaffolding.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Learn more about scaffolding in the <a href="http://docs.grails.org/latest/guide/scaffolding.html">Grails documentation</a>.
+</td>
+</tr>
+</table>
+</div>
+
+
+<h2 id="dynamicScaffolding">6.3 Dynamic Scaffolding</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/dynamicScaffolding.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Now that we have a home page, let&#8217;s create controllers to manage the domain model we created earlier. Create 3 new controllers for each of the domain classes, <code>Vehicle</code>, <code>Make</code>, and <code>Model</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ ./grailsw create-controller Vehicle
+
+| Created grails-app/controllers/org/grails/guides/VehicleController.groovy
+| Created src/test/groovy/org/grails/guides/VehicleControllerSpec.groovy
+
+$ ./grailsw create-controller Make
+
+| Created grails-app/controllers/org/grails/guides/MakeController.groovy
+| Created src/test/groovy/org/grails/guides/MakeControllerSpec.groovy
+
+$ ./grailsw create-controller Model
+
+| Created grails-app/controllers/org/grails/guides/ModelController.groovy
+| Created src/test/groovy/org/grails/guides/ModelControllerSpec.groovy</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To use scaffolding, edit the three controllers we just created, and replace the default <code>index</code> action with a <code>scaffolding</code> property as shown in the examples below.</p>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/controllers/org/grails/guides/VehicleController.groovy</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> org.grails.guides
+
+<span class="type">class</span> <span class="class">VehicleController</span> {
+
+    <span class="directive">static</span> scaffold = Vehicle
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/controllers/org/grails/guides/MakeControler.groovy</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> org.grails.guides
+
+<span class="type">class</span> <span class="class">MakeControler</span> {
+
+    <span class="directive">static</span> scaffold = Make
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/controllers/org/grails/guides/ModelController.groovy</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> org.grails.guides
+
+<span class="type">class</span> <span class="class">ModelController</span> {
+
+    <span class="directive">static</span> scaffold = Model
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With the <code>scaffold</code> property set, Grails will now generate all necessary CRUD (Create, Read, Update, Delete) actions for the respective domain classes. It will also dynamically generate views with list, create, show and edit pages using our domain properties and associations. This can give you a big leg up when putting together the beginnings of an application.</p>
+</div>
+<div class="paragraph">
+<p>Restart the app, and browse to <code><a href="http://localhost:8080/vehicle" class="bare">http://localhost:8080/vehicle</a></code> - you should see a list of the <code>Vehicle</code> instances we added to our <code>BootStrap</code>. Try out the new views and create, view, edit and delete some instances. You can also do the same with the <code>Model</code> and <code>Make</code> controllers.</p>
+</div>
+
+
+<h2 id="staticScaffolding">6.4 Static Scaffolding</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/staticScaffolding.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Dynamic scaffolding is powerful and sometimes will provide all the functionality you need (especially for an administrative site where data access is more important than presentation). But it&#8217;s quite likely that you will feel the need to customize the generated views and controllers, either to change their appearance or to add custom logic and functionality. Grails anticipates this need and provides a set of <code>generate</code> commands that can generate the controllers and/or views that you just saw, allowing you to modify them to suite your needs.</p>
+</div>
+<div class="paragraph">
+<p>To generate the views (and continue to use the dynamic scaffolding):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ ./grailsw generate-views Vehicle</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To generate the controller (and continue to use the dynamic GSP views):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ ./grailsw generate-controller Vehicle</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To both views and controllers (bypassing all dynamic generation):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ ./grailsw generate-all Vehicle</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The generated controller will be placed under <code>grails-app/controller</code>, and the generated views will be placed under <code>grails-app/views/vehicle</code>.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+To override existing files, use th <code>-force</code> flag along with the <code>generate-*</code> command: <code>./grailsw generate-all com.example.Vehicle -force</code>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s generate the controller and views for <code>Vehicle</code> and take a look at the resulting controller.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ ./grailsw generate-all Vehicle -force</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Open the <code>VehicleController.groovy</code> file at <code>grails-app/controllers/org/grails/guides/</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">import</span> <span class="include">static</span> <span class="include">org.springframework.http.HttpStatus.NOT_FOUND</span>
+<span class="keyword">import</span> <span class="include">static</span> <span class="include">org.springframework.http.HttpStatus.OK</span>
+<span class="keyword">import</span> <span class="include">static</span> <span class="include">org.springframework.http.HttpStatus.CREATED</span>
+<span class="keyword">import</span> <span class="include">org.grails.guides.Vehicle</span>
+<span class="keyword">import</span> <span class="include">grails.gorm.transactions.Transactional</span>
+
+<span class="annotation">@SuppressWarnings</span>([<span class="string"><span class="delimiter">'</span><span class="content">LineLength</span><span class="delimiter">'</span></span>])
+<span class="annotation">@ReadOnly</span> <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="type">class</span> <span class="class">VehicleController</span> {
+
+    <span class="directive">static</span> namespace = <span class="string"><span class="delimiter">'</span><span class="content">scaffolding</span><span class="delimiter">'</span></span>
+
+    <span class="directive">static</span> allowedMethods = [<span class="key">save</span>: <span class="string"><span class="delimiter">'</span><span class="content">POST</span><span class="delimiter">'</span></span>, <span class="key">update</span>: <span class="string"><span class="delimiter">'</span><span class="content">PUT</span><span class="delimiter">'</span></span>, <span class="key">delete</span>: <span class="string"><span class="delimiter">'</span><span class="content">DELETE</span><span class="delimiter">'</span></span>]
+
+    <span class="keyword">def</span> <span class="function">index</span>(<span class="predefined-type">Integer</span> max) {
+        params.max = <span class="predefined-type">Math</span>.min(max ?: <span class="integer">10</span>, <span class="integer">100</span>) <i class="conum" data-value="2"></i><b>(2)</b>
+        respond Vehicle.list(params), <span class="key">model</span>:[<span class="key">vehicleCount</span>: Vehicle.count()] <i class="conum" data-value="3"></i><b>(3)</b>
+    }
+
+    <span class="keyword">def</span> <span class="function">show</span>(Vehicle vehicle) {
+        respond vehicle <i class="conum" data-value="3"></i><b>(3)</b>
+    }
+
+    <span class="annotation">@SuppressWarnings</span>([<span class="string"><span class="delimiter">'</span><span class="content">FactoryMethodName</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">GrailsMassAssignment</span><span class="delimiter">'</span></span>])
+    <span class="keyword">def</span> <span class="function">create</span>() {
+        respond <span class="keyword">new</span> Vehicle(params) <i class="conum" data-value="3"></i><b>(3)</b>
+    }
+
+    <span class="annotation">@Transactional</span> <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="keyword">def</span> <span class="function">save</span>(Vehicle vehicle) {
+        <span class="keyword">if</span> (vehicle == <span class="predefined-constant">null</span>) {
+            transactionStatus.setRollbackOnly()
+            notFound()
+            <span class="keyword">return</span>
+        }
+
+        <span class="keyword">if</span> (vehicle.hasErrors()) {
+            transactionStatus.setRollbackOnly()
+            respond vehicle.errors, <span class="key">view</span>:<span class="string"><span class="delimiter">'</span><span class="content">create</span><span class="delimiter">'</span></span>  <i class="conum" data-value="3"></i><b>(3)</b>
+            <span class="keyword">return</span>
+        }
+
+        vehicle.save <span class="key">flush</span>:<span class="predefined-constant">true</span>
+
+        request.withFormat {  <i class="conum" data-value="4"></i><b>(4)</b>
+            form multipartForm {
+                <i class="conum" data-value="5"></i><b>(5)</b>
+                flash.message = message(<span class="key">code</span>: <span class="string"><span class="delimiter">'</span><span class="content">default.created.message</span><span class="delimiter">'</span></span>, <span class="key">args</span>: [message(<span class="key">code</span>: <span class="string"><span class="delimiter">'</span><span class="content">vehicle.label</span><span class="delimiter">'</span></span>, <span class="keyword">default</span>: <span class="string"><span class="delimiter">'</span><span class="content">Vehicle</span><span class="delimiter">'</span></span>), vehicle.id])
+                redirect vehicle
+            }
+            <span class="string"><span class="delimiter">'</span><span class="content">*</span><span class="delimiter">'</span></span> { respond vehicle, [<span class="key">status</span>: CREATED] } <i class="conum" data-value="3"></i><b>(3)</b>
+        }
+    }
+
+    <span class="keyword">def</span> <span class="function">edit</span>(Vehicle vehicle) {
+        respond vehicle <i class="conum" data-value="3"></i><b>(3)</b>
+    }
+
+    <span class="annotation">@Transactional</span> <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="keyword">def</span> <span class="function">update</span>(Vehicle vehicle) {
+        <span class="keyword">if</span> (vehicle == <span class="predefined-constant">null</span>) {
+            transactionStatus.setRollbackOnly()
+            notFound()
+            <span class="keyword">return</span>
+        }
+
+        <span class="keyword">if</span> (vehicle.hasErrors()) {
+            transactionStatus.setRollbackOnly()
+            respond vehicle.errors, <span class="key">view</span>:<span class="string"><span class="delimiter">'</span><span class="content">edit</span><span class="delimiter">'</span></span> <i class="conum" data-value="3"></i><b>(3)</b>
+            <span class="keyword">return</span>
+        }
+
+        vehicle.save <span class="key">flush</span>:<span class="predefined-constant">true</span>
+
+        request.withFormat {
+            form multipartForm {
+                <i class="conum" data-value="5"></i><b>(5)</b>
+                flash.message = message(<span class="key">code</span>: <span class="string"><span class="delimiter">'</span><span class="content">default.updated.message</span><span class="delimiter">'</span></span>, <span class="key">args</span>: [message(<span class="key">code</span>: <span class="string"><span class="delimiter">'</span><span class="content">vehicle.label</span><span class="delimiter">'</span></span>, <span class="keyword">default</span>: <span class="string"><span class="delimiter">'</span><span class="content">Vehicle</span><span class="delimiter">'</span></span>), vehicle.id])
+                redirect vehicle <i class="conum" data-value="6"></i><b>(6)</b>
+            }
+            <span class="string"><span class="delimiter">'</span><span class="content">*</span><span class="delimiter">'</span></span> { respond vehicle, [<span class="key">status</span>: OK] } <i class="conum" data-value="3"></i><b>(3)</b>
+        }
+    }
+
+    <span class="annotation">@Transactional</span> <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="keyword">def</span> <span class="function">delete</span>(Vehicle vehicle) {
+
+        <span class="keyword">if</span> (vehicle == <span class="predefined-constant">null</span>) {
+            transactionStatus.setRollbackOnly()
+            notFound()
+            <span class="keyword">return</span>
+        }
+
+        vehicle.delete <span class="key">flush</span>:<span class="predefined-constant">true</span>
+
+        request.withFormat {
+            form multipartForm {
+                <i class="conum" data-value="5"></i><b>(5)</b>
+                flash.message = message(<span class="key">code</span>: <span class="string"><span class="delimiter">'</span><span class="content">default.deleted.message</span><span class="delimiter">'</span></span>, <span class="key">args</span>: [message(<span class="key">code</span>: <span class="string"><span class="delimiter">'</span><span class="content">vehicle.label</span><span class="delimiter">'</span></span>, <span class="keyword">default</span>: <span class="string"><span class="delimiter">'</span><span class="content">Vehicle</span><span class="delimiter">'</span></span>), vehicle.id])
+                redirect <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">index</span><span class="delimiter">'</span></span>, <span class="key">method</span>: <span class="string"><span class="delimiter">'</span><span class="content">GET</span><span class="delimiter">'</span></span> <i class="conum" data-value="6"></i><b>(6)</b>
+            }
+            <span class="string"><span class="delimiter">'</span><span class="content">*</span><span class="delimiter">'</span></span> { render <span class="key">status</span>: NO_CONTENT } <i class="conum" data-value="7"></i><b>(7)</b>
+        }
+    }
+
+    <span class="directive">protected</span> <span class="type">void</span> notFound() {
+        request.withFormat {
+            form multipartForm {
+                <i class="conum" data-value="5"></i><b>(5)</b>
+                flash.message = message(<span class="key">code</span>: <span class="string"><span class="delimiter">'</span><span class="content">default.not.found.message</span><span class="delimiter">'</span></span>, <span class="key">args</span>: [message(<span class="key">code</span>: <span class="string"><span class="delimiter">'</span><span class="content">vehicle.label</span><span class="delimiter">'</span></span>, <span class="keyword">default</span>: <span class="string"><span class="delimiter">'</span><span class="content">Vehicle</span><span class="delimiter">'</span></span>), params.id])</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <a href="http://gorm.grails.org/latest/api/grails/gorm/transactions/Transactional.html"><code>@Transactional</code></a> annotation configures the transactional behavior of the controller or method. Transactions are used to manage persistence and other complicated operations that should be completed together (and potentially rolled-back if any one of the steps fails).  For more information on transactions, see the <a href="http://docs.grails.org/latest/guide/single.html#declarativeTransactions">Grails documentation</a></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The <code>params</code> object is available to all controllers, and contains a map of any URL parameters on the request. You can refer to any parameter by name to retrieve the value: <code>params.myCustomParameter</code> will match this URL parameter: <code>[url]?myCustomParameter=hello</code>. See the <a href="https://docs.grails.org/latest/ref/Controllers/params.html">Grails documentation</a> for more detail.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The <code>respond</code> method takes an object to return to the requestor, using <a href="https://docs.grails.org/latest/guide/theWebLayer.html#contentNegotiation">content negotiation</a> to choose the correct type (for example, a request&#8217;s <code>Accept</code> header might specify JSON or XML). <code>respond</code> also can accept a map of arguments, such as <code>model</code> (which defines the way the data is loaded on a page). For more on how to use the <code>respond</code> method, see the <a href="https://docs.grails.org/latest/ref/Controllers/respond.html">Grails documentation</a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td><code>request</code> is available on all controllers, and is an instance of the Servlet API’s <a href="https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html">HttpServletRequest</a> class. You can access request headers, store properties in the request scope, and get information about the requestor using this object. For more see the <a href="https://docs.grails.org/latest/ref/Controllers/request.html">Grails documentation on <code>request</code></a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td><code>flash</code> is a map that stores objects within the session for the <strong>next</strong> request, automatically clearing them after that next request completes. This is useful for passing error messages or other data that you want the next request to access. For more, see the <a href="https://docs.grails.org/latest/ref/Controllers/flash.html">Grails documentation on <code>flash</code></a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>The <code>redirect</code> method is a simple one - it allows the action to redirect the request to another action, controller, or a URI. You can also pass along parameters with the redirect. See the <a href="https://docs.grails.org/latest/ref/Controllers/redirect.html">Grails documentation on <code>redirect</code></a> for more.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>The <code>render</code> method is a less sophisticated version of <code>respond</code> - it doesn&#8217;t perform content negotiation, so you have to specify exactly what you want to render. You can render plain text, a view or template, an HTTP response code, or any object that has a String representation. See the <a href="https://docs.grails.org/latest/ref/Controllers/render.html">Grails documentation</a>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>That&#8217;s a lot of code! Generating and modifying a scaffold controller is a good learning exercise, so feel free to experiment and modify this code - you can always revert back to the version in the <code>completed</code> project of this guide.</p>
+</div>
+
+
+<h2 id="respond">6.5 Render a response</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/respond.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Let&#8217;s modify our <code>HomeController</code> to render some custom content on our home page. Edit <code>grails-app/controllers/org/grails/guides/HomeController.groovy</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/controllers/org/grails/guides/HomeController.groovy</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> org.grails.guides
+
+<span class="type">class</span> <span class="class">HomeController</span> {
+
+    <span class="keyword">def</span> <span class="function">index</span>() {
+        respond([<span class="key">name</span>: session.name ?: <span class="string"><span class="delimiter">'</span><span class="content">User</span><span class="delimiter">'</span></span>, <span class="key">vehicleTotal</span>: Vehicle.count()]) <i class="conum" data-value="1"></i><b>(1)</b>
+    }
+
+    <span class="keyword">def</span> <span class="function">updateName</span>(<span class="predefined-type">String</span> name) {
+        session.name = name <i class="conum" data-value="2"></i><b>(2)</b>
+
+        flash.message = <span class="string"><span class="delimiter">&quot;</span><span class="content">Name has been updated</span><span class="delimiter">&quot;</span></span> <i class="conum" data-value="3"></i><b>(3)</b>
+
+        redirect <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">index</span><span class="delimiter">'</span></span> <i class="conum" data-value="4"></i><b>(4)</b>
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We&#8217;re calling the <code>respond</code> method to render a Groovy map of content to the requestor, containing a <code>name</code> property from the session (defaulting to "User" if no session value exists) and the current total of <code>Vehicle</code> instances from GORM&#8217;s <code>count</code> method.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>session</code> is an instance of the Servlet API’s`HttpSession` class, and is available in every controller. We can retrieve and store properties in the session - in this case, we&#8217;re storing a <code>String</code> with the attribute <code>name</code> in the session. For more see the <a href="https://docs.grails.org/latest/ref/Controllers/session.html">Grails documentation</a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>We&#8217;re using <code>flash</code> scope to set a message to display upon the next request</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>We don&#8217;t have any specific content to display in this action, so we issue a redirect back to the <code>index</code> action (note that in Groovy method parenthesis are optional so long as there is at least one argument).</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We&#8217;ve updated our <code>index</code>  action to render some custom content to the page, and we&#8217;ve created a new action <code>updateName</code>, which takes a <code>String</code> parameter and saves it to the <code>session</code> for later retrieval. However, we need to update our view to 1. display the newly available content, and 2. provide some means of calling <code>updateName</code> and setting the <code>session</code> attribute.</p>
+</div>
+<div class="paragraph">
+<p>Edit <code>grails-app/views/home/index.gsp</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/views/home/index.gsp</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;html&gt;</span>
+<span class="tag">&lt;html&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">layout</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">content</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">main</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;title&gt;</span>Home Page<span class="tag">&lt;/title&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+
+<span class="tag">&lt;div</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">content</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">role</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">main</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;section</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">row colset-2-its</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;h1&gt;</span>Welcome ${name}!<span class="tag">&lt;/h1&gt;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+
+        <span class="tag">&lt;h4&gt;</span>${flash.message}<span class="tag">&lt;/h4&gt;</span>  <i class="conum" data-value="2"></i><b>(2)</b>
+
+        <span class="tag">&lt;p&gt;</span>There are ${vehicleTotal} vehicles in the database.<span class="tag">&lt;/p&gt;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+
+        <span class="tag">&lt;form</span> <span class="attribute-name">action</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/home/updateName</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">method</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">post</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">style</span>=<span class="string"><span class="delimiter">&quot;</span><span class="key">margin</span>: <span class="float">0</span> <span class="value">auto</span>; <span class="key">width</span>:<span class="float">320px</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span> <i class="conum" data-value="3"></i><b>(3)</b>
+            <span class="tag">&lt;input</span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">text</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;input</span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">submit</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Update name</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Update name</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Update name</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;/form&gt;</span>
+
+    <span class="tag">&lt;/section&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We can refer to any values in our "model" by name in a GSP page, using Groovy String Expressions <code>${name}</code> <code>${vehicleTotal}</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Here we&#8217;re accessing our <code>flash.message</code> property - if it&#8217;s null then nothing will render here.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>This is a plain HTML form that will submit the <code>name</code> text field to the <code>updateName</code> action we just created.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Run the app and you should see our new message in the <code>&lt;h1&gt;</code> header: "Welcome User!", as well as the current total of <code>Vehicle</code> instances in the database.</p>
+</div>
+<div class="paragraph">
+<p>Try entering your own name in the form and submitting it - you should see the page reload and your own name will replace "User". Refresh the page a few times. Because we stored the <code>name</code> in the session, it will persist as long as the session is valid.</p>
+</div>
+<div class="sect1">
+<h2 id="_content_negotiation">Content Negotiation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Remember we used the <code>respond</code> method, instead of the simpler <code>render</code> method to send our "model" to the page. This means we can get our model using other formats besides an HTML page, such as JSON or XML.</p>
+</div>
+<div class="paragraph">
+<p>Run the following command in a terminal (while the app is running)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ curl -i -H &quot;Accept: application/json&quot; &quot;http://localhost:8080/home/index&quot;
+
+HTTP/1.1 200
+X-Application-Context: application:development
+Set-Cookie: JSESSIONID=008B45AAA1A820CE5C9FDC2741D345F3;path=/;HttpOnly
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Wed, 11 Jan 2017 04:06:57 GMT
+
+{&quot;name&quot;:&quot;User&quot;,&quot;vehicleTotal&quot;:3}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We&#8217;ve used <code>curl</code> to call our <code>index</code> action, but we&#8217;ve changed our <code>Accept</code> header to <code>application/json</code>. Now instead of an HTML page, we receive the same data in JSON.</p>
+</div>
+<div class="paragraph">
+<p>You can request difference content types in the browser as well, thanks to Grails' default URL Mappings (shown below):</p>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/controllers/org/grails/guides/UrlMappings.groovy</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy">        <span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="inline"><span class="inline-delimiter">$</span>controller</span><span class="content">/</span><span class="inline"><span class="inline-delimiter">$</span>action</span><span class="content">?/</span><span class="inline"><span class="inline-delimiter">$</span>id</span><span class="content">?(.</span><span class="inline"><span class="inline-delimiter">$</span>format</span><span class="content">)?</span><span class="delimiter">&quot;</span></span> {
+            constraints {
+                <span class="comment">// apply constraints here</span>
+            }
+        }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note the <code>(.$format)?</code> token in the mapping. This will match a suffix on our URL such as <code>.json</code> or <code>.xml</code>. Test this out in your browser.</p>
+</div>
+<div class="paragraph">
+<p>Browse to <code><a href="http://localhost:8080/home/index.json" class="bare">http://localhost:8080/home/index.json</a></code>. You should see the same JSON body we retrieved using <code>curl</code>.</p>
+</div>
+<div class="paragraph">
+<p>Try changing <code>.json</code> to <code>.xml</code>. You should see an XML representation of the model. Content negotiation allows your controllers to be very versatile and to return appropriate data to different clients from the same actions.</p>
+</div>
+</div>
+</div>
+
+
+<h1 id="views">7 Views</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/views.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Views are the third component of the MVC pattern. Views are responsible for presenting data to the user (which might be a browser page, an API endpoint, or some other sort of consumer). In many apps, views are HTML pages designed to be loaded in a browser. However, it is perfectly reasonable for a "view" to be an XML or JSON document, depending on the type of client requesting the view.</p>
+</div>
+<div class="paragraph">
+<p>Grails' primary view technology is <a href="http://docs.grails.org/latest/guide/theWebLayer.html#gsp">Groovy Server Pages</a>. It follows many of the conventions of JSP and ASP, but naturally it is based upon the Groovy language. GSP pages are essentially HTML documents, but they support a number of special tags (typically prefix with <code>g:</code>) to allow programmatic control over your views. You can even write arbitrary Groovy code in your GSP pages, but this is <strong>strongly</strong> discouraged - ideally, the GSP page should only contain view-related logic and content; any sort of data manipulation or processing should happen in the controller (or in a service) prior to the view being rendered.</p>
+</div>
+<div class="paragraph">
+<p>You&#8217;ve already worked with GSP views in this guide, but let&#8217;s quickly cover the basics.</p>
+</div>
+<div class="sect1">
+<h2 id="_layouts">Layouts</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>GSP views in an application often need to share some general structure, and perhaps some shared assets like JavaScript files. Grails uses the <a href="http://wiki.sitemesh.org/wiki/display/sitemesh/Home">SiteMesh</a> templating technology to support the idea of "layouts", which are essentially GSP template files that your GSP page can "inherit".</p>
+</div>
+<div class="paragraph">
+<p>By convention, layouts are located under <code>grails-app/views/layouts</code>. Grails includes a <code>main.gsp</code> template in the default project, and that&#8217;s the one that Grails scaffolding uses, as well as the default home page. We&#8217;re using it as well. To use a GSP layout, simply specify the name of the layout using a <code>&lt;meta name="layout"&gt;</code> tag:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;html&gt;</span>
+<span class="tag">&lt;html&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">layout</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">content</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">main</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="comment">&lt;!-- ... --&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can create your own layouts as well. Let&#8217;s create a new layout for our home page.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ vim grails-app/views/layouts/public.gsp</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Edit your new layout. We&#8217;ll be copying the existing <code>main.gsp</code> as a start, but we&#8217;ll add a custom logo image and remove some layout code we don&#8217;t need on our pages.</p>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/views/layouts/public.gsp</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="doctype">&lt;!doctype html&gt;</span>
+<span class="tag">&lt;html</span> <span class="attribute-name">lang</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">en</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">no-js</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attribute-name">http-equiv</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Content-Type</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">content</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">text/html; charset=UTF-8</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attribute-name">http-equiv</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">X-UA-Compatible</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">content</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">IE=edge</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;title&gt;</span>
+        <span class="tag">&lt;g:layoutTitle</span> <span class="attribute-name">default</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Auto Catalog</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/title&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">viewport</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">content</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">width=device-width, initial-scale=1</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+
+    <span class="tag">&lt;asset:stylesheet</span> <span class="attribute-name">src</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">application.css</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+
+    <span class="tag">&lt;g:layoutHead</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+
+<span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">navbar navbar-default navbar-static-top</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">role</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">navigation</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">container</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">navbar-header</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;a</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">navbar-brand</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/#</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                <span class="tag">&lt;i</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">fa grails-icon</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                    <span class="tag">&lt;asset:image</span> <span class="attribute-name">src</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">logo.png</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+                <span class="tag">&lt;/i&gt;</span> Auto Catalog
+            <span class="tag">&lt;/a&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+        <span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">navbar-collapse collapse</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">aria-expanded</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">false</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">style</span>=<span class="string"><span class="delimiter">&quot;</span><span class="key">height</span>: <span class="float">0.8px</span>;<span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;ul</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">nav navbar-nav navbar-right</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                <span class="tag">&lt;g:pageProperty</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">page.nav</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+            <span class="tag">&lt;/ul&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+
+<span class="tag">&lt;g:layoutBody</span><span class="tag">/&gt;</span>
+
+<span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">footer</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">role</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">contentinfo</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;/div&gt;</span>
+
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The key points of this layout are the <code>&lt;g:layoutBody&gt;</code> and <code>&lt;g:layoutHead&gt;</code> tags. These tags are substituted by SiteMesh for the <code>&lt;head&gt;</code> and <code>&lt;body&gt;</code> sections of any GSP page that uses the layout.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Feel free to provide your own <code>logo.png</code> image, or use the one from the <code>completed</code> project (or <a href="https://github.com/grails-guides/creating-your-first-grails-app/blob/master/complete/grails-app/assets/images/logo.png">download at this link</a>). Place the image in the <code>grails-app/assets/images/</code> directory, and the layout should render it instead of the Grails logo.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Don&#8217;t worry about the <code>&lt;asset&gt;</code> tags in the new layout just yet - we&#8217;ll be covering those shortly.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Now edit the <code>home/index.gsp</code> view to use the new <code>public</code> layout.</p>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/views/home/index.gsp</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;html&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">layout</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">content</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">public</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tag">&lt;title&gt;</span>Home Page<span class="tag">&lt;/title&gt;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Change "main" to "public"</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Refresh the page (or restart the app) and you should see the new layout in action. Feel free to modify the <code>public.gsp</code> layout further if you wish.</p>
+</div>
+</div>
+</div>
+
+
+<h2 id="viewsResolution">7.1 Views Resolution</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/viewsResolution.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>How does Grails choose which view to render? By convention, Grails looks for views
+under the <code>grails-app/views</code> directory. It will attempt to resolve views to controller
+actions by matching the controller name with a directory under the <code>views</code> directory.
+E.g., <code>HomeController</code> will resolve to <code>grails-app/views/home</code>. Grails will then map
+actions to GSP pages with the same name. E.g, <code>index</code> will resolve to <code>index.gsp</code>.</p>
+</div>
+<div class="paragraph">
+<p>You can also render a particular view from your controller action (overriding Grails' conventions) using the <code>render</code> method:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">class</span> <span class="class">SomeController</span> {
+    <span class="keyword">def</span> <span class="function">someAction</span>() {
+        render <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">anotherView</span><span class="delimiter">'</span></span>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will attempt to resolve to a <code>anotherView.gsp</code> page under <code>grails-app/views/some/</code>. If you would like to resolve a view that is not under the controller&#8217;s own view directory, use a leading <code>/</code> to specifiy an absolute path from <code>grails-app/views</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">class</span> <span class="class">SomeController</span> {
+    <span class="keyword">def</span> <span class="function">someAction</span>() {
+        render <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">/another/view</span><span class="delimiter">'</span></span>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will resolve to <code>view.gsp</code> under <code>grails-app/views/another/</code>.</p>
+</div>
+
+
+<h2 id="gsp">7.2 GSP</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/gsp.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>GSP pages have access to a rich set of tags. We&#8217;ve seen a few in action already. You can get much more detail on the available GSP tags (including how to define your own custom tags) from the Grails documentation.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s soup up our <code>index.gsp</code> page a bit with some GSP tags.</p>
+</div>
+<div class="paragraph">
+<p>Edit <code>grails-app/views/home/index.gsp</code></p>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/views/home/index.gsp</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="error">&lt;</span>%@ page import=&quot;Vehicle&quot; %<span class="error">&gt;</span>
+<span class="tag">&lt;html&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">layout</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">content</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">public</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;title&gt;</span>Home Page<span class="tag">&lt;/title&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+
+<span class="tag">&lt;div</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">content</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">role</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">main</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;section</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">row colset-2-its</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;h1&gt;</span>Welcome ${name}!<span class="tag">&lt;/h1&gt;</span>
+        <span class="tag">&lt;g:if</span> <span class="attribute-name">test</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">${flash.message}</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+            <span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">message</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">role</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">status</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>${flash.message}<span class="tag">&lt;/div&gt;</span>
+        <span class="tag">&lt;/g:if&gt;</span>
+
+        <span class="tag">&lt;p&gt;</span>There are ${vehicleTotal} vehicles in the database.<span class="tag">&lt;/p&gt;</span>
+
+        <span class="tag">&lt;ul&gt;</span>
+        <span class="tag">&lt;g:each</span> <span class="attribute-name">in</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">${Vehicle.list()}</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">var</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">vehicle</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;li&gt;</span>
+                <span class="tag">&lt;g:link</span> <span class="attribute-name">controller</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">vehicle</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">action</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">show</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">${vehicle.id}</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                    ${vehicle.name} - ${vehicle.year} ${vehicle.make.name} ${vehicle.model.name}
+                <span class="tag">&lt;/g:link&gt;</span>
+            <span class="tag">&lt;/li&gt;</span>
+        <span class="tag">&lt;/g:each&gt;</span>
+        <span class="tag">&lt;/ul&gt;</span>
+
+        <span class="tag">&lt;g:form</span> <span class="attribute-name">action</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">updateName</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">style</span>=<span class="string"><span class="delimiter">&quot;</span><span class="key">margin</span>: <span class="float">0</span> <span class="value">auto</span>; <span class="key">width</span>:<span class="float">320px</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span> <i class="conum" data-value="2"></i><b>(2)</b>
+            <span class="tag">&lt;g:textField</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+            <span class="tag">&lt;g:submitButton</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Update name</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+        <span class="tag">&lt;/g:form&gt;</span>
+
+    <span class="tag">&lt;/section&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Rather than rendering <code>flash.message</code> regardless of whether it exists, we use the <code>&lt;g:if&gt;</code> tag to test if there is a message, and then render the message (using some custom styling).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Replace the plain HTML <code>&lt;form&gt;</code> tags with their GSP equivalents.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s take a closer look at <code>&lt;g:if&gt;</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml">    <span class="tag">&lt;g:if</span> <span class="attribute-name">test</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">${isThisTrue}}</span></span><span class="error">&gt;</span>
+        Some content
+    <span class="tag">&lt;/g:if&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>GSP tags can optionally accept attributes, such as <code>test</code> in this example. Different tags require different types of attributes, but typically you will end up passing a Groovy Expression like in this example. Any Groovy code between the <code>${</code> and <code>}</code> will be evaluated (on the server) and the result will be substituted on the rendered page.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can use Groovy Expressions anywhere on the GSP page, not just in tags. See the <code>${flash.message}</code> in our <code>index.gsp</code> page.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Other tag attributes might accept plain strings or numbers. E.g, <code>&lt;g:form action="updateName"&gt;</code></p>
+</div>
+<div class="paragraph">
+<p>A GSP tag can also optionally include a body. In the case of <code>&lt;g:if&gt;</code>, the body will only be rendered if the <code>test</code> expression evaluates to true (following the <a href="http://docs.groovy-lang.org/latest/html/documentation/#Groovy-Truth">Groovy Truth</a> convention). Other GSP tags (like <code>&lt;g:form&gt;</code>) simply include the body within the resulting HTML output.</p>
+</div>
+
+
+<h2 id="gspIteration">7.3 GSP Tags Iteration</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/gspIteration.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="sect1">
+<h2 id="_iteration">Iteration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There are GSP tags for iteration as well - a very useful one is <code>&lt;g:each&gt;</code>. Let&#8217;s try it out:</p>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/views/home/index.gsp</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="error">&lt;</span>%@ page import=&quot;Vehicle&quot; %<span class="error">&gt;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tag">&lt;html&gt;</span>
+<span class="comment">&lt;!-- ... --&gt;</span>
+        <span class="tag">&lt;p&gt;</span>There are ${vehicleTotal} vehicles in the database.<span class="tag">&lt;/p&gt;</span>
+
+        <span class="tag">&lt;ul&gt;</span>
+            <span class="tag">&lt;g:each</span> <span class="attribute-name">in</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">${Vehicle.list()}</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">var</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">vehicle</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>  <i class="conum" data-value="2"></i><b>(2)</b>
+                <span class="tag">&lt;li&gt;</span>
+                    <span class="error">&lt;</span>! -- ... --<span class="error">&gt;</span>
+                <span class="tag">&lt;/li&gt;</span>
+            <span class="tag">&lt;/g:each&gt;</span>
+        <span class="tag">&lt;/ul&gt;</span>
+
+<span class="comment">&lt;!-- ... --&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The  <code>&lt;g:each&gt;</code> tag iterates through a collection of objects, provided by the <code>in</code> attribute. <code>var</code> sets the name for each object in the collection. Grails will iterate through the collection (in this case, the list of <code>Vehicles</code> returned by <code>Vehicle.list()</code>) and render the body of the <code>&lt;g:each&gt;</code> tag for every item.</p>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>This is a JSP-style expression that allows executing arbitrary Groovy code (without rendering a result). We&#8217;re using it here to import our <code>Vehicle</code> class. This is <strong>highly</strong> discouraged - we&#8217;ll explain why shortly.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Bad practice, accessing the Domain model directly from the view</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+This sort of code is a <strong>bad idea</strong> - we are accessing our domain model (<code>Vehicle</code>) directly from our view, which tightly couples two separate parts of the application, and in general leads to very messy code. The better way to accomplish this feature is to get the <code>Vehicle</code> list in the <code>HomeController.index</code> action, and add the list to our model object (the one being passed to <code>respond</code>). Then we could refer to the list in the same way that we access <code>name</code> and <code>vehicleTotal</code>. Go ahead and change the controller and view to use this better approach - the completed project has this change already made if you need help.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+
+
+<h2 id="gspLinks">7.4 GSP Tags Links</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/gspLinks.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Let&#8217;s take a look at one more common GSP tag: <code>&lt;g:link&gt;</code></p>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/views/home/index.gsp</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml">        ${vehicle.name} - ${vehicle.year} ${vehicle.make.name} ${vehicle.model.name}
+    <span class="tag">&lt;/g:link&gt;</span>
+<span class="tag">&lt;/li&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>&lt;g:link&gt;</code> renders an HTML <code>&lt;a&gt;</code> tag, but it has the advantage in that it allows you to specify your link target following Grails conventions, such as this example (using the <code>controller</code>, <code>action</code> and <code>id</code> attributes). <code>&lt;g:link&gt;</code> is also smart enough to follow our URL mappings, so if we change the URL mapping for <code>vehicle/show</code>, the <code>&lt;g:link&gt;</code> tag will still render the correct URL. There&#8217;s many more attributes supported by <code>&lt;g:link&gt;</code> - see the <a href="http://docs.grails.org/latest/ref/Tags/link.html">Grails documentation</a> for more.</p>
+</div>
+
+
+<h2 id="assetPipeline">7.5 Asset Pipeline</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/assetPipeline.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>You may have noticed a few <code>&lt;asset&gt;</code> tags in our GSP pages. These tags are provided by the Asset Pipeline plugin, which is Grails' default tool for managing static assets (images, CSS, JavaScript files, etc). The Asset Pipeline plugin provides a set of custom GSP tags, but unlike the tags we&#8217;ve been exploring, it uses the <code>asset</code> prefix (or namespace).</p>
+</div>
+<div class="paragraph">
+<p>The most common <code>&lt;asset&gt;</code> tags are listed below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;asset:javascript</span> <span class="attribute-name">src</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">myscript.js</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+
+<span class="tag">&lt;asset:image</span> <span class="attribute-name">src</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">myimage.png</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span> <i class="conum" data-value="2"></i><b>(2)</b>
+
+<span class="tag">&lt;asset:stylesheet</span> <span class="attribute-name">src</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">mystyles.css</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span> <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>This tag loads JavaScript files from <code>grails-app/assets/javascripts</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>This tag loads images from <code>grails-app/assets/images</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>This tag loads CSS files from <code>grails-app/assets/stylesheets</code></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>As you can see, the Asset Pipeline follows a convention over configuration approach, following the precedent of Grails. However, Asset Pipeline is a very powerful framework, and includes a rich plugin ecosystem - you can find plugins to render LESS and SASS files, CoffeeScript, Ember, Angular, JSX (React), and more.</p>
+</div>
+<div class="paragraph">
+<p>Asset Pipeline also supports minification and compression of your assets, and much more.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Visit <a href="http://www.asset-pipeline.com/">asset-pipeline.com</a> for much more information on using the Asset Pipeline, including a directory of <a href="http://www.asset-pipeline.com/plugins">available plugins</a>.
+</td>
+</tr>
+</table>
+</div>
+
+
+<h2 id="addJavascriptAsset">7.6 Add Javascript Asset</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/addJavascriptAsset.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Let&#8217;s use the Asset Pipeline plugin to add jQuery to our page. Grails includes jQuery by default.
+The version of Grails used in this guide included jQuery 2.2.0 by default:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>_grails-app/assets/javascripts/jquery-2.2.0.min.js_</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>but let&#8217;s instead download the latest version. Download jQuery from <a href="https://code.jquery.com/jquery-3.1.1.js" class="bare">https://code.jquery.com/jquery-3.1.1.js</a></p>
+</div>
+<div class="paragraph">
+<p>Save <code>jquery-3.1.1.js</code> to <code>grails-app/assets/javascripts</code>.</p>
+</div>
+<div class="paragraph">
+<p>Edit <code>grails-app/views/home/index.gsp</code>, add the following snippet in the <em>head</em> block.</p>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/views/home/index.gsp</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;asset:javascript</span> <span class="attribute-name">src</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">jquery-3.1.1.js</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+
+<span class="tag">&lt;script</span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">text/javascript</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+<span class="inline">  <span class="predefined">$</span>( document ).ready(<span class="keyword">function</span>() {
+    console.log( <span class="string"><span class="delimiter">&quot;</span><span class="content">jQuery 3.1.1 loaded!</span><span class="delimiter">&quot;</span></span> );
+  });</span>
+<span class="tag">&lt;/script&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Refresh the page, and open your browser&#8217;s developer console. You should see the string <code>jQuery 3.1.1 loaded!</code> in the console logs.</p>
+</div>
+
+
+<h1 id="services">8 Services</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/services.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Grails provides a "service layer", which are classes that encapsulate business logic and are wired (using <a href="https://en.wikipedia.org/wiki/Dependency_injection">dependency injection</a>) into the application context, so that any controller can inject and use them. Services are the preferred vehicle for most application logic, <strong>not</strong> controllers.</p>
+</div>
+<div class="paragraph">
+<p>If this seems confusing, think of it this way: controllers are intended to respond to the request and return a response. Services can be reused across many controllers (as well as in domain classes and from other services). Services are more versatile and can help you keep your controllers clean and prevent duplication of business logic. It is often easier to write unit tests against service methods than against controller actions, as well.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Controllers are for "web logic", services for "business logic"
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Again by convention, Grails will configure any Groovy classes within the <code>grails-app/services</code> directory as services. Services will be "wired" as <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/html/beans.html">Spring beans</a> in the Grails application context, which means you can refer to them simply by name from any other Spring bean (including controllers and domain classes).</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s add a feature to generate an estimated value for <code>Vehicle</code>, based on the make, model and year. We&#8217;ll put this logic in a service and call it from our application code.</p>
+</div>
+<div class="paragraph">
+<p>Create a new service using the <code>create-service</code> Grails command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ ./grailsw create-service ValueEstimateService
+
+| Created grails-app/services/org/grails/guides/ValueEstimateService.groovy
+| Created src/test/groovy/org/grails/guides/ValueEstimateServiceSpec.groovy</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Edit <code>grails-app/services/org/grails/guides/ValueEstimateService.groovy</code></p>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/services/org/grails/guides/ValueEstimateService.groovy</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> org.grails.guides
+
+<span class="keyword">import</span> <span class="include">grails.gorm.transactions.Transactional</span>
+
+<span class="annotation">@Transactional</span>
+<span class="type">class</span> <span class="class">ValueEstimateService</span> {
+
+    <span class="keyword">def</span> <span class="function">serviceMethod</span>() {
+
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Grails has provided a <code>serviceMethod</code> stub as an example. Delete it and replace it with the following content:</p>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/services/org/grails/guides/ValueEstimateService.groovy</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> org.grails.guides
+
+<span class="keyword">import</span> <span class="include">grails.gorm.transactions.Transactional</span>
+
+<span class="annotation">@Transactional</span>
+<span class="type">class</span> <span class="class">ValueEstimateService</span> {
+
+    <span class="keyword">def</span> <span class="function">getEstimate</span>(Vehicle vehicle) {
+        log.info <span class="string"><span class="delimiter">'</span><span class="content">Estimating vehicle value...</span><span class="delimiter">'</span></span>
+
+        <span class="comment">//TODO: Call third-party valuation API</span>
+        <span class="predefined-type">Math</span>.round (vehicle.name.size() + vehicle.model.name.size() * vehicle.year) * <span class="integer">2</span>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Obviously this method of estimating a vehicle&#8217;s value is pretty contrived! In reality you would likely call a third-party webservice to get a valuation, or perhaps run a query against your own database.  However, the point of this example is to show the sort of "business logic" that can be placed in services, rather than being calculated within a controller or view.</p>
+</div>
+<div class="paragraph">
+<p>Now, let&#8217;s use our new service.</p>
+</div>
+<div class="paragraph">
+<p>Edit <code>grails-app/controllers/org/grails/guides/VehicleController.groovy</code> (the scaffolded controller we generated earlier), and add the property shown below:</p>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/controllers/org/grails/guides/VehicleController.groovy</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="directive">static</span> namespace = <span class="string"><span class="delimiter">'</span><span class="content">scaffolding</span><span class="delimiter">'</span></span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>By simply defining a property in our controller with the same name as our service class, Grails will inject a reference to the service for us.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Now (still editing <code>VehicleController.groovy</code>), modify the <code>show</code> action as seen below:</p>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/controllers/org/grails/guides/VehicleController.groovy</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy">}
+
+<span class="keyword">def</span> <span class="function">show</span>(Vehicle vehicle) {</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We&#8217;ve added a new property to the <code>model</code>, called <code>estimatedValue</code>. The value of this property is the result of calling our service method, <code>getEstimate</code>, to which we pass the <code>vehicle</code> property we are about to render.</p>
+</div>
+<div class="paragraph">
+<p>Now, on the <code>show</code> page, we can access the <code>estimatedValue</code> property and display it on the page. Edit <code>grails-app/views/vehicle/show.gsp</code> as shown below:</p>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/views/vehicle/show.gsp</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy">&lt;div id=<span class="string"><span class="delimiter">&quot;</span><span class="content">show-vehicle</span><span class="delimiter">&quot;</span></span> <span class="type">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">content scaffold-show</span><span class="delimiter">&quot;</span></span> <span class="class">role</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">main</span><span class="delimiter">&quot;</span></span>&gt;
+    &lt;h1&gt;&lt;<span class="key">g</span>:message code=<span class="string"><span class="delimiter">&quot;</span><span class="content">default.show.label</span><span class="delimiter">&quot;</span></span> args=<span class="string"><span class="delimiter">&quot;</span><span class="content">[entityName]</span><span class="delimiter">&quot;</span></span> /&gt;&lt;<span class="regexp"><span class="delimiter">/</span><span class="content">h1&gt;</span></span><span class="error">
+</span>    &lt;h1&gt;Estimated <span class="key">Value</span>: &lt;<span class="key">g</span>:formatNumber number=<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">${</span>estimatedValue<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> type=<span class="string"><span class="delimiter">&quot;</span><span class="content">currency</span><span class="delimiter">&quot;</span></span> currencyCode=<span class="string"><span class="delimiter">&quot;</span><span class="content">USD</span><span class="delimiter">&quot;</span></span> /&gt;&lt;<span class="regexp"><span class="delimiter">/</span><span class="content">h1&gt;</span></span><span class="error">
+</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Restart the application and browse to the show page for a <code>Vehicle</code>, such as <code><a href="http://localhost:8080/vehicle/show/1" class="bare">http://localhost:8080/vehicle/show/1</a></code>. You should see the "Estimated Value" on the page</p>
+</div>
+
+
+<h1 id="testing">9 Testing your App</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/testing.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Testing is a vital part of web application development. Grails provides support for three types of testing: unit tests, integration tests, and functional tests. <a href="http://docs.grails.org/latest/guide/testing.html#unitTesting">Unit tests</a> are usually the simplest kind, focusing on a specific piece of code without depending on other parts of your app. <a href="http://docs.grails.org/latest/guide/testing.html#integrationTesting">Integration tests</a> require the Grails environment to be up and running, and are used to test features that depend on database or network resources. <a href="http://docs.grails.org/latest/guide/testing.html#functionalTesting">Functional tests</a> require the app to be running, and are designed to exercise the application almost as a user would, by making HTTP requests against it. These tend to be the most complex tests to write.</p>
+</div>
+<div class="paragraph">
+<p>The testing framework used by Grails is <a href="http://spockframework.org">Spock</a>. Spock provides an expressive syntax for writing test cases, based on the Groovy language, and so is a great fit for Grails. It includes a JUnit runner, which means IDE support is effectively universal (any IDE that can run JUnit tests can run Spock tests).</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Spock is a rich framework (even outside of Grails applications) and well worth your time to master, if you haven&#8217;t already. Check out the <a href="http://docs.spockframework.org">extensive documentation</a> for an introduction to Spock.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Grails tests are stored (by convention) in the <code>src/test/groovy</code> directory (unit tests) and <code>src/integration-test/groovy</code> directory (integration/functional tests).</p>
+</div>
+<div class="paragraph">
+<p>You can run your Grails tests using the <a href="http://docs.grails.org/latest/ref/Command%20Line/test-app.html"><code>test-app</code></a> command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ ./grailsw test-app</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you want to run only unit tests or integration/functional tests, you can pass in a command line flag to choose one or the other.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ ./grailsw test-app -unit
+$ ./grailsw test-app -integration</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can also run a specific test by passing the test class as an argument:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ ./grailsw test-app org.grails.guides.MyTestSpec</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Writing tests is a very broad topic and worthy of its own guide. In practice, the simplest (and often most useful) tests are unit tests, so let&#8217;s write a simple unit test to exercise our <code>ValueEstimateService</code>.</p>
+</div>
+<div class="paragraph">
+<p>Grails automatically creates a test spec for services created with the <code>create-service</code> command. Open <code>src/test/groovy/org/grails/guides/ValueEstimateServiceSpec</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">src/test/groovy/org/grails/guides/ValueEstimateServiceSpec</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> org.grails.guides
+
+<span class="keyword">import</span> <span class="include">grails.testing.gorm.DataTest</span>
+<span class="keyword">import</span> <span class="include">grails.testing.services.ServiceUnitTest</span>
+<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
+
+<span class="type">class</span> <span class="class">ValueEstimateServiceSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> ServiceUnitTest&lt;ValueEstimateService&gt;, DataTest {
+
+    <span class="keyword">def</span> <span class="function">setup</span>() {
+    }
+
+    <span class="keyword">def</span> <span class="function">cleanup</span>() {
+    }
+
+    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test something</span><span class="delimiter">&quot;</span></span>() {
+        <span class="key">expect</span>:<span class="string"><span class="delimiter">&quot;</span><span class="content">fix me</span><span class="delimiter">&quot;</span></span>
+            <span class="predefined-constant">true</span> == <span class="predefined-constant">false</span>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Currently our test spec has one test, <code>"test something"</code>, which asserts that <code>true == false</code>. Grails is helpfully encouraging you to do the right thing by kicking things off with a failing test.</p>
+</div>
+<div class="paragraph">
+<p>Try running the test, just to confirm it fails:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ /grailsw test-app org.grails.guides.ValueEstimateServiceSpec
+
+...
+&gt; There were failing tests. See the report at: file:///Users/dev/projects/creating-your-first-grails-app/complete/build/reports/tests/test/index.html
+
+BUILD FAILED
+
+Total time: 6.353 secs
+| Tests FAILED Test execution failed</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now that we&#8217;ve confirmed our test is failing, let&#8217;s edit this test case to exercise our <code>getEstimate</code> method. Edit <code>src/test/groovy/org/grails/guides/ValueEstimateServiceSpec</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">src/test/groovy/org/grails/guides/ValueEstimateServiceSpec.groovy</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> org.grails.guides
+
+<span class="keyword">import</span> <span class="include">grails.testing.gorm.DataTest</span>
+<span class="keyword">import</span> <span class="include">grails.testing.services.ServiceUnitTest</span>
+<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
+
+<span class="type">class</span> <span class="class">ValueEstimateServiceSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> ServiceUnitTest&lt;ValueEstimateService&gt;, DataTest {
+
+    <span class="type">void</span> setupSpec() { <i class="conum" data-value="1"></i><b>(1)</b>
+        mockDomain Make
+        mockDomain Model
+        mockDomain Vehicle
+    }
+
+    <span class="type">void</span> testEstimateRetrieval() {
+        <span class="key">given</span>: <span class="string"><span class="delimiter">'</span><span class="content">a vehicle</span><span class="delimiter">'</span></span>
+        <span class="keyword">def</span> make = <span class="keyword">new</span> Make(<span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Test</span><span class="delimiter">'</span></span>)
+        <span class="keyword">def</span> model = <span class="keyword">new</span> Model(<span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Test</span><span class="delimiter">'</span></span>, <span class="key">make</span>: make)
+        <span class="keyword">def</span> vehicle = <span class="keyword">new</span> Vehicle(<span class="key">year</span>: <span class="integer">2000</span>, <span class="key">make</span>: make, <span class="key">model</span>: model, <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Test Vehicle</span><span class="delimiter">'</span></span>)
+
+        <span class="key">when</span>: <span class="string"><span class="delimiter">'</span><span class="content">service is called</span><span class="delimiter">'</span></span>
+        <span class="keyword">def</span> estimate = service.getEstimate(vehicle)
+
+        <span class="key">then</span>: <span class="string"><span class="delimiter">'</span><span class="content">a non-zero result is returned</span><span class="delimiter">'</span></span>
+        estimate &gt; <span class="integer">0</span>
+
+        <span class="key">and</span>: <span class="string"><span class="delimiter">'</span><span class="content">estimate is not too large</span><span class="delimiter">'</span></span>
+        estimate &lt; <span class="integer">1000000</span>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>When mocking multiple objects using the updated testing framework in Grails 3.3 we now perform mocks during setup and no
+longer require the @Mock annotation.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We&#8217;ve kept things pretty simple in this test, since we don&#8217;t have very complex logic to test, but also so you can focus on the basic formula of the Spock test case. Spock provides a set of keywords which allow you to lay out your test in a very human-readable form.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>given</code> indicates a "setup" block - here you can set up any objects or variables needed to complete your test.</p>
+</li>
+<li>
+<p><code>when</code> and <code>then</code> are one of the most common "pairings" in Spock (another one, not used here, is <code>expect</code>/<code>where</code> - they define a statement and an expected result.</p>
+</li>
+<li>
+<p><code>and</code> simply continues on the current <code>then</code> block, but it allows you to specify your expectations for multiple assertions. Note that all of these blocks accept (optionally) a string description, which makes your test even more readable. E.g., <code>when: "this method is called"</code>, <code>then: "expect this result"</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Go ahead and rerun this test - if all&#8217;s well, it should pass with flying colors.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ ./grailsw test-app org.grails.guides.ValueEstimateServiceSpec
+
+...
+
+BUILD SUCCESSFUL
+
+| Tests PASSED</code></pre>
+</div>
+</div>
+
+
+<h1 id="deployment">10 Deploying your App</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/deployment.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The final step in developing a Grails application is building the finished project into a deployable package. Typically Java web applications are deployed as WAR files, and Grails makes this easy with the <code>war</code> command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ ./grailsw war
+...
+BUILD SUCCESSFUL
+
+| Built application to build/libs using environment: production</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>We didn&#8217;t cover the topic of <a href="http://docs.grails.org/latest/guide/conf.html">configuration</a> in this guide (although we did make some edits to our config files), but it&#8217;s worth mentioning here that Grails supports to concept of Environments, such as "development", "test", and "production". Each environment can have its own config properties and values, so you can have different settings between your development and production systems. By default, the <code>war</code> command uses the "production" environment - you can override this using the <code>-Dgrails.env</code> flag, like so:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ ./grailsw war -Dgrails.env=development
+...
+BUILD SUCCESSFUL
+
+| Built application to build/libs using environment: development</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Once we have our WAR file, we can deploy it in any JEE container, such as <a href="http://tomcat.apache.org">Tomcat</a>.</p>
+</div>
+<div class="paragraph">
+<p>Congratulations! You&#8217;ve built your first Grails application.</p>
+</div>
+
+
+<h1 id="helpWithGrails">11 Do you need help with Grails?</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails-guides/creating-your-first-grails-app/edit/master/src/main/docs/guide/helpWithGrails.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<h3 style="color: #333; margin-bottom:25px;"><a href="https://objectcomputing.com/" target="_blank">Object Computing, Inc.</a> (OCI) sponsored the creation of this Guide. A variety of consulting and support services are available.</h3>
+
+<!-- BEGIN HubSpot Consultation Form -->
+
+<!--[if lte IE 8]>
+<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2-legacy.js"></script>
+<![endif]-->
+<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2.js"></script>
+<script>
+  hbspt.forms.create({
+	portalId: "4547412",
+	formId: "f8bc9b16-d5f6-4226-a24e-da0eb8b73363"
+});
+</script>
+
+<!-- END HubSpot Consultation Form -->
+
+<h3 style="color: #333;">OCI is Home to Grails</h3>
+
+<p><a href="https://objectcomputing.com/products/2gm-team" target="_blank">Meet the Team</a></p>
+
+</article></div><footer>
+  <div class='content'>
+    <div class='ocihometograils'>
+      <span>Sponsored by</span>
+      <a href='https://objectcomputing.com/products/grails/'><img class='' src='/images/oci_home_to_grails.svg' alt='Object Computing - Home to Grails' width='300px' /></a>
+    </div>
+    <nav class='socialmedianav'><ul>
+  <li>
+    <a href='https://slack.grails.org'><img class='' src='/images/slack.svg' alt='Slack Icon' /></a>
+  </li>
+  <li>
+    <a href='https://www.youtube.com/watch?v=XnRNfDGkBVg&amp;list=PLI74De5M9T73uH3WilDCePP2qfSDpMaGu'><img class='' src='/images/youtube.svg' alt='Youtube Icon' /></a>
+  </li>
+  <li>
+    <a href='https://www.linkedin.com/groups/39757'><img class='' src='/images/linkedin.svg' alt='LinkedIn Icon' /></a>
+  </li>
+  <li>
+    <a href='https://github.com/grails/'><img class='' src='/images/github.svg' alt='Github Icon' /></a>
+  </li>
+  <li>
+    <a href='https://twitter.com/grailsframework'><img class='' src='/images/twitter.svg' alt='Twitter Icon' /></a>
+  </li>
+</ul></nav>
+    <nav class='partnersnav'><ul>
+  <li>Grails' repositories are hosted by
+    <a href='https://repo.grails.org/'>Artifactory</a>
+  </li>
+  <li>Website hosting provided by
+    <a href='https://aws.amazon.com/'>AWS</a>
+  </li>
+  <li>JetBrains supports Grails with its 
+    <a href='https://www.jetbrains.com/idea/'>IntelliJ IDEA IDE</a>
+  </li>
+  <li>YourKit supports Grails with its 
+    <a href='https://www.yourkit.com/java/profiler/index.jsp'>Java Profiler</a>
+  </li>
+  <li>Grails is Open Source
+    <a href='http://www.apache.org/licenses/LICENSE-2.0.html'>Apache 2 License</a>
+  </li>
+  <li>
+    <a href='https://grails.org/buildstatus.html'>Build Status</a>
+  </li>
+</ul></nav>
+  </div>
+</footer><div>
+  <script type='text/javascript'>
+              (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+              })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+              ga('create', 'UA-82213539-2', 'auto');
+              ga('send', 'pageview');
+</script>
+  <script type='text/javascript'>
+adroll_adv_id = "HBWJH4CQCJGS5DJRSB4Z4D";
+adroll_pix_id = "IVEQYFOZXZAPZMDVQH7BFE";
+/* OPTIONAL: provide email to improve user identification */
+/* adroll_email = "username@example.com"; */
+(function () {
+    var _onload = function(){
+        if (document.readyState && !/loaded|complete/.test(document.readyState)){setTimeout(_onload, 10);return}
+        if (!window.__adroll_loaded){__adroll_loaded=true;setTimeout(_onload, 50);return}
+        var scr = document.createElement("script");
+        var host = (("https:" == document.location.protocol) ? "https://s.adroll.com" : "http://a.adroll.com");
+        scr.setAttribute('async', 'true');
+        scr.type = "text/javascript";
+        scr.src = host + "/j/roundtrip.js";
+        ((document.getElementsByTagName('head') || [null])[0] ||
+            document.getElementsByTagName('script')[0].parentNode).appendChild(scr);
+    };
+    if (window.addEventListener) {window.addEventListener('load', _onload, false);}
+    else {window.attachEvent('onload', _onload)}
+}());            
+</script>
+</div></body>
+</html>

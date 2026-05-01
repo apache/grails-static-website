@@ -33,6 +33,16 @@ dependencies {
     // HTML parser used by the guides verification harness.
     implementation "org.jsoup:jsoup:$jsoupVersion"
 
+    // Runtime dependencies for the vendored grails/doc/* renderer.
+    // The renderer (DocPublisher, DocEngine, AsciiDocEngine, macros, filters)
+    // was vendored from apache/grails-core 7.2.x build-logic/docs-core.
+    // See buildSrc/VENDOR.md for source SHA + re-vendor procedure.
+    implementation "org.apache.commons:commons-text:$commonsTextVersion"
+    implementation "org.apache.ant:ant:$antVersion"
+    implementation "org.grails:grails-gdoc-engine:$grailsGdocEngineVersion"
+    implementation "org.slf4j:slf4j-api:$slf4jVersion"
+    implementation "org.slf4j:jcl-over-slf4j:$slf4jVersion"
+
     testImplementation 'org.spockframework:spock-core'
 
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
@@ -47,6 +57,24 @@ gradlePlugin {
             description = 'Creates tasks to generate the Grails Website'
         }
     }
+}
+
+// Package the vendored grails-doc templates (style/, css/, js/, fonts/, img/)
+// into a jar that the vendored DocPublisher loads at runtime via
+// `getClassLoader().getResource('grails-doc-files.jar')`. The inner jar is
+// nested inside the outer buildSrc jar so the classloader can resolve it
+// by name. Mirrors apache/grails-core 7.2.x build-logic/docs-core's
+// docFilesJar pattern; required to unblock DocPublisher.unpack().
+def docFilesJar = tasks.register('docFilesJar', Jar) {
+    description = 'Package vendored grails-doc templates so DocPublisher can locate them on the runtime classpath.'
+    archiveBaseName = 'grails-doc-files'
+    archiveVersion = ''
+    from 'src/main/template'
+}
+
+tasks.named('jar', Jar) {
+    dependsOn docFilesJar
+    from(docFilesJar.flatMap { it.archiveFile })
 }
 
 tasks.withType(Test).configureEach {
