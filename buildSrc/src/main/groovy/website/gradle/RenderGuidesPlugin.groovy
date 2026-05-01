@@ -20,7 +20,8 @@ package website.gradle
 
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
-
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 import org.gradle.api.Project
 import org.gradle.api.file.Directory
 import org.yaml.snakeyaml.Yaml
@@ -206,14 +207,8 @@ class RenderGuidesPlugin {
                 String renderTaskName = "renderGuide_${safeName}_${safeVersion}"
                 String stagedRelPath = "staged-guides/${guideName}/${versionKey}"
 
-                // {commondir} resolves relative to each guide's .adoc file,
-                // pointing at the staged copy of guides/common/.
-                attributes.put('commondir', 'common')
-
                 // Stage the per-version source into a working layout that
-                // DocPublisher expects: <staged>/guide/*.adoc + toc.yml. The
-                // shared guides/common/ snippets are copied alongside as
-                // <staged>/guide/common/ so {commondir} resolves cleanly.
+                // DocPublisher expects: <staged>/guide/*.adoc + toc.yml.
                 File commonDirSrc = project.rootProject.layout.projectDirectory
                         .dir('guides/common').asFile
                 project.tasks.register(stageTaskName, org.gradle.api.tasks.Sync) { stage ->
@@ -221,7 +216,6 @@ class RenderGuidesPlugin {
                     stage.description = "Stages ${guideName} v${versionKey} source for the vendored grails-doc renderer"
                     stage.into(project.layout.buildDirectory.dir(stagedRelPath))
                     stage.from(versionDir) {
-                        // Top-level toc.yml is repositioned into guide/ below.
                         exclude 'toc.yml'
                     }
                     File rootToc = new File(versionDir, 'toc.yml')
@@ -230,10 +224,14 @@ class RenderGuidesPlugin {
                             into 'guide'
                         }
                     }
-                    if (commonDirSrc.isDirectory()) {
-                        stage.from(commonDirSrc) {
-                            into 'guide/common'
-                        }
+                    // The vendored grails-doc renderer drives AsciidoctorJ
+                    // without a baseDir, so include::{commondir}/foo.adoc[]
+                    // never resolves. Inline the shared snippets into each
+                    // staged .adoc at config time instead.
+                    stage.doLast {
+                        File guideDir = project.layout.buildDirectory.dir(stagedRelPath).get().asFile
+                        File guideAdocDir = new File(guideDir, 'guide')
+                        inlineCommonIncludes(guideAdocDir, commonDirSrc)
                     }
                 }
 
@@ -343,6 +341,41 @@ class RenderGuidesPlugin {
      * must be scalar.</p>
      */
     @CompileDynamic
+    /**
+     * Replaces {@code include::{commondir}/common-*.adoc[]} directives in
+     * every staged .adoc with the literal contents of the common snippet.
+     * The vendored renderer's AsciidoctorJ wrapper has no baseDir, so
+     * include resolution would otherwise fall through.
+     */
+    @CompileDynamic
+    private static void inlineCommonIncludes(File guideAdocDir, File commonDir) {
+        if (!guideAdocDir.isDirectory() || !commonDir.isDirectory()) {
+            return
+        }
+        Pattern pat = Pattern.compile(/include::\{commondir\}\/(common-[\w\-]+\.adoc)\[\]/)
+        guideAdocDir.eachFileRecurse { File f ->
+            if (!f.isFile() || !f.name.endsWith('.adoc')) return
+            String text = f.getText('UTF-8')
+            Matcher m = pat.matcher(text)
+            if (!m.find()) return
+            StringBuilder out = new StringBuilder()
+            int last = 0
+            m.reset()
+            while (m.find()) {
+                out.append(text, last, m.start())
+                File snippet = new File(commonDir, m.group(1))
+                if (snippet.isFile()) {
+                    out.append(snippet.getText('UTF-8'))
+                } else {
+                    out.append("// missing include: ${m.group(1)}\n".toString())
+                }
+                last = m.end()
+            }
+            out.append(text, last, text.length())
+            f.setText(out.toString(), 'UTF-8')
+        }
+    }
+
     /**
      * Reads the shared chrome partials from {@code templates/partials/} and
      * exposes them as {@code siteHead}, {@code siteHeader}, {@code siteFooter}
