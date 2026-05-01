@@ -52,16 +52,17 @@ import org.asciidoctor.extension.PreprocessorReader
 class SnippetVendoringIncludeProcessor extends IncludeProcessor {
 
     /**
-     * Audit record for one vendored include. The Gradle task that
-     * orchestrates vendoring serializes a list of these into
-     * {@code snippets/MANIFEST.yml}.
+     * Audit record for one vendored snippet file. Per-file (not per-include).
+     * If the same snippet is included multiple times with different
+     * {@code tag=}/{@code lines=} filters, only one entry is emitted -- the
+     * filtering attributes themselves remain on the include directives in
+     * the {@code .adoc} files (preserved verbatim by the rewrite), so
+     * AsciiDoctor's built-in IncludeProcessor honours them at render time.
      */
     @ToString(includeNames = true)
     static class ManifestEntry {
         String vendoredPath          // relative to snippets/, e.g. 'grails-app/domain/Foo.groovy'
         String upstreamPath          // relative to sample repo root, e.g. 'complete/grails-app/domain/Foo.groovy'
-        String filterLines           // value of `lines=` attribute on the include, if present
-        String filterTag             // value of `tag=` or `tags=` attribute, if present
     }
 
     private final File sampleRepoRoot
@@ -117,14 +118,10 @@ class SnippetVendoringIncludeProcessor extends IncludeProcessor {
 
         if (isUnderSampleRepo(resolved)) {
             String vendoredRel = vendor(resolved)
-            String filterLines = attributes['lines']?.toString()
-            String filterTag = (attributes['tag'] ?: attributes['tags'])?.toString()
             if (!vendoredAlready.contains(vendoredRel)) {
                 manifestEntries << new ManifestEntry(
                         vendoredPath: vendoredRel,
-                        upstreamPath: relativeTo(sampleRepoRoot, resolved),
-                        filterLines: filterLines,
-                        filterTag: filterTag)
+                        upstreamPath: relativeTo(sampleRepoRoot, resolved))
                 vendoredAlready.add(vendoredRel)
             }
             String rewritten = "../snippets/${vendoredRel}".toString()
@@ -190,8 +187,13 @@ class SnippetVendoringIncludeProcessor extends IncludeProcessor {
         if (!dest.parentFile.exists()) {
             dest.parentFile.mkdirs()
         }
-        if (!dest.exists()) {
-            dest.bytes = resolved.bytes
+        // Always overwrite. Re-running the vendor task with a new upstream
+        // SHA must propagate any upstream content changes; skipping when
+        // dest already existed would silently leave stale snippet bodies
+        // on disk after a SHA bump.
+        byte[] sourceBytes = resolved.bytes
+        if (!dest.exists() || !Arrays.equals(dest.bytes, sourceBytes)) {
+            dest.bytes = sourceBytes
         }
         // Asciidoctor-friendly forward-slash path
         stripped.replace('\\', '/')

@@ -111,6 +111,13 @@ abstract class VendorGuideTask extends DefaultTask {
 
         File destGuideDir = new File(dest, 'guide')
         File destSnippetsDir = new File(dest, 'snippets')
+        // Clean before writing so files removed (or moved) upstream don't
+        // linger in the fixture across re-vendor runs. We deliberately
+        // recreate only the two managed subtrees rather than wiping
+        // {@code dest} entirely so any sibling files outside this task's
+        // contract (e.g. a hand-curated note file) survive.
+        if (destGuideDir.exists()) destGuideDir.deleteDir()
+        if (destSnippetsDir.exists()) destSnippetsDir.deleteDir()
         destGuideDir.mkdirs()
         destSnippetsDir.mkdirs()
 
@@ -164,11 +171,38 @@ abstract class VendorGuideTask extends DefaultTask {
             new File(destGuideDir, adoc.name).text = rewritten
         }
 
-        writeManifestYml(new File(dest, 'manifest.yml'), manifestData)
-        writeSnippetsManifestYml(new File(destSnippetsDir, 'MANIFEST.yml'), manifestData, processor.manifest)
+        // Augment manifest data with the upstream commit timestamp,
+        // queried from the local checkout. Doing it here (rather than
+        // requiring callers to pass it in) keeps the task self-contained.
+        Map<String, Object> augmented = new LinkedHashMap<>(manifestData)
+        if (!augmented.containsKey('sourceCommitDate')) {
+            String sha = augmented['githubSha'] as String
+            if (sha) {
+                String date = readUpstreamCommitDate(sampleRoot, sha)
+                if (date) augmented['sourceCommitDate'] = date
+            }
+        }
+
+        writeManifestYml(new File(dest, 'manifest.yml'), augmented)
+        writeSnippetsManifestYml(new File(destSnippetsDir, 'MANIFEST.yml'), augmented, processor.manifest)
 
         logger.lifecycle('Vendored {} -> {} ({} snippet(s))',
                 sampleRoot.name, dest.name, processor.manifest.size())
+    }
+
+    private static String readUpstreamCommitDate(File repoRoot, String sha) {
+        try {
+            ProcessBuilder pb = new ProcessBuilder(
+                    'git', '-C', repoRoot.absolutePath,
+                    'log', '-1', '--format=%aI', sha)
+            pb.redirectErrorStream(true)
+            Process p = pb.start()
+            String out = p.inputStream.text.trim()
+            int rc = p.waitFor()
+            return (rc == 0 && out) ? out : null
+        } catch (Exception ignored) {
+            return null
+        }
     }
 
     @CompileDynamic
@@ -187,15 +221,16 @@ abstract class VendorGuideTask extends DefaultTask {
         source['repo'] = guideData['githubSlug']
         source['branch'] = guideData['githubBranch']
         source['sha'] = guideData['githubSha']
-        source['capturedAt'] = guideData['sourceCommitDate']
+        // capturedAt is the vendoring timestamp (when this manifest was
+        // written), not the upstream commit date. The upstream commit date
+        // is recorded in manifest.yml's sourceCommitDate field.
+        source['capturedAt'] = java.time.LocalDate.now().toString()
         top['source'] = source
         top['entries'] = entries.collect { entry ->
-            Map<String, Object> e = [:]
-            e['vendoredPath'] = entry.vendoredPath
-            e['upstreamPath'] = entry.upstreamPath
-            if (entry.filterLines != null) e['filterLines'] = entry.filterLines
-            if (entry.filterTag != null) e['filterTag'] = entry.filterTag
-            return e
+            [
+                    vendoredPath: entry.vendoredPath,
+                    upstreamPath: entry.upstreamPath,
+            ] as Map<String, Object>
         }
         DumperOptions opts = new DumperOptions()
         opts.defaultFlowStyle = DumperOptions.FlowStyle.BLOCK
