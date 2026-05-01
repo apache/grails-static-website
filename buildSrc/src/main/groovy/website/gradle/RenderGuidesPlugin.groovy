@@ -230,6 +230,19 @@ class RenderGuidesPlugin {
                     // copy byte-clean for re-vendor.
                     task.notCompatibleWithConfigurationCache(
                             'Vendored grails.doc.gradle.PublishGuideTask references Project + AntBuilder')
+                    // Several main-site rendering tasks declare build/ as their
+                    // @OutputDirectory (they write to build/dist/<x>.html), which
+                    // overlaps with build/staged-guides/<name>/<v>/. Without
+                    // explicit ordering, Gradle 9.4 raises a fatal validation
+                    // error: 'renderGuide_* uses output of :renderSite/:genPlugins/
+                    // :renderBlog/:renderMinutes/:genProfilesPage without declaring
+                    // dependency'. mustRunAfter resolves the ordering without
+                    // forcing those tasks to be invoked when only renderGuide_* is
+                    // scheduled.
+                    task.mustRunAfter('renderSite', 'genPlugins', 'renderBlog',
+                            'renderMinutes', 'genProfilesPage', 'genHtaccess',
+                            'genBskyAtProtoDid', 'genSitemap', 'copyAssets',
+                            'genDocsPage', 'genDownloads', 'genFaq', 'genGuides')
                 }
                 wiring.renderTaskNames << renderTaskName
 
