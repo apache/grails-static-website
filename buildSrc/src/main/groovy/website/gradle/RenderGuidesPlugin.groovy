@@ -64,8 +64,12 @@ import website.gradle.tasks.VendorGuideTask
  *
  * <p>The renderer itself is the vendored {@code grails.doc.*} subtree (see
  * {@code buildSrc/VENDOR.md}). Templates and theme assets live in
- * {@code buildSrc/src/main/template/} and are passed to
- * {@link PublishGuideTask#getResourcesDir()} as a filesystem path.</p>
+ * {@code guides/resources/} and are passed to
+ * {@link PublishGuideTask#getResourcesDir()} as a filesystem path. The
+ * {@code guides/resources/style/layout.html} template renders the legacy
+ * single-page guide chrome; {@code guideItem.html}, {@code section.html},
+ * {@code index.html}, {@code menu.html}, and {@code referenceItem.html}
+ * round out the bundle DocPublisher expects.</p>
  */
 @CompileStatic
 class RenderGuidesPlugin {
