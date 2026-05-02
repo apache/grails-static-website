@@ -3,8 +3,8 @@
 Apache Grails is supported by an active community of contributors and the Apache Software Foundation. If you need help working through a guide, want to discuss the framework, or have run into something that looks like a bug, the channels below are the right place to start.
 
 * https://slack.grails.org[Slack] - real-time conversation with the Apache Grails community.
-* https://lists.apache.org/list.html?dev%40grails.apache.org[Developer mailing list] - design discussions and contributor coordination.
-* https://lists.apache.org/list.html?users%40grails.apache.org[Users mailing list] - end-user questions and answers.
+* link:++https://lists.apache.org/list.html?dev@grails.apache.org++[Developer mailing list] - design discussions and contributor coordination.
+* link:++https://lists.apache.org/list.html?users@grails.apache.org++[Users mailing list] - end-user questions and answers.
 * https://github.com/apache/grails-core/issues[Issue tracker on GitHub] - file a bug or feature request against the framework.
 
 For Grails plugins, see the matching project on https://github.com/apache?q=grails[the apache org] or the plugin's own GitHub repository.
