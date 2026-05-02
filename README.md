@@ -242,7 +242,7 @@ Repositories under [`https://github.com/grails-guides`](https://github.com/grail
 
 **Contact the PMC via the [community page](https://grails.apache.org/community.html):**
 
-- **Dev mailing list**: subscribe by sending a blank email to [`dev-subscribe@grails.apache.org`](mailto:dev-subscribe@grails.apache.org), then post your request to [`dev@grails.apache.org`](https://lists.apache.org/list.html?dev%40grails.apache.org). Include the proposed guide name, a one-line description, and which Grails major version(s) the sample will target.
+- **Dev mailing list**: subscribe by sending a blank email to [`dev-subscribe@grails.apache.org`](mailto:dev-subscribe@grails.apache.org), then post your request to [`dev@grails.apache.org`](https://lists.apache.org/list.html?dev@grails.apache.org). Include the proposed guide name, a one-line description, and which Grails major version(s) the sample will target.
 - **Slack**: join via [https://slack.grails.org](https://slack.grails.org) and ping the PMC in the appropriate channel.
 
 A PMC member with org-admin access on `grails-guides` will create the repository, set the default branch (the latest `grails<N>` you target), and grant you push access. From there you push your `initial/` (and optionally `complete/`) tree as normal.
@@ -401,5 +401,5 @@ All static assets used by the main site live under [`assets/`](assets/). Assets 
 For broader Grails contribution discussion and questions:
 
 - [Community page](https://grails.apache.org/community.html)
-- [Dev mailing list](https://lists.apache.org/list.html?dev%40grails.apache.org)
+- [Dev mailing list](https://lists.apache.org/list.html?dev@grails.apache.org)
 - [Slack](https://slack.grails.org)
