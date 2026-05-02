@@ -1,0 +1,28 @@
+Run the following command to download a `web` profile starter for Grails 8 with Hibernate, Tomcat, DevTools, and the JDK 25 toolchain:
+
+[source,bash]
+----
+curl --location --request GET \
+  'https://prev-snapshot.grails.org/create/web/example.library?gorm=HIBERNATE&servlet=TOMCAT&reloading=DEVTOOLS&javaVersion=JDK_25' \
+  --output library.zip
+unzip library.zip -d library
+cd library
+----
+
+The query string controls four feature toggles:
+
+* `gorm=HIBERNATE` - uses Hibernate as the GORM data store (the default; the alternative is `MONGODB`).
+* `servlet=TOMCAT` - embeds Apache Tomcat as the servlet container.
+* `reloading=DEVTOOLS` - wires in Spring Boot DevTools so file changes restart the JVM.
+* `javaVersion=JDK_25` - sets the source/target compatibility to JDK 25 in `build.gradle`.
+
+The resulting project is a self-contained Gradle build. Verify it boots before you go further:
+
+[source,bash]
+----
+./gradlew bootRun
+----
+
+Open `http://localhost:8080/` in a browser and you should see the default Grails landing page. Stop the application with `Ctrl+C` once you have confirmed it runs.
+
+NOTE: If `prev-snapshot.grails.org` is not reachable in your environment, you can pin Grails 8 manually instead. Add the snapshot Maven repository to `build.gradle` and set `grailsVersion=8.0.0-SNAPSHOT` in `gradle.properties`. The link:https://repo.grails.org/grails/libs-snapshots-local/[Apache Grails snapshot repository] hosts the artifacts.

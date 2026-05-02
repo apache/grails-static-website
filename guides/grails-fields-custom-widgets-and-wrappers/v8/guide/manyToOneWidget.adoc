@@ -1,0 +1,24 @@
+A many-to-one association on `Book.author` reads `belongsTo = [author: Author]` and stores `author_id` on the `book` table. The default Fields widget renders all candidates as `<select>` options labelled by `Author.toString()`.
+
+Customise `_fields/manyToOne/_widget.gsp` once and every many-to-one in the application picks it up:
+
+[source,html]
+.grails-app/views/_fields/manyToOne/_widget.gsp
+----
+include::../snippets/grails-app/views/_fields/manyToOne/_widget.gsp[]
+----
+
+Two points worth highlighting:
+
+* `persistentProperty.associatedEntity.javaClass` is how you reach the other side without hard-coding `Author` in the template. The same template now serves every many-to-one in the app - `Book.author`, `OrderItem.product`, whatever you add tomorrow.
+* The `name` attribute uses `${prefix}${property}.id`, not just `${property}`. Grails data binding writes the looked-up `Author` instance into `book.author` when the form posts; the trailing `.id` is what tells the binder to look up the row, not assign the literal value.
+
+The matching display widget renders the association as a link to the show page of the referenced entity:
+
+[source,html]
+.grails-app/views/_fields/manyToOne/_displayWidget.gsp
+----
+include::../snippets/grails-app/views/_fields/manyToOne/_displayWidget.gsp[]
+----
+
+Now both the show page (`<f:display bean="book"/>`) and the list view (`<f:table collection="${bookList}"/>`) render `book.author` as a clickable link to the author show page, with one template instead of one piece of markup per consumer.

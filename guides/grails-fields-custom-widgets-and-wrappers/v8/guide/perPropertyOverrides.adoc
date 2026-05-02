@@ -1,0 +1,3 @@
+Type-level customisation is enough for 90% of the form. The remaining 10% is the place where an individual property has a presentation requirement that does not generalise to its type. The Fields plugin handles this with a per-class, per-property template path: `_fields/<class>/<property>/_widget.gsp` (or `_wrapper.gsp`).
+
+Two examples on the `Book` class show both axes.

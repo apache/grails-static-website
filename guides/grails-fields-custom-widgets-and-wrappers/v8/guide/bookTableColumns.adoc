@@ -1,0 +1,21 @@
+Sometimes a single column wants formatting that does not generalise to the property's type. For example, the `priceUSD` column on the books table should render with a `$` prefix and two decimal places, but you do not want every `BigDecimal` in the app to look like USD.
+
+Per-class, per-property display widgets work the same way as form widgets. Create `_fields/book/priceUSD/_displayWidget.gsp`:
+
+[source,html]
+.grails-app/views/_fields/book/priceUSD/_displayWidget.gsp
+----
+<g:formatNumber number="${value}" type="currency" currencyCode="USD"/>
+----
+
+The `<f:displayWidget>` call inside the table template dispatches to the most-specific path, so the price column picks up the currency formatting. The other `BigDecimal` columns in the app keep using whatever `_fields/bigDecimal/_displayWidget.gsp` (or the default) produces.
+
+A second example: render `Book.author` as the author's `name` rather than the default `toString()`:
+
+[source,html]
+.grails-app/views/_fields/book/author/_displayWidget.gsp
+----
+<g:if test="${value}"><g:link controller="author" action="show" id="${value.id}">${value.name}</g:link></g:if>
+----
+
+The same display widget is also picked up by `<f:display bean="book" property="author"/>` on the show page - one customisation, two consumers.

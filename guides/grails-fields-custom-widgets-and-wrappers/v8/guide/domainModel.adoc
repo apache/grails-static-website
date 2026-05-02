@@ -1,0 +1,1 @@
+A small library is the right size to exercise every interesting customisation hook in the Fields plugin: two domain classes, a `belongsTo` association, a few different property types (`String`, `Date`, `Boolean`, `BigDecimal`), and a handful of constraints (`inList`, `email`, `url`, `matches`, `widget: 'textarea'`) that drive widget selection.

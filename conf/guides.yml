@@ -345,7 +345,6 @@ guides:
             title: Grails Training
           gettingStarted:
             title: Getting Started
-            title: Getting Started
             requirements: What you will need
             howto: How to complete the guide
           overview:
@@ -2019,6 +2018,82 @@ guides:
             title: Running the Tests
           helpWithGrails:
             title: Help with Grails
+
+  - name: 'grails-fields-custom-widgets-and-wrappers'
+    title: 'Grails Fields Plugin: Custom Widgets, Wrappers, and Tables'
+    subtitle: 'Drive every CRUD page with f:all, f:display, and f:table while customising widgets, wrappers, and table columns once for the whole app'
+    authors:
+      - 'James Fredley'
+    category: 'Web Layer'
+    publicationDate: '2026-05-02'
+    versions:
+      '8':
+        sourcePath: guides/grails-fields-custom-widgets-and-wrappers/v8
+        publicationDate: '2026-05-02'
+        tags:
+          - 'fields'
+          - 'gsp'
+          - 'scaffolding'
+          - 'crud'
+          - 'grails8'
+        sampleRef:
+          repo: 'grails-guides/grails-fields-custom-widgets-and-wrappers'
+          branch: 'grails8'
+        toc:
+          gettingStarted:
+            title: Getting Started
+            whatYouWillBuild: What You Will Build
+            requirements: What You Will Need
+            howto: How to Complete the Guide
+          createApp:
+            title: Creating the Application
+            download: Download a Grails 8 Snapshot Starter
+            fieldsPluginAlreadyIncluded: The Fields Plugin in Grails 8
+          domainModel:
+            title: The Book and Author Domain Model
+            authorClass: Author Domain Class
+            bookClass: Book Domain Class
+            bootstrapData: Bootstrap Sample Data
+          scaffolding:
+            title: Scaffolding the CRUD Controllers
+            generateControllers: Generate Controllers
+            defaultViews: Why the Default Views Are Not Enough
+          fAllAndFDisplay:
+            title: Replacing the GSPs with f:all and f:display
+            fAllInCreate: f:all in create.gsp
+            fAllInEdit: f:all in edit.gsp
+            fDisplayInShow: f:display in show.gsp
+          fTable:
+            title: Replacing list.gsp with f:table
+            fTableForBooks: f:table for Books
+            fTableForAuthors: f:table for Authors
+          templateLookup:
+            title: Template Lookup Precedence
+          customDefaultWrapper:
+            title: Customising the Default Wrapper
+          customWidgets:
+            title: Customising Widgets by Type
+            stringWidget: Custom String Widget With Constraints
+            dateWidget: Custom Date Widget
+            booleanWidget: Custom Boolean Widget
+          associationWidgets:
+            title: Customising Association Widgets
+            manyToOneWidget: many-to-one
+            oneToOneWidget: one-to-one
+            oneToManyWidget: one-to-many
+            manyToManyWidget: many-to-many
+          perPropertyOverrides:
+            title: Per-Property Overrides
+            bookIsbn: Per-Property Widget for ISBN
+            bookDescription: Per-Property Wrapper for Description
+          customTable:
+            title: Customising the Table Template
+            bookTableTemplate: A Custom _table.gsp for Book
+            bookTableColumns: Per-Column Cell Overrides
+          cleanCrud:
+            title: The Result - Clean CRUD GSPs
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'grails-file-download-excel'
     title: 'Download an Excel file in Grails App'
@@ -3849,7 +3924,6 @@ guides:
             title: Grails Training
           gettingStarted:
             title: Getting Started
-            title: Getting Started
             architecture: Architecture
             requirements: What you will need
             howto: How to complete the guide
@@ -3883,7 +3957,6 @@ guides:
           training:
             title: Grails Training
           gettingStarted:
-            title: Getting Started
             title: Getting Started
             architecture: Architecture
             requirements: What you will need

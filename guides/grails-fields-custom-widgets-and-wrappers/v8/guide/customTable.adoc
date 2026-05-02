@@ -1,0 +1,3 @@
+`<f:table>` reads its column list from the `properties` attribute (or the first seven of the bean), looks each property up in `_displayWidget.gsp` for the cell, and emits a `<table>` with a header row.
+
+You can customise tables at two layers: the whole-table template (`_table.gsp`) and the individual cell templates (`_displayWidget.gsp`). Both follow the same lookup precedence as the form templates - per-class first, then default fallback.

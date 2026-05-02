@@ -1,0 +1,14 @@
+Override the scaffolded list view for books with this single-line replacement:
+
+[source,html]
+.grails-app/views/book/index.gsp
+----
+include::../snippets/grails-app/views/book/index.gsp[]
+----
+
+The two attributes you will use most often:
+
+* `properties="title,author,genre,priceUSD,inStock"` - explicitly pick which columns to render and in which order. Without this, `<f:table>` picks the first seven properties from `Book` in declaration order.
+* `except="id,version,dateCreated,lastUpdated"` - drop columns you almost never want in a list view.
+
+Visit `http://localhost:8080/book/index` and you should see a basic table. The cell formatting (the `priceUSD` decimal format, the `Author` association label, the `Boolean` checkmark) is whatever the default display widgets produce - we will replace those next.

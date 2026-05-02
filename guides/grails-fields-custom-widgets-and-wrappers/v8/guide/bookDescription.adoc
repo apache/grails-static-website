@@ -1,0 +1,17 @@
+`Book.description` uses `widget: 'textarea'`, which already routes the widget lookup to a textarea. What it does _not_ have is a character counter - a single-property feature that does not belong on every textarea in the app.
+
+Create `_fields/book/description/_wrapper.gsp` (a per-property *wrapper*, not widget):
+
+[source,html]
+.grails-app/views/_fields/book/description/_wrapper.gsp
+----
+include::../snippets/grails-app/views/_fields/book/description/_wrapper.gsp[]
+----
+
+A few things to notice:
+
+. The wrapper still produces a label, the required marker, and the error list - the same shape as the default wrapper. This consistency is a soft requirement: if every wrapper in the app has the same skeleton, users feel the form is uniform.
+. The wrapper renders `<f:widget property="${property}"/>` to ask the plugin to do the widget lookup _inside_ a custom wrapper. The plugin will dispatch to `_fields/string/_widget.gsp` for the textarea (because of the `widget: 'textarea'` constraint), then this wrapper splices it inline.
+. The `<small>` element with the live counter is per-property concern that does not leak to any other field.
+
+If you want this behaviour on _every_ textarea, move the same template to `_fields/textarea/_wrapper.gsp` and the precedence rules will pick it up app-wide.
