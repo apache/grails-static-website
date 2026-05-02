@@ -2,15 +2,15 @@ Create the `Author` domain class first. Authors have a name, an email address, a
 
 [source,bash]
 ----
-./grailsw create-domain-class example.library.Author
+./grailsw create-domain-class example.Author
 ----
 
 Replace the contents of the generated file with:
 
 [source,groovy]
-.grails-app/domain/example/library/Author.groovy
+.grails-app/domain/example/Author.groovy
 ----
-include::../snippets/grails-app/domain/example/library/Author.groovy[]
+include::../snippets/grails-app/domain/example/Author.groovy[]
 ----
 
 Notable constraints:
@@ -25,7 +25,7 @@ Notable constraints:
 The `ContactInfo` class is a thin owned domain object:
 
 [source,groovy]
-.grails-app/domain/example/library/ContactInfo.groovy
+.grails-app/domain/example/ContactInfo.groovy
 ----
-include::../snippets/grails-app/domain/example/library/ContactInfo.groovy[]
+include::../snippets/grails-app/domain/example/ContactInfo.groovy[]
 ----

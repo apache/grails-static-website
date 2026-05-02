@@ -2,15 +2,15 @@ Create the `Book` domain class. A book belongs to one `Author`, has an ISBN that
 
 [source,bash]
 ----
-./grailsw create-domain-class example.library.Book
+./grailsw create-domain-class example.Book
 ----
 
 Replace the contents of the generated file with:
 
 [source,groovy]
-.grails-app/domain/example/library/Book.groovy
+.grails-app/domain/example/Book.groovy
 ----
-include::../snippets/grails-app/domain/example/library/Book.groovy[]
+include::../snippets/grails-app/domain/example/Book.groovy[]
 ----
 
 Each constraint here will drive a customisation later in the guide:
@@ -24,9 +24,9 @@ Each constraint here will drive a customisation later in the guide:
 `Tag` itself is the join-side domain:
 
 [source,groovy]
-.grails-app/domain/example/library/Tag.groovy
+.grails-app/domain/example/Tag.groovy
 ----
-include::../snippets/grails-app/domain/example/library/Tag.groovy[]
+include::../snippets/grails-app/domain/example/Tag.groovy[]
 ----
 
 The `static mapping` block on `Book` sorts list views by `title` ascending, which we will exploit when we customise the table template.

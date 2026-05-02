@@ -1,9 +1,9 @@
-Replace `grails-app/init/example/library/BootStrap.groovy` with the following so that the application starts with a few authors and books to look at:
+Replace `grails-app/init/example/BootStrap.groovy` with the following so that the application starts with a few authors and books to look at:
 
 [source,groovy]
-.grails-app/init/example/library/BootStrap.groovy
+.grails-app/init/example/BootStrap.groovy
 ----
-include::../snippets/grails-app/init/example/library/BootStrap.groovy[]
+include::../snippets/grails-app/init/example/BootStrap.groovy[]
 ----
 
 Restart the application with `./gradlew bootRun`. The H2 database is in-memory by default, so the seed data is recreated on every startup.

@@ -7,27 +7,27 @@
 source:
   repo: grails-guides/grails-fields-custom-widgets-and-wrappers
   branch: grails8
-  sha: "0000000000000000000000000000000000000000"
+  sha: "f62446666870d5347f68a34ec89cfc464ec3aa1f"
   capturedAt: "2026-05-02"
 
 # The snippets/ directory mirrors the upstream `complete/` sample-app
 # source tree at the relative paths listed below. The .adoc files in
 # ../guide/ reference these via `include::../snippets/<path>[options]`.
 snippets:
-  - path: grails-app/domain/example/library/Author.groovy
-    upstream: complete/grails-app/domain/example/library/Author.groovy
-  - path: grails-app/domain/example/library/Book.groovy
-    upstream: complete/grails-app/domain/example/library/Book.groovy
-  - path: grails-app/domain/example/library/ContactInfo.groovy
-    upstream: complete/grails-app/domain/example/library/ContactInfo.groovy
-  - path: grails-app/domain/example/library/Tag.groovy
-    upstream: complete/grails-app/domain/example/library/Tag.groovy
-  - path: grails-app/controllers/example/library/AuthorController.groovy
-    upstream: complete/grails-app/controllers/example/library/AuthorController.groovy
-  - path: grails-app/controllers/example/library/BookController.groovy
-    upstream: complete/grails-app/controllers/example/library/BookController.groovy
-  - path: grails-app/init/example/library/BootStrap.groovy
-    upstream: complete/grails-app/init/example/library/BootStrap.groovy
+  - path: grails-app/domain/example/Author.groovy
+    upstream: complete/grails-app/domain/example/Author.groovy
+  - path: grails-app/domain/example/Book.groovy
+    upstream: complete/grails-app/domain/example/Book.groovy
+  - path: grails-app/domain/example/ContactInfo.groovy
+    upstream: complete/grails-app/domain/example/ContactInfo.groovy
+  - path: grails-app/domain/example/Tag.groovy
+    upstream: complete/grails-app/domain/example/Tag.groovy
+  - path: grails-app/controllers/example/AuthorController.groovy
+    upstream: complete/grails-app/controllers/example/AuthorController.groovy
+  - path: grails-app/controllers/example/BookController.groovy
+    upstream: complete/grails-app/controllers/example/BookController.groovy
+  - path: grails-app/init/example/BootStrap.groovy
+    upstream: complete/grails-app/init/example/BootStrap.groovy
   - path: grails-app/views/book/create.gsp
     upstream: complete/grails-app/views/book/create.gsp
   - path: grails-app/views/book/edit.gsp
