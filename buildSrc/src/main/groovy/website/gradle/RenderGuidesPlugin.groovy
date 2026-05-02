@@ -24,6 +24,7 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 import org.gradle.api.Project
 import org.gradle.api.file.Directory
+import org.yaml.snakeyaml.DumperOptions
 import org.yaml.snakeyaml.Yaml
 
 import grails.doc.gradle.PublishGuideTask
@@ -57,10 +58,14 @@ import website.gradle.tasks.SitemapTask
  * task, so the conventional invocation is
  * {@code ./gradlew buildAllGuides}.</p>
  *
- * <p>Per-version AsciiDoc attributes are sourced from the matching
- * {@code <sourcePath>/manifest.yml} file (every key becomes an attribute),
- * with sensible fallbacks pulled from the parent {@code conf/guides.yml}
- * entry when {@code manifest.yml} omits a field.</p>
+ * <p>Per-version AsciiDoc attributes are derived from the matching
+ * {@code conf/guides.yml} entry: the guide-level {@code title},
+ * {@code subtitle}, {@code authors}, {@code category}, {@code publicationDate}
+ * fields plus the per-version {@code tags} and {@code sampleRef.repo} /
+ * {@code sampleRef.branch} (mapped to {@code githubSlug} / {@code githubBranch}
+ * for the rendered "Get the Code" sidebar). Each per-version {@code toc:}
+ * block is also materialized verbatim into the staged build directory as the
+ * {@code toc.yml} file the vendored grails-doc renderer reads.</p>
  *
  * <p>The renderer itself is the vendored {@code grails.doc.*} subtree (see
  * {@code buildSrc/VENDOR.md}). Templates and theme assets live in
@@ -141,9 +146,8 @@ class RenderGuidesPlugin {
 
                 if (!adocDir.isDirectory()) continue   // skip-if-missing for render/parity/stage
 
-                File manifestFile = new File(versionDir, 'manifest.yml')
-                Map<String, Object> attributes = manifestToAttributes(
-                        manifestFile, guide, version, versionKey)
+                Map<String, Object> attributes = buildAttributes(
+                        guide, version, versionKey)
                 injectSitePartials(project, attributes)
 
                 String stageTaskName = "stageGuideSource_${safeName}_${safeVersion}"
@@ -154,19 +158,12 @@ class RenderGuidesPlugin {
                 // DocPublisher expects: <staged>/guide/*.adoc + toc.yml.
                 File commonDirSrc = project.rootProject.layout.projectDirectory
                         .dir('guides/common').asFile
+                Map<String, Object> tocMap = (version.toc ?: [:]) as Map<String, Object>
                 project.tasks.register(stageTaskName, org.gradle.api.tasks.Sync) { stage ->
                     stage.group = GROUP
                     stage.description = "Stages ${guideName} v${versionKey} source for the vendored grails-doc renderer"
                     stage.into(project.layout.buildDirectory.dir(stagedRelPath))
-                    stage.from(versionDir) {
-                        exclude 'toc.yml'
-                    }
-                    File rootToc = new File(versionDir, 'toc.yml')
-                    if (rootToc.isFile()) {
-                        stage.from(rootToc) {
-                            into 'guide'
-                        }
-                    }
+                    stage.from(versionDir)
                     // The vendored grails-doc renderer drives AsciidoctorJ
                     // without a baseDir, so include::{commondir}/foo.adoc[]
                     // and include::../snippets/...[] never resolve. Inline
@@ -174,10 +171,17 @@ class RenderGuidesPlugin {
                     // config time instead. img/ is staged as part of the
                     // top-level Sync.from(versionDir) above; the per-task
                     // doLast (see renderTaskName) copies it into dist.
+                    // toc.yml is materialized from the conf/guides.yml `toc:`
+                    // block here too - DocPublisher expects to find it under
+                    // <staged>/guide/toc.yml.
                     File snippetsDirSrc = new File(versionDir, 'snippets')
                     stage.doLast {
                         File guideDir = project.layout.buildDirectory.dir(stagedRelPath).get().asFile
                         File guideAdocDir = new File(guideDir, 'guide')
+                        guideAdocDir.mkdirs()
+                        if (tocMap) {
+                            RenderGuidesPlugin.writeStagedToc(new File(guideAdocDir, 'toc.yml'), tocMap)
+                        }
                         RenderGuidesPlugin.inlineCommonIncludes(guideAdocDir, commonDirSrc)
                         RenderGuidesPlugin.inlineSnippetIncludes(guideAdocDir, snippetsDirSrc)
                     }
@@ -292,18 +296,14 @@ class RenderGuidesPlugin {
     }
 
     /**
-     * Builds the {@code attributes} map for {@link PublishGuideTask#getProperties()}.
+     * Builds the {@code attributes} map for {@link PublishGuideTask#getProperties()}
+     * directly from the {@code conf/guides.yml} guide entry and version block.
      *
-     * <p>Precedence (high to low):</p>
-     * <ol>
-     *   <li>Fields in the per-version {@code manifest.yml}</li>
-     *   <li>Fields in the parent {@code conf/guides.yml} guide entry</li>
-     *   <li>Synthetic {@code version} / {@code grails.version} from the version key</li>
-     * </ol>
-     *
-     * <p>List-typed manifest fields (e.g. {@code authors}, {@code tags}) are
-     * joined with {@code ", "} into a string because AsciiDoc attribute values
-     * must be scalar.</p>
+     * <p>Per-version {@code tags} and {@code sampleRef.repo}/{@code sampleRef.branch}
+     * override their guide-level counterparts. The version key is also exposed
+     * as {@code version}, {@code grails.version}, and {@code grailsVersion}.
+     * List-typed fields ({@code authors}, {@code tags}) are joined with {@code ", "}
+     * because AsciiDoc attribute values must be scalar.</p>
      */
     @CompileDynamic
     /**
@@ -616,47 +616,47 @@ class RenderGuidesPlugin {
         sb.toString()
     }
 
-    private static Map<String, Object> manifestToAttributes(
-            File manifestFile, Map guide, Map version, String versionKey) {
+    private static Map<String, Object> buildAttributes(
+            Map guide, Map version, String versionKey) {
         Map<String, Object> attrs = [:]
 
-        if (manifestFile.isFile()) {
-            Map manifest = manifestFile.withReader('UTF-8') { reader ->
-                new Yaml().load(reader) as Map
-            }
-            manifest.each { Object key, Object value ->
-                if (key instanceof String && value != null) {
-                    attrs[key as String] = value instanceof List
-                            ? (value as List).join(', ')
-                            : value.toString()
-                }
-            }
-        }
-
-        // Fallbacks from the conf/guides.yml entry
-        if (guide.title) attrs.putIfAbsent('title', guide.title.toString())
-        if (guide.subtitle) attrs.putIfAbsent('subtitle', guide.subtitle.toString())
-        if (guide.category) attrs.putIfAbsent('category', guide.category.toString())
+        if (guide.name) attrs['name'] = guide.name.toString()
+        if (guide.title) attrs['title'] = guide.title.toString()
+        if (guide.subtitle) attrs['subtitle'] = guide.subtitle.toString()
+        if (guide.category) attrs['category'] = guide.category.toString()
         if (guide.authors instanceof List) {
-            attrs.putIfAbsent('author', (guide.authors as List).join(', '))
+            String joined = (guide.authors as List).join(', ')
+            attrs['author'] = joined
+            attrs['authors'] = joined
         }
         if (version.publicationDate) {
-            attrs.putIfAbsent('publicationDate', version.publicationDate.toString())
+            attrs['publicationDate'] = version.publicationDate.toString()
         } else if (guide.publicationDate) {
-            attrs.putIfAbsent('publicationDate', guide.publicationDate.toString())
+            attrs['publicationDate'] = guide.publicationDate.toString()
         }
         if (version.tags instanceof List) {
-            attrs.putIfAbsent('tags', (version.tags as List).join(', '))
+            attrs['tags'] = (version.tags as List).join(', ')
         }
 
+        // sampleRef -> githubSlug / githubBranch (drives "Get the Code" sidebar)
+        Map sampleRef = (version.sampleRef ?: [:]) as Map
+        if (sampleRef.repo) attrs['githubSlug'] = sampleRef.repo.toString()
+        if (sampleRef.branch) attrs['githubBranch'] = sampleRef.branch.toString()
+
         // Always surface the version key so :version{} attribute resolutions work.
-        attrs.putIfAbsent('version', versionKey)
-        attrs.putIfAbsent('grails.version', versionKey)
-        // Legacy guide layout templates expect these names directly.
-        attrs.putIfAbsent('grailsVersion', versionKey)
-        if (guide.authors instanceof List) {
-            attrs.putIfAbsent('authors', (guide.authors as List).join(', '))
-        }
+        attrs['version'] = versionKey
+        attrs['grails.version'] = versionKey
+        // Legacy guide layout templates expect this name directly.
+        attrs['grailsVersion'] = versionKey
+
         attrs
+    }
+
+    @CompileDynamic
+    static void writeStagedToc(File target, Map<String, Object> tocMap) {
+        DumperOptions opts = new DumperOptions()
+        opts.defaultFlowStyle = DumperOptions.FlowStyle.BLOCK
+        opts.prettyFlow = true
+        target.text = new Yaml(opts).dump(tocMap)
     }
 }

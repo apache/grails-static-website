@@ -128,11 +128,11 @@ Combine with continuous Gradle builds in a separate shell for full reloading:
 
 ## Authoring a Guide
 
-A guide on `https://grails.apache.org/guides/<name>/<version>/guide/index.html` is the rendered form of an AsciiDoc source tree under [`guides/<name>/v<N>/`](guides/) plus a registry entry in [`conf/guides.yml`](conf/guides.yml).
+A guide is the rendered form of an AsciiDoc source tree under [`guides/<name>/v<N>/guide/`](guides/) plus a single entry in [`conf/guides.yml`](conf/guides.yml). The registry entry holds **all** of the per-version metadata, including the table of contents.
 
 ### Two flavours
 
-Most of the time it's just narrative + inline code blocks. If you also want readers to be able to `git clone` a runnable sample app, host it on the [`grails-guides` org](https://github.com/grails-guides) and link to it from your registry entry's `sampleRef`.
+Most of the time it's just narrative + inline code blocks. If you also want readers to be able to `git clone` a runnable sample app, host it on the [`grails-guides` org](https://github.com/grails-guides) and link to it from the registry entry's `sampleRef`.
 
 | Flavour | What it adds | External `grails-guides/<name>` repo? |
 |---|---|---|
@@ -148,29 +148,15 @@ Every guide-version lives at `guides/<name>/v<N>/`:
 ```
 guides/<name>/v<N>/
 ├── guide/
-│   └── <chapter>.adoc    # one file per chapter (toc.yml drives ordering)
-├── snippets/             # OPTIONAL: vendored source the include:: directives reference
-├── manifest.yml          # per-version metadata
-└── toc.yml               # table-of-contents structure
+│   └── <chapter>.adoc    # one file per chapter (referenced by the registry's toc)
+└── snippets/             # OPTIONAL: vendored source that include:: directives reference
 ```
 
-`manifest.yml`:
-
-```yaml
-title: 'My Guide Title'
-subtitle: 'A short subtitle'
-authors: ['Your Name']
-category: 'Some Category'
-publicationDate: '2026-05-02'
-githubSlug: 'grails-guides/<name>'   # only when there is a sample-app repo
-githubBranch: 'grails8'              # only when there is a sample-app repo
-```
-
-`toc.yml` lists chapters in the order they should appear.
+That's it. No per-guide YAML files. All metadata - title, subtitle, authors, tags, sample-app pointer, **and the chapter ordering** - lives in one place: the entry in `conf/guides.yml`.
 
 ### Registering the guide in `conf/guides.yml`
 
-Documentation-only entries omit `sampleRef`:
+Add an entry to the top-level `guides:` list. Each `versions[<N>]` block carries the `toc:` mapping that drives the rendered table of contents (top-level keys are chapter slugs, matching `<chapter>.adoc` filenames; their `title:` values are the chapter labels; sibling keys are sub-section anchor IDs):
 
 ```yaml
 - name: 'my-guide-name'
@@ -183,9 +169,17 @@ Documentation-only entries omit `sampleRef`:
     '8':
       sourcePath: guides/my-guide-name/v8
       tags: ['grails8', 'topic']
+      toc:
+        gettingStarted:
+          title: Getting Started
+          requirements: What you will need
+        writingTheApp:
+          title: Writing the App
+        helpWithGrails:
+          title: Do you need help with Grails?
 ```
 
-Entries with a sample-app repo add `sampleRef`:
+Sample-app flavour adds `sampleRef`:
 
 ```yaml
       sampleRef:
@@ -193,18 +187,17 @@ Entries with a sample-app repo add `sampleRef`:
         branch: 'grails8'
 ```
 
-`sampleRef` drives the "Get the Code" sidebar on the rendered page. `repo` and `branch` are the only fields - no SHA pinning.
+`sampleRef` drives the "Get the Code" sidebar on the rendered page. `repo` and `branch` are the only fields.
 
 ### Step-by-step
 
-1. Create `guides/<name>/v<N>/{guide,snippets}` (omit `snippets/` if you have no `include::../snippets/...` directives).
-2. Write the chapter `.adoc` files. Cross-cutting code that benefits readers comes from inline `[source,groovy]` blocks; long verbatim source goes in `snippets/` and is referenced via `include::../snippets/<path>[]`.
-3. Author `manifest.yml` (omit `githubSlug`/`githubBranch` if there's no upstream repo) and `toc.yml`.
-4. Add the registry entry to `conf/guides.yml`.
-5. (Sample-app flavour) Push your `initial/` (and optionally `complete/`) tree to `grails-guides/<name>` on the matching `grails<N>` branch.
-6. Validate locally: `./gradlew validateGuides -PvalidationMode=both`.
-7. Render locally: `./gradlew renderGuide_<safeName>_<N>` (underscores in `<safeName>`) and open `build/dist/guides/<name>/<N>/guide/index.html`.
-8. Open a PR against this repository.
+1. Create `guides/<name>/v<N>/guide/` (and `snippets/` if your guide uses `include::../snippets/...` directives).
+2. Write the chapter `.adoc` files. Inline `[source,groovy]` blocks cover most code; long verbatim source goes in `snippets/` and is referenced via `include::../snippets/<path>[]`.
+3. Add the registry entry to `conf/guides.yml`, including the `toc:` block.
+4. (Sample-app flavour) Push your `initial/` (and optionally `complete/`) tree to `grails-guides/<name>` on the matching `grails<N>` branch.
+5. Validate locally: `./gradlew validateGuides -PvalidationMode=both`.
+6. Render locally: `./gradlew renderGuide_<safeName>_<N>` (underscores in `<safeName>`) and open `build/dist/guides/<name>/<N>/guide/index.html`.
+7. Open a PR against this repository.
 
 ### Requesting a sample-app repository
 
