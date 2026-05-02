@@ -961,7 +961,6 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-fields-custom-widgets-and-wrappers'
           branch: 'grails8'
-          sha: 'f62446666870d5347f68a34ec89cfc464ec3aa1f'
 
   - name: 'grails-file-download-excel'
     title: 'Download an Excel file in Grails App'

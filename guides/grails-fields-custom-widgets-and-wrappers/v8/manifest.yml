@@ -1,6 +1,3 @@
-# Per-guide-version metadata. Consumed by the schema validator (existence
-# mode) and by the renderer (genGuides + PublishGuide).
-
 name: grails-fields-custom-widgets-and-wrappers
 version: "8"
 title: "Grails Fields Plugin: Custom Widgets, Wrappers, and Tables"
@@ -15,12 +12,5 @@ tags:
   - crud
   - grails8
 publicationDate: "2026-05-02"
-
-# Source repo + branch + pinned SHA. Pinned to the initial commit on the
-# grails-guides/grails-fields-custom-widgets-and-wrappers grails8 branch
-# that ships initial/ (vanilla Grails 8 starter) and complete/ (full guide
-# customisations applied).
 githubSlug: grails-guides/grails-fields-custom-widgets-and-wrappers
 githubBranch: grails8
-githubSha: "f62446666870d5347f68a34ec89cfc464ec3aa1f"
-sourceCommitDate: "2026-05-02"
