@@ -28,7 +28,31 @@ guides:
         sampleRef:
           repo: 'grails-guides/adding-commit-info'
           branch: 'grails3'
-          sha: '7c0a7f906f1e2d7444c876ef9d87249e7054b544'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          history:
+            title: History
+            earlyDays: Early approaches
+            applicationProperties: application.properties
+            buildInfoPlugin: Build Info Plugin
+          writingTheApp:
+            title: Writing the Application
+            gradlePlugin: Gradle Plugin
+            actuator: Spring Boot Actuator endpoints
+          runningTheApp:
+            title: Running the Application
+          configuration:
+            title: Configuration
+            configuringGitInfoContributor: Configuring the commit info shown
+            perEnvironmentConfig: Environment Configuration
+            secured: Secure your endpoints if neccesary
+          tldr:
+            title: tl;dr (Too long; didn't read)
       '4':
         sourcePath: guides/adding-commit-info/v4
         publicationDate: '2017-03-06'
@@ -40,7 +64,31 @@ guides:
         sampleRef:
           repo: 'grails-guides/adding-commit-info'
           branch: 'grails4'
-          sha: '810a3a7d1dbf7a05916b1dd5cc61501bf75b0602'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          history:
+            title: History
+            earlyDays: Early approaches
+            applicationProperties: application.properties
+            buildInfoPlugin: Build Info Plugin
+          writingTheApp:
+            title: Writing the Application
+            gradlePlugin: Gradle Plugin
+            actuator: Spring Boot Actuator endpoints
+          runningTheApp:
+            title: Running the Application
+          configuration:
+            title: Configuration
+            configuringGitInfoContributor: Configuring the commit info shown
+            perEnvironmentConfig: Environment Configuration
+            secured: Secure your endpoints if neccesary
+          tldr:
+            title: tl;dr (Too long; didn't read)
 
   - name: 'angular2-combined'
     title: 'Combining the Angular Profile Projects'
@@ -59,7 +107,22 @@ guides:
         sampleRef:
           repo: 'grails-guides/angular2-combined'
           branch: 'master'
-          sha: '4d11ab5a2fcb07bfe696efd9f4f2e5a7695d10c0'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            combining: Combining the Applications
+            build: Combining the Builds
+            configuration: Changing Configuration
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'building-a-react-app'
     title: 'Building a React App'
@@ -80,7 +143,29 @@ guides:
         sampleRef:
           repo: 'grails-guides/building-a-react-app'
           branch: 'master'
-          sha: '78cfdf647c4613438c4b3f5d4c88ecaee1b3e598'
+        toc:
+          training:
+            title: Grails Training 
+          gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+          runningTheApp:
+            title: Running the Application
+            customizingApi: Customizing the API
+          writingReactComponents:
+            title: Writing our React components
+            vehicles: Writing the Vehicles component
+            garage: Writing the Garage app
+            rendering: Render the app
+            fetch: Fetching data from the API
+            post: Posting data to the API
+          nextSteps:
+            title: Next Steps
+          helpWithGrails:
+            title: Do you need help with Grails?  
 
   - name: 'building-a-vue-app'
     title: 'Building a Vue.js app with Grails'
@@ -101,7 +186,32 @@ guides:
         sampleRef:
           repo: 'grails-guides/building-a-vue-app'
           branch: 'master'
-          sha: '9d445e7798938be51b2a3a1bd653428a905c050c'
+        toc:
+          training:
+            title: Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          runningTheApp:
+            title: Running the Application
+          writingTheServer:
+            title: Building the Server
+            testingApi: Testing the API
+            customizingApi: Customizing the API
+          writingTheClient:
+            title: Building the Client
+            clientAppLayout: Default Vue.js App layout
+            writingVueComponents: Vue Components
+            headers: UI Header Component
+            displayComponents: Select & Table Components
+            postComponents: Form Component
+            oneMoreComponent: Vehicle Display
+            puttingItAllTogether: Routing
+          nextSteps:
+            title: Next Steps
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'building-an-android-client-powered-by-a-grails-backend'
     title: 'Building an Android client powered by a Grails backend'
@@ -123,7 +233,38 @@ guides:
         sampleRef:
           repo: 'grails-guides/building-an-android-client-powered-by-a-grails-backend'
           branch: 'master'
-          sha: 'b895fd715f5332ad92076b28d2920b98fef57309'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          overview:
+            title: Overview
+          writingTheGrailsApp:
+            title: Writing the Grails Application
+            domainClass: Create a Domain Class - Persistent Entities
+            domainClassTest: Domain Class Unit Testing
+            versioning: Versioning
+            v1Controller: Create a Controller
+            bootstrap: Loading test data
+            v1FunctionalTests: Functional tests
+            runningTheApp: Running the Application
+          writingTheAndroidApp:
+              title: Writing the Android Application
+              androidOverview: Fetching the Announcements
+              networkingCode: Networking code
+              detailActivity: Detail Activity
+          version2:
+              title: API version 2.0
+              v2Controller: Grails V2 Changes
+              v2FunctionalTests: Api 2.0 Functional tests
+              v2Android: Android V2 Changes
+          conclusion:
+              title: Conclusion
+          helpWithGrails:
+            title: Do you need help with Grails?    
 
   - name: 'building-an-ios-objectc-client-powered-by-a-grails-backend'
     title: 'Building a Objective-C iOS Client powered by a Grails backend'
@@ -144,7 +285,41 @@ guides:
         sampleRef:
           repo: 'grails-guides/building-an-ios-objectc-client-powered-by-a-grails-backend'
           branch: 'grails4'
-          sha: 'f9c6847ec4d60653030f7d6c9b2897cd2d5fa725'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          overview:
+            title: Overview
+          writingTheGrailsApp:
+            title: Writing the Grails Application
+            domainClass: Create a Domain Class - Persistent Entities
+            domainClassTest: Domain Class Unit Testing
+            versioning: Versioning
+            v1Controller: Create a Controller
+            bootstrap: Loading test data
+            v1FunctionalTests: Functional tests
+            runningTheApp: Running the Application
+          writingTheiOSApp:
+              title: Writing the iOS Application
+              ios-overview: Fetching the Announcements
+              iosModel: Model
+              iosJsonToModel: Json to Model
+              appTransportSecurity: App Transport Security
+              networkingCode: Networking code
+              detailViewController: Detail View Controller
+          version2:
+              title: API version 2.0
+              v2Controller: Grails V2 Changes
+              v2FunctionalTests: Api 2.0 Functional tests
+              v2iOS: iOS V2 Changes
+          conclusion:
+              title: Conclusion
+          helpWithGrails:
+            title: Do you need help with Grails?    
 
   - name: 'building-an-ios-swift-client-powered-by-a-grails-backend'
     title: 'Building a Swift iOS Client powered by a Grails backend'
@@ -165,7 +340,41 @@ guides:
         sampleRef:
           repo: 'grails-guides/building-an-ios-swift-client-powered-by-a-grails-backend'
           branch: 'grails4'
-          sha: '58043350dc3345619ef47c58f2abe251032cc9e6'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          overview:
+            title: Overview
+          writingTheGrailsApp:
+            title: Writing the Grails Application
+            domainClass: Create a Domain Class - Persistent Entities
+            domainClassTest: Domain Class Unit Testing
+            versioning: Versioning
+            v1Controller: Create a Controller
+            bootstrap: Loading test data
+            v1FunctionalTests: Functional tests
+            runningTheApp: Running the Application
+          writingTheiOSApp:
+              title: Writing the iOS Application
+              ios-overview: Fetching the Announcements
+              iosModel: Model
+              iosJsonToModel: Json to Model
+              networkingCode: Networking code
+              detailViewController: Detail View Controller
+          version2:
+              title: API version 2.0
+              v2Controller: Grails V2 Changes
+              v2FunctionalTests: Api 2.0 Functional tests
+              v2iOS: iOS V2 Changes
+          conclusion:
+              title: Conclusion
+          helpWithGrails:
+            title: Do you need help with Grails?    
 
   - name: 'command-objects-and-forms'
     title: 'Using Command Objects To Handle Form Data'
@@ -186,7 +395,23 @@ guides:
         sampleRef:
           repo: 'grails-guides/command-objects-and-forms'
           branch: 'grails3'
-          sha: '9266e29f6db785ee6a556238ec09fac28bab5f0a'
+        toc:
+          training:
+            title: Grails Training 
+          gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          whatAreCommandObjects: What are command objects?
+          writingTheApp:
+            title: Writing the Application
+            createTheController: Create the controller
+            addCreateAndSaveActions: Implement the create and save actions
+            addEditAndUpdateActions: Implement the edit and update actions
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Do you need help with Grails?  
       '4':
         sourcePath: guides/command-objects-and-forms/v4
         publicationDate: '2017-01-09'
@@ -198,7 +423,23 @@ guides:
         sampleRef:
           repo: 'grails-guides/command-objects-and-forms'
           branch: 'grails4'
-          sha: '897c3df53eda7d8d22edce0086d08866f8973c0e'
+        toc:
+          training:
+            title: Grails Training 
+          gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          whatAreCommandObjects: What are command objects?
+          writingTheApp:
+            title: Writing the Application
+            createTheController: Create the controller
+            addCreateAndSaveActions: Implement the create and save actions
+            addEditAndUpdateActions: Implement the edit and update actions
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Do you need help with Grails?  
 
   - name: 'creating-your-first-grails-app'
     title: 'Creating your first Grails Application'
@@ -218,7 +459,55 @@ guides:
         sampleRef:
           repo: 'grails-guides/creating-your-first-grails-app'
           branch: 'grails3'
-          sha: 'da04cd2996cfacb6268028df68e1c8301d5fa8f5'
+        toc:
+          training: 
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          creatingTheApp:
+            title: Creating your Grails App
+            installing: Installing Grails
+            grailsApplicationForge: Grails Application Forge
+            createApp: Create the App
+            applicationProfile: Application Profile
+          runningTheApp:
+            title: Running the App
+            changeDefaultPort: Change Default Port
+            autoReloading: Auto Reloading
+          domainClasses:
+            title: Domain Classes
+            creatingDomainClass: Creating a Domain Class
+            databaseConsole: DB Console
+            expandDomain: Expanding the Domain Model
+            bootstrap: Bootstrapping Data
+            datasource: Datasources
+            mysqlAsDatasource: Configure MySQL Datasource
+            console: Grails Console
+          controllers:
+            title: Controllers
+            urlMappings: URL Mappings
+            scaffolding: Scaffolding
+            dynamicScaffolding: Dynamic Scaffolding
+            staticScaffolding: Static Scaffolding
+            respond: Render a response
+          views:
+            title: Views
+            viewsResolution: Views Resolution
+            gsp: GSP
+            gspIteration: GSP Tags Iteration
+            gspLinks: GSP Tags Links
+            assetPipeline: Asset Pipeline
+            addJavascriptAsset: Add Javascript Asset
+          services:
+            title: Services
+          testing:
+            title: Testing your App
+          deployment:
+            title: Deploying your App
+          helpWithGrails:
+            title: Do you need help with Grails?  
       '4':
         sourcePath: guides/creating-your-first-grails-app/v4
         publicationDate: '2017-01-23'
@@ -229,7 +518,55 @@ guides:
         sampleRef:
           repo: 'grails-guides/creating-your-first-grails-app'
           branch: 'grails4'
-          sha: '35a2468be99286a6953ddfac5ac7039e05f23107'
+        toc:
+          training: 
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          creatingTheApp:
+            title: Creating your Grails App
+            installing: Installing Grails
+            grailsApplicationForge: Grails Application Forge
+            createApp: Create the App
+            applicationProfile: Application Profile
+          runningTheApp:
+            title: Running the App
+            changeDefaultPort: Change Default Port
+            autoReloading: Auto Reloading
+          domainClasses:
+            title: Domain Classes
+            creatingDomainClass: Creating a Domain Class
+            databaseConsole: DB Console
+            expandDomain: Expanding the Domain Model
+            bootstrap: Bootstrapping Data
+            datasource: Datasources
+            mysqlAsDatasource: Configure MySQL Datasource
+            console: Grails Console
+          controllers:
+            title: Controllers
+            urlMappings: URL Mappings
+            scaffolding: Scaffolding
+            dynamicScaffolding: Dynamic Scaffolding
+            staticScaffolding: Static Scaffolding
+            respond: Render a response
+          views:
+            title: Views
+            viewsResolution: Views Resolution
+            gsp: GSP
+            gspIteration: GSP Tags Iteration
+            gspLinks: GSP Tags Links
+            assetPipeline: Asset Pipeline
+            addJavascriptAsset: Add Javascript Asset
+          services:
+            title: Services
+          testing:
+            title: Testing your App
+          deployment:
+            title: Deploying your App
+          helpWithGrails:
+            title: Do you need help with Grails?  
       '6':
         sourcePath: guides/creating-your-first-grails-app/v6
         publicationDate: '2017-01-23'
@@ -240,7 +577,55 @@ guides:
         sampleRef:
           repo: grails-guides/creating-your-first-grails-app
           branch: master
-          sha: '84422f5d162f3deffb89978a3e9127382ce7eeea'
+        toc:
+          training: 
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          creatingTheApp:
+            title: Creating your Grails App
+            installing: Installing Grails
+            grailsApplicationForge: Grails Application Forge
+            createApp: Create the App
+            applicationProfile: Application Profile
+          runningTheApp:
+            title: Running the App
+            changeDefaultPort: Change Default Port
+            autoReloading: Auto Reloading
+          domainClasses:
+            title: Domain Classes
+            creatingDomainClass: Creating a Domain Class
+            databaseConsole: DB Console
+            expandDomain: Expanding the Domain Model
+            bootstrap: Bootstrapping Data
+            datasource: Datasources
+            mysqlAsDatasource: Configure MySQL Datasource
+            console: Grails Console
+          controllers:
+            title: Controllers
+            urlMappings: URL Mappings
+            scaffolding: Scaffolding
+            dynamicScaffolding: Dynamic Scaffolding
+            staticScaffolding: Static Scaffolding
+            respond: Render a response
+          views:
+            title: Views
+            viewsResolution: Views Resolution
+            gsp: GSP
+            gspIteration: GSP Tags Iteration
+            gspLinks: GSP Tags Links
+            assetPipeline: Asset Pipeline
+            addJavascriptAsset: Add Javascript Asset
+          services:
+            title: Services
+          testing:
+            title: Testing your App
+          deployment:
+            title: Deploying your App
+          helpWithGrails:
+            title: Do you need help with Grails?  
 
   - name: 'database-per-tenant'
     title: 'Database per Tenant Multi-Tenancy'
@@ -260,7 +645,33 @@ guides:
         sampleRef:
           repo: 'grails-guides/database-per-tenant'
           branch: 'master'
-          sha: 'd5deac3fc9e7377b07212fbcd403988ac03d67f8'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            setupMultitenancy:
+              title: Setup Multi-Tenancy
+              multiTenancyMode: The Multi-Tenancy Mode
+              multiTenancyResolver: The TenantResolver
+              dataSources: Multiple Data Sources
+            domainClasses: Creating the Domain Classes
+            seedData: Setup Test Data
+            tenantSelection: Implementing Tenant Selection
+            multiTenantLogic:
+              title: Writing Multi-Tenant Aware Data Logic
+              readingData: Executing Multi-Tenant Aware Queries
+              writingData: Executing Multi-Tenant Updates
+          testingTheApp: Multi-Tenancy Unit Testing
+          integrationTest: Functional Tests
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'discriminator-per-tenant'
     title: 'Single Database Multi-Tenancy - Discriminator Column'
@@ -281,7 +692,32 @@ guides:
         sampleRef:
           repo: 'grails-guides/discriminator-per-tenant'
           branch: 'master'
-          sha: 'bca6f1a42f1fc04e7a0d5f16304d2b77ff6c57cd'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            setupMultitenancy:
+              title: Setup Multi-Tenancy
+              multiTenancyMode: The Multi-Tenancy Mode
+              multiTenancyResolver: The TenantResolver
+            domainClasses: Creating the Domain Classes
+            seedData: Setup Test Data
+            tenantSelection: Implementing Tenant Selection
+            multiTenantLogic:
+              title: Writing Multi-Tenant Aware Data Logic
+              readingData: Executing Multi-Tenant Aware Queries
+              writingData: Executing Multi-Tenant Updates
+          testingTheApp: Multi-Tenancy Unit Testing
+          integrationTest: Functional Tests
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'gorm-event-listeners'
     title: 'GORM Event Listeners'
@@ -302,7 +738,24 @@ guides:
         sampleRef:
           repo: 'grails-guides/gorm-event-listeners'
           branch: 'grails3'
-          sha: '7b622fc0b5f71bed7ee388870b49bf1da5c76930'
+        toc:
+          training: 
+            title: Training
+          gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            dataServices: Data Services
+            async: Listening to events from GORM asynchronously
+            sync: Listening to events from GORM synchronously
+          runningTheTests:
+            title: Running the Tests
+          conclusion:
+            title: Conclusion
+          helpWithGrails: 
+            title: Help with Grails 
       '4':
         sourcePath: guides/gorm-event-listeners/v4
         publicationDate: '2018-02-19'
@@ -314,7 +767,24 @@ guides:
         sampleRef:
           repo: 'grails-guides/gorm-event-listeners'
           branch: 'grails4'
-          sha: 'ec8eb00f5c9872d7092fb858639a1d34de861c31'
+        toc:
+          training: 
+            title: Training
+          gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            dataServices: Data Services
+            async: Listening to events from GORM asynchronously
+            sync: Listening to events from GORM synchronously
+          runningTheTests:
+            title: Running the Tests
+          conclusion:
+            title: Conclusion
+          helpWithGrails: 
+            title: Help with Grails 
 
   - name: 'gorm-graphql-with-react-and-apollo'
     title: 'Building a GORM/GraphQL App with React and Apollo'
@@ -336,7 +806,27 @@ guides:
         sampleRef:
           repo: 'grails-guides/gorm-graphql-with-react-and-apollo'
           branch: 'grails4'
-          sha: '3bd0f629f571f6fbb0aeea0dc744640300fcce60'
+        toc:
+          training:
+            title: Training
+          gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          configuringGormGraphQL:
+            title: Configuring GORM for GraphQL
+          playGraphQL:
+            title: Playing with the GraphQL browser
+          installApollo:
+            title: Install and Configure Apollo
+          queryGraphQL:
+            title: Querying GraphQL
+          mutations:
+            title: Mutations
+          conclusion: 
+            title: Conclusion        
+          helpWithGrails:
+            title: Help with Grails  
 
   - name: 'gorm-ratpack'
     title: 'Build a Ratpack application which uses GORM'
@@ -356,7 +846,23 @@ guides:
         sampleRef:
           repo: 'grails-guides/gorm-ratpack'
           branch: 'grails3'
-          sha: 'c5498016a1606292f0421a1f68dbb6841129bc4b'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheAppPartOne:
+            title: Writing the Application
+            configuringTheApp: Configuring your Build
+            application: GORM Configuration
+            creatingTheDomain: Creating the domain
+            creatingTestData: Seed Data
+            creatingTheServices: Creating a Handler
+            creatingTheControllers: Ratpack.groovy
+          helpWithGrails:
+            title: Do you need help with GORM or Grails?
       '4':
         sourcePath: guides/gorm-ratpack/v4
         publicationDate: '2017-08-28'
@@ -367,7 +873,23 @@ guides:
         sampleRef:
           repo: 'grails-guides/gorm-ratpack'
           branch: 'master'
-          sha: '0a27ee00e150844b2c7defbb7eeec714de49b2e5'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheAppPartOne:
+            title: Writing the Application
+            configuringTheApp: Configuring your Build
+            application: GORM Configuration
+            creatingTheDomain: Creating the domain
+            creatingTestData: Seed Data
+            creatingTheServices: Creating a Handler
+            creatingTheControllers: Ratpack.groovy
+          helpWithGrails:
+            title: Do you need help with GORM or Grails?
 
   - name: 'gorm-without-grails'
     title: 'Build a Spring Boot application with GORM'
@@ -388,7 +910,24 @@ guides:
         sampleRef:
           repo: 'grails-guides/gorm-without-grails'
           branch: 'master'
-          sha: '14a7eea75d3292de56213d87ab34b14d6c87602e'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          configuringTheApp:
+            title: Configuring your Build
+            application: Configuration
+          writingTheAppPartOne:
+            title: Writing the Application
+            creatingTheDomain: Creating the domain
+            creatingTestData: Seed Data
+            creatingTheServices: Creating the Service layer
+            creatingTheControllers: Creating a controller
+          helpWithGrails:
+            title: Do you need help with GORM or Grails?
 
   - name: 'grails_i18n'
     title: 'How to change languages in a Grails app?'
@@ -409,7 +948,24 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails_i18n'
           branch: 'grails3'
-          sha: 'e70d6899bdb550218e4ff2e45af07d2166337c42'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            messageBundles: Message Bundles
+            changeLocale: Change Locale
+            changingDefaultLocale: Changing Default Locale
+            localeNavBar: Locale Navbar
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Do you need help with Grails?
+
       '4':
         sourcePath: guides/grails_i18n/v4
         publicationDate: '2017-05-08'
@@ -421,7 +977,24 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails_i18n'
           branch: 'master'
-          sha: '58fccd02de69b87ef95a2135bf3cc356b36c0bef'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            messageBundles: Message Bundles
+            changeLocale: Change Locale
+            changingDefaultLocale: Changing Default Locale
+            localeNavBar: Locale Navbar
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Do you need help with Grails?
+
 
   - name: 'grails_url_mappings'
     title: 'Grails URL Mappings'
@@ -440,7 +1013,25 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails_url_mappings'
           branch: 'master'
-          sha: '363287cf8ade9e179d3a5504d77368f95305b319'
+        toc:
+          gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          creatingTheApp:
+            title: Creating our Application
+          controllers:
+            title: Creating Controllers
+          urlMappings:
+            title: Defining URL Mappings
+          splitUrlMappings:
+            title: Organize URL Mappings
+          testing:
+            title: Testing URL Mappings
+          conclusion:
+            title: Conclusion
+          helpWithGrails:
+            title: Help with Grails
 
   - name: 'grails-as-docker-container'
     title: 'Grails as a Docker Container'
@@ -460,7 +1051,24 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-as-docker-container'
           branch: 'grails3'
-          sha: 'b9daa46d6838a4b092595cff97dd0c618abebb19'
+        toc:
+          training:
+            title: Training
+          gettingStarted: 
+            title: Getting Started
+            howto: How to complete the guide
+          writing:
+            title: Writing the Guide
+            docker: Install and configure Docker
+            gradle: Gradle Docker plugin
+            appEntry: App Entry Script
+            gradleDockerTasks: Gradle Docker Tasks
+          building:
+            title: Building the app
+          usingOnlyDocker:
+            title: Using only Docker
+          helpWithGrails:
+            title: Help with Grails  
       '4':
         sourcePath: guides/grails-as-docker-container/v4
         publicationDate: '2018-01-15'
@@ -471,7 +1079,24 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-as-docker-container'
           branch: 'grails4'
-          sha: '737a252246fd57643074d41c13d982ca462bc44a'
+        toc:
+          training:
+            title: Training
+          gettingStarted: 
+            title: Getting Started
+            howto: How to complete the guide
+          writing:
+            title: Writing the Guide
+            docker: Install and configure Docker
+            gradle: Gradle Docker plugin
+            appEntry: App Entry Script
+            gradleDockerTasks: Gradle Docker Tasks
+          building:
+            title: Building the app
+          usingOnlyDocker:
+            title: Using only Docker
+          helpWithGrails:
+            title: Help with Grails  
 
   - name: 'grails-async-promises'
     title: 'Grails Promises'
@@ -493,7 +1118,24 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-async-promises'
           branch: 'grails3'
-          sha: '95a9d42b108daec0f670e8322bbc770fe7ed35c5'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+            initial: Initial Project
+          writingTheApp:
+            title: Writing the Application
+            topcities: Top Cities
+            service: Open Weather Service
+            controller: Cities Controller
+            view: View
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Help with Grails
       '4':
         sourcePath: guides/grails-async-promises/v4
         publicationDate: '2017-08-21'
@@ -506,7 +1148,24 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-async-promises'
           branch: 'master'
-          sha: '557d63937c4d9fe9019d92cb148c34d1df532376'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+            initial: Initial Project
+          writingTheApp:
+            title: Writing the Application
+            topcities: Top Cities
+            service: Open Weather Service
+            controller: Cities Controller
+            view: View
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Help with Grails
 
   - name: 'grails-basicauth'
     title: 'Grails Basic Auth'
@@ -526,7 +1185,21 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-basicauth'
           branch: 'grails3'
-          sha: 'b238dc1e74ba2f94ba2fa64de734ee7218d7b123'
+        toc:
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the App
+            dependencies: Add Security Dependencies
+            controller: Controller
+            views: Views
+            services: GORM Data Service
+            test: Test
+            next: Next Steps
+          helpWithGrails:
+            title: Do you need help with Grails?
       '4':
         sourcePath: guides/grails-basicauth/v4
         publicationDate: '2018-05-28'
@@ -537,7 +1210,21 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-basicauth'
           branch: 'master'
-          sha: '763b905e0bd201675771c6835aa78028ecfc1c36'
+        toc:
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the App
+            dependencies: Add Security Dependencies
+            controller: Controller
+            views: Views
+            services: GORM Data Service
+            test: Test
+            next: Next Steps
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'grails-code-coverage'
     title: 'Grails Code Coverage'
@@ -557,7 +1244,21 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-code-coverage'
           branch: 'grails3'
-          sha: 'b2725c0'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            clovergradle: Gradle Clover Plugin
+            codeandtest: Code and test
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Do you need help with Grails?
       '4':
         sourcePath: guides/grails-code-coverage/v4
         publicationDate: '2017-07-03'
@@ -568,7 +1269,21 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-code-coverage'
           branch: 'master'
-          sha: '35f4689'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            clovergradle: Gradle Clover Plugin
+            codeandtest: Code and test
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'grails-codenarc'
     title: 'Static code analysis in a Grails app with CodeNarc'
@@ -588,7 +1303,25 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-codenarc'
           branch: 'master'
-          sha: '3145e967154895cdb6a349bb10160309a29ac03b'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            multiproject: Multi-Project Build
+            ruleTypes: Rule Types
+            addingCodenarc: Adding CodeNarc to our project
+            finalConfiguration: Final configuration
+          writingCustomRule:
+            title: Writing a custom Rule
+            customRule: Creating the Rule
+            checkingRule: Checking the Rule in the Grails application
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'grails-configuration-properties'
     title: 'SpringBoot @ConfigurationProperties in Grails App'
@@ -609,7 +1342,22 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-configuration-properties'
           branch: 'grails3'
-          sha: '61827aab4459f04c6fcd2a11966c4b05227cce09'
+        toc:
+          training:
+            title: Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            solution: Solution
+          writingTheApp:
+            title: Writing the App
+            configurationProperties: Configuration Properties
+            taglib: Tag Lib
+            tests: Unit Tests
+            acceptanceTests: Acceptance Tests
+          testTheApp: Test the app
+          helpWithGrails:
+            title: Help with Grails
       '4':
         sourcePath: guides/grails-configuration-properties/v4
         publicationDate: '2018-10-11'
@@ -621,7 +1369,22 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-configuration-properties'
           branch: 'master'
-          sha: '0f5c2beb66c244e9db4f99827e8a761c6e0b53fa'
+        toc:
+          training:
+            title: Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            solution: Solution
+          writingTheApp:
+            title: Writing the App
+            configurationProperties: Configuration Properties
+            taglib: Tag Lib
+            tests: Unit Tests
+            acceptanceTests: Acceptance Tests
+          testTheApp: Test the app
+          helpWithGrails:
+            title: Help with Grails
 
   - name: 'grails-configuration-properties-micronaut'
     title: 'Micronaut @ConfigurationProperties in Grails App'
@@ -642,7 +1405,21 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-configuration-properties-micronaut'
           branch: 'grails4'
-          sha: '84637fe2c3f83086f5b37179486dd2b51a3b10ce'
+        toc:
+          training:
+            title: Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            solution: Solution
+          writingTheApp:
+            title: Writing the App
+            configurationProperties: Configuration Properties
+            taglib: Tag Lib
+            acceptanceTests: Acceptance Tests
+          testTheApp: Test the app
+          helpWithGrails:
+            title: Help with Grails
       '6':
         sourcePath: guides/grails-configuration-properties-micronaut/v6
         publicationDate: '2023-07-07'
@@ -654,7 +1431,21 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-configuration-properties-micronaut'
           branch: 'grails6'
-          sha: 'e2625ba609664bf2b8d7ae9fe53280a0fa5c27b1'
+        toc:
+          training:
+            title: Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the App
+            configurationProperties: Configuration Properties
+            taglib: Tag Lib
+            acceptanceTests: Acceptance Tests
+          testTheApp: Test the app
+          helpWithGrails:
+            title: Help with Grails
 
   - name: 'grails-controller-testing'
     title: 'Grails Controller Testing'
@@ -675,7 +1466,27 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-controller-testing'
           branch: 'grails3'
-          sha: '1907cd8dceb82e850252ad5919efb39962b2ed06'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            domainClassAndScaffold: Domain Class and Scaffold
+            staticScaffolding: Static Scaffolding
+            unitTestIndex: Unit Test - Index Method
+            unitTestSave: Unit Test - Save Method
+            allowedMethods: Test Allowed Methods
+            functionalTestController: Functional Test
+          summary:
+            title: Summary
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Help with Grails  
       '4':
         sourcePath: guides/grails-controller-testing/v4
         publicationDate: '2017-06-19'
@@ -687,7 +1498,27 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-controller-testing'
           branch: 'master'
-          sha: '0740e3bf33ea6180b2a6aa4de9c330eef84f5bce'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            domainClassAndScaffold: Domain Class and Scaffold
+            staticScaffolding: Static Scaffolding
+            unitTestIndex: Unit Test - Index Method
+            unitTestSave: Unit Test - Save Method
+            allowedMethods: Test Allowed Methods
+            functionalTestController: Functional Test
+          summary:
+            title: Summary
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Help with Grails  
 
   - name: 'grails-custom-security-tenant-resolver'
     title: 'Custom Tenant Resolver by Current Logged in User'
@@ -710,7 +1541,26 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-custom-security-tenant-resolver'
           branch: 'grails3'
-          sha: 'f7bbeb88f2329cded16e997f58408345c4ad5454'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            domain: Create Domain Class
+            controller: Controller
+            security: Wire up Security
+            tenantResolver: Custom Tenant Resolver
+            tenantResolverByJWT: Tenant Resolver by JWT
+            tenantResolverByUser: Tenant Resolver by User
+            test: Functional Test
+          runTests:
+            title: Run the tests
+          helpWithGrails:
+            title: Help with Grails
       '4':
         sourcePath: guides/grails-custom-security-tenant-resolver/v4
         publicationDate: '2017-09-11'
@@ -724,7 +1574,26 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-custom-security-tenant-resolver'
           branch: 'master'
-          sha: '2fbfda44c0c6206bffc4ab984622e927b49e7cc2'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            domain: Create Domain Class
+            controller: Controller
+            security: Wire up Security
+            tenantResolver: Custom Tenant Resolver
+            tenantResolverByJWT: Tenant Resolver by JWT
+            tenantResolverByUser: Tenant Resolver by User
+            test: Functional Test
+          runTests:
+            title: Run the tests
+          helpWithGrails:
+            title: Help with Grails
 
   - name: 'grails-database-migration'
     title: 'Grails Database Migration'
@@ -746,7 +1615,27 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-database-migration'
           branch: 'grails3'
-          sha: '094ae2023304d49d9b14150e49ea2eeda2bedd1c'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            installDatabase: Install Database
+            domainClassAndController: Domain Class
+            installPlugin: Install Database Migration Plugin
+            databaseMigrationInAction: Database Migration In Action  
+            baseline: Baseline for Database Migration
+            makeColumnNullable: Make Column Nullable
+            addAttributes: Add Attributes
+            redesignTables: Redesign Tables
+          summary:
+              title: Summary
+          helpWithGrails:
+            title: Do you need help with Grails?  
       '4':
         sourcePath: guides/grails-database-migration/v4
         publicationDate: '2017-08-07'
@@ -759,7 +1648,27 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-database-migration'
           branch: 'master'
-          sha: '3695f5334f7839e14d3860fcb2c2080d465f4ebf'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            installDatabase: Install Database
+            domainClassAndController: Domain Class
+            installPlugin: Install Database Migration Plugin
+            databaseMigrationInAction: Database Migration In Action  
+            baseline: Baseline for Database Migration
+            makeColumnNullable: Make Column Nullable
+            addAttributes: Add Attributes
+            redesignTables: Redesign Tables
+          summary:
+              title: Summary
+          helpWithGrails:
+            title: Do you need help with Grails?  
       '6':
         sourcePath: guides/grails-database-migration/v6
         publicationDate: '2023-06-22'
@@ -772,7 +1681,27 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-database-migration'
           branch: 'grails6'
-          sha: '9688dc2'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            installDatabase: Install Database
+            domainClassAndController: Domain Class
+            installPlugin: Install Database Migration Plugin
+            databaseMigrationInAction: Database Migration In Action  
+            baseline: Baseline for Database Migration
+            makeColumnNullable: Make Column Nullable
+            addAttributes: Add Attributes
+            redesignTables: Redesign Tables
+          summary:
+              title: Summary
+          helpWithGrails:
+            title: Do you need help with Grails?  
 
   - name: 'grails-docker-external-services'
     title: 'Use docker to provide external services to your Grails app'
@@ -792,7 +1721,25 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-docker-external-services'
           branch: 'master'
-          sha: '6f73df5d63dea0212269dd56027bf7d53cc5f80a'
+        toc:
+          training:
+            title: Training
+          gettingStarted: 
+            title: Getting Started
+            howto: How to complete the guide
+          writing:
+            title: Writing the Guide
+            docker: Install and configure Docker
+            domainClass: Domain Class
+            gradle: Gradle Docker plugin
+            gradleDockerTasks: Gradle Docker Tasks
+            postgresql: Configure PostgreSQL
+          running:
+            title: Running the app
+          usingOnlyDocker:
+            title: Using only Docker
+          helpWithGrails:
+            title: Help with Grails  
 
   - name: 'grails-dynamic-multiple-datasources'
     title: 'Configure Datasources dynamically while using DATABASE Multi-tenancy'
@@ -816,7 +1763,24 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-dynamic-multiple-datasources'
           branch: 'grails3'
-          sha: 'dc4e7f8992ffa44e5e9bae0a4424d785f22db645'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            configuration: Configuration
+            domain: Domain Class
+            gormevents: GORM Events
+            test: Functional Test
+            bootstrap: Add Connection Source on Start-up
+          runTests:
+            title: Run the tests
+          helpWithGrails:
+            title: Help with Grails
       '4':
         sourcePath: guides/grails-dynamic-multiple-datasources/v4
         publicationDate: '2017-09-18'
@@ -831,7 +1795,24 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-dynamic-multiple-datasources'
           branch: 'master'
-          sha: 'ad141e32d4a877b3e7b4841f459ac915928e6580'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            configuration: Configuration
+            domain: Domain Class
+            gormevents: GORM Events
+            test: Functional Test
+            bootstrap: Add Connection Source on Start-up
+          runTests:
+            title: Run the tests
+          helpWithGrails:
+            title: Help with Grails
 
   - name: 'grails-elasticbeanstalk'
     title: 'Deploy to AWS ElasticBeanstalk'
@@ -852,7 +1833,16 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-elasticbeanstalk'
           branch: 'master'
-          sha: '17455a37c5816f89d5ba81a164a96cb3e1c951bb'
+        toc:
+          gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            solution: Solution
+          writingTheApp:
+            title: Writing the App
+          deploy: Deploy to Elastic Beanstalk
+          nextSteps:
+            title: Next Steps
 
   - name: 'grails-elasticsearch'
     title: 'Grails ElasticSearch'
@@ -871,7 +1861,32 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-elasticsearch'
           branch: 'master'
-          sha: 'd79483a0eead4caf1347351d31671c45672f7896'
+        toc:
+          training:
+            title: Training
+          gettingStarted:
+            title: Getting Started
+            esfeatures: Features
+            requirements: What will you need
+            howto: How to complete the guide
+          writing:
+            title: Writing the Guide
+            docker: Install Elasticsearch via Docker
+            install: Configure ElasticSearch plugin
+            logchanges: Elasticsearch logs
+            domain: Create a Domain Class
+            searchable: Mark Domain Searchable
+            gormDataService: GORM Data Service
+            bootstrap: Save Initial Data
+            service: Create Service
+            controller: Create Controller
+            jsonview: JSON View
+            modifyUrlMappings: Modify UrlMapping
+            functionalTest: Functional Test
+          summary:
+            title: Summary
+          helpWithGrails:
+            title: Help with Grails
 
   - name: 'grails-email'
     title: 'Send Email and Spock Spring'
@@ -894,7 +1909,22 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-email'
           branch: 'grails3'
-          sha: 'ecb97ec2a5042603e06cf382ecc46113aa62481d'
+        toc:
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the App
+            controller: Controller
+            services:
+              title: Email Service
+              awsSesService: AWS SES
+              sendGridService: SendGrid
+            resources: Resources
+            test: Test
+          helpWithGrails:
+            title: Do you need help with Grails?
       '4':
         sourcePath: guides/grails-email/v4
         publicationDate: '2018-06-04'
@@ -908,7 +1938,22 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-email'
           branch: 'master'
-          sha: 'dbde655816c37cdd4409dbcb64a11c0d03d241bf'
+        toc:
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the App
+            controller: Controller
+            services:
+              title: Email Service
+              awsSesService: AWS SES
+              sendGridService: SendGrid
+            resources: Resources
+            test: Test
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'grails-events'
     title: 'Grails Events'
@@ -928,7 +1973,24 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-events'
           branch: 'grails3'
-          sha: 'b57ab605c052dadf96985dc03c1ded556f5e0de4'
+        toc:
+          gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            domain: Domain Classes
+            dataServices: Data Services
+            urlMapping: Url Mapping
+            view: View
+            services: Services    
+            controllers: Controller
+            testing: Testing
+          runningTheApp:
+            title: Running the Tests
+          helpWithGrails:
+            title: Help with Grails
       '4':
         sourcePath: guides/grails-events/v4
         publicationDate: '2017-09-04'
@@ -939,7 +2001,24 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-events'
           branch: 'master'
-          sha: '8467011d15bf134a8c2a5903c21b194c2f9bc1ea'
+        toc:
+          gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            domain: Domain Classes
+            dataServices: Data Services
+            urlMapping: Url Mapping
+            view: View
+            services: Services    
+            controllers: Controller
+            testing: Testing
+          runningTheApp:
+            title: Running the Tests
+          helpWithGrails:
+            title: Help with Grails
 
   - name: 'grails-fields-custom-widgets-and-wrappers'
     title: 'Grails Fields Plugin: Custom Widgets, Wrappers, and Tables'
@@ -983,7 +2062,23 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-file-download-excel'
           branch: 'grails3'
-          sha: '2e9a5217c9e26757a99e956612f38b788b70d745'
+        toc:
+          training:
+            title: Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            solution: Solution
+          writingTheApp:
+            title: Writing the App
+            books: Books
+            spreadsheetBuilder: Spreadsheet Builder
+            excel: Excel Creation
+            controller: Controller
+            tests: Tests
+          runningTheApp: Running the app
+          helpWithGrails:
+            title: Help with Grails
       '4':
         sourcePath: guides/grails-file-download-excel/v4
         publicationDate: '2018-09-03'
@@ -997,7 +2092,22 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-file-download-excel'
           branch: 'master'
-          sha: 'a76c1a57952c2a21ad434a21f0108be05ba471c9'
+        toc:
+          training:
+            title: Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            solution: Solution
+          writingTheApp:
+            title: Writing the App
+            books: Books
+            spreadsheetBuilder: Spreadsheet Builder
+            excel: Excel Creation
+            controller: Controller
+            tests: Tests
+          helpWithGrails:
+            title: Help with Grails
 
   - name: 'grails-geb-multiple-browsers'
     title: 'Run Grails Geb Functional Tests with multiple Browsers'
@@ -1021,7 +2131,25 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-geb-multiple-browsers'
           branch: 'grails3'
-          sha: 'e3ad935377c4410ae7e778e8747afa3292c4b3c0'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            gebConfig: Geb Config
+            test: Geb Test
+          runningTheApp:
+            title: Running the Application
+            runFirefox: Run Tests with Firefox
+            runChrome: Run Tests with Chrome
+            runHtmlUnit: Run Tests with HtmlUnit
+            runPhantomJs: Run Tests with PhantomJs
+          helpWithGrails:
+            title: Do you need help with Grails?  
       '4':
         sourcePath: guides/grails-geb-multiple-browsers/v4
         publicationDate: '2017-01-30'
@@ -1036,7 +2164,24 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-geb-multiple-browsers'
           branch: 'master'
-          sha: 'b62e6d79b464c1b04d183a8ec476f8153a60cc5f'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            gebConfig: Geb Config
+            test: Geb Test
+          runningTheApp:
+            title: Running the Application
+            runFirefox: Run Tests with Firefox
+            runChrome: Run Tests with Chrome
+            runHtmlUnit: Run Tests with HtmlUnit
+          helpWithGrails:
+            title: Do you need help with Grails?  
 
   - name: 'grails-google-cloud'
     title: 'Deploy a Grails app to Google Cloud'
@@ -1058,7 +2203,45 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-google-cloud'
           branch: 'master'
-          sha: '3112a1a40500a59624df49e9527e3b58be824743'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+          costs:
+            title: Costs
+          whatYouWillNeed:
+            title: What you will need
+          howToComplete:
+            title: How to Complete
+          writingTheApp:
+            title: Writing the application
+            domainClass: Domain Class
+            seedData: Seed Data
+            urlMappings: Display Books
+          cloudSDK:
+            title: Cloud SDK
+          googleAppEngine:
+            title: Google App Engine
+            googleAppEngineGradlePlugin: 'Google App Engine Gradle Plugin'
+            applicationDeploymentConfiguration: Application Deployment Configuration
+            springBootJetty: SpringBoot Jetty
+          cloudSQL:
+            title: Cloud SQL
+            createCloudSQLInstance: Create Cloud SQL Instance
+            datasourceUsingCloudSQL: Datasource using Cloud SQL
+          cloudStorage:
+            title: Cloud Storage
+          deployingTheApp:
+            title: Deploying the app
+          logging:
+            title: Logging
+          cleaningUp:
+            title: Cleaning Up
+          learnMore:
+             title: Learn More
+          helpWithGrails:
+            title: Help With Grails
 
   - name: 'grails-google-home'
     title: 'Google Home Guide'
@@ -1080,7 +2263,31 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-google-home'
           branch: 'grails4'
-          sha: '9de7244'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          googleCloudSettings: 
+            title: Google Cloud Settings
+            googleCloud: Create a Google Cloud Project  
+            gactionsCLI: Install gactions CLI    
+            googleActionsApi: Configure Google Actions 
+            appEngine: Google App Engine  
+          writingTheApp:
+            title: Writing the Application
+            grailsResponseHandler: Handle Request from Google in Grails
+            colorRequestHandlerFactory: Color Handler
+            googleActionsJavaSdk: Unofficial Google Actions Java SDK
+            gapGradlePlugin: Google App Engine Gradle Plugin
+            applicationDeploymentConfiguration: Application Deployment Configuration
+            springBootJetty: SpringBoot Jetty
+            deployingTheApp: Deploying the App  
+          test:
+            title: Test
+            webSimulator: Test and interact with your Google Action
 
   - name: 'grails-gorm-data-services'
     title: 'Grails GORM Data Services'
@@ -1102,7 +2309,32 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-gorm-data-services'
           branch: 'grails3'
-          sha: '1b5c12cd4d55c1c51be7b73ecacee57b3b68aa2e'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            domainObjects: Domain Objects
+          whyGormDataServices:
+            title: Why GORM Data Services
+          usingGormDataServices:
+            title: Using GORM Data Services
+            dynamicFinders: Dynamic Finders Like
+            unitTest: Unit Test
+            propertyProjection: Property Projection
+            saveOperation: Save Operation
+            joinQuery: Join Query
+          japqlQuery:
+            title: JPA-QL Query
+          japqlProjection:
+            title: JPA-QL Projection
+          conclusion: Conclusion
+          helpWithGrails:
+              title: Help with Grails
       '4':
         sourcePath: guides/grails-gorm-data-services/v4
         publicationDate: '2018-08-20'
@@ -1115,7 +2347,32 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-gorm-data-services'
           branch: 'grails4'
-          sha: '639fb66d5a00731ec391e64aa326d0be2d130575'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            domainObjects: Domain Objects
+          whyGormDataServices:
+            title: Why GORM Data Services
+          usingGormDataServices:
+            title: Using GORM Data Services
+            dynamicFinders: Dynamic Finders Like
+            unitTest: Unit Test
+            propertyProjection: Property Projection
+            saveOperation: Save Operation
+            joinQuery: Join Query
+          japqlQuery:
+            title: JPA-QL Query
+          japqlProjection:
+            title: JPA-QL Projection
+          conclusion: Conclusion
+          helpWithGrails:
+              title: Help with Grails
 
   - name: 'grails-javamelody'
     title: 'JavaMelody monitoring with Grails 3'
@@ -1134,7 +2391,21 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-javamelody'
           branch: 'master'
-          sha: '3b1fd033b6a255d5ebd679fb6a0e1bd535c2daf5'
+        toc:
+          training:
+            title: Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          runningTheApp:
+            title: Application Overview
+            originalAppGrails: Books Application
+          melody: Adding Melody
+          nextSteps:
+            title: Next Steps
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'grails-logicaldelete'
     title: 'GORM Logical delete'
@@ -1155,7 +2426,27 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-logicaldelete'
           branch: 'grails3'
-          sha: '21a3a76'
+        toc:
+          training:
+            title: Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          runningTheApp:
+            title: Application Overview
+            install: Install Plugin
+            domain: Domain
+            controllers: Controller
+            services: Services
+            views: Views
+            bootstrap: BootStrap
+            urlMappings: URLMappings
+            test: Integration Test
+          conclusion:
+            title: Conclusion
+          helpWithGrails:
+            title: Do you need help with Grails?
       '4':
         sourcePath: guides/grails-logicaldelete/v4
         publicationDate: '2018-04-09'
@@ -1167,7 +2458,27 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-logicaldelete'
           branch: 'master'
-          sha: '5d61442'
+        toc:
+          training:
+            title: Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          runningTheApp:
+            title: Application Overview
+            install: Install Plugin
+            domain: Domain
+            controllers: Controller
+            services: Services
+            views: Views
+            bootstrap: BootStrap
+            urlMappings: URLMappings
+            test: Integration Test
+          conclusion:
+            title: Conclusion
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'grails-micronaut-http'
     title: 'Grails with Micronaut HTTP Client'
@@ -1189,7 +2500,25 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-micronaut-http'
           branch: 'grails5'
-          sha: 'fbae42124f5ed64e78810acfd9c0d731827622d1'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+          micronautHttpClient:
+            title: Micronaut HTTP Client
+            lowLevelClient: Use the Low-Level Micronaut HTTP Client API
+            declarativeClient: Use the Declarative Micronaut HTTP Client
+          test:
+              title: Test with Micronaut HTTP Client
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Help with Grails
 
   - name: 'grails-micronaut-kafka'
     title: 'Message Queues with Grails and Micronaut Kafka'
@@ -1208,7 +2537,26 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-micronaut-kafka'
           branch: 'master'
-          sha: '2533ac46edfa5328d385af08c9e757f7abf35466'
+        toc:
+          training:
+            title: Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          runningTheApp:
+            title: Application Overview
+          kakfaDocker:
+            title: Running Kafka
+          originalAppGrails:
+            title: Books Application
+          buildingAnalytics:
+            title: Building Analytics app
+          running: Running the apps
+          nextSteps:
+            title: Next Steps
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'grails-mock-basics'
     title: 'Grails Service Testing'
@@ -1229,7 +2577,27 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-mock-basics'
           branch: 'master'
-          sha: '08f844a5a37be73fa0f0f07288095fdcfd10f1e6'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            domainClasses: Domain Classes
+            gormHibernate: Gorm Hibernate
+            dynamicFinderService: DynamicFinder Service
+            dynamicFinderServiceTests: HibernateSpec
+            gormService: Projection Query
+            integrationTests: Service Integration tests
+            serviceWithCollaborators: Service with Collaborators
+            testEmailWithMock: Test Email with Mock Collaborators
+          summary:
+            title: Summary
+          runningTheApp:
+            title: Running the Application
       '4':
         sourcePath: guides/grails-mock-basics/v4
         publicationDate: '2017-04-24'
@@ -1241,7 +2609,27 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-mock-basics'
           branch: 'master'
-          sha: 'c666e2b9252c85c20bf09adfb6e8b078624c54df'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            domainClasses: Domain Classes
+            gormHibernate: Gorm Hibernate
+            dynamicFinderService: DynamicFinder Service
+            dynamicFinderServiceTests: HibernateSpec
+            gormService: Projection Query
+            integrationTests: Service Integration tests
+            serviceWithCollaborators: Service with Collaborators
+            testEmailWithMock: Test Email with Mock Collaborators
+          summary:
+            title: Summary
+          runningTheApp:
+            title: Running the Application
 
   - name: 'grails-mock-http-server'
     title: 'Consume and test a third-party REST API'
@@ -1262,7 +2650,28 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-mock-http-server'
           branch: 'grails3'
-          sha: '4d7d125a60096f9e1cd0af31d6550339b97bd9c7'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            openweather: Open Weather Map   
+            pogos: Parse Response into Groovy classes
+            service: Open Weather Service
+            parse: Parse Response into Groovy Classes
+            ersatz: Ersatz
+            testapp: Run Tests
+            controller: Root Url to Weather Controller
+            taglib: TagLib
+            view: View
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Help with Grails
       '4':
         sourcePath: guides/grails-mock-http-server/v4
         publicationDate: '2017-08-14'
@@ -1274,7 +2683,27 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-mock-http-server'
           branch: 'master'
-          sha: '40f65bb3c6508d4326fb5775764f67e26dec0c07'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            openweather: Open Weather Map   
+            pogos: Parse Response into JAVA classes
+            service: Open Weather Service
+            ersatz: Ersatz
+            testapp: Run Tests
+            controller: Root Url to Weather Controller
+            taglib: TagLib
+            view: View
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Help with Grails
 
   - name: 'grails-mock-logging-slf4j-test'
     title: 'Grails Mock Logging with Slf4j Test'
@@ -1297,7 +2726,27 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-mock-logging-slf4j-test'
           branch: 'grails3'
-          sha: '9f877cb198c714227c48332f2876faac1d7a5d65'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            personDomainAndDataService: Person Domain and Data Service
+            createPerson: Create a Person
+            offerAdvice: Offer Advice to a Person
+          mockLogging:
+              title: Mock Logging with Slf4j Test
+              verifyLogsInController: Verify Logs in Controller
+              verifyLogsInController2: Verify More Logs
+              verifyLogsInGroovyPogo: Verify Logs in Groovy POGO
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Help with Grails
       '4':
         sourcePath: guides/grails-mock-logging-slf4j-test/v4
         publicationDate: '2018-06-11'
@@ -1311,7 +2760,27 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-mock-logging-slf4j-test'
           branch: 'grails4'
-          sha: '84a003f3156803a3e1398d4b42227d9b4aac6062'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            personDomainAndDataService: Person Domain and Data Service
+            createPerson: Create a Person
+            offerAdvice: Offer Advice to a Person
+          mockLogging:
+              title: Mock Logging with Slf4j Test
+              verifyLogsInController: Verify Logs in Controller
+              verifyLogsInController2: Verify More Logs
+              verifyLogsInGroovyPogo: Verify Logs in Groovy POGO
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Help with Grails
 
   - name: 'grails-multi-datasource'
     title: 'Grails Multi-datasource'
@@ -1331,7 +2800,25 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-multi-datasource'
           branch: 'grails3'
-          sha: '55320dfdf49c177ecab476c05ab9c921c621ecd2'
+        toc:
+          training:
+            title: Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            configuration: Configuration
+            domain: Domain Classes
+            services: Services
+            controllers: Controllers
+            views: Views
+            test: Functional Test
+          testingTheApp:
+            title: Testing the Application
+          helpWithGrails:
+            title: Help with Grails
       '4':
         sourcePath: guides/grails-multi-datasource/v4
         publicationDate: '2017-10-10'
@@ -1342,7 +2829,25 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-multi-datasource'
           branch: 'master'
-          sha: 'a3c857519dd0dd1f47d3268823bf41d5ee5b863b'
+        toc:
+          training:
+            title: Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            configuration: Configuration
+            domain: Domain Classes
+            services: Services
+            controllers: Controllers
+            views: Views
+            test: Functional Test
+          testingTheApp:
+            title: Testing the Application
+          helpWithGrails:
+            title: Help with Grails
 
   - name: 'grails-multi-project-build'
     title: 'Grails Multi-Project Build'
@@ -1362,7 +2867,26 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-multi-project-build'
           branch: 'master'
-          sha: 'b5cad5286ded0e2435e5a69593d0a463a08d8acf'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            overview: Overview
+            createprojects: Create Projects
+            dependencies: Projects' dependencies
+            openide: Open project in IDE
+            code: Code in multiple projects
+            rootgradle: Keep your build dry
+            featuresgradlefiles: Features as Gradle files
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'grails-oauth-google'
     title: 'Google OAuth2 with Grails 3 and Spring Security REST'
@@ -1382,7 +2906,35 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-oauth-google'
           branch: 'master'
-          sha: 'b91e2110a815356f339b71757258f352e16d729d'
+        toc:
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          oauth2:
+            title: OAuth2 Authentication
+            configureGoogleOAuth: Setup and Configure Google OAuth2
+          appConfig:
+            title: Setting up your app
+            dependencies: Add Security Dependencies
+            tokenReader: Custom Token Reader
+            oauthConfig: Configure Security
+            logout: Logout Handlers
+            authController: JWT Cookie
+            logging: Enhanced Logging
+          buildingTheApp:
+            title: Building your app
+            domain: Your Domain
+            data: Your Data
+            services: Your Services
+            controllers: Your Controllers
+            views: Your Views
+          runningTheCompleteApp:
+            title: Running your Completed App
+          nextSteps:
+            title: Next Steps
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'grails-oauth-twitter'
     title: 'Twitter OAuth with Grails 3 and Spring Security REST'
@@ -1402,7 +2954,35 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-oauth-twitter'
           branch: 'master'
-          sha: 'c853056340bee3be58d998b67472126f05827161'
+        toc:
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          oauth2:
+            title: OAuth Authentication
+            configureOAuth: Setup and Configure Twitter OAuth
+          appConfig:
+            title: Setting up your app
+            dependencies: Add Security Dependencies
+            tokenReader: Custom Token Reader
+            oauthConfig: Configure Security
+            logout: Logout Handlers
+            authController: JWT Cookie
+            logging: Enhanced Logging
+          buildingTheApp:
+            title: Building your app
+            domain: Your Domain
+            data: Your Data
+            services: Your Services
+            controllers: Your Controllers
+            views: Your Views
+          runningTheCompleteApp:
+            title: Running your Completed App
+          nextSteps:
+            title: Next Steps
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'grails-on-circleci-basics'
     title: 'Grails on Circle CI Basics'
@@ -1426,7 +3006,28 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-on-circleci-basics'
           branch: 'master'
-          sha: 'adfee1c12e51d5e27f97067a7ba81119765bb649'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            unitTest: Unit Test
+            integrationTest: Integration Test
+            testLogging: Verbose Test Output
+            runTests: Run Tests
+          createGitHubRepo:
+            title: Create GitHub Repo
+          integrateCircle:
+            title: Integrate Circle CI
+            createCircleConfig: Create Circle Config File
+          wheretoGoFromHere:
+            title: Where to Go From Here?
+          helpWithGrails:
+            title: Help with Grails
 
   - name: 'grails-on-github-actions'
     title: 'Grails on Github Actions'
@@ -1451,7 +3052,27 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-on-github-actions'
           branch: 'master'
-          sha: 'dfda6eb9f360547650c559a0a92510d0c8dcd700'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            unitTest: Unit Test
+            integrationTest: Integration Test
+            testLogging: Verbose Test Output
+            runTests: Run Tests
+          createGitHubRepo:
+            title: Create GitHub Repo
+          integrateGithubActions:
+            title: Integrate Github Actions
+          wheretoGoFromHere:
+            title: Where to Go From Here?
+          helpWithGrails:
+            title: Help with Grails
 
   - name: 'grails-on-travis-basics'
     title: 'Grails on Travis Basics'
@@ -1475,7 +3096,28 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-on-travis-basics'
           branch: 'grails3'
-          sha: '31b0512e0379437a681b5a65c784c0def1df0400'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            unitTest: Unit Test
+            integrationTest: Integration Test
+            testLogging: Verbose Test Output
+            runTests: Run Tests
+          createGitHubRepo:
+            title: Create GitHub Repo
+            grantPermissions: Grant File Permissions for Execution
+          integrateTravis:
+            title: Integrate Travis CI
+            createTravisConfig: Create Travis Config File
+            delegateToScript: Delegate to Script File
+          helpWithGrails:
+            title: Help with Grails
       '4':
         sourcePath: guides/grails-on-travis-basics/v4
         publicationDate: '2018-06-25'
@@ -1490,7 +3132,28 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-on-travis-basics'
           branch: 'master'
-          sha: '366f9d6c3c7ef88c42e6c23eaff5aa5e620b56aa'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            unitTest: Unit Test
+            integrationTest: Integration Test
+            testLogging: Verbose Test Output
+            runTests: Run Tests
+          createGitHubRepo:
+            title: Create GitHub Repo
+            grantPermissions: Grant File Permissions for Execution
+          integrateTravis:
+            title: Integrate Travis CI
+            createTravisConfig: Create Travis Config File
+            delegateToScript: Delegate to Script File
+          helpWithGrails:
+            title: Help with Grails
 
   - name: 'grails-quickcast-logging'
     title: 'Grails Logging'
@@ -1509,7 +3172,13 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-quickcast-logging'
           branch: 'master'
-          sha: 'bcee2c60a25083ec2e084e9877c369ae5ed8cda0'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Grails Logging
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'grails-quickcasts-angularjs-scaffolding-with-grails-3'
     title: 'AngularJS Scaffolding with Grails 3'
@@ -1528,7 +3197,13 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-quickcasts-angularjs-scaffolding-with-grails-3'
           branch: 'master'
-          sha: '57e45091ee382e00f86d89dd49d6649e59228054'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: AngularJS Scaffolding with Grails 3
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'grails-quickcasts-developing-grails-3-applications-with-intellij-idea'
     title: 'Developing Grails 3 Applications with IntelliJ IDEA'
@@ -1548,7 +3223,13 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-quickcasts-developing-grails-3-applications-with-intellij-idea'
           branch: 'master'
-          sha: 'f7f55f7bec0a95aee70f582eb782e7bc2e0d186a'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Developing Grails 3 applications with IntelliJ IDEA
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'grails-quickcasts-interceptors'
     title: 'Grails Interceptors'
@@ -1567,7 +3248,13 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-quickcasts-interceptors'
           branch: 'master'
-          sha: 'd4b47e3cfd6d218d2c76d4e5ee283a24e93ee84a'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Grails Interceptors
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'grails-quickcasts-json-views'
     title: 'JSON Views'
@@ -1586,7 +3273,13 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-quickcasts-json-views'
           branch: 'master'
-          sha: '7402e7bb77ce7877be2e39cb5d20ef4266180591'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: JSON Views
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'grails-quickcasts-multi-project-builds'
     title: 'Grails Multi Project Builds'
@@ -1605,7 +3298,13 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-quickcasts-multi-project-builds'
           branch: 'master'
-          sha: '40860e78a753d11c8a54b4fab3d51e4d8a5f9d80'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Grails Multi Project Builds
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'grails-quickcasts-retrieving-config-values'
     title: 'Retrieving Config Values'
@@ -1624,7 +3323,13 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-quickcasts-retrieving-config-values'
           branch: 'master'
-          sha: 'f714bea77ae16b0ae04f098980f0e00f801a43e4'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Retrieving Config Values
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'grails-rabbitmq'
     title: 'Message Queues with Grails 3 and RabbitMQ'
@@ -1643,7 +3348,31 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-rabbitmq'
           branch: 'master'
-          sha: '64d475b2b3a02ffdb2b51438a27224337f22353f'
+        toc:
+          training:
+            title: Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          runningTheApp:
+            title: Application Overview
+          rabbitMQ:
+            title: Message Queues - RabbitMQ
+            setupRabbit: Setup RabbitMQ service
+          originalAppGrails:
+            title: Books Application
+            bookApplicationRabbit: RabbitMQ publisher
+          buildingAnalytics:
+            title: Building Analytics app
+            bookAnalyticsRabbit: RabbitMQ consumer
+          running: Running the apps
+          rabbitManagement:
+            title: Rabbit Management
+          nextSteps:
+            title: Next Steps
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'grails-restapi-angularjs'
     title: 'Building a REST API with Grails and AngularJS 1.x'
@@ -1662,7 +3391,25 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-restapi-angularjs'
           branch: 'grails4'
-          sha: '5638ac4ae74d6ccfcc072ba8342614c5b199e9dd'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          initialAngularApplication:
+            title: Initial Angular Application
+          writingTheApp:
+            title: Writing the Grails Application
+            domainClass: Domain Class
+            enableCors: Enable CORS
+          completeAngularApplication:
+              title: Connect Angular Application to Grails
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'grails-scheduled'
     title: 'Grails + @Scheduled'
@@ -1687,7 +3434,24 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-scheduled'
           branch: 'grails3'
-          sha: 'a77fe4cd8746c88c2865cdb15a85bb976f988e94'
+        toc:
+          training:
+            title: Training
+          gettingStarted: 
+            title: Getting Started
+            howto: How to complete the guide
+          writing:
+            title: Writing Schedules
+            logchanges: Set log level INFO for package demo
+            createSimpleJob: Creating a simple Job
+            logicInService: Business logic in Services
+            taskScheduler: Task Scheduler Bean
+            runnableTasks: Runnable Tasks
+            triggerManually: Scheduling a Job manually
+            logicInServiceTwo: Simplified Cron with TaskSchedule
+            summary: Summary
+          helpWithGrails:
+            title: Help with Grails  
       '4':
         sourcePath: guides/grails-scheduled/v4
         publicationDate: '2018-02-26'
@@ -1703,7 +3467,24 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-scheduled'
           branch: 'grails4'
-          sha: 'a0eb85a824bb304e47b92cf92a7359bd4576a89f'
+        toc:
+          training:
+            title: Training
+          gettingStarted: 
+            title: Getting Started
+            howto: How to complete the guide
+          writing:
+            title: Writing Schedules
+            logchanges: Set log level INFO for package demo
+            createSimpleJob: Creating a simple Job
+            logicInService: Business logic in Services
+            taskScheduler: Task Scheduler Bean
+            runnableTasks: Runnable Tasks
+            triggerManually: Scheduling a Job manually
+            logicInServiceTwo: Simplified Cron with TaskSchedule
+            summary: Summary
+          helpWithGrails:
+            title: Help with Grails  
 
   - name: 'grails-schwartz'
     title: 'Schedule periodic tasks inside your Grails applications'
@@ -1723,7 +3504,23 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-schwartz'
           branch: 'master'
-          sha: 'c53e627f2712de66ba94559724f0d04d28ca14df'
+        toc:
+          training:
+            title: Training
+          gettingStarted: 
+            title: Getting Started
+            howto: How to complete the guide
+          writing:
+            title: Writing the Guide
+            install: Installing the plugin
+            logchanges: Set log level INFO for package demo
+            createSimpleJob: Creating a simple Job
+            logicInService: Business logic in Services
+            triggerManually: Scheduling a Job with data manually 
+            concurrentExecution: Concurrent Job execution
+            summary: Summary
+          helpWithGrails:
+            title: Help with Grails  
 
   - name: 'grails-soap'
     title: 'Grails & SOAP'
@@ -1743,7 +3540,21 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-soap'
           branch: 'grails3'
-          sha: '3556aaaa1ff025c897ed51989732621ac4827f7e'
+        toc:
+          training:
+            title: Help with Grails
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            soapLibrary: SOAP library
+            countries: Countries
+            controllerandview: Controller and View
+            test: Functional Test
+          helpWithGrails:
+            title: Help with Grails
       '4':
         sourcePath: guides/grails-soap/v4
         publicationDate: '2017-10-03'
@@ -1754,7 +3565,21 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-soap'
           branch: 'master'
-          sha: '32e5e3df32b6165be99a34f379fb0db6d8c2e6e3'
+        toc:
+          training:
+            title: Help with Grails
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            soapLibrary: SOAP library
+            countries: Countries
+            controllerandview: Controller and View
+            test: Functional Test
+          helpWithGrails:
+            title: Help with Grails
 
   - name: 'grails-spring-security-core-plugin-custom-authentication'
     title: 'Grails Spring Security Core Plugin Custom Authentication'
@@ -1773,7 +3598,27 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-spring-security-core-plugin-custom-authentication'
           branch: 'grails3'
-          sha: 'cc0f60f6df2a1688ea1be0cc94582af2c5989548'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            domainClasses: Domain Classes
+            securedController: Secured Controller
+            seedData: Seed Data
+            customLoginForm: Custom Login Form
+            title: Writing the Application
+            authenticationProvider: Authentication Provider
+            authentication: Authentication
+            filter: Filter
+            test: Functional Test
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Do you need help with Grails?
       '4':
         sourcePath: guides/grails-spring-security-core-plugin-custom-authentication/v4
         publicationDate: '2017-04-10'
@@ -1783,7 +3628,27 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-spring-security-core-plugin-custom-authentication'
           branch: 'master'
-          sha: 'ca5e2f0f8c1004f60db6234f3383fe66d084e8dc'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            domainClasses: Domain Classes
+            securedController: Secured Controller
+            seedData: Seed Data
+            customLoginForm: Custom Login Form
+            title: Writing the Application
+            authenticationProvider: Authentication Provider
+            authentication: Authentication
+            filter: Filter
+            test: Functional Test
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'grails-taglib-wyswyg-trix'
     title: 'Create and test a Grails 5 TagLib; integrate the Trix WYSWYG editor'
@@ -1803,7 +3668,24 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-taglib-wyswyg-trix'
           branch: 'grails3'
-          sha: '117e0e11d1f0ec584336ddda057da84693bcb978'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            domainClass: Domain Class
+            scaffolding: Scaffolding
+            trix: Downloading Trix
+            taglib: Writing the Taglib
+            useTaglib: Use the Taglib
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Do you need help with Grails?
       '4':
         sourcePath: guides/grails-taglib-wyswyg-trix/v4
         publicationDate: '2017-02-06'
@@ -1814,7 +3696,24 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-taglib-wyswyg-trix'
           branch: 'grails4'
-          sha: 'c451c5ec86cd72ca57d1063835d6bce896a8d38e'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            domainClass: Domain Class
+            scaffolding: Scaffolding
+            trix: Downloading Trix
+            taglib: Writing the Taglib
+            useTaglib: Use the Taglib
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'grails-test-domain-class-constraints'
     title: 'How to test Domain class constraints?'
@@ -1833,7 +3732,19 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-test-domain-class-constraints'
           branch: 'grails3'
-          sha: 'e0dc1b7ce33a49517a581afc19b6f7bf9cb1d667'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            domainClass: Domain Class
+            unitTests: Unit Tests
+          testingTheApp:
+            title: Testing the Application
       '4':
         sourcePath: guides/grails-test-domain-class-constraints/v4
         publicationDate: '2017-04-03'
@@ -1843,7 +3754,19 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-test-domain-class-constraints'
           branch: 'grails4'
-          sha: '8ebe9bf926225f52fb444463b46c84ebc9057788'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            domainClass: Domain Class
+            unitTests: Unit Tests
+          testingTheApp:
+            title: Testing the Application
 
   - name: 'grails-test-security'
     title: 'Testing a Secured Grails Application'
@@ -1867,7 +3790,27 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-test-security'
           branch: 'grails3'
-          sha: 'fbc5c1205210dae86d59074e7720215cfde062ea'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            domainClass: Domain Class
+            controller: Web Controller
+            apiController: Api Controller
+            securingTheApp: Securing the App
+            testRestApi: Test Rest Api
+            testing: Test Web Endpoint
+          runningTheApp:
+            title: Running the Application
+          appendixA:
+            title: Appendix A
+          helpWithGrails:
+            title: Do you need help with Grails?
       '4':
         sourcePath: guides/grails-test-security/v4
         publicationDate: '2017-01-16'
@@ -1882,7 +3825,25 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-test-security'
           branch: 'master'
-          sha: '57054ed62c67e68284442275f82457ba49a3c025'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            domainClass: Domain Class
+            controller: Web Controller
+            apiController: Api Controller
+            securingTheApp: Securing the App
+            testRestApi: Test Rest Api
+            testing: Test Web Endpoint
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'grails-tvmlapp'
     title: 'Build a TVML App with Grails'
@@ -1904,7 +3865,29 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-tvmlapp'
           branch: 'grails3'
-          sha: '62d432b4c6b920a83cfd642d79d653dfd7a849a8'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            title: Getting Started
+            architecture: Architecture
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheTvOSApp:
+            title: Writing the TVML Client
+          writingTheApp:
+            title: Writing the TVML Grails Application
+            tvmlUtils: TVMLKit JS Utils
+            tvBootURL: TV Boot Url
+            domainClass: Domain class
+            controllerIndex: Stack Template
+            controllerShow: Product Template
+            internationalization: Internationalization
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Do you need help with Grails?  
       '4':
         sourcePath: guides/grails-tvmlapp/v4
         publicationDate: '2017-03-20'
@@ -1917,7 +3900,29 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-tvmlapp'
           branch: 'master'
-          sha: '963011677ae99484dfffe152f0acacfed0b050e3'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            title: Getting Started
+            architecture: Architecture
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheTvOSApp:
+            title: Writing the TVML Client
+          writingTheApp:
+            title: Writing the TVML Grails Application
+            tvmlUtils: TVMLKit JS Utils
+            tvBootURL: TV Boot Url
+            domainClass: Domain class
+            controllerIndex: Stack Template
+            controllerShow: Product Template
+            internationalization: Internationalization
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Do you need help with Grails?  
 
   - name: 'grails-upload-file'
     title: 'How to upload a file with Grails 4'
@@ -1938,7 +3943,36 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-upload-file'
           branch: 'grails3'
-          sha: 'd20a475c54992358d803971ba9ccb60d64b95bd8'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            featuredImageCommand: Featured Image Command Object
+            increaseFileSize: Increase allowed file size
+          restaurant:
+            title: Restaurant - Upload and save as byte[]
+            restaurantDomainClass: Restaurant Domain Class
+            restaurantView: Restaurant Views
+            restaurantUploadFeaturedImageService: Upload Featured Image Service
+            loadByteArrayImage: Load byte array Image
+          pointOfInterest:
+            title: Point of Interest - Upload and transfer
+            pointOfInterestDomainClass: Point of Interest Domain Class
+            pointOfInterestView: Point of Interest  Views
+            pointOfInterestUploadFeaturedImageService: Upload Featured Image Service
+          awsS3:
+            title: Hotel - Upload to AWS S3
+            hotelDomainClass: Hotel Domain Class
+            hotelView: Hotel Views
+            hotelUploadFeaturedImageService: Upload image to S3
+            awsAccessAndSecret: Run the App with AWS Access and Secret
+          helpWithGrails:
+            title: Do you need help with Grails?  
       '4':
         sourcePath: guides/grails-upload-file/v4
         publicationDate: '2017-03-13'
@@ -1950,7 +3984,36 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-upload-file'
           branch: 'grails4'
-          sha: 'd05380391e039a719b8ed5b1c095c3c065878d08'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            featuredImageCommand: Featured Image Command Object
+            increaseFileSize: Increase allowed file size
+          restaurant:
+            title: Restaurant - Upload and save as byte[]
+            restaurantDomainClass: Restaurant Domain Class
+            restaurantView: Restaurant Views
+            restaurantUploadFeaturedImageService: Upload Featured Image Service
+            loadByteArrayImage: Load byte array Image
+          pointOfInterest:
+            title: Point of Interest - Upload and transfer
+            pointOfInterestDomainClass: Point of Interest Domain Class
+            pointOfInterestView: Point of Interest  Views
+            pointOfInterestUploadFeaturedImageService: Upload Featured Image Service
+          awsS3:
+            title: Hotel - Upload to AWS S3
+            hotelDomainClass: Hotel Domain Class
+            hotelView: Hotel Views
+            hotelUploadFeaturedImageService: Upload image to S3
+            awsAccessAndSecret: Run the App with AWS Access and Secret
+          helpWithGrails:
+            title: Do you need help with Grails?  
 
   - name: 'grails-vs-nodejs'
     title: 'Replacing a Node/Express API with Grails'
@@ -1973,7 +4036,35 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-vs-nodejs'
           branch: 'master'
-          sha: '2488ed1c8566c3bb6526a45c4f13ed0a8826d68f'
+        toc:
+          training: 
+            title: Grails Training
+          gettingStarted: 
+            title: Introduction
+          requirements: 
+            title: Requirements		
+            howto: Following Along		
+          writingTheApp:
+            title: Writing the Application
+            reactProfile: React Profile
+            datasource: Datasource  
+            gorm: GORM
+            grailsConsole: Grails Console  
+            seedData: Seed Data
+            authentication: Authentication
+            restServices: REST Services
+            signup: Signup Endpoint
+            flavorsByUser: Flavors by User Endpoint
+            saveFlavorsByUser: Save User favourite Flavor
+            deleteFlavorsByUser: Delete User's Flavor
+            websockets: Websockets
+            react: React
+          runningTheApp:
+            title: Running the Application
+            deployment: Deployment
+            summary: Summary
+          helpWithGrails:
+            title: Help with Grails
 
   - name: 'grails-vue-combined'
     title: 'Combining the Grails Vue profile client and server projects'
@@ -1994,7 +4085,21 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-vue-combined'
           branch: 'master'
-          sha: '25feedc9fbb814dde1542e25e71e8d72f57e52ee'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            gradle: Configuring Gradle
+            config: Updating our config
+            urlMappings: URL Mappings
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails: Help with Grails
 
   - name: 'grails-yourkit-profiling'
     title: 'Grails YourKit Profiling'
@@ -2018,7 +4123,29 @@ guides:
         sampleRef:
           repo: 'grails-guides/grails-yourkit-profiling'
           branch: 'master'
-          sha: 'ba74a0bab6fcac4c7f32721c404bfd39be8bc36d'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          evaluatingTheApp:
+            title: Evaluating the Application
+            installYourKit: Install YourKit
+            startProfiling: Start Profiling
+            insertStudents: Insert Students
+          inefficientDelete:
+            title: Inefficient Delete
+          excessiveGarbageCollection:
+            title: Excessive Garbage Collection
+          excessiveHeapMemory:
+            title: Excessive Heap Memory
+          conclusion:
+            title: Conclusion
+            yourKitBestFeatures:  YourKit's Best Features
+          helpWithGrails:
+            title: Help with Grails    
 
   - name: 'neo4j-movies'
     title: 'Building a Graph application with Grails and Neo4j'
@@ -2039,7 +4166,26 @@ guides:
         sampleRef:
           repo: 'grails-guides/neo4j-movies'
           branch: 'master'
-          sha: 'f18f115dc4cc36951984a9b3c6d400f939f6e596'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          setupData: Populating the Data Model
+          configuration: Configure GORM for Neo4j  
+          writingTheApp:
+            title: Writing the Application
+            domainModel: Define the GORM Domain Model
+            endpoints:
+              title: Implementing the REST Endpoints
+              byTitleEndpoint: The Find By Title Endpoint
+              searchEndpoint: The Search Endpoint
+              graphEndpoint: The D3 Graph Endpoint
+            ui: Add the Neo4j Movies UI
+          runningTheApp:
+            title: Running the Application
 
   - name: 'querying-gorm-dynamic-finders'
     title: 'Querying the Database using GORM Dynamic Finders'
@@ -2060,7 +4206,36 @@ guides:
         sampleRef:
           repo: 'grails-guides/querying-gorm-dynamic-finders'
           branch: 'grails3'
-          sha: '417cf0c02853ab6700ffe3d5c9eca069ebce0126'
+        toc:
+          training:
+            title: Grails Training 
+          gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          testingTheService:
+            title: Testing the Service
+          updatingTheService:
+            title: Updating the Service
+            findByProp: Find One By Value
+            findAllByProp: Find Many By Value
+            findByInequality: Find By Inequality
+            countingMatches: Counting Matching Instances
+            findByRange: Find By Value Range
+            findByStringComp: Find by Similar Strings
+            findByNull: Find By Null/Non-Null
+            findInList: Find Property In List
+            combinators: Combining Query Clauses
+            queryParameters: Parameterizing Queries
+          specialForms:
+            title: Convenient Exceptional Forms
+            createOrSaveBy: Query, Then Create/Save
+            simplerBooleans: Simplifying Boolean Matching
+            chainingDCAndNQ: Chaining with Detatched Criteria and Named Queries
+          dynamicFinderSummary:
+            title: Summary of Dynamic Finders
+          helpWithGrails:
+            title: Do you need help with Grails?
       '4':
         sourcePath: guides/querying-gorm-dynamic-finders/v4
         publicationDate: '2017-09-25'
@@ -2072,7 +4247,36 @@ guides:
         sampleRef:
           repo: 'grails-guides/querying-gorm-dynamic-finders'
           branch: 'master'
-          sha: '79fb2ebd0c14931196411a172cfe939d7cc0942d'
+        toc:
+          training:
+            title: Grails Training 
+          gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          testingTheService:
+            title: Testing the Service
+          updatingTheService:
+            title: Updating the Service
+            findByProp: Find One By Value
+            findAllByProp: Find Many By Value
+            findByInequality: Find By Inequality
+            countingMatches: Counting Matching Instances
+            findByRange: Find By Value Range
+            findByStringComp: Find by Similar Strings
+            findByNull: Find By Null/Non-Null
+            findInList: Find Property In List
+            combinators: Combining Query Clauses
+            queryParameters: Parameterizing Queries
+          specialForms:
+            title: Convenient Exceptional Forms
+            createOrSaveBy: Query, Then Create/Save
+            simplerBooleans: Simplifying Boolean Matching
+            chainingDCAndNQ: Chaining with Detatched Criteria and Named Queries
+          dynamicFinderSummary:
+            title: Summary of Dynamic Finders
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'react-combined'
     title: 'Combining the React profile projects'
@@ -2093,7 +4297,20 @@ guides:
         sampleRef:
           repo: 'grails-guides/react-combined'
           branch: 'grails4'
-          sha: '187cfee5deda3815642eb28855940428de453152'
+        toc:
+          training:
+            title: Grails Training 
+          gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            gradle: Configuring Gradle
+            config: Updating our config
+            urlMappings: URL Mappings
+          runningTheApp:
+            title: Running the Application
 
   - name: 'react-spring-security'
     title: 'Creating a React app with Spring Security'
@@ -2116,7 +4333,45 @@ guides:
         sampleRef:
           repo: 'grails-guides/react-spring-security'
           branch: 'master'
-          sha: '61b494fb45b6038f4c3db51032cf6c3cf02bc42a'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+          runningTheApp:
+            title: Running the Application
+          server:
+            title: Building the Server
+            serverDependencies: Installing Spring Security
+            springSecurityConfig: Configuring Spring Security
+            appSecurityConfig: Securing our API
+            bootstrapData: Updating our Initial Data
+            runningTheSecuredApp: Test-driving our Secured API
+          client:
+            title: Building the Client
+            loginScreen: Stateless Login Component
+          writingTheSecurity:
+            title: Adding Client security
+            clientSecurityConfig: Creating our Configuration
+            writingAuth: Handling Authentication
+            writingHandlers: Writing the Response Handlers
+            writingResponseHandlers: Creating our Response Handlers
+            writingErrorHandlers: Creating a Default Error Handler
+          puttingItAllTogether:
+            title: Putting it all together
+            appState: Creating our state
+            lifecycle: React Lifecycle Methods
+            inputChangeHandler: Login Form Change Handler
+            login: Handling Login
+            logout: Handling Logout
+            routing: Routing
+            garage: Authenticating our REST Calls
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'rest-hibernate'
     title: 'Building a REST application with GORM and Hibernate 5'
@@ -2138,7 +4393,31 @@ guides:
         sampleRef:
           repo: 'grails-guides/rest-hibernate'
           branch: 'grails3'
-          sha: '1ecff72406deed1fef4283a519216c3543687b8f'
+        toc:
+          training:
+            title: Grails Training 
+          gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            configure: Configure the Application
+            domainClass: Create a Domain Class
+            applyConstraints: Apply Domain Constraints
+            controller: Create a Controller
+            mapController: Map the Controller to a URI
+            searchEndpoint: Implement a Search Endpoint
+            testing: Testing the Search Endpoint
+            json: Customizing the JSON Output
+          runningTheApp:
+            title: Running the Application
+            createData: Creating Data with POST
+            readData: Reading Data with GET
+            updateData: Updating Data with PUT
+            deleteData: Deleting Data with DELETE
+          helpWithGrails:
+            title: Do you need help with Grails?  
       '4':
         sourcePath: guides/rest-hibernate/v4
         publicationDate: '2016-11-23'
@@ -2151,7 +4430,31 @@ guides:
         sampleRef:
           repo: 'grails-guides/rest-hibernate'
           branch: 'grails4'
-          sha: '2e081c2778fbb5b34b211787f475e3232ff2814b'
+        toc:
+          training:
+            title: Grails Training 
+          gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            configure: Configure the Application
+            domainClass: Create a Domain Class
+            applyConstraints: Apply Domain Constraints
+            controller: Create a Controller
+            mapController: Map the Controller to a URI
+            searchEndpoint: Implement a Search Endpoint
+            testing: Testing the Search Endpoint
+            json: Customizing the JSON Output
+          runningTheApp:
+            title: Running the Application
+            createData: Creating Data with POST
+            readData: Reading Data with GET
+            updateData: Updating Data with PUT
+            deleteData: Deleting Data with DELETE
+          helpWithGrails:
+            title: Do you need help with Grails?  
 
   - name: 'rest-mongodb'
     title: 'Building a REST application with MongoDB'
@@ -2173,7 +4476,31 @@ guides:
         sampleRef:
           repo: 'grails-guides/rest-mongodb'
           branch: 'master'
-          sha: 'f4d4709ca0e07a9f6ff672814d7dd189dbc6d38a'
+        toc:
+          training: 
+            title: Grails Training
+          gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            configure: Configure the Application
+            domainClass: Create a Domain Class
+            applyConstraints: Apply Domain Constraints
+            controller: Create a Controller
+            mapController: Map the Controller to a URI
+            searchEndpoint: Implement a Search Endpoint
+            testing: Testing the Search Endpoint
+            json: Customizing the JSON Output
+          runningTheApp:
+            title: Running the Application
+            createData: Creating Data with POST
+            readData: Reading Data with GET
+            updateData: Updating Data with PUT
+            deleteDate: Deleting Data with DELETE
+          helpWithGrails:
+            title: Do you need help with Grails?  
 
   - name: 'server-sent-events'
     title: 'Sending Server Sent Events with Grails '
@@ -2194,7 +4521,23 @@ guides:
         sampleRef:
           repo: 'grails-guides/server-sent-events'
           branch: 'grails3'
-          sha: '57561b9251e8f05c3177047514f463241c4eb7a7'
+        toc:
+          training: 
+            title: Grails Training
+          gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            gradleConfig: Add RxJava dependency 
+            createController: Create a Controller
+            implementController: Implement the Controller 
+            implementTheClient: Implement the Client
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Do you need help with Grails?  
       '4':
         sourcePath: guides/server-sent-events/v4
         publicationDate: '2016-11-11'
@@ -2206,7 +4549,23 @@ guides:
         sampleRef:
           repo: 'grails-guides/server-sent-events'
           branch: 'grails4'
-          sha: '912c0de2c66d8d98379a39cad46186c8f25ab71f'
+        toc:
+          training: 
+            title: Grails Training
+          gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            gradleConfig: Add RxJava dependency 
+            createController: Create a Controller
+            implementController: Implement the Controller 
+            implementTheClient: Implement the Client
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Do you need help with Grails?  
 
   - name: 'using-hal-with-json-views'
     title: 'Using HAL with JSON Views'
@@ -2227,7 +4586,29 @@ guides:
         sampleRef:
           repo: 'grails-guides/using-hal-with-json-views'
           branch: 'grails3'
-          sha: 'c240a3081ac2499a3226728a6a302b84fc5f9354'
+        toc:
+          training: 
+            title: Grails Training
+          gettingStarted: 
+            title: Getting Started
+            requirements: What You will Need
+            howto: How to Complete the Guide
+          runningTheApp: Running the Application
+          buildingApi:
+            title: Building our API
+            jsonViews: Introducing JSON Views
+            customizingOurApi: Customizing our API
+          hal:
+            title: Make our API Discoverable via HAL
+            links: Linked Resources
+            templates: Render Collections with Templates
+            embedded: Embed Associated Objects
+            pagination: Paginate Results
+            mimeTypes: Custom MIME Types
+          explorableAPI:
+            title: Explore the API
+          helpWithGrails:
+            title: Do you need help with Grails?  
       '4':
         sourcePath: guides/using-hal-with-json-views/v4
         publicationDate: '2017-04-17'
@@ -2239,7 +4620,29 @@ guides:
         sampleRef:
           repo: 'grails-guides/using-hal-with-json-views'
           branch: 'master'
-          sha: 'a6e65807c683135769787d8cbd5a4b75d5eed31f'
+        toc:
+          training: 
+            title: Grails Training
+          gettingStarted: 
+            title: Getting Started
+            requirements: What You will Need
+            howto: How to Complete the Guide
+          runningTheApp: Running the Application
+          buildingApi:
+            title: Building our API
+            jsonViews: Introducing JSON Views
+            customizingOurApi: Customizing our API
+          hal:
+            title: Make our API Discoverable via HAL
+            links: Linked Resources
+            templates: Render Collections with Templates
+            embedded: Embed Associated Objects
+            pagination: Paginate Results
+            mimeTypes: Custom MIME Types
+          explorableAPI:
+            title: Explore the API
+          helpWithGrails:
+            title: Do you need help with Grails?  
 
   - name: 'using-the-react-profile'
     title: 'Using the React Profile'
@@ -2260,7 +4663,18 @@ guides:
         sampleRef:
           repo: 'grails-guides/using-the-react-profile'
           branch: 'master'
-          sha: 'e7b1cb8e1a7895d5f9204065a0b8acf26c306e0c'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+          generateTheApp:
+            title: Generate the Application
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'using-the-vue-profile'
     title: 'Using the Vue.js Grails Profile'
@@ -2282,7 +4696,18 @@ guides:
         sampleRef:
           repo: 'grails-guides/using-the-vue-profile'
           branch: 'grails3'
-          sha: '4f60803c5ac9aefc6965eb0c05aec4b7ab6ead96'
+        toc:
+          training:
+            title: Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+          generateTheApp:
+            title: Generate the Application
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Help with Grails
       '4':
         sourcePath: guides/using-the-vue-profile/v4
         publicationDate: '2018-03-12'
@@ -2295,7 +4720,18 @@ guides:
         sampleRef:
           repo: 'grails-guides/using-the-vue-profile'
           branch: 'master'
-          sha: 'c92ffad31cd225280311c32e0c170c08703e41d2'
+        toc:
+          training:
+            title: Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+          generateTheApp:
+            title: Generate the Application
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Help with Grails
 
   - name: 'vaadin-grails'
     title: 'Build a Grails 3 application with the Vaadin 8 Framework'
@@ -2315,5 +4751,28 @@ guides:
         sampleRef:
           repo: 'grails-guides/vaadin-grails'
           branch: 'grails4'
-          sha: 'ffe260205df173a6d214e86ccc1d845c371d3290'
+        toc:
+          training:
+            title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+            profile: Vaadin 8 Grails Profile
+          aboutVaadin:
+            title: About Vaadin
+          runningTheApp:
+            title: Running the Application
+          writingTheApp:
+            title: Writing the Application
+            creatingTheDomain: Creating the domain
+            creatingTestData: Bootstrap Data
+            creatingTheServices: Creating the service layer
+            creatingTheControllers: Creating a controller
+            addingToVaadin: Vaadin
+            addingView: Adding your view
+          nextSteps:
+            title: Next Steps
+          helpWithGrails:
+            title: Do you need help with Grails?
 

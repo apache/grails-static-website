@@ -55,9 +55,9 @@ import java.util.regex.Pattern
  *       checked, even ones not yet migrated.</li>
  *   <li>{@code existence} - of the entries whose {@code sourcePath} directory
  *       exists, validates that each contains at least one {@code .adoc}
- *       file plus {@code toc.yml} and {@code manifest.yml}, and that the
- *       {@code manifest.yml} has the required keys. Entries whose
- *       {@code sourcePath} does not exist are SKIP-warned (not failures).</li>
+ *       file under {@code guide/} and that the registry entry has a
+ *       {@code toc} block. Entries whose {@code sourcePath} does not exist
+ *       are SKIP-warned (not failures).</li>
  *   <li>{@code both} - runs both rule sets.</li>
  * </ul>
  */
@@ -70,15 +70,7 @@ abstract class ValidateGuidesTask extends DefaultTask {
     public static final String MODE_EXISTENCE = 'existence'
     public static final String MODE_BOTH = 'both'
 
-    private static final Pattern SHA_40_HEX = ~/^[0-9a-fA-F]{40}$/
     private static final Pattern VERSION_KEY = ~/^[0-9]+$/
-    private static final List<String> MANIFEST_REQUIRED_KEYS = [
-            'title',
-            'subtitle',
-            'authors',
-            'category',
-            'publicationDate',
-    ].asImmutable() as List<String>
 
     @Internal
     final String description = 'Validate conf/guides.yml against the migration schema (-PvalidationMode=shape|existence|both)'
@@ -284,12 +276,6 @@ abstract class ValidateGuidesTask extends DefaultTask {
                         if (!sampleRef['branch']) {
                             errors << "${vPrefix}.sampleRef: missing required 'branch'"
                         }
-                        String sha = sampleRef['sha'] as String
-                        if (!sha) {
-                            errors << "${vPrefix}.sampleRef: missing required 'sha'"
-                        } else if (!SHA_40_HEX.matcher(sha).matches()) {
-                            errors << "${vPrefix}.sampleRef.sha: '${sha}' is not a 40-character hex SHA"
-                        }
                     }
                 }
             }
@@ -345,32 +331,11 @@ abstract class ValidateGuidesTask extends DefaultTask {
                     (result['errors'] as List<String>) << "${prefix}: sourcePath '${sourcePath}/guide' contains no .adoc files"
                 }
 
-                File tocYml = new File(sourceDir, 'toc.yml')
-                if (!tocYml.file) {
-                    (result['errors'] as List<String>) << "${prefix}: missing toc.yml at ${tocYml.absolutePath}"
-                }
-
-                File manifestYml = new File(sourceDir, 'manifest.yml')
-                if (!manifestYml.file) {
-                    (result['errors'] as List<String>) << "${prefix}: missing manifest.yml at ${manifestYml.absolutePath}"
-                } else {
-                    try {
-                        Map manifest = manifestYml.withReader('UTF-8') { reader ->
-                            Object loaded = new Yaml().load(reader)
-                            (loaded instanceof Map) ? (loaded as Map) : null
-                        } as Map
-                        if (manifest == null) {
-                            (result['errors'] as List<String>) << "${prefix}: manifest.yml is empty or not a mapping"
-                        } else {
-                            MANIFEST_REQUIRED_KEYS.each { String key ->
-                                if (!manifest.containsKey(key) || manifest[key] == null) {
-                                    (result['errors'] as List<String>) << "${prefix}.manifest.yml: missing required key '${key}'"
-                                }
-                            }
-                        }
-                    } catch (Exception e) {
-                        (result['errors'] as List<String>) << "${prefix}: manifest.yml is not parseable as YAML: ${e.message}"
-                    }
+                Object tocObj = version['toc']
+                if (!tocObj) {
+                    (result['errors'] as List<String>) << "${prefix}: missing required 'toc' block (was previously toc.yml)"
+                } else if (!(tocObj instanceof Map) || (tocObj as Map).isEmpty()) {
+                    (result['errors'] as List<String>) << "${prefix}.toc: must be a non-empty mapping"
                 }
 
                 if (version['extends'] == 'shared' && guide.containsKey('shared')) {
