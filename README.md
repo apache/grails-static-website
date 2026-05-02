@@ -16,50 +16,36 @@ limitations under the License.
 
 # Grails Website
 
-the gh-pages branch is used to redirect all https://grails.org/ URLs to https://grails.apache.org/
-
-The Grails Website is published on [https://grails.apache.org/](https://grails.apache.org/) via the [`asf-site-production` branch on `grails-website`](https://github.com/apache/grails-website/tree/asf-site-production) repository.  
-
 [![Build Status](https://github.com/apache/grails-static-website/workflows/Publish/badge.svg)](https://github.com/apache/grails-static-website/actions)
 
-This project builds the Grails website. A static website build with [Gradle](https://gradle.org). It uses a Gradle Plugin whose sources can be found at `buildSrc`.
+Source for the Apache Grails website at [https://grails.apache.org/](https://grails.apache.org/) and the guides site at [https://grails.apache.org/guides/](https://grails.apache.org/guides/). Built as a static site with [Gradle](https://gradle.org); the build logic lives in [`buildSrc/`](buildSrc/).
 
-Gradle tasks use `grails` group.
+The cron-driven [`publish.yml`](.github/workflows/publish.yml) workflow builds this repository and pushes the result to the [`asf-site-production` branch on `apache/grails-website`](https://github.com/apache/grails-website/tree/asf-site-production), which Apache Infra mirrors to `grails.apache.org`.
 
-You can get more info by running:
+The legacy `https://guides.grails.org/` host is kept alive serving meta-refresh redirects to the new canonical URLs.
 
-```
-  % ./gradlew tasks --group=grails
+## Repository layout
 
- > Task :tasks
+| Path | What lives here |
+|---|---|
+| `pages/` | Hand-authored HTML pages on the main site (community, download, FAQ, etc.) |
+| `posts/` | Blog posts in Markdown |
+| `assets/` | CSS, JS, fonts, images for the main site |
+| `templates/` | HTML chrome shared across the main site and guide pages |
+| `conf/` | Site configuration: `guides.yml` (guide registry), `releases.yml` (Grails versions), `csp-allowlist.yml`, `legacy-guide-paths.txt` (redirect manifest input) |
+| `guides/` | Vendored guide content - one subdirectory per guide, then per Grails major version (see [Authoring a Guide](#authoring-a-guide)) |
+| `buildSrc/` | Gradle plugin (`website.gradle.GrailsWebsitePlugin`) and all custom tasks |
+| `scripts/` | Reserved for migration helpers; see [Appendix G of the migration plan](https://github.com/apache/grails-static-website/issues/354) - everything operational is a Gradle task |
 
- ------------------------------------------------------------
- Tasks runnable from root project
- ------------------------------------------------------------
+## Building locally
 
- Grails tasks
- ------------
- buildGuide - Alias for buildGuides (kept for backward compatibility)
- buildGuides - Build guides website - generates guides pages, copies assets and generates a sitemap
- copyAssets - Copies css, js, fonts and images from the assets folder to the dist folder
- genDocs - Generates documentation HTML page - build/temp/documentation.html
- genDownloads - Generates download HTML page - build/temp/download.html
- genFaq - Generates FAQ HTML - build/temp/faq.html
- genGuides - Generates guides home, tags and categories HTML pages - build/temp/index.html
- genProfiles - Generates profiles HTML page - build/temp/profiles.html
- genSitemap - Generates build/dist/sitemap.xml with every page in the site
- renderBlog - Renders Markdown posts (posts/*.md) into HTML pages (dist/blog/*.html). It generates tag pages. Generates RSS feed. Posts with future dates are not generated.
- renderSite - Build Grails website - generates pages with HTML entries in pages and build/temp, renders blog and RSS feed, copies assets and generates a sitemap
+Tasks use the `grails website` group:
 
- To see all tasks and more detail, run gradlew tasks --all
-
- To see more detail about a task, run gradlew help --task <task>
-
- BUILD SUCCESSFUL in 558ms
- 1 actionable task: 1 executed
+```bash
+./gradlew tasks --group="grails website"
 ```
 
-## Generating the MAIN site
+### Main site
 
 [https://grails.apache.org](https://grails.apache.org)
 
@@ -67,19 +53,38 @@ You can get more info by running:
 ./gradlew build --console=plain
 ```
 
-The output can be found in the `build/dist` directory.
+Output lands in `build/dist/`.
 
-## Generating the GUIDES site
+### Guides site
 
-[https://grails.apache.org/guides](https://grails.apache.org/guides)
+[https://grails.apache.org/guides/](https://grails.apache.org/guides/)
 
 ```bash
-./gradlew buildGuide --console=plain
+./gradlew buildGuides --console=plain
 ```
-The output can be found in the `build/dist` directory.
 
-This will generate links to https://grails.apache.org if you want the links to point to your local webserver you need to
-set this environment variable before running the build commands (port number depend on webserver...):
+This is the aggregate task. To render a single guide-version while iterating on its source:
+
+```bash
+./gradlew renderGuide_<name>_<version> --console=plain
+# e.g. ./gradlew renderGuide_creating-your-first-grails-app_6
+```
+
+To check `conf/guides.yml` against the schema:
+
+```bash
+./gradlew validateGuides -PvalidationMode=both
+```
+
+To run the full guide verification harness (warning gate, link crawl, structural diff, CSP scan, acceptance report):
+
+```bash
+./gradlew verifyAllGuides
+```
+
+### Local link rewriting
+
+The build emits absolute URLs to `https://grails.apache.org/`. For local preview, point links at your local webserver:
 
 ```bash
 export GRAILS_WS_URL=http://127.0.0.1:8000
@@ -87,14 +92,14 @@ export GRAILS_WS_URL=http://127.0.0.1:8000
 
 ## Running the website locally
 
-The easiest way to work locally is to generate the site and set up your Webserver to serve build/dist.
+Generate the site, then serve `build/dist/` with any static-file server.
 
-### Using jwebserver
+### Using jwebserver (JDK 19+)
 
-JDK 19+ comes with a simpel webserver called [jwebserver](https://docs.oracle.com/en/java/javase/25/docs/specs/man/jwebserver.html) that can be used for serving static files:
+JDK 19+ ships with a built-in static-file server called [`jwebserver`](https://docs.oracle.com/en/java/javase/25/docs/specs/man/jwebserver.html):
 
 ```bash
-$ jwebserver -d $(pwd)/build/dist
+$ jwebserver -d "$(pwd)/build/dist"
 Binding to loopback by default. For all interfaces use "-b 0.0.0.0" or "-b ::".
 Serving /home/user/grails-static-website/build/dist and subdirectories on 127.0.0.1 port 8000
 URL http://127.0.0.1:8000/
@@ -102,47 +107,175 @@ URL http://127.0.0.1:8000/
 
 ### Using Python
 
-You can also use Python to serve the directory:
-
 ```bash
 python3 -m http.server 8080 --directory build/dist
 ```
 
-### Using `npm`
+### Using npm + live-server
 
-You can use install `live-serve` with `npm` to get live auto-reload:
+For live auto-reload, install [`live-server`](https://www.npmjs.com/package/live-server):
 
-```bash 
+```bash
 npm install -g live-server
-```
-
-And then run the server like this:
-
-```bash 
 live-server build/dist
 ```
 
-Combining this with `./gradlew` continuously build in a separate shell, you get full reloading:
+Combine with continuous Gradle builds in a separate shell for full reloading:
 
 ```bash
 ./gradlew build --continuous
 ```
 
+## Authoring a Guide
+
+A guide on `https://grails.apache.org/guides/<name>/<version>/guide/index.html` is the rendered form of an AsciiDoc source tree under [`guides/<name>/v<N>/`](guides/) plus a registry entry in [`conf/guides.yml`](conf/guides.yml).
+
+### The three tiers
+
+Pick the tier that matches the kind of guide you want to ship. The PR you open against this repository is the same shape in all three tiers; the difference is whether the guide also needs an external sample-app repository on the [`grails-guides` org](https://github.com/grails-guides) for code that readers can clone and run.
+
+| Tier | Description | External `grails-guides/<name>` repo? |
+|---|---|---|
+| 1 - **Documentation only** | Pure narrative. No `initial/` or `complete/` code listings, no `include::{sourceDir}/...` directives in the guide body. | No |
+| 2 - **Initial code** | Narrative plus a starting-point sample (an empty Grails skeleton or a partial app readers fill in as they follow along). The repository contains an `initial/` directory; the guide may include snippets from it. | Yes |
+| 3 - **Initial and complete code** | Narrative plus both a starting-point sample (`initial/`) and a finished reference (`complete/`). | Yes |
+
+If your guide needs a sample repository (Tiers 2 and 3), open it via the PMC **before** you open the PR against this repository. See [Requesting a sample-app repository](#requesting-a-sample-app-repository).
+
+### Source layout per guide
+
+Every guide-version lives at `guides/<name>/v<N>/`:
+
+```
+guides/<name>/v<N>/
+├── guide/
+│   ├── index.adoc        # AsciiDoc entry point - all chapter includes start here
+│   └── <chapter>.adoc    # one file per chapter
+├── snippets/             # vendored copies of code that include:: directives reference
+├── manifest.yml          # per-version metadata consumed by the renderer
+└── toc.yml               # table-of-contents structure
+```
+
+`manifest.yml` looks like:
+
+```yaml
+title: 'My Guide Title'
+subtitle: 'A short subtitle'
+authors: ['Your Name']
+category: 'Some Category'
+publicationDate: '2026-05-02'
+githubSlug: 'grails-guides/<name>'   # only present for Tiers 2 and 3
+githubBranch: 'grails6'              # only present for Tiers 2 and 3
+```
+
+`toc.yml` lists chapters in the order they should appear (matching the `include::` order in `guide/index.adoc`).
+
+### Registering the guide in `conf/guides.yml`
+
+Add an entry to the top-level `guides:` list. **Tier 1** (no sample repo) omits the `sampleRef` block:
+
+```yaml
+- name: 'my-guide-name'
+  title: 'My Guide Title'
+  subtitle: 'A short subtitle'
+  authors: ['Your Name']
+  category: 'Some Category'
+  publicationDate: '2026-05-02'
+  versions:
+    '6':
+      sourcePath: guides/my-guide-name/v6
+      publicationDate: '2026-05-02'
+      tags: ['grails6', 'topic']
+```
+
+**Tiers 2 and 3** add a `sampleRef` block per version pinning the exact upstream commit you vendored snippets from:
+
+```yaml
+- name: 'my-guide-name'
+  title: 'My Guide Title'
+  subtitle: 'A short subtitle'
+  authors: ['Your Name']
+  category: 'Some Category'
+  publicationDate: '2026-05-02'
+  versions:
+    '6':
+      sourcePath: guides/my-guide-name/v6
+      publicationDate: '2026-05-02'
+      tags: ['grails6', 'topic']
+      sampleRef:
+        repo: 'grails-guides/my-guide-name'
+        branch: 'grails6'
+        sha: '<40-char SHA from grails-guides/my-guide-name>'
+```
+
+### Step-by-step
+
+#### Tier 1 - Documentation only
+
+1. Create `guides/<name>/v<N>/{guide,snippets}` (the `snippets/` directory can stay empty or be omitted).
+2. Write your `guide/index.adoc` and chapter files.
+3. Author `manifest.yml` and `toc.yml` (no `githubSlug`/`githubBranch`).
+4. Add the registry entry to `conf/guides.yml` without a `sampleRef` block.
+5. Validate locally: `./gradlew validateGuides -PvalidationMode=both`.
+6. Render locally: `./gradlew renderGuide_<name>_<N>` and open `build/dist/guides/<name>/<N>/guide/index.html`.
+7. Open a PR against this repository.
+
+#### Tier 2 - Initial code only
+
+1. Request a sample-app repository (see [Requesting a sample-app repository](#requesting-a-sample-app-repository)).
+2. Push your starting-point app to `grails-guides/<name>` under an `initial/` directory on the appropriate `grails<N>` branch.
+3. Tag the exact commit your guide will reference.
+4. In `apache/grails-static-website`, create the guide source tree as in Tier 1.
+5. Vendor any code your guide includes via `include::{sourceDir}/snippets/...[]` into `guides/<name>/v<N>/snippets/` (the renderer's `inlineSnippetIncludes` preprocessor reads these).
+6. Add the registry entry with a `sampleRef` pointing at the SHA from step 3.
+7. Validate, render, open PR.
+
+#### Tier 3 - Initial and complete code
+
+1-3. Same as Tier 2 but the upstream repository contains BOTH `initial/` AND `complete/` directories.
+
+4-7. Same as Tier 2. Your guide can include snippets from either directory via `include::{sourceDir}/initial/...` or `include::{sourceDir}/complete/...`.
+
+### Requesting a sample-app repository
+
+Repositories under [`https://github.com/grails-guides`](https://github.com/grails-guides) are owned and provisioned by the Apache Grails PMC. Tier 2 and Tier 3 guides need one of these repositories before the guide can ship.
+
+**Contact the PMC via the [community page](https://grails.apache.org/community.html):**
+
+- **Dev mailing list**: subscribe by sending a blank email to [`dev-subscribe@grails.apache.org`](mailto:dev-subscribe@grails.apache.org), then post your request to [`dev@grails.apache.org`](https://lists.apache.org/list.html?dev%40grails.apache.org). Include the proposed guide name, a one-line description, and which Grails major version(s) the sample will target.
+- **Slack**: join via [https://slack.grails.org](https://slack.grails.org) and ping the PMC in the appropriate channel.
+
+A PMC member with org-admin access on `grails-guides` will create the repository, set the default branch (the latest `grails<N>` you target), and grant you push access. From there you push your `initial/` (and optionally `complete/`) tree as normal.
+
+### Local validation checklist
+
+Before opening the PR:
+
+```bash
+# Schema check on conf/guides.yml
+./gradlew validateGuides -PvalidationMode=both
+
+# Single-guide render (faster than buildGuides)
+./gradlew renderGuide_<name>_<version>
+
+# Full corpus + verification harness
+./gradlew buildAllGuides
+./gradlew verifyAllGuides
+```
+
+Open the rendered HTML directly in a browser - relative CSS makes file:// URLs work.
+
 ## Blog Posts
 
-### Posts Location
+### Posts location
 
-Write blog posts in markdown at `posts` folder.
+Write blog posts in Markdown under [`posts/`](posts/).
 
-### Blog post Metadata
+### Blog post metadata
 
-A post supports metadata at the beginning of the document. You can use it store information (title, description, publication date) about your blog posts.
+A post supports metadata at the top of the document. Use it for title, description, publication date, and other display fields. Metadata is separated from the body by three dashes, and the metadata values can be referenced in the body via `[%fieldname]`.
 
-Metadata must be separated from the rest of the document by three dashes.
-
-You can use the metadata in the text by putting it in brackets adding a % sign.
-
-A typical blog post will look like:
+A typical blog post looks like:
 
 ```markdown
 ---
@@ -166,106 +299,67 @@ The process to deploy Grails 3.1 applications to JBoss 6.4 EAP is largely simila
 
 #### Text Expander snippets
 
-If you write often to Grails's blog, we recommend you to create a [Text Expander](https://textexpander.com) snippet:
+If you write to the Grails blog frequently, consider creating a [Text Expander](https://textexpander.com) snippet:
 
- ![TextExpander snippet example](docs/textexpander.png)
+![TextExpander snippet example](docs/textexpander.png)
 
+#### `title`
 
-#### Title Metadata
+Used as the window title, the card title, the blog post main header, and in social cards.
 
-`title` tag is used as the window title, the card title, blog post main header and also in twitter cards.
+#### `description`
 
-#### Description Metadata
+Used as the HTML meta description tag and in social cards.
 
-Description metadata is used as HTML meta description tag, and in twitter cards.
+#### `date`
 
-#### Date Metadata
+Publication date - drives ordering in the blog index, the displayed date in the UI, and the RSS feed entry date. Two accepted formats:
 
-Date is used to for publication date. It is used to order to blog posts. It is displayed in the UI and in the RSS feed.
+- `MMM d, yyyy` (e.g. `April 9, 2020`)
+- `MMM d, yyyy HH:mm` (e.g. `April 9, 2020 09:00`)
 
-Date can be expressed in `MMM d, yyyy`
+**Posts dated in the future are scheduled.** The cron-driven publish workflow runs daily and ships scheduled posts when their date arrives.
 
-```markdown
----
-...
-..
-.
-date: April 9, 2020
----
+#### Background image
 
-```
-
-or `MMM d, yyyy HH:mm`
+Reference a background image from `assets/bgimages/` via the `image` metadata key:
 
 ```markdown
 ---
-...
-..
-.
-date: April 9, 2020 09:00
----
-
-```
-
-**To Schedule tasks use a date in the future. Github Action runs daily and will publish scheduled posts.**
-
-#### Blog post background
-
-For Blog post background images usage image metadata.
-
-```markdown
----
-...
-..
-.
 image: 2018-05-23.jpg
 ---
 ```
 
-Place the images at `assets/bgimages`
-
-![Blog images directory structure](docs/blogimages.png)
+Place the source files under [`assets/bgimages/`](assets/bgimages/).
 
 ### Tags
 
-To add tags just preffix them with `#`:
-
-Example:
+Prefix tags with `#`:
 
 ```markdown
 Tags: #angular
 ```
 
-**Webinars on-demand recordings should be tagged with `webinar`**
+- Webinar on-demand recordings should be tagged `webinar`.
+- Release announcements should be tagged `release`.
+- Check the [list of existing tags](https://grails.apache.org/blog/index.html) and reuse them where reasonable.
 
-Release announcements should be tagged with `release`.
+#### Code highlighting
 
-Check the [list of tags](https://grails.apache.org/blog/index.html) and try to reuse them.
-
-#### Code Highlighting
-
-If your blog post, contains code samples add the following metadata:
+If your post contains code samples, opt into the Prism highlighter via metadata:
 
 ```markdown
 ---
-...
-..
-.
 CSS: [%url]/stylesheets/prism.css
 JAVASCRIPT: [%url]/javascripts/prism.js
 ---
 
 # [%title]
-
 ```
 
-#### Video
+#### Embedded video
 
-Use the `video` metadata to embed a Video.
-
-Currently, the plugin supports youtube videos. Use a link which starts with `https://www.youtube.com/watch?v=` such as `https://www.youtube.com/watch?v=RtjSqRZ_md4`
-
-Example:
+Set the `video` metadata to embed a YouTube video. Use a URL of the form `https://www.youtube.com/watch?v=...`:
 
 ```markdown
 ---
@@ -288,10 +382,24 @@ Tags:
 [%description]
 ```
 
-## Assets (Fonts, Stylesheets, Images, Javascripts)
+## Recording a release
 
-Assets used in the website can be found under `assets`.
+When a new Grails version is published, append it to [`conf/releases.yml`](conf/releases.yml) via the `recordRelease` Gradle task:
 
-## What to change when a new release is published.
+```bash
+./gradlew recordRelease -PreleaseVersion=7.0.0
+```
 
-Please, modify `conf/releases.yml`
+This is also wired into the [`release.yml`](.github/workflows/release.yml) workflow, which is invoked manually from the Actions tab with the version as input.
+
+## Assets (fonts, stylesheets, images, JavaScript)
+
+All static assets used by the main site live under [`assets/`](assets/). Assets used by the guides site live under [`guides/resources/`](guides/resources/).
+
+## Contributing
+
+For broader Grails contribution discussion and questions:
+
+- [Community page](https://grails.apache.org/community.html)
+- [Dev mailing list](https://lists.apache.org/list.html?dev%40grails.apache.org)
+- [Slack](https://slack.grails.org)
