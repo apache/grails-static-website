@@ -203,12 +203,9 @@ Sample-app flavour adds `sampleRef`:
 
 Repositories under [`https://github.com/grails-guides`](https://github.com/grails-guides) are owned and provisioned by the Apache Grails PMC. Sample-app flavour guides need one of these repositories before the guide can ship.
 
-**Contact the PMC via the [community page](https://grails.apache.org/community.html):**
+Contact the PMC via the [community page](https://grails.apache.org/community.html).
 
-- **Dev mailing list**: subscribe by sending a blank email to [`dev-subscribe@grails.apache.org`](mailto:dev-subscribe@grails.apache.org), then post your request to [`dev@grails.apache.org`](https://lists.apache.org/list.html?dev@grails.apache.org). Include the proposed guide name, a one-line description, and which Grails major version(s) the sample will target.
-- **Slack**: join via [https://slack.grails.org](https://slack.grails.org) and ping the PMC in the appropriate channel.
-
-A PMC member with org-admin access on `grails-guides` will create the repository, set the default branch (the latest `grails<N>` you target), and grant you push access. From there you push your `initial/` (and optionally `complete/`) tree as normal.
+A PMC member with org-admin access on `grails-guides` will create the repository, set the default branch (the latest `grails<N>` you target). Then you will create a PR from your personal GitHub fork.
 
 ### Local validation checklist
 
