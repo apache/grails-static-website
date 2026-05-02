@@ -1,11 +1,3 @@
-# Per-guide-version metadata. Consumed by the schema validator (existence
-# mode) and by the renderer (genGuides + PublishGuide).
-#
-# This is the FIXTURE migration for the apache/grails-static-website#354
-# publishing migration. It is the known-good reference output that the
-# IncludeProcessor-based bulk-migration tooling (built later) is measured
-# against.
-
 name: creating-your-first-grails-app
 version: "6"
 title: "Creating your first Grails Application"
@@ -18,11 +10,5 @@ tags:
   - gsp
   - grails6
 publicationDate: "2017-01-23"
-
-# Source repo + branch + pinned SHA. The fixture was vendored bit-for-bit
-# from this commit; subsequent re-vendoring (or upstream fix import) updates
-# the SHA in lockstep with the source-content commit on this branch.
 githubSlug: grails-guides/creating-your-first-grails-app
 githubBranch: master
-githubSha: 84422f5d162f3deffb89978a3e9127382ce7eeea
-sourceCommitDate: "2022-04-04T15:29:57+02:00"

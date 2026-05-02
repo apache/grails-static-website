@@ -70,7 +70,6 @@ abstract class ValidateGuidesTask extends DefaultTask {
     public static final String MODE_EXISTENCE = 'existence'
     public static final String MODE_BOTH = 'both'
 
-    private static final Pattern SHA_40_HEX = ~/^[0-9a-fA-F]{40}$/
     private static final Pattern VERSION_KEY = ~/^[0-9]+$/
     private static final List<String> MANIFEST_REQUIRED_KEYS = [
             'title',
@@ -283,12 +282,6 @@ abstract class ValidateGuidesTask extends DefaultTask {
                         }
                         if (!sampleRef['branch']) {
                             errors << "${vPrefix}.sampleRef: missing required 'branch'"
-                        }
-                        String sha = sampleRef['sha'] as String
-                        if (!sha) {
-                            errors << "${vPrefix}.sampleRef: missing required 'sha'"
-                        } else if (!SHA_40_HEX.matcher(sha).matches()) {
-                            errors << "${vPrefix}.sampleRef.sha: '${sha}' is not a 40-character hex SHA"
                         }
                     }
                 }

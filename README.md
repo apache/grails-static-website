@@ -130,17 +130,16 @@ Combine with continuous Gradle builds in a separate shell for full reloading:
 
 A guide on `https://grails.apache.org/guides/<name>/<version>/guide/index.html` is the rendered form of an AsciiDoc source tree under [`guides/<name>/v<N>/`](guides/) plus a registry entry in [`conf/guides.yml`](conf/guides.yml).
 
-### The three tiers
+### Two flavours
 
-Pick the tier that matches the kind of guide you want to ship. The PR you open against this repository is the same shape in all three tiers; the difference is whether the guide also needs an external sample-app repository on the [`grails-guides` org](https://github.com/grails-guides) for code that readers can clone and run.
+Most of the time it's just narrative + inline code blocks. If you also want readers to be able to `git clone` a runnable sample app, host it on the [`grails-guides` org](https://github.com/grails-guides) and link to it from your registry entry's `sampleRef`.
 
-| Tier | Description | External `grails-guides/<name>` repo? |
+| Flavour | What it adds | External `grails-guides/<name>` repo? |
 |---|---|---|
-| 1 - **Documentation only** | Pure narrative. No `initial/` or `complete/` code listings, no `include::{sourceDir}/...` directives in the guide body. | No |
-| 2 - **Initial code** | Narrative plus a starting-point sample (an empty Grails skeleton or a partial app readers fill in as they follow along). The repository contains an `initial/` directory; the guide may include snippets from it. | Yes |
-| 3 - **Initial and complete code** | Narrative plus both a starting-point sample (`initial/`) and a finished reference (`complete/`). | Yes |
+| **Documentation** | Pure narrative with inline `[source,groovy]` code blocks. | No |
+| **Documentation + sample app** | Same narrative, plus `include::../snippets/<path>[]` directives that pull verbatim source from a vendored `snippets/` tree. The matching upstream repo (with `initial/` and optionally `complete/`) lives on the `grails-guides` org so readers can clone and run it. | Yes |
 
-If your guide needs a sample repository (Tiers 2 and 3), open it via the PMC **before** you open the PR against this repository. See [Requesting a sample-app repository](#requesting-a-sample-app-repository).
+If your guide needs an upstream repo, see [Requesting a sample-app repository](#requesting-a-sample-app-repository) - PMC-provisioned.
 
 ### Source layout per guide
 
@@ -149,14 +148,13 @@ Every guide-version lives at `guides/<name>/v<N>/`:
 ```
 guides/<name>/v<N>/
 ├── guide/
-│   ├── index.adoc        # AsciiDoc entry point - all chapter includes start here
-│   └── <chapter>.adoc    # one file per chapter
-├── snippets/             # vendored copies of code that include:: directives reference
-├── manifest.yml          # per-version metadata consumed by the renderer
+│   └── <chapter>.adoc    # one file per chapter (toc.yml drives ordering)
+├── snippets/             # OPTIONAL: vendored source the include:: directives reference
+├── manifest.yml          # per-version metadata
 └── toc.yml               # table-of-contents structure
 ```
 
-`manifest.yml` looks like:
+`manifest.yml`:
 
 ```yaml
 title: 'My Guide Title'
@@ -164,15 +162,15 @@ subtitle: 'A short subtitle'
 authors: ['Your Name']
 category: 'Some Category'
 publicationDate: '2026-05-02'
-githubSlug: 'grails-guides/<name>'   # only present for Tiers 2 and 3
-githubBranch: 'grails6'              # only present for Tiers 2 and 3
+githubSlug: 'grails-guides/<name>'   # only when there is a sample-app repo
+githubBranch: 'grails8'              # only when there is a sample-app repo
 ```
 
-`toc.yml` lists chapters in the order they should appear (matching the `include::` order in `guide/index.adoc`).
+`toc.yml` lists chapters in the order they should appear.
 
 ### Registering the guide in `conf/guides.yml`
 
-Add an entry to the top-level `guides:` list. **Tier 1** (no sample repo) omits the `sampleRef` block:
+Documentation-only entries omit `sampleRef`:
 
 ```yaml
 - name: 'my-guide-name'
@@ -182,63 +180,35 @@ Add an entry to the top-level `guides:` list. **Tier 1** (no sample repo) omits 
   category: 'Some Category'
   publicationDate: '2026-05-02'
   versions:
-    '6':
-      sourcePath: guides/my-guide-name/v6
-      publicationDate: '2026-05-02'
-      tags: ['grails6', 'topic']
+    '8':
+      sourcePath: guides/my-guide-name/v8
+      tags: ['grails8', 'topic']
 ```
 
-**Tiers 2 and 3** add a `sampleRef` block per version pinning the exact upstream commit you vendored snippets from:
+Entries with a sample-app repo add `sampleRef`:
 
 ```yaml
-- name: 'my-guide-name'
-  title: 'My Guide Title'
-  subtitle: 'A short subtitle'
-  authors: ['Your Name']
-  category: 'Some Category'
-  publicationDate: '2026-05-02'
-  versions:
-    '6':
-      sourcePath: guides/my-guide-name/v6
-      publicationDate: '2026-05-02'
-      tags: ['grails6', 'topic']
       sampleRef:
         repo: 'grails-guides/my-guide-name'
-        branch: 'grails6'
-        sha: '<40-char SHA from grails-guides/my-guide-name>'
+        branch: 'grails8'
 ```
+
+`sampleRef` drives the "Get the Code" sidebar on the rendered page. `repo` and `branch` are the only fields - no SHA pinning.
 
 ### Step-by-step
 
-#### Tier 1 - Documentation only
-
-1. Create `guides/<name>/v<N>/{guide,snippets}` (the `snippets/` directory can stay empty or be omitted).
-2. Write your `guide/index.adoc` and chapter files.
-3. Author `manifest.yml` and `toc.yml` (no `githubSlug`/`githubBranch`).
-4. Add the registry entry to `conf/guides.yml` without a `sampleRef` block.
-5. Validate locally: `./gradlew validateGuides -PvalidationMode=both`.
-6. Render locally: `./gradlew renderGuide_<name>_<N>` and open `build/dist/guides/<name>/<N>/guide/index.html`.
-7. Open a PR against this repository.
-
-#### Tier 2 - Initial code only
-
-1. Request a sample-app repository (see [Requesting a sample-app repository](#requesting-a-sample-app-repository)).
-2. Push your starting-point app to `grails-guides/<name>` under an `initial/` directory on the appropriate `grails<N>` branch.
-3. Tag the exact commit your guide will reference.
-4. In `apache/grails-static-website`, create the guide source tree as in Tier 1.
-5. Vendor any code your guide includes via `include::{sourceDir}/snippets/...[]` into `guides/<name>/v<N>/snippets/` (the renderer's `inlineSnippetIncludes` preprocessor reads these).
-6. Add the registry entry with a `sampleRef` pointing at the SHA from step 3.
-7. Validate, render, open PR.
-
-#### Tier 3 - Initial and complete code
-
-1-3. Same as Tier 2 but the upstream repository contains BOTH `initial/` AND `complete/` directories.
-
-4-7. Same as Tier 2. Your guide can include snippets from either directory via `include::{sourceDir}/initial/...` or `include::{sourceDir}/complete/...`.
+1. Create `guides/<name>/v<N>/{guide,snippets}` (omit `snippets/` if you have no `include::../snippets/...` directives).
+2. Write the chapter `.adoc` files. Cross-cutting code that benefits readers comes from inline `[source,groovy]` blocks; long verbatim source goes in `snippets/` and is referenced via `include::../snippets/<path>[]`.
+3. Author `manifest.yml` (omit `githubSlug`/`githubBranch` if there's no upstream repo) and `toc.yml`.
+4. Add the registry entry to `conf/guides.yml`.
+5. (Sample-app flavour) Push your `initial/` (and optionally `complete/`) tree to `grails-guides/<name>` on the matching `grails<N>` branch.
+6. Validate locally: `./gradlew validateGuides -PvalidationMode=both`.
+7. Render locally: `./gradlew renderGuide_<safeName>_<N>` (underscores in `<safeName>`) and open `build/dist/guides/<name>/<N>/guide/index.html`.
+8. Open a PR against this repository.
 
 ### Requesting a sample-app repository
 
-Repositories under [`https://github.com/grails-guides`](https://github.com/grails-guides) are owned and provisioned by the Apache Grails PMC. Tier 2 and Tier 3 guides need one of these repositories before the guide can ship.
+Repositories under [`https://github.com/grails-guides`](https://github.com/grails-guides) are owned and provisioned by the Apache Grails PMC. Sample-app flavour guides need one of these repositories before the guide can ship.
 
 **Contact the PMC via the [community page](https://grails.apache.org/community.html):**
 
