@@ -1,0 +1,558 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Grails Logo":
+        - /url: https://grails.apache.org/index.html
+        - img "Grails Logo" [ref=e4] [cursor=pointer]
+      - generic [ref=e5]:
+        - navigation [ref=e6]:
+          - list:
+            - listitem [ref=e7]:
+              - link "Case Studies" [ref=e8] [cursor=pointer]:
+                - /url: https://grails.apache.org/casestudies/index.html
+            - listitem [ref=e9]:
+              - link "Blog" [ref=e10] [cursor=pointer]:
+                - /url: https://grails.apache.org/blog/index.html
+            - listitem [ref=e11]:
+              - link "Learning" [ref=e12] [cursor=pointer]:
+                - /url: https://grails.apache.org/learning.html
+            - listitem [ref=e13]:
+              - link "Community" [ref=e14] [cursor=pointer]:
+                - /url: https://grails.apache.org/community.html
+            - listitem [ref=e15]:
+              - link "Search" [ref=e16] [cursor=pointer]:
+                - /url: https://grails.apache.org/search.html
+        - navigation [ref=e17]:
+          - list:
+            - listitem [ref=e18]:
+              - link "Documentation" [ref=e19] [cursor=pointer]:
+                - /url: https://grails.apache.org/documentation.html
+            - listitem [ref=e20]:
+              - link "Download" [ref=e21] [cursor=pointer]:
+                - /url: https://grails.apache.org/download.html
+            - listitem [ref=e22]:
+              - link "Plugins" [ref=e23] [cursor=pointer]:
+                - /url: https://plugins.grails.org
+            - listitem [ref=e24]:
+              - link "Guides" [ref=e25] [cursor=pointer]:
+                - /url: https://grails.apache.org/guides
+            - listitem [ref=e26]:
+              - link "FAQ" [ref=e27] [cursor=pointer]:
+                - /url: https://grails.apache.org/faq.html
+            - listitem [ref=e28]:
+              - link "Support" [ref=e29] [cursor=pointer]:
+                - /url: https://grails.apache.org/support.html
+            - listitem [ref=e30]:
+              - link "Forge App" [ref=e31] [cursor=pointer]:
+                - /url: https://start.grails.org
+  - article [ref=e33]:
+    - complementary [ref=e34]:
+      - button "GitHub Get the Code" [ref=e35] [cursor=pointer]:
+        - img "GitHub" [ref=e36]
+        - text: Get the Code
+      - list [ref=e37]:
+        - listitem [ref=e38]:
+          - button "SSH" [ref=e39] [cursor=pointer]
+        - listitem [ref=e40]:
+          - button "HTTPS" [ref=e41] [cursor=pointer]
+      - generic [ref=e42]:
+        - textbox [ref=e43]: git@github.com:grails-guides/grails-on-github-actions.git
+        - button "Copy to clipboard" [ref=e44] [cursor=pointer]:
+          - img "Copy to clipboard" [ref=e45]
+      - button "Download ZIP" [ref=e46] [cursor=pointer]
+      - generic [ref=e47]:
+        - heading "Table of Contents" [level=3] [ref=e48]
+        - link "1Grails Training" [ref=e50] [cursor=pointer]:
+          - /url: "#training"
+          - strong [ref=e51]: "1"
+          - text: Grails Training
+        - link "2Getting Started" [ref=e53] [cursor=pointer]:
+          - /url: "#gettingStarted"
+          - strong [ref=e54]: "2"
+          - text: Getting Started
+        - link "2.1What you will need" [ref=e56] [cursor=pointer]:
+          - /url: "#requirements"
+          - strong [ref=e57]: "2.1"
+          - text: What you will need
+        - link "2.2How to complete the guide" [ref=e59] [cursor=pointer]:
+          - /url: "#howto"
+          - strong [ref=e60]: "2.2"
+          - text: How to complete the guide
+        - link "3Writing the Application" [ref=e62] [cursor=pointer]:
+          - /url: "#writingTheApp"
+          - strong [ref=e63]: "3"
+          - text: Writing the Application
+        - link "3.1Unit Test" [ref=e65] [cursor=pointer]:
+          - /url: "#unitTest"
+          - strong [ref=e66]: "3.1"
+          - text: Unit Test
+        - link "3.2Integration Test" [ref=e68] [cursor=pointer]:
+          - /url: "#integrationTest"
+          - strong [ref=e69]: "3.2"
+          - text: Integration Test
+        - link "3.3Verbose Test Output" [ref=e71] [cursor=pointer]:
+          - /url: "#testLogging"
+          - strong [ref=e72]: "3.3"
+          - text: Verbose Test Output
+        - link "3.4Run Tests" [ref=e74] [cursor=pointer]:
+          - /url: "#runTests"
+          - strong [ref=e75]: "3.4"
+          - text: Run Tests
+        - link "4Create GitHub Repo" [ref=e77] [cursor=pointer]:
+          - /url: "#createGitHubRepo"
+          - strong [ref=e78]: "4"
+          - text: Create GitHub Repo
+        - link "5Integrate Github Actions" [ref=e80] [cursor=pointer]:
+          - /url: "#integrateGithubActions"
+          - strong [ref=e81]: "5"
+          - text: Integrate Github Actions
+        - link "6Where to Go From Here?" [ref=e83] [cursor=pointer]:
+          - /url: "#wheretoGoFromHere"
+          - strong [ref=e84]: "6"
+          - text: Where to Go From Here?
+        - link "7Help with Grails" [ref=e86] [cursor=pointer]:
+          - /url: "#helpWithGrails"
+          - strong [ref=e87]: "7"
+          - text: Help with Grails
+    - generic [ref=e88]:
+      - heading "Grails on Github Actions" [level=1] [ref=e89]
+      - paragraph [ref=e90]: In this guide, we will learn how to setup Github Actions to build and test a Grails application.
+      - paragraph [ref=e91]:
+        - strong [ref=e92]: "Authors:"
+        - text: Sergio del Amo
+      - paragraph [ref=e93]:
+        - strong [ref=e94]: "Grails Version:"
+        - text: "4"
+    - heading "1 Grails Training" [level=1] [ref=e95]
+    - button "Improve this doc" [ref=e97] [cursor=pointer]: Improve this doc
+    - generic [ref=e98]:
+      - heading "Apache Grails Training" [level=2] [ref=e99]
+      - paragraph [ref=e102]:
+        - text: Apache Grails is now part of the Apache Software Foundation. The community-maintained training catalog is being migrated; in the meantime see the
+        - link "Learning" [ref=e103] [cursor=pointer]:
+          - /url: https://grails.apache.org/learning.html
+        - text: page for current resources, recorded talks, and links to other community-supplied training material.
+    - heading "2 Getting Started" [level=1] [ref=e104]
+    - button "Improve this doc" [ref=e106] [cursor=pointer]: Improve this doc
+    - paragraph [ref=e108]:
+      - text: Every software project needs
+      - link "Continuous Integration (CI)" [ref=e109] [cursor=pointer]:
+        - /url: https://martinfowler.com/articles/continuousIntegration.html
+      - text: .
+    - generic [ref=e110]:
+      - blockquote [ref=e111]: Continuous Integration is a software development practice where members of a team integrate their work frequently, usually each person integrates at least daily - leading to multiple integrations per day. Each integration is verified by an automated build (including test) to detect integration errors as quickly as possible. Many teams find that this approach leads to significantly reduced integration problems and allows a team to develop cohesive software more rapidly.
+      - generic [ref=e112]: — Martin Fowler
+    - paragraph [ref=e114]: "In this guide, we use Github Actions:"
+    - blockquote [ref=e116]:
+      - paragraph [ref=e118]: GitHub Actions makes it easy to automate all your software workflows, now with world-class CI/CD. Build, test, and deploy your code right from GitHub. Make code reviews, branch management, and issue triaging work the way you want.
+    - paragraph [ref=e120]:
+      - text: You are going to create a Grails application on GitHub and use
+      - link "Github Actions" [ref=e121] [cursor=pointer]:
+        - /url: https://github.com/features/actions
+      - text: to build and test your code. This guide assumes you are familiar with Git and GitHub. It also assumes that you already have a GitHub account.
+    - heading "2.1 What you will need" [level=2] [ref=e122]
+    - button "Improve this doc" [ref=e124] [cursor=pointer]: Improve this doc
+    - paragraph [ref=e126]: "To complete this guide, you will need the following:"
+    - list [ref=e128]:
+      - listitem [ref=e129]:
+        - paragraph [ref=e130]: Some time on your hands
+      - listitem [ref=e131]:
+        - paragraph [ref=e132]: A decent text editor or IDE
+      - listitem [ref=e133]:
+        - paragraph [ref=e134]:
+          - text: JDK 11 or greater installed with
+          - code [ref=e135]: JAVA_HOME
+          - text: configured appropriately
+    - heading "2.2 How to complete the guide" [level=2] [ref=e136]
+    - button "Improve this doc" [ref=e138] [cursor=pointer]: Improve this doc
+    - paragraph [ref=e140]: "To get started do the following:"
+    - list [ref=e142]:
+      - listitem [ref=e143]:
+        - paragraph [ref=e144]:
+          - link "Download" [ref=e145] [cursor=pointer]:
+            - /url: https://github.com/grails-guides/grails-on-github-actions/archive/master.zip
+          - text: and unzip the source
+    - paragraph [ref=e147]: or
+    - list [ref=e149]:
+      - listitem [ref=e150]:
+        - paragraph [ref=e151]:
+          - text: Clone the
+          - link "Git" [ref=e152] [cursor=pointer]:
+            - /url: https://git-scm.com/
+          - text: "repository:"
+          - code [ref=e153]:
+            - text: git clone
+            - link "https://github.com/grails-guides/grails-on-github-actions.git" [ref=e154] [cursor=pointer]:
+              - /url: https://github.com/grails-guides/grails-on-github-actions.git
+    - paragraph [ref=e156]: "The Grails guides repositories contain two folders:"
+    - list [ref=e158]:
+      - listitem [ref=e159]:
+        - paragraph [ref=e160]:
+          - code [ref=e161]: initial
+          - text: Initial project. Often a simple Grails app with some additional code to give you a head-start.
+      - listitem [ref=e162]:
+        - paragraph [ref=e163]:
+          - code [ref=e164]: complete
+          - text: A completed example. It is the result of working through the steps presented by the guide and applying those changes to the
+          - code [ref=e165]: initial
+          - text: folder.
+    - paragraph [ref=e167]:
+      - text: To complete the guide, go to the
+      - code [ref=e168]: initial
+      - text: folder
+    - list [ref=e170]:
+      - listitem [ref=e171]:
+        - paragraph [ref=e172]:
+          - code [ref=e173]: cd
+          - text: into
+          - code [ref=e174]: grails-guides/grails-on-github-actions/initial
+    - paragraph [ref=e176]: and follow the instructions in the next sections.
+    - table [ref=e178]:
+      - rowgroup [ref=e179]:
+        - row "Tip You can go right to the completed example if you cd into grails-guides/grails-on-github-actions/complete" [ref=e180]:
+          - cell "Tip" [ref=e181]:
+            - generic "Tip"
+          - cell "You can go right to the completed example if you cd into grails-guides/grails-on-github-actions/complete" [ref=e182]:
+            - text: You can go right to the
+            - strong [ref=e183]: completed example
+            - text: if you
+            - code [ref=e184]: cd
+            - text: into
+            - code [ref=e185]: grails-guides/grails-on-github-actions/complete
+    - heading "3 Writing the Application" [level=1] [ref=e186]
+    - button "Improve this doc" [ref=e188] [cursor=pointer]: Improve this doc
+    - paragraph [ref=e190]:
+      - text: The
+      - code [ref=e191]: initial
+      - text: project contains a Grails Application created with the
+      - code [ref=e192]: web
+      - text: with the
+      - link "Grails Application Forge" [ref=e193] [cursor=pointer]:
+        - /url: http://start.grails.org
+      - text: .
+    - paragraph [ref=e195]:
+      - text: Your build file
+      - code [ref=e196]: build.gradle
+      - text: "is setup to run Geb tests seamlessly:"
+    - generic [ref=e197]:
+      - generic [ref=e198]: gradle.properties
+      - code [ref=e201]: grailsVersion=4.0.1 gormVersion=7.0.2.RELEASE assetPipelineVersion=3.0.11 webdriverBinariesVersion=1.4 seleniumVersion=3.141.59 chromeDriverVersion=78.0.3904.105 geckodriverVersion=0.26.0
+    - generic [ref=e202]:
+      - generic [ref=e203]: build.gradle
+      - code [ref=e206]:
+        - text: "buildscript { ... dependencies { ... classpath"
+        - generic [ref=e207]: "\"gradle.plugin.com.github.erdi.webdriver-binaries:webdriver-binaries-gradle-plugin:2.1\""
+        - text: "(1) } } ... ... ... apply plugin:"
+        - generic [ref=e208]: "\"com.github.erdi.webdriver-binaries\""
+        - text: "(1) ... ... ... dependencies { ... ... testCompile"
+        - generic [ref=e209]: "\"org.grails.plugins:geb\""
+        - text: (2) testCompile
+        - generic [ref=e210]: "\"org.seleniumhq.selenium:htmlunit-driver:2.35.1\""
+        - text: testRuntime
+        - generic [ref=e211]: "'net.sourceforge.htmlunit:htmlunit:2.35.0'"
+        - text: testRuntime
+        - generic [ref=e212]:
+          - text: "\"org.seleniumhq.selenium:selenium-chrome-driver:"
+          - generic [ref=e213]: $seleniumVersion
+          - text: "\""
+        - text: (3) testRuntime
+        - generic [ref=e214]:
+          - text: "\"org.seleniumhq.selenium:selenium-firefox-driver:"
+          - generic [ref=e215]: $seleniumVersion
+          - text: "\""
+        - text: (4) testCompile
+        - generic [ref=e216]:
+          - text: "\"org.seleniumhq.selenium:selenium-remote-driver:"
+          - generic [ref=e217]: $seleniumVersion
+          - text: "\""
+        - text: (5) testCompile
+        - generic [ref=e218]:
+          - text: "\"org.seleniumhq.selenium:selenium-api:"
+          - generic [ref=e219]: $seleniumVersion
+          - text: "\""
+        - text: (5) testCompile
+        - generic [ref=e220]:
+          - text: "\"org.seleniumhq.selenium:selenium-support:"
+          - generic [ref=e221]: $seleniumVersion
+          - text: "\""
+        - text: "(5) } webdriverBinaries { chromedriver"
+        - generic [ref=e222]:
+          - text: "\""
+          - generic [ref=e223]: "${chromeDriverVersion}"
+          - text: "\""
+        - text: (6) geckodriver
+        - generic [ref=e224]:
+          - text: "\""
+          - generic [ref=e225]: "${geckodriverVersion}"
+          - text: "\""
+        - text: "(7) }"
+    - table [ref=e227]:
+      - rowgroup [ref=e228]:
+        - row "1 Apply the Webdriver binaries Gradle Plugin. A Gradle plugin that downloads WebDriver binaries specific to the operating system the build runs on. The plugin also as configures various parts of the build to use the downloaded binaries." [ref=e229]:
+          - cell "1" [ref=e230]: "1"
+          - cell "Apply the Webdriver binaries Gradle Plugin. A Gradle plugin that downloads WebDriver binaries specific to the operating system the build runs on. The plugin also as configures various parts of the build to use the downloaded binaries." [ref=e231]:
+            - text: Apply the
+            - link "Webdriver binaries Gradle Plugin" [ref=e232] [cursor=pointer]:
+              - /url: https://github.com/energizedwork/webdriver-binaries-gradle-plugin
+            - text: . A Gradle plugin that downloads WebDriver binaries specific to the operating system the build runs on. The plugin also as configures various parts of the build to use the downloaded binaries.
+        - row "2 Include a testCompile dependency to the Geb Grails plugin which has a transitive dependency to geb-spock." [ref=e233]:
+          - cell "2" [ref=e234]: "2"
+          - cell "Include a testCompile dependency to the Geb Grails plugin which has a transitive dependency to geb-spock." [ref=e235]:
+            - text: Include a
+            - code [ref=e236]: testCompile
+            - text: dependency to the Geb Grails plugin which has a transitive dependency to
+            - code [ref=e237]: geb-spock
+            - text: .
+        - row "3 Adds the necessary selenium dependencies to use Chrome" [ref=e238]:
+          - cell "3" [ref=e239]: "3"
+          - cell "Adds the necessary selenium dependencies to use Chrome" [ref=e240]
+        - row "4 Adds the necessary selenium dependencies to use Firefox" [ref=e241]:
+          - cell "4" [ref=e242]: "4"
+          - cell "Adds the necessary selenium dependencies to use Firefox" [ref=e243]
+        - row "5 Geb is built on top of WebDriver. You need these testCompile dependencies." [ref=e244]:
+          - cell "5" [ref=e245]: "5"
+          - cell "Geb is built on top of WebDriver. You need these testCompile dependencies." [ref=e246]:
+            - text: Geb is built on top of WebDriver. You need these
+            - code [ref=e247]: testCompile
+            - text: dependencies.
+        - row "6 Configures the ChromeDriver version to be used by the Webdriver binaries Gradle Plugin." [ref=e248]:
+          - cell "6" [ref=e249]: "6"
+          - cell "Configures the ChromeDriver version to be used by the Webdriver binaries Gradle Plugin." [ref=e250]:
+            - text: Configures the
+            - link "ChromeDriver" [ref=e251] [cursor=pointer]:
+              - /url: http://chromedriver.chromium.org
+            - text: version to be used by the Webdriver binaries Gradle Plugin.
+        - row "7 Configures the GeckoDriver version (e.g. Firefox) to be used by the Webdriver binaries Gradle Plugin." [ref=e252]:
+          - cell "7" [ref=e253]: "7"
+          - cell "Configures the GeckoDriver version (e.g. Firefox) to be used by the Webdriver binaries Gradle Plugin." [ref=e254]:
+            - text: Configures the
+            - link "GeckoDriver" [ref=e255] [cursor=pointer]:
+              - /url: https://github.com/mozilla/geckodriver/releases
+            - text: version (e.g. Firefox) to be used by the Webdriver binaries Gradle Plugin.
+    - heading "3.1 Unit Test" [level=2] [ref=e256]
+    - button "Improve this doc" [ref=e258] [cursor=pointer]: Improve this doc
+    - paragraph [ref=e260]:
+      - text: The
+      - code [ref=e261]: initial
+      - text: application contains a unit test which verifies the default UrlMapping for
+      - code [ref=e262]: /
+      - text: .
+    - generic [ref=e263]:
+      - generic [ref=e264]: src/test/groovy/example/grails/UrlMappingsSpec.groovy
+      - code [ref=e267]:
+        - text: "package example.grails import grails.testing.web.UrlMappingsUnitTest import spock.lang.Specification class UrlMappingsSpec extends Specification implements UrlMappingsUnitTest<UrlMappings> { void"
+        - generic [ref=e268]: "\"test forward mappings\""
+        - text: "() { expect: verifyForwardUrlMapping("
+        - generic [ref=e269]: "\"/\""
+        - text: ", view:"
+        - generic [ref=e270]: "'index'"
+        - text: ") } }"
+    - heading "3.2 Integration Test" [level=2] [ref=e271]
+    - button "Improve this doc" [ref=e273] [cursor=pointer]: Improve this doc
+    - paragraph [ref=e275]:
+      - text: The
+      - code [ref=e276]: initial
+      - text: application contains a functional test which uses Geb to verify that the Home Page displays the sentence
+      - code [ref=e277]: Welcome to Grails
+      - text: .
+    - generic [ref=e278]:
+      - generic [ref=e279]: src/integration-test/groovy/example/grails/HomePage.groovy
+      - code [ref=e282]:
+        - text: "package example.grails import geb.Page class HomePage extends Page { static url ="
+        - generic [ref=e283]: "\"/\""
+        - text: "static content = { titleHeader { $("
+        - generic [ref=e284]: "'h1'"
+        - text: ", 0) } } String getTitle() { titleHeader.text() } }"
+    - generic [ref=e285]:
+      - generic [ref=e286]: src/integration-test/groovy/example/grails/DefaultHomePageSpec.groovy
+      - code [ref=e289]:
+        - text: "package example.grails import geb.spock.GebSpec import grails.testing.mixin.integration.Integration @Integration class DefaultHomePageSpec extends GebSpec { def"
+        - generic [ref=e290]: "'verifies there is _<h1>_ header with the text _Welcome to Grails when we visit the home page.'"
+        - text: "() { when: HomePage page = to HomePage then: page.title =="
+        - generic [ref=e291]: "'Welcome to Grails'"
+        - text: "} }"
+    - heading "3.3 Verbose Test Output" [level=2] [ref=e292]
+    - button "Improve this doc" [ref=e294] [cursor=pointer]: Improve this doc
+    - paragraph [ref=e296]: When running the tests in a continuous integration server is useful to have a more verbose output.
+    - paragraph [ref=e298]:
+      - text: Modify
+      - code [ref=e299]: build.gradle
+      - text: ":"
+    - generic [ref=e300]:
+      - generic [ref=e301]: build.gradle
+      - code [ref=e304]:
+        - text: "tasks.withType(Test) { testLogging { events"
+        - generic [ref=e305]: "\"passed\""
+        - text: ","
+        - generic [ref=e306]: "\"skipped\""
+        - text: ","
+        - generic [ref=e307]: "\"failed\""
+        - text: exceptionFormat
+        - generic [ref=e308]: "'full'"
+        - text: "} }"
+    - paragraph [ref=e310]: "When we execute the tests we will see output such as:"
+    - code [ref=e314]: $ ./gradlew test .... ... example.grails.UrlMappingsSpec > test forward mappings PASSED
+    - heading "3.4 Run Tests" [level=2] [ref=e315]
+    - button "Improve this doc" [ref=e317] [cursor=pointer]: Improve this doc
+    - paragraph [ref=e319]: Verify everything executes correctly up to this point.
+    - paragraph [ref=e321]: "To run the tests:"
+    - code [ref=e325]: ./grailsw grails> test-app grails> open test-report
+    - paragraph [ref=e327]: or
+    - code [ref=e331]: ./gradlew check open build/reports/tests/index.html
+    - heading "4 Create GitHub Repo" [level=1] [ref=e332]
+    - button "Improve this doc" [ref=e334] [cursor=pointer]: Improve this doc
+    - paragraph [ref=e336]: We will need to place the Grails application on GitHub so that the CI can access it.
+    - paragraph [ref=e338]:
+      - text: Proceed to GitHub and follow the directions to
+      - link "create a new repository" [ref=e339] [cursor=pointer]:
+        - /url: https://help.github.com/articles/creating-a-new-repository/
+      - text: .
+    - table [ref=e341]:
+      - rowgroup [ref=e342]:
+        - row "Note When creating the repo, make it public. Option not to create a LICENSE and .gitignore. We are importing an existing code base so we want to avoid conflicts." [ref=e343]:
+          - cell "Note" [ref=e344]:
+            - generic "Note"
+          - cell "When creating the repo, make it public. Option not to create a LICENSE and .gitignore. We are importing an existing code base so we want to avoid conflicts." [ref=e345]
+    - paragraph [ref=e347]: "Import the code into the repo on GitHub by executing the following commands:"
+    - code [ref=e351]: "> git init > git add . > git commit -m \"first commit\" > git remote add origin <Your repo URL> > git push -u origin master"
+    - heading "5 Integrate Github Actions" [level=1] [ref=e352]
+    - button "Improve this doc" [ref=e354] [cursor=pointer]: Improve this doc
+    - paragraph [ref=e356]: "To setup Github Actions, create a file:"
+    - code [ref=e360]:
+      - text: "#.github/workflows/gradle.yml // missing snippet:"
+      - generic [ref=e361]: ../.github/workflows/gradle.yml
+    - table [ref=e363]:
+      - rowgroup [ref=e364]:
+        - row "1 Run Github action for pushes to branch master." [ref=e365]:
+          - cell "1" [ref=e366]: "1"
+          - cell "Run Github action for pushes to branch master." [ref=e367]:
+            - text: Run Github action for pushes to branch
+            - code [ref=e368]: master
+            - text: .
+        - row "2 Run Github action for pull requests targeting branch master." [ref=e369]:
+          - cell "2" [ref=e370]: "2"
+          - cell "Run Github action for pull requests targeting branch master." [ref=e371]:
+            - text: Run Github action for pull requests targeting branch
+            - code [ref=e372]: master
+            - text: .
+        - row "3 Run Github action for JDK 8 and 11" [ref=e373]:
+          - cell "3" [ref=e374]: "3"
+          - cell "Run Github action for JDK 8 and 11" [ref=e375]
+        - row "4 GitHub cache Action allows caching dependencies and build outputs to improve workflow execution time." [ref=e376]:
+          - cell "4" [ref=e377]: "4"
+          - cell "GitHub cache Action allows caching dependencies and build outputs to improve workflow execution time." [ref=e378]
+        - row "5 Run tests" [ref=e379]:
+          - cell "5" [ref=e380]: "5"
+          - cell "Run tests" [ref=e381]
+    - paragraph [ref=e383]: When you push the code to Github you will see the Grails tests run with both JDK 8 and JDK 11.
+    - img "githubactions 1" [ref=e386]
+    - img "githubactions 2" [ref=e389]
+    - heading "6 Where to Go From Here?" [level=1] [ref=e390]
+    - button "Improve this doc" [ref=e392] [cursor=pointer]: Improve this doc
+    - paragraph [ref=e394]:
+      - text: Read about how to
+      - link "automate your workflow with GitHub Actions" [ref=e395] [cursor=pointer]:
+        - /url: https://help.github.com/en/actions/automating-your-workflow-with-github-actions
+      - text: .
+    - heading "7 Help with Grails" [level=1] [ref=e396]
+    - button "Improve this doc" [ref=e398] [cursor=pointer]: Improve this doc
+    - generic [ref=e399]:
+      - heading "Help with Apache Grails" [level=2] [ref=e400]
+      - generic [ref=e401]:
+        - paragraph [ref=e403]: Apache Grails is supported by an active community of contributors and the Apache Software Foundation. If you need help working through a guide, want to discuss the framework, or have run into something that looks like a bug, the channels below are the right place to start.
+        - list [ref=e405]:
+          - listitem [ref=e406]:
+            - paragraph [ref=e407]:
+              - link "Slack" [ref=e408] [cursor=pointer]:
+                - /url: https://slack.grails.org
+              - text: "- real-time conversation with the Apache Grails community."
+          - listitem [ref=e409]:
+            - paragraph [ref=e410]:
+              - link "Developer mailing list" [ref=e411] [cursor=pointer]:
+                - /url: https://lists.apache.org/list.html?dev%40grails.apache.org
+              - text: "- design discussions and contributor coordination."
+          - listitem [ref=e412]:
+            - paragraph [ref=e413]:
+              - link "Users mailing list" [ref=e414] [cursor=pointer]:
+                - /url: https://lists.apache.org/list.html?users%40grails.apache.org
+              - text: "- end-user questions and answers."
+          - listitem [ref=e415]:
+            - paragraph [ref=e416]:
+              - link "Issue tracker on GitHub" [ref=e417] [cursor=pointer]:
+                - /url: https://github.com/apache/grails-core/issues
+              - text: "- file a bug or feature request against the framework."
+        - paragraph [ref=e419]:
+          - text: For Grails plugins, see the matching project on
+          - link "the apache org" [ref=e420] [cursor=pointer]:
+            - /url: https://github.com/apache?q=grails
+          - text: or the plugin’s own GitHub repository.
+  - contentinfo [ref=e421]:
+    - generic [ref=e422]:
+      - generic [ref=e423]:
+        - paragraph [ref=e424]: Apache Grails is supported by the Apache Software Foundation and the Grails community.
+        - link "Apache Software Foundation" [ref=e425] [cursor=pointer]:
+          - /url: https://apache.org
+          - img "Apache Software Foundation" [ref=e426]
+        - paragraph [ref=e427]: Apache, Apache Grails, Grails, Groovy, and the ASF logo are either registered trademarks or trademarks of The Apache Software Foundation.
+      - navigation [ref=e428]:
+        - list [ref=e429]:
+          - listitem [ref=e430]:
+            - link "Email Icon" [ref=e431] [cursor=pointer]:
+              - /url: mailto:dev@grails.apache.org
+              - img "Email Icon" [ref=e432]
+          - listitem [ref=e433]:
+            - link "Slack Icon" [ref=e434] [cursor=pointer]:
+              - /url: https://slack.grails.org
+              - img "Slack Icon" [ref=e435]
+          - listitem [ref=e436]:
+            - link "Youtube Icon" [ref=e437] [cursor=pointer]:
+              - /url: https://www.youtube.com/@GrailsFramework
+              - img "Youtube Icon" [ref=e438]
+          - listitem [ref=e439]:
+            - link "Bluesky Icon" [ref=e440] [cursor=pointer]:
+              - /url: https://bsky.app/profile/grails.apache.org
+              - img "Bluesky Icon" [ref=e441]
+          - listitem [ref=e442]:
+            - link "Mastodon Icon" [ref=e443] [cursor=pointer]:
+              - /url: https://fosstodon.org/@grails
+              - img "Mastodon Icon" [ref=e444]
+          - listitem [ref=e445]:
+            - link "LinkedIn Icon" [ref=e446] [cursor=pointer]:
+              - /url: https://www.linkedin.com/showcase/official-grails/
+              - img "LinkedIn Icon" [ref=e447]
+          - listitem [ref=e448]:
+            - link "GitHub Icon" [ref=e449] [cursor=pointer]:
+              - /url: https://github.com/apache/grails-core
+              - img "GitHub Icon" [ref=e450]
+          - listitem [ref=e451]:
+            - link "Twitter Icon" [ref=e452] [cursor=pointer]:
+              - /url: https://twitter.com/grailsframework
+              - img "Twitter Icon" [ref=e453]
+    - generic [ref=e454]:
+      - paragraph [ref=e455]: © 2005-2026 the Apache Grails project
+      - paragraph [ref=e456]:
+        - text: "Grails is Open Source:"
+        - link "License" [ref=e457] [cursor=pointer]:
+          - /url: https://www.apache.org/licenses/
+        - text: ","
+        - link "Privacy Policy" [ref=e458] [cursor=pointer]:
+          - /url: https://privacy.apache.org/policies/privacy-policy-public.html
+        - text: ","
+        - link "Sponsor Apache" [ref=e459] [cursor=pointer]:
+          - /url: https://www.apache.org/foundation/sponsorship
+        - text: ","
+        - link "Events" [ref=e460] [cursor=pointer]:
+          - /url: https://www.apache.org/events/current-event
+        - text: ","
+        - link "Security" [ref=e461] [cursor=pointer]:
+          - /url: https://www.apache.org/security
+        - text: ","
+        - link "Thanks" [ref=e462] [cursor=pointer]:
+          - /url: https://www.apache.org/foundation/thanks.html
+        - text: ","
+        - link "Support Schedule" [ref=e463] [cursor=pointer]:
+          - /url: https://grails.apache.org/support-schedule.html
+  - button "Project Logo Ask AI" [ref=e464] [cursor=pointer]:
+    - generic [ref=e467]:
+      - img "Project Logo" [ref=e468]
+      - paragraph [ref=e469]: Ask AI

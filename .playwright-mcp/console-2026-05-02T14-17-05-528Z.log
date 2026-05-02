@@ -1,0 +1,2 @@
+[    2606ms] [WARNING] Unable to create a text session because the service is not running. @ https://grails.apache.org/guides/grails-on-github-actions/4/guide/index.html:0
+[    2606ms] [WARNING] The language detection model was required but not available. @ https://grails.apache.org/guides/grails-on-github-actions/4/guide/index.html:0
