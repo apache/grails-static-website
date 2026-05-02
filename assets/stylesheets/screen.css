@@ -1978,3 +1978,166 @@ li.plugin.p {
 	border-color: #ddd;
 	border-radius: 2px;
 }
+
+/* ---------------------------------------------------------------------------
+ * Guide-page polish
+ *
+ * AsciiDoc emits .imageblock and .listingblock containers for figures and
+ * code samples. These containers only appear on rendered guide pages
+ * (grails.apache.org/guides/<name>/<v>/guide/index.html), so the rules in
+ * this section don't affect any page on the main site.
+ *
+ * Fixes three pre-existing UX bugs:
+ *   1. <img> inside .imageblock had no max-width, so wide screenshots
+ *      overflowed the content column horizontally.
+ *   2. ".listing-block .content" (note the hyphen) at line 310 was a typo
+ *      that never matched anything; AsciiDoc emits ".listingblock".
+ *      Code blocks inherited the parent .content centering and looked
+ *      misaligned next to left-aligned prose.
+ *   3. Code blocks had no border / rounded corners and long single-line
+ *      code overflowed the page width instead of scrolling inside the block.
+ * --------------------------------------------------------------------------- */
+
+/* 1. Responsive images inside guide content. Keep wide screenshots from
+ *    overflowing; preserve aspect ratio; center within the content column. */
+.imageblock img,
+.imageblock svg {
+	max-width: 100%;
+	height: auto;
+	display: block;
+	margin: 0 auto;
+}
+
+.imageblock {
+	margin: 24px 0;
+}
+
+.imageblock .title {
+	margin-top: 8px;
+	font-size: 14px;
+	color: #666;
+	text-align: center;
+	font-style: italic;
+}
+
+/* 2. Code-block container. Left-aligned (matches surrounding prose), full
+ *    width of the content column, with the previous .listing-block typo
+ *    superseded by the correct .listingblock selector. */
+.listingblock {
+	margin: 24px 0;
+	text-align: left;
+}
+
+.listingblock .content {
+	width: auto;
+	max-width: 100%;
+	margin: 0;
+}
+
+.listingblock .title {
+	margin-bottom: 8px;
+	font-size: 14px;
+	color: #666;
+	font-style: italic;
+}
+
+/* 3. Code-block visual treatment. Subtle border + rounded corners +
+ *    horizontal scroll for very long lines (instead of breaking the page
+ *    layout). Padding tuned for readability. */
+.listingblock pre,
+.literalblock pre {
+	background-color: #f8f8f8;
+	border: 1px solid #e1e4e8;
+	border-radius: 6px;
+	padding: 16px 20px !important;
+	margin: 0 !important;
+	overflow-x: auto;
+	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, "Courier New", monospace;
+	font-size: 14px;
+	line-height: 1.5;
+	-webkit-text-size-adjust: 100%;
+}
+
+.listingblock pre code,
+.literalblock pre code {
+	background: none;
+	border: none;
+	padding: 0;
+	font-family: inherit;
+	font-size: inherit;
+	white-space: pre;
+}
+
+/* 4. Inline <code> distinction. Single-backtick code in prose gets a subtle
+ *    chip treatment so it stands out from text but stays compact. */
+.content article p > code,
+.content article li > code {
+	background-color: #f3f4f6;
+	border: 1px solid #e5e7eb;
+	border-radius: 3px;
+	padding: 1px 6px;
+	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, "Courier New", monospace;
+	font-size: 0.9em;
+	color: #111827;
+	white-space: nowrap;
+}
+
+/* 5. Tables in guide content. AsciiDoc emits .tableblock with a default
+ *    centered margin; left-align them with the surrounding prose and
+ *    keep them from overflowing. */
+.tableblock {
+	margin: 24px 0;
+	max-width: 100%;
+	overflow-x: auto;
+}
+
+.tableblock table {
+	border-collapse: collapse;
+}
+
+.tableblock th,
+.tableblock td {
+	padding: 8px 12px;
+	border: 1px solid #e1e4e8;
+}
+
+.tableblock th {
+	background-color: #f6f8fa;
+	font-weight: 600;
+	text-align: left;
+}
+
+/* 6. Admonitions (NOTE, TIP, WARNING, IMPORTANT, CAUTION) styling. AsciiDoc
+ *    emits .admonitionblock with a per-type modifier class. Give them a
+ *    consistent left-bordered call-out look. */
+.admonitionblock {
+	margin: 24px 0;
+	padding: 12px 16px;
+	border-left: 4px solid #3a8ee6;
+	background-color: #f0f7ff;
+	border-radius: 0 4px 4px 0;
+}
+
+.admonitionblock.warning,
+.admonitionblock.caution {
+	border-left-color: #e0a800;
+	background-color: #fff8e1;
+}
+
+.admonitionblock.important {
+	border-left-color: #d73a49;
+	background-color: #fff5f5;
+}
+
+.admonitionblock .icon {
+	font-weight: 600;
+	margin-bottom: 4px;
+}
+
+.admonitionblock .content > :first-child {
+	margin-top: 0;
+}
+
+.admonitionblock .content > :last-child {
+	margin-bottom: 0;
+}
