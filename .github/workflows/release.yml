@@ -16,8 +16,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Run Release Script
-        run: ./release.sh ${{ github.event.inputs.grails_version }}
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: Record Release
+        run: ./gradlew --no-daemon recordRelease -PreleaseVersion=${{ github.event.inputs.grails_version }}
       - name: Commit Release
         run: |
           git config user.name ${GIT_USER_NAME}
