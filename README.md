@@ -199,6 +199,17 @@ Sample-app flavour adds `sampleRef`:
 6. Render locally: `./gradlew renderGuide_<safeName>_<N>` (underscores in `<safeName>`) and open `build/dist/guides/<name>/<N>/guide/index.html`.
 7. Open a PR against this repository.
 
+### Worked example: grails-fields-custom-widgets-and-wrappers v8
+
+The most recent guide on the site, [grails-fields-custom-widgets-and-wrappers v8](https://grails.apache.org/guides/grails-fields-custom-widgets-and-wrappers/8/guide/index.html), is a sample-app-flavour Grails 8 guide and a useful concrete reference for new authors. It exercises every part of the workflow described above:
+
+- **Source tree:** [`guides/grails-fields-custom-widgets-and-wrappers/v8/`](guides/grails-fields-custom-widgets-and-wrappers/v8/) - 30+ chapter `.adoc` files under `guide/`, vendored Groovy + GSP source under `snippets/`.
+- **Registry entry:** see the `grails-fields-custom-widgets-and-wrappers` block in [`conf/guides.yml`](conf/guides.yml) - shows the full `versions['8']` block with `sourcePath`, `tags`, `sampleRef` (`repo` + `branch`), and the inline `toc:` mapping that drives the table of contents.
+- **Upstream sample app:** [`grails-guides/grails-fields-custom-widgets-and-wrappers`](https://github.com/grails-guides/grails-fields-custom-widgets-and-wrappers) on the `grails8` branch contains the matching `initial/` and `complete/` trees that the `snippets/` directory was vendored from.
+- **Cross-reference:** chapters reference vendored source via `include::../snippets/<path>[]` directives - see [`guide/manyToOneWidget.adoc`](guides/grails-fields-custom-widgets-and-wrappers/v8/guide/manyToOneWidget.adoc) for a representative example that pulls a `_widget.gsp` template into the rendered page.
+
+Reading the v8 guide's source alongside its rendered output is the fastest way to see how `conf/guides.yml`, the `guide/` AsciiDoc, and the vendored `snippets/` come together.
+
 ### Requesting a sample-app repository
 
 Repositories under [`https://github.com/grails-guides`](https://github.com/grails-guides) are owned and provisioned by the Apache Grails PMC. Sample-app flavour guides need one of these repositories before the guide can ship.
