@@ -2088,8 +2088,9 @@ guides:
             bookDescription: Per-Property Wrapper for Description
           customTable:
             title: Customising the Table Template
-            bookTableTemplate: A Custom _table.gsp for Book
-            bookTableColumns: Per-Column Cell Overrides
+            appWideTable: App-Wide _table.gsp Override
+            perDomainTable: Per-Domain Override via template= Attribute
+            perColumnCells: Per-Column Cell Overrides
           cleanCrud:
             title: The Result - Clean CRUD GSPs
           helpWithGrails:
