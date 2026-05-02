@@ -41,7 +41,6 @@ import website.gradle.tasks.ProfilesTask
 import website.gradle.tasks.QuestionsTask
 import website.gradle.tasks.RenderSiteTask
 import website.gradle.tasks.SitemapTask
-import website.gradle.tasks.VendorGuideTask
 
 /**
  * Wires guide-rendering tasks onto a Gradle project.
@@ -76,20 +75,11 @@ import website.gradle.tasks.VendorGuideTask
 class RenderGuidesPlugin {
 
     static final String GROUP = 'documentation'
-    static final String MIGRATION_GROUP = 'migration'
     static final String AGGREGATE_TASK = 'buildAllGuides'
     static final String PARITY_AGGREGATE_TASK = 'parityCheckAllGuides'
-    static final String VENDOR_AGGREGATE_TASK = 'vendorAllGuides'
     static final String GUIDES_YML_PATH = 'conf/guides.yml'
     static final String GUIDE_TEMPLATE_PATH = 'guides/resources'
     static final String PARITY_BASELINE_ROOT = 'buildSrc/src/test/resources/parity-baseline'
-    /**
-     * Default upstream-checkout root, relative to the project root's
-     * sibling. Maps to {@code C:\Users\james\Documents\IdeaProjects\grails-guides-org\}
-     * for the canonical workspace layout. Overridable via
-     * {@code -PguidesWorkspaceRoot=/path/to/grails-guides-org}.
-     */
-    static final String DEFAULT_GUIDES_WORKSPACE_REL = '../grails-guides-org'
 
     static void apply(Project project) {
         File guidesYml = project.rootProject.layout.projectDirectory
@@ -111,15 +101,11 @@ class RenderGuidesPlugin {
         registerAggregateTask(project, GROUP, PARITY_AGGREGATE_TASK,
                 'Runs renderer parity checks for every guide-version that has a baseline snapshot under buildSrc/src/test/resources/parity-baseline/',
                 wiring.parityTaskNames)
-        registerAggregateTask(project, MIGRATION_GROUP, VENDOR_AGGREGATE_TASK,
-                'Re-vendors every guide-version whose upstream sample repo is checked out under the workspace root (default ../grails-guides-org/, override with -PguidesWorkspaceRoot=...).',
-                wiring.vendorTaskNames)
     }
 
     private static class Wiring {
         List<String> renderTaskNames = []
         List<String> parityTaskNames = []
-        List<String> vendorTaskNames = []
     }
 
     @CompileDynamic
@@ -153,50 +139,7 @@ class RenderGuidesPlugin {
                 String safeName = sanitize(guideName)
                 String safeVersion = sanitize(versionKey)
 
-                // Vendor task -- registered on its own (BEFORE the
-                // skip-if-missing guard for fixture presence) so the
-                // task can be invoked to CREATE the fixture for guides
-                // not yet vendored on disk. Gated only by sampleRef
-                // metadata + presence of an upstream checkout.
-                Map sampleRefEarly = (version.sampleRef ?: [:]) as Map
-                String repoSlugEarly = sampleRefEarly.repo as String
-                String repoShaEarly = sampleRefEarly.sha as String
-                String repoBranchEarly = sampleRefEarly.branch as String
-                if (repoSlugEarly && repoShaEarly) {
-                    String workspaceRoot = project.findProperty('guidesWorkspaceRoot') as String ?:
-                            new File(project.rootProject.layout.projectDirectory.asFile, DEFAULT_GUIDES_WORKSPACE_REL).canonicalPath
-                    String repoName = repoSlugEarly.tokenize('/').last()
-                    File checkoutDir = new File(workspaceRoot, repoName)
-                    if (checkoutDir.isDirectory()) {
-                        String vendorTaskName = "vendorGuide_${safeName}_${safeVersion}"
-                        File commonDir = project.rootProject.layout.projectDirectory.dir('guides/common').asFile
-                        File destDir = new File(versionDir.parentFile, versionDir.name)
-                        Map<String, Object> manifestData = [
-                                name: guideName,
-                                version: versionKey,
-                                title: guide.title,
-                                subtitle: guide.subtitle,
-                                authors: guide.authors,
-                                category: guide.category,
-                                tags: version.tags ?: [],
-                                publicationDate: version.publicationDate ?: guide.publicationDate,
-                                githubSlug: repoSlugEarly,
-                                githubBranch: repoBranchEarly,
-                                githubSha: repoShaEarly,
-                        ] as Map<String, Object>
-                        project.tasks.register(vendorTaskName, VendorGuideTask) { VendorGuideTask task ->
-                            task.group = MIGRATION_GROUP
-                            task.description = "Re-vendor ${guideName} v${versionKey} from upstream ${repoSlugEarly}@${repoShaEarly[0..6]}. Overwrites ${versionDir.name}/."
-                            task.sampleRepoRoot.set(checkoutDir)
-                            task.commonDir.set(commonDir)
-                            task.destDir.set(destDir)
-                            task.manifest.set(manifestData)
-                        }
-                        wiring.vendorTaskNames << vendorTaskName
-                    }
-                }
-
-                if (!adocDir.isDirectory()) continue   // skip-if-missing for render/parity/stage; vendor is registered above
+                if (!adocDir.isDirectory()) continue   // skip-if-missing for render/parity/stage
 
                 File manifestFile = new File(versionDir, 'manifest.yml')
                 Map<String, Object> attributes = manifestToAttributes(
