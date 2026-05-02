@@ -1,3 +1,9 @@
-`<f:table>` reads its column list from the `properties` attribute (or the first seven of the bean), looks each property up in `_displayWidget.gsp` for the cell, and emits a `<table>` with a header row.
+`<f:table>` reads its column list from the `properties` attribute (or the first seven properties of the bean), looks each cell up via `<f:displayWidget>`, and emits a `<table>` with a sortable header row.
 
-You can customise tables at two layers: the whole-table template (`_table.gsp`) and the individual cell templates (`_displayWidget.gsp`). Both follow the same lookup precedence as the form templates - per-class first, then default fallback.
+Customising the table renders at three layers:
+
+* *Whole-table layout, app-wide* - replace the `<table>` skeleton (header row, body iteration, accessibility attributes) for every `<f:table>` invocation in the application. This is a single file under `grails-app/views/templates/_fields/_table.gsp`.
+* *Whole-table layout, per-domain or per-page* - opt one specific `<f:table>` invocation into a different template via the `template=` attribute, with the override file living next to the app-wide one under `grails-app/views/templates/_fields/`.
+* *Per-column cells* - each `<td>` is rendered by `<f:displayWidget>`, which DOES go through the standard `_fields/<class>/<property>/_displayWidget.gsp` lookup chain. So one-off cell formatting is a per-property override, not a table-template change.
+
+CAUTION: Unlike the form templates (`<f:field>`, `<f:all>`, `<f:display>` with a property), `<f:table>` does NOT walk the `_fields/<class>/_table.gsp` lookup chain. Looking at link:https://github.com/apache/grails-core/blob/8.0.x/grails-fields/grails-app/taglib/grails/plugin/formfields/FormFieldsTagLib.groovy[`FormFieldsTagLib.table`] in the plugin source, the template path is hardcoded to `/templates/_fields/$template`, where `$template` defaults to the literal string `'table'`. A file at `grails-app/views/_fields/book/_table.gsp` is never picked up by the plugin, regardless of what domain class you pass.
