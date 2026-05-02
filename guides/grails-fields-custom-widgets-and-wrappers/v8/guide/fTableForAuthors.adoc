@@ -1,0 +1,9 @@
+Do the same for authors:
+
+[source,html]
+.grails-app/views/author/index.gsp
+----
+include::../snippets/grails-app/views/author/index.gsp[]
+----
+
+`<f:table>` works for any domain class without per-class boilerplate. If you add a third domain class tomorrow, its list view is a one-line change.

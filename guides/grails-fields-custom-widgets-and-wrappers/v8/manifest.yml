@@ -1,0 +1,25 @@
+# Per-guide-version metadata. Consumed by the schema validator (existence
+# mode) and by the renderer (genGuides + PublishGuide).
+
+name: grails-fields-custom-widgets-and-wrappers
+version: "8"
+title: "Grails Fields Plugin: Custom Widgets, Wrappers, and Tables"
+subtitle: "Drive every CRUD page with f:all, f:display, and f:table while customising widgets, wrappers, and table columns once for the whole app"
+authors:
+  - "James Fredley"
+category: "Web Layer"
+tags:
+  - fields
+  - gsp
+  - scaffolding
+  - crud
+  - grails8
+publicationDate: "2026-05-02"
+
+# Source repo + branch + pinned SHA. Update the SHA below after the first
+# commit lands on the grails-guides/grails-fields-custom-widgets-and-wrappers
+# repository's grails8 branch.
+githubSlug: grails-guides/grails-fields-custom-widgets-and-wrappers
+githubBranch: grails8
+githubSha: "0000000000000000000000000000000000000000"
+sourceCommitDate: "2026-05-02"

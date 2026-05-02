@@ -1,0 +1,31 @@
+Create the `Author` domain class first. Authors have a name, an email address, a free-form bio, and an optional homepage URL.
+
+[source,bash]
+----
+./grailsw create-domain-class example.library.Author
+----
+
+Replace the contents of the generated file with:
+
+[source,groovy]
+.grails-app/domain/example/library/Author.groovy
+----
+include::../snippets/grails-app/domain/example/library/Author.groovy[]
+----
+
+Notable constraints:
+
+* `email: true` - Grails validates the value as an email address; the Fields plugin renders an `<input type="email">` widget.
+* `url: true` - Grails validates the value as a URL; the Fields plugin renders an `<input type="url">` widget.
+* `widget: 'textarea'` on `bio` - tells the Fields plugin to render a `<textarea>` instead of the default `<input type="text">`.
+* `nullable: true` on `website` - makes the field optional in the form.
+* `static hasOne = [contactInfo: ContactInfo]` - one-to-one association where `Author` owns the FK column on `ContactInfo`. We will customise this in the association chapter.
+* `static hasMany = [books: Book]` - one-to-many back-reference; the books own the FK on their side via `belongsTo: Author`.
+
+The `ContactInfo` class is a thin owned domain object:
+
+[source,groovy]
+.grails-app/domain/example/library/ContactInfo.groovy
+----
+include::../snippets/grails-app/domain/example/library/ContactInfo.groovy[]
+----

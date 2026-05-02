@@ -1,0 +1,16 @@
+You will start with the default scaffolded views that Grails generates for two domain classes (`Book` and `Author`), then progressively replace them with three Fields-plugin tags:
+
+* `<f:all bean="book"/>` - renders every editable property of the bean as a labelled, validated form field. Used in `create.gsp` and `edit.gsp`.
+* `<f:display bean="book"/>` - renders every property of the bean as a read-only labelled value. Used in `show.gsp`.
+* `<f:table collection="${bookList}"/>` - renders a collection as an HTML table with one column per property. Used in `list.gsp`.
+
+The interesting part of the guide is what you do _alongside_ those one-liners: customise the templates the plugin uses to look up _how_ each field renders. When you finish the guide you will have:
+
+* A custom `_wrapper.gsp` that gives every field a consistent label, required marker, error message, and help text.
+* Custom `_widget.gsp` templates per property type (`String`, `Date`, `Boolean`) that respect Grails constraints (`inList`, `email`, `url`, `widget: 'textarea'`).
+* A per-property widget for `Book.isbn` that adds an HTML pattern attribute and a help line.
+* A per-property wrapper for `Book.description` that adds a live character counter.
+* A per-domain `_table.gsp` for `Book` with custom column cells, action buttons, and link-out behaviour.
+* A `<f:display>`-driven `show.gsp` that automatically picks up every customisation you wrote for the form side.
+
+The result is a CRUD UI where adding a new domain class is a 5-line change, and changing how every date in the application renders is a single-file edit.

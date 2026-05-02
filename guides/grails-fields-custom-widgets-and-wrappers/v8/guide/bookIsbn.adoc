@@ -1,0 +1,13 @@
+`Book.isbn` already has a `matches:` constraint that validates a 10- or 13-digit ISBN on the server. We want the browser to enforce the same pattern client-side via the HTML5 `pattern` attribute, plus a help line below the input.
+
+Create `_fields/book/isbn/_widget.gsp`:
+
+[source,html]
+.grails-app/views/_fields/book/isbn/_widget.gsp
+----
+include::../snippets/grails-app/views/_fields/book/isbn/_widget.gsp[]
+----
+
+This is the most-specific lookup the plugin will try, so it _wins_ over `_fields/string/_widget.gsp`. The `String` dispatcher you wrote earlier still applies to every other `String` property on every domain class - only `Book.isbn` is special-cased.
+
+Note how the per-property widget can still reuse the wrapper from `_fields/default/_wrapper.gsp` by emitting just the input and the help line - the wrapper supplies the label, required marker, and validation feedback.

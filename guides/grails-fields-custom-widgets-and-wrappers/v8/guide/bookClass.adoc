@@ -1,0 +1,32 @@
+Create the `Book` domain class. A book belongs to one `Author`, has an ISBN that follows a strict pattern, a published date, a price, an in-stock flag, and a genre selected from a fixed list.
+
+[source,bash]
+----
+./grailsw create-domain-class example.library.Book
+----
+
+Replace the contents of the generated file with:
+
+[source,groovy]
+.grails-app/domain/example/library/Book.groovy
+----
+include::../snippets/grails-app/domain/example/library/Book.groovy[]
+----
+
+Each constraint here will drive a customisation later in the guide:
+
+* `inList:` on `genre` - the Fields plugin will render a `<select>` populated from the list. We will keep that behaviour but restyle it.
+* `matches:` on `isbn` - we will reach down to a per-property `_widget.gsp` and add an HTML `pattern` attribute that mirrors the Groovy regex.
+* `widget: 'textarea'` on `description` - we will swap in a per-property `_wrapper.gsp` that adds a live character counter.
+* `belongsTo: Author` - many-to-one association: the Fields plugin renders this as a `<select>` populated with all `Author` instances. We will customise the option label and the display widget.
+* `static hasMany = [tags: Tag]` - many-to-many association via the `Tag` domain class. The default plugin widget is a multi-select; we will swap it for a checkbox group in the association chapter.
+
+`Tag` itself is the join-side domain:
+
+[source,groovy]
+.grails-app/domain/example/library/Tag.groovy
+----
+include::../snippets/grails-app/domain/example/library/Tag.groovy[]
+----
+
+The `static mapping` block on `Book` sorts list views by `title` ascending, which we will exploit when we customise the table template.

@@ -1,0 +1,78 @@
+# Inventory of code snippets vendored from the upstream sample app.
+#
+# Each entry records the relative path under this snippets/ directory and
+# the original path under the upstream `complete/` sample-app source tree.
+# All snippets came from the same source commit (sha below).
+
+source:
+  repo: grails-guides/grails-fields-custom-widgets-and-wrappers
+  branch: grails8
+  sha: "0000000000000000000000000000000000000000"
+  capturedAt: "2026-05-02"
+
+# The snippets/ directory mirrors the upstream `complete/` sample-app
+# source tree at the relative paths listed below. The .adoc files in
+# ../guide/ reference these via `include::../snippets/<path>[options]`.
+snippets:
+  - path: grails-app/domain/example/library/Author.groovy
+    upstream: complete/grails-app/domain/example/library/Author.groovy
+  - path: grails-app/domain/example/library/Book.groovy
+    upstream: complete/grails-app/domain/example/library/Book.groovy
+  - path: grails-app/domain/example/library/ContactInfo.groovy
+    upstream: complete/grails-app/domain/example/library/ContactInfo.groovy
+  - path: grails-app/domain/example/library/Tag.groovy
+    upstream: complete/grails-app/domain/example/library/Tag.groovy
+  - path: grails-app/controllers/example/library/AuthorController.groovy
+    upstream: complete/grails-app/controllers/example/library/AuthorController.groovy
+  - path: grails-app/controllers/example/library/BookController.groovy
+    upstream: complete/grails-app/controllers/example/library/BookController.groovy
+  - path: grails-app/init/example/library/BootStrap.groovy
+    upstream: complete/grails-app/init/example/library/BootStrap.groovy
+  - path: grails-app/views/book/create.gsp
+    upstream: complete/grails-app/views/book/create.gsp
+  - path: grails-app/views/book/edit.gsp
+    upstream: complete/grails-app/views/book/edit.gsp
+  - path: grails-app/views/book/show.gsp
+    upstream: complete/grails-app/views/book/show.gsp
+  - path: grails-app/views/book/index.gsp
+    upstream: complete/grails-app/views/book/index.gsp
+  - path: grails-app/views/author/create.gsp
+    upstream: complete/grails-app/views/author/create.gsp
+  - path: grails-app/views/author/edit.gsp
+    upstream: complete/grails-app/views/author/edit.gsp
+  - path: grails-app/views/author/show.gsp
+    upstream: complete/grails-app/views/author/show.gsp
+  - path: grails-app/views/author/index.gsp
+    upstream: complete/grails-app/views/author/index.gsp
+  - path: grails-app/views/_fields/default/_wrapper.gsp
+    upstream: complete/grails-app/views/_fields/default/_wrapper.gsp
+  - path: grails-app/views/_fields/string/_widget.gsp
+    upstream: complete/grails-app/views/_fields/string/_widget.gsp
+  - path: grails-app/views/_fields/date/_widget.gsp
+    upstream: complete/grails-app/views/_fields/date/_widget.gsp
+  - path: grails-app/views/_fields/date/_displayWidget.gsp
+    upstream: complete/grails-app/views/_fields/date/_displayWidget.gsp
+  - path: grails-app/views/_fields/boolean/_widget.gsp
+    upstream: complete/grails-app/views/_fields/boolean/_widget.gsp
+  - path: grails-app/views/_fields/boolean/_displayWidget.gsp
+    upstream: complete/grails-app/views/_fields/boolean/_displayWidget.gsp
+  - path: grails-app/views/_fields/manyToOne/_widget.gsp
+    upstream: complete/grails-app/views/_fields/manyToOne/_widget.gsp
+  - path: grails-app/views/_fields/manyToOne/_displayWidget.gsp
+    upstream: complete/grails-app/views/_fields/manyToOne/_displayWidget.gsp
+  - path: grails-app/views/_fields/oneToOne/_widget.gsp
+    upstream: complete/grails-app/views/_fields/oneToOne/_widget.gsp
+  - path: grails-app/views/_fields/oneToMany/_widget.gsp
+    upstream: complete/grails-app/views/_fields/oneToMany/_widget.gsp
+  - path: grails-app/views/_fields/oneToMany/_displayWidget.gsp
+    upstream: complete/grails-app/views/_fields/oneToMany/_displayWidget.gsp
+  - path: grails-app/views/_fields/manyToMany/_widget.gsp
+    upstream: complete/grails-app/views/_fields/manyToMany/_widget.gsp
+  - path: grails-app/views/_fields/manyToMany/_displayWidget.gsp
+    upstream: complete/grails-app/views/_fields/manyToMany/_displayWidget.gsp
+  - path: grails-app/views/_fields/book/isbn/_widget.gsp
+    upstream: complete/grails-app/views/_fields/book/isbn/_widget.gsp
+  - path: grails-app/views/_fields/book/description/_wrapper.gsp
+    upstream: complete/grails-app/views/_fields/book/description/_wrapper.gsp
+  - path: grails-app/views/_fields/book/_table.gsp
+    upstream: complete/grails-app/views/_fields/book/_table.gsp

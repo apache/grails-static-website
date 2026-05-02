@@ -1,0 +1,34 @@
+Associations are the part of the Fields plugin's customisation surface with the thinnest documentation. The plugin exposes four type aliases that you can drop a template under in `_fields/` - `manyToOne`, `oneToOne`, `oneToMany`, and `manyToMany` - and the lookup precedence will pick the most-specific available template at runtime.
+
+The four templates each have a different shape because the underlying GORM relationship has different rendering semantics:
+
+[cols="1,1,2,2"]
+|===
+| Type alias | Owning side | Default widget | Recommended customisation
+
+| `manyToOne`
+| Has the FK column on this side
+| `<select>` of all candidates
+| Restyled `<select>` with deterministic option order
+
+| `oneToOne`
+| Has the FK column on this side, but only one row
+| `<select>` of all candidates
+| Inline child fieldset when child is owned (`belongsTo`); otherwise `<select>`
+
+| `oneToMany`
+| FK lives on the _other_ side
+| List of links to children
+| Read-only list with quick-add link, no editing on parent form
+
+| `manyToMany`
+| Both sides via a join table
+| `<select multiple>`
+| Checkbox group, plain HTML form-binding semantics
+|===
+
+The model variables in the templates are the same as for any other widget (`bean`, `property`, `value`, `label`, `required`, `invalid`, `errors`) plus one extra:
+
+* `persistentProperty` - a `org.grails.datastore.mapping.model.PersistentProperty` (specifically a `ToOne` or `ToMany` subtype). Its `associatedEntity.javaClass` is the FQN of the other side; its `referencedPropertyName` is the back-reference name on the other side. You will use those two fields in every association template.
+
+The rest of this chapter walks each of the four type aliases in turn.

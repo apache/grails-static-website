@@ -941,6 +941,28 @@ guides:
           branch: 'master'
           sha: '8467011d15bf134a8c2a5903c21b194c2f9bc1ea'
 
+  - name: 'grails-fields-custom-widgets-and-wrappers'
+    title: 'Grails Fields Plugin: Custom Widgets, Wrappers, and Tables'
+    subtitle: 'Drive every CRUD page with f:all, f:display, and f:table while customising widgets, wrappers, and table columns once for the whole app'
+    authors:
+      - 'James Fredley'
+    category: 'Web Layer'
+    publicationDate: '2026-05-02'
+    versions:
+      '8':
+        sourcePath: guides/grails-fields-custom-widgets-and-wrappers/v8
+        publicationDate: '2026-05-02'
+        tags:
+          - 'fields'
+          - 'gsp'
+          - 'scaffolding'
+          - 'crud'
+          - 'grails8'
+        sampleRef:
+          repo: 'grails-guides/grails-fields-custom-widgets-and-wrappers'
+          branch: 'grails8'
+          sha: '0000000000000000000000000000000000000000'
+
   - name: 'grails-file-download-excel'
     title: 'Download an Excel file in Grails App'
     subtitle: 'Learn how to download an excel file with Grails and Spreadsheet Builder library.'

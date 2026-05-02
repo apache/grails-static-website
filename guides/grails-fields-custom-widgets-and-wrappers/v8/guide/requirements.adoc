@@ -1,0 +1,8 @@
+To follow this guide you will need:
+
+* JDK 17 or later (JDK 21 or 25 recommended for Grails 8 snapshots).
+* Approximately 30 minutes of your time.
+* A text editor or IDE - link:https://www.jetbrains.com/idea/[IntelliJ IDEA] is recommended; the Community Edition is free.
+* Familiarity with the basics of GSP, GORM domain classes, and the Grails dynamic scaffolding plugin.
+
+This guide targets Apache Grails 8 (snapshot). The Fields plugin is bundled with `grails-core` in Grails 7 and later, so no additional plugin dependency is required.
