@@ -425,35 +425,69 @@ class RenderGuidesPlugin {
      * <p>Supports the four attribute styles that account for 100% of usage
      * across the vendored guides ({@code []}, {@code [indent=N]},
      * {@code [tag(s)=foo,bar]}, {@code [lines=N..M[,P..Q]]}).</p>
+     *
+     * <p>Three include shapes are recognised:</p>
+     * <ul>
+     *   <li>{@code include::../snippets/<path>[...]} - chapter directly
+     *       under {@code guide/}.</li>
+     *   <li>{@code include::../../snippets/<path>[...]} (or deeper) -
+     *       chapter living in a subdirectory below {@code guide/}, e.g.
+     *       {@code guide/writingTheApp/configurationProperties.adoc} which
+     *       needs to escape both {@code writingTheApp/} and {@code guide/}.
+     *       Verified against 47 affected files across 6 guides; 4 files
+     *       use {@code ../../../} (three levels).</li>
+     *   <li>{@code include::{sourcedir}/../<path>[...]} - legacy upstream
+     *       grails-doc form. The renderer's AsciidoctorJ wrapper does not
+     *       define {@code sourcedir}, so this pattern would otherwise fall
+     *       through. The path is treated as snippets-relative because the
+     *       Phase 9 vendoring stripped the {@code complete/} / {@code initial/}
+     *       prefix when copying upstream files into {@code snippets/}.
+     *       21 occurrences in the android guide.</li>
+     * </ul>
      */
     @CompileDynamic
     static void inlineSnippetIncludes(File guideAdocDir, File snippetsDir) {
         if (!guideAdocDir.isDirectory()) {
             return
         }
-        Pattern pat = Pattern.compile(/include::\.\.\/snippets\/([^\[\s]+)\[([^\]]*)\]/)
+        // Two patterns, same handler. The relative-path form supports any
+        // positive number of leading `../` segments. The {sourcedir} form is
+        // a legacy upstream-grails-doc shape kept around so vendored guide
+        // sources don't have to be rewritten.
+        List<Pattern> patterns = [
+                Pattern.compile(/include::(?:\.\.\/)+snippets\/([^\[\s]+)\[([^\]]*)\]/),
+                Pattern.compile(/include::\{sourcedir\}\/\.\.\/([^\[\s]+)\[([^\]]*)\]/),
+        ]
         guideAdocDir.eachFileRecurse { File f ->
             if (!f.isFile() || !f.name.endsWith('.adoc')) return
             String text = f.getText('UTF-8')
-            Matcher m = pat.matcher(text)
-            if (!m.find()) return
-            StringBuilder out = new StringBuilder()
-            int last = 0
-            m.reset()
-            while (m.find()) {
-                out.append(text, last, m.start())
-                String snippetRel = m.group(1)
-                String attrStr = m.group(2)
-                File snippet = snippetsDir != null ? new File(snippetsDir, snippetRel) : null
-                if (snippet != null && snippet.isFile()) {
-                    out.append(applySnippetAttributes(snippet.getText('UTF-8'), attrStr))
-                } else {
-                    out.append("// missing snippet: ${snippetRel}\n".toString())
+            String currentText = text
+            boolean changed = false
+            for (Pattern pat : patterns) {
+                Matcher m = pat.matcher(currentText)
+                if (!m.find()) continue
+                changed = true
+                StringBuilder out = new StringBuilder()
+                int last = 0
+                m.reset()
+                while (m.find()) {
+                    out.append(currentText, last, m.start())
+                    String snippetRel = m.group(1)
+                    String attrStr = m.group(2)
+                    File snippet = snippetsDir != null ? new File(snippetsDir, snippetRel) : null
+                    if (snippet != null && snippet.isFile()) {
+                        out.append(applySnippetAttributes(snippet.getText('UTF-8'), attrStr))
+                    } else {
+                        out.append("// missing snippet: ${snippetRel}\n".toString())
+                    }
+                    last = m.end()
                 }
-                last = m.end()
+                out.append(currentText, last, currentText.length())
+                currentText = out.toString()
             }
-            out.append(text, last, text.length())
-            f.setText(out.toString(), 'UTF-8')
+            if (changed) {
+                f.setText(currentText, 'UTF-8')
+            }
         }
     }
 
