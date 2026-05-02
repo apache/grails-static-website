@@ -1999,23 +1999,31 @@ li.plugin.p {
  * --------------------------------------------------------------------------- */
 
 /* 1. Responsive images inside guide content. Keep wide screenshots from
- *    overflowing; preserve aspect ratio; center within the content column. */
+ *    overflowing; preserve aspect ratio; center within the content column.
+ *    Bordered chrome makes screenshots read as figures rather than floating
+ *    bitmaps - critical for guides that demo IDE/CLI screenshots. */
 .imageblock img,
 .imageblock svg {
-	max-width: 100%;
-	height: auto;
+	max-width: 100% !important;
+	height: auto !important;
 	display: block;
 	margin: 0 auto;
+	border: 1px solid #d0d7de;
+	border-radius: 6px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+	background-color: #ffffff;
 }
 
 .imageblock {
-	margin: 24px 0;
+	margin: 32px 0;
+	max-width: 100%;
+	overflow-x: auto;
 }
 
 .imageblock .title {
-	margin-top: 8px;
+	margin-top: 12px;
 	font-size: 14px;
-	color: #666;
+	color: #57606a;
 	text-align: center;
 	font-style: italic;
 }
@@ -2024,61 +2032,81 @@ li.plugin.p {
  *    width of the content column, with the previous .listing-block typo
  *    superseded by the correct .listingblock selector. */
 .listingblock {
-	margin: 24px 0;
-	text-align: left;
+	margin: 24px 0 !important;
+	text-align: left !important;
 }
 
 .listingblock .content {
-	width: auto;
-	max-width: 100%;
-	margin: 0;
+	width: auto !important;
+	max-width: 100% !important;
+	margin: 0 !important;
 }
 
 .listingblock .title {
-	margin-bottom: 8px;
-	font-size: 14px;
-	color: #666;
-	font-style: italic;
+	display: inline-block;
+	margin: 0 !important;
+	padding: 6px 12px;
+	background-color: #1f2328;
+	color: #f6f8fa;
+	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, "Courier New", monospace;
+	font-size: 13px;
+	font-style: normal;
+	font-weight: 600;
+	border-radius: 6px 6px 0 0;
+	border: 1px solid #1f2328;
+	border-bottom: 0;
 }
 
-/* 3. Code-block visual treatment. Subtle border + rounded corners +
- *    horizontal scroll for very long lines (instead of breaking the page
- *    layout). Padding tuned for readability. */
+/* 3. Code-block visual treatment. Strong border + rounded corners +
+ *    horizontal scroll for very long lines. The dark title chip from
+ *    rule #2 connects to the code body via a square top-left corner. */
 .listingblock pre,
 .literalblock pre {
-	background-color: #f8f8f8;
-	border: 1px solid #e1e4e8;
-	border-radius: 6px;
-	padding: 16px 20px !important;
+	background-color: #f6f8fa !important;
+	border: 1px solid #d0d7de !important;
+	border-radius: 6px !important;
+	padding: 18px 20px !important;
 	margin: 0 !important;
-	overflow-x: auto;
-	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, "Courier New", monospace;
-	font-size: 14px;
-	line-height: 1.5;
+	overflow-x: auto !important;
+	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, "Courier New", monospace !important;
+	font-size: 14px !important;
+	line-height: 1.55 !important;
+	color: #1f2328;
+	box-shadow: 0 1px 2px rgba(31, 35, 40, 0.04);
 	-webkit-text-size-adjust: 100%;
+}
+
+/* When a .title chip immediately precedes the pre, square the top-left
+ * corner of the pre so the chip and code body read as a single unit. */
+.listingblock .title + .content > pre,
+.listingblock .title + pre {
+	border-top-left-radius: 0 !important;
 }
 
 .listingblock pre code,
 .literalblock pre code {
-	background: none;
-	border: none;
-	padding: 0;
-	font-family: inherit;
-	font-size: inherit;
+	background: none !important;
+	border: none !important;
+	padding: 0 !important;
+	font-family: inherit !important;
+	font-size: inherit !important;
+	color: inherit;
 	white-space: pre;
 }
 
-/* 4. Inline <code> distinction. Single-backtick code in prose gets a subtle
- *    chip treatment so it stands out from text but stays compact. */
+/* 4. Inline <code> distinction. Single-backtick code in prose gets a
+ *    visible chip treatment so it stands out from text but stays compact. */
 .content article p > code,
-.content article li > code {
-	background-color: #f3f4f6;
-	border: 1px solid #e5e7eb;
-	border-radius: 3px;
-	padding: 1px 6px;
+.content article li > code,
+.content article td > code,
+.content article a > code {
+	background-color: #eaeef2;
+	border: 1px solid #d0d7de;
+	border-radius: 4px;
+	padding: 2px 6px;
 	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, "Courier New", monospace;
-	font-size: 0.9em;
-	color: #111827;
+	font-size: 0.875em;
+	color: #1f2328;
 	white-space: nowrap;
 }
 
