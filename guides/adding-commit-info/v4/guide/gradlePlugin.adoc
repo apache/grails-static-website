@@ -3,7 +3,7 @@ One of the features of Grails 3.x is that the applications come packaged with Gr
 Rather than implementing our own mechanism to capture git commit information we can leverage the https://plugins.gradle.org/plugin/com.gorylenko.gradle-git-properties[gradle-git-properties] plugin.
 The goal of this plugin is to capture the commit information and store it in a file called `git.properties`
 
-include::{commondir}/commmon-addingAGradlePlugin.adoc[]
+include::{commondir}/common-addingAGradlePlugin.adoc[]
 
 [source,groovy]
 ./complete/build.gradle
