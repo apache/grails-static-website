@@ -70,6 +70,55 @@
 	font-style: normal;
 }
 
+/* Inter - body / UI text. Self-hosted under same-origin so no CSP changes
+ * are needed. Used by body.guide as the primary readable face. SIL OFL 1.1,
+ * see NOTICE + assets/fonts/OFL.txt. */
+@font-face {
+	font-family: 'Inter';
+	src: url('../fonts/inter-regular.woff2') format('woff2');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Inter';
+	src: url('../fonts/inter-medium.woff2') format('woff2');
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Inter';
+	src: url('../fonts/inter-semibold.woff2') format('woff2');
+	font-weight: 600;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Inter';
+	src: url('../fonts/inter-bold.woff2') format('woff2');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* JetBrains Mono - code listings and inline code on guide pages. Same-origin,
+ * SIL OFL 1.1, see NOTICE + assets/fonts/OFL.txt. */
+@font-face {
+	font-family: 'JetBrains Mono';
+	src: url('../fonts/jetbrains-mono-regular.woff2') format('woff2');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'JetBrains Mono';
+	src: url('../fonts/jetbrains-mono-medium.woff2') format('woff2');
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
 body {
 	color: #7c7c7c;
 	background-color: #F5F5F5;
@@ -1980,30 +2029,203 @@ li.plugin.p {
 }
 
 /* ---------------------------------------------------------------------------
- * Guide-page polish
+ * Guide-page polish (modernised)
  *
- * AsciiDoc emits .imageblock and .listingblock containers for figures and
- * code samples. These containers only appear on rendered guide pages
- * (grails.apache.org/guides/<name>/<v>/guide/index.html), so the rules in
- * this section don't affect any page on the main site.
+ * Rendered guide pages live under
+ * grails.apache.org/guides/<name>/<v>/guide/index.html with body.guide and
+ * <article class="guide"> as the wrapper. Every selector here is scoped to
+ * body.guide / article.guide so the rules don't affect any page on the
+ * main site. The reference quality bar is docs.spring.io,
+ * kotlinlang.org/docs, and docs.gradle.org/current/userguide.
  *
- * Fixes three pre-existing UX bugs:
- *   1. <img> inside .imageblock had no max-width, so wide screenshots
- *      overflowed the content column horizontally.
- *   2. ".listing-block .content" (note the hyphen) at line 310 was a typo
- *      that never matched anything; AsciiDoc emits ".listingblock".
- *      Code blocks inherited the parent .content centering and looked
- *      misaligned next to left-aligned prose.
- *   3. Code blocks had no border / rounded corners and long single-line
- *      code overflowed the page width instead of scrolling inside the block.
+ * History:
+ *   - PR #482 added a first pass of code-block CSS to the wrong file
+ *     (buildSrc/src/main/template/css/main.css, which the modern
+ *     RenderGuidesPlugin never loads).
+ *   - PR #484 re-applied the same rules to guides/resources/css/guide.css,
+ *     which IS loaded - but the inline-code chip used a Bootstrap-3
+ *     raspberry colour (#c7254e) that the user reported as "worse than
+ *     before" against the rest of the page.
+ *   - This block (May 2026) replaces both: it restyles inline code as a
+ *     calm GitHub-style pill, drops in self-hosted Inter + JetBrains Mono,
+ *     fixes selectors to actually match the rendered DOM, and tightens
+ *     headings, links, code-block chrome, tables, admonitions.
  * --------------------------------------------------------------------------- */
 
-/* 1. Responsive images inside guide content. Keep wide screenshots from
- *    overflowing; preserve aspect ratio; center within the content column.
- *    Bordered chrome makes screenshots read as figures rather than floating
- *    bitmaps - critical for guides that demo IDE/CLI screenshots. */
-.imageblock img,
-.imageblock svg {
+/* === Base typography on the guide article =============================== */
+
+body.guide article.guide {
+	font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+	font-size: 16px;
+	line-height: 1.65;
+	color: #24292f;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+}
+
+body.guide article.guide p {
+	font-size: 16px;
+	line-height: 1.65;
+	color: #24292f;
+	margin: 0 0 18px 0;
+}
+
+body.guide article.guide ul,
+body.guide article.guide ol {
+	margin: 0 0 18px 0;
+	padding-left: 28px;
+}
+
+body.guide article.guide ul li,
+body.guide article.guide ol li {
+	margin-bottom: 8px;
+	line-height: 1.65;
+	color: #24292f;
+}
+
+/* Cap the outer page width so prose doesn't run edge-to-edge on widescreens. */
+@media screen and (min-width: 961px) {
+	body.guide .fullwidth {
+		max-width: 1280px;
+		margin: 0 auto;
+	}
+}
+
+/* === Headings =========================================================== */
+
+body.guide article.guide h1,
+body.guide article.guide h2,
+body.guide article.guide h3,
+body.guide article.guide h4,
+body.guide article.guide h5,
+body.guide article.guide h6 {
+	font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	color: #1f2328;
+	font-weight: 600;
+	letter-spacing: -0.011em;
+	line-height: 1.25;
+	margin: 32px 0 12px 0;
+}
+
+body.guide article.guide h1 {
+	font-size: 28px;
+	font-weight: 700;
+	letter-spacing: -0.018em;
+	margin-top: 40px;
+	padding-bottom: 8px;
+	border-bottom: 1px solid #d8dee4;
+}
+
+body.guide article.guide h2 {
+	font-size: 22px;
+	font-weight: 600;
+	margin-top: 32px;
+}
+
+body.guide article.guide h3 {
+	font-size: 18px;
+	font-weight: 600;
+}
+
+body.guide article.guide h4 {
+	font-size: 16px;
+	font-weight: 600;
+}
+
+/* The page banner inside <article><header>: keep the brand orange, but
+ * with a modern weight + larger size, and ditch the textShadow. */
+body.guide article.guide > header h1 {
+	color: #d97706;
+	font-size: 32px;
+	font-weight: 700;
+	letter-spacing: -0.022em;
+	border-bottom: none;
+	margin-top: 8px;
+	margin-bottom: 12px;
+	padding-bottom: 0;
+	text-shadow: none;
+}
+
+body.guide article.guide > header p {
+	font-size: 17px;
+	color: #57606a;
+	line-height: 1.5;
+	margin-bottom: 16px;
+}
+
+body.guide article.guide > header strong {
+	color: #1f2328;
+	font-weight: 600;
+}
+
+/* === Links ============================================================== */
+
+body.guide article.guide a {
+	color: #0969da;
+	text-decoration: none;
+	border-bottom: 1px solid transparent;
+	transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+body.guide article.guide a:hover {
+	color: #0a4ba8;
+	border-bottom-color: rgba(9, 105, 218, 0.4);
+}
+
+body.guide article.guide a:visited {
+	color: #6f42c1;
+}
+
+body.guide article.guide a.bare {
+	word-break: break-word;
+}
+
+/* === Inline <code> ====================================================== */
+/*
+ * Replaces the over-loud Bootstrap-3 raspberry styling (#c7254e on #f3f3f4)
+ * with a calm, GitHub-style chip: dark slate text on a soft gray pill, in
+ * JetBrains Mono with a system-monospace fallback. Selectors target the
+ * actual rendered DOM (article.guide directly, NOT a non-existent .content
+ * wrapper).
+ */
+body.guide article.guide p > code,
+body.guide article.guide li > code,
+body.guide article.guide td > code,
+body.guide article.guide dd > code,
+body.guide article.guide dt > code,
+body.guide article.guide a > code,
+body.guide article.guide h1 > code,
+body.guide article.guide h2 > code,
+body.guide article.guide h3 > code,
+body.guide article.guide h4 > code,
+body.guide article.guide h5 > code,
+body.guide article.guide h6 > code {
+	font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+	font-size: 0.92em;
+	color: #1f2328;
+	background-color: rgba(175, 184, 193, 0.18);
+	padding: 0.15em 0.4em;
+	border-radius: 4px;
+	word-break: break-word;
+}
+
+/* Inline code inside a heading: smaller relative size + don't override the
+ * heading's own weight. */
+body.guide article.guide h1 > code,
+body.guide article.guide h2 > code,
+body.guide article.guide h3 > code,
+body.guide article.guide h4 > code,
+body.guide article.guide h5 > code,
+body.guide article.guide h6 > code {
+	font-size: 0.85em;
+	font-weight: 600;
+}
+
+/* === Images ============================================================ */
+
+body.guide .imageblock img,
+body.guide .imageblock svg {
 	max-width: 100% !important;
 	height: auto !important;
 	display: block;
@@ -2014,13 +2236,13 @@ li.plugin.p {
 	background-color: #ffffff;
 }
 
-.imageblock {
+body.guide .imageblock {
 	margin: 32px 0;
 	max-width: 100%;
 	overflow-x: auto;
 }
 
-.imageblock .title {
+body.guide .imageblock .title {
 	margin-top: 12px;
 	font-size: 14px;
 	color: #57606a;
@@ -2028,63 +2250,68 @@ li.plugin.p {
 	font-style: italic;
 }
 
-/* 2. Code-block container. Left-aligned (matches surrounding prose), full
- *    width of the content column, with the previous .listing-block typo
- *    superseded by the correct .listingblock selector. */
-.listingblock {
+/* === Code blocks (listing + literal) ==================================== */
+
+body.guide .listingblock,
+body.guide .literalblock {
 	margin: 24px 0 !important;
 	text-align: left !important;
+	position: relative;
 }
 
-.listingblock .content {
+body.guide .listingblock > .content,
+body.guide .literalblock > .content {
 	width: auto !important;
 	max-width: 100% !important;
 	margin: 0 !important;
 }
 
-.listingblock .title {
+/* The "filename" caption above each listing block (rendered from the
+ * "[source,html]\n.path/to/file"-style title syntax) is a dark slate "tab"
+ * that joins flush to the code body. */
+body.guide .listingblock > .title {
 	display: inline-block;
 	margin: 0 !important;
 	padding: 6px 12px;
 	background-color: #1f2328;
 	color: #f6f8fa;
-	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, "Courier New", monospace;
-	font-size: 13px;
+	font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+	font-size: 12.5px;
 	font-style: normal;
-	font-weight: 600;
+	font-weight: 500;
+	letter-spacing: 0.01em;
 	border-radius: 6px 6px 0 0;
 	border: 1px solid #1f2328;
 	border-bottom: 0;
 }
 
-/* 3. Code-block visual treatment. Strong border + rounded corners +
- *    horizontal scroll for very long lines. The dark title chip from
- *    rule #2 connects to the code body via a square top-left corner. */
-.listingblock pre,
-.literalblock pre {
+body.guide .listingblock pre,
+body.guide .literalblock pre {
 	background-color: #f6f8fa !important;
 	border: 1px solid #d0d7de !important;
 	border-radius: 6px !important;
-	padding: 18px 20px !important;
+	padding: 16px 18px !important;
 	margin: 0 !important;
 	overflow-x: auto !important;
-	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, "Courier New", monospace !important;
-	font-size: 14px !important;
-	line-height: 1.55 !important;
+	font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace !important;
+	font-size: 13.5px !important;
+	line-height: 1.6 !important;
 	color: #1f2328;
 	box-shadow: 0 1px 2px rgba(31, 35, 40, 0.04);
 	-webkit-text-size-adjust: 100%;
+	word-wrap: normal;
+	white-space: pre;
 }
 
-/* When a .title chip immediately precedes the pre, square the top-left
- * corner of the pre so the chip and code body read as a single unit. */
-.listingblock .title + .content > pre,
-.listingblock .title + pre {
+/* When a .title tab is present, square the top-left corner of the pre so
+ * the tab and code body read as a single unit. */
+body.guide .listingblock > .title + .content > pre,
+body.guide .listingblock > .title + pre {
 	border-top-left-radius: 0 !important;
 }
 
-.listingblock pre code,
-.literalblock pre code {
+body.guide .listingblock pre code,
+body.guide .literalblock pre code {
 	background: none !important;
 	border: none !important;
 	padding: 0 !important;
@@ -2094,78 +2321,119 @@ li.plugin.p {
 	white-space: pre;
 }
 
-/* 4. Inline <code> distinction. Single-backtick code in prose gets a
- *    visible chip treatment so it stands out from text but stays compact. */
-.content article p > code,
-.content article li > code,
-.content article td > code,
-.content article a > code {
-	background-color: #eaeef2;
-	border: 1px solid #d0d7de;
-	border-radius: 4px;
-	padding: 2px 6px;
-	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, "Courier New", monospace;
-	font-size: 0.875em;
-	color: #1f2328;
-	white-space: nowrap;
+/* The data-lang ribbon on the top-right of each code block, so readers know
+ * the language at a glance. Suppressed when the listing has its own .title
+ * tab, to avoid double labels. */
+body.guide .listingblock code[data-lang]:before {
+	content: attr(data-lang);
+	display: block;
+	position: absolute;
+	top: 8px;
+	right: 10px;
+	padding: 1px 6px;
+	background: rgba(31, 35, 40, 0.06);
+	color: #57606a;
+	font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+	font-size: 11px;
+	font-weight: 500;
+	letter-spacing: 0.04em;
+	text-transform: lowercase;
+	border-radius: 3px;
+	pointer-events: none;
+	z-index: 1;
 }
 
-/* 5. Tables in guide content. AsciiDoc emits .tableblock with a default
- *    centered margin; left-align them with the surrounding prose and
- *    keep them from overflowing. */
-.tableblock {
+body.guide .listingblock > .title ~ .content code[data-lang]:before,
+body.guide .listingblock > .title + pre code[data-lang]:before {
+	display: none;
+}
+
+/* === Tables ============================================================ */
+
+body.guide .tableblock {
 	margin: 24px 0;
 	max-width: 100%;
 	overflow-x: auto;
 }
 
-.tableblock table {
+body.guide .tableblock table {
 	border-collapse: collapse;
+	width: 100%;
 }
 
-.tableblock th,
-.tableblock td {
-	padding: 8px 12px;
-	border: 1px solid #e1e4e8;
-}
-
-.tableblock th {
-	background-color: #f6f8fa;
-	font-weight: 600;
+body.guide .tableblock th,
+body.guide .tableblock td {
+	padding: 10px 14px;
+	border: 1px solid #d0d7de;
 	text-align: left;
+	vertical-align: top;
 }
 
-/* 6. Admonitions (NOTE, TIP, WARNING, IMPORTANT, CAUTION) styling. AsciiDoc
- *    emits .admonitionblock with a per-type modifier class. Give them a
- *    consistent left-bordered call-out look. */
-.admonitionblock {
+body.guide .tableblock th {
+	background-color: #f6f8fa;
+	color: #1f2328;
+	font-weight: 600;
+	font-size: 14px;
+}
+
+body.guide .tableblock tr:nth-child(even) > td {
+	background-color: #fafbfc;
+}
+
+/* === Admonitions ======================================================== */
+
+body.guide .admonitionblock {
 	margin: 24px 0;
-	padding: 12px 16px;
-	border-left: 4px solid #3a8ee6;
-	background-color: #f0f7ff;
-	border-radius: 0 4px 4px 0;
+	padding: 14px 18px;
+	border-left: 4px solid #0969da;
+	background-color: #ddf4ff;
+	border-radius: 0 6px 6px 0;
+	color: #1f2328;
 }
 
-.admonitionblock.warning,
-.admonitionblock.caution {
-	border-left-color: #e0a800;
-	background-color: #fff8e1;
+body.guide .admonitionblock.warning,
+body.guide .admonitionblock.caution {
+	border-left-color: #bf8700;
+	background-color: #fff8c5;
 }
 
-.admonitionblock.important {
-	border-left-color: #d73a49;
-	background-color: #fff5f5;
+body.guide .admonitionblock.important {
+	border-left-color: #cf222e;
+	background-color: #ffebe9;
 }
 
-.admonitionblock .icon {
+body.guide .admonitionblock.tip {
+	border-left-color: #1a7f37;
+	background-color: #dafbe1;
+}
+
+body.guide .admonitionblock .icon {
 	font-weight: 600;
 	margin-bottom: 4px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	font-size: 12px;
 }
 
-.admonitionblock .content > :first-child {
+body.guide .admonitionblock .content > :first-child {
 	margin-top: 0;
 }
 
-.admonitionblock .content > :last-child {
+body.guide .admonitionblock .content > :last-child {
 	margin-bottom: 0;
+}
+
+/* AsciiDoc default emits NOTE/TIP/WARNING as a TR-based row layout; null out
+ * the cell borders so the call-out reads as one block. */
+body.guide article.guide .note td.icon,
+body.guide article.guide .warning td.icon,
+body.guide article.guide .tip td.icon {
+	border: none;
+	padding-right: 12px;
+}
+
+body.guide article.guide .note td.content,
+body.guide article.guide .warning td.content,
+body.guide article.guide .tip td.content {
+	border: none;
 }
