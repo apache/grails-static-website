@@ -2437,3 +2437,135 @@ body.guide article.guide .warning td.content,
 body.guide article.guide .tip td.content {
 	border: none;
 }
+
+/* ==========================================================================
+   Multi-version downloads / documentation page redesign
+   ----------------------------------------------------------------------
+   The legacy two-column-stack layout collapsed every release into the left
+   column. The redesigned layout features one card per active minor line in
+   a flex grid (today: 7.0 + 7.1; once 8.0 ships: 7.0 + 7.1 + 8.0). Cards
+   reuse the existing .guide-group visual treatment so this is purely an
+   additive container layer - no changes to the per-card chrome.
+   ========================================================================== */
+
+.release-page-intro {
+	margin: 30px 0 30px 0;
+	font-size: 16px;
+	line-height: 1.6;
+}
+
+.release-section-header {
+	margin-top: 50px;
+	margin-bottom: 20px;
+	color: #FFFFFF;
+	background-color: #C8C8C8;
+}
+
+.release-section-header.column-header {
+	color: #FFFFFF;
+	background-color: #C8C8C8;
+}
+
+.release-grid {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 24px;
+	margin: 0 0 32px 0;
+	align-items: stretch;
+}
+
+.release-grid .guide-group {
+	flex: 1 1 380px;
+	min-width: 0;
+	max-width: 480px;
+	margin-bottom: 0;
+}
+
+.release-grid .guide-group h2 {
+	height: auto;
+	min-height: 60px;
+	padding-top: 20px;
+}
+
+@media (max-width: 768px) {
+	.release-grid .guide-group {
+		flex-basis: 100%;
+		max-width: 100%;
+	}
+}
+
+/* ==========================================================================
+   Home page hero cards
+   ----------------------------------------------------------------------
+   One card per active stable minor line, rendered by RenderSiteTask via the
+   [%hero_cards] placeholder in pages/index.html. Pre-releases / milestones
+   are intentionally absent here per Apache release-policy guidance.
+   ========================================================================== */
+
+.hero-cards {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 24px;
+	justify-content: center;
+	margin: 30px 0;
+}
+
+.hero-card {
+	flex: 1 1 280px;
+	min-width: 0;
+	max-width: 360px;
+	padding: 24px 20px;
+	background-color: rgba(255, 255, 255, 0.95);
+	border-radius: 4px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+	text-align: center;
+}
+
+.hero-card-label {
+	font-family: 'Roboto-Medium', sans-serif;
+	font-size: 22px;
+	color: #4f4f4f;
+	letter-spacing: 0.5px;
+	margin-bottom: 18px;
+}
+
+.hero-card-actions {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.hero-card-actions .hero-action {
+	display: inline-block;
+	padding: 12px 20px;
+	font-family: 'Roboto-Medium', sans-serif;
+	font-size: 16px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	text-decoration: none;
+	border-radius: 3px;
+	transition: opacity 0.15s ease;
+}
+
+.hero-card-actions .hero-action:hover {
+	opacity: 0.85;
+}
+
+.hero-action-download {
+	background-color: #feb672;
+	color: #4f4f4f;
+}
+
+.hero-action-docs {
+	background-color: #ffffff;
+	color: #4f4f4f;
+	border: 1px solid #d8d8d8;
+}
+
+@media (max-width: 768px) {
+	.hero-card {
+		flex-basis: 100%;
+		max-width: 100%;
+	}
+}
+

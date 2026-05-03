@@ -43,6 +43,14 @@ dependencies {
     implementation "org.slf4j:slf4j-api:$slf4jVersion"
     implementation "org.slf4j:jcl-over-slf4j:$slf4jVersion"
 
+    // Canonical Grails version model. ReleaseVersion delegates parsing and comparison
+    // to org.grails.datastore.mapping.core.grailsversion.GrailsVersion so this codebase
+    // doesn't maintain its own regex-based version parser. The BOM is required because
+    // grails-datastore-core's transitive deps (grails-common, etc.) use unversioned
+    // constraints and rely on the BOM for resolution.
+    implementation platform("org.apache.grails:grails-bom:$grailsBomVersion")
+    implementation "org.apache.grails.data:grails-datastore-core:$grailsDatastoreCoreVersion"
+
     testImplementation 'org.spockframework:spock-core'
 
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

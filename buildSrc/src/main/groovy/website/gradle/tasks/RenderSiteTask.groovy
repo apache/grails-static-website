@@ -46,6 +46,7 @@ import org.gradle.api.tasks.TaskProvider
 import website.gradle.GrailsWebsiteExtension
 import website.model.ContentAndMetadata
 import website.model.Page
+import website.model.documentation.ReleaseVersion
 import website.model.documentation.SiteMap
 import website.utils.DateUtils
 
@@ -129,6 +130,7 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
                 .reverse()
                 .collect { "<option>${it}</option>" }
                 .join(' ')
+        def heroCards = buildHeroCardsHtml(releasesFile)
         def metaData = siteMeta(
                 title.get(),
                 about.get(),
@@ -136,7 +138,8 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
                 keywords.get(),
                 robots.get(),
                 latest.versionText,
-                versions)
+                versions,
+                heroCards)
         def listOfPages = parsePages(pagesDir.get().asFile)
         listOfPages.addAll(
                 parsePages(
@@ -152,6 +155,51 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
         )
     }
 
+    /** First Grails major distributed via the Apache mirrors. Hero cards are
+     *  only emitted for majors at or above this; older majors used GitHub
+     *  releases that don't have the predictable apache.org/dyn/closer.lua URL
+     *  pattern the hero links rely on. */
+    private static final int FIRST_APACHE_MAJOR = 7
+
+    /**
+     * Renders the home-page hero as one card per active minor line, driven
+     * entirely by the SiteMap multi-major helpers. This is what makes the
+     * home page scale: today the hero shows 7.0 + 7.1, after 8.0.0 ships it
+     * shows 7.0 + 7.1 + 8.0 with no edit to {@code pages/index.html} required.
+     * Pre-releases / milestones are intentionally absent here per Apache
+     * release-policy guidance - those still surface on /download.html and
+     * /documentation.html.
+     */
+    private static String buildHeroCardsHtml(File releasesFile) {
+        List<String> activeLines = SiteMap.activeMinorLines(releasesFile)
+        Map<String, ReleaseVersion> latestPerLine = SiteMap.latestStablePerMinorLine(releasesFile)
+        if (activeLines.isEmpty()) {
+            return ''
+        }
+        StringBuilder sb = new StringBuilder()
+        sb.append('<div class="hero-cards">')
+        boolean rendered = false
+        for (String lineKey : activeLines) {
+            ReleaseVersion v = latestPerLine[lineKey]
+            if (v == null || v.major < FIRST_APACHE_MAJOR) {
+                continue
+            }
+            String version = v.versionText
+            String downloadUrl = "https://www.apache.org/dyn/closer.lua/grails/core/${version}/distribution/apache-grails-${version}-bin.zip?action=download"
+            String docsUrl = "https://grails.apache.org/docs/${version}/"
+            sb.append('<div class="hero-card">')
+            sb.append('<div class="hero-card-label">Grails ').append(version).append('</div>')
+            sb.append('<div class="hero-card-actions">')
+            sb.append('<a class="hero-action hero-action-download" href="').append(downloadUrl).append('">Download</a>')
+            sb.append('<a class="hero-action hero-action-docs" href="').append(docsUrl).append('">Documentation</a>')
+            sb.append('</div>')
+            sb.append('</div>')
+            rendered = true
+        }
+        sb.append('</div>')
+        rendered ? sb.toString() : ''
+    }
+
     static Map<String, String> siteMeta(
             String title,
             String about,
@@ -159,7 +207,8 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
             List<String> keywords,
             String robots,
             String latest,
-            String versionsBeforeGrails6
+            String versionsBeforeGrails6,
+            String heroCards = ''
     ) {
         return [
             title: title,
@@ -171,6 +220,7 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
             versionAfterGrails6: versionsBeforeGrails6,
             keywords: keywords.join(','),
             robots: robots,
+            hero_cards: heroCards,
         ]
     }
 

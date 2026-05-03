@@ -26,6 +26,9 @@ import static website.utils.RenderUtils.renderHtml
 @CompileStatic
 class DownloadPage {
 
+    /** First Grails major distributed via the Apache mirrors (rather than GitHub releases). */
+    private static final int FIRST_APACHE_MAJOR = 7
+
     static String binaryUrl(String version, String artifact = 'grails', String ext = '', String directory = 'core') {
         "https://www.apache.org/dyn/closer.lua/grails/$directory/$version/distribution/apache-$artifact-$version-bin.zip$ext?action=download"
     }
@@ -49,7 +52,7 @@ class DownloadPage {
         def parts = ((version.split(/\./)*.replaceAll(/\D.*/, '')*.toInteger()) + [0, 0, 0]).take(3)
         def (major, minor, patch) = [parts[0], parts[1], parts[2]]
         def tag = "v$version"
-        if (major < 7) {
+        if (major < FIRST_APACHE_MAJOR) {
             def baseUrl = 'https://github.com/apache/grails-core/releases/download'
             def artifactName = "grails-$version"
             if (major == 6) {
@@ -69,18 +72,26 @@ class DownloadPage {
         }
     }
 
+    /**
+     * Renders the download card for a single version. For Apache-distributed
+     * versions ({@code major >= 7}), this is Source + Binary + Binary Wrapper
+     * with full sha512/asc verification links plus one entry per supplied
+     * {@link CompanionArtifact}. For older GitHub-released versions, only the
+     * single CLI binary link is rendered. Snapshots render an empty card.
+     *
+     * @param version    the Grails version string (or the literal {@code "snapshot"}).
+     * @param companions per-major companion plugins to render under the core
+     *                   download links. Empty for non-Apache versions or for
+     *                   majors that don't yet have companions tracked.
+     */
     @CompileDynamic
-    static String renderDownload(String version) {
+    static String renderDownload(String version, List<CompanionArtifact> companions = []) {
 
         if (version.toLowerCase().contains('snapshot')) {
             return ''
         }
 
-        def redisVersion = '5.0.1'
-        def quartzVersion = '4.0.1'
-        def springSecurityVersion = '7.0.1'
-        def grailsGithubActionsVersion = '1.0.1'
-        def grailsGradlePublishVersion = '0.0.4'
+        boolean isApacheDistributed = isApacheDistributed(version)
 
         renderHtml {
             div(class: 'guide-group') {
@@ -92,7 +103,7 @@ class DownloadPage {
                         )
                     }
                     ul {
-                        if (version.startsWith('7')) {
+                        if (isApacheDistributed) {
                             li {
                                 a(href: DownloadPage.sourceUrl(version), 'Source')
                                 a(href: sourceVerificationUrl(version, 'grails', '.sha512'), 'SHA512')
@@ -108,30 +119,21 @@ class DownloadPage {
                                 a(href: binaryVerificationUrl(version, 'grails-wrapper', '.sha512'), 'SHA512')
                                 a(href: binaryVerificationUrl(version, 'grails-wrapper', '.asc'), 'ASC')
                             }
-                            li {
-                                a(href: sourceUrl(springSecurityVersion, 'grails-spring-security', '', 'spring-security'), "Grails Spring Security $springSecurityVersion Plugin Source")
-                                a(href: sourceVerificationUrl(springSecurityVersion, 'grails-spring-security', '.sha512', 'spring-security'), 'SHA512')
-                                a(href: sourceVerificationUrl(springSecurityVersion, 'grails-spring-security', '.asc', 'spring-security'), 'ASC')
-                            }
-                            li {
-                                a(href: sourceUrl(redisVersion, 'grails-redis', '', 'redis'), "Grails Redis $redisVersion Plugin Source")
-                                a(href: sourceVerificationUrl(redisVersion, 'grails-redis', '.sha512', 'redis'), 'SHA512')
-                                a(href: sourceVerificationUrl(redisVersion, 'grails-redis', '.asc', 'redis'), 'ASC')
-                            }
-                            li {
-                                a(href: sourceUrl(quartzVersion, 'grails-quartz', '', 'quartz'), "Grails Quartz $quartzVersion Plugin Source")
-                                a(href: sourceVerificationUrl(quartzVersion, 'grails-quartz', '.sha512', 'quartz'), 'SHA512')
-                                a(href: sourceVerificationUrl(quartzVersion, 'grails-quartz', '.asc', 'quartz'), 'ASC')
-                            }
-                            li {
-                                a(href: sourceUrl(grailsGithubActionsVersion, 'grails-github-actions', '', 'actions'), "Grails GitHub Actions $grailsGithubActionsVersion Source")
-                                a(href: sourceVerificationUrl(grailsGithubActionsVersion, 'grails-github-actions', '.sha512', 'actions'), 'SHA512')
-                                a(href: sourceVerificationUrl(grailsGithubActionsVersion, 'grails-github-actions', '.asc', 'actions'), 'ASC')
-                            }
-                            li {
-                                a(href: sourceUrl(grailsGradlePublishVersion, 'grails-publish', '', 'grails-publish'), "Grails Publish Gradle Plugin $grailsGradlePublishVersion Source")
-                                a(href: sourceVerificationUrl(grailsGradlePublishVersion, 'grails-publish', '.sha512', 'grails-publish'), 'SHA512')
-                                a(href: sourceVerificationUrl(grailsGradlePublishVersion, 'grails-publish', '.asc', 'grails-publish'), 'ASC')
+                            companions.each { CompanionArtifact c ->
+                                li {
+                                    a(
+                                            href: sourceUrl(c.version, c.artifactId, '', c.mirrorDirectory),
+                                            "${c.displayName} ${c.version} Source"
+                                    )
+                                    a(
+                                            href: sourceVerificationUrl(c.version, c.artifactId, '.sha512', c.mirrorDirectory),
+                                            'SHA512'
+                                    )
+                                    a(
+                                            href: sourceVerificationUrl(c.version, c.artifactId, '.asc', c.mirrorDirectory),
+                                            'ASC'
+                                    )
+                                }
                             }
                         } else {
                             li {
@@ -146,33 +148,14 @@ class DownloadPage {
                                     href: "https://github.com/apache/grails-core/releases/tag/v$version",
                                     'Grails Release Notes')
                         }
-                        if (version.startsWith('7')) {
-                            li {
-                                a(
-                                        href: "https://github.com/apache/grails-spring-security/releases/tag/v$springSecurityVersion",
-                                        "Grails Spring Security Plugin $springSecurityVersion Release Notes")
-                            }
-                            li {
-                                a(
-                                        href: "https://github.com/apache/grails-redis/releases/tag/v$redisVersion",
-                                        "Grails Redis $redisVersion Plugin Release Notes")
-                            }
-                            li {
-                                a(
-                                        href: "https://github.com/apache/grails-quartz/releases/tag/v$quartzVersion",
-                                        "Grails Quartz $quartzVersion Plugin Release Notes"
-                                )
-                            }
-                            li {
-                                a(
-                                        href: "https://github.com/apache/grails-github-actions/releases/tag/v$grailsGithubActionsVersion",
-                                        "Grails GitHub Actions $grailsGithubActionsVersion Release Notes")
-                            }
-                            li {
-                                a(
-                                        href: "https://github.com/apache/grails-gradle-publish/releases/tag/v$grailsGradlePublishVersion",
-                                        "Grails Publish Gradle Plugin $grailsGradlePublishVersion Release Notes"
-                                )
+                        if (isApacheDistributed) {
+                            companions.each { CompanionArtifact c ->
+                                li {
+                                    a(
+                                            href: "https://github.com/${c.releaseNotesRepo}/releases/tag/v${c.version}",
+                                            "${c.displayName} ${c.version} Release Notes"
+                                    )
+                                }
                             }
                         }
                     }
@@ -181,11 +164,38 @@ class DownloadPage {
         }
     }
 
+    /**
+     * @return {@code true} if this version line is distributed through the
+     *         Apache mirrors ({@code major >= 7}). Older versions fell back to
+     *         GitHub releases on apache/grails-core or apache/grails-forge.
+     */
+    private static boolean isApacheDistributed(String version) {
+        ReleaseVersion parsed = ReleaseVersion.build(version)
+        if (parsed == null) {
+            // Defensive: if we can't parse the version, infer from the leading digit
+            // the way the legacy code did. Keeps behavior identical for any unusual
+            // input that slips through.
+            return version.startsWith('7') || version.startsWith('8') || version.startsWith('9')
+        }
+        return parsed.major >= FIRST_APACHE_MAJOR
+    }
 
+    /**
+     * Renders the Downloads page in a multi-version card-grid layout. The
+     * legacy two-column-stack layout collapsed every release into a single
+     * column on the left; this layout has a top-level "Current Releases"
+     * grid (one card per active minor line, e.g. 7.0 and 7.1 today, plus
+     * 8.0 once that ships), a "Pre-release" grid below it for any
+     * Apache-released milestones / RCs that haven't been superseded by
+     * stable, the older-versions dropdown, and a "Get Started" two-column
+     * footer with Application Forge + SDKMAN install instructions.
+     */
     @CompileDynamic
     static String mainContent(File releases) {
-        def preRelease = SiteMap.latestPreReleaseVersion(releases)
-        def latest = SiteMap.latestVersion(releases)
+        List<String> currentLines = SiteMap.activeMinorLines(releases)
+        Map<String, ReleaseVersion> latestPerLine = SiteMap.latestStablePerMinorLine(releases)
+        Map<Integer, ReleaseVersion> preReleasesPerMajor = SiteMap.latestPreReleasePerMajor(releases)
+
         renderHtml {
             div(class: 'header-bar chalices-bg') {
                 div(class: 'content') {
@@ -193,52 +203,76 @@ class DownloadPage {
                 }
             }
             div(class: 'content') {
-                div(class: 'two-columns') {
-                    div(class: 'odd column') {
-                        h3(
-                                class: 'column-header', style: 'margin-bottom: 10px',
-                                'Source and Binary Releases'
-                        )
-                        p {
-                            mkp.yieldUnescaped(
-                                    'We provide OpenPGP signatures (\'.asc\') files and checksums (\'.sha512\') for ' +
-                                    'every release artifact. We recommend that you '
-                            )
-                            a(href: 'https://www.apache.org/info/verification.html', 'verify')
-                            mkp.yieldUnescaped(
-                                    ' the integrity of downloaded files by generating your own checksums and match ' +
-                                    'them against ours, and checking signatures using the '
-                            )
-                            a(href: 'https://www.apache.org/dyn/closer.lua/grails/KEYS?action=download', 'KEYS')
-                            mkp.yieldUnescaped(' file which contains the Grails OpenPGP release keys.')
-                        }
-                        if (preRelease > latest) {
-                            mkp.yieldUnescaped(DownloadPage.renderDownload(preRelease.versionText))
-                        }
+                p(class: 'release-page-intro') {
+                    mkp.yieldUnescaped(
+                            'We provide OpenPGP signatures (\'.asc\') files and checksums (\'.sha512\') for ' +
+                            'every release artifact. We recommend that you '
+                    )
+                    a(href: 'https://www.apache.org/info/verification.html', 'verify')
+                    mkp.yieldUnescaped(
+                            ' the integrity of downloaded files by generating your own checksums and match ' +
+                            'them against ours, and checking signatures using the '
+                    )
+                    a(href: 'https://www.apache.org/dyn/closer.lua/grails/KEYS?action=download', 'KEYS')
+                    mkp.yieldUnescaped(' file which contains the Grails OpenPGP release keys.')
+                }
 
-                        mkp.yieldUnescaped(DownloadPage.renderDownload('snapshot'))
-                        mkp.yieldUnescaped(DownloadPage.renderDownload(latest.versionText))
-
-                        h3(
-                                class: 'column-header',
-                                'Older Versions'
-                        )
-                        p('You can download previous versions as far back as Grails 0.1.')
-                        p(
-                                'NOTE: Versions prior to 7.0.0-M4 are not ASF releases. Links to those releases are ' +
-                                'provided here as a convenience.'
-                        )
-                        div(class: 'version-selector') {
-                            select(class: 'form-control', onchange: 'window.location.href = this.value') {
-                                option(label: 'Select a version', disabled: 'disabled', selected: 'selected')
-                                SiteMap.stableVersions(releases)*.versionText.each {
-                                    option(value: DownloadPage.resolveOldDownloadUrl(it), it)
-                                }
+                h2(class: 'release-section-header column-header', 'Current Releases')
+                if (currentLines.isEmpty()) {
+                    p('No stable releases have been recorded yet.')
+                } else {
+                    div(class: 'release-grid') {
+                        currentLines.each { String lineKey ->
+                            ReleaseVersion v = latestPerLine[lineKey]
+                            if (v != null) {
+                                mkp.yieldUnescaped(
+                                        DownloadPage.renderDownload(
+                                                v.versionText,
+                                                SiteMap.companionArtifactsFor(releases, v.major)
+                                        )
+                                )
                             }
                         }
                     }
-                    div(class: 'column') {
+                }
 
+                if (!preReleasesPerMajor.isEmpty()) {
+                    h2(class: 'release-section-header column-header', 'Pre-release (Apache-released)')
+                    p(
+                            'Per Apache release policy, the milestones and release candidates below are ' +
+                            'official Apache releases published to Maven Central with full source, binary, ' +
+                            'and signature artifacts. They are not featured on the home page.'
+                    )
+                    div(class: 'release-grid') {
+                        preReleasesPerMajor.values().each { ReleaseVersion v ->
+                            mkp.yieldUnescaped(
+                                    DownloadPage.renderDownload(
+                                            v.versionText,
+                                            SiteMap.companionArtifactsFor(releases, v.major)
+                                    )
+                            )
+                        }
+                    }
+                }
+
+                h2(class: 'release-section-header column-header', 'Older Versions')
+                p('You can download previous versions as far back as Grails 0.1.')
+                p(
+                        'NOTE: Versions prior to 7.0.0-M4 are not ASF releases. Links to those releases are ' +
+                        'provided here as a convenience.'
+                )
+                div(class: 'version-selector') {
+                    select(class: 'form-control', onchange: 'window.location.href = this.value') {
+                        option(label: 'Select a version', disabled: 'disabled', selected: 'selected')
+                        SiteMap.stableVersions(releases)*.versionText.each {
+                            option(value: DownloadPage.resolveOldDownloadUrl(it), it)
+                        }
+                    }
+                }
+
+                h2(class: 'release-section-header column-header', 'Get Started')
+                div(class: 'two-columns') {
+                    div(class: 'odd column') {
                         h3(
                                 class: 'column-header',
                                 style: 'margin-bottom: 10px',
@@ -248,7 +282,8 @@ class DownloadPage {
                         p {
                             a(href: 'https://start.grails.org', 'Grails Application Forge')
                         }
-
+                    }
+                    div(class: 'column') {
                         h3(
                                 class: 'column-header',
                                 style: 'margin-bottom: 10px',
@@ -260,7 +295,6 @@ class DownloadPage {
                                     'SDKMAN! (The Software Development Kit Manager)'
                             )
                         }
-
                         p(
                                 'This tool makes installing the Grails framework on any Unix based platform ' +
                                 '(Mac OSX, Linux, Cygwin, Solaris, or FreeBSD) easy.'
