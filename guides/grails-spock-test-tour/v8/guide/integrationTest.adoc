@@ -1,0 +1,15 @@
+`@Integration` boots the full Spring context against a real datasource (whatever the `test` environment in `application.yml` configures - H2 by default). `@Rollback` rolls back every test method's database changes so specs stay isolated.
+
+[source,groovy]
+.src/integration-test/groovy/example/BookIntegrationSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/BookIntegrationSpec.groovy[]
+----
+
+Three things to highlight:
+
+* `BookService bookService` is a real Spring-injected bean here, not a unit-test mock. The full GORM stack runs; `service.save()` does a real INSERT, `service.get()` does a real SELECT.
+* `@Rollback` is non-negotiable. Without it, the second test sees the first test's data and the third test sees both. Specs become order-dependent and impossible to debug.
+* The duplicate-ISBN test deliberately catches the constraint failure inside the second `save` call rather than letting it throw. `unique: true` constraint failures surface as `errors.hasErrors()`, not as exceptions, in GORM 7+.
+
+Integration specs run an order of magnitude slower than unit tests (5-20 seconds per spec). Use them only for what unit tests genuinely cannot answer: cross-layer wiring, security filter chains, bootstrap-data correctness.

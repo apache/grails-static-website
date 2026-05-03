@@ -1,0 +1,10 @@
+You can either type the code in this guide as you read or skip ahead and clone the finished sample:
+
+[source,bash]
+----
+git clone -b grails8 https://github.com/grails-guides/grails-spock-test-tour.git
+cd grails-spock-test-tour/complete
+./gradlew test integrationTest
+----
+
+`initial/` is a vanilla Grails 8 starter with the `postgres`, `testcontainers`, `geb-with-webdriver-binaries`, and `mockito` features. `complete/` adds the Book domain, the BookService, the BookController, and the four spec files this guide walks through.

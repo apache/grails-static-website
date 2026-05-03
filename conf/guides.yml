@@ -3636,6 +3636,54 @@ guides:
           helpWithGrails:
             title: Help with Grails
 
+  - name: 'grails-spock-test-tour'
+    title: 'A Spock Test Tour for Grails 8'
+    subtitle: 'Working examples of every Spock test layer Grails 8 supports - DomainUnitTest, ServiceUnitTest + DataTest, ControllerUnitTest, @Integration + @Rollback, plus parameterised where: data tables.'
+    authors:
+      - 'James Fredley'
+    category: 'Grails Testing'
+    publicationDate: '2026-05-03'
+    versions:
+      '8':
+        sourcePath: guides/grails-spock-test-tour/v8
+        publicationDate: '2026-05-03'
+        tags:
+          - 'spock'
+          - 'testing'
+          - 'gorm'
+          - 'data-test'
+          - 'integration-test'
+          - 'geb'
+          - 'jacoco'
+          - 'grails8'
+        sampleRef:
+          repo: 'grails-guides/grails-spock-test-tour'
+          branch: 'grails8'
+        toc:
+          gettingStarted:
+            title: Getting Started
+            whatYouWillBuild: What You Will Build
+            requirements: What You Will Need
+            howto: How to Complete the Guide
+          testLayers:
+            title: Five Test Layers
+          domainUnitTest:
+            title: DomainUnitTest for Constraints
+          dataTest:
+            title: ServiceUnitTest + DataTest for Queries
+          controllerUnitTest:
+            title: ControllerUnitTest for Routing
+          integrationTest:
+            title: '@Integration With @Rollback'
+          functionalTest:
+            title: Geb Functional Tests
+          parameterised:
+            title: 'Parameterised where: Data Tables'
+          platform:
+            title: useJUnitPlatform and JaCoCo Coverage
+          helpWithGrails:
+            title: Do you need help with Grails?
+
   - name: 'grails-spring-security-core-plugin-custom-authentication'
     title: 'Grails Spring Security Core Plugin Custom Authentication'
     subtitle: 'Shows how to create a custom authentication with Spring Security Core Plugin'

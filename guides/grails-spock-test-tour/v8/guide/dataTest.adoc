@@ -1,0 +1,13 @@
+`ServiceUnitTest<BookService>` plus `DataTest` exercises GORM finders against the in-memory datastore. Real GORM queries run; no Spring context, no real database.
+
+[source,groovy]
+.src/test/groovy/example/BookServiceSpec.groovy
+----
+include::../snippets/src/test/groovy/example/BookServiceSpec.groovy[]
+----
+
+Three things to highlight:
+
+* `Class[] getDomainClassesToMock() { [Book] }` is what `DataTest` reads to know which entities to register with the in-memory datastore. List every domain class your spec touches; forget one and you get a `Hibernate could not find entity` error at first use.
+* `setup()` runs before every feature method and seeds the datastore. There is no inter-spec state leak because `DataTest` clears the in-memory store between methods.
+* Dynamic-finder method names like `countByPageCountGreaterThanEquals` are interpreted by GORM at runtime. They are typo-prone; write a test the moment you add one.

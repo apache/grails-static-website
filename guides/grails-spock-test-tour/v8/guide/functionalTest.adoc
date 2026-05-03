@@ -1,0 +1,24 @@
+Functional tests use Geb 8 to drive a real browser against a real booted app. The `geb-with-webdriver-binaries` feature you selected at the forge step downloads matching Chrome/Firefox driver binaries automatically.
+
+[source,groovy]
+----
+@Integration
+class BookFunctionalSpec extends GebSpec {
+
+    void "the book index page lists every book"() {
+        when:
+        go '/books'
+
+        then:
+        $('table.book-list tr').size() > 0
+    }
+}
+----
+
+Three keep-it-fast disciplines:
+
+* *Use Testcontainers' Postgres module per-spec*, not a long-running Postgres. The container start is ~3 s once warm; the trade-off is per-spec database isolation.
+* *Reuse a single browser session* across feature methods in the same spec - Geb does this by default. Re-launching Firefox between every method adds 2 s of overhead per method.
+* *Run unit and integration tests first*, functional last. Failure is then localised: if every functional test fails, it is because the app would not boot, which is an integration-test problem.
+
+The matching link:../grails-github-actions-cicd/8/guide/index.html[CI/CD guide] models this as a four-stage job graph (validation -> unit -> integration -> functional) so a broken unit test does not waste 60 seconds on functional runs.
