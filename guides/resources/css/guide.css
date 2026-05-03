@@ -173,3 +173,74 @@
   		display: none;
   	}
 }
+
+/* ---- Code-block + inline-code refinements (apache/grails-static-website) ---- */
+/*
+ * These rules were originally added in PR #482 to buildSrc/src/main/template/css/main.css.
+ * That file is the source for guides/resources/css/main.css, but rendered guide pages
+ * never load main.css - they load this guide.css plus the absolute main-site
+ * stylesheets/screen.css. So the rules had no effect on the live site. Re-applied here
+ * against the file the guide HTML actually links.
+ */
+
+/* Inline <code> in narrative paragraphs gets a subtle pill background so it
+   stands out from regular prose. Excludes <code> inside <pre> blocks so the
+   syntax-highlighted listings keep their existing flush layout. */
+p > code,
+li > code,
+td > code,
+dd > code,
+dt > code,
+h1 > code, h2 > code, h3 > code, h4 > code, h5 > code, h6 > code {
+    background: #f3f3f4;
+    padding: 0.12em 0.35em;
+    border-radius: 3px;
+    font-size: 0.92em;
+    color: #c7254e;
+    word-break: break-word;
+}
+
+/* The block-code language label was hover-only on desktop; show it always so
+   readers can see the language without mousing over. Also pin it slightly
+   inside the rounded corner so it doesn't look like it's escaping the box. */
+.listingblock code[data-lang]:before {
+    display: block;
+    top: 0.35rem;
+    right: 0.6rem;
+    padding: 0.05em 0.4em;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+}
+
+/* The "filename" caption above each listing block (rendered from the
+   "[source,html]\n.path/to/file"-style title) is currently styled like a
+   floating italic line with no visual connection to the code below. Bind
+   it visually to the listing by giving it a top-rounded gray bar that
+   sits flush against the code block. */
+.listingblock > .title {
+    background: #ebebed;
+    color: #555;
+    font-style: normal;
+    font-family: "Droid Sans Mono", "DejaVu Sans Mono", monospace;
+    font-size: 0.78em;
+    padding: 0.4em 0.9em;
+    border-radius: 4px 4px 0 0;
+    margin-bottom: 0;
+    border-bottom: 1px solid #dcdcde;
+}
+
+/* When a listing has a title, square off the top corners of the pre so the
+   title and code meet seamlessly. */
+.listingblock > .title + .content > pre,
+.listingblock > .title + .content > pre[class] {
+    border-radius: 0 0 4px 4px;
+}
+
+/* Slightly relax horizontal scrolling so long lines don't wrap mid-token. */
+.listingblock pre,
+.listingblock pre[class] {
+    overflow-x: auto;
+    word-wrap: normal;
+    white-space: pre;
+}
