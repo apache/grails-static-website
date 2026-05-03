@@ -11,6 +11,15 @@ on:
       artifact_version:
         description: 'New companion version (e.g. 5.0.2)'
         required: true
+      mirror_directory:
+        description: 'First-time only: sub-path under https://www.apache.org/dyn/closer.lua/grails/ where the artifact distribution lives. Ignored for subsequent bumps.'
+        required: false
+      release_notes_repo:
+        description: 'First-time only: GitHub slug (org/repo) used for the v<version> release-notes link. Ignored for subsequent bumps.'
+        required: false
+      display_name:
+        description: 'First-time only: human-readable label rendered on the downloads page. Ignored for subsequent bumps.'
+        required: false
 jobs:
   release-companion:
     runs-on: ubuntu-latest
@@ -32,7 +41,10 @@ jobs:
           ./gradlew --no-daemon recordCompanionRelease \
             -PgrailsMajor=${{ github.event.inputs.grails_major }} \
             -PartifactId=${{ github.event.inputs.artifact_id }} \
-            -PartifactVersion=${{ github.event.inputs.artifact_version }}
+            -PartifactVersion=${{ github.event.inputs.artifact_version }} \
+            -PmirrorDirectory="${{ github.event.inputs.mirror_directory }}" \
+            -PreleaseNotesRepo="${{ github.event.inputs.release_notes_repo }}" \
+            -PdisplayName="${{ github.event.inputs.display_name }}"
       - name: Commit companion release
         run: |
           git config user.name ${GIT_USER_NAME}
