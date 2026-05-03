@@ -98,18 +98,31 @@ class DocumentationPage {
      * Resolves a human-readable documentation title based on the version string.
      * Determines whether the version is a Snapshot, Milestone, Release Candidate, or Latest release.
      *
+     * <p>Delegates to {@link ReleaseVersion} so that both legacy dot-style qualifiers
+     * ({@code "3.0.0.M1"}, {@code "1.0.RC1"}) and modern dash-style qualifiers
+     * ({@code "7.0.0-M1"}, {@code "7.1.0-RC1"}) get the right label. The bare
+     * literal {@code "snapshot"} (used by the snapshot section of the rendered
+     * pages) bypasses parsing.
+     *
      * @param version the Grails version string
      * @return formatted documentation title (e.g., "Latest Version (6.2.0) Documentation")
      */
     static String resolveDocumentationName(String version) {
-        def v = version.toLowerCase()
-        def label =
-                v.endsWith('-snapshot') || v.contains('snapshot') ? 'Snapshot' :
-                        version.contains('.M')                    ? 'Milestone' :
-                        version.contains('.RC')                   ? 'Release Candidate' :
-                                                                    'Latest'
-
-        "$label Version ($version) Documentation"
+        String label = 'Latest'
+        if (version == null) {
+            return "$label Version ($version) Documentation".toString()
+        }
+        if (version.equalsIgnoreCase('snapshot') || version.toLowerCase().contains('snapshot')) {
+            label = 'Snapshot'
+        } else {
+            ReleaseVersion parsed = ReleaseVersion.build(version)
+            if (parsed?.getSnapshot()?.isMilestone()) {
+                label = 'Milestone'
+            } else if (parsed?.getSnapshot()?.isReleaseCandidate()) {
+                label = 'Release Candidate'
+            }
+        }
+        "$label Version ($version) Documentation".toString()
     }
 
     /**

@@ -25,17 +25,18 @@ import org.yaml.snakeyaml.Yaml
 @CompileStatic
 class SiteMap {
 
-    static List<SoftwareVersion> versions(File releases) {
+    static List<ReleaseVersion> versions(File releases) {
         assert releases.exists()
         def model = releases.newInputStream().withCloseable {
             new Yaml().load(it) as Map
         }
         (model.releases as List<Map>)
-                .collect { SoftwareVersion.build(it.version as String) }
+                .collect { ReleaseVersion.build(it.version as String) }
+                .findAll { it != null }
                 .toSorted()
     }
 
-    static SoftwareVersion latestVersion(File releases) {
+    static ReleaseVersion latestVersion(File releases) {
         stableVersions(releases)?.get(0)
     }
 
@@ -43,19 +44,19 @@ class SiteMap {
         stableVersions(releases).tail()*.versionText
     }
 
-    static List<SoftwareVersion> stableVersions(File releases) {
+    static List<ReleaseVersion> stableVersions(File releases) {
         versions(releases)
-                .findAll { !it.getIsSnapshot() }
+                .findAll { it.getSnapshot() == null }
                 .toSorted { a, b -> b <=> a }
     }
 
-    static List<SoftwareVersion> preReleaseVersions(File releases) {
+    static List<ReleaseVersion> preReleaseVersions(File releases) {
         versions(releases)
-                .findAll {it.getSnapshot()?.isMilestone() || it.getSnapshot()?.isReleaseCandidate() }
+                .findAll { it.getSnapshot()?.isMilestone() || it.getSnapshot()?.isReleaseCandidate() }
                 .toSorted { a, b -> b <=> a }
     }
 
-    static SoftwareVersion latestPreReleaseVersion(File releases) {
+    static ReleaseVersion latestPreReleaseVersion(File releases) {
         preReleaseVersions(releases)?.get(0)
     }
 }
