@@ -42,6 +42,7 @@ import website.gradle.tasks.PluginsTask
 import website.gradle.tasks.ProfilesTask
 import website.gradle.tasks.PublishMainSiteTask
 import website.gradle.tasks.QuestionsTask
+import website.gradle.tasks.RecordCompanionReleaseTask
 import website.gradle.tasks.RecordReleaseTask
 import website.gradle.tasks.RenderSiteTask
 import website.gradle.tasks.SitemapTask
@@ -130,6 +131,12 @@ class GrailsWebsitePlugin implements Plugin<Project> {
         // legacy release.sh shell script; the release.yml workflow invokes
         // `./gradlew recordRelease -PreleaseVersion=X.Y.Z`.
         RecordReleaseTask.register(project)
+
+        // Bumps the version of an existing companion artifact entry under
+        // companionArtifacts:'N':. The release-companion.yml workflow invokes
+        // `./gradlew recordCompanionRelease -PgrailsMajor=N -PartifactId=name
+        //  -PartifactVersion=X.Y.Z` on each plugin's release day.
+        RecordCompanionReleaseTask.register(project)
 
         // Validates conf/guides.yml against the schema.
         // `-PvalidationMode=shape|existence|both` selects the rule set.
