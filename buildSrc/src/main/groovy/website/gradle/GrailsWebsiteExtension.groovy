@@ -47,6 +47,7 @@ class GrailsWebsiteExtension {
     final DirectoryProperty minutesDir
     final DirectoryProperty outputDir
     final DirectoryProperty pagesDir
+    final DirectoryProperty partialsDir
     final DirectoryProperty postsDir
 
     final Property<String> description
@@ -95,6 +96,9 @@ class GrailsWebsiteExtension {
 
         pagesDir = objects.directoryProperty()
         pagesDir.convention(layout.projectDirectory.dir('pages'))
+
+        partialsDir = objects.directoryProperty()
+        partialsDir.convention(layout.projectDirectory.dir('templates/partials'))
 
         postsDir = objects.directoryProperty()
         postsDir.convention(layout.projectDirectory.dir('posts'))

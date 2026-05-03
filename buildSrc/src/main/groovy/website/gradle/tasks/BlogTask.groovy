@@ -106,6 +106,10 @@ abstract class BlogTask extends GrailsWebsiteTask {
 
     @InputDirectory
     @PathSensitive(PathSensitivity.RELATIVE)
+    abstract DirectoryProperty getPartialsDir()
+
+    @InputDirectory
+    @PathSensitive(PathSensitivity.RELATIVE)
     abstract DirectoryProperty getPostsDir()
 
     @Input
@@ -133,6 +137,7 @@ abstract class BlogTask extends GrailsWebsiteTask {
             it.document.set(siteExt.template)
             it.keywords.set(siteExt.keywords)
             it.outputDir.set(siteExt.outputDir)
+            it.partialsDir.set(siteExt.partialsDir)
             it.postsDir.set(siteExt.postsDir)
             it.releases.set(siteExt.releases)
             it.robots.set(siteExt.robots)
@@ -163,7 +168,18 @@ abstract class BlogTask extends GrailsWebsiteTask {
                 .sort(false)
         def processed = processPosts(meta, posts)
         def blogOut = outputDir.dir('dist/blog').get().asFile.tap { it.mkdirs() }
-        def templateText = document.get().asFile.text
+        // Expand the [%PARTIAL:...] tokens once up front. The downstream
+        // static helpers (renderPostHtml, renderArchive, renderTags ->
+        // renderCards) all forward this expanded text into
+        // RenderSiteTask.renderHtmlWithTemplateContent without a partialsRoot,
+        // and that helper's internal expandPartials is a no-op when
+        // partialsRoot is null. Without this expansion, every rendered blog
+        // post and the blog index shipped the literal "[%PARTIAL:site-head]"
+        // tokens to production.
+        def templateText = RenderSiteTask.expandPartials(
+                document.get().asFile.text,
+                partialsDir.get().asFile
+        )
 
         renderPosts(meta, processed, blogOut, templateText)
 

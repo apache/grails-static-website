@@ -38,6 +38,7 @@ import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.OutputDirectory
@@ -69,6 +70,10 @@ abstract class PluginsTask extends GrailsWebsiteTask {
     @PathSensitive(PathSensitivity.RELATIVE)
     abstract RegularFileProperty getDocument()
 
+    @InputDirectory
+    @PathSensitive(PathSensitivity.RELATIVE)
+    abstract DirectoryProperty getPartialsDir()
+
     @Input
     abstract ListProperty<String> getKeywords()
 
@@ -86,6 +91,7 @@ abstract class PluginsTask extends GrailsWebsiteTask {
         project.tasks.register(name, PluginsTask) {
             it.document.set(siteExt.template)
             it.outputDir.set(siteExt.outputDir)
+            it.partialsDir.set(siteExt.partialsDir)
             it.url.set(siteExt.url)
         }
     }
@@ -106,7 +112,18 @@ abstract class PluginsTask extends GrailsWebsiteTask {
         def resolvedMetadata = RenderSiteTask.processMetadata(metadata)
         def result = new JsonSlurper().parse(GRAILS_PLUGINS_JSON.toURL()) as List<Object>
         def plugins = pluginsFromJson(result)
-        renderHtml(plugins, document.get().asFile.text, resolvedMetadata, 'plugins.html')
+        // Expand the [%PARTIAL:site-head] / [%PARTIAL:site-header] /
+        // [%PARTIAL:site-footer] tokens once up front. Downstream static
+        // helpers all forward this expanded template text into
+        // RenderSiteTask.renderHtmlWithTemplateContent without a partialsRoot,
+        // and the second expandPartials pass inside that helper is a no-op
+        // when partialsRoot is null. Without this, the rendered plugins.html
+        // shipped the literal "[%PARTIAL:site-head]" tokens to production.
+        def expandedTemplate = RenderSiteTask.expandPartials(
+                document.get().asFile.text,
+                partialsDir.get().asFile
+        )
+        renderHtml(plugins, expandedTemplate, resolvedMetadata, 'plugins.html')
     }
 
     void renderHtml(List<Plugin> plugins, String templateText, Map<String, String> metadata, String fileName) {
