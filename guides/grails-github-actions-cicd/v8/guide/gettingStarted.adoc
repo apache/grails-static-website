@@ -1,0 +1,9 @@
+In this guide you will set up a complete GitHub Actions CI/CD pipeline for an Apache Grails 8 application. The pipeline replaces the patterns in the seven-year-old link:https://grails.apache.org/guides/grails-on-github-actions/4/guide/index.html[Grails on GitHub Actions] guide, all of whose actions are now deprecated.
+
+You will end up with three files in `.github/`:
+
+* `workflows/ci.yml` - a four-stage job graph (validation -> unit tests -> integration tests -> functional tests) that runs on every push and pull request to the `grails8` branch.
+* `workflows/release.yml` - tag-triggered release pipeline that builds the OCI image with `bootBuildImage` (from the link:../grails-docker-bootbuildimage/8/guide/index.html[Docker bootBuildImage] guide), pushes to GitHub Container Registry, and creates a GitHub Release with the bootJar attached.
+* `dependabot.yml` - weekly Gradle and GitHub Actions updates with grouped Grails / Spring / testing PRs.
+
+This guide targets Apache Grails 8 / Spring Boot 4 / JDK 21.

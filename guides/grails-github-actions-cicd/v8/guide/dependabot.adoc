@@ -1,0 +1,17 @@
+A `.github/dependabot.yml` keeps dependency drift in check without you remembering to look:
+
+[source,yaml]
+..github/dependabot.yml
+----
+include::../snippets/.github/dependabot.yml[]
+----
+
+Two ecosystems get watched: `gradle` (your runtime + test dependencies declared in `build.gradle`) and `github-actions` (the actions referenced in the workflow YAML files themselves). Both run weekly on Monday morning to batch up the noise, and `open-pull-requests-limit: 5` caps the in-flight PR count so a quiet week does not become a 30-PR avalanche.
+
+The `groups:` block under `gradle` collapses what would otherwise be a flood of single-dependency bumps into three semantic PRs:
+
+* All `org.apache.grails*` updates land as one PR (so a Grails minor bump arrives intact, not as fifteen separate dependency bumps).
+* All `org.springframework*` updates land as one PR (Spring releases its modules together).
+* All testing-framework updates (Spock, Testcontainers, Mockito) land as one PR.
+
+Anything that does not match a group falls back to one PR per dependency. The result is typically 5 to 8 PRs per week instead of 30+.

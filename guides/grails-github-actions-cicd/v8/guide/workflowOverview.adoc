@@ -1,0 +1,17 @@
+The CI workflow is intentionally split into five jobs that form a directed acyclic graph:
+
+```
+                  validation
+                  /         \
+            unit-test    integration-test
+                  \         /
+                   coverage         functional-test
+```
+
+`validation` runs first and is the gate for everything else. It validates the Gradle wrapper, sets up the toolchain, and compiles `classes` + `testClasses` so that any compile-time error fails fast in under a minute.
+
+`unit-test` and `integration-test` run in parallel, both depending on `validation`. They are the bulk of the runtime - 80% of the wall-clock budget. Splitting them lets you see in `Actions` -> `Summary` whether the regression is in business logic (unit tests) or in database/transaction wiring (integration tests).
+
+`functional-test` depends on `integration-test` (a green integration suite is a precondition for booting the app and driving it with Geb). It uses Testcontainers for Postgres rather than a service container so it can be the same Spock specs you run locally.
+
+`coverage` depends on `unit-test` and `integration-test` and uploads the merged JaCoCo report to Codecov. It does not block PR review on coverage drops; that is a soft gate that lives in Codecov's PR comment.

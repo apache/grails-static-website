@@ -1,0 +1,31 @@
+version: 2
+updates:
+
+  # Gradle dependencies (build.gradle, settings.gradle, buildSrc)
+  - package-ecosystem: gradle
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '09:00'
+      timezone: 'Etc/UTC'
+    labels: ['dependencies', 'gradle']
+    open-pull-requests-limit: 5
+    groups:
+      grails:
+        patterns: ['org.apache.grails*']
+      spring:
+        patterns: ['org.springframework*']
+      testing:
+        patterns: ['org.spockframework*', 'org.testcontainers*', 'org.mockito*']
+
+  # GitHub Actions versions in the workflow files themselves
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '09:00'
+      timezone: 'Etc/UTC'
+    labels: ['dependencies', 'github-actions']
+    open-pull-requests-limit: 5

@@ -1,0 +1,11 @@
+The `Build and publish OCI image` step in `release.yml` calls the same `bootBuildImage` task introduced in the link:../grails-docker-bootbuildimage/8/guide/index.html[Docker bootBuildImage] guide, with two CI-specific flags:
+
+* `--imageName=ghcr.io/${{ github.repository }}:${{ steps.version.outputs.version }}` overrides the build.gradle default at runtime, ensuring every release lands at the canonical GHCR path.
+* `--publishImage` plus the registry credentials publish the image directly to the registry without a separate `docker push` step.
+
+The credentials come from `docker/login-action@v3`, which uses `${{ secrets.GITHUB_TOKEN }}` - a repository-scoped token that GitHub auto-provisions for every workflow run. No personal access token to mint, no secret to rotate, no audit trail to maintain. The token is automatically scoped to `packages: write` because we declared it at workflow level.
+
+[TIP]
+====
+The first time the release workflow pushes to `ghcr.io/your-org/your-repo`, the package is created as private. Make it public via the GitHub UI (Package settings -> Change visibility -> Public) so anonymous pulls work. After that, every subsequent release inherits the visibility.
+====

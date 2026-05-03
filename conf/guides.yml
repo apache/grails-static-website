@@ -2238,6 +2238,61 @@ guides:
           helpWithGrails:
             title: Do you need help with Grails?  
 
+  - name: 'grails-github-actions-cicd'
+    title: 'GitHub Actions CI/CD with Grails 8'
+    subtitle: 'End-to-end CI/CD pipeline for a Grails 8 application: a multi-stage job graph (validation, unit, integration, functional) with PostgreSQL service containers and Geb + Testcontainers, plus a tag-triggered release workflow that builds the OCI image with bootBuildImage and pushes it to GHCR.'
+    authors:
+      - 'James Fredley'
+    category: 'Grails + DevOps'
+    publicationDate: '2026-05-03'
+    versions:
+      '8':
+        sourcePath: guides/grails-github-actions-cicd/v8
+        publicationDate: '2026-05-03'
+        tags:
+          - 'github-actions'
+          - 'ci-cd'
+          - 'gradle'
+          - 'testcontainers'
+          - 'geb'
+          - 'codecov'
+          - 'dependabot'
+          - 'ghcr'
+          - 'grails8'
+        sampleRef:
+          repo: 'grails-guides/grails-github-actions-cicd'
+          branch: 'grails8'
+        toc:
+          gettingStarted:
+            title: Getting Started
+            whatYouWillBuild: What You Will Build
+            requirements: What You Will Need
+            howto: How to Complete the Guide
+          createApp:
+            title: Creating the Application
+            download: Download a Grails 8 Snapshot Starter
+          workflowOverview:
+            title: The Multi-Stage Job Graph
+          ciYml:
+            title: The Canonical ci.yml
+          unitTests:
+            title: The Unit-Test Job
+          integrationTests:
+            title: The Integration-Test Job (Postgres Service Container)
+          functionalTests:
+            title: The Functional-Test Job (Geb + Testcontainers)
+          releaseYml:
+            title: The Release Workflow
+            ghcrPush: Pushing the OCI Image to GHCR
+          dependabot:
+            title: Dependabot for Gradle and Actions
+          branchProtection:
+            title: Required Status Checks
+          badge:
+            title: README Build Status Badge
+          helpWithGrails:
+            title: Do you need help with Grails?
+
   - name: 'grails-google-cloud'
     title: 'Deploy a Grails app to Google Cloud'
     subtitle: 'Learn how to deploy a Grails 3 application to Google App Engine Java Flexible Environment, integrate with Google Cloud Storage and Google Cloud SQL'
@@ -3105,7 +3160,7 @@ guides:
           - 'geb'
           - 'grails4'
         sampleRef:
-          repo: 'grails-guides/grails-on-github-actions'
+          repo: 'grails-guides/grails-github-actions-cicd'
           branch: 'master'
         toc:
           training:

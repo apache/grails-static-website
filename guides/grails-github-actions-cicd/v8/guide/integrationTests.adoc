@@ -1,0 +1,25 @@
+The `integration-test` job needs a database. GitHub Actions service containers are the cheapest path: declare a `services.postgres` block, GitHub starts the container before the steps run, and the integration test connects to it via `localhost:5432`:
+
+[source,yaml]
+----
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: testDb
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+----
+
+The three datasource environment variables on the `./gradlew integrationTest` step (`SPRING_DATASOURCE_URL`, `_USERNAME`, `_PASSWORD`) match the `${SPRING_DATASOURCE_URL:fallback}` placeholders in `application.yml` from the link:../grails-docker-bootbuildimage/8/guide/envProfiles.html[Docker bootBuildImage envProfiles] chapter, so the same wiring serves both CI and Compose.
+
+[NOTE]
+====
+For the *functional* tests in the next chapter we switch from a service container to Testcontainers' Postgres. The trade-off: service containers are faster to spin up (the postgres image is already cached on the runner) but force every test in the suite to share the same database. Testcontainers gives each spec its own fresh container at the cost of an extra container start per spec class. For functional tests where database state isolation matters more than wall-clock speed, Testcontainers wins.
+====
