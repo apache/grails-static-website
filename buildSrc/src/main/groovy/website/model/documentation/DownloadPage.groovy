@@ -213,7 +213,7 @@ class DownloadPage {
                             ' the integrity of downloaded files by generating your own checksums and match ' +
                             'them against ours, and checking signatures using the '
                     )
-                    a(href: 'https://www.apache.org/dyn/closer.lua/grails/KEYS?action=download', 'KEYS')
+                    a(href: 'https://downloads.apache.org/grails/KEYS', 'KEYS')
                     mkp.yieldUnescaped(' file which contains the Grails OpenPGP release keys.')
                 }
 
