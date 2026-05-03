@@ -1,0 +1,11 @@
+`AuthorController` extends `grails.rest.RestfulController<Author>`, which provides every action the URL mappings reference (`index`, `show`, `save`, `update`, `patch`, `delete`) for free:
+
+[source,groovy]
+.grails-app/controllers/example/AuthorController.groovy
+----
+include::../snippets/grails-app/controllers/example/AuthorController.groovy[]
+----
+
+`responseFormats = ['json']` restricts every action to negotiate JSON; the legacy XML-by-default behaviour from older Grails versions is gone.
+
+The single override is `listAllResources`. Without it, a `GET /v1/authors?max=99999` would happily return every row in the table. The hard cap (`Math.min(params.int('max', 25), 100)`) bounds the response, with 25 as the default when the client does not pass `max`. `params.offset`, `params.sort`, and `params.order` flow through unchanged so a paginating client gets `?max=25&offset=50&sort=name&order=asc` semantics out of the box.

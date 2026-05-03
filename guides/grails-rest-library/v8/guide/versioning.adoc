@@ -1,0 +1,14 @@
+Two patterns dominate REST versioning:
+
+* *URL prefix*: `/v1/books`, `/v2/books`. Cheap to implement, trivially debuggable, plays well with caches and proxies.
+* *Content negotiation*: `Accept: application/vnd.example.v2+json`. Cleaner semantically (the URL is the resource, not the representation), but adds friction to every consumer.
+
+This guide leads with URL prefix because it is the cheaper choice for a project that has not yet shipped its first breaking change. The `'/v1/books'(resources: 'book')` URL mapping localises every v1 route under a single prefix; when v2 ships, you add a second `'/v2/books'(resources: 'bookV2')` mapping to a fresh `BookV2Controller` and let v1 keep serving its existing clients while you migrate them.
+
+The migration discipline that *does* matter:
+
+* *Never break v1 within its lifetime.* Even adding a new required field is a breaking change for a strict client. Add fields as optional; deprecate via response headers.
+* *Document a deprecation timeline* on day 1 of v2. "v1 sunsets 12 months after v2 GA" gives consumers a window.
+* *Run v1 and v2 from the same codebase* whenever you can. Two controllers, two view trees, one domain model. Forking the domain model is a smell.
+
+For the small percentage of cases where content negotiation makes sense - public APIs with thousands of consumers, where ~/v1~ in URLs would be visually offensive - Grails' `responseFormats` and the `Accept`-header mapping are first-class. The mechanics are the same; only the surface changes.
