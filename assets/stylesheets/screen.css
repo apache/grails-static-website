@@ -2493,3 +2493,79 @@ body.guide article.guide .tip td.content {
 		max-width: 100%;
 	}
 }
+
+/* ==========================================================================
+   Home page hero cards
+   ----------------------------------------------------------------------
+   One card per active stable minor line, rendered by RenderSiteTask via the
+   [%hero_cards] placeholder in pages/index.html. Pre-releases / milestones
+   are intentionally absent here per Apache release-policy guidance.
+   ========================================================================== */
+
+.hero-cards {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 24px;
+	justify-content: center;
+	margin: 30px 0;
+}
+
+.hero-card {
+	flex: 1 1 280px;
+	min-width: 0;
+	max-width: 360px;
+	padding: 24px 20px;
+	background-color: rgba(255, 255, 255, 0.95);
+	border-radius: 4px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+	text-align: center;
+}
+
+.hero-card-label {
+	font-family: 'Roboto-Medium', sans-serif;
+	font-size: 22px;
+	color: #4f4f4f;
+	letter-spacing: 0.5px;
+	margin-bottom: 18px;
+}
+
+.hero-card-actions {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.hero-card-actions .hero-action {
+	display: inline-block;
+	padding: 12px 20px;
+	font-family: 'Roboto-Medium', sans-serif;
+	font-size: 16px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	text-decoration: none;
+	border-radius: 3px;
+	transition: opacity 0.15s ease;
+}
+
+.hero-card-actions .hero-action:hover {
+	opacity: 0.85;
+}
+
+.hero-action-download {
+	background-color: #feb672;
+	color: #4f4f4f;
+}
+
+.hero-action-docs {
+	background-color: #ffffff;
+	color: #4f4f4f;
+	border: 1px solid #d8d8d8;
+}
+
+@media (max-width: 768px) {
+	.hero-card {
+		flex-basis: 100%;
+		max-width: 100%;
+	}
+}
+
