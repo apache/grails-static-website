@@ -275,8 +275,9 @@ body.guide article.guide aside button.btn-large + ul.githublinks + .input-group 
  * AsciiDoc renders a <div class="contribute-btn"><button class="btn btn-default">
  * after every <h1>/<h2>. The legacy treatment was a screaming orange CTA
  * directly under each heading, which competed with the heading itself for
- * attention. Demote it to a subtle right-aligned link with a pencil glyph,
- * GitHub-style. */
+ * attention. Render it as a calm, GitHub-style outlined button that is
+ * visible at rest (subtle background + border) and gains a colour accent
+ * on hover, instead of only revealing button chrome on hover. */
 .contribute-btn {
 	float: right;
 	margin: -28px 0 0 12px;
@@ -285,10 +286,10 @@ body.guide article.guide aside button.btn-large + ul.githublinks + .input-group 
 
 .contribute-btn button.btn,
 .contribute-btn button.btn-default {
-	background: transparent !important;
-	background-color: transparent !important;
+	background: #f6f8fa !important;
+	background-color: #f6f8fa !important;
 	background-image: none !important;
-	border: 1px solid transparent !important;
+	border: 1px solid #d0d7de !important;
 	border-radius: 6px !important;
 	color: #6b7280 !important;
 	font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
@@ -306,8 +307,8 @@ body.guide article.guide aside button.btn-large + ul.githublinks + .input-group 
 .contribute-btn button.btn:hover,
 .contribute-btn button.btn-default:hover {
 	color: #0969da !important;
-	background-color: #f6f8fa !important;
-	border-color: #d0d7de !important;
+	background-color: #eaeef2 !important;
+	border-color: #afb8c1 !important;
 }
 
 .contribute-btn .fa,
