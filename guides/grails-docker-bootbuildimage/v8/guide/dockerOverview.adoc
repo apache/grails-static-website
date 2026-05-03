@@ -1,0 +1,8 @@
+Two paths produce a runnable container image from the same `bootJar`:
+
+* *Spring Boot 4's `bootBuildImage` task* invokes link:https://paketo.io[Paketo Buildpacks] under the hood. The buildpack inspects your jar, picks a JRE, lays the application out across cacheable image layers (dependencies, snapshot dependencies, classes, resources), and writes the result straight into the local Docker daemon. There is no Dockerfile, no buildscript, nothing for you to maintain. Updates to the JRE, base image, and CVE patches happen by upgrading the Spring Boot version, not by editing your repo.
+* *A hand-rolled multi-stage Dockerfile* gives you total control over the base image, the user/uid, the layer ordering, and exactly which files are copied. The cost is that you own all those decisions, including keeping the base images patched.
+
+For a typical Grails 8 web app the buildpack path wins on every dimension that matters: smaller images (the buildpack's slim JRE base is ~150 MB), better layering (a code-only change touches only the top layer), and a free non-root user. The Dockerfile path is justified when you have a regulated build that must consume an internal mirror, an air-gapped CI, or a non-buildpack-compatible base image.
+
+This guide leads with `bootBuildImage` and treats the Dockerfile as an alternative.

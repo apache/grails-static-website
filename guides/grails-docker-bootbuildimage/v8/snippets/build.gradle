@@ -1,0 +1,177 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+           url = 'https://repo.grails.org/grails/restricted'
+        }
+        maven {
+           url = 'https://repository.apache.org/content/groups/snapshots'
+           content {
+              includeVersionByRegex('org[.]apache[.]grails.*', '.*', '.*-SNAPSHOT')
+           }
+           content {
+              includeVersionByRegex('org[.]apache[.]groovy.*', 'groovy.*', '.*-SNAPSHOT')
+           }
+           mavenContent {
+              snapshotsOnly()
+           }
+        }
+        maven {
+           url = 'https://repository.apache.org/content/groups/staging'
+           content {
+              includeVersionByRegex('org[.]apache[.]grails[.]gradle', 'grails-publish', '.*')
+           }
+           content {
+              includeVersionByRegex('org[.]apache[.]groovy.*', 'groovy.*', '.*')
+           }
+           mavenContent {
+              releasesOnly()
+           }
+        }
+    }
+    dependencies { // Not Published to Gradle Plugin Portal
+        classpath "cloud.wondrify:asset-pipeline-gradle"
+        classpath platform("org.apache.grails:grails-bom:$grailsVersion")
+        classpath "org.apache.grails:grails-data-hibernate5"
+        classpath "org.apache.grails:grails-data-hibernate5-dbmigration"
+        classpath "org.apache.grails:grails-gradle-plugins"
+    }
+}
+
+plugins {
+    id "war"
+    id "idea"
+    id "eclipse"
+}
+
+// Not Published to Gradle Plugin Portal
+apply plugin: "org.apache.grails.gradle.grails-web"
+apply plugin: "org.apache.grails.gradle.grails-gsp"
+apply plugin: "cloud.wondrify.asset-pipeline"
+
+group = "example"
+
+repositories {
+    mavenCentral()
+    maven {
+       url = 'https://repo.grails.org/grails/restricted'
+    }
+    maven {
+       url = 'https://repository.apache.org/content/groups/snapshots'
+       content {
+          includeVersionByRegex('org[.]apache[.]grails.*', '.*', '.*-SNAPSHOT')
+       }
+       content {
+          includeVersionByRegex('org[.]apache[.]groovy.*', 'groovy.*', '.*-SNAPSHOT')
+       }
+       mavenContent {
+          snapshotsOnly()
+       }
+    }
+    maven {
+       url = 'https://repository.apache.org/content/groups/staging'
+       content {
+          includeVersionByRegex('org[.]apache[.]grails[.]gradle', 'grails-publish', '.*')
+       }
+       content {
+          includeVersionByRegex('org[.]apache[.]groovy.*', 'groovy.*', '.*')
+       }
+       mavenContent {
+          releasesOnly()
+       }
+    }
+}
+
+dependencies {
+    profile "org.apache.grails.profiles:web"
+    developmentOnly "org.springframework.boot:spring-boot-devtools" // Spring Boot DevTools may cause performance slowdowns or compatibility issues on larger applications
+    testAndDevelopmentOnly "org.webjars.npm:bootstrap"
+    testAndDevelopmentOnly "org.webjars.npm:bootstrap-icons"
+    testAndDevelopmentOnly "org.webjars.npm:jquery"
+    implementation platform("org.apache.grails:grails-bom:$grailsVersion")
+    implementation "org.apache.grails:grails-core"
+    implementation "org.apache.grails:grails-data-hibernate5"
+    implementation "org.apache.grails:grails-data-hibernate5-dbmigration"
+    implementation "org.apache.grails:grails-databinding"
+    implementation "org.apache.grails:grails-events"
+    implementation "org.apache.grails:grails-gsp"
+    implementation "org.apache.grails:grails-interceptors"
+    implementation "org.apache.grails:grails-layout"
+    implementation "org.apache.grails:grails-logging"
+    implementation "org.apache.grails:grails-rest-transforms"
+    implementation "org.apache.grails:grails-scaffolding"
+    implementation "org.apache.grails:grails-services"
+    implementation "org.apache.grails:grails-url-mappings"
+    implementation "org.apache.grails:grails-web-boot"
+    implementation "org.springframework.boot:spring-boot-autoconfigure"
+    implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+    implementation "org.springframework.boot:spring-boot-starter-logging"
+    implementation "org.springframework.boot:spring-boot-starter-tomcat"
+    implementation "org.springframework.boot:spring-boot-starter-validation"
+    implementation "org.springframework.boot:spring-boot-tomcat"
+    console "org.apache.grails:grails-console"
+    runtimeOnly "cloud.wondrify:asset-pipeline-grails"
+    runtimeOnly "com.zaxxer:HikariCP"
+    runtimeOnly "org.fusesource.jansi:jansi"
+    runtimeOnly "org.postgresql:postgresql"
+    integrationTestImplementation testFixtures("org.apache.grails:grails-geb")
+    testImplementation "org.apache.grails:grails-testing-support-datamapping"
+    testImplementation "org.apache.grails:grails-testing-support-web"
+    testImplementation "org.mockito:mockito-core"
+    testImplementation "org.spockframework:spock-core"
+    testImplementation "org.testcontainers:postgresql"
+    testImplementation "org.testcontainers:spock"
+    testImplementation "org.testcontainers:testcontainers"
+}
+
+compileJava.options.release = 21
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+}
+
+// ----------------------------------------------------------------------
+// Spring Boot 4 / Paketo bootBuildImage configuration
+// ----------------------------------------------------------------------
+//
+// `./gradlew bootBuildImage` produces an OCI image tagged
+// ``ghcr.io/grails-guides/grails-docker-bootbuildimage:<version>``
+// using the Paketo Buildpacks default builder (no Dockerfile).
+// Override the image name on the command line with -PimageName=... .
+//
+// `BP_JVM_VERSION` pins the runtime JDK in the produced image so the
+// image's bytecode matches `compileJava.options.release` above.
+// `BPE_DELIM_JAVA_TOOL_OPTIONS` + `BPE_APPEND_JAVA_TOOL_OPTIONS` lets
+// `-XX:MaxRAMPercentage=75.0` reach the JVM at runtime without a
+// hand-rolled ENTRYPOINT script.
+//
+// tag::bootBuildImage[]
+def imageNameOverride = providers.gradleProperty('imageName')
+        .getOrElse("ghcr.io/grails-guides/grails-docker-bootbuildimage:${version}")
+
+tasks.named('bootBuildImage') {
+    imageName = imageNameOverride
+    environment = [
+            'BP_JVM_VERSION'                  : '21',
+            'BPE_DELIM_JAVA_TOOL_OPTIONS'     : ' ',
+            'BPE_APPEND_JAVA_TOOL_OPTIONS'    : '-XX:MaxRAMPercentage=75.0 -XX:+UseContainerSupport'
+    ]
+}
+// end::bootBuildImage[]
+
+assets {
+    excludes = [
+            'webjars/jquery/**',
+            'webjars/bootstrap/**',
+            'webjars/bootstrap-icons/**'
+    ]
+    includes = [
+            'webjars/jquery/*/dist/jquery.js',
+            'webjars/bootstrap/*/dist/js/bootstrap.bundle.js',
+            'webjars/bootstrap/*/dist/css/bootstrap.css',
+            'webjars/bootstrap-icons/*/font/bootstrap-icons.css',
+            'webjars/bootstrap-icons/*/font/fonts/*',
+    ]
+}
+

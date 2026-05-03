@@ -1,0 +1,23 @@
+A `compose.yml` at the project root orchestrates the application image plus a real PostgreSQL service:
+
+[source,yaml]
+.compose.yml
+----
+include::../snippets/compose.yml[]
+----
+
+The shape is two services and one named volume:
+
+* `postgres` runs `postgres:16-alpine`. The `healthcheck` calls `pg_isready` every five seconds; the database is considered healthy as soon as it accepts connections. The `volumes` block persists data across `docker compose down` so a `compose up` reset does not wipe your dev data; use `docker compose down -v` to reset.
+* `app` runs the image we built with `bootBuildImage`. The `depends_on` block uses `condition: service_healthy`, which means Compose will not start the app container until the Postgres healthcheck has flipped to healthy. Without this, the app would start, fail to connect to a still-booting Postgres, and crash on first attempt.
+* The five environment variables (`SPRING_PROFILES_ACTIVE`, the three datasource ones, `JAVA_TOOL_OPTIONS`) are exactly the ones our `application.yml` and JVM-tuning chapters established. `JAVA_TOOL_OPTIONS` is also set in the image, but having it in the Compose file makes the runtime flags greppable from outside the image.
+* The app's `healthcheck` calls `wget` (which the Paketo image happens to have) against `/actuator/health/readiness`. Compose surfaces the result via `docker compose ps`.
+
+Bring it all up with:
+
+[source,bash]
+----
+docker compose up
+----
+
+The first run pulls the Postgres image, creates the volume, starts Postgres, waits for healthy, then starts the app. Subsequent runs skip the pull.

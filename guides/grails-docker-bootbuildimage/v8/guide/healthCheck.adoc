@@ -1,0 +1,16 @@
+Spring Boot Actuator (already on the classpath in the starter) exposes liveness and readiness probes at `/actuator/health/liveness` and `/actuator/health/readiness`. Enable them with a small block in `application.yml`:
+
+[source,yaml]
+.grails-app/conf/application.yml
+----
+include::../snippets/grails-app/conf/application.yml[tag=management,indent=0]
+----
+
+The `endpoints.web.exposure.include` line restricts the public surface to just `health` and `info`; the operator-grade endpoints (`metrics`, `env`, `threaddump`, `loggers`) stay closed. `endpoint.health.show-details: when-authorized` means a curl against `/actuator/health` returns `{"status":"UP"}` to the world but the full per-component breakdown only to authenticated callers.
+
+The `health.livenessstate` and `health.readinessstate` flags expose the two probes Kubernetes-style platforms expect:
+
+* `/actuator/health/liveness` answers "should the platform restart this pod?". Returns `DOWN` only on hard, unrecoverable JVM state. Use as a Kubernetes `livenessProbe`.
+* `/actuator/health/readiness` answers "should the platform send traffic to this pod?". Returns `DOWN` while the application is starting up, or while the database is unreachable. Use as a Kubernetes `readinessProbe` and as the Docker `HEALTHCHECK`.
+
+For Docker Compose, the `HEALTHCHECK` lives on the service definition (next chapter). For Kubernetes, you would use `httpGet: { path: /actuator/health/readiness, port: 8080 }` instead.

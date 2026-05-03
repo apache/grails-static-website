@@ -1,0 +1,26 @@
+Build and run the image:
+
+[source,bash]
+----
+./gradlew bootBuildImage
+docker run --rm -p 8080:8080 \
+    -e SPRING_PROFILES_ACTIVE=development \
+    ghcr.io/grails-guides/grails-docker-bootbuildimage:0.1
+----
+
+The first build downloads the Paketo builder image (~600 MB) and the buildpack base layers (~150 MB JRE, ~60 MB OS) into your local Docker daemon. Subsequent builds reuse them; the per-build delta after that is just your changed classes and resources, typically under 5 MB.
+
+When the container is up, hit it from another terminal:
+
+[source,bash]
+----
+curl -i http://localhost:8080/
+curl -s http://localhost:8080/actuator/health/readiness
+----
+
+The first request renders the Grails welcome page. The second returns `{"status":"UP"}` from the Spring Boot Actuator readiness probe we will configure in a later chapter.
+
+[TIP]
+====
+``docker history ghcr.io/grails-guides/grails-docker-bootbuildimage:0.1`` shows you the layer breakdown the buildpack produced. Notice that classes/resources sit on top of dependencies; a code-only change rebuilds only that one layer.
+====

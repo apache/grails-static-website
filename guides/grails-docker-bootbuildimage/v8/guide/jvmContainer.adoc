@@ -1,0 +1,19 @@
+Two JVM flags need to be set for any JVM workload running inside a container:
+
+* `-XX:+UseContainerSupport` (default since JDK 11) tells the JVM to honour cgroup memory and CPU limits set by the container runtime, instead of inheriting the limits of the host kernel. Without it, a 256 MB container on a 64 GB host will see 64 GB of available memory, default to a heap sized for a 64 GB host, and OOM-kill on first GC.
+* `-XX:MaxRAMPercentage=75.0` overrides the legacy `-Xmx` calculation. The JVM sets `Xmx` to 75% of the cgroup memory limit, leaving the rest for non-heap memory (metaspace, code cache, direct buffers, the JVM itself, and a small safety margin). 75 is conservative for a Grails app; tune to your profiler.
+
+You set them once in `build.gradle`:
+
+[source,groovy]
+----
+environment = [
+        'BP_JVM_VERSION'                  : '21',
+        'BPE_DELIM_JAVA_TOOL_OPTIONS'     : ' ',
+        'BPE_APPEND_JAVA_TOOL_OPTIONS'    : '-XX:MaxRAMPercentage=75.0 -XX:+UseContainerSupport'
+]
+----
+
+The `BPE_APPEND` variant *adds* to whatever the buildpack-supplied `JAVA_TOOL_OPTIONS` already contains. The buildpack ships its own memory calculator output (heap, direct memory, metaspace, reserved code cache, thread stacks); appending preserves all of that and just bolts our two flags on the end.
+
+If you switch to the hand-rolled Dockerfile you set the same two flags via `ENV JAVA_TOOL_OPTIONS=...` instead.

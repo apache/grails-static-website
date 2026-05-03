@@ -1,0 +1,6 @@
+To complete this guide you will need:
+
+* JDK 21
+* link:https://docs.docker.com/engine/install/[Docker Engine 24+] (or Docker Desktop 4.30+); `docker buildx` and `docker compose` are bundled
+* About 4 GB of free disk for the buildpack base images on first run
+* About 45 minutes
