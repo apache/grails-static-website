@@ -30,7 +30,11 @@ class SiteMap {
         def model = releases.newInputStream().withCloseable {
             new Yaml().load(it) as Map
         }
-        (model.releases as List<Map>)
+        // Accept either `coreReleases:` (canonical) or the legacy `releases:` key
+        // for one release cycle so external tooling that still writes the old
+        // schema keeps working during the migration window.
+        def coreReleases = (model.coreReleases ?: model.releases) as List<Map>
+        coreReleases
                 .collect { ReleaseVersion.build(it.version as String) }
                 .findAll { it != null }
                 .toSorted()

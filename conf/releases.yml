@@ -1,4 +1,29 @@
-releases:
+# conf/releases.yml is the single source of truth for the website's view of
+# the Apache Grails release inventory. It has two top-level sections:
+#
+#   companionArtifacts: per-Grails-major Apache-released companion artifacts
+#                       (Spring Security, Redis, Quartz, etc.) with their own
+#                       independent versions. Keyed by Grails major version.
+#                       Populated by the recordCompanionRelease Gradle task.
+#
+#   coreReleases:       the flat append-only list of every Grails core release
+#                       ever shipped, optionally annotated with a publicationDate.
+#                       Appended by the recordRelease Gradle task on release day.
+#
+# coreReleases: is intentionally placed last so that recordRelease's plain
+# append-to-end-of-file produces a valid YAML structure without any structural
+# parsing on the task side.
+#
+# The legacy top-level key was `releases:` - SiteMap accepts either spelling
+# during the migration window. New tooling should write `coreReleases:`.
+companionArtifacts:
+  # Per Grails major version, the companion Apache plugins that ship alongside
+  # Grails core. Each entry pins the artifact version and the Apache mirror
+  # subdirectory used by DownloadPage to build distribution URLs. Empty here -
+  # populated in the next commit when the plugin versions move out of
+  # DownloadPage.groovy's hard-coded constants.
+
+coreReleases:
   - version: '0.1'
   - version: '0.2'
   - version: '0.3'
