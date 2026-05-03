@@ -1,0 +1,20 @@
+The Compose file's `app` service receives three datasource variables:
+
+[source,yaml]
+----
+SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/appdb?tcpKeepAlive=true
+SPRING_DATASOURCE_USERNAME: appuser
+SPRING_DATASOURCE_PASSWORD: appsecret
+----
+
+Two things to highlight:
+
+* The host is `postgres`, not `localhost` or `127.0.0.1`. Compose creates a default bridge network and registers each service name as a DNS A record on it; the application resolves `postgres` to the database container's IP without any extra wiring.
+* The credentials match the `POSTGRES_DB`, `POSTGRES_USER`, and `POSTGRES_PASSWORD` set on the `postgres` service. In a real deployment you would split these out into a `.env` file or a Compose secrets block; for the sample app we keep them inline so the moving parts are visible.
+
+The `application.yml` we wrote in the env-profiles chapter resolves these three variables transparently. Spring Boot's relaxed binding maps `SPRING_DATASOURCE_URL` to the property `spring.datasource.url`, which Grails forwards into its own `dataSource.url` slot. No glue code in the app itself.
+
+[TIP]
+====
+For functional tests, the `testcontainers` feature means you do not need a long-running Postgres at all - Spock specs can spin one up per spec via Testcontainers' Postgres module, run their assertions, and tear it down. The CI/CD guide shows how that integrates with GitHub Actions.
+====

@@ -1048,7 +1048,7 @@ guides:
           - 'gradle'
           - 'grails3'
         sampleRef:
-          repo: 'grails-guides/grails-as-docker-container'
+          repo: 'grails-guides/grails-docker-bootbuildimage'
           branch: 'grails3'
         toc:
           training:
@@ -1076,7 +1076,7 @@ guides:
           - 'gradle'
           - 'grails4'
         sampleRef:
-          repo: 'grails-guides/grails-as-docker-container'
+          repo: 'grails-guides/grails-docker-bootbuildimage'
           branch: 'grails4'
         toc:
           training:
@@ -1701,6 +1701,61 @@ guides:
               title: Summary
           helpWithGrails:
             title: Do you need help with Grails?  
+
+  - name: 'grails-docker-bootbuildimage'
+    title: 'Containerise a Grails 8 App with Spring Boot bootBuildImage'
+    subtitle: 'Package a Grails 8 application as a production-ready OCI image using Spring Boot 4 bootBuildImage and Paketo Buildpacks, then orchestrate it with PostgreSQL via Docker Compose. A hand-rolled multi-stage Dockerfile is shown as the alternative path.'
+    authors:
+      - 'James Fredley'
+    category: 'Grails + DevOps'
+    publicationDate: '2026-05-03'
+    versions:
+      '8':
+        sourcePath: guides/grails-docker-bootbuildimage/v8
+        publicationDate: '2026-05-03'
+        tags:
+          - 'docker'
+          - 'compose'
+          - 'paketo'
+          - 'buildpacks'
+          - 'postgres'
+          - 'actuator'
+          - 'oci'
+          - 'grails8'
+        sampleRef:
+          repo: 'grails-guides/grails-docker-bootbuildimage'
+          branch: 'grails8'
+        toc:
+          gettingStarted:
+            title: Getting Started
+            whatYouWillBuild: What You Will Build
+            requirements: What You Will Need
+            howto: How to Complete the Guide
+          createApp:
+            title: Creating the Application
+            download: Download a Grails 8 Snapshot Starter
+          dockerOverview:
+            title: Two Paths to a Container Image
+          bootBuildImage:
+            title: The Spring Boot bootBuildImage Task
+            runImage: Run the Image and Verify
+          dockerfile:
+            title: The Hand-Rolled Multi-Stage Dockerfile
+          envProfiles:
+            title: Environment-Driven application.yml
+          jvmContainer:
+            title: Container-Friendly JVM Flags
+          healthCheck:
+            title: Spring Boot Actuator Health Probes
+          compose:
+            title: Orchestrating the Stack with Docker Compose
+            postgresWiring: Wiring the App to a Real Postgres
+          ghcr:
+            title: Pushing to GitHub Container Registry
+          nonRoot:
+            title: Running as a Non-Root User
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'grails-docker-external-services'
     title: 'Use docker to provide external services to your Grails app'
