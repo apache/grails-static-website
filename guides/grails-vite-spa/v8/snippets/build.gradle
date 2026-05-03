@@ -1,0 +1,57 @@
+/*
+ * Root build script.
+ *
+ * The frontend module is NOT a Gradle subproject - it lives as a plain
+ * npm directory at frontend/ with its own package.json. Three Gradle
+ * tasks bridge the two halves:
+ *
+ *   npmInstall              -> npm install in frontend/
+ *   frontendBuild           -> npm run build (writes frontend/dist/)
+ *   copyFrontendToBackend   -> copies dist/ into backend/src/main/
+ *                              resources/public/ so bootJar packages it
+ *
+ * The backend's processResources task depends on copyFrontendToBackend
+ * so a plain `./gradlew :backend:bootJar` (or :backend:bootRun) builds
+ * the SPA and copies it into the right place automatically.
+ */
+
+def npxCmd = org.gradle.internal.os.OperatingSystem.current().isWindows() ? 'npx.cmd' : 'npx'
+def npmCmd = org.gradle.internal.os.OperatingSystem.current().isWindows() ? 'npm.cmd' : 'npm'
+
+// tag::frontendTasks[]
+tasks.register('npmInstall', Exec) {
+    description = 'Install npm dependencies for the frontend SPA'
+    group = 'frontend'
+    workingDir = file('frontend')
+    inputs.file('frontend/package.json')
+    outputs.dir('frontend/node_modules')
+    commandLine npmCmd, 'install', '--no-fund', '--no-audit'
+}
+
+tasks.register('frontendBuild', Exec) {
+    description = 'Build the Vite/React SPA into frontend/dist/'
+    group = 'frontend'
+    dependsOn 'npmInstall'
+    workingDir = file('frontend')
+    inputs.dir('frontend/src')
+    inputs.file('frontend/index.html')
+    inputs.file('frontend/vite.config.js')
+    inputs.file('frontend/package.json')
+    outputs.dir('frontend/dist')
+    commandLine npmCmd, 'run', 'build'
+}
+
+tasks.register('copyFrontendToBackend', Copy) {
+    description = 'Copy the built SPA into backend/src/main/resources/public/'
+    group = 'frontend'
+    dependsOn 'frontendBuild'
+    from file('frontend/dist')
+    into file('backend/src/main/resources/public')
+}
+// end::frontendTasks[]
+
+project(':backend') {
+    afterEvaluate {
+        tasks.named('processResources').configure { dependsOn rootProject.tasks.named('copyFrontendToBackend') }
+    }
+}

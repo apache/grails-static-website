@@ -1,0 +1,23 @@
+A root `settings.gradle` includes only the backend; the frontend is a plain npm directory:
+
+[source,groovy]
+.settings.gradle
+----
+include::../snippets/settings.gradle[]
+----
+
+The two-shell-of-control choice is deliberate. Making `frontend` a Gradle subproject would force you to find or write a Vite Gradle plugin, deal with version drift, and introduce a layer that adds nothing the npm CLI does not already do. Letting Gradle drive `npm` via `Exec` tasks keeps each tool in its lane and lets you `cd frontend && npm install` exactly the way every JS dev expects.
+
+The root `build.gradle` adds three tasks that bridge the two halves:
+
+[source,groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[]
+----
+
+Three patterns:
+
+* `npmInstall` -> `frontendBuild` -> `copyFrontendToBackend` is a chain. Each task declares its `inputs`/`outputs` so Gradle's up-to-date check skips the chain when nothing has changed.
+* `copyFrontendToBackend` writes into `backend/src/main/resources/public/`. Spring Boot serves anything under that directory at `/` automatically; no further wiring needed.
+* The `afterEvaluate { tasks.named('processResources').configure { dependsOn ... } }` line is what makes plain `./gradlew :backend:bootJar` (or `bootRun`) trigger the SPA build. Readers never type the frontend tasks directly.

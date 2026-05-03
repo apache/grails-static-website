@@ -1,0 +1,12 @@
+URL mappings split the application surface in two:
+
+[source,groovy]
+.backend/grails-app/controllers/example/UrlMappings.groovy
+----
+include::../snippets/backend/grails-app/controllers/example/UrlMappings.groovy[]
+----
+
+* `/api/books` (and any other future `/api/**` route) hits the JSON controllers.
+* Everything else - `/`, `/books/42`, `/about` - resolves to `SpaController.index`, which forwards to the bundled `index.html`. The SPA's client-side router takes over from there.
+
+The forward (rather than a redirect) is what makes deep links survive a browser refresh: a hard reload on `/books/42` returns the same `index.html` payload, the SPA boots, and React Router parses the URL.

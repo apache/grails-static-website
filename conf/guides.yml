@@ -4423,6 +4423,55 @@ guides:
           helpWithGrails:
             title: Do you need help with Grails?  
 
+  - name: 'grails-vite-spa'
+    title: 'Vite + React SPA on a Grails 8 Backend'
+    subtitle: 'A Grails 8 rest_api JSON backend plus a Vite/React single-page app frontend in a single Gradle multi-project, packaged into one bootJar with the SPA served from the same origin as the API.'
+    authors:
+      - 'James Fredley'
+    category: 'Web Layer'
+    publicationDate: '2026-05-03'
+    versions:
+      '8':
+        sourcePath: guides/grails-vite-spa/v8
+        publicationDate: '2026-05-03'
+        tags:
+          - 'vite'
+          - 'react'
+          - 'spa'
+          - 'json-views'
+          - 'two-tier'
+          - 'monorepo'
+          - 'grails8'
+        sampleRef:
+          repo: 'grails-guides/grails-vite-spa'
+          branch: 'grails8'
+        toc:
+          gettingStarted:
+            title: Getting Started
+            whatYouWillBuild: What You Will Build
+            requirements: What You Will Need
+            howto: How to Complete the Guide
+          layout:
+            title: Multi-Project Layout
+          backend:
+            title: The Grails 8 JSON Backend
+          urlMappings:
+            title: URL Mappings (/api/** vs SPA)
+          spaController:
+            title: The SpaController Forwarder
+          frontend:
+            title: The Vite/React Frontend
+          viteConfig:
+            title: vite.config.js (Proxy + Build)
+          devMode:
+            title: Dev Mode (Two Servers, One Origin)
+          prodBuild:
+            title: Prod Build (One bootJar, One Origin)
+          cors:
+            title: Why CORS Never Appears
+          helpWithGrails:
+            title: Do you need help with Grails?
+
   - name: 'grails-vs-nodejs'
     title: 'Replacing a Node/Express API with Grails'
     subtitle: 'Learn how to replace a RESTful API in Node/Express with Grails'

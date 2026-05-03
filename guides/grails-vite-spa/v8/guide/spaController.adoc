@@ -1,0 +1,14 @@
+The `SpaController` is one action that hands every non-`/api/**` request to the SPA's bundled `index.html`:
+
+[source,groovy]
+.backend/grails-app/controllers/example/SpaController.groovy
+----
+include::../snippets/backend/grails-app/controllers/example/SpaController.groovy[]
+----
+
+`forward url: '/index.html'` re-dispatches inside the same servlet container; the response status, content type, and caching headers all come from the static-resource handler that serves `index.html`. No HTML duplication, no template engine in the loop.
+
+[NOTE]
+====
+*Why not a wildcard URL mapping like `'/$path**'(controller: 'spa', action: 'index')`?* Because URL mappings resolve before static resources. A wildcard mapping would intercept `/favicon.ico` and `/assets/main-abc123.js`, returning the SPA's `index.html` instead of the asset. Letting Spring Boot's static-resource handler claim everything except `/api/**` and `/` is the simplest correct shape.
+====

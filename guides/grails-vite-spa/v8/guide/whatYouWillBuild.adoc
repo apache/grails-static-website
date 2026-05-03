@@ -1,0 +1,25 @@
+By the end of the guide your repository will look like:
+
+[source,text]
+----
+grails-vite-spa/
+|-- settings.gradle              # include ':backend' (frontend is npm-only)
+|-- build.gradle                 # npmInstall, frontendBuild, copyFrontendToBackend
+|-- backend/                     # Grails 8 rest_api
+|   `-- grails-app/
+|       |-- domain/example/Book.groovy
+|       |-- controllers/example/BookController.groovy        # /api/books
+|       |-- controllers/example/SpaController.groovy         # forwards / -> SPA
+|       |-- controllers/example/UrlMappings.groovy
+|       `-- views/book/{_book,index,show}.gson
+`-- frontend/                    # Vite + React (NOT a Gradle subproject)
+    |-- package.json
+    |-- vite.config.js           # proxy /api/** -> http://localhost:8080
+    |-- index.html
+    `-- src/{main.jsx, App.jsx, index.css}
+----
+
+Two run-modes:
+
+* *Dev*: `./gradlew :backend:bootRun` in one shell, `cd frontend && npm run dev` in another. Vite serves the SPA on `:5173` with HMR; the proxy forwards `/api/**` to the Grails app on `:8080`.
+* *Prod*: `./gradlew :backend:bootJar`. Gradle runs `npm run build`, copies `frontend/dist/` into `backend/src/main/resources/public/`, and packages everything into one bootJar. The SPA serves from `/` and `/api/**` from the same origin - CORS irrelevant.

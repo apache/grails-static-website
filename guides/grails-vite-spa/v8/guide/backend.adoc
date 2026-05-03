@@ -1,0 +1,29 @@
+The backend is a vanilla Grails 8 `rest_api` starter (`postgres`, `testcontainers`, `views-json` features) with a small Book domain and a `RestfulController`:
+
+[source,groovy]
+.backend/grails-app/domain/example/Book.groovy
+----
+include::../snippets/backend/grails-app/domain/example/Book.groovy[]
+----
+
+[source,groovy]
+.backend/grails-app/controllers/example/BookController.groovy
+----
+include::../snippets/backend/grails-app/controllers/example/BookController.groovy[]
+----
+
+The JSON views shape the response:
+
+[source,groovy]
+.backend/grails-app/views/book/_book.gson
+----
+include::../snippets/backend/grails-app/views/book/_book.gson[]
+----
+
+[source,groovy]
+.backend/grails-app/views/book/index.gson
+----
+include::../snippets/backend/grails-app/views/book/index.gson[]
+----
+
+This is exactly the pattern from the link:../grails-rest-library/8/guide/index.html[REST Library] guide, narrowed to a single domain so the Vite-and-React story stays in focus.
