@@ -270,6 +270,123 @@ companionArtifacts:
             result[1].artifactId == 'grails-quartz'
     }
 
+    void 'orphanCompanionMajors returns an empty list when no companionArtifacts section exists'() {
+
+        given:
+            File releases = releasesFile('''
+coreReleases:
+  - version: 7.0.0
+  - version: 7.1.0
+'''.stripIndent())
+
+        expect:
+            SiteMap.orphanCompanionMajors(releases) == []
+    }
+
+    void 'orphanCompanionMajors returns an empty list when every companion major has a stable core release'() {
+
+        given:
+            File releases = releasesFile('''
+coreReleases:
+  - version: 7.0.0
+  - version: 7.1.0
+companionArtifacts:
+  '7':
+    - artifactId: grails-redis
+      version: '5.0.1'
+      mirrorDirectory: redis
+      releaseNotesRepo: apache/grails-redis
+      displayName: Grails Redis Plugin
+'''.stripIndent())
+
+        expect:
+            SiteMap.orphanCompanionMajors(releases) == []
+    }
+
+    void 'orphanCompanionMajors returns an empty list when the companion major has only a pre-release in coreReleases'() {
+
+        given: 'a companion major that is also represented by a milestone in coreReleases'
+            File releases = releasesFile('''
+coreReleases:
+  - version: 7.1.0
+  - version: 8.0.0-M1
+companionArtifacts:
+  '8':
+    - artifactId: grails-publish
+      version: '1.0.0-M1'
+      mirrorDirectory: grails-publish
+      releaseNotesRepo: apache/grails-gradle-publish
+      displayName: Grails Publish Gradle Plugin
+'''.stripIndent())
+
+        expect: 'the companion is not orphan because the existing pre-release card will pick it up'
+            SiteMap.orphanCompanionMajors(releases) == []
+    }
+
+    void 'orphanCompanionMajors returns the major when companions exist but no core release of any kind exists for that major'() {
+
+        given:
+            File releases = releasesFile('''
+coreReleases:
+  - version: 7.1.0
+companionArtifacts:
+  '7':
+    - artifactId: grails-redis
+      version: '5.0.1'
+      mirrorDirectory: redis
+      releaseNotesRepo: apache/grails-redis
+      displayName: Grails Redis Plugin
+  '8':
+    - artifactId: grails-publish
+      version: '1.0.0-M1'
+      mirrorDirectory: grails-publish
+      releaseNotesRepo: apache/grails-gradle-publish
+      displayName: Grails Publish Gradle Plugin
+'''.stripIndent())
+
+        expect:
+            SiteMap.orphanCompanionMajors(releases) == [8]
+    }
+
+    void 'orphanCompanionMajors returns multiple majors in descending order'() {
+
+        given:
+            File releases = releasesFile('''
+coreReleases:
+  - version: 7.1.0
+companionArtifacts:
+  '8':
+    - artifactId: grails-publish
+      version: '1.0.0-M1'
+      mirrorDirectory: grails-publish
+      releaseNotesRepo: apache/grails-gradle-publish
+      displayName: Grails Publish Gradle Plugin
+  '9':
+    - artifactId: grails-experimental
+      version: '0.1.0'
+      mirrorDirectory: experimental
+      releaseNotesRepo: apache/grails-experimental
+      displayName: Grails Experimental Plugin
+'''.stripIndent())
+
+        expect:
+            SiteMap.orphanCompanionMajors(releases) == [9, 8]
+    }
+
+    void 'orphanCompanionMajors skips majors whose companion list is empty'() {
+
+        given:
+            File releases = releasesFile('''
+coreReleases:
+  - version: 7.1.0
+companionArtifacts:
+  '8': []
+'''.stripIndent())
+
+        expect:
+            SiteMap.orphanCompanionMajors(releases) == []
+    }
+
     void 'versions accepts the legacy releases: key during the migration window'() {
 
         given:

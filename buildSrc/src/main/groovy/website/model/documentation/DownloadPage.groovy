@@ -165,6 +165,61 @@ class DownloadPage {
     }
 
     /**
+     * Renders a "plugins-only" card for a Grails major version that has
+     * Apache-released companion plugins but no matching {@code coreReleases:}
+     * entry yet. The card mirrors the visual treatment of {@link #renderDownload}
+     * but omits the core source / binary / wrapper / release-notes block - only
+     * the companion plugins are listed, each with their Source / SHA512 / ASC
+     * verification links and a release-notes link.
+     *
+     * <p>Returns the empty string for an empty {@code companions} list so that
+     * callers can safely render unconditionally.
+     *
+     * @param major      the Grails major version this card represents (e.g. 8)
+     * @param companions companion plugins published for this upcoming major
+     */
+    @CompileDynamic
+    static String renderCompanionsOnlyCard(int major, List<CompanionArtifact> companions) {
+        if (!companions) {
+            return ''
+        }
+        renderHtml {
+            div(class: 'guide-group') {
+                div(class: 'guide-group-header') {
+                    img(src: '[%url]/images/download.svg', alt: "Apache Grails ${major} plugins")
+                    h2("Apache Grails ${major} Plugins")
+                }
+                ul {
+                    companions.each { CompanionArtifact c ->
+                        li {
+                            a(
+                                    href: sourceUrl(c.version, c.artifactId, '', c.mirrorDirectory),
+                                    "${c.displayName} ${c.version} Source"
+                            )
+                            a(
+                                    href: sourceVerificationUrl(c.version, c.artifactId, '.sha512', c.mirrorDirectory),
+                                    'SHA512'
+                            )
+                            a(
+                                    href: sourceVerificationUrl(c.version, c.artifactId, '.asc', c.mirrorDirectory),
+                                    'ASC'
+                            )
+                        }
+                    }
+                    companions.each { CompanionArtifact c ->
+                        li {
+                            a(
+                                    href: "https://github.com/${c.releaseNotesRepo}/releases/tag/v${c.version}",
+                                    "${c.displayName} ${c.version} Release Notes"
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * @return {@code true} if this version line is distributed through the
      *         Apache mirrors ({@code major >= 7}). Older versions fell back to
      *         GitHub releases on apache/grails-core or apache/grails-forge.
@@ -187,14 +242,18 @@ class DownloadPage {
      * grid (one card per active minor line, e.g. 7.0 and 7.1 today, plus
      * 8.0 once that ships), a "Pre-release" grid below it for any
      * Apache-released milestones / RCs that haven't been superseded by
-     * stable, the older-versions dropdown, and a "Get Started" two-column
-     * footer with Application Forge + SDKMAN install instructions.
+     * stable, an "Upcoming Plugins" grid for Apache-released companion
+     * plugins whose target Grails major hasn't shipped yet (e.g. a Grails 8
+     * plugin published before any Grails 8 core release), the older-versions
+     * dropdown, and a "Get Started" two-column footer with Application Forge
+     * + SDKMAN install instructions.
      */
     @CompileDynamic
     static String mainContent(File releases) {
         List<String> currentLines = SiteMap.activeMinorLines(releases)
         Map<String, ReleaseVersion> latestPerLine = SiteMap.latestStablePerMinorLine(releases)
         Map<Integer, ReleaseVersion> preReleasesPerMajor = SiteMap.latestPreReleasePerMajor(releases)
+        List<Integer> orphanCompanionMajors = SiteMap.orphanCompanionMajors(releases)
 
         renderHtml {
             div(class: 'header-bar chalices-bg') {
@@ -249,6 +308,30 @@ class DownloadPage {
                                     DownloadPage.renderDownload(
                                             v.versionText,
                                             SiteMap.companionArtifactsFor(releases, v.major)
+                                    )
+                            )
+                        }
+                    }
+                }
+
+                if (!orphanCompanionMajors.isEmpty()) {
+                    h2(
+                            class: 'release-section-header column-header',
+                            'Plugins for upcoming Apache Grails releases'
+                    )
+                    p(
+                            'Per Apache release policy, the plugins below are official Apache releases ' +
+                            'published to Maven Central with full source and signature artifacts. They ' +
+                            'target an upcoming Grails major version that has not yet had a release ' +
+                            'recorded on this site; once that version ships these plugins will move under ' +
+                            'its download card automatically.'
+                    )
+                    div(class: 'release-grid') {
+                        orphanCompanionMajors.each { Integer major ->
+                            mkp.yieldUnescaped(
+                                    DownloadPage.renderCompanionsOnlyCard(
+                                            major,
+                                            SiteMap.companionArtifactsFor(releases, major)
                                     )
                             )
                         }

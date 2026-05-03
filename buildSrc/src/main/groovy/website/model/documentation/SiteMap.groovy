@@ -97,6 +97,44 @@ class SiteMap {
     }
 
     /**
+     * Returns the Grails major versions that have entries under
+     * {@code companionArtifacts:} but no entry of any kind (stable or
+     * pre-release) under {@code coreReleases:}. These are companion plugins
+     * that have shipped ahead of their target Grails core release.
+     *
+     * <p>The downloads page renders a dedicated section for these "orphan"
+     * companions so they're discoverable until the matching core release
+     * lands. Once any release for that major is appended to
+     * {@code coreReleases:} (including a milestone or RC) the major drops out
+     * of this list automatically and the existing per-major card picks up its
+     * companions through {@link #companionArtifactsFor}.
+     *
+     * <p>Result is sorted descending so the highest upcoming major is rendered
+     * first. Companion entries with an empty list are skipped (they would
+     * produce an empty card).
+     *
+     * @param releases the {@code conf/releases.yml} file
+     * @return descending list of orphan major versions; never null
+     */
+    static List<Integer> orphanCompanionMajors(File releases) {
+        assert releases.exists()
+        Set<Integer> coreMajors = versions(releases)*.major as Set<Integer>
+        def model = releases.newInputStream().withCloseable {
+            new Yaml().load(it) as Map
+        }
+        Map section = (model.companionArtifacts ?: [:]) as Map
+        List<Integer> orphans = []
+        section.each { key, value ->
+            Integer major = (key as String).toInteger()
+            List entries = value as List
+            if (entries && !coreMajors.contains(major)) {
+                orphans << major
+            }
+        }
+        orphans.toSorted().reverse()
+    }
+
+    /**
      * @return the highest stable {@link ReleaseVersion} per major version,
      *         keyed by major. Used as the cross-major reference point for
      *         deciding which pre-releases are still relevant (a pre-release
