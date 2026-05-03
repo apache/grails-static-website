@@ -14,3 +14,4 @@ atlassian-ide-plugin.xml
 .settings/
 .vscode/
 .nova
+.playwright-mcp/
