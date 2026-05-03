@@ -2437,3 +2437,59 @@ body.guide article.guide .warning td.content,
 body.guide article.guide .tip td.content {
 	border: none;
 }
+
+/* ==========================================================================
+   Multi-version downloads / documentation page redesign
+   ----------------------------------------------------------------------
+   The legacy two-column-stack layout collapsed every release into the left
+   column. The redesigned layout features one card per active minor line in
+   a flex grid (today: 7.0 + 7.1; once 8.0 ships: 7.0 + 7.1 + 8.0). Cards
+   reuse the existing .guide-group visual treatment so this is purely an
+   additive container layer - no changes to the per-card chrome.
+   ========================================================================== */
+
+.release-page-intro {
+	margin: 30px 0 30px 0;
+	font-size: 16px;
+	line-height: 1.6;
+}
+
+.release-section-header {
+	margin-top: 50px;
+	margin-bottom: 20px;
+	color: #FFFFFF;
+	background-color: #C8C8C8;
+}
+
+.release-section-header.column-header {
+	color: #FFFFFF;
+	background-color: #C8C8C8;
+}
+
+.release-grid {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 24px;
+	margin: 0 0 32px 0;
+	align-items: stretch;
+}
+
+.release-grid .guide-group {
+	flex: 1 1 380px;
+	min-width: 0;
+	max-width: 480px;
+	margin-bottom: 0;
+}
+
+.release-grid .guide-group h2 {
+	height: auto;
+	min-height: 60px;
+	padding-top: 20px;
+}
+
+@media (max-width: 768px) {
+	.release-grid .guide-group {
+		flex-basis: 100%;
+		max-width: 100%;
+	}
+}

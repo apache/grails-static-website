@@ -180,10 +180,22 @@ class DownloadPage {
         return parsed.major >= FIRST_APACHE_MAJOR
     }
 
+    /**
+     * Renders the Downloads page in a multi-version card-grid layout. The
+     * legacy two-column-stack layout collapsed every release into a single
+     * column on the left; this layout has a top-level "Current Releases"
+     * grid (one card per active minor line, e.g. 7.0 and 7.1 today, plus
+     * 8.0 once that ships), a "Pre-release" grid below it for any
+     * Apache-released milestones / RCs that haven't been superseded by
+     * stable, the older-versions dropdown, and a "Get Started" two-column
+     * footer with Application Forge + SDKMAN install instructions.
+     */
     @CompileDynamic
     static String mainContent(File releases) {
-        def preRelease = SiteMap.latestPreReleaseVersion(releases)
-        def latest = SiteMap.latestVersion(releases)
+        List<String> currentLines = SiteMap.activeMinorLines(releases)
+        Map<String, ReleaseVersion> latestPerLine = SiteMap.latestStablePerMinorLine(releases)
+        Map<Integer, ReleaseVersion> preReleasesPerMajor = SiteMap.latestPreReleasePerMajor(releases)
+
         renderHtml {
             div(class: 'header-bar chalices-bg') {
                 div(class: 'content') {
@@ -191,62 +203,76 @@ class DownloadPage {
                 }
             }
             div(class: 'content') {
-                div(class: 'two-columns') {
-                    div(class: 'odd column') {
-                        h3(
-                                class: 'column-header', style: 'margin-bottom: 10px',
-                                'Source and Binary Releases'
-                        )
-                        p {
-                            mkp.yieldUnescaped(
-                                    'We provide OpenPGP signatures (\'.asc\') files and checksums (\'.sha512\') for ' +
-                                    'every release artifact. We recommend that you '
-                            )
-                            a(href: 'https://www.apache.org/info/verification.html', 'verify')
-                            mkp.yieldUnescaped(
-                                    ' the integrity of downloaded files by generating your own checksums and match ' +
-                                    'them against ours, and checking signatures using the '
-                            )
-                            a(href: 'https://www.apache.org/dyn/closer.lua/grails/KEYS?action=download', 'KEYS')
-                            mkp.yieldUnescaped(' file which contains the Grails OpenPGP release keys.')
-                        }
-                        if (preRelease > latest) {
-                            mkp.yieldUnescaped(
-                                    DownloadPage.renderDownload(
-                                            preRelease.versionText,
-                                            SiteMap.companionArtifactsFor(releases, preRelease.major)
-                                    )
-                            )
-                        }
+                p(class: 'release-page-intro') {
+                    mkp.yieldUnescaped(
+                            'We provide OpenPGP signatures (\'.asc\') files and checksums (\'.sha512\') for ' +
+                            'every release artifact. We recommend that you '
+                    )
+                    a(href: 'https://www.apache.org/info/verification.html', 'verify')
+                    mkp.yieldUnescaped(
+                            ' the integrity of downloaded files by generating your own checksums and match ' +
+                            'them against ours, and checking signatures using the '
+                    )
+                    a(href: 'https://www.apache.org/dyn/closer.lua/grails/KEYS?action=download', 'KEYS')
+                    mkp.yieldUnescaped(' file which contains the Grails OpenPGP release keys.')
+                }
 
-                        mkp.yieldUnescaped(DownloadPage.renderDownload('snapshot'))
-                        mkp.yieldUnescaped(
-                                DownloadPage.renderDownload(
-                                        latest.versionText,
-                                        SiteMap.companionArtifactsFor(releases, latest.major)
+                h2(class: 'release-section-header column-header', 'Current Releases')
+                if (currentLines.isEmpty()) {
+                    p('No stable releases have been recorded yet.')
+                } else {
+                    div(class: 'release-grid') {
+                        currentLines.each { String lineKey ->
+                            ReleaseVersion v = latestPerLine[lineKey]
+                            if (v != null) {
+                                mkp.yieldUnescaped(
+                                        DownloadPage.renderDownload(
+                                                v.versionText,
+                                                SiteMap.companionArtifactsFor(releases, v.major)
+                                        )
                                 )
-                        )
-
-                        h3(
-                                class: 'column-header',
-                                'Older Versions'
-                        )
-                        p('You can download previous versions as far back as Grails 0.1.')
-                        p(
-                                'NOTE: Versions prior to 7.0.0-M4 are not ASF releases. Links to those releases are ' +
-                                'provided here as a convenience.'
-                        )
-                        div(class: 'version-selector') {
-                            select(class: 'form-control', onchange: 'window.location.href = this.value') {
-                                option(label: 'Select a version', disabled: 'disabled', selected: 'selected')
-                                SiteMap.stableVersions(releases)*.versionText.each {
-                                    option(value: DownloadPage.resolveOldDownloadUrl(it), it)
-                                }
                             }
                         }
                     }
-                    div(class: 'column') {
+                }
 
+                if (!preReleasesPerMajor.isEmpty()) {
+                    h2(class: 'release-section-header column-header', 'Pre-release (Apache-released)')
+                    p(
+                            'Per Apache release policy, the milestones and release candidates below are ' +
+                            'official Apache releases published to Maven Central with full source, binary, ' +
+                            'and signature artifacts. They are not featured on the home page.'
+                    )
+                    div(class: 'release-grid') {
+                        preReleasesPerMajor.values().each { ReleaseVersion v ->
+                            mkp.yieldUnescaped(
+                                    DownloadPage.renderDownload(
+                                            v.versionText,
+                                            SiteMap.companionArtifactsFor(releases, v.major)
+                                    )
+                            )
+                        }
+                    }
+                }
+
+                h2(class: 'release-section-header column-header', 'Older Versions')
+                p('You can download previous versions as far back as Grails 0.1.')
+                p(
+                        'NOTE: Versions prior to 7.0.0-M4 are not ASF releases. Links to those releases are ' +
+                        'provided here as a convenience.'
+                )
+                div(class: 'version-selector') {
+                    select(class: 'form-control', onchange: 'window.location.href = this.value') {
+                        option(label: 'Select a version', disabled: 'disabled', selected: 'selected')
+                        SiteMap.stableVersions(releases)*.versionText.each {
+                            option(value: DownloadPage.resolveOldDownloadUrl(it), it)
+                        }
+                    }
+                }
+
+                h2(class: 'release-section-header column-header', 'Get Started')
+                div(class: 'two-columns') {
+                    div(class: 'odd column') {
                         h3(
                                 class: 'column-header',
                                 style: 'margin-bottom: 10px',
@@ -256,7 +282,8 @@ class DownloadPage {
                         p {
                             a(href: 'https://start.grails.org', 'Grails Application Forge')
                         }
-
+                    }
+                    div(class: 'column') {
                         h3(
                                 class: 'column-header',
                                 style: 'margin-bottom: 10px',
@@ -268,7 +295,6 @@ class DownloadPage {
                                     'SDKMAN! (The Software Development Kit Manager)'
                             )
                         }
-
                         p(
                                 'This tool makes installing the Grails framework on any Unix based platform ' +
                                 '(Mac OSX, Linux, Cygwin, Solaris, or FreeBSD) easy.'
