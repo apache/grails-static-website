@@ -1,0 +1,7 @@
+import example.Author
+
+model {
+    Author author
+}
+
+json g.render(template: 'author', model: [author: author])

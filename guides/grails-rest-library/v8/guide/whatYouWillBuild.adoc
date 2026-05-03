@@ -1,0 +1,8 @@
+By the end of the guide you will have:
+
+* A `Book` and `Author` domain pair, with `Book` `belongsTo: Author` and reasonable constraints (a regex-validated ISBN, a positive `pageCount`, optional `dateOfBirth`).
+* `BookController extends RestfulController<Book>` and `AuthorController extends RestfulController<Author>`, each scoped to JSON via `responseFormats` and bounded by a `listAllResources` override that hard-caps `params.max` at 100.
+* JSON views (`.gson`) under `grails-app/views/book/` and `grails-app/views/author/` that render the API responses. Each view emits a body, embeds a HAL-style `_links` object, and reuses a shared `_book.gson` / `_author.gson` partial.
+* A `POST /v1/books/bulk` endpoint that accepts a JSON array, validates every entry, and returns a structured 422 with the field errors of every failing entry on the first validation failure (the whole transaction rolls back).
+* URL-prefix versioning: every endpoint lives under `/v1/`. The chapter on versioning compares this with the `Accept: application/vnd.example.v2+json` content-negotiation approach and recommends starting with URL prefixes.
+* Sample data in `BootStrap` so `curl http://localhost:8080/v1/books` returns four real books from two real authors immediately after `./gradlew bootRun`.

@@ -1,0 +1,24 @@
+URL-prefix versioning lives in `UrlMappings.groovy`:
+
+[source,groovy]
+.grails-app/controllers/example/UrlMappings.groovy
+----
+include::../snippets/grails-app/controllers/example/UrlMappings.groovy[]
+----
+
+The `'/v1/books'(resources: 'book')` line generates the standard seven REST routes:
+
+[cols="1,4,3"]
+|===
+| Method | Path                  | Controller action
+
+| GET    | `/v1/books`           | `index`
+| POST   | `/v1/books`           | `save`
+| GET    | `/v1/books/{id}`      | `show`
+| PUT    | `/v1/books/{id}`      | `update`
+| PATCH  | `/v1/books/{id}`      | `patch`
+| DELETE | `/v1/books/{id}`      | `delete`
+| GET    | `/v1/books/create`   | `create` (rarely used in JSON APIs; safe to ignore)
+|===
+
+The nested `collection { ... }` block adds non-instance routes - in our case `POST /v1/books/bulk` mapped to a `bulkCreate` action we will write later.

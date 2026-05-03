@@ -1,0 +1,13 @@
+import example.Author
+
+model {
+    Iterable<Author> authorList
+    Long             authorCount
+}
+
+json {
+    page    Math.max(0, (params.int('offset', 0) ?: 0).intdiv(params.int('max', 25) ?: 25))
+    pageSize params.int('max', 25)
+    total   authorCount
+    items   authorList.collect { Author a -> g.render(template: 'author', model: [author: a]) }
+}

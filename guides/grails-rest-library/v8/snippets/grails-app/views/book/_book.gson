@@ -1,0 +1,21 @@
+import example.Book
+
+model {
+    Book book
+}
+
+json {
+    id          book.id
+    title       book.title
+    isbn        book.isbn
+    pageCount   book.pageCount
+    publishedOn book.publishedOn?.format('yyyy-MM-dd')
+    author {
+        id   book.author.id
+        name book.author.name
+    }
+    _links {
+        self   url: g.createLink(controller: 'book',   action: 'show', id: book.id,        absolute: true)
+        author url: g.createLink(controller: 'author', action: 'show', id: book.author.id, absolute: true)
+    }
+}

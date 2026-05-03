@@ -3466,6 +3466,61 @@ guides:
           helpWithGrails:
             title: Do you need help with Grails?
 
+  - name: 'grails-rest-library'
+    title: 'A Library REST API with Grails 8'
+    subtitle: 'Build a Book + Author REST API on Grails 8 using RestfulController, JSON views, structured 422 validation responses, bounded pagination, all-or-nothing bulk create, and URL-prefix versioning under /v1/.'
+    authors:
+      - 'James Fredley'
+    category: 'Web Layer'
+    publicationDate: '2026-05-03'
+    versions:
+      '8':
+        sourcePath: guides/grails-rest-library/v8
+        publicationDate: '2026-05-03'
+        tags:
+          - 'rest'
+          - 'rest-api'
+          - 'json-views'
+          - 'gson'
+          - 'restful-controller'
+          - 'gorm'
+          - 'pagination'
+          - 'validation'
+          - 'grails8'
+        sampleRef:
+          repo: 'grails-guides/grails-rest-library'
+          branch: 'grails8'
+        toc:
+          gettingStarted:
+            title: Getting Started
+            whatYouWillBuild: What You Will Build
+            requirements: What You Will Need
+            howto: How to Complete the Guide
+          createApp:
+            title: Creating the Application
+            download: Download a Grails 8 rest_api Starter
+          domainModel:
+            title: The Book and Author Domain Model
+            bootstrapData: Bootstrap Sample Data
+          urlMappings:
+            title: URL Mappings and v1 Versioning
+          controllers:
+            title: RestfulController With a Hard Page Cap
+          jsonViews:
+            title: JSON Views
+          validation:
+            title: Structured 422 Validation Responses
+          pagination:
+            title: Pagination, Sorting, and Filtering
+          bulkCreate:
+            title: All-or-Nothing Bulk Create
+          versioning:
+            title: URL-Prefix vs Content-Negotiation Versioning
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Do you need help with Grails?
+
   - name: 'grails-scheduled'
     title: 'Grails + @Scheduled'
     subtitle: 'Learn how to use Spring Task Execution and Scheduling to schedule periodic tasks inside your Grails applications'
@@ -4444,7 +4499,7 @@ guides:
           - 'gorm'
           - 'grails3'
         sampleRef:
-          repo: 'grails-guides/rest-hibernate'
+          repo: 'grails-guides/grails-rest-library'
           branch: 'grails3'
         toc:
           training:
@@ -4481,7 +4536,7 @@ guides:
           - 'gorm'
           - 'grails4'
         sampleRef:
-          repo: 'grails-guides/rest-hibernate'
+          repo: 'grails-guides/grails-rest-library'
           branch: 'grails4'
         toc:
           training:

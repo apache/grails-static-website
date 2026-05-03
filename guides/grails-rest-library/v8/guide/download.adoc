@@ -1,0 +1,9 @@
+[source,bash]
+----
+curl -L -o library.zip \
+  "https://prev-snapshot.grails.org/create/rest_api/example.library?lang=GROOVY&build=GRADLE&test=SPOCK&javaVersion=JDK_21&features=postgres,testcontainers,views-json,database-migration"
+unzip library.zip
+cd library
+----
+
+The `rest_api` starter is leaner than the `web` starter: no asset pipeline, no GSP, no Bootstrap webjars. The `views-json` feature adds the `.gson` view support and the matching `org.apache.grails:grails-views-gson` dependency.

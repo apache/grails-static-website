@@ -1,0 +1,13 @@
+import example.Book
+
+model {
+    Iterable<Book> bookList
+    Long           bookCount
+}
+
+json {
+    page    Math.max(0, (params.int('offset', 0) ?: 0).intdiv(params.int('max', 25) ?: 25))
+    pageSize params.int('max', 25)
+    total   bookCount
+    items   bookList.collect { Book b -> g.render(template: 'book', model: [book: b]) }
+}
