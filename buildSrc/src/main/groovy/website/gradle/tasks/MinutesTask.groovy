@@ -213,6 +213,10 @@ abstract class MinutesTask extends GrailsWebsiteTask {
 
         def html = writer.toString()
         def metadata = htmlMinutes.metadata.toMap()
+        // Per-page Open Graph URL. Without this the [%ogurl] token in
+        // templates/document.html ships verbatim on every rendered minutes
+        // page. minutesLink() resolves to "<siteUrl>/foundation/minutes/<path>".
+        metadata['ogurl'] = minutesLink(htmlMinutes)
         html = RenderSiteTask.renderHtmlWithTemplateContent(html, metadata, templateText)
         html = RenderSiteTask.highlightMenu(html, metadata, htmlMinutes.path)
         metadata['bodyClassAttr'] = metadata['bodyClassAttr'] ?: 'foundation minutes'
@@ -319,6 +323,12 @@ abstract class MinutesTask extends GrailsWebsiteTask {
         def html = cardsHtml(minuteCards.toList())
         def resolvedMetadata = RenderSiteTask.processMetadata(siteMeta).tap {
             it.title = 'Foundation | Grails Framework'
+            // [%ogurl] is the per-page Open Graph URL token in
+            // templates/document.html. The minutes archive lives at
+            // <siteUrl>/foundation/minutes/index.html; without this the
+            // rendered HTML shipped the literal [%ogurl] in the og:url
+            // meta tag.
+            it.ogurl = "${it.url}/$MINUTES/$INDEX".toString()
         }
         html = RenderSiteTask.renderHtmlWithTemplateContent(html, resolvedMetadata, templateText)
         html = RenderSiteTask.highlightMenu(html, resolvedMetadata, "/$MINUTES/$INDEX")
