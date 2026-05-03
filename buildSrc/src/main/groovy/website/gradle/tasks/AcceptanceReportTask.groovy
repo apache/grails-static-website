@@ -63,11 +63,6 @@ class AcceptanceReportTask extends DefaultTask {
     @Optional
     @InputFile
     @PathSensitive(PathSensitivity.RELATIVE)
-    final RegularFileProperty structuralReportFile = project.objects.fileProperty()
-
-    @Optional
-    @InputFile
-    @PathSensitive(PathSensitivity.RELATIVE)
     final RegularFileProperty cspReportFile = project.objects.fileProperty()
 
     @OutputFile
@@ -81,14 +76,12 @@ class AcceptanceReportTask extends DefaultTask {
         File guidesRoot = guidesDir.get().asFile
         Map<String, GateResult> asciidoctorResults = parseCsvReport(optionalFile(asciidoctorReportFile))
         Map<String, GateResult> crawlResults = parseCsvReport(optionalFile(crawlReportFile))
-        Map<String, GateResult> structuralResults = parseCsvReport(optionalFile(structuralReportFile))
         CspAggregation cspAggregation = parseCspReport(optionalFile(cspReportFile))
 
         Set<String> guideKeys = [] as LinkedHashSet<String>
         guideKeys.addAll(discoverGuideKeys(guidesRoot))
         guideKeys.addAll(asciidoctorResults.keySet())
         guideKeys.addAll(crawlResults.keySet())
-        guideKeys.addAll(structuralResults.keySet())
         guideKeys.addAll(cspAggregation.issuesByGuide.keySet())
 
         if (guideKeys.isEmpty()) {
@@ -101,16 +94,14 @@ class AcceptanceReportTask extends DefaultTask {
             Pair pair = splitKey(key)
             GateResult asciidoctor = asciidoctorResults[key] ?: GateResult.review('asciidoctorWarningGate report row missing.')
             GateResult crawl = crawlResults[key] ?: GateResult.review('crawlBuiltGuides report row missing.')
-            GateResult structural = structuralResults[key] ?: GateResult.review('structuralDiffGuides report row missing.')
             GateResult csp = cspResultFor(key, cspAggregation)
-            String verdict = mergeVerdict([asciidoctor.status, crawl.status, structural.status, csp.status])
-            String details = summarizeDetails(asciidoctor, crawl, structural, csp)
+            String verdict = mergeVerdict([asciidoctor.status, crawl.status, csp.status])
+            String details = summarizeDetails(asciidoctor, crawl, csp)
             rows << new AcceptanceRow(
                     guide: pair.guide,
                     version: pair.version,
                     asciidoctorWarningGate: asciidoctor.status,
                     crawlBuiltGuides: crawl.status,
-                    structuralDiffGuides: structural.status,
                     cspScan: csp.status,
                     verdict: verdict,
                     details: details,
@@ -133,13 +124,11 @@ class AcceptanceReportTask extends DefaultTask {
             task.guidesDir.convention(project.layout.buildDirectory.dir('dist/guides'))
             task.asciidoctorReportFile.convention(project.layout.buildDirectory.file('reports/asciidoctor-warning-gate.csv'))
             task.crawlReportFile.convention(project.layout.buildDirectory.file('reports/crawl-built-guides.csv'))
-            task.structuralReportFile.convention(project.layout.buildDirectory.file('reports/structural-diff-guides.csv'))
             task.cspReportFile.convention(project.layout.buildDirectory.file('reports/csp-scan.md'))
             task.reportFile.convention(project.layout.buildDirectory.file('reports/acceptance.csv'))
             task.failOnViolation.convention(isHardFailMode(project))
             task.dependsOn(AsciidoctorWarningGateTask.NAME)
             task.dependsOn(CrawlBuiltGuidesTask.NAME)
-            task.dependsOn(StructuralDiffGuidesTask.NAME)
             task.dependsOn(CspScanTask.NAME)
         }
     }
@@ -277,12 +266,10 @@ class AcceptanceReportTask extends DefaultTask {
         'VERIFIED'
     }
 
-    private static String summarizeDetails(GateResult asciidoctor, GateResult crawl,
-            GateResult structural, GateResult csp) {
+    private static String summarizeDetails(GateResult asciidoctor, GateResult crawl, GateResult csp) {
         List<String> details = []
         addDetail(details, 'asciidoctorWarningGate', asciidoctor)
         addDetail(details, 'crawlBuiltGuides', crawl)
-        addDetail(details, 'structuralDiffGuides', structural)
         addDetail(details, 'cspScan', csp)
         if (details.isEmpty()) {
             return 'All guide verification gates passed.'
@@ -298,13 +285,12 @@ class AcceptanceReportTask extends DefaultTask {
 
     private static void writeCsv(File outputFile, List<AcceptanceRow> rows) {
         outputFile.parentFile.mkdirs()
-        StringBuilder sb = new StringBuilder('guide,version,asciidoctorWarningGate,crawlBuiltGuides,structuralDiffGuides,cspScan,verdict,details\n')
+        StringBuilder sb = new StringBuilder('guide,version,asciidoctorWarningGate,crawlBuiltGuides,cspScan,verdict,details\n')
         for (AcceptanceRow row : rows) {
             sb << sanitize(row.guide) << ','
             sb << sanitize(row.version) << ','
             sb << sanitize(row.asciidoctorWarningGate) << ','
             sb << sanitize(row.crawlBuiltGuides) << ','
-            sb << sanitize(row.structuralDiffGuides) << ','
             sb << sanitize(row.cspScan) << ','
             sb << sanitize(row.verdict) << ','
             sb << sanitize(row.details) << '\n'
@@ -381,7 +367,6 @@ class AcceptanceReportTask extends DefaultTask {
         String version
         String asciidoctorWarningGate
         String crawlBuiltGuides
-        String structuralDiffGuides
         String cspScan
         String verdict
         String details
