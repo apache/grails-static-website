@@ -1,0 +1,5 @@
+To complete this guide you will need:
+
+* JDK 21
+* link:https://nodejs.org[Node.js] 20+ and a recent npm
+* About 45 minutes

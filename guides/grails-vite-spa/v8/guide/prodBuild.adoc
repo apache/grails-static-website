@@ -1,0 +1,21 @@
+Production packaging is one Gradle command:
+
+[source,bash]
+----
+./gradlew :backend:bootJar
+----
+
+Behind the scenes, that command:
+
+1. `:npmInstall` runs `npm install` in `frontend/` (skipped if `node_modules/` is up-to-date).
+2. `:frontendBuild` runs `npm run build`, which is `vite build`, which produces `frontend/dist/index.html` plus a hashed JS+CSS bundle in `frontend/dist/assets/`.
+3. `:copyFrontendToBackend` copies `frontend/dist/*` into `backend/src/main/resources/public/`.
+4. `:backend:processResources` (which `:backend:bootJar` depends on) picks up the new `public/` tree and includes it in the bootJar.
+5. `:backend:bootJar` writes `backend/build/libs/backend-0.1.jar`.
+
+The resulting jar serves the SPA from `/` and the API from `/api/**`, both from the same origin. CORS is a non-issue. The deployment artifact is one file.
+
+[TIP]
+====
+The matching link:../grails-docker-bootbuildimage/8/guide/index.html[Docker bootBuildImage] guide turns this exact bootJar into an OCI image. Combined, the two guides give you `git push` -> tagged GHCR image -> single-container deploy.
+====

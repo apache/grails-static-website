@@ -1,0 +1,29 @@
+The frontend is a stock `npm create vite@latest -- --template react` scaffold, simplified:
+
+[source,json]
+.frontend/package.json
+----
+include::../snippets/frontend/package.json[]
+----
+
+[source,html]
+.frontend/index.html
+----
+include::../snippets/frontend/index.html[]
+----
+
+[source,jsx]
+.frontend/src/main.jsx
+----
+include::../snippets/frontend/src/main.jsx[]
+----
+
+[source,jsx]
+.frontend/src/App.jsx
+----
+include::../snippets/frontend/src/App.jsx[]
+----
+
+The single `fetch('/api/books')` call is the only contract between the two halves. The relative path means the same code runs in dev (where Vite proxies to `:8080`) and in prod (where the SPA is served from the bootJar at `:8080` already).
+
+To use Vue 3 instead of React, swap the dependency to `vue` + `@vitejs/plugin-vue` and replace `App.jsx` with an `App.vue` single-file component. The Gradle wiring, Vite proxy, and backend never change.
