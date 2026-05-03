@@ -47,7 +47,7 @@ companionArtifacts:
       releaseNotesRepo: apache/grails-quartz
       displayName: Grails Quartz Plugin
     - artifactId: grails-github-actions
-      version: '1.0.1'
+      version: '1.0.2'
       mirrorDirectory: actions
       releaseNotesRepo: apache/grails-github-actions
       displayName: Grails GitHub Actions
