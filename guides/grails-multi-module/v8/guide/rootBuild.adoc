@@ -1,0 +1,21 @@
+A root `settings.gradle` and a root `build.gradle` turn three side-by-side Grails projects into one Gradle build:
+
+[source,groovy]
+.settings.gradle
+----
+include::../snippets/settings.gradle[]
+----
+
+[source,groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[]
+----
+
+Three patterns to point at:
+
+* `rootProject.name = 'grails-multi-module'` is what `./gradlew projects` shows at the top of the tree. Without it, Gradle uses the directory name, which is fine for this sample but may not match your repo name in a real layout.
+* The `subprojects { repositories { ... } }` block is where every module's Apache Grails snapshot + staging Maven repos live. Avoid the temptation to also put `dependencies { ... }` here - you want each module to declare what it needs explicitly.
+* `plugins.withId('groovy') { tasks.withType(Test).configureEach { useJUnitPlatform() } }` ensures the JUnit 5 runner is used in every module that loads the Groovy plugin (which is every Grails module). Without it, only the Grails 8 starter's own build.gradle would have it; the plugin module would default to the Vintage runner.
+
+The per-module `build.gradle` files keep their dependency lists. Sharing too aggressively at root level (e.g. `dependencies { implementation '...' }` inside `subprojects`) creates surprise transitive dependencies that are hard to debug.

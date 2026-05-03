@@ -1,0 +1,23 @@
+By the end of the guide your workspace will look like:
+
+[source,text]
+----
+grails-multi-module/
+|-- settings.gradle
+|-- build.gradle
+|-- shared-core/                # Grails Plugin
+|   |-- build.gradle
+|   `-- grails-app/
+|       |-- domain/example/Book.groovy
+|       `-- services/example/BookService.groovy
+|-- webapp-customer/            # Grails web app (read-only catalog)
+|   |-- build.gradle            # `implementation project(':shared-core')`
+|   `-- grails-app/
+|       `-- controllers/customer/CatalogController.groovy
+`-- webapp-admin/               # Grails web app (CRUD)
+    |-- build.gradle            # `implementation project(':shared-core')`
+    `-- grails-app/
+        `-- controllers/admin/BookController.groovy
+----
+
+Three modules, one root, two webapps that build to two `bootJar`s, one plugin every consumer reuses. Each webapp can be `bootRun` independently; both can be built together with `./gradlew build`.

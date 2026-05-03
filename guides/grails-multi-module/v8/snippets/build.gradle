@@ -1,0 +1,40 @@
+/*
+ * Root build script. Per-module build.gradle files keep their own
+ * dependency lists; this root file only carries cross-cutting concerns:
+ * the JDK release level, the plain-old `useJUnitPlatform()` for every
+ * Test task, and the same Apache Grails snapshot repositories every
+ * module needs.
+ */
+
+subprojects {
+    repositories {
+        mavenCentral()
+        maven { url = 'https://repo.grails.org/grails/restricted' }
+        maven {
+            url = 'https://repository.apache.org/content/groups/snapshots'
+            content {
+                includeVersionByRegex('org[.]apache[.]grails.*', '.*', '.*-SNAPSHOT')
+            }
+            content {
+                includeVersionByRegex('org[.]apache[.]groovy.*', 'groovy.*', '.*-SNAPSHOT')
+            }
+            mavenContent { snapshotsOnly() }
+        }
+        maven {
+            url = 'https://repository.apache.org/content/groups/staging'
+            content {
+                includeVersionByRegex('org[.]apache[.]grails[.]gradle', 'grails-publish', '.*')
+            }
+            content {
+                includeVersionByRegex('org[.]apache[.]groovy.*', 'groovy.*', '.*')
+            }
+            mavenContent { releasesOnly() }
+        }
+    }
+
+    plugins.withId('groovy') {
+        tasks.withType(Test).configureEach {
+            useJUnitPlatform()
+        }
+    }
+}

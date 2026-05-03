@@ -1,0 +1,18 @@
+/*
+ * Multi-project root settings file.
+ *
+ * Three modules participate:
+ *   shared-core      : Grails Plugin holding the domain model, GORM services,
+ *                      and security-config bits the two webapps share.
+ *   webapp-customer  : customer-facing Grails web app (read-only catalog).
+ *   webapp-admin     : back-office Grails web app with full CRUD.
+ *
+ * Both webapps depend on shared-core via `implementation project(':shared-core')`.
+ * GORM picks up the plugin's domain classes automatically.
+ */
+
+rootProject.name = 'grails-multi-module'
+
+include 'shared-core'
+include 'webapp-customer'
+include 'webapp-admin'

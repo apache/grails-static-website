@@ -1,0 +1,22 @@
+Each of the three modules is a fresh forge zip. The plugin is the `web_plugin` application type; the two webapps are the `web` type:
+
+[source,bash]
+----
+mkdir grails-multi-module && cd grails-multi-module && mkdir initial complete && cd complete
+
+# shared-core - the plugin that holds the shared domain model + services
+curl -L -o p.zip "https://prev-snapshot.grails.org/create/web_plugin/example.shared?lang=GROOVY&build=GRADLE&test=SPOCK&javaVersion=JDK_21"
+unzip p.zip && mv shared shared-core && rm p.zip
+
+# webapp-customer - read-only catalog
+curl -L -o c.zip "https://prev-snapshot.grails.org/create/web/example.customer?lang=GROOVY&build=GRADLE&test=SPOCK&javaVersion=JDK_21"
+unzip c.zip && mv customer webapp-customer && rm c.zip
+
+# webapp-admin - back-office CRUD
+curl -L -o a.zip "https://prev-snapshot.grails.org/create/web/example.admin?lang=GROOVY&build=GRADLE&test=SPOCK&javaVersion=JDK_21"
+unzip a.zip && mv admin webapp-admin && rm a.zip
+----
+
+Patch `compileJava.options.release = 17` to `21` in each of the three `build.gradle` files (the forge ships JDK 17 by default even when `javaVersion=JDK_21` is requested).
+
+Each subdirectory is currently a stand-alone Grails project. The next chapter wires them into a single multi-project build.

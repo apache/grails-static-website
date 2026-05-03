@@ -1,0 +1,12 @@
+Three failure modes show up in real multi-module Grails layouts. Recognise them early, address them once.
+
+* *Circular plugin dependencies.* If `shared-core` reaches "up" into either webapp - e.g. via a `MessageSource` lookup that depends on a webapp's `i18n/` - the build still passes locally (because the consumer is on the classpath at run time) but breaks the moment you try to publish `shared-core` to a Maven repo. Fix the direction: the plugin should never know about its consumers.
+
+* *GORM mapping conflicts when the same domain class loads twice.* A common mistake: copying a domain class from `shared-core` into `webapp-admin` "just to add an admin-only field". GORM sees two `example.Book` classes on the classpath, registers both, and either silently picks one or fails at startup. The fix is always the same: the field belongs on `shared-core.Book`, with `nullable: true` and an admin-only setter.
+
+* *Two webapps disagree on the schema migration order.* If both webapps run Liquibase changesets at startup, one of them will be racing the other on first deploy. Pick one - typically `webapp-admin` - to own migrations; the other (`webapp-customer`) reads the migrated schema with `dbCreate: none`. Document the discipline; do not rely on lock acquisition from Liquibase for cross-app coordination.
+
+[NOTE]
+====
+*Cross-repo iteration.* If `shared-core` later moves to its own GitHub repository, `includeBuild('../shared-core')` in the webapps' `settings.gradle` still gives you live cross-iteration during development - the consumer compiles against the live source tree, not a published JAR.
+====
