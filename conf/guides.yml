@@ -3065,6 +3065,52 @@ guides:
           helpWithGrails:
             title: Help with Grails
 
+  - name: 'grails-multi-module'
+    title: 'Grails 8 Multi-Project Build: Shared Plugin + Two Webapps'
+    subtitle: 'Lay out a real-world Grails 8 multi-project build: one shared-core Grails Plugin holding the domain model and GORM data services, plus two separate web apps (customer + admin) that consume the plugin and deploy independently.'
+    authors:
+      - 'James Fredley'
+    category: 'Advanced Grails'
+    publicationDate: '2026-05-03'
+    versions:
+      '8':
+        sourcePath: guides/grails-multi-module/v8
+        publicationDate: '2026-05-03'
+        tags:
+          - 'multi-project'
+          - 'grails-plugin'
+          - 'gradle'
+          - 'gorm'
+          - 'monorepo'
+          - 'grails8'
+        sampleRef:
+          repo: 'grails-guides/grails-multi-module'
+          branch: 'grails8'
+        toc:
+          gettingStarted:
+            title: Getting Started
+            whatYouWillBuild: What You Will Build
+            requirements: What You Will Need
+            howto: How to Complete the Guide
+          generateModules:
+            title: Generate the Three Module Starters
+          rootBuild:
+            title: Root settings.gradle and build.gradle
+          sharedCore:
+            title: The shared-core Plugin
+          webapps:
+            title: The Two Webapps Consume shared-core
+          runningEach:
+            title: Running and Packaging Each Webapp
+          testingPerModule:
+            title: Per-Module Testing
+          extractingPlugin:
+            title: Extracting a Plugin From a Monolith
+          failureModes:
+            title: Failure Modes
+          helpWithGrails:
+            title: Do you need help with Grails?
+
   - name: 'grails-multi-project-build'
     title: 'Grails Multi-Project Build'
     subtitle: 'Learn how to leverage Gradle capabilities in a Grails application to create Multi-Project builds'
@@ -3081,7 +3127,7 @@ guides:
           - 'multi-project'
           - 'grails4'
         sampleRef:
-          repo: 'grails-guides/grails-multi-project-build'
+          repo: 'grails-guides/grails-multi-module'
           branch: 'master'
         toc:
           training:

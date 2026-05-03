@@ -1,0 +1,23 @@
+Tests live with the module they cover.
+
+* `shared-core` has its own integration suite (`shared-core/src/integration-test/`) that runs against an in-memory H2 datasource and exercises the domain constraints + GORM data service queries directly. No webapp boots.
+* Each webapp has its own functional suite (`webapp-customer/src/integration-test/`, `webapp-admin/src/integration-test/`) that boots the corresponding `bootJar` and drives it with Geb specs.
+* Unit tests (Spock-based, no Spring context) live in each module's `src/test/`.
+
+Run them granularly during development:
+
+[source,bash]
+----
+./gradlew :shared-core:integrationTest
+./gradlew :webapp-customer:integrationTest
+./gradlew :webapp-admin:integrationTest
+----
+
+Or fan out the whole test suite from the root:
+
+[source,bash]
+----
+./gradlew test integrationTest
+----
+
+The matching link:../grails-github-actions-cicd/8/guide/index.html[GitHub Actions CI/CD guide] shows how to model these as separate jobs in a single workflow so a failing functional test in `webapp-admin` does not stop the `shared-core` suite from reporting its result.

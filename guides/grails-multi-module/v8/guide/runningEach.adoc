@@ -1,0 +1,25 @@
+Run each webapp independently:
+
+[source,bash]
+----
+./gradlew :webapp-customer:bootRun
+# In another shell:
+./gradlew :webapp-admin:bootRun
+----
+
+Both default to port 8080, so you cannot run them at the same time without overrides. For dev work you have two cheap options:
+
+* `./gradlew :webapp-admin:bootRun --args='--server.port=8081'` - one-shot port override.
+* Set `server.port: 8081` in `webapp-admin/grails-app/conf/application.yml` so the admin app permanently uses 8081 in dev. The customer app keeps 8080.
+
+Production deployment uses `bootJar` instead of `bootRun`:
+
+[source,bash]
+----
+./gradlew :webapp-customer:bootJar
+./gradlew :webapp-admin:bootJar
+ls webapp-customer/build/libs/   # webapp-customer-0.1.jar
+ls webapp-admin/build/libs/      # webapp-admin-0.1.jar
+----
+
+Each `bootJar` embeds the `shared-core` plugin classes (and only the *transitive* runtime dependencies the plugin actually needs). The two jars deploy independently to different hosts, different containers, different release cadences. The data model they share is the byte-for-byte identical compiled `Book.class` produced once by the `shared-core:compileGroovy` task and packaged into both.

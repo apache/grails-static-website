@@ -1,0 +1,22 @@
+The plugin module holds the domain model and the GORM data services. A simple Book domain in `shared-core/grails-app/domain/example/Book.groovy`:
+
+[source,groovy]
+.shared-core/grails-app/domain/example/Book.groovy
+----
+include::../snippets/shared-core/grails-app/domain/example/Book.groovy[]
+----
+
+And a GORM data service that both webapps consume:
+
+[source,groovy]
+.shared-core/grails-app/services/example/BookService.groovy
+----
+include::../snippets/shared-core/grails-app/services/example/BookService.groovy[]
+----
+
+Two things to highlight:
+
+* The `@Service(Book)` interface is auto-implemented by GORM at compile time. The webapps inject `BookService bookService` directly; there is no `BookServiceImpl` to write.
+* The package is `example`, not `shared` or `core`. This is the *domain* package - it is what the data layer is "about", not what module owns it. The two webapps' UI controllers will live in `customer.*` and `admin.*` so the package separation makes the layering explicit.
+
+The plugin's `build.gradle` should already contain `apply plugin: 'org.apache.grails.gradle.grails-plugin'` (the forge generates this for `web_plugin`). That is what registers the plugin's domain classes and services for GORM auto-discovery in any consumer.

@@ -1,0 +1,5 @@
+In this guide you will lay out a real-world Grails 8 multi-project build: one shared Grails Plugin (`shared-core`) holding the domain model, GORM services, and security configuration, plus two separate Grails web apps (`webapp-customer` and `webapp-admin`) that consume the plugin.
+
+This is the canonical shape for products with a customer-facing UI and an admin/back-office UI: the two apps share their data model exactly but differ in screens, authorization rules, and deployment cadence. Each webapp builds its own `bootJar` with the plugin embedded, so the two apps deploy independently while always staying in sync on the data model.
+
+This guide targets Apache Grails 8 / JDK 21.

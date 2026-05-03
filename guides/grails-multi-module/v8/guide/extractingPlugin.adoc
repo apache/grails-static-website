@@ -1,0 +1,10 @@
+Most multi-module layouts grow out of a monolith that already exists. The migration from "one Grails app with two areas" to "one shared plugin plus two webapps" is mechanical:
+
+1. *Decide what the plugin owns.* Domain classes, GORM data services, security policy beans, and any tag library that emits content the customer and admin pages both render. Anything UI-shaped (controllers, GSPs, JSON views) stays in the consuming webapp.
+2. *Generate a Grails 8 plugin* (the forge `web_plugin` type) into a new `shared-core/` directory next to the existing app.
+3. *Move (`git mv`) the chosen files* out of `app/grails-app/...` into `shared-core/grails-app/...`. Keep package names. The history follows the rename.
+4. *In `settings.gradle` of the existing app, ``include 'shared-core'``.* In the existing app's `build.gradle`, add `implementation project(':shared-core')`. Run `./gradlew build` - it should still pass.
+5. *Generate the second webapp* (the forge `web` type) into `webapp-customer/`. Add `implementation project(':shared-core')` to its `build.gradle`. Move whichever controllers/views logically belong there from the original app.
+6. *Rename the original app* to `webapp-admin/` (or whichever role it ended up playing).
+
+The third commit on the timeline is a single commit that moves files; the fourth is the wiring change. Reviewers can see exactly what moved without unrelated diffs.
