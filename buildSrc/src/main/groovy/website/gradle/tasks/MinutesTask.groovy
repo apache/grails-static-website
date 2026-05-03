@@ -147,10 +147,23 @@ abstract class MinutesTask extends GrailsWebsiteTask {
                         .collect {"<option>$it</option>" }
                         .join(' ')
         )
+        // Output path lives under build/dist/ alongside every other rendered
+        // page (BlogTask emits to outputDir.dir('dist/blog'), RenderSiteTask
+        // emits to outputDir.dir('dist'), the genHtaccess / genSitemap /
+        // genPlugins tasks all live under build/dist/). The publish workflow
+        // only ships build/dist/ to the asf-site-production branch, so the
+        // previous output path 'foundation/minutes' (which resolves to
+        // build/foundation/minutes/) never reached production at all and
+        // the live foundation/minutes pages went stale from the moment this
+        // task started writing somewhere outside dist/. The downstream
+        // renderRss call uses outputDir.parentFile + RSS_FILE, which
+        // correspondingly moves from build/foundation/minutes.xml to
+        // build/dist/foundation/minutes.xml, lining up with how BlogTask
+        // emits build/dist/rss.xml.
         renderMinutes(
                 meta,
                 processMinutes(meta, parseMinutes(minutesDir.get().asFile).sort(false)),
-                outputDir.dir('foundation/minutes').get().asFile.tap { it.mkdirs() },
+                outputDir.dir('dist/foundation/minutes').get().asFile.tap { it.mkdirs() },
                 document.get().asFile.text
         )
         fileSystemOperations.copy { CopySpec copy ->
