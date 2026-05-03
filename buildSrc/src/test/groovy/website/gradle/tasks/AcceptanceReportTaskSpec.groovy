@@ -35,7 +35,6 @@ class AcceptanceReportTaskSpec extends Specification {
         createGuideVersion(project)
         writeCsv(new File(project.buildDir, 'reports/asciidoctor-warning-gate.csv'), 'demo-guide,1,VERIFIED,0,clean')
         writeCsv(new File(project.buildDir, 'reports/crawl-built-guides.csv'), 'demo-guide,1,VERIFIED,0,clean')
-        writeCsv(new File(project.buildDir, 'reports/structural-diff-guides.csv'), 'demo-guide,1,VERIFIED,0,clean')
         new File(project.buildDir, 'reports/csp-scan.md').with {
             parentFile.mkdirs()
             text = '# CSP Scan Report\n\n## Result: CLEAN\n'
@@ -47,7 +46,7 @@ class AcceptanceReportTaskSpec extends Specification {
         task.report()
 
         then:
-        task.reportFile.get().asFile.text.contains('demo-guide,1,VERIFIED,VERIFIED,VERIFIED,VERIFIED,VERIFIED')
+        task.reportFile.get().asFile.text.contains('demo-guide,1,VERIFIED,VERIFIED,VERIFIED,VERIFIED')
     }
 
     def 'writes only the header when there are no guide versions or reports'() {
@@ -60,7 +59,7 @@ class AcceptanceReportTaskSpec extends Specification {
         task.report()
 
         then:
-        task.reportFile.get().asFile.readLines() == ['guide,version,asciidoctorWarningGate,crawlBuiltGuides,structuralDiffGuides,cspScan,verdict,details']
+        task.reportFile.get().asFile.readLines() == ['guide,version,asciidoctorWarningGate,crawlBuiltGuides,cspScan,verdict,details']
     }
 
     def 'throws in hard-fail mode when any gate reports FAILED'() {
@@ -69,7 +68,6 @@ class AcceptanceReportTaskSpec extends Specification {
         createGuideVersion(project)
         writeCsv(new File(project.buildDir, 'reports/asciidoctor-warning-gate.csv'), 'demo-guide,1,FAILED,1,warning found')
         writeCsv(new File(project.buildDir, 'reports/crawl-built-guides.csv'), 'demo-guide,1,VERIFIED,0,clean')
-        writeCsv(new File(project.buildDir, 'reports/structural-diff-guides.csv'), 'demo-guide,1,VERIFIED,0,clean')
         new File(project.buildDir, 'reports/csp-scan.md').with {
             parentFile.mkdirs()
             text = '# CSP Scan Report\n\n## Result: CLEAN\n'
@@ -84,7 +82,7 @@ class AcceptanceReportTaskSpec extends Specification {
         then:
         def error = thrown(GradleException)
         error.message.contains('Acceptance report contains FAILED rows')
-        task.reportFile.get().asFile.text.contains('demo-guide,1,FAILED,VERIFIED,VERIFIED,VERIFIED,FAILED')
+        task.reportFile.get().asFile.text.contains('demo-guide,1,FAILED,VERIFIED,VERIFIED,FAILED')
     }
 
     def 'maps guide-specific CSP report entries with windows separators to REVIEW'() {
@@ -93,7 +91,6 @@ class AcceptanceReportTaskSpec extends Specification {
         createGuideVersion(project)
         writeCsv(new File(project.buildDir, 'reports/asciidoctor-warning-gate.csv'), 'demo-guide,1,VERIFIED,0,clean')
         writeCsv(new File(project.buildDir, 'reports/crawl-built-guides.csv'), 'demo-guide,1,VERIFIED,0,clean')
-        writeCsv(new File(project.buildDir, 'reports/structural-diff-guides.csv'), 'demo-guide,1,VERIFIED,0,clean')
         new File(project.buildDir, 'reports/csp-scan.md').with {
             parentFile.mkdirs()
             text = '# CSP Scan Report\n\nNon-allowlisted hosts found: 1\n\n## Violations\n\n- `guides\\demo-guide\\1\\guide\\single.html`\n'
@@ -105,7 +102,7 @@ class AcceptanceReportTaskSpec extends Specification {
         task.report()
 
         then:
-        task.reportFile.get().asFile.text.contains('demo-guide,1,VERIFIED,VERIFIED,VERIFIED,REVIEW,REVIEW')
+        task.reportFile.get().asFile.text.contains('demo-guide,1,VERIFIED,VERIFIED,REVIEW,REVIEW')
     }
 
     private void createGuideVersion(def project) {

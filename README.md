@@ -76,7 +76,7 @@ To check `conf/guides.yml` against the schema:
 ./gradlew validateGuides -PvalidationMode=both
 ```
 
-To run the full guide verification harness (warning gate, link crawl, structural diff, CSP scan, acceptance report):
+To run the full guide verification harness (warning gate, link crawl, CSP scan, acceptance report):
 
 ```bash
 ./gradlew verifyAllGuides

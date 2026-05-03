@@ -46,7 +46,6 @@ import website.gradle.tasks.RecordCompanionReleaseTask
 import website.gradle.tasks.RecordReleaseTask
 import website.gradle.tasks.RenderSiteTask
 import website.gradle.tasks.SitemapTask
-import website.gradle.tasks.StructuralDiffGuidesTask
 import website.gradle.tasks.ValidateGuidesTask
 
 @CompileStatic
@@ -154,7 +153,6 @@ class GrailsWebsitePlugin implements Plugin<Project> {
 
         AsciidoctorWarningGateTask.register(project)
         CrawlBuiltGuidesTask.register(project)
-        StructuralDiffGuidesTask.register(project)
         AcceptanceReportTask.register(project)
         GenerateRedirectStubsTask.register(project)
         GenerateRedirectsManifestTask.register(project, siteExt)
@@ -166,7 +164,6 @@ class GrailsWebsitePlugin implements Plugin<Project> {
             it.dependsOn('buildAllGuides')
             it.dependsOn(AsciidoctorWarningGateTask.NAME)
             it.dependsOn(CrawlBuiltGuidesTask.NAME)
-            it.dependsOn(StructuralDiffGuidesTask.NAME)
             it.dependsOn(CspScanTask.NAME)
             it.dependsOn(AcceptanceReportTask.NAME)
         }
