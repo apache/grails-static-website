@@ -117,7 +117,7 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
             it.robots.set(siteExt.robots)
             it.title.set(siteExt.title)
             it.url.set(siteExt.url)
-            it.partialsDir.set(project.rootProject.layout.projectDirectory.dir('templates/partials'))
+            it.partialsDir.set(siteExt.partialsDir)
         }
     }
 
