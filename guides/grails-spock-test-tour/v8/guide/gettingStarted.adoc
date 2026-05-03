@@ -1,0 +1,3 @@
+In this guide you will write working examples of every Spock test layer that Apache Grails 8 supports - from millisecond-fast `DomainUnitTest` constraint specs to full-stack `@Integration` specs that boot a real Spring context. The teaching framing is *which test type catches which class of bug*: constraint regressions belong in domain tests; query bugs in `DataTest`; controller routing in `ControllerUnitTest`; cross-layer wiring in `@Integration` tests; end-to-end UI flows only in functional tests.
+
+This guide targets Apache Grails 8 / Spock 2.3 / JDK 21.

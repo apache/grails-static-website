@@ -1,0 +1,12 @@
+By the end of the guide your sample app will have:
+
+* `Book.groovy` - a small domain class with `title`, `isbn` (regex-validated, unique), and `pageCount` (positive integer).
+* `BookService.groovy` - an `@Service(Book)` GORM data service with `findByIsbn`, `countByPageCountGreaterThanEquals`, and the standard CRUD methods.
+* `BookController.groovy` - a `RestfulController<Book>` so the JSON CRUD surface is testable from `ControllerUnitTest`.
+* Four spec files exercising four test layers:
+** `BookSpec` - `DomainUnitTest<Book>`, constraint validation including a `@Unroll` parameterised `where:` table.
+** `BookServiceSpec` - `ServiceUnitTest<BookService>` + `DataTest`, query-shape testing against the in-memory datastore.
+** `BookControllerSpec` - `ControllerUnitTest<BookController>` + `DataTest`, action routing and response status testing.
+** `BookIntegrationSpec` - `@Integration` + `@Rollback`, full-stack tests with a real Spring context.
+
+You will also touch the JVM-level concerns most teams get wrong: `useJUnitPlatform()` wiring, JaCoCo coverage report shape, and how to keep functional tests fast.
