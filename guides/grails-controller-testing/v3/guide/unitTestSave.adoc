@@ -1,6 +1,6 @@
 The `save()` action method use a command object as a parameter.
 
-Check the guide http://guides.grails.org/command-objects-and-forms/guide/index.html[Using Command Objects to handle form data] to learn more about command objects.
+Check the guide https://grails.apache.org/guides/command-objects-and-forms/guide/index.html[Using Command Objects to handle form data] to learn more about command objects.
 
 [source, groovy]
 .grails-app/controllers/demo/StudentSaveCommand.groovy

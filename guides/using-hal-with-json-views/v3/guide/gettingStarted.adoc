@@ -1,4 +1,4 @@
-In this guide you are going to explore https://en.wikipedia.org/wiki/Hypertext_Application_Language[HAL] (Hypertext Application Language) support in Grails, using JSON views (provided by the http://views.grails.org/latest/[Grails Views] library).
+In this guide you are going to explore https://en.wikipedia.org/wiki/Hypertext_Application_Language[HAL] (Hypertext Application Language) support in Grails, using JSON views (provided by the https://grails.apache.org/docs/latest/guide/theWebLayer.html#gson[Grails Views] library).
 
 [quote#wiki, Wikipedia]
 ____

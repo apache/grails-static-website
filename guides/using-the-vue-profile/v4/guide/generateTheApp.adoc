@@ -25,7 +25,7 @@ drwxr-xr-x  8 zak  staff   272 Nov  1 13:12 server
 -rw-r--r--  1 zak  staff    26 Nov  1 13:10 settings.gradle
 ----
 
-The `server` project is our Grails application. The profile will generate a Grails app using the `rest-api` profile, which provides support for creating domain classes as restful resources, http://docs.grails.org/snapshot/guide/single.html#cors[CORS enabled by default], as well as JSON and Markup views.
+The `server` project is our Grails application. The profile will generate a Grails app using the `rest-api` profile, which provides support for creating domain classes as restful resources, https://grails.apache.org/docs/snapshot/guide/single.html#cors[CORS enabled by default], as well as JSON and Markup views.
 
 `client` is our Vue app.
 

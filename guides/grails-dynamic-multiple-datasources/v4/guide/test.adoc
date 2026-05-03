@@ -1,4 +1,4 @@
-We have modified slightly the functional test of http://guides.grails.org/grails-custom-security-tenant-resolver/guide/index.html#test[Custom Tenant Resolver by JWT] Guide to verify
+We have modified slightly the functional test of https://grails.apache.org/guides/grails-custom-security-tenant-resolver/guide/index.html#test[Custom Tenant Resolver by JWT] Guide to verify
 that a new connection source is created when a new `User` is inserted.
 
 [source,groovy]

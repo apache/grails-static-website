@@ -34,7 +34,7 @@ NOTE: If you are running Windows, there is a clone project of `sdkman` available
 
 This is not the recommend way to install Grails, but here are the manual installation steps, if the above methods fails.
 
-Download the Grails binary package from https://grails.org/download.html[https://grails.org]. Unpack the package in a convenient directory.
+Download the Grails binary package from https://grails.apache.org/download.html[https://grails.apache.org]. Unpack the package in a convenient directory.
 
 [source, bash]
 ----

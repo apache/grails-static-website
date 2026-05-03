@@ -44,7 +44,7 @@ fetch(book._links.author.href).then(function(response) {
 });
 ----
 
-JSON views implement a Groovy trait http://views.grails.org/latest/api/grails/plugin/json/view/api/HalView.html[`HalView`], which exposes a `hal` helper with several methods for outputting HAL-compliant JSON. One of those is the `links` method:
+JSON views implement a Groovy trait https://grails.apache.org/docs/latest/guide/theWebLayer.html#gson[`HalView`], which exposes a `hal` helper with several methods for outputting HAL-compliant JSON. One of those is the `links` method:
 
 [source,groovy]
 ----

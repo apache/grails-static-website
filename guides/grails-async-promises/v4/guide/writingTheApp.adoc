@@ -9,4 +9,4 @@ Your project already contains the async dependency:
 include::{sourcedir}/build.gradle[tag=async]
 ----
 
-Grails Async capabilites documentation can be found in http://async.grails.org[async.grails.org].
+Grails Async capabilites documentation can be found in https://grails.apache.org/docs/latest/guide/async.html[async.grails.org].

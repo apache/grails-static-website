@@ -1,4 +1,4 @@
-From the http://grails.org[official website]:
+From the https://grails.apache.org[official website]:
 
 [quote, Grails.org]
 ____

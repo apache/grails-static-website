@@ -1,8 +1,8 @@
-We need to create persistent entities to store company announcements. Grails handles persistence with the use of https://docs.grails.org/latest/ref/Domain%20Classes/Usage.html[Grails Domain Classes]:
+We need to create persistent entities to store company announcements. Grails handles persistence with the use of https://grails.apache.org/docs/latest/ref/Domain%20Classes/Usage.html[Grails Domain Classes]:
 
 include::{commondir}/common-quoteDomainClass.adoc[]
 
-Grails simplifies the creation of domain classes with the http://docs.grails.org/latest/ref/Command%20Line/create-domain-class.html[create-domain-class command].
+Grails simplifies the creation of domain classes with the https://grails.apache.org/docs/latest/ref/Command%20Line/create-domain-class.html[create-domain-class command].
 [source,bash]
 ----
  ./grailsw create-domain-class Announcement

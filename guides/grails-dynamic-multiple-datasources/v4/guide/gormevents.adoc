@@ -1,6 +1,6 @@
 Create a class named `UserInsertedListener`. It creates a new connection source when a new user is inserted.
 
-It uses the `@Listener` annotation to listen *synchronously* to https://async.grails.org/latest/guide/index.html#gormEvents[Events from GORM].
+It uses the `@Listener` annotation to listen *synchronously* to https://grails.apache.org/docs/latest/guide/async.html[Events from GORM].
 
 [source,groovy]
 .src/main/groovy/demo/UserInsertedListener.groovy

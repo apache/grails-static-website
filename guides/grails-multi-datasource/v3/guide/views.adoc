@@ -1,4 +1,4 @@
-Add multiple http://views.grails.org/latest/[JSON Views] to render the output.
+Add multiple https://grails.apache.org/docs/latest/guide/theWebLayer.html#gson[JSON Views] to render the output.
 
 [source,groovy]
 .grails-app/views/book/_book.gson

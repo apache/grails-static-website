@@ -1,4 +1,4 @@
-http://docs.grails.org/latest/guide/testing.html#functionalTesting[Functional Tests] involve making HTTP
+https://grails.apache.org/docs/latest/guide/testing.html#functionalTesting[Functional Tests] involve making HTTP
 requests against the running application and verifying the resultant behavior.
 
 We use the https://github.com/grails-plugins/grails-rest-client-builder[Rest Client Builder Grails Plugin] whose

@@ -24,7 +24,7 @@ Create `MailController` which use a collaborator, `emailService` to send and ema
 include::../../snippets/grails-app/controllers/example/grails/MailController.groovy[]
 ----
 
-The previous controller uses a http://docs.grails.org/snapshot/guide/single.html#commandObjects[command object]:
+The previous controller uses a https://grails.apache.org/docs/snapshot/guide/single.html#commandObjects[command object]:
 
 [source,groovy]
 .grails-app/controllers/example/grails/EmailCmd.groovy

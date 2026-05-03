@@ -18,7 +18,7 @@ include::../snippets/src/test/groovy/example/grails/PersonDataServiceWithoutHibe
 <5> In general you have to wrap your test execution logic in a session or transaction. You can obtain the PlatformTransactionManager from the HibernateDatastore.
 <6> Typically you want to annotate your feature methods with the Rollback annotation which is used to rollback any changes made within each test.
 
-Luckily, http://plugins.grails.org/plugin/grails/hibernate5[Grails Hibernate Plugin] includes a utility class `grails.test.hibernate.HibernateSpec` which you could extend from and simplify
+Luckily, https://grails.apache.org/plugins.html[Grails Hibernate Plugin] includes a utility class `grails.test.hibernate.HibernateSpec` which you could extend from and simplify
 the previous unit test:
 
 [source, groovy]

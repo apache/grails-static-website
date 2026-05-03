@@ -1,4 +1,4 @@
-Create a persistent entity to store Quickcasts. Most common way to handle persistence in Grails is the use of https://docs.grails.org/latest/ref/Domain%20Classes/Usage.html[Grails Domain Classes]:
+Create a persistent entity to store Quickcasts. Most common way to handle persistence in Grails is the use of https://grails.apache.org/docs/latest/ref/Domain%20Classes/Usage.html[Grails Domain Classes]:
 
 include::{commondir}/common-quoteDomainClass.adoc[]
 
@@ -15,7 +15,7 @@ The `Quickcast` domain class is our data model. We define different properties t
 include::../snippets/grails-app/domain/com/ociweb/quickcasts/Quickcast.groovy[indent=0]
 ----
 
-With a http://docs.grails.org/latest/guide/testing.html[Unit Test], we test the property body is optional.
+With a https://grails.apache.org/docs/latest/guide/testing.html[Unit Test], we test the property body is optional.
 
 [source,groovy]
 ./src/test/groovy/com/ociweb/quickcasts/QuickcastSpec.groovy

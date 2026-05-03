@@ -75,6 +75,6 @@ Now, on the `show` page, we can access the `estimatedValue` property and display
 ----
 include::../snippets/grails-app/views/vehicle/show.gsp[indent=0,lines="17..20"]
 ----
-<1> `<g:formatNumber>` is another GSP tag which provides many useful options for rendering numbers, including currency and decimal precision. See the http://docs.grails.org/latest/ref/Tags/formatNumber.html[Grails documentation] for more.
+<1> `<g:formatNumber>` is another GSP tag which provides many useful options for rendering numbers, including currency and decimal precision. See the https://grails.apache.org/docs/latest/ref/Tags/formatNumber.html[Grails documentation] for more.
 
 Restart the application and browse to the show page for a `Vehicle`, such as `http://localhost:8080/vehicle/show/1`. You should see the "Estimated Value" on the page

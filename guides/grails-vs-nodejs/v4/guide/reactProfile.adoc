@@ -1,5 +1,5 @@
 Every Grails project begins with a single `create-app` command. For the
-purposes of following along with this guide, you may choose to https://grails.org/download.html[install]
+purposes of following along with this guide, you may choose to https://grails.apache.org/download.html[install]
 Grails via the official website, or using http://sdkman.io[sdkman] (recommended).
 However, there is no need to install the framework on your machine to
 create your Grails app - instead, let's browse to
@@ -50,7 +50,7 @@ separate “apps” for us - the backend Grails application, and the React
 application (which in turn is generated via `create-react-app`). Gradle
 treats these two apps as independent subprojects, with the above names.
 This is called a
-http://guides.grails.org/grails-quickcasts-multi-project-builds/guide/index.html[multi-project
+https://grails.apache.org/guides/grails-quickcasts-multi-project-builds/guide/index.html[multi-project
 build].
 
 When running a Gradle “task” from the project root directory, anything

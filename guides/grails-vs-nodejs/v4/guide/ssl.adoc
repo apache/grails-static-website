@@ -22,7 +22,7 @@ When deploying to a server like Tomcat, it is necessary to use the Java KeyStore
 ++++
 <ul>
 <li><a href="https://symantec.tbs-certificates.co.uk/index.html.en">Convert PKCS12 to JKS</a></li>
-<li><a href="https://docs.grails.org/latest/guide/deployment.html#deploymentTasks">Configure JKS with Grails (docs)</a></li>
+<li><a href="https://grails.apache.org/docs/latest/guide/deployment.html#deploymentTasks">Configure JKS with Grails (docs)</a></li>
 </ul>
 ++++
 

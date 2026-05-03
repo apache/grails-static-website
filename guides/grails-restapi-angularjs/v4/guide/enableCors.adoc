@@ -1,4 +1,4 @@
-Because the client side (AngularJS) and server side (Grails) will be running on separate ports, https://docs.grails.org/latest/guide/theWebLayer.html#cors[CORS] configuration is required.
+Because the client side (AngularJS) and server side (Grails) will be running on separate ports, https://grails.apache.org/docs/latest/guide/theWebLayer.html#cors[CORS] configuration is required.
 
 Modify your `application.yml` to enable CORS
 

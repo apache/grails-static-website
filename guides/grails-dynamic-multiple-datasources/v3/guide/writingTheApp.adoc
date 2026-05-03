@@ -1,4 +1,4 @@
-NOTE: This guide uses Multi-Tenancy DATABASE mode. To learn more, read http://guides.grails.org/database-per-tenant/guide/index.html[Database per Tenant Multi-Tenancy] Guide.
+NOTE: This guide uses Multi-Tenancy DATABASE mode. To learn more, read https://grails.apache.org/guides/database-per-tenant/guide/index.html[Database per Tenant Multi-Tenancy] Guide.
 
 This guides shows a typical flow you will see when creating a SaaS ( Software as a Service ) application using Multi-Tenancy `DATABASE` mode.
 

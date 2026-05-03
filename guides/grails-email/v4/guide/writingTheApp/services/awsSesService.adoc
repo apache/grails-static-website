@@ -2,7 +2,7 @@ ____
 Amazon Simple Email Service (Amazon SES) is a cloud-based email sending service designed to help digital marketers and application developers send marketing, notification, and transactional emails. It is a reliable, cost-effective service for businesses of all sizes that use email to keep in contact with their customers.
 ____
 
-There is a http://plugins.grails.org/plugin/agorapulse/aws-sdk-ses[AWS SDK SES Grails plugin]. However, in this guide we are going to integrate AWS SDK SES directly.
+There is a https://grails.apache.org/plugins.html[AWS SDK SES Grails plugin]. However, in this guide we are going to integrate AWS SDK SES directly.
 
 Add a dependency to AWS SES SDK:
 

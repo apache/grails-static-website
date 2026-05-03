@@ -19,4 +19,4 @@ In this guide, we save a `Notification` in the database.
 include::../snippets/grails-app/services/demo/WelcomeEmailService.groovy[]
 ----
 
-<1> To consume an event use the https://async.grails.org/latest/api/grails/events/annotation/Subscriber.html[Subscriber] annotation. The method name `saveUser` is  used by default for the event id, although it can start with the word "on". In other words either a method name of `saveUser` or `onSaveUser` would work for the this guide example.
+<1> To consume an event use the https://grails.apache.org/docs/latest/guide/async.html[Subscriber] annotation. The method name `saveUser` is  used by default for the event id, although it can start with the word "on". In other words either a method name of `saveUser` or `onSaveUser` would work for the this guide example.

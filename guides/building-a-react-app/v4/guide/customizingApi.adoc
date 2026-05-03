@@ -12,7 +12,7 @@ Connection: close
 {"id":1,"name":"Pickup","make":{"id":1},"driver":{"id":1}}
 ----
 
-This is sufficient for many usages, but we'll need to get a bit more data for our React component in a moment. This is an excellent place for http://views.grails.org/latest/[JSON Views]. Let's create a new JSON view to render our Vehicle list:
+This is sufficient for many usages, but we'll need to get a bit more data for our React component in a moment. This is an excellent place for https://grails.apache.org/docs/latest/guide/theWebLayer.html#gson[JSON Views]. Let's create a new JSON view to render our Vehicle list:
 
 [source,bash]
 ----

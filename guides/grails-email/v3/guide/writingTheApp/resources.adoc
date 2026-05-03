@@ -1,6 +1,6 @@
 Grails integrates with and builds on the http://spring.io/[Spring Framework].
 
-You can easily register new (or override existing) beans by configuring them in `grails-app/conf/spring/resources.groovy` which uses the http://docs.grails.org/snapshot/guide/single.html#springdsl[Grails Spring DSL].
+You can easily register new (or override existing) beans by configuring them in `grails-app/conf/spring/resources.groovy` which uses the https://grails.apache.org/docs/snapshot/guide/single.html#springdsl[Grails Spring DSL].
 
 Depending on the presence of the required system properties we are going to enable SendGrid or AWS SES integration.
 

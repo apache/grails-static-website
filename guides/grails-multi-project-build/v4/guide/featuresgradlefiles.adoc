@@ -4,7 +4,7 @@ files for different features.
 Imagine you have Geb tests in several projects of your multi-project build.
 
 We can encapsulate a set of dependencies to run
-http://guides.grails.org/grails-geb-multiple-browsers/guide/index.html[Geb tests for multiple browsers].
+https://grails.apache.org/guides/grails-geb-multiple-browsers/guide/index.html[Geb tests for multiple browsers].
 
 [source, groovy]
 .gradle/geb.gradle

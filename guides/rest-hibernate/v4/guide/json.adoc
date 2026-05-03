@@ -1,4 +1,4 @@
-Grails uses http://views.grails.org[JSON Views] to represent render JSON responses. The idea being to continue the philosophy of separating the controller logic from the view logic.
+Grails uses https://grails.apache.org/docs/latest/guide/theWebLayer.html#gson[JSON Views] to represent render JSON responses. The idea being to continue the philosophy of separating the controller logic from the view logic.
 
 The default view rendered if no specific view is found is `grails-app/views/object/_object.gson`:
 
@@ -59,4 +59,4 @@ In this trivialized example, we output the currency symbol based on the user's l
 [{id:1,"name":"Apple","price":"$2.0"}]
 ----
 
-TIP: JSON Views are very flexible, for more information on customizing the output to your needs see http://views.grails.org[the documentation].
+TIP: JSON Views are very flexible, for more information on customizing the output to your needs see https://grails.apache.org/docs/latest/guide/theWebLayer.html#gson[the documentation].

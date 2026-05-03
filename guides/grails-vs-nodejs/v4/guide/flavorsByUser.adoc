@@ -38,7 +38,7 @@ include::../snippets/server/grails-app/services/demo/UserIceCreamService.groovy[
 }
 ----
 
-We render JSON with the help of http://views.grails.org[JSON Views]
+We render JSON with the help of https://grails.apache.org/docs/latest/guide/theWebLayer.html#gson[JSON Views]
 
 [source, groovy]
 ./server/grails-app/views/iceCream/index.gson

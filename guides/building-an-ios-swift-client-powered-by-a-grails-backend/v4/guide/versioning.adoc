@@ -2,7 +2,7 @@ It is important to think about API versioning from the beginning, especially whe
 consumed by mobile phone applications. Users will run different versions of the app, and you will need to version
 your API to create advanced functionality but keep supporting legacy versions.
 
-Grails allows multiple ways to http://docs.grails.org/latest/guide/webServices.html#versioningResources[Version REST Resources].
+Grails allows multiple ways to https://grails.apache.org/docs/latest/guide/webServices.html#versioningResources[Version REST Resources].
 
 * Using the URI
 * Using the Accept-Version Header

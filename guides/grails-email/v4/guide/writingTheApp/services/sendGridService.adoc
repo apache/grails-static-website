@@ -4,7 +4,7 @@ ____
 SendGrid is responsible for sending billions of emails for some of the best and brightest companies in the world.
 ____
 
-There is a http://plugins.grails.org/plugin/desirable-objects/grails-sendgrid[SendGrid Grails Plugin]. However, in this guide we are going to integrate AWS SDK SES directly.
+There is a https://grails.apache.org/plugins.html[SendGrid Grails Plugin]. However, in this guide we are going to integrate AWS SDK SES directly.
 
 Add a dependency to SendGrid SDK:
 

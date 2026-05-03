@@ -1,7 +1,7 @@
 
-You can optionally specify a http://docs.grails.org/latest/guide/profiles.html[Profile] for your Grails app. Profiles are available for many common application types, including `rest-api`, `angular`, `react`, and others, and you can even create your own.
+You can optionally specify a https://grails.apache.org/docs/latest/guide/profiles.html[Profile] for your Grails app. Profiles are available for many common application types, including `rest-api`, `angular`, `react`, and others, and you can even create your own.
 
-To view of a list of what profiles are available, use the http://docs.grails.org/latest/ref/Command%20Line/list-profiles.html[`list-profiles`] command.
+To view of a list of what profiles are available, use the https://grails.apache.org/docs/latest/ref/Command%20Line/list-profiles.html[`list-profiles`] command.
 
 [source, bash]
 ----
@@ -36,7 +36,7 @@ You may optionally specify a package and version (defaults to `org.grails.profil
 grails create-app myApp -profile org.grails.profiles:react:1.0.2
 ----
 
-To get detailed information about a profile use the http://docs.grails.org/latest/ref/Command%20Line/profile-info.html[`profile-info`] command.
+To get detailed information about a profile use the https://grails.apache.org/docs/latest/ref/Command%20Line/profile-info.html[`profile-info`] command.
 
 [source, bash]
 ----

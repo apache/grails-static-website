@@ -13,7 +13,7 @@ The TagLib https://github.com/basecamp/trix#integrating-with-forms[integrates Tr
 include::../snippets/grails-app/taglib/demo/TrixTagLib.groovy[indent=0]
 ----
 
-<1> We use a http://docs.grails.org/latest/guide/theWebLayer.html#namespaces[custom name space]; _trix_
+<1> We use a https://grails.apache.org/docs/latest/guide/theWebLayer.html#namespaces[custom name space]; _trix_
 <2> By default we encode as _Text_ but the value, if present, is encoded as _Html_
 
 And we test the _TagLib_:

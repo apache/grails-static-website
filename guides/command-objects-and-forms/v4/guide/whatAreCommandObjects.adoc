@@ -1,4 +1,4 @@
-As described in the http://docs.grails.org/latest/guide/theWebLayer.html#commandObjects[Grails documentation],
+As described in the https://grails.apache.org/docs/latest/guide/theWebLayer.html#commandObjects[Grails documentation],
 ____
 A command object is a class that is used in conjunction with data binding, usually to
 allow validation of data that may not fit into an existing domain class. *A class is only

@@ -4,7 +4,7 @@ projects is https://projects.spring.io/spring-security/[Spring
 Security]. It provides powerful authentication and access control for
 Java web apps, and supports many authentication methods, from LDAP to
 OAuth2. Even better, there is a set of
-http://plugins.grails.org/plugin/grails/spring-security-core[Grails
+https://grails.apache.org/plugins.html[Grails
 plugins] that make Spring Security a breeze to set up.
 
 Edit `server/build.gradle` again, and add the following two lines:

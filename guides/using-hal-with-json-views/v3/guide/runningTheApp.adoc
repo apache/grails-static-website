@@ -7,7 +7,7 @@ include::../snippets/../initial/grails-app/domain/com/example/Customer.groovy[in
 ----
 <1> The `@Resource` annotation takes several optional arguments, including a URL endpoint and format options, as well as whether the API should only expose read endpoints
 
-Adding these annotations to our domain classes gives us a running start to creating our API. See the https://docs.grails.org/latest/guide/webServices.html#domainResources[Grails documentation] for more information on `@Resource`
+Adding these annotations to our domain classes gives us a running start to creating our API. See the https://grails.apache.org/docs/latest/guide/webServices.html#domainResources[Grails documentation] for more information on `@Resource`
 
 include::{commondir}/common-runapp.adoc[]
 

@@ -6,7 +6,7 @@ We define the supported languages in a configuration property:
 include::{sourcedir}/grails-app/conf/application.yml[tag=configurationLanguages]
 ----
 
-We are going to use a http://docs.grails.org/latest/guide/single.html#taglibs[Tag Library]
+We are going to use a https://grails.apache.org/docs/latest/guide/single.html#taglibs[Tag Library]
 to render a languages dropdown:
 
 image::languages_drop_down.png[]
@@ -40,5 +40,5 @@ include::{sourcedir}/grails-app/views/index.gsp[tag=navBarLocaleDropDown, indent
 We supply to the Tag Lib the `request.forwardURI`
 
 ____
-http://docs.grails.org/latest/ref/Servlet%20API/request.html[forwardURI] - Useful for obtaining the current request URI since the request object’s requestURI property returns the original URI, not the matched one.
+https://grails.apache.org/docs/latest/ref/Servlet%20API/request.html[forwardURI] - Useful for obtaining the current request URI since the request object’s requestURI property returns the original URI, not the matched one.
 ____

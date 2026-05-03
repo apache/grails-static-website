@@ -32,7 +32,7 @@ include::../snippets/src/test/groovy/demo/ProductSpec.groovy[tag=clazz]
 <1> Spock allows you to define much more readable
 <2> Override the `createMongoClient` method of the `MongoSpec` base class. Use something such as https://github.com/fakemongo/fongo[Fongo]; an in-memory java implementation of MongoDB.
 <3> MongoSpec is an abstract class that will initialise GORM in the setup phase of the specification being executed
-<4> Use the https://testing.grails.org/latest/guide/index.html#unitTestingDomainClasses[grails.testing.gorm.DomainUnitTest] trait to unit test single domain class.
+<4> Use the https://grails.apache.org/docs/latest/guide/testing.html[grails.testing.gorm.DomainUnitTest] trait to unit test single domain class.
 
 Add the fongo dependency to `build.gradle`
 
@@ -49,7 +49,7 @@ Now to run the test you can run `./gradlew check` from a terminal window or run 
 $ ./gradlew check
 ----
 
-Checkout http://guides.grails.org/grails-test-domain-class-constraints/guide/index.html[How to test domain class constraints?] guide to learn more about testing constraints.
+Checkout https://grails.apache.org/guides/grails-test-domain-class-constraints/guide/index.html[How to test domain class constraints?] guide to learn more about testing constraints.
 
 
 
