@@ -1,0 +1,16 @@
+When does HTMX fit and when do you reach for an SPA?
+
+HTMX wins when:
+
+* The UI is fundamentally CRUD - lists, forms, partial updates, optimistic deletes. The task tracker in this guide is the canonical shape.
+* SEO matters - HTMX pages are server-rendered HTML on first paint, so search engines and link previews see the real content.
+* The team is more comfortable on the server than in JavaScript - HTMX shifts complexity away from the SPA's reactive state model into plain controller actions and GSP partials.
+* The deploy story is simpler when there is one bootJar instead of a backend + a frontend build pipeline.
+
+SPAs (React, Vue, Svelte) win when:
+
+* The UI is genuinely client-stateful - a real-time editor, a Kanban board with drag-and-drop, an analytics dashboard with cross-filter interactions. HTMX can do these but you fight the framework.
+* Offline-first matters - HTMX is built around server round-trips by design.
+* The same backend serves multiple frontends (web + native mobile) and you want a single JSON API surface for both.
+
+Most internal back-office apps land squarely in HTMX's sweet spot. The link:../grails-vite-spa/8/guide/index.html[Grails 8 + Vite SPA guide] covers the SPA path for the cases that need it.

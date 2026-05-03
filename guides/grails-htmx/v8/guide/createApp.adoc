@@ -1,0 +1,11 @@
+Generate a fresh Apache Grails 8 web application from link:https://prev-snapshot.grails.org[prev-snapshot.grails.org]:
+
+[source,bash]
+----
+curl -L -o htmx-app.zip \
+  "https://prev-snapshot.grails.org/create/web/example.htmxtasks?lang=GROOVY&build=GRADLE&test=SPOCK&javaVersion=JDK_21"
+unzip htmx-app.zip
+cd htmxtasks
+----
+
+The default `web` starter ships GSP, the asset pipeline, and Bootstrap 5 webjars - all of which we will reuse.

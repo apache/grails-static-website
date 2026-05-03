@@ -1,0 +1,9 @@
+By the end of the guide your application will have:
+
+* A `Task` domain with `title` (required) and `done` (boolean), with sample data seeded by `BootStrap` so the page is non-empty on first load.
+* A `TaskController` with seven actions: `index` (full page), `search` (live filter), `create` (new task), `editForm` + `update` (inline edit), `toggle` (flip the done flag), `delete`. Every non-`index` action returns a tiny GSP partial, not a full page.
+* GSP partials at `_task.gsp`, `_taskRows.gsp`, and `_taskEdit.gsp` that the controller renders via `<g:render template="..."/>`. One partial per logical state.
+* The four core HTMX attributes (`hx-get`, `hx-post`, `hx-patch`, `hx-delete`) plus the swap targeting attributes (`hx-target`, `hx-swap`).
+* Live search via `hx-trigger="keyup changed delay:300ms"` so the rows partial refreshes after the user pauses typing.
+* Optimistic delete with confirm via `hx-confirm` and an outerHTML swap that animates the row out.
+* CSRF token forwarding configured globally so HTMX requests carry the right header on every POST/PATCH/DELETE.

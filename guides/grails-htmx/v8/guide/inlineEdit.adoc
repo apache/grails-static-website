@@ -1,0 +1,13 @@
+Clicking a task title swaps the row out for an edit form. Saving swaps it back. The state never leaves the server.
+
+[source,html]
+.grails-app/views/task/_taskEdit.gsp
+----
+include::../snippets/grails-app/views/task/_taskEdit.gsp[]
+----
+
+Three patterns to highlight:
+
+* The form's `hx-patch` posts to `/tasks/{id}` with the PATCH method. The response is either the read-only `_task.gsp` (success) or the same edit form with the validation errors rendered (failure).
+* `<g:eachError bean="${task}">` renders the field errors inline. Because Grails populates `task.errors` when `save()` fails, the same partial template handles both success and failure. The HTTP status (200 vs 422) is what tells HTMX which one - both swap into the same slot.
+* The Cancel button does a `hx-get` for `/tasks/{id}` (which returns the read-only row partial) so cancelling does not require any new wiring.

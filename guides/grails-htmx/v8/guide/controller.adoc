@@ -1,0 +1,14 @@
+`TaskController` has seven actions, but only `index` returns a full page. Every other action returns a single GSP partial via `render template: '...'`:
+
+[source,groovy]
+.grails-app/controllers/example/TaskController.groovy
+----
+include::../snippets/grails-app/controllers/example/TaskController.groovy[]
+----
+
+A few patterns to point at:
+
+* `static allowedMethods = [...]` rejects mismatched HTTP verbs at the framework level. Sending `GET /tasks` to `create` returns 405, not silently calling the action.
+* The `@Transactional(readOnly = true)` class annotation flips read-only mode on for the whole controller; individual mutating actions override with their own `@Transactional`.
+* On a validation failure (`!t.save()`), the controller returns a 422 with the error fragment. HTMX swaps that fragment into the page, the user sees the error inline, and the form remains in the DOM ready for another attempt.
+* `delete` returns an empty body. Combined with `hx-swap="outerHTML"` on the delete button, this removes the row from the DOM.

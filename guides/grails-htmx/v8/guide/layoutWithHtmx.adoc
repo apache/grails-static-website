@@ -1,0 +1,11 @@
+HTMX is a single ~14 KB script. The starter's layout already loads stylesheets and the Grails javascript bundle; add the HTMX script tag in `<head>`:
+
+[source,html]
+.grails-app/views/layouts/main.gsp
+----
+include::../snippets/grails-app/views/layouts/main.gsp[]
+----
+
+The `integrity=` attribute uses a Subresource Integrity hash that the browser verifies before executing - protecting you against a CDN compromise. Keep it in sync with the version in the `src` URL.
+
+For production, vendor the file under `grails-app/assets/javascripts/htmx.min.js` and load via `<asset:javascript src="htmx.min.js"/>` so deployments do not depend on the CDN.
