@@ -2429,6 +2429,57 @@ guides:
           helpWithGrails:
               title: Help with Grails
 
+  - name: 'grails-htmx'
+    title: 'HTMX with Grails 8'
+    subtitle: 'Build a small task tracker with server-rendered Grails 8 GSP and HTMX-driven inline editing, live search, optimistic delete, and toggle - no SPA, no JSON.'
+    authors:
+      - 'James Fredley'
+    category: 'Web Layer'
+    publicationDate: '2026-05-03'
+    versions:
+      '8':
+        sourcePath: guides/grails-htmx/v8
+        publicationDate: '2026-05-03'
+        tags:
+          - 'htmx'
+          - 'gsp'
+          - 'partials'
+          - 'no-spa'
+          - 'grails8'
+        sampleRef:
+          repo: 'grails-guides/grails-htmx'
+          branch: 'grails8'
+        toc:
+          gettingStarted:
+            title: Getting Started
+            whatYouWillBuild: What You Will Build
+            requirements: What You Will Need
+            howto: How to Complete the Guide
+          createApp:
+            title: Creating the Application
+          taskDomain:
+            title: The Task Domain Class
+          layoutWithHtmx:
+            title: Adding HTMX to the Layout
+          urlMappings:
+            title: URL Mappings
+          controller:
+            title: The TaskController
+          indexPage:
+            title: The Initial Page
+          rowPartial:
+            title: The Row Partial
+          inlineEdit:
+            title: Inline Edit With Validation
+          liveSearch:
+            title: Live Search
+          csrf:
+            title: CSRF With HTMX
+          spaComparison:
+            title: HTMX vs an SPA
+          helpWithGrails:
+            title: Do you need help with Grails?
+
   - name: 'grails-javamelody'
     title: 'JavaMelody monitoring with Grails 3'
     subtitle: 'Learn how to setup and monitor your application using JavaMelody'

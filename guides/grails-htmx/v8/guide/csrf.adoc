@@ -1,0 +1,23 @@
+Grails' `<g:form>` tag automatically inserts a `SYNCHRONIZER_TOKEN` parameter when the controller declares `static withForm = ...`. HTMX requests do not go through `<g:form>`, so the token has to be wired in differently.
+
+The HTMX configuration block in `main.gsp` reads the token from a `<meta>` tag and forwards it as a custom header on every request:
+
+[source,html]
+----
+<meta name="csrf-token" content="${useToken().token}"/>
+<script>
+    document.body.addEventListener('htmx:configRequest', function(evt) {
+        var meta = document.querySelector('meta[name="csrf-token"]');
+        if (meta) {
+            evt.detail.headers['X-Grails-Csrf-Token'] = meta.content;
+        }
+    });
+</script>
+----
+
+A matching `before` interceptor checks the header on every state-changing request and rejects mismatches with a 403. For a sample app the token check is overkill; for a real back-office the few lines of plumbing buy you the same protection `<g:form>` provides for traditional forms.
+
+[NOTE]
+====
+The `Origin` and `Referer` headers also defeat CSRF for fetch-based clients. Modern browsers send them automatically and a same-origin check is one line of interceptor code. Belt-and-braces shops do both; pick the discipline that matches your threat model.
+====
