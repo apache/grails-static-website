@@ -1,0 +1,9 @@
+The CI workflow is only useful if a PR cannot be merged when it is red. Configure that in *Settings -> Branches -> Branch protection rules -> Add rule*:
+
+* *Branch name pattern:* `grails8` (and `master`, if you keep one).
+* *Require a pull request before merging:* on, with at least one approval.
+* *Require status checks to pass before merging:* on, *Require branches to be up to date before merging:* on. In the search box add the four required jobs: `Wrapper validation + compile`, `Unit tests`, `Integration tests`, `Functional tests (Geb + Testcontainers)`. The `Coverage` job stays optional - a coverage drop is a hint, not a hard block.
+* *Require linear history:* on, if you prefer rebase merges over merge commits.
+* *Do not allow bypassing the above settings:* on, including for repository administrators (the link:https://owasp.org/Top10/A04_2021-Insecure_Design/[OWASP A04] guidance applies to your own repo too).
+
+Once branch protection is on, the *Merge* button on a PR turns grey until all four required checks return green. The PR author either fixes the failing job or asks the reviewer to override - which, with admin-bypass off, requires a second approval and an explicit force-merge.

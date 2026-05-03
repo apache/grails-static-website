@@ -1,0 +1,67 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*.*.*']
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g. 1.0.0)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+
+  build-and-publish:
+    name: Build OCI image and create GitHub Release
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - id: version
+        name: Resolve release version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "version=${{ inputs.version }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "version=${GITHUB_REF#refs/tags/v}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: liberica
+          java-version: 21
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build bootJar
+        run: ./gradlew --no-daemon -Pversion=${{ steps.version.outputs.version }} bootJar
+
+      - name: Build and publish OCI image
+        run: |
+          ./gradlew --no-daemon -Pversion=${{ steps.version.outputs.version }} \
+            bootBuildImage \
+            --imageName=ghcr.io/${{ github.repository }}:${{ steps.version.outputs.version }} \
+            --publishImage \
+          --publicationRegistry.username=${{ github.actor }} \
+          --publicationRegistry.password=${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          name: ${{ steps.version.outputs.version }}
+          generate_release_notes: true
+          files: build/libs/*.jar

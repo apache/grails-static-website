@@ -1,0 +1,30 @@
+The `functional-test` job boots the application against a Testcontainers-managed Postgres and drives it with Geb 8 specs. Because it does not declare a `services.postgres` block, the runner is a plain Ubuntu VM; Testcontainers spins up Postgres on demand from the test JVM via the local Docker socket (which GitHub-hosted runners expose by default).
+
+[source,yaml]
+----
+  functional-test:
+    name: Functional tests (Geb + Testcontainers)
+    needs: integration-test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: liberica
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-read-only: true
+      - run: ./gradlew --no-daemon functionalTest
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: geb-reports
+          path: |
+            build/reports/tests/functionalTest/
+            build/geb-reports/
+----
+
+`if: always()` on the geb-reports upload is intentional: even on a green run you may want the screenshots from `build/geb-reports/` to confirm the page rendered as expected. On a red run, those screenshots are how you debug "works on my machine" failures - the runner's screenshot of the failed page is usually enough to spot the missing element.
+
+The `geb-with-webdriver-binaries` feature you selected at the forge step downloads matching Chrome/Firefox driver binaries on the fly via `webdriver-binaries-gradle-plugin`, so no `apt-get install` of the browsers themselves is needed - the plugin handles both the browser and the driver.

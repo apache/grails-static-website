@@ -1,0 +1,10 @@
+A green badge in your README is the cheapest way to signal "this project's main branch is healthy". GitHub generates a per-workflow badge for free; copy the URL from *Actions -> CI -> ... -> Create status badge* and paste it as the first thing in the README:
+
+[source,markdown]
+----
+[![CI](https://github.com/your-org/your-repo/actions/workflows/ci.yml/badge.svg?branch=grails8)](https://github.com/your-org/your-repo/actions/workflows/ci.yml)
+----
+
+The `?branch=grails8` query string is non-optional. Without it, the badge reflects the most recent run on *any* branch, including stale feature-branch runs from months ago. With it, the badge tracks the branch you actually ship from.
+
+For projects with multiple workflows, add one badge per workflow. The badges line up nicely as a single bullet list at the top of the README.

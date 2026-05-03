@@ -1,0 +1,13 @@
+You can either type the YAML in this guide as you read or skip ahead and clone the finished sample app:
+
+[source,bash]
+----
+git clone -b grails8 https://github.com/grails-guides/grails-github-actions-cicd.git
+cd grails-github-actions-cicd/complete
+./gradlew test
+----
+
+The repository contains two top-level directories:
+
+* `initial/` - the starting Grails 8 snapshot project, generated from `https://prev-snapshot.grails.org` with the `postgres`, `testcontainers`, and `geb-with-webdriver-binaries` features.
+* `complete/` - the same project with the three workflow YAML files added under `.github/`.

@@ -1,0 +1,29 @@
+The `unit-test` job runs just `./gradlew test`:
+
+[source,yaml]
+----
+  unit-test:
+    name: Unit tests
+    needs: validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: liberica
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-read-only: true
+      - run: ./gradlew --no-daemon test
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: unit-test-reports
+          path: build/reports/tests/test/
+----
+
+Two patterns worth pointing at:
+
+* `if: failure()` on the artefact upload uploads test reports only when the job fails. On success there is no point in carrying around `index.html` files; on failure they are the first thing you click on.
+* `--no-daemon` ensures the JVM starts cold and reports honest first-run times. The Gradle dependency cache is still warm; the daemon caching disagreement was about JVM warm-up, not classpath resolution.
