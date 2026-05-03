@@ -126,10 +126,27 @@ class DocumentationPage {
     }
 
     /**
-     * Generates the main documentation page HTML content.
-     * Displays pre-release, snapshot, and latest version documentation links,
-     * along with categorized documentation for GORM, Security, and other modules.
-     * Also includes version selectors for browsing older documentation.
+     * Generates the main documentation page HTML content using the same
+     * multi-version card-grid layout as the redesigned downloads page:
+     *
+     * <ul>
+     *   <li><strong>Current Versions</strong> - one card per active minor line
+     *       linking to its User Guide + API Reference. Today this renders
+     *       7.1.0 + 7.0.10 side-by-side; once 8.0.0 ships, 8.0 + 7.1 + 7.0
+     *       = three cards.</li>
+     *   <li><strong>Pre-release (Apache-released)</strong> - cards for any
+     *       milestone / RC that hasn't been superseded by a stable. Apache
+     *       release policy requires the milestone/RC documentation to be
+     *       linked even though those versions aren't featured on the home
+     *       page.</li>
+     *   <li><strong>Snapshot</strong> - the rolling /docs/snapshot/ build.</li>
+     *   <li><strong>Older Versions</strong> - the three legacy dropdowns
+     *       (Single-page, User Guide, API Reference) for every stable docs
+     *       URL since Grails 1.2.0.</li>
+     *   <li><strong>Modules</strong> - the GORM / Security / Upgrade / Testing /
+     *       Views / Async / Database / Redis category boxes, in a two-column
+     *       footer.</li>
+     * </ul>
      *
      * @param releases the YAML file containing Grails release information
      * @param modules the YAML file containing module/category definitions
@@ -137,35 +154,105 @@ class DocumentationPage {
      */
     @CompileDynamic
     static String mainContent(File releases, File modules) {
+        List<String> currentLines = SiteMap.activeMinorLines(releases)
+        Map<String, ReleaseVersion> latestPerLine = SiteMap.latestStablePerMinorLine(releases)
+        Map<Integer, ReleaseVersion> preReleasesPerMajor = SiteMap.latestPreReleasePerMajor(releases)
+        def categories = DocumentationPage.categories(modules)
+        def missingDocsCriteria = [
+                { it.startsWith('0') },
+                { it.startsWith('1.0') },
+                { it == '3.1.16' }
+        ]
+        def olderVersionOptions = SiteMap.olderVersions(releases)
+                .findAll { v -> !missingDocsCriteria.any { crit -> crit(v) } }
+                .collect { "<option>$it</option>" }
+
         renderHtml {
             div(class: 'header-bar chalices-bg') {
                 div(class: 'content') {
                     h1('Documentation')
                 }
             }
-            def preRelease = SiteMap.latestPreReleaseVersion(releases)
-            def latest = SiteMap.latestVersion(releases)
-            def categories = DocumentationPage.categories(modules)
-            def missingDocsCriteria = [
-                    { it.startsWith('0') },
-                    { it.startsWith('1.0') },
-                    { it == '3.1.16' }
-
-            ]
-            def olderVersionOptions = SiteMap.olderVersions(releases)
-                    .findAll { v -> !missingDocsCriteria.any { crit -> crit(v) } }
-                    .collect { "<option>$it</option>" }
             div(class: 'content') {
-                div(class: 'two-columns') {
-                    div(class: 'odd column'){
-                        if (preRelease > latest) {
+                h2(class: 'release-section-header column-header', 'Current Versions')
+                if (currentLines.isEmpty()) {
+                    p('No stable releases have been recorded yet.')
+                } else {
+                    div(class: 'release-grid') {
+                        currentLines.each { String lineKey ->
+                            ReleaseVersion v = latestPerLine[lineKey]
+                            if (v != null) {
+                                mkp.yieldUnescaped(
+                                        DocumentationPage.renderDocumentation(v.versionText)
+                                )
+                            }
+                        }
+                    }
+                }
+
+                if (!preReleasesPerMajor.isEmpty()) {
+                    h2(class: 'release-section-header column-header', 'Pre-release (Apache-released)')
+                    p(
+                            'Per Apache release policy, milestone and release-candidate documentation is ' +
+                            'linked alongside the stable releases. These versions are not featured on the home page.'
+                    )
+                    div(class: 'release-grid') {
+                        preReleasesPerMajor.values().each { ReleaseVersion v ->
                             mkp.yieldUnescaped(
-                                    DocumentationPage.renderDocumentation(preRelease.versionText)
+                                    DocumentationPage.renderDocumentation(v.versionText)
                             )
                         }
-                        mkp.yieldUnescaped(
-                                DocumentationPage.renderDocumentation('snapshot')
-                        )
+                    }
+                }
+
+                h2(class: 'release-section-header column-header', 'Snapshot')
+                div(class: 'release-grid') {
+                    mkp.yieldUnescaped(
+                            DocumentationPage.renderDocumentation('snapshot')
+                    )
+                }
+
+                h2(class: 'release-section-header column-header', 'Older Versions')
+                p('Browse previous versions\' documentation since Grails 1.2.0.')
+                script(type: 'text/javascript') {
+                    mkp.yieldUnescaped(
+                            '''
+                            function redirectToDocs(selectEl, urlTemplate) {
+                                if (selectEl.selectedIndex === 0) {
+                                    return; // No version selected
+                                }
+                                window.location.href = urlTemplate.replace('{v}', selectEl.value);
+                            }
+                            '''
+                    )
+                }
+                div(class: 'older-versions') {
+                    div(class: 'version-selector') {
+                        h4('Single Page - User Guide')
+                        select(onchange: "redirectToDocs(this, 'https://grails.apache.org/docs/{v}/guide/single.html')") {
+                            option('Select a version')
+                            mkp.yieldUnescaped(olderVersionOptions)
+                        }
+                    }
+                    div(class: 'version-selector') {
+                        h4('User Guide')
+                        select(onchange: "redirectToDocs(this, 'https://grails.apache.org/docs/{v}')") {
+                            option('Select a version')
+                            mkp.yieldUnescaped(olderVersionOptions)
+                        }
+                    }
+                    div(class: 'version-selector') {
+                        h4('API Reference')
+                        select(onchange: "redirectToDocs(this, 'https://grails.apache.org/docs/{v}/api')") {
+                            option('Select a version')
+                            mkp.yieldUnescaped(olderVersionOptions)
+                        }
+                    }
+                }
+
+                h2(class: 'release-section-header column-header', 'Modules')
+                div(class: 'two-columns') {
+                    div(class: 'odd column') {
                         mkp.yieldUnescaped(
                                 DocumentationPage.renderCategory(categories.find {
                                     it.title == 'GORM - Data Access Toolkit'
@@ -176,53 +263,8 @@ class DocumentationPage {
                                     it.title == 'Security'
                                 })
                         )
-
                     }
                     div(class: 'column') {
-                        mkp.yieldUnescaped(
-                                DocumentationPage.renderDocumentation(latest.versionText)
-                        )
-                        div(class: 'older-versions') {
-                            h3(
-                                    class: 'column-header',
-                                    style: 'margin-bottom: 10px',
-                                    'Older Version'
-                            )
-                            p('Browse previous versions\' documentation since Grails 1.2.0')
-                            script(type: 'text/javascript') {
-                                mkp.yieldUnescaped(
-                                        '''
-                                        function redirectToDocs(selectEl, urlTemplate) {
-                                            if (selectEl.selectedIndex === 0) {
-                                                return; // No version selected
-                                            }                      
-                                            window.location.href = urlTemplate.replace('{v}', selectEl.value);
-                                        }
-                                        '''
-                                )
-                            }
-                            div(class: 'version-selector') {
-                                h4('Single Page - User Guide')
-                                select(onchange: "redirectToDocs(this, 'https://grails.apache.org/docs/{v}/guide/single.html')") {
-                                    option('Select a version')
-                                    mkp.yieldUnescaped(olderVersionOptions)
-                                }
-                            }
-                            div(class: 'version-selector') {
-                                h4('User Guide')
-                                select(onchange: "redirectToDocs(this, 'https://grails.apache.org/docs/{v}')") {
-                                    option('Select a version')
-                                    mkp.yieldUnescaped(olderVersionOptions)
-                                }
-                            }
-                            div(class: 'version-selector') {
-                                h4('API Reference')
-                                select(onchange: "redirectToDocs(this, 'https://grails.apache.org/docs/{v}/api')") {
-                                    option('Select a version')
-                                    mkp.yieldUnescaped(olderVersionOptions)
-                                }
-                            }
-                        }
                         ['Upgrade', 'Testing', 'Views', 'Async', 'Database', 'Redis'].each { title ->
                             mkp.yieldUnescaped(
                                     DocumentationPage.renderCategory(categories.find {
@@ -231,7 +273,6 @@ class DocumentationPage {
                             )
                         }
                     }
-
                 }
             }
         }
