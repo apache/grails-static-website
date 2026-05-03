@@ -3705,6 +3705,51 @@ guides:
           helpWithGrails:
             title: Do you need help with Grails?
 
+  - name: 'grails-tailwindcss'
+    title: 'Tailwind CSS 4 with Grails 8'
+    subtitle: 'Wire Tailwind CSS 4 into a Grails 8 GSP application with class-based dark mode and a small @apply component layer, all driven from the Gradle build.'
+    authors:
+      - 'James Fredley'
+    category: 'Web Layer'
+    publicationDate: '2026-05-03'
+    versions:
+      '8':
+        sourcePath: guides/grails-tailwindcss/v8
+        publicationDate: '2026-05-03'
+        tags:
+          - 'tailwindcss'
+          - 'css'
+          - 'gsp'
+          - 'asset-pipeline'
+          - 'grails8'
+        sampleRef:
+          repo: 'grails-guides/grails-tailwindcss'
+          branch: 'grails8'
+        toc:
+          gettingStarted:
+            title: Getting Started
+            whatYouWillBuild: What You Will Build
+            requirements: What You Will Need
+            howto: How to Complete the Guide
+          createApp:
+            title: Creating the Application
+            download: Download a Grails 8 Snapshot Starter
+          installTailwind:
+            title: Installing Tailwind CSS 4
+          configureTailwind:
+            title: Configuring Tailwind for Grails
+            inputCss: The input.css Entry Point
+          gradleWiring:
+            title: Wiring Tailwind into the Gradle Build
+          firstPaint:
+            title: Applying Tailwind to the GSP Layout
+          darkMode:
+            title: Class-Based Dark Mode
+          componentLayer:
+            title: Reusable Component Classes with @apply
+          helpWithGrails:
+            title: Do you need help with Grails?
+
   - name: 'grails-taglib-wyswyg-trix'
     title: 'Create and test a Grails 5 TagLib; integrate the Trix WYSWYG editor'
     subtitle: 'Learn how to integrate Trix (the rich text editor created by Basecamp) with your Grails app with the help of a custom TagLib'

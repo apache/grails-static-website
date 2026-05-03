@@ -1,0 +1,16 @@
+The forge exposes a simple HTTP create endpoint that returns a zip:
+
+[source,bash]
+----
+curl -L -o tailwind-app.zip \
+  "https://prev-snapshot.grails.org/create/web/example.tailwind?lang=GROOVY&build=GRADLE&test=SPOCK&javaVersion=JDK_21"
+unzip tailwind-app.zip
+cd tailwind
+----
+
+The zip unpacks into a `tailwind/` directory containing the standard Grails 8 web layout (`grails-app/`, `src/`, `gradle/`, `build.gradle`, `gradle.properties`).
+
+[NOTE]
+====
+The forge's default `build.gradle` ships with `compileJava.options.release = 17` even when `javaVersion=JDK_21` is requested. The `complete/` tree in the upstream repo already patches this to `21`; do the same in your local checkout if you want JDK 21 source-level features.
+====

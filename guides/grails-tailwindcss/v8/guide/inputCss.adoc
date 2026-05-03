@@ -1,0 +1,15 @@
+Create the Tailwind entry point at `src/main/css/input.css`:
+
+[source,css]
+.src/main/css/input.css
+----
+include::../snippets/src/main/css/input.css[]
+----
+
+Three things in this file are worth highlighting:
+
+* `@import "tailwindcss";` pulls in the framework. In v3 you wrote three separate `@tailwind base; @tailwind components; @tailwind utilities;` directives; v4 collapses all three into the single `@import`.
+* The `@source` directives tell the scanner exactly where to look. The starter the forge produces puts views under `grails-app/views`, controllers under `grails-app/controllers`, services under `grails-app/services`, and any helper code (tag libs, command objects, traits) under `src/main/groovy`. Adding a new directory tree later means another `@source` line; nothing else.
+* The `@custom-variant dark (&:where(.dark, .dark *));` line redefines `dark:` so it applies whenever an ancestor (typically `<html>`) carries the `dark` class. Without this override the v4 default uses `prefers-color-scheme`, which honours the OS theme but does not let the user override it.
+
+The `@layer components` block at the bottom defines `.btn-primary`, `.card`, and `.nav-link` - these are referenced from `main.gsp` and `index.gsp` in later chapters.

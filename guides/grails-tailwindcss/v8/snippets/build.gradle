@@ -1,0 +1,156 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+           url = 'https://repo.grails.org/grails/restricted'
+        }
+        maven {
+           url = 'https://repository.apache.org/content/groups/snapshots'
+           content {
+              includeVersionByRegex('org[.]apache[.]grails.*', '.*', '.*-SNAPSHOT')
+           }
+           content {
+              includeVersionByRegex('org[.]apache[.]groovy.*', 'groovy.*', '.*-SNAPSHOT')
+           }
+           mavenContent {
+              snapshotsOnly()
+           }
+        }
+        maven {
+           url = 'https://repository.apache.org/content/groups/staging'
+           content {
+              includeVersionByRegex('org[.]apache[.]grails[.]gradle', 'grails-publish', '.*')
+           }
+           content {
+              includeVersionByRegex('org[.]apache[.]groovy.*', 'groovy.*', '.*')
+           }
+           mavenContent {
+              releasesOnly()
+           }
+        }
+    }
+    dependencies { // Not Published to Gradle Plugin Portal
+        classpath "cloud.wondrify:asset-pipeline-gradle"
+        classpath platform("org.apache.grails:grails-bom:$grailsVersion")
+        classpath "org.apache.grails:grails-data-hibernate5"
+        classpath "org.apache.grails:grails-gradle-plugins"
+    }
+}
+
+plugins {
+    id "war"
+    id "idea"
+    id "eclipse"
+}
+
+// Not Published to Gradle Plugin Portal
+apply plugin: "org.apache.grails.gradle.grails-web"
+apply plugin: "org.apache.grails.gradle.grails-gsp"
+apply plugin: "cloud.wondrify.asset-pipeline"
+
+group = "example"
+
+repositories {
+    mavenCentral()
+    maven {
+       url = 'https://repo.grails.org/grails/restricted'
+    }
+    maven {
+       url = 'https://repository.apache.org/content/groups/snapshots'
+       content {
+          includeVersionByRegex('org[.]apache[.]grails.*', '.*', '.*-SNAPSHOT')
+       }
+       content {
+          includeVersionByRegex('org[.]apache[.]groovy.*', 'groovy.*', '.*-SNAPSHOT')
+       }
+       mavenContent {
+          snapshotsOnly()
+       }
+    }
+    maven {
+       url = 'https://repository.apache.org/content/groups/staging'
+       content {
+          includeVersionByRegex('org[.]apache[.]grails[.]gradle', 'grails-publish', '.*')
+       }
+       content {
+          includeVersionByRegex('org[.]apache[.]groovy.*', 'groovy.*', '.*')
+       }
+       mavenContent {
+          releasesOnly()
+       }
+    }
+}
+
+dependencies {
+    profile "org.apache.grails.profiles:web"
+    developmentOnly "org.springframework.boot:spring-boot-devtools" // Spring Boot DevTools may cause performance slowdowns or compatibility issues on larger applications
+    implementation platform("org.apache.grails:grails-bom:$grailsVersion")
+    implementation "org.apache.grails:grails-core"
+    implementation "org.apache.grails:grails-data-hibernate5"
+    implementation "org.apache.grails:grails-databinding"
+    implementation "org.apache.grails:grails-events"
+    implementation "org.apache.grails:grails-gsp"
+    implementation "org.apache.grails:grails-interceptors"
+    implementation "org.apache.grails:grails-layout"
+    implementation "org.apache.grails:grails-logging"
+    implementation "org.apache.grails:grails-rest-transforms"
+    implementation "org.apache.grails:grails-scaffolding"
+    implementation "org.apache.grails:grails-services"
+    implementation "org.apache.grails:grails-url-mappings"
+    implementation "org.apache.grails:grails-web-boot"
+    implementation "org.springframework.boot:spring-boot-autoconfigure"
+    implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+    implementation "org.springframework.boot:spring-boot-starter-logging"
+    implementation "org.springframework.boot:spring-boot-starter-tomcat"
+    implementation "org.springframework.boot:spring-boot-starter-validation"
+    implementation "org.springframework.boot:spring-boot-tomcat"
+    console "org.apache.grails:grails-console"
+    runtimeOnly "cloud.wondrify:asset-pipeline-grails"
+    runtimeOnly "com.h2database:h2"
+    runtimeOnly "com.zaxxer:HikariCP"
+    runtimeOnly "org.fusesource.jansi:jansi"
+    integrationTestImplementation testFixtures("org.apache.grails:grails-geb")
+    testImplementation "org.apache.grails:grails-testing-support-datamapping"
+    testImplementation "org.apache.grails:grails-testing-support-web"
+    testImplementation "org.mockito:mockito-core"
+    testImplementation "org.spockframework:spock-core"
+}
+
+compileJava.options.release = 21
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+}
+
+// tag::tailwind[]
+def npxCmd = org.gradle.internal.os.OperatingSystem.current().isWindows() ? 'npx.cmd' : 'npx'
+def npmCmd = org.gradle.internal.os.OperatingSystem.current().isWindows() ? 'npm.cmd' : 'npm'
+
+tasks.register('npmInstall', Exec) {
+    description = 'Install npm dependencies (Tailwind CSS 4 CLI)'
+    group = 'tailwind'
+    inputs.file('package.json')
+    outputs.dir('node_modules')
+    commandLine npmCmd, 'install', '--no-fund', '--no-audit'
+}
+
+tasks.register('tailwindBuild', Exec) {
+    description = 'Compile src/main/css/input.css into grails-app/assets/stylesheets/app.css via the Tailwind 4 CLI'
+    group = 'tailwind'
+    dependsOn 'npmInstall'
+    inputs.file('package.json')
+    inputs.file('src/main/css/input.css')
+    inputs.dir('grails-app/views')
+    inputs.dir('grails-app/controllers')
+    outputs.file('grails-app/assets/stylesheets/app.css')
+    commandLine npxCmd, '@tailwindcss/cli',
+            '-i', 'src/main/css/input.css',
+            '-o', 'grails-app/assets/stylesheets/app.css',
+            '--minify'
+}
+
+tasks.named('processResources').configure { dependsOn 'tailwindBuild' }
+tasks.named('compileGroovy').configure { dependsOn 'tailwindBuild' }
+// end::tailwind[]
+
