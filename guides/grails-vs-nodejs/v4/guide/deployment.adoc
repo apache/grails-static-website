@@ -13,5 +13,5 @@ to be set accordingly).
 An attractive way to package and deploy a Grails/React app is to bundle
 both apps together into a single executable JAR file. This approach is
 documented in tutorial form in the
-http://guides.grails.org/react-combined/guide/index.html[“Combining the
+https://grails.apache.org/guides/react-combined/guide/index.html[“Combining the
 React profile projects”] Grails Guide.

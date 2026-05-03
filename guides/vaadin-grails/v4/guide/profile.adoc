@@ -7,4 +7,4 @@ grails create-app demo --profile me.przepiora.vaadin-grails:web-vaadin8:0.3
 
 We supply to the `create-app` command the https://github.com/macprzepiora/web-vaadin8[Vaadin 8 Grails Profile]'s coordinates.
 
-With the use of http://docs.grails.org/latest/guide/single.html#profiles[application profiles], Grails allows you to build modern web applications. There are profiles to facilitate the construction of REST APIs or Web applications with a Javascript front-end (Angular, REACT) or Vaadin apps. 
+With the use of https://grails.apache.org/docs/latest/guide/single.html#profiles[application profiles], Grails allows you to build modern web applications. There are profiles to facilitate the construction of REST APIs or Web applications with a Javascript front-end (Angular, REACT) or Vaadin apps. 

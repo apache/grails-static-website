@@ -31,7 +31,7 @@ validate the object. All of these tasks could be done manually, but by making us
 command object, all of this behavior is automatic and leaves your code uncluttered of so
 much boilerplate.
 
-Arguably, the best feature here is http://docs.grails.org/latest/guide/theWebLayer.html#dataBinding[Data Binding],
+Arguably, the best feature here is https://grails.apache.org/docs/latest/guide/theWebLayer.html#dataBinding[Data Binding],
 part of the automatic behavior you get from using command objects. While on the create
 page, view the HTML source code (generated from the compiled `create.gsp`) and look for
 the `<form>` tag:

@@ -3,4 +3,4 @@ CodeNarc Rule as shown in the next image:
 
 image::multiproject.png[]
 
-Check our http://guides.grails.org/grails-multi-project-build/guide/index.html[Grails Multi-Project Build] Guide, to learn more.
+Check our https://grails.apache.org/guides/grails-multi-project-build/guide/index.html[Grails Multi-Project Build] Guide, to learn more.

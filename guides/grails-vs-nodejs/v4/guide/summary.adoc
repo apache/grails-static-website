@@ -7,8 +7,8 @@ Grails backend.
 
 Grails offers a slew of powerful web development
 features that we haven’t had occasion or time to demonstrate in this app
-- including http://views.grails.org/latest/[JSON views], http://guides.grails.org/using-hal-with-json-views[HAL+JSON support], http://gorm.grails.org/latest/hibernate/manual/index.html#constraints[custom data validation and
-constraints], http://guides.grails.org/neo4j-movies[NoSQL support], http://guides.grails.org/database-per-tenant[multi-tenancy], and much more. Please check
-out the http://guides.grails.org[Grails Guides website] for more
+- including https://grails.apache.org/docs/latest/guide/theWebLayer.html#gson[JSON views], https://grails.apache.org/guides/using-hal-with-json-views[HAL+JSON support], http://gorm.grails.org/latest/hibernate/manual/index.html#constraints[custom data validation and
+constraints], https://grails.apache.org/guides/neo4j-movies[NoSQL support], https://grails.apache.org/guides/database-per-tenant[multi-tenancy], and much more. Please check
+out the https://grails.apache.org/guides[Grails Guides website] for more
 tutorials on building fun and powerful apps with Grails (including
-several Guides http://guides.grails.org/building-a-react-app/[featuring React]).
+several Guides https://grails.apache.org/guides/building-a-react-app/[featuring React]).

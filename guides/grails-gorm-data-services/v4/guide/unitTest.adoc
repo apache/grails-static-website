@@ -21,7 +21,7 @@ include::../snippets/src/test/groovy/example/grails/PersonDataServiceWithoutHibe
 <6> Typically you want to annotate your feature methods with the Rollback annotation which is used to rollback any changes made within each test.
 <7> Cleanup the person created during the test.
 
-Luckily, http://plugins.grails.org/plugin/grails/hibernate5[Grails Hibernate Plugin] includes a utility class `grails.test.hibernate.HibernateSpec` which you could extend from and simplify
+Luckily, https://grails.apache.org/plugins.html[Grails Hibernate Plugin] includes a utility class `grails.test.hibernate.HibernateSpec` which you could extend from and simplify
 the previous unit test:
 
 [source, groovy]

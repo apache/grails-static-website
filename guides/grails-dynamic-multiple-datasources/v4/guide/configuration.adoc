@@ -34,4 +34,4 @@ include::../snippets/grails-app/conf/application.yml[tag=multiTenancyConfigurati
 ----
 
 <1> Define Multi-Tenancy mode as `DATABASE`
-<2> Set the Tenant Resolver class to a custom class which you wrote in the http://guides.grails.org/grails-custom-security-tenant-resolver/guide/index.html[Custom Tenant Resolver by JWT] guide.
+<2> Set the Tenant Resolver class to a custom class which you wrote in the https://grails.apache.org/guides/grails-custom-security-tenant-resolver/guide/index.html[Custom Tenant Resolver by JWT] guide.

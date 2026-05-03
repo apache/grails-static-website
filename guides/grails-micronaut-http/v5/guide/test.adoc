@@ -1,5 +1,5 @@
 The Micronaut Client can also be used for testing purposes with Spock. In our music app let's create a domain object to capture
-record labels. We will use the grails built-in https://docs.grails.org/latest/guide/REST.html#domainResources[REST API for domain classes].
+record labels. We will use the grails built-in https://grails.apache.org/docs/latest/guide/REST.html#domainResources[REST API for domain classes].
 
 Create a domain object and tag it with `@Resource` and a given URI. This will expose REST functionality for the object.
 

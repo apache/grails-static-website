@@ -1,4 +1,4 @@
-We create a _Controller_ for the _Domain class_ we previously created. Our Controller extends  http://docs.grails.org/latest/guide/webServices.html#restfulControllers[RestfulController]. This
+We create a _Controller_ for the _Domain class_ we previously created. Our Controller extends  https://grails.apache.org/docs/latest/guide/webServices.html#restfulControllers[RestfulController]. This
 will provide us RESTful functionality to list, create, update and delete `Announcement` resources using
 different HTTP  Methods.
 
@@ -16,7 +16,7 @@ include::../snippets/grails-app/controllers/intranet/backend/v1/AnnouncementCont
 We want our endpoint to listen in `/announcements` instead of `/announcement`. Moreover, we want the previous controller for
 which we declared a namespace of v1 to handle the requests with the Accept-Version Http Header set to 1.0.
 
-Grails enables powerful http://docs.grails.org/latest/guide/theWebLayer.html#urlmappingss[URL mapping] configuration to
+Grails enables powerful https://grails.apache.org/docs/latest/guide/theWebLayer.html#urlmappingss[URL mapping] configuration to
 do that. Add the next line to the mappings closure:
 
 [source,groovy]

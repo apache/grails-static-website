@@ -1,4 +1,4 @@
-http://docs.grails.org/latest/guide/i18n.html[Internationalization] is a first-class citizen in Grails.
+https://grails.apache.org/docs/latest/guide/i18n.html[Internationalization] is a first-class citizen in Grails.
 
 include::{commondir}/common-quoteInternationalization.adoc[]
 

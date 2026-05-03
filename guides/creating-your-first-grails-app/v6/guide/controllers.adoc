@@ -1,6 +1,6 @@
 This section will focus on the basics of creating a controller and defining actions.
 
-TIP: While not part of the "MVC" triad, Grails also provides support for http://docs.grails.org/latest/guide/single.html#services[services]. In a Grails application of any complexity, it is considered best practice to keep core application logic in services. We'll get to services later on in this guide.
+TIP: While not part of the "MVC" triad, Grails also provides support for https://grails.apache.org/docs/latest/guide/single.html#services[services]. In a Grails application of any complexity, it is considered best practice to keep core application logic in services. We'll get to services later on in this guide.
 
 Following the convention over configuration principle, Grails will configure any Groovy classes under `grails-app/controllers/` as controllers, without any additional configuration. You can create the Groovy class yourself, or use the `create-controller` command to generate the controller and an associated test spec.
 
@@ -27,7 +27,7 @@ class HomeController {
 }
 ----
 
-Grails has created a controller with a single *action*. Actions are public methods in a controller, which can respond to requests. Typically, a controller action will receive a request, obtain some data (optionally using parameters or a body of the request, if present), and render the result to the browser (e.g, as a webpage). Controller actions can also redirect requests, forward, call service methods, and return HTTP response codes. See the http://docs.grails.org/latest/guide/theWebLayer.html#understandingControllersAndActions[Grails documentation] for more on controller actions.
+Grails has created a controller with a single *action*. Actions are public methods in a controller, which can respond to requests. Typically, a controller action will receive a request, obtain some data (optionally using parameters or a body of the request, if present), and render the result to the browser (e.g, as a webpage). Controller actions can also redirect requests, forward, call service methods, and return HTTP response codes. See the https://grails.apache.org/docs/latest/guide/theWebLayer.html#understandingControllersAndActions[Grails documentation] for more on controller actions.
 
 We don't have any need for logic in this particular action just yet, but we would like it to render a page. We'll look at GSP pages in more detail in the <<Views>> section, but for now, let's create a very simple GSP page for our `HomeController.index` action to display.
 

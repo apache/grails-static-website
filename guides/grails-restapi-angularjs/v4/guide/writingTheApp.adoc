@@ -1,4 +1,4 @@
-The initial project, which we are going to work on, was generated with http://docs.grails.org/latest/guide/webServices.html#restProfile[Grails REST profile].
+The initial project, which we are going to work on, was generated with https://grails.apache.org/docs/latest/guide/webServices.html#restProfile[Grails REST profile].
 
 [source,bash]
 ----

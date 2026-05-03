@@ -1,5 +1,5 @@
 
-We want to http://docs.grails.org/latest/guide/testing.html[unit test] our validation constraints.
+We want to https://grails.apache.org/docs/latest/guide/testing.html[unit test] our validation constraints.
 
 Implement the `DomainUnitTest` trait. It indicates we are testing a Grails artifact; a domain class.
 
@@ -97,12 +97,12 @@ latitude nullable: true, range: -90..90
 longitude nullable: true, range: -180..180
 ----
 
-However, a value such as `latitude` of 90.1 will be a valid value using the  https://docs.grails.org/latest/ref/Constraints/range.html[Range Constraint]
+However, a value such as `latitude` of 90.1 will be a valid value using the  https://grails.apache.org/docs/latest/ref/Constraints/range.html[Range Constraint]
 ____
 Set to a Groovy range which can contain numbers in the form of an IntRange, dates or any object that implements Comparable and provides next and previous methods for navigation.
 ____
 
-Instead we are using a https://docs.grails.org/latest/ref/Constraints/validator.html[custom validation].
+Instead we are using a https://grails.apache.org/docs/latest/ref/Constraints/validator.html[custom validation].
 
 [source,javascript]
 ./grails-app/domain/demo/Hotel.groovy

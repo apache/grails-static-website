@@ -32,7 +32,7 @@ include::../snippets/server/grails-app/conf/application.yml[indent=0,tag=postgre
 Now our Grails app is connected to our database, but we haven’t created
 any tables yet. With Grails, there’s no need to create the database
 schema manually (although you certainly can do so if you want). Instead,
-we’ll specify our domain model in code, by writing https://docs.grails.org/latest/ref/Domain%20Classes/Usage.html[*Domain Classes*].
+we’ll specify our domain model in code, by writing https://grails.apache.org/docs/latest/ref/Domain%20Classes/Usage.html[*Domain Classes*].
 
 By convention, Grails will load any Groovy classes located under
 `grails-app/domain` as Domain Classes. This means that GORM will map
@@ -68,7 +68,7 @@ create table user_ice_creams (
 GORM is the data access toolkit used by Grails by default.
 We can customize how the generated database schema looks like.
 
-http://docs.grails.org/latest/ref/Database%20Mapping/Usage.html[Database Mapping]
+https://grails.apache.org/docs/latest/ref/Database%20Mapping/Usage.html[Database Mapping]
 ____
 Domain classes in Grails by default dictate the way they are mapped to the database using sensible defaults. You can customize these with the ORM Mapping DSL.
 ____

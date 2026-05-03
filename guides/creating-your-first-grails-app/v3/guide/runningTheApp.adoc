@@ -1,6 +1,6 @@
 Now that you've created (or downloaded) your Grails project, it's time to run it and see what Grails has already given you.
 
-If you have a local installation of Grails, you can run the app using the http://docs.grails.org/latest/ref/Command%20Line/run-app.html[run-app] command from within your project:
+If you have a local installation of Grails, you can run the app using the https://grails.apache.org/docs/latest/ref/Command%20Line/run-app.html[run-app] command from within your project:
 
 [source, bash]
 ----
@@ -9,7 +9,7 @@ $ cd myApp/
 
 **Run the App without Grails Installed**
 
-Thanks to the http://docs.grails.org/latest/guide/introduction.html#whatsNewGrailsWrapper[Grails Wrapper], as of Grails version 3.2.3 or later, you can run any Grails command without having
+Thanks to the https://grails.apache.org/docs/latest/guide/introduction.html#whatsNewGrailsWrapper[Grails Wrapper], as of Grails version 3.2.3 or later, you can run any Grails command without having
 Grails installed. If you download it from the http://start.grails.org[Grails Application Forge], the Grails Wrapper is included too.
 
 [source, bash]
@@ -28,7 +28,7 @@ $ grails run-app
 
 **Run the App with Grails Interactive Mode**
 
-You can also use Grails' http://docs.grails.org/latest/guide/commandLine.html#interactiveMode[Interactive Mode] to run the Grails runtime, from which you can issue any Grails command without waiting for the runtime to spin up for each task.
+You can also use Grails' https://grails.apache.org/docs/latest/guide/commandLine.html#interactiveMode[Interactive Mode] to run the Grails runtime, from which you can issue any Grails command without waiting for the runtime to spin up for each task.
 
 In this guide we will be preferring the Grails wrapper for most commands.
 

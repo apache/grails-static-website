@@ -1,4 +1,4 @@
-Create a persistent entity to store Todos. Most common way to handle persistence in Grails is the use of https://docs.grails.org/latest/ref/Domain%20Classes/Usage.html[Grails Domain Classes]:
+Create a persistent entity to store Todos. Most common way to handle persistence in Grails is the use of https://grails.apache.org/docs/latest/ref/Domain%20Classes/Usage.html[Grails Domain Classes]:
 
 include::{commondir}/common-quoteDomainClass.adoc[]
 
@@ -15,7 +15,7 @@ The `Todo` domain class is our data model. We define different properties to sto
 include::../snippets/grails-app/domain/demo/Todo.groovy[indent=0]
 ----
 
-With a http://docs.grails.org/latest/guide/testing.html[Unit Test], we test that `name` is a required property.
+With a https://grails.apache.org/docs/latest/guide/testing.html[Unit Test], we test that `name` is a required property.
 
 [source,groovy]
 ./src/test/groovy/demo/TodoSpec.groovy
@@ -39,7 +39,7 @@ include::../snippets/grails-app/init/demo/BootStrap.groovy[indent=0]
 include::../snippets/grails-app/domain/demo/Todo.groovy[indent=0,lines=3..6]
 ----
 
-This annotation exposes the `Todo` domain class as a https://docs.grails.org/latest/guide/webServices.html#domainResources[REST resource]
+This annotation exposes the `Todo` domain class as a https://grails.apache.org/docs/latest/guide/webServices.html#domainResources[REST resource]
 
 ____
 The easiest way to create a RESTful API in Grails is to expose a domain class as a REST resource.

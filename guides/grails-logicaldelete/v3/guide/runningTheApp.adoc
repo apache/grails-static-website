@@ -3,7 +3,7 @@ ____
 Reference to a record that remains in the database, but is not included in comparisons or retrieved in searches.
 ____
 
-In this guide, we use the http://plugins.grails.org/plugin/grails/gorm-logical-delete[GORM Logical Delete] plugin to create
+In this guide, we use the https://grails.apache.org/plugins.html[GORM Logical Delete] plugin to create
 Logical deletion into a Grails application.
 
 We will create a delete button and undo functionality in a book collection.

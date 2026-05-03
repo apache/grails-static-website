@@ -18,7 +18,7 @@ include::../snippets/grails-app/views/order/show_v3.gson[]
 <1> The `tmpl` helper will resolve a method name to a template in the current view directory - e.g, `tmpl.product` will resolve to `/order/_product.gson`. If you want to access a template from outside the current directory, you can use an absolute path (relative to the `views` directory) as a string: `tmpl."/customer/order"()` will resolve to `grails-app/views/customer/_order.gson`.
 
 
-TIP: For more information on using templates in JSON views, see the http://views.grails.org/latest/#_templates[Grails Views documentation].
+TIP: For more information on using templates in JSON views, see the https://grails.apache.org/docs/latest/guide/theWebLayer.html#gson[Grails Views documentation].
 
 Make a request to `http://localhost:8080/api/orders/1`, and you should see `_links` for each product in the `products` array:
 

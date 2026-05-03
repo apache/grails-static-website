@@ -12,4 +12,4 @@ Your project already contains the events dependency:
     compile "org.grails.plugins:events"
 ----
 
-Grails Events capabilites documentation can be found in https://async.grails.org/latest/guide/index.html#events[async.grails.org].
+Grails Events capabilites documentation can be found in https://grails.apache.org/docs/latest/guide/async.html[async.grails.org].

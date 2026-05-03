@@ -44,4 +44,4 @@ class Vehicle {
 <1> Properties will be used to create columns in the database (assuming a relational database is used)
 <2> Constraints are used to enforce valid data in each field - Grails provides a rich set of constraints for common scenarios, and you can define custom constraints as well
 
-Please see the Grails documentation for a complete list and documentation of how to use https://docs.grails.org/latest/ref/Domain%20Classes/Usage.html[domain classes] and https://docs.grails.org/latest/ref/Constraints/Usage.html[constraints]
+Please see the Grails documentation for a complete list and documentation of how to use https://grails.apache.org/docs/latest/ref/Domain%20Classes/Usage.html[domain classes] and https://grails.apache.org/docs/latest/ref/Constraints/Usage.html[constraints]

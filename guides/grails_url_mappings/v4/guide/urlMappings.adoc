@@ -22,7 +22,7 @@ class UrlMappings {
 
 The very first mapping in the `mappings` block is pretty straightforward. It has two components: a string, defining the URL pattern, and a closure, where options (such as *constraints*) can be specified to change the behavior of the mapping.
 
-TIP: See how to use URL constraints http://docs.grails.org/latest/guide/theWebLayer.html#applyingConstraints[here in the Grails documentation].
+TIP: See how to use URL constraints https://grails.apache.org/docs/latest/guide/theWebLayer.html#applyingConstraints[here in the Grails documentation].
 
 The URL pattern can include variables, which are denoted by Groovy Strings within the pattern (e.g., `$controller` or `${controller}`. Grails has a few special wildcards which it supports out of the box. For example, `$controller` will be mapped to the name of a given controller, `$action` will be mapped to an action within that controller, and so forth. Optional variables are suffixed with a `?`. E.g., `/controller/$action?`
 

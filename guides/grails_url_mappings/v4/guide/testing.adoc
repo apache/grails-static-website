@@ -1,4 +1,4 @@
-The http://testing.grails.org[Grails Testing Support] library is the recommended way to write tests for most Grails artefacts, including URL mappings. The library is included in the current version of Grails, and it provides a `UrlMappingsUnitTest` trait that makes it easy to test URL mappings.
+The https://grails.apache.org/docs/latest/guide/testing.html[Grails Testing Support] library is the recommended way to write tests for most Grails artefacts, including URL mappings. The library is included in the current version of Grails, and it provides a `UrlMappingsUnitTest` trait that makes it easy to test URL mappings.
 
 TIP: *Traits* are a powerful feature of the Groovy programming language, and many Grails features utilize them. You can create your own traits as well as part of your application code. See the http://docs.groovy-lang.org/next/html/documentation/core-traits.html[Groovy documentation] for more information.
 

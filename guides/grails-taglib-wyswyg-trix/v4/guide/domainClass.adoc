@@ -1,4 +1,4 @@
-Create a persistent entity to store _Announcement_ entities. Most common way to handle persistence in Grails is the use of https://docs.grails.org/latest/ref/Domain%20Classes/Usage.html[Grails Domain Classes]:
+Create a persistent entity to store _Announcement_ entities. Most common way to handle persistence in Grails is the use of https://grails.apache.org/docs/latest/ref/Domain%20Classes/Usage.html[Grails Domain Classes]:
 
 include::{commondir}/common-quoteDomainClass.adoc[]
 

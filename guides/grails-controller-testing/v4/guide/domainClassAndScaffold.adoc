@@ -24,4 +24,4 @@ Delete this file:
 $ src/test/groovy/demo/StudentSpec.groovy
 ----
 
-Learn more about testing domain classes in the http://guides.grails.org/grails-test-domain-class-constraints/guide/index.html[How to test Domain Class constraints?] Guide.
+Learn more about testing domain classes in the https://grails.apache.org/guides/grails-test-domain-class-constraints/guide/index.html[How to test Domain Class constraints?] Guide.

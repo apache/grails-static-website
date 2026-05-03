@@ -6,7 +6,7 @@ by _chaining_ (i.e. appending) dynamic finders to them.
 For example, let us find all the games that
 use involve the "Hand Management" mechanic and have an average duration of less than 120
 minutes. Finding all games using a specific mechanic can be done with the `Game` domain class
-http://docs.grails.org/latest/ref/Domain%20Classes/namedQueries.html[Named Query], `gamesWithMechanic`.
+https://grails.apache.org/docs/latest/ref/Domain%20Classes/namedQueries.html[Named Query], `gamesWithMechanic`.
 [source,groovy]
 ----
 include::complete/grails-app/domain/demo/Game.groovy[tag=gameNamedQueries]

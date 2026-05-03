@@ -20,7 +20,7 @@ include::../snippets/grails-app/conf/application.yml[indent=0, tag=mqConfig]
 <5> Creation of a `bookqueue`
 
 When a book's details is viewed we publish a message to RabbitMQ. In order to do that we create
-an http://docs.grails.org/latest/guide/single.html#interceptors[interceptor].
+an https://grails.apache.org/docs/latest/guide/single.html#interceptors[interceptor].
 
 Create a new interceptor in the `grails-app/controllers/demo` called `BookShowInterceptor.groovy`.
 

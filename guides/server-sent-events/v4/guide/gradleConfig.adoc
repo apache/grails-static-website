@@ -1,4 +1,4 @@
-The first step is to configure the necessary Gradle dependencies. This basically means adding a dependency on the http://plugins.grails.org/plugin/rxjava[RxJava plugin] for Grails and Micronaut `reactivex`in the `build.gradle` file:
+The first step is to configure the necessary Gradle dependencies. This basically means adding a dependency on the https://grails.apache.org/plugins.html[RxJava plugin] for Grails and Micronaut `reactivex`in the `build.gradle` file:
 
 [source,groovy]
 ----

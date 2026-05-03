@@ -1,1 +1,1 @@
-In this guide, we will introduce you http://plugins.grails.org/plugin/grails/gorm-logical-delete[GORM Logical Delete] plugin.
+In this guide, we will introduce you https://grails.apache.org/plugins.html[GORM Logical Delete] plugin.

@@ -1,4 +1,4 @@
-We'll create a http://docs.grails.org/latest/ref/Domain%20Classes/Usage.html[Domain Class], `Announcement`, which we are going to use as an example through this guide:
+We'll create a https://grails.apache.org/docs/latest/ref/Domain%20Classes/Usage.html[Domain Class], `Announcement`, which we are going to use as an example through this guide:
 
 [source, bash]
 ----

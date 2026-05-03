@@ -1,4 +1,4 @@
-Create a https://gsp.grails.org/latest/guide/index.html#taglibs[Tag Library] to render the address:
+Create a https://grails.apache.org/docs/latest/guide/theWebLayer.html#gsp[Tag Library] to render the address:
 
 [source, groovy]
 .grails-app/taglib/example/grails/AddressTagLib.groovy

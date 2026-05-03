@@ -1,6 +1,6 @@
-Right now we don't have any controllers or views set up to play with our domain model. We'll get there shortly, but for now, let's fire up the http://docs.grails.org/latest/ref/Command%20Line/console.html[Grails Console] so we can explore what Grails and GORM have to offer.
+Right now we don't have any controllers or views set up to play with our domain model. We'll get there shortly, but for now, let's fire up the https://grails.apache.org/docs/latest/ref/Command%20Line/console.html[Grails Console] so we can explore what Grails and GORM have to offer.
 
-If the application is still running, shut it down with either kbd:[Ctrl+C], or (if running Grails in http://docs.grails.org/latest/guide/commandLine.html#interactiveMode[Interactive Mode], the `stop-app` command).
+If the application is still running, shut it down with either kbd:[Ctrl+C], or (if running Grails in https://grails.apache.org/docs/latest/guide/commandLine.html#interactiveMode[Interactive Mode], the `stop-app` command).
 
 Launch the Grails Console:
 

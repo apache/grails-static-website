@@ -1,4 +1,4 @@
-Add several Geb dependencies. Read our guide http://guides.grails.org/grails-geb-multiple-browsers/guide/index.html[Run Grails Geb Functional Tests with Multiple Browsers] to learn more.
+Add several Geb dependencies. Read our guide https://grails.apache.org/guides/grails-geb-multiple-browsers/guide/index.html[Run Grails Geb Functional Tests with Multiple Browsers] to learn more.
 
 [source,groovy]
 .build.gradle

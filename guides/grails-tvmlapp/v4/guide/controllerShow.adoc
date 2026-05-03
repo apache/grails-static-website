@@ -31,7 +31,7 @@ Fetching of related quickcasts is encapsulated in a Service.
 include::../snippets/grails-app/services/com/ociweb/quickcasts/RelatedQuickcastsService.groovy[indent=0]
 ----
 
-The `QuickcastController` index method renders a `Quickcast` using the next http://views.grails.org/latest/#_markup_views[Markup View]
+The `QuickcastController` index method renders a `Quickcast` using the next https://grails.apache.org/docs/latest/guide/theWebLayer.html#gson[Markup View]
 
 [source,groovy]
 ./grails-app/views/quickcast/show.gml

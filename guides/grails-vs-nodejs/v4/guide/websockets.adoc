@@ -1,6 +1,6 @@
 Our final server-side feature is to push “session timeout” events to the
 client over a websocket connection. We’ll use another Grails plugin, the
-https://plugins.grails.org/plugin/zyro/grails-spring-websocket[Spring
+https://grails.apache.org/plugins.html[Spring
 Websocket plugin], to support this feature.
 
 Install the plugin by adding another line to our `build.gradle` file:
@@ -90,7 +90,7 @@ include::../snippets/server/grails-app/conf/application.yml[indent=0,tag=allowed
 
 TIP: Grails applications can read config values set in a variety of
 ways, including YAML files, Groovy files, and system properties. See the
-http://docs.grails.org/latest/guide/conf.html[Grails documentation] for
+https://grails.apache.org/docs/latest/guide/conf.html[Grails documentation] for
 more on how to use configuration files.
 
 That’s all for the Grails backend server - we have support for CORS (out

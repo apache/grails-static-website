@@ -2,7 +2,7 @@ Now that we have our new "home" page, it would be nice if it was the app's landi
 
 Grails uses the `UrlMappings.groovy` file to route request to the proper controller and action. They can be as simple as URI strings that redirect to a controller and/or action, or they can include wildcards and constraints and become quite sophisticated.
 
-TIP: Learn much more about URL Mappings from the http://docs.grails.org/latest/guide/theWebLayer.html#urlmappings[Grails documentation]
+TIP: Learn much more about URL Mappings from the https://grails.apache.org/docs/latest/guide/theWebLayer.html#urlmappings[Grails documentation]
 
 Let's look at the default `URLMappings.groovy` file.
 

@@ -1,4 +1,4 @@
-With the data model defined now it time to write http://docs.grails.org/latest/guide/theWebLayer.html#controllers[a controller].
+With the data model defined now it time to write https://grails.apache.org/docs/latest/guide/theWebLayer.html#controllers[a controller].
 
 The quickest way to do that is with the `create-restful-controller` command from a terminal window:
 

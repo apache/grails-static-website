@@ -14,7 +14,7 @@ include::../snippets/grails-app/domain/demo/Role.groovy[]
 
 Create a class `UserPasswordEncoderListener` which deals with the User's password encoding.
 
-It uses the `@Listener` annotation to listen *synchronously* to https://async.grails.org/latest/guide/index.html#gormEvents[Events from GORM].
+It uses the `@Listener` annotation to listen *synchronously* to https://grails.apache.org/docs/latest/guide/async.html[Events from GORM].
 
 [source,groovy]
 .src/main/groovy/demo/UserPasswordEncoderListener.groovy
