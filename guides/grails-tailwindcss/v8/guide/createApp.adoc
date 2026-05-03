@@ -1,0 +1,1 @@
+Generate a fresh Apache Grails 8 web application from link:https://prev-snapshot.grails.org[prev-snapshot.grails.org]. This is the same forge that produced the `initial/` tree in the upstream repository.

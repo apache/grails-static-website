@@ -1,0 +1,16 @@
+Tailwind 4 ships as the npm package `tailwindcss`, with a separate `@tailwindcss/cli` package for the standalone command-line compiler that we will drive from Gradle. Add a small `package.json` at the project root:
+
+[source,json]
+.package.json
+----
+include::../snippets/package.json[]
+----
+
+Then run `npm install` once to populate `node_modules/`:
+
+[source,bash]
+----
+npm install
+----
+
+The `tailwindBuild` Gradle task we will add in a later chapter calls `npm install` automatically the first time it runs (and skips it on subsequent invocations as long as `package.json` has not changed), so committing the lock file is enough; no hand-rolled bootstrap step is needed in CI.
