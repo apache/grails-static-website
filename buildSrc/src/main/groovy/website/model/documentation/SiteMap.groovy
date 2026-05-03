@@ -63,4 +63,36 @@ class SiteMap {
     static ReleaseVersion latestPreReleaseVersion(File releases) {
         preReleaseVersions(releases)?.get(0)
     }
+
+    /**
+     * Reads the {@code companionArtifacts:} block from {@code conf/releases.yml}
+     * and returns the list of companion plugins published for the given Grails
+     * major version. Returns an empty list when no entry exists for that major
+     * (e.g. Grails 6 and earlier, where companion artifacts weren't tracked,
+     * or a future major that hasn't been populated yet).
+     *
+     * @param releases the {@code conf/releases.yml} file
+     * @param major    the Grails major version (e.g. 7, 8)
+     * @return immutable list of {@link CompanionArtifact} entries; never null
+     */
+    static List<CompanionArtifact> companionArtifactsFor(File releases, int major) {
+        assert releases.exists()
+        def model = releases.newInputStream().withCloseable {
+            new Yaml().load(it) as Map
+        }
+        def section = (model.companionArtifacts ?: [:]) as Map
+        def entries = section[major as String] as List<Map>
+        if (!entries) {
+            return Collections.<CompanionArtifact> emptyList()
+        }
+        entries.collect { Map e ->
+            new CompanionArtifact(
+                    artifactId: e.artifactId as String,
+                    version: e.version as String,
+                    mirrorDirectory: e.mirrorDirectory as String,
+                    releaseNotesRepo: e.releaseNotesRepo as String,
+                    displayName: e.displayName as String,
+            )
+        }
+    }
 }
