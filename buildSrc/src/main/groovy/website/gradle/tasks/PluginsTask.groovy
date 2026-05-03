@@ -133,12 +133,25 @@ abstract class PluginsTask extends GrailsWebsiteTask {
         def pluginsTagsDir   = outputDir.dir('dist/plugins/tags').get().asFile.tap { mkdirs() }
         def pluginsOwnersDir = outputDir.dir('dist/plugins/owners').get().asFile.tap { mkdirs() }
 
-        def wrap = { String html -> RenderSiteTask.renderHtmlWithTemplateContent(html, metadata, templateText) }
+        // [%ogurl] is the per-page Open Graph URL token in templates/document.html.
+        // The base metadata map is shared across the main page and every tag/owner
+        // page, so we need to thread a per-page ogurl through wrap() rather than
+        // reusing the same metadata map; otherwise every rendered page would ship
+        // the same og:url meta tag (or, as on the live site today, the literal
+        // [%ogurl] token).
+        def wrap = { String html, String ogurl ->
+            def pageMetadata = new LinkedHashMap<String, String>(metadata)
+            pageMetadata['ogurl'] = ogurl
+            RenderSiteTask.renderHtmlWithTemplateContent(html, pageMetadata, templateText)
+        }
 
         // main plugins page
         new File(distDir, fileName).setText(
                 RenderSiteTask.highlightMenu(
-                        wrap(PluginsPage.mainContent(siteUrl, plugins, 'Grails Plugins', null)),
+                        wrap(
+                                PluginsPage.mainContent(siteUrl, plugins, 'Grails Plugins', null),
+                                "${siteUrl}/plugins.html".toString()
+                        ),
                         metadata,
                         '/plugins.html'
                 ),
@@ -151,7 +164,10 @@ abstract class PluginsTask extends GrailsWebsiteTask {
                 .unique()
                 .each { tag ->
                     new File(pluginsTagsDir, "${tag}.html").setText(
-                            wrap(renderHtmlPagesForTags(siteUrl, plugins, tag)),
+                            wrap(
+                                    renderHtmlPagesForTags(siteUrl, plugins, tag),
+                                    "${siteUrl}/plugins/tags/${tag}.html".toString()
+                            ),
                             'UTF-8'
                     )
                 }
@@ -162,11 +178,12 @@ abstract class PluginsTask extends GrailsWebsiteTask {
                 .findAll { it }
                 .unique()
                 .each { owner ->
-                    new File(
-                            pluginsOwnersDir,
-                            "${owner.replace(' ', '').toLowerCase()}.html"
-                    ).setText(
-                            wrap(renderHtmlPagesForOwners(siteUrl, plugins, owner)),
+                    def ownerSlug = owner.replace(' ', '').toLowerCase()
+                    new File(pluginsOwnersDir, "${ownerSlug}.html").setText(
+                            wrap(
+                                    renderHtmlPagesForOwners(siteUrl, plugins, owner),
+                                    "${siteUrl}/plugins/owners/${ownerSlug}.html".toString()
+                            ),
                             'UTF-8'
                     )
                 }

@@ -375,6 +375,10 @@ abstract class BlogTask extends GrailsWebsiteTask {
                     tagCards,
                     new LinkedHashMap(meta).tap {
                         it.title = tag.toUpperCase() + ' | Blog | Grails Framework'
+                        // Per-tag Open Graph URL. Without this the [%ogurl]
+                        // token in templates/document.html ships verbatim on
+                        // every blog/tag/<tag>.html page.
+                        it.ogurl = "${it.url}/$BLOG/$TAG/${tag}.html".toString()
                     },
                     templateText,
                     renderTagTitle(tag)
@@ -423,6 +427,11 @@ abstract class BlogTask extends GrailsWebsiteTask {
     ) {
         def meta = RenderSiteTask.processMetadata(siteMeta).tap {
             it.title = 'Blog | Grails Framework'
+            // [%ogurl] is the per-page Open Graph URL token in
+            // templates/document.html. The blog archive index lives at
+            // <siteUrl>/blog/index.html; without this the rendered HTML
+            // shipped the literal [%ogurl] in the og:url meta tag.
+            it.ogurl = "${it.url}/$BLOG/$INDEX".toString()
         }
         def html = cardsHtml(postCards)
         html = RenderSiteTask.renderHtmlWithTemplateContent(html, meta, templateText)
