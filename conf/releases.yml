@@ -52,7 +52,7 @@ companionArtifacts:
       releaseNotesRepo: apache/grails-github-actions
       displayName: Grails GitHub Actions
     - artifactId: grails-publish
-      version: '0.0.4'
+      version: '0.0.5'
       mirrorDirectory: grails-publish
       releaseNotesRepo: apache/grails-gradle-publish
       displayName: Grails Publish Gradle Plugin
