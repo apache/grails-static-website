@@ -26,37 +26,50 @@ import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 /**
- * Bumps the {@code version:} field of an existing companion artifact entry in
+ * Maintains entries in the {@code companionArtifacts:} block of
  * {@code conf/releases.yml}. Companion artifacts (Spring Security, Redis,
  * Quartz, GitHub Actions, Gradle Publish, ...) ship independently of Grails
- * core, so each one has its own release cadence and needs its own bump task.
+ * core, so each one has its own release cadence.
  *
  * <p>Invoked from {@code .github/workflows/release-companion.yml} on a
- * {@code workflow_dispatch}, with three inputs:
- * <pre>
- *   ./gradlew recordCompanionRelease \
- *       -PgrailsMajor=7 \
- *       -PartifactId=grails-redis \
- *       -PartifactVersion=5.0.2
- * </pre>
+ * {@code workflow_dispatch}. The task supports three operations on a single
+ * {@code (grailsMajor, artifactId)} pair, automatically picking the right one
+ * based on what already exists in the file:
  *
- * <p>The task performs a line-based update so existing comments and
- * indentation in {@code releases.yml} are preserved (a YAML round-trip via
- * SnakeYAML would erase them). It looks for the {@code 'N':} block under
- * {@code companionArtifacts:}, then within that block locates the entry whose
- * {@code artifactId:} matches and rewrites the next {@code version:} line.
+ * <ol>
+ *   <li><strong>Bump existing entry</strong> - the artifact is already listed
+ *   under its major. The {@code version:} field is rewritten in place and
+ *   the optional descriptor flags are ignored.
+ *   <pre>
+ *     ./gradlew recordCompanionRelease \
+ *         -PgrailsMajor=7 \
+ *         -PartifactId=grails-redis \
+ *         -PartifactVersion=5.0.2
+ *   </pre></li>
+ *   <li><strong>Add new artifact to an existing major</strong> - the
+ *   {@code 'N':} block exists but does not yet contain this artifactId. A new
+ *   entry is appended to the end of that block. All three descriptor flags
+ *   ({@code -PmirrorDirectory}, {@code -PreleaseNotesRepo},
+ *   {@code -PdisplayName}) are required.</li>
+ *   <li><strong>Bootstrap a brand-new major</strong> - no {@code 'N':} block
+ *   exists yet. A new major block is appended to the end of the
+ *   {@code companionArtifacts:} section (preserving the trailing blank line
+ *   that separates it from {@code coreReleases:}) containing exactly one
+ *   entry. All three descriptor flags are required.</li>
+ * </ol>
  *
- * <p>This task only updates an existing entry. First-time addition of a brand
- * new companion artifact for a major requires a manual edit of
- * {@code conf/releases.yml} (e.g. a one-time PR when a new plugin is
- * provisioned by the PMC), since the schema of a new entry can vary
- * (mirrorDirectory, releaseNotesRepo, displayName all need PMC-supplied
- * values).
+ * <p>The task performs line-based edits so existing comments and indentation
+ * in {@code releases.yml} are preserved (a YAML round-trip via SnakeYAML
+ * would erase them). The descriptor flags are accepted but ignored on the
+ * bump path because changing them mid-major would break URLs that downstream
+ * pages and crawlers may have already indexed - those changes intentionally
+ * require a manual PR.
  */
 @CompileStatic
 abstract class RecordCompanionReleaseTask extends DefaultTask {
@@ -72,6 +85,18 @@ abstract class RecordCompanionReleaseTask extends DefaultTask {
 
     @Input
     abstract Property<String> getArtifactVersion()
+
+    @Input
+    @Optional
+    abstract Property<String> getMirrorDirectory()
+
+    @Input
+    @Optional
+    abstract Property<String> getReleaseNotesRepo()
+
+    @Input
+    @Optional
+    abstract Property<String> getDisplayName()
 
     @OutputFile
     abstract RegularFileProperty getReleasesYaml()
@@ -93,92 +118,178 @@ abstract class RecordCompanionReleaseTask extends DefaultTask {
         }
 
         List<String> lines = yaml.readLines('UTF-8')
-        boolean inCompanionSection = false
-        boolean inMajorSection = false
-        boolean foundArtifact = false
-        boolean updated = false
-        String majorMarker = "'${major}':".toString()
-        String artifactMarker = "artifactId: ${artifact}".toString()
+        Layout layout = scanLayout(lines, major, artifact)
+
+        if (layout.companionHeaderIdx < 0) {
+            throw new GradleException(
+                    "${yaml.name} has no companionArtifacts: section. The schema migration commit added it; ".toString() +
+                            'did the working tree drift?')
+        }
+
+        String mode
+        if (layout.targetArtifactVersionIdx >= 0) {
+            String original = lines[layout.targetArtifactVersionIdx]
+            lines[layout.targetArtifactVersionIdx] =
+                    "${leadingWhitespace(original)}version: '${version}'".toString()
+            mode = 'bump'
+        } else if (layout.targetMajorEndIdx >= 0) {
+            requireDescriptorFlags(major, artifact, false)
+            lines.addAll(layout.targetMajorEndIdx, renderEntry(artifact, version))
+            mode = 'new-artifact'
+        } else {
+            requireDescriptorFlags(major, artifact, true)
+            lines.addAll(layout.companionSectionEndIdx, renderMajorBlock(major, artifact, version))
+            mode = 'new-major'
+        }
+
+        yaml.text = lines.join(System.lineSeparator()) + System.lineSeparator()
+        logger.lifecycle(
+                "Updated companion ${artifact} to ${version} for Grails ${major} in ${yaml.name} (${mode}).".toString())
+    }
+
+    private void requireDescriptorFlags(String major, String artifact, boolean newMajor) {
+        String mirror = mirrorDirectory.getOrElse('').trim()
+        String notes = releaseNotesRepo.getOrElse('').trim()
+        String display = displayName.getOrElse('').trim()
+        List<String> missing = []
+        if (!mirror) missing << '-PmirrorDirectory=<sub-path>'
+        if (!notes) missing << '-PreleaseNotesRepo=<org/repo>'
+        if (!display) missing << '-PdisplayName=<Human Readable Name>'
+        if (missing) {
+            String context = newMajor
+                    ? "no '${major}': block exists yet under companionArtifacts:".toString()
+                    : "artifactId=${artifact} is not yet listed under '${major}':".toString()
+            throw new GradleException(
+                    "First-time entry: ${context}. Required descriptor flags missing: ${missing.join(', ')}. ".toString() +
+                            'Pass all three so the new entry can be rendered (mirror URL, release-notes link, display name).')
+        }
+    }
+
+    private List<String> renderEntry(String artifact, String version) {
+        return [
+                "    - artifactId: ${artifact}".toString(),
+                "      version: '${version}'".toString(),
+                "      mirrorDirectory: ${mirrorDirectory.get().trim()}".toString(),
+                "      releaseNotesRepo: ${releaseNotesRepo.get().trim()}".toString(),
+                "      displayName: ${displayName.get().trim()}".toString(),
+        ]
+    }
+
+    private List<String> renderMajorBlock(String major, String artifact, String version) {
+        List<String> block = ["  '${major}':".toString()] as List<String>
+        block.addAll(renderEntry(artifact, version))
+        return block
+    }
+
+    private static String leadingWhitespace(String line) {
+        StringBuilder ws = new StringBuilder()
+        for (int j = 0; j < line.length(); j++) {
+            char ch = line.charAt(j)
+            if (ch == ' ' as char || ch == '\t' as char) {
+                ws.append(ch)
+            } else {
+                break
+            }
+        }
+        return ws.toString()
+    }
+
+    private static Layout scanLayout(List<String> lines, String targetMajor, String targetArtifact) {
+        Layout layout = new Layout()
+        String majorMarker = "'${targetMajor}':".toString()
+        String artifactMarker = "artifactId: ${targetArtifact}".toString()
+        boolean inCompanion = false
+        boolean inTargetMajor = false
+        boolean inTargetArtifact = false
 
         for (int i = 0; i < lines.size(); i++) {
             String line = lines[i]
             String trimmed = line.trim()
-            // Strip the YAML list-item prefix "- " so we can compare against
-            // an artifactId without worrying about which entry happens to be
-            // the first (sequence-bullet-bearing) one in the major's block.
             String normalized = trimmed.startsWith('- ') ? trimmed.substring(2) : trimmed
 
-            if (trimmed == 'companionArtifacts:' || trimmed.startsWith('companionArtifacts:')) {
-                inCompanionSection = true
-                continue
-            }
-
-            // Leaving the companionArtifacts: section once we hit another
-            // top-level key (a non-blank line with no leading whitespace).
-            if (inCompanionSection && trimmed && !line.startsWith(' ') && !line.startsWith('\t')
-                    && !trimmed.startsWith('#')) {
-                inCompanionSection = false
-                inMajorSection = false
-            }
-
-            if (inCompanionSection && trimmed.startsWith(majorMarker)) {
-                inMajorSection = true
-                continue
-            }
-
-            // Within companionArtifacts, hitting another quoted single-segment
-            // major key (e.g. "'8':") means we've left our major.
-            if (inMajorSection && trimmed ==~ /^'\d+':$/ && trimmed != majorMarker) {
-                inMajorSection = false
-            }
-
-            if (inMajorSection && !foundArtifact && normalized == artifactMarker) {
-                foundArtifact = true
-                continue
-            }
-
-            if (foundArtifact && trimmed.startsWith('version:')) {
-                // Preserve the original indentation; rewrite only the value
-                // and (re-apply) single-quote wrapping for consistency with
-                // the rest of the companion entries written by the previous
-                // commit's data migration.
-                String leadingWs = ''
-                for (int j = 0; j < line.length(); j++) {
-                    char ch = line.charAt(j)
-                    if (ch == ' ' as char || ch == '\t' as char) {
-                        leadingWs += ch
-                    } else {
-                        break
-                    }
+            if (!inCompanion) {
+                if (trimmed == 'companionArtifacts:' || trimmed.startsWith('companionArtifacts:')) {
+                    inCompanion = true
+                    layout.companionHeaderIdx = i
                 }
-                lines[i] = "${leadingWs}version: '${version}'".toString()
-                updated = true
-                break
+                continue
+            }
+
+            boolean isTopLevelKey = trimmed && !line.startsWith(' ') && !line.startsWith('\t') && !trimmed.startsWith('#')
+            if (isTopLevelKey) {
+                int sectionEnd = trimToLastMeaningfulLine(lines, i)
+                if (inTargetMajor && layout.targetMajorEndIdx < 0) {
+                    layout.targetMajorEndIdx = sectionEnd
+                }
+                layout.companionSectionEndIdx = sectionEnd
+                return layout
+            }
+
+            if (trimmed ==~ /^'\d+':$/) {
+                if (inTargetMajor && layout.targetMajorEndIdx < 0) {
+                    layout.targetMajorEndIdx = trimToLastMeaningfulLine(lines, i)
+                }
+                inTargetMajor = (trimmed == majorMarker)
+                inTargetArtifact = false
+                continue
+            }
+
+            if (inTargetMajor && normalized == artifactMarker) {
+                inTargetArtifact = true
+                continue
+            }
+            if (inTargetMajor && normalized.startsWith('artifactId: ')) {
+                inTargetArtifact = false
+                continue
+            }
+            if (inTargetArtifact && trimmed.startsWith('version:') && layout.targetArtifactVersionIdx < 0) {
+                layout.targetArtifactVersionIdx = i
             }
         }
 
-        if (!updated) {
-            throw new GradleException(
-                    "Could not find companionArtifact entry artifactId=${artifact} under Grails major '${major}' in ${yaml.name}. ".toString() +
-                            'For a brand-new companion artifact, add the entry to conf/releases.yml manually first.')
+        if (layout.companionHeaderIdx >= 0 && layout.companionSectionEndIdx < 0) {
+            layout.companionSectionEndIdx = trimToLastMeaningfulLine(lines, lines.size())
         }
+        if (inTargetMajor && layout.targetMajorEndIdx < 0) {
+            layout.targetMajorEndIdx = layout.companionSectionEndIdx
+        }
+        return layout
+    }
 
-        yaml.text = lines.join(System.lineSeparator()) + System.lineSeparator()
-        logger.lifecycle("Updated companion ${artifact} to ${version} for Grails ${major} in ${yaml.name}.")
+    private static int trimToLastMeaningfulLine(List<String> lines, int upperExclusive) {
+        int idx = upperExclusive
+        while (idx > 0 && lines[idx - 1].trim().isEmpty()) {
+            idx--
+        }
+        return idx
+    }
+
+    private static class Layout {
+        int companionHeaderIdx = -1
+        int companionSectionEndIdx = -1
+        int targetMajorEndIdx = -1
+        int targetArtifactVersionIdx = -1
     }
 
     static TaskProvider<RecordCompanionReleaseTask> register(Project project) {
         project.tasks.register(NAME, RecordCompanionReleaseTask) { task ->
             task.group = GROUP
             task.description =
-                    'Bump a companion artifact version in conf/releases.yml. ' +
-                            'Pass via -PgrailsMajor=N -PartifactId=name -PartifactVersion=X.Y.Z.'
+                    'Maintain a companion artifact entry in conf/releases.yml. ' +
+                            'Required: -PgrailsMajor=N -PartifactId=name -PartifactVersion=X.Y.Z. ' +
+                            'For first-time entries also pass: -PmirrorDirectory=path -PreleaseNotesRepo=org/repo -PdisplayName=Label.'
             task.grailsMajor.set(
                     project.providers.gradleProperty('grailsMajor').orElse(''))
             task.artifactId.set(
                     project.providers.gradleProperty('artifactId').orElse(''))
             task.artifactVersion.set(
                     project.providers.gradleProperty('artifactVersion').orElse(''))
+            task.mirrorDirectory.set(
+                    project.providers.gradleProperty('mirrorDirectory').orElse(''))
+            task.releaseNotesRepo.set(
+                    project.providers.gradleProperty('releaseNotesRepo').orElse(''))
+            task.displayName.set(
+                    project.providers.gradleProperty('displayName').orElse(''))
             task.releasesYaml.set(
                     project.rootProject.layout.projectDirectory.file('conf/releases.yml'))
         }
