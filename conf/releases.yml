@@ -56,6 +56,12 @@ companionArtifacts:
       mirrorDirectory: grails-publish
       releaseNotesRepo: apache/grails-gradle-publish
       displayName: Grails Publish Gradle Plugin
+  '8':
+    - artifactId: grails-publish
+      version: '1.0.0-M1'
+      mirrorDirectory: grails-publish
+      releaseNotesRepo: apache/grails-gradle-publish
+      displayName: Grails Publish Gradle Plugin
 
 coreReleases:
   - version: '0.1'
