@@ -21,10 +21,14 @@ guides:
         sourcePath: guides/adding-commit-info/v3
         publicationDate: '2017-03-06'
         tags:
-          - 'git'
-          - 'actuator'
           - 'commit-info'
-          - 'grails3'
+          - 'actuator'
+          - 'spring-boot'
+          - 'build-info'
+          - 'gradle-plugin'
+          - 'devops'
+          - 'monitoring'
+          - 'versioning'
         sampleRef:
           repo: 'grails-guides/adding-commit-info'
           branch: 'grails3'
@@ -57,10 +61,14 @@ guides:
         sourcePath: guides/adding-commit-info/v4
         publicationDate: '2017-03-06'
         tags:
-          - 'git'
-          - 'actuator'
           - 'commit-info'
-          - 'grails4'
+          - 'actuator'
+          - 'spring-boot'
+          - 'build-info'
+          - 'gradle-plugin'
+          - 'devops'
+          - 'monitoring'
+          - 'versioning'
         sampleRef:
           repo: 'grails-guides/adding-commit-info'
           branch: 'grails4'
@@ -95,7 +103,7 @@ guides:
     subtitle: 'This guide will take you through the process of creating a single build starting with the Angular 2 profile.'
     authors:
       - 'James Kleeh'
-    category: 'Grails + Angular'
+    category: 'Frontend SPA'
     publicationDate: '2016-12-04'
     versions:
       '4':
@@ -103,7 +111,11 @@ guides:
         publicationDate: '2016-12-04'
         tags:
           - 'angular'
-          - 'javascript'
+          - 'gradle'
+          - 'multi-project'
+          - 'spa'
+          - 'rest-api'
+          - 'profile'
         sampleRef:
           repo: 'grails-guides/angular2-combined'
           branch: 'master'
@@ -129,7 +141,7 @@ guides:
     subtitle: 'Use the React 1.x profile to create a Grails app with React views'
     authors:
       - 'Zachary Klein'
-    category: 'Grails + React'
+    category: 'Frontend SPA'
     publicationDate: '2017-01-07'
     versions:
       '4':
@@ -138,8 +150,11 @@ guides:
         tags:
           - 'react'
           - 'node'
-          - 'javascript'
-          - 'json views'
+          - 'json-views'
+          - 'rest-api'
+          - 'spa'
+          - 'profile'
+          - 'webpack'
         sampleRef:
           repo: 'grails-guides/building-a-react-app'
           branch: 'master'
@@ -172,7 +187,7 @@ guides:
     subtitle: 'Learn how to add a Vue.js frontend to your application'
     authors:
       - 'Ben Rhine, Zachary Klein'
-    category: 'Grails + Vue.js'
+    category: 'Frontend SPA'
     publicationDate: '2018-03-26'
     versions:
       '4':
@@ -180,9 +195,11 @@ guides:
         publicationDate: '2018-03-26'
         tags:
           - 'vue'
-          - 'grails'
-          - 'javascript'
           - 'rest-api'
+          - 'spa'
+          - 'bootstrap'
+          - 'vue-router'
+          - 'profile'
         sampleRef:
           repo: 'grails-guides/building-a-vue-app'
           branch: 'master'
@@ -218,7 +235,7 @@ guides:
     subtitle: 'This guide demonstrates how you can use Grails as a backend for an Android app'
     authors:
       - 'Sergio del Amo'
-    category: 'Grails + Android'
+    category: 'Frontend SPA'
     publicationDate: '2017-02-13'
     versions:
       '4':
@@ -226,10 +243,10 @@ guides:
         publicationDate: '2017-02-13'
         tags:
           - 'android'
-          - 'java'
+          - 'mobile-client'
           - 'rest-api'
           - 'api-versioning'
-          - 'grails4'
+          - 'integration'
         sampleRef:
           repo: 'grails-guides/building-an-android-client-powered-by-a-grails-backend'
           branch: 'master'
@@ -271,17 +288,19 @@ guides:
     subtitle: 'This guide demonstrates how you can use Grails as a backend for an iOS app built with Objective-C'
     authors:
       - 'Sergio del Amo'
-    category: 'Grails + iOS'
+    category: 'Frontend SPA'
     publicationDate: '2017-02-13'
     versions:
       '4':
         sourcePath: guides/building-an-ios-objectc-client-powered-by-a-grails-backend/v4
         publicationDate: '2017-02-13'
         tags:
-          - 'objective-c'
           - 'ios'
-          - 'api-versioning'
+          - 'objective-c'
+          - 'apple'
+          - 'mobile-client'
           - 'rest-api'
+          - 'api-versioning'
         sampleRef:
           repo: 'grails-guides/building-an-ios-objectc-client-powered-by-a-grails-backend'
           branch: 'grails4'
@@ -326,17 +345,19 @@ guides:
     subtitle: 'This guide demonstrates how you can use Grails as the backend of an iOS app built with Swift'
     authors:
       - 'Sergio del Amo'
-    category: 'Grails + iOS'
+    category: 'Frontend SPA'
     publicationDate: '2017-02-13'
     versions:
       '4':
         sourcePath: guides/building-an-ios-swift-client-powered-by-a-grails-backend/v4
         publicationDate: '2017-02-13'
         tags:
-          - 'swift'
           - 'ios'
-          - 'api-versioning'
+          - 'swift'
+          - 'apple'
+          - 'mobile-client'
           - 'rest-api'
+          - 'api-versioning'
         sampleRef:
           repo: 'grails-guides/building-an-ios-swift-client-powered-by-a-grails-backend'
           branch: 'grails4'
@@ -387,10 +408,16 @@ guides:
         sourcePath: guides/command-objects-and-forms/v3
         publicationDate: '2017-01-09'
         tags:
-          - 'command-object'
-          - 'binding'
+          - 'command-objects'
+          - 'forms'
+          - 'data-binding'
           - 'validation'
-          - 'grails3'
+          - 'controllers'
+          - 'gsp'
+          - 'web-layer'
+          - 'unit-tests'
+          - 'functional-tests'
+          - 'beginner'
         sampleRef:
           repo: 'grails-guides/command-objects-and-forms'
           branch: 'grails3'
@@ -415,10 +442,16 @@ guides:
         sourcePath: guides/command-objects-and-forms/v4
         publicationDate: '2017-01-09'
         tags:
-          - 'command-object'
-          - 'binding'
+          - 'command-objects'
+          - 'forms'
+          - 'data-binding'
           - 'validation'
-          - 'grails4'
+          - 'controllers'
+          - 'gsp'
+          - 'web-layer'
+          - 'unit-tests'
+          - 'functional-tests'
+          - 'beginner'
         sampleRef:
           repo: 'grails-guides/command-objects-and-forms'
           branch: 'grails4'
@@ -452,9 +485,19 @@ guides:
         sourcePath: guides/creating-your-first-grails-app/v3
         publicationDate: '2017-01-23'
         tags:
-          - 'mysql'
+          - 'beginner'
+          - 'domain-classes'
+          - 'controllers'
+          - 'services'
           - 'gsp'
-          - 'grails3'
+          - 'unit-tests'
+          - 'integration-tests'
+          - 'mysql'
+          - 'scaffolding'
+          - 'asset-pipeline'
+          - 'url-mappings'
+          - 'getting-started'
+          - 'crud'
         sampleRef:
           repo: 'grails-guides/creating-your-first-grails-app'
           branch: 'grails3'
@@ -511,9 +554,19 @@ guides:
         sourcePath: guides/creating-your-first-grails-app/v4
         publicationDate: '2017-01-23'
         tags:
-          - 'mysql'
+          - 'beginner'
+          - 'domain-classes'
+          - 'controllers'
+          - 'services'
           - 'gsp'
-          - 'grails4'
+          - 'unit-tests'
+          - 'integration-tests'
+          - 'mysql'
+          - 'scaffolding'
+          - 'asset-pipeline'
+          - 'url-mappings'
+          - 'getting-started'
+          - 'crud'
         sampleRef:
           repo: 'grails-guides/creating-your-first-grails-app'
           branch: 'grails4'
@@ -570,9 +623,19 @@ guides:
         sourcePath: guides/creating-your-first-grails-app/v6
         publicationDate: '2017-01-23'
         tags:
-          - 'mysql'
+          - 'beginner'
+          - 'domain-classes'
+          - 'controllers'
+          - 'services'
           - 'gsp'
-          - 'grails6'
+          - 'unit-tests'
+          - 'integration-tests'
+          - 'mysql'
+          - 'scaffolding'
+          - 'asset-pipeline'
+          - 'url-mappings'
+          - 'getting-started'
+          - 'crud'
         sampleRef:
           repo: grails-guides/creating-your-first-grails-app
           branch: master
@@ -639,8 +702,13 @@ guides:
         publicationDate: '2017-05-15'
         tags:
           - 'multi-tenancy'
-          - 'hibernate'
+          - 'database-per-tenant'
           - 'gorm'
+          - 'hibernate'
+          - 'tenant-resolver'
+          - 'data-isolation'
+          - 'multi-datasource'
+          - 'security'
         sampleRef:
           repo: 'grails-guides/database-per-tenant'
           branch: 'master'
@@ -685,9 +753,12 @@ guides:
         publicationDate: '2017-06-26'
         tags:
           - 'multi-tenancy'
-          - 'hibernate'
+          - 'discriminator-column'
           - 'gorm'
-          - 'grails4'
+          - 'hibernate'
+          - 'tenant-resolver'
+          - 'single-database'
+          - 'security'
         sampleRef:
           repo: 'grails-guides/discriminator-per-tenant'
           branch: 'master'
@@ -731,9 +802,14 @@ guides:
         publicationDate: '2018-02-19'
         tags:
           - 'gorm'
+          - 'gorm-events'
+          - 'event-listeners'
+          - 'domain-events'
           - 'async'
-          - 'events'
-          - 'grails3'
+          - 'service-layer'
+          - 'persistence-events'
+          - 'unit-tests'
+          - 'integration-tests'
         sampleRef:
           repo: 'grails-guides/gorm-event-listeners'
           branch: 'grails3'
@@ -760,9 +836,14 @@ guides:
         publicationDate: '2018-02-19'
         tags:
           - 'gorm'
+          - 'gorm-events'
+          - 'event-listeners'
+          - 'domain-events'
           - 'async'
-          - 'events'
-          - 'grails4'
+          - 'service-layer'
+          - 'persistence-events'
+          - 'unit-tests'
+          - 'integration-tests'
         sampleRef:
           repo: 'grails-guides/gorm-event-listeners'
           branch: 'grails4'
@@ -790,18 +871,22 @@ guides:
     subtitle: 'Build a Grails app and use GORM''s GraphQL support to serve React app using Apollo'
     authors:
       - 'Zachary Klein'
-    category: 'Grails + React'
+    category: 'Frontend SPA'
     publicationDate: '2017-12-18'
     versions:
       '4':
         sourcePath: guides/gorm-graphql-with-react-and-apollo/v4
         publicationDate: '2017-12-18'
         tags:
-          - 'react'
-          - 'graphql'
           - 'gorm'
-          - 'javascript'
+          - 'graphql'
+          - 'react'
           - 'apollo'
+          - 'rest-api'
+          - 'frontend'
+          - 'spa'
+          - 'domain-classes'
+          - 'api-design'
         sampleRef:
           repo: 'grails-guides/gorm-graphql-with-react-and-apollo'
           branch: 'grails4'
@@ -839,9 +924,14 @@ guides:
         sourcePath: guides/gorm-ratpack/v3
         publicationDate: '2017-08-28'
         tags:
-          - 'ratpack'
           - 'gorm'
+          - 'ratpack'
           - 'hibernate'
+          - 'data-access'
+          - 'domain-classes'
+          - 'service-layer'
+          - 'reactive'
+          - 'async'
         sampleRef:
           repo: 'grails-guides/gorm-ratpack'
           branch: 'grails3'
@@ -866,9 +956,14 @@ guides:
         sourcePath: guides/gorm-ratpack/v4
         publicationDate: '2017-08-28'
         tags:
-          - 'ratpack'
           - 'gorm'
+          - 'ratpack'
           - 'hibernate'
+          - 'data-access'
+          - 'domain-classes'
+          - 'service-layer'
+          - 'reactive'
+          - 'async'
         sampleRef:
           repo: 'grails-guides/gorm-ratpack'
           branch: 'master'
@@ -902,10 +997,13 @@ guides:
         sourcePath: guides/gorm-without-grails/v4
         publicationDate: '2017-07-31'
         tags:
-          - 'spring boot'
-          - 'backend'
-          - 'GORM'
+          - 'gorm'
+          - 'spring-boot'
+          - 'standalone-gorm'
           - 'hibernate'
+          - 'data-access'
+          - 'domain-classes'
+          - 'service-layer'
         sampleRef:
           repo: 'grails-guides/gorm-without-grails'
           branch: 'master'
@@ -941,9 +1039,12 @@ guides:
         publicationDate: '2017-05-08'
         tags:
           - 'i18n'
-          - 'locale'
-          - 'grails3'
-          - 'language'
+          - 'internationalization'
+          - 'message-bundles'
+          - 'web-layer'
+          - 'gsp'
+          - 'translation'
+          - 'beginner'
         sampleRef:
           repo: 'grails-guides/grails_i18n'
           branch: 'grails3'
@@ -970,9 +1071,12 @@ guides:
         publicationDate: '2017-05-08'
         tags:
           - 'i18n'
-          - 'locale'
-          - 'grails4'
-          - 'language'
+          - 'internationalization'
+          - 'message-bundles'
+          - 'web-layer'
+          - 'gsp'
+          - 'translation'
+          - 'beginner'
         sampleRef:
           repo: 'grails-guides/grails_i18n'
           branch: 'master'
@@ -1008,7 +1112,12 @@ guides:
         publicationDate: '2018-01-17'
         tags:
           - 'url-mappings'
-          - 'grails4'
+          - 'controllers'
+          - 'rest-api'
+          - 'routing'
+          - 'web-layer'
+          - 'beginner'
+          - 'api-design'
         sampleRef:
           repo: 'grails-guides/grails_url_mappings'
           branch: 'master'
@@ -1037,7 +1146,7 @@ guides:
     subtitle: 'Learn how to distribute your Grails application as a Docker container.'
     authors:
       - 'Iván López'
-    category: 'Advanced Grails'
+    category: 'Grails + DevOps'
     publicationDate: '2018-01-15'
     versions:
       '3':
@@ -1045,8 +1154,11 @@ guides:
         publicationDate: '2018-01-15'
         tags:
           - 'docker'
-          - 'gradle'
-          - 'grails3'
+          - 'containerization'
+          - 'gradle-plugin'
+          - 'devops'
+          - 'distribution'
+          - 'jvm-container'
         sampleRef:
           repo: 'grails-guides/grails-as-docker-container'
           branch: 'grails3'
@@ -1073,8 +1185,11 @@ guides:
         publicationDate: '2018-01-15'
         tags:
           - 'docker'
-          - 'gradle'
-          - 'grails4'
+          - 'containerization'
+          - 'gradle-plugin'
+          - 'devops'
+          - 'distribution'
+          - 'jvm-container'
         sampleRef:
           repo: 'grails-guides/grails-as-docker-container'
           branch: 'grails4'
@@ -1109,11 +1224,13 @@ guides:
         sourcePath: guides/grails-async-promises/v3
         publicationDate: '2017-08-21'
         tags:
-          - 'promise'
+          - 'promises'
           - 'async'
-          - 'rest'
+          - 'rest-api'
+          - 'http-client'
+          - 'reactive'
+          - 'parallel-processing'
           - 'openweather'
-          - 'grails3'
         sampleRef:
           repo: 'grails-guides/grails-async-promises'
           branch: 'grails3'
@@ -1139,11 +1256,13 @@ guides:
         sourcePath: guides/grails-async-promises/v4
         publicationDate: '2017-08-21'
         tags:
-          - 'promise'
+          - 'promises'
           - 'async'
-          - 'rest'
+          - 'rest-api'
+          - 'http-client'
+          - 'reactive'
+          - 'parallel-processing'
           - 'openweather'
-          - 'grails4'
         sampleRef:
           repo: 'grails-guides/grails-async-promises'
           branch: 'master'
@@ -1171,16 +1290,20 @@ guides:
     subtitle: 'Learn how to secure a Grails app using ''Basic'' HTTP Authentication Scheme.'
     authors:
       - 'Sergio del Amo'
-    category: 'Advanced Grails'
+    category: 'Security'
     publicationDate: '2018-05-28'
     versions:
       '3':
         sourcePath: guides/grails-basicauth/v3
         publicationDate: '2018-05-28'
         tags:
+          - 'basic-auth'
           - 'spring-security'
-          - 'basicauth'
-          - 'grails3'
+          - 'authentication'
+          - 'rest-api'
+          - 'rfc-7617'
+          - 'security'
+          - 'web-layer'
         sampleRef:
           repo: 'grails-guides/grails-basicauth'
           branch: 'grails3'
@@ -1203,9 +1326,13 @@ guides:
         sourcePath: guides/grails-basicauth/v4
         publicationDate: '2018-05-28'
         tags:
+          - 'basic-auth'
           - 'spring-security'
-          - 'basicauth'
-          - 'grails4'
+          - 'authentication'
+          - 'rest-api'
+          - 'rfc-7617'
+          - 'security'
+          - 'web-layer'
         sampleRef:
           repo: 'grails-guides/grails-basicauth'
           branch: 'master'
@@ -1237,9 +1364,13 @@ guides:
         sourcePath: guides/grails-code-coverage/v3
         publicationDate: '2017-07-03'
         tags:
-          - 'clover'
           - 'code-coverage'
-          - 'grails3'
+          - 'clover'
+          - 'jacoco'
+          - 'gradle-plugin'
+          - 'static-analysis'
+          - 'testing'
+          - 'quality'
         sampleRef:
           repo: 'grails-guides/grails-code-coverage'
           branch: 'grails3'
@@ -1262,9 +1393,13 @@ guides:
         sourcePath: guides/grails-code-coverage/v4
         publicationDate: '2017-07-03'
         tags:
-          - 'clover'
           - 'code-coverage'
-          - 'grails4'
+          - 'clover'
+          - 'jacoco'
+          - 'gradle-plugin'
+          - 'static-analysis'
+          - 'testing'
+          - 'quality'
         sampleRef:
           repo: 'grails-guides/grails-code-coverage'
           branch: 'master'
@@ -1298,7 +1433,11 @@ guides:
         tags:
           - 'codenarc'
           - 'static-analysis'
-          - 'grails4'
+          - 'code-quality'
+          - 'groovy'
+          - 'gradle-plugin'
+          - 'multi-project'
+          - 'custom-rules'
         sampleRef:
           repo: 'grails-guides/grails-codenarc'
           branch: 'master'
@@ -1334,10 +1473,13 @@ guides:
         sourcePath: guides/grails-configuration-properties/v3
         publicationDate: '2018-10-11'
         tags:
-          - 'spring-boot'
           - 'configuration'
           - 'configuration-properties'
-          - 'grails3'
+          - 'spring-boot'
+          - 'micronaut'
+          - 'property-binding'
+          - 'environment-profiles'
+          - 'taglib'
         sampleRef:
           repo: 'grails-guides/grails-configuration-properties'
           branch: 'grails3'
@@ -1361,10 +1503,13 @@ guides:
         sourcePath: guides/grails-configuration-properties/v4
         publicationDate: '2018-10-11'
         tags:
-          - 'spring-boot'
           - 'configuration'
           - 'configuration-properties'
-          - 'grails4'
+          - 'spring-boot'
+          - 'micronaut'
+          - 'property-binding'
+          - 'environment-profiles'
+          - 'taglib'
         sampleRef:
           repo: 'grails-guides/grails-configuration-properties'
           branch: 'master'
@@ -1397,10 +1542,13 @@ guides:
         sourcePath: guides/grails-configuration-properties-micronaut/v4
         publicationDate: '2019-12-16'
         tags:
-          - 'micronaut'
           - 'configuration'
           - 'configuration-properties'
-          - 'grails4'
+          - 'micronaut'
+          - 'spring-boot'
+          - 'property-binding'
+          - 'environment-profiles'
+          - 'type-safe-config'
         sampleRef:
           repo: 'grails-guides/grails-configuration-properties-micronaut'
           branch: 'grails4'
@@ -1423,10 +1571,13 @@ guides:
         sourcePath: guides/grails-configuration-properties-micronaut/v6
         publicationDate: '2023-07-07'
         tags:
-          - 'micronaut'
           - 'configuration'
           - 'configuration-properties'
-          - 'grails6'
+          - 'micronaut'
+          - 'spring-boot'
+          - 'property-binding'
+          - 'environment-profiles'
+          - 'type-safe-config'
         sampleRef:
           repo: 'grails-guides/grails-configuration-properties-micronaut'
           branch: 'grails6'
@@ -1458,10 +1609,16 @@ guides:
         sourcePath: guides/grails-controller-testing/v3
         publicationDate: '2017-06-19'
         tags:
-          - 'unit-test'
-          - 'functional-test'
+          - 'controllers'
+          - 'unit-tests'
+          - 'functional-tests'
           - 'spock'
-          - 'grails3'
+          - 'testing'
+          - 'json-views'
+          - 'command-objects'
+          - 'redirects'
+          - 'rest-api'
+          - 'web-layer'
         sampleRef:
           repo: 'grails-guides/grails-controller-testing'
           branch: 'grails3'
@@ -1490,10 +1647,16 @@ guides:
         sourcePath: guides/grails-controller-testing/v4
         publicationDate: '2017-06-19'
         tags:
-          - 'unit-test'
-          - 'functional-test'
+          - 'controllers'
+          - 'unit-tests'
+          - 'functional-tests'
           - 'spock'
-          - 'grails4'
+          - 'testing'
+          - 'json-views'
+          - 'command-objects'
+          - 'redirects'
+          - 'rest-api'
+          - 'web-layer'
         sampleRef:
           repo: 'grails-guides/grails-controller-testing'
           branch: 'master'
@@ -1524,19 +1687,21 @@ guides:
     subtitle: 'Learn how to create a custom tenant resolver and use Grails Multi-Tenancy capabilities to switch tenants based on the current logged user or by a JWT.'
     authors:
       - 'Sergio del Amo'
-    category: 'Advanced Grails'
+    category: 'Security'
     publicationDate: '2017-09-11'
     versions:
       '3':
         sourcePath: guides/grails-custom-security-tenant-resolver/v3
         publicationDate: '2017-09-11'
         tags:
-          - 'spring-security'
-          - 'spring-security-rest'
-          - 'jwt'
           - 'multi-tenancy'
+          - 'tenant-resolver'
+          - 'jwt'
+          - 'spring-security-rest'
+          - 'authentication'
           - 'rest-api'
-          - 'grails3'
+          - 'custom-authentication'
+          - 'security'
         sampleRef:
           repo: 'grails-guides/grails-custom-security-tenant-resolver'
           branch: 'grails3'
@@ -1564,12 +1729,14 @@ guides:
         sourcePath: guides/grails-custom-security-tenant-resolver/v4
         publicationDate: '2017-09-11'
         tags:
-          - 'spring-security'
-          - 'spring-security-rest'
-          - 'jwt'
           - 'multi-tenancy'
+          - 'tenant-resolver'
+          - 'jwt'
+          - 'spring-security-rest'
+          - 'authentication'
           - 'rest-api'
-          - 'grails4'
+          - 'custom-authentication'
+          - 'security'
         sampleRef:
           repo: 'grails-guides/grails-custom-security-tenant-resolver'
           branch: 'master'
@@ -1607,10 +1774,14 @@ guides:
         publicationDate: '2017-08-07'
         tags:
           - 'liquibase'
-          - 'database'
+          - 'database-migration'
           - 'gorm'
-          - 'migration'
-          - 'grails3'
+          - 'schema-evolution'
+          - 'baselining'
+          - 'rollback'
+          - 'persistence'
+          - 'devops'
+          - 'versioning'
         sampleRef:
           repo: 'grails-guides/grails-database-migration'
           branch: 'grails3'
@@ -1640,10 +1811,14 @@ guides:
         publicationDate: '2017-08-07'
         tags:
           - 'liquibase'
-          - 'database'
+          - 'database-migration'
           - 'gorm'
-          - 'migration'
-          - 'grails4'
+          - 'schema-evolution'
+          - 'baselining'
+          - 'rollback'
+          - 'persistence'
+          - 'devops'
+          - 'versioning'
         sampleRef:
           repo: 'grails-guides/grails-database-migration'
           branch: 'master'
@@ -1673,10 +1848,14 @@ guides:
         publicationDate: '2023-06-22'
         tags:
           - 'liquibase'
-          - 'database'
+          - 'database-migration'
           - 'gorm'
-          - 'migration'
-          - 'grails6'
+          - 'schema-evolution'
+          - 'baselining'
+          - 'rollback'
+          - 'persistence'
+          - 'devops'
+          - 'versioning'
         sampleRef:
           repo: 'grails-guides/grails-database-migration'
           branch: 'grails6'
@@ -1715,13 +1894,19 @@ guides:
         publicationDate: '2026-05-03'
         tags:
           - 'docker'
-          - 'compose'
+          - 'containerization'
+          - 'boot-build-image'
           - 'paketo'
           - 'buildpacks'
-          - 'postgres'
-          - 'actuator'
           - 'oci'
-          - 'grails8'
+          - 'postgresql'
+          - 'docker-compose'
+          - 'spring-boot'
+          - 'gradle'
+          - 'devops'
+          - 'actuator'
+          - 'ghcr'
+          - 'health-checks'
         sampleRef:
           repo: 'grails-guides/grails-docker-bootbuildimage'
           branch: 'grails8'
@@ -1762,7 +1947,7 @@ guides:
     subtitle: 'Learn how to use a Postgresql database in your Grails application with a Docker container'
     authors:
       - 'Iván López,Sergio del Amo'
-    category: 'Advanced Grails'
+    category: 'Grails + DevOps'
     publicationDate: '2018-01-08'
     versions:
       '4':
@@ -1770,7 +1955,11 @@ guides:
         publicationDate: '2018-01-08'
         tags:
           - 'docker'
+          - 'docker-compose'
           - 'postgresql'
+          - 'devops'
+          - 'external-services'
+          - 'integration'
           - 'gradle'
         sampleRef:
           repo: 'grails-guides/grails-docker-external-services'
@@ -1807,13 +1996,14 @@ guides:
         sourcePath: guides/grails-dynamic-multiple-datasources/v3
         publicationDate: '2017-09-18'
         tags:
-          - 'spring-security-rest'
-          - 'jwt'
-          - 'multi-tenancy'
-          - 'rest-api'
           - 'multi-datasource'
-          - 'gorm-event'
-          - 'grails3'
+          - 'multi-tenancy'
+          - 'jwt'
+          - 'spring-security-rest'
+          - 'gorm-events'
+          - 'tenant-resolver'
+          - 'rest-api'
+          - 'connection-source'
         sampleRef:
           repo: 'grails-guides/grails-dynamic-multiple-datasources'
           branch: 'grails3'
@@ -1839,13 +2029,14 @@ guides:
         sourcePath: guides/grails-dynamic-multiple-datasources/v4
         publicationDate: '2017-09-18'
         tags:
-          - 'spring-security-rest'
-          - 'jwt'
-          - 'multi-tenancy'
-          - 'rest-api'
           - 'multi-datasource'
-          - 'gorm-event'
-          - 'grails4'
+          - 'multi-tenancy'
+          - 'jwt'
+          - 'spring-security-rest'
+          - 'gorm-events'
+          - 'tenant-resolver'
+          - 'rest-api'
+          - 'connection-source'
         sampleRef:
           repo: 'grails-guides/grails-dynamic-multiple-datasources'
           branch: 'master'
@@ -1873,17 +2064,20 @@ guides:
     subtitle: 'Learn how easy is to deploy a Grails App to Elastic Beanstalk.'
     authors:
       - 'Sergio del Amo'
-    category: 'Grails + DevOps'
+    category: 'Grails + Cloud'
     publicationDate: '2018-10-29'
     versions:
       '4':
         sourcePath: guides/grails-elasticbeanstalk/v4
         publicationDate: '2018-10-29'
         tags:
-          - 'actuator'
-          - 'health'
           - 'aws'
-          - 'aws-elasticbeanstlak'
+          - 'elasticbeanstalk'
+          - 'cloud'
+          - 'deployment'
+          - 'actuator'
+          - 'devops'
+          - 'health-checks'
         sampleRef:
           repo: 'grails-guides/grails-elasticbeanstalk'
           branch: 'master'
@@ -1911,7 +2105,13 @@ guides:
         publicationDate: '2018-02-12'
         tags:
           - 'elasticsearch'
+          - 'search'
+          - 'analytics'
+          - 'full-text-search'
+          - 'indexing'
           - 'rest-api'
+          - 'gorm'
+          - 'json-views'
         sampleRef:
           repo: 'grails-guides/grails-elasticsearch'
           branch: 'master'
@@ -1954,12 +2154,13 @@ guides:
         sourcePath: guides/grails-email/v3
         publicationDate: '2018-06-04'
         tags:
-          - 'spock-spring'
           - 'email'
-          - 'sendgrid'
           - 'aws'
           - 'ses'
-          - 'grails3'
+          - 'sendgrid'
+          - 'smtp'
+          - 'spock-spring'
+          - 'integration-tests'
         sampleRef:
           repo: 'grails-guides/grails-email'
           branch: 'grails3'
@@ -1983,12 +2184,13 @@ guides:
         sourcePath: guides/grails-email/v4
         publicationDate: '2018-06-04'
         tags:
-          - 'spock-spring'
           - 'email'
-          - 'sendgrid'
           - 'aws'
           - 'ses'
-          - 'grails4'
+          - 'sendgrid'
+          - 'smtp'
+          - 'spock-spring'
+          - 'integration-tests'
         sampleRef:
           repo: 'grails-guides/grails-email'
           branch: 'master'
@@ -2021,9 +2223,12 @@ guides:
         sourcePath: guides/grails-events/v3
         publicationDate: '2017-09-04'
         tags:
-          - 'async'
           - 'events'
-          - 'grails3'
+          - 'async'
+          - 'event-publishing'
+          - 'service-layer'
+          - 'gorm'
+          - 'email'
         sampleRef:
           repo: 'grails-guides/grails-events'
           branch: 'grails3'
@@ -2049,9 +2254,12 @@ guides:
         sourcePath: guides/grails-events/v4
         publicationDate: '2017-09-04'
         tags:
-          - 'async'
           - 'events'
-          - 'grails4'
+          - 'async'
+          - 'event-publishing'
+          - 'service-layer'
+          - 'gorm'
+          - 'email'
         sampleRef:
           repo: 'grails-guides/grails-events'
           branch: 'master'
@@ -2086,11 +2294,19 @@ guides:
         sourcePath: guides/grails-fields-custom-widgets-and-wrappers/v8
         publicationDate: '2026-05-02'
         tags:
-          - 'fields'
+          - 'fields-plugin'
           - 'gsp'
           - 'scaffolding'
           - 'crud'
-          - 'grails8'
+          - 'widgets'
+          - 'wrappers'
+          - 'templates'
+          - 'domain-classes'
+          - 'views'
+          - 'partials'
+          - 'taglib'
+          - 'forms'
+          - 'server-rendering'
         sampleRef:
           repo: 'grails-guides/grails-fields-custom-widgets-and-wrappers'
           branch: 'grails8'
@@ -2163,12 +2379,15 @@ guides:
         sourcePath: guides/grails-file-download-excel/v3
         publicationDate: '2018-09-03'
         tags:
-          - 'spreadsheet-builder-poi'
-          - 'spock'
-          - 'geb'
+          - 'file-download'
           - 'excel'
-          - 'file-transfer'
-          - 'grails3'
+          - 'spreadsheet-builder'
+          - 'poi'
+          - 'controllers'
+          - 'services'
+          - 'gsp'
+          - 'functional-tests'
+          - 'geb'
         sampleRef:
           repo: 'grails-guides/grails-file-download-excel'
           branch: 'grails3'
@@ -2193,12 +2412,15 @@ guides:
         sourcePath: guides/grails-file-download-excel/v4
         publicationDate: '2018-09-03'
         tags:
-          - 'spreadsheet-builder-poi'
-          - 'spock'
-          - 'geb'
+          - 'file-download'
           - 'excel'
-          - 'file-transfer'
-          - 'grails4'
+          - 'spreadsheet-builder'
+          - 'poi'
+          - 'controllers'
+          - 'services'
+          - 'gsp'
+          - 'functional-tests'
+          - 'geb'
         sampleRef:
           repo: 'grails-guides/grails-file-download-excel'
           branch: 'master'
@@ -2231,13 +2453,12 @@ guides:
         sourcePath: guides/grails-geb-multiple-browsers/v3
         publicationDate: '2017-01-30'
         tags:
-          - 'functional-test'
           - 'geb'
-          - 'firefox'
-          - 'chrome'
-          - 'phantomjs'
-          - 'htmlunit'
-          - 'grails3'
+          - 'functional-tests'
+          - 'browser-testing'
+          - 'selenium'
+          - 'gradle'
+          - 'testing'
         sampleRef:
           repo: 'grails-guides/grails-geb-multiple-browsers'
           branch: 'grails3'
@@ -2264,13 +2485,12 @@ guides:
         sourcePath: guides/grails-geb-multiple-browsers/v4
         publicationDate: '2017-01-30'
         tags:
-          - 'functional-test'
           - 'geb'
-          - 'firefox'
-          - 'chrome'
-          - 'phantomjs'
-          - 'htmlunit'
-          - 'grails4'
+          - 'functional-tests'
+          - 'browser-testing'
+          - 'selenium'
+          - 'gradle'
+          - 'testing'
         sampleRef:
           repo: 'grails-guides/grails-geb-multiple-browsers'
           branch: 'master'
@@ -2310,10 +2530,15 @@ guides:
           - 'gradle'
           - 'testcontainers'
           - 'geb'
-          - 'codecov'
+          - 'postgresql'
+          - 'functional-tests'
+          - 'integration-tests'
+          - 'unit-tests'
           - 'dependabot'
           - 'ghcr'
-          - 'grails8'
+          - 'devops'
+          - 'spock'
+          - 'pipeline'
         sampleRef:
           repo: 'grails-guides/grails-github-actions-cicd'
           branch: 'grails8'
@@ -2353,18 +2578,21 @@ guides:
     subtitle: 'Learn how to deploy a Grails 3 application to Google App Engine Java Flexible Environment, integrate with Google Cloud Storage and Google Cloud SQL'
     authors:
       - 'Sergio del Amo, Mathew Moss'
-    category: 'Grails + Google Cloud'
+    category: 'Grails + Cloud'
     publicationDate: '2017-05-01'
     versions:
       '4':
         sourcePath: guides/grails-google-cloud/v4
         publicationDate: '2017-05-01'
         tags:
-          - 'mysql'
-          - 'cloud-sql'
+          - 'google-cloud'
+          - 'app-engine'
           - 'cloud-storage'
-          - 'google-app-engine'
-          - 'logs'
+          - 'cloud-sql'
+          - 'mysql'
+          - 'cloud'
+          - 'deployment'
+          - 'devops'
         sampleRef:
           repo: 'grails-guides/grails-google-cloud'
           branch: 'master'
@@ -2413,18 +2641,19 @@ guides:
     subtitle: 'Learn to make a Goole action using Grails'
     authors:
       - 'Ryan Vanderwerf, Sergio del Amo'
-    category: 'Grails + Google Cloud'
+    category: 'Grails + Cloud'
     publicationDate: '2017-05-29'
     versions:
       '4':
         sourcePath: guides/grails-google-home/v4
         publicationDate: '2017-05-29'
         tags:
+          - 'google-cloud'
+          - 'app-engine'
+          - 'google-actions'
+          - 'voice'
+          - 'cloud'
           - 'conversation'
-          - 'ai'
-          - 'google-home'
-          - 'google-app-engine'
-          - 'web-profile'
         sampleRef:
           repo: 'grails-guides/grails-google-home'
           branch: 'grails4'
@@ -2467,10 +2696,13 @@ guides:
         publicationDate: '2018-08-20'
         tags:
           - 'gorm'
-          - 'database'
-          - 'jpq-ql'
-          - 'data-services'
-          - 'grails3'
+          - 'gorm-data-services'
+          - 'service-layer'
+          - 'data-access'
+          - 'domain-classes'
+          - 'jpa-ql'
+          - 'projections'
+          - 'unit-tests'
         sampleRef:
           repo: 'grails-guides/grails-gorm-data-services'
           branch: 'grails3'
@@ -2505,10 +2737,13 @@ guides:
         publicationDate: '2018-08-20'
         tags:
           - 'gorm'
-          - 'database'
-          - 'jpq-ql'
-          - 'data-services'
-          - 'grails4'
+          - 'gorm-data-services'
+          - 'service-layer'
+          - 'data-access'
+          - 'domain-classes'
+          - 'jpa-ql'
+          - 'projections'
+          - 'unit-tests'
         sampleRef:
           repo: 'grails-guides/grails-gorm-data-services'
           branch: 'grails4'
@@ -2554,8 +2789,13 @@ guides:
           - 'htmx'
           - 'gsp'
           - 'partials'
-          - 'no-spa'
-          - 'grails8'
+          - 'server-rendering'
+          - 'controllers'
+          - 'validation'
+          - 'progressive-enhancement'
+          - 'rest-api'
+          - 'inline-editing'
+          - 'live-search'
         sampleRef:
           repo: 'grails-guides/grails-htmx'
           branch: 'grails8'
@@ -2604,6 +2844,10 @@ guides:
         tags:
           - 'javamelody'
           - 'monitoring'
+          - 'profiling'
+          - 'plugin-development'
+          - 'metrics'
+          - 'jvm-performance'
         sampleRef:
           repo: 'grails-guides/grails-javamelody'
           branch: 'master'
@@ -2636,9 +2880,12 @@ guides:
         publicationDate: '2018-04-09'
         tags:
           - 'logical-delete'
+          - 'soft-delete'
           - 'gorm'
+          - 'plugin-development'
+          - 'domain-classes'
+          - 'integration-tests'
           - 'geb'
-          - 'grails3'
         sampleRef:
           repo: 'grails-guides/grails-logicaldelete'
           branch: 'grails3'
@@ -2668,9 +2915,12 @@ guides:
         publicationDate: '2018-04-09'
         tags:
           - 'logical-delete'
+          - 'soft-delete'
           - 'gorm'
+          - 'plugin-development'
+          - 'domain-classes'
+          - 'integration-tests'
           - 'geb'
-          - 'grails4'
         sampleRef:
           repo: 'grails-guides/grails-logicaldelete'
           branch: 'master'
@@ -2708,11 +2958,13 @@ guides:
         sourcePath: guides/grails-micronaut-http/v5
         publicationDate: '2019-12-03'
         tags:
-          - 'rest'
-          - 'test'
-          - 'client'
           - 'micronaut'
-          - 'grails5'
+          - 'http-client'
+          - 'rest-api'
+          - 'declarative-client'
+          - 'spock'
+          - 'aop'
+          - 'reactive'
         sampleRef:
           repo: 'grails-guides/grails-micronaut-http'
           branch: 'grails5'
@@ -2749,7 +3001,12 @@ guides:
         publicationDate: '2021-10-14'
         tags:
           - 'kafka'
+          - 'micronaut'
           - 'message-queues'
+          - 'async'
+          - 'event-driven'
+          - 'streaming'
+          - 'pub-sub'
         sampleRef:
           repo: 'grails-guides/grails-micronaut-kafka'
           branch: 'master'
@@ -2786,10 +3043,15 @@ guides:
         sourcePath: guides/grails-mock-basics/v3
         publicationDate: '2017-04-24'
         tags:
-          - 'unit-test'
-          - 'mock'
           - 'spock'
-          - 'grails3'
+          - 'mocking'
+          - 'unit-tests'
+          - 'integration-tests'
+          - 'service-layer'
+          - 'gorm'
+          - 'hibernate'
+          - 'testing'
+          - 'verification'
         sampleRef:
           repo: 'grails-guides/grails-mock-basics'
           branch: 'master'
@@ -2818,10 +3080,15 @@ guides:
         sourcePath: guides/grails-mock-basics/v4
         publicationDate: '2017-04-24'
         tags:
-          - 'unit-test'
-          - 'mock'
           - 'spock'
-          - 'grails4'
+          - 'mocking'
+          - 'unit-tests'
+          - 'integration-tests'
+          - 'service-layer'
+          - 'gorm'
+          - 'hibernate'
+          - 'testing'
+          - 'verification'
         sampleRef:
           repo: 'grails-guides/grails-mock-basics'
           branch: 'master'
@@ -2860,9 +3127,14 @@ guides:
         publicationDate: '2017-08-14'
         tags:
           - 'ersatz'
-          - 'mock'
-          - 'rest'
-          - 'grails3'
+          - 'mocking'
+          - 'http-client'
+          - 'rest-api'
+          - 'testing'
+          - 'integration-tests'
+          - 'spock'
+          - 'third-party-apis'
+          - 'web-services'
         sampleRef:
           repo: 'grails-guides/grails-mock-http-server'
           branch: 'grails3'
@@ -2893,9 +3165,14 @@ guides:
         publicationDate: '2017-08-14'
         tags:
           - 'ersatz'
-          - 'mock'
-          - 'rest'
-          - 'grails4'
+          - 'mocking'
+          - 'http-client'
+          - 'rest-api'
+          - 'testing'
+          - 'integration-tests'
+          - 'spock'
+          - 'third-party-apis'
+          - 'web-services'
         sampleRef:
           repo: 'grails-guides/grails-mock-http-server'
           branch: 'master'
@@ -2933,12 +3210,13 @@ guides:
         sourcePath: guides/grails-mock-logging-slf4j-test/v3
         publicationDate: '2018-06-11'
         tags:
-          - 'spock'
           - 'slf4j'
-          - 'mock'
-          - 'log'
-          - 'test'
-          - 'grails3'
+          - 'mocking'
+          - 'logging'
+          - 'unit-tests'
+          - 'spock'
+          - 'verification'
+          - 'testing'
         sampleRef:
           repo: 'grails-guides/grails-mock-logging-slf4j-test'
           branch: 'grails3'
@@ -2967,12 +3245,13 @@ guides:
         sourcePath: guides/grails-mock-logging-slf4j-test/v4
         publicationDate: '2018-06-11'
         tags:
-          - 'spock'
           - 'slf4j'
-          - 'mock'
-          - 'log'
-          - 'test'
-          - 'grails4'
+          - 'mocking'
+          - 'logging'
+          - 'unit-tests'
+          - 'spock'
+          - 'verification'
+          - 'testing'
         sampleRef:
           repo: 'grails-guides/grails-mock-logging-slf4j-test'
           branch: 'grails4'
@@ -3012,7 +3291,12 @@ guides:
         tags:
           - 'multi-datasource'
           - 'json-views'
-          - 'grails3'
+          - 'gorm'
+          - 'hibernate'
+          - 'database'
+          - 'transactions'
+          - 'rest-api'
+          - 'configuration'
         sampleRef:
           repo: 'grails-guides/grails-multi-datasource'
           branch: 'grails3'
@@ -3041,7 +3325,12 @@ guides:
         tags:
           - 'multi-datasource'
           - 'json-views'
-          - 'grails4'
+          - 'gorm'
+          - 'hibernate'
+          - 'database'
+          - 'transactions'
+          - 'rest-api'
+          - 'configuration'
         sampleRef:
           repo: 'grails-guides/grails-multi-datasource'
           branch: 'master'
@@ -3080,9 +3369,14 @@ guides:
           - 'multi-project'
           - 'grails-plugin'
           - 'gradle'
-          - 'gorm'
           - 'monorepo'
-          - 'grails8'
+          - 'shared-core'
+          - 'gorm'
+          - 'gorm-data-services'
+          - 'plugin-development'
+          - 'domain-classes'
+          - 'modular'
+          - 'spring-security'
         sampleRef:
           repo: 'grails-guides/grails-multi-module'
           branch: 'grails8'
@@ -3125,7 +3419,10 @@ guides:
         tags:
           - 'gradle'
           - 'multi-project'
-          - 'grails4'
+          - 'plugin-development'
+          - 'modular'
+          - 'build'
+          - 'devops'
         sampleRef:
           repo: 'grails-guides/grails-multi-project-build'
           branch: 'master'
@@ -3155,7 +3452,7 @@ guides:
     subtitle: 'Learn how to use Google OAuth2 with Grails 3 and Spring Security REST plugin'
     authors:
       - 'Ben Rhine'
-    category: 'Grails + Google Cloud'
+    category: 'Security'
     publicationDate: '2018-03-19'
     versions:
       '4':
@@ -3163,8 +3460,15 @@ guides:
         publicationDate: '2018-03-19'
         tags:
           - 'spring-security-rest'
-          - 'google'
+          - 'spring-security'
           - 'oauth'
+          - 'oauth2'
+          - 'google'
+          - 'authentication'
+          - 'jwt'
+          - 'rest-api'
+          - 'security'
+          - 'social-login'
         sampleRef:
           repo: 'grails-guides/grails-oauth-google'
           branch: 'master'
@@ -3203,7 +3507,7 @@ guides:
     subtitle: 'Learn how to use Twitter OAuth with Grails 3 and Spring Security REST plugin'
     authors:
       - 'Ben Rhine, Sergio del Amo'
-    category: 'Advanced Grails'
+    category: 'Security'
     publicationDate: '2018-04-30'
     versions:
       '4':
@@ -3211,8 +3515,14 @@ guides:
         publicationDate: '2018-04-30'
         tags:
           - 'spring-security-rest'
+          - 'spring-security'
           - 'oauth'
           - 'twitter'
+          - 'authentication'
+          - 'jwt'
+          - 'rest-api'
+          - 'security'
+          - 'social-login'
         sampleRef:
           repo: 'grails-guides/grails-oauth-twitter'
           branch: 'master'
@@ -3259,12 +3569,13 @@ guides:
         publicationDate: '2018-07-16'
         tags:
           - 'circleci'
-          - 'ci'
+          - 'ci-cd'
           - 'testing'
-          - 'chrome'
-          - 'firefox'
           - 'geb'
-          - 'grails4'
+          - 'devops'
+          - 'pipeline'
+          - 'gradle'
+          - 'functional-tests'
         sampleRef:
           repo: 'grails-guides/grails-on-circleci-basics'
           branch: 'master'
@@ -3303,14 +3614,14 @@ guides:
         sourcePath: guides/grails-on-github-actions/v4
         publicationDate: '2019-12-16'
         tags:
-          - 'github'
           - 'github-actions'
-          - 'ci'
+          - 'ci-cd'
           - 'testing'
-          - 'chrome'
-          - 'firefox'
           - 'geb'
-          - 'grails4'
+          - 'devops'
+          - 'pipeline'
+          - 'gradle'
+          - 'functional-tests'
         sampleRef:
           repo: 'grails-guides/grails-on-github-actions'
           branch: 'master'
@@ -3349,12 +3660,13 @@ guides:
         publicationDate: '2018-06-25'
         tags:
           - 'travis'
-          - 'ci'
+          - 'ci-cd'
           - 'testing'
-          - 'chrome'
-          - 'firefox'
           - 'geb'
-          - 'grails3'
+          - 'devops'
+          - 'pipeline'
+          - 'gradle'
+          - 'functional-tests'
         sampleRef:
           repo: 'grails-guides/grails-on-travis-basics'
           branch: 'grails3'
@@ -3385,12 +3697,13 @@ guides:
         publicationDate: '2018-06-25'
         tags:
           - 'travis'
-          - 'ci'
+          - 'ci-cd'
           - 'testing'
-          - 'chrome'
-          - 'firefox'
           - 'geb'
-          - 'grails3'
+          - 'devops'
+          - 'pipeline'
+          - 'gradle'
+          - 'functional-tests'
         sampleRef:
           repo: 'grails-guides/grails-on-travis-basics'
           branch: 'master'
@@ -3431,6 +3744,9 @@ guides:
         tags:
           - 'quickcast'
           - 'logging'
+          - 'slf4j'
+          - 'configuration'
+          - 'parameterized-logging'
         sampleRef:
           repo: 'grails-guides/grails-quickcast-logging'
           branch: 'master'
@@ -3447,7 +3763,7 @@ guides:
     subtitle: 'Grails Quickcast #4'
     authors:
       - 'James Kleeh'
-    category: 'Grails + AngularJS'
+    category: 'Frontend SPA'
     publicationDate: '2016-07-05'
     versions:
       '4':
@@ -3456,6 +3772,11 @@ guides:
         tags:
           - 'quickcast'
           - 'angularjs'
+          - 'scaffolding'
+          - 'spa'
+          - 'frontend'
+          - 'rest-api'
+          - 'profile'
         sampleRef:
           repo: 'grails-guides/grails-quickcasts-angularjs-scaffolding-with-grails-3'
           branch: 'master'
@@ -3481,7 +3802,8 @@ guides:
         tags:
           - 'quickcast'
           - 'intellij-idea'
-          - 'ide'
+          - 'tooling'
+          - 'productivity'
         sampleRef:
           repo: 'grails-guides/grails-quickcasts-developing-grails-3-applications-with-intellij-idea'
           branch: 'master'
@@ -3506,7 +3828,11 @@ guides:
         publicationDate: '2016-01-25'
         tags:
           - 'quickcast'
-          - 'interceptor'
+          - 'interceptors'
+          - 'web-layer'
+          - 'controllers'
+          - 'middleware'
+          - 'aop'
         sampleRef:
           repo: 'grails-guides/grails-quickcasts-interceptors'
           branch: 'master'
@@ -3531,7 +3857,10 @@ guides:
         publicationDate: '2016-03-24'
         tags:
           - 'quickcast'
-          - 'json-view'
+          - 'json-views'
+          - 'rest-api'
+          - 'serialization'
+          - 'web-layer'
         sampleRef:
           repo: 'grails-guides/grails-quickcasts-json-views'
           branch: 'master'
@@ -3557,6 +3886,9 @@ guides:
         tags:
           - 'quickcast'
           - 'gradle'
+          - 'multi-project'
+          - 'modular'
+          - 'devops'
         sampleRef:
           repo: 'grails-guides/grails-quickcasts-multi-project-builds'
           branch: 'master'
@@ -3582,6 +3914,8 @@ guides:
         tags:
           - 'quickcast'
           - 'configuration'
+          - 'environment-profiles'
+          - 'property-binding'
         sampleRef:
           repo: 'grails-guides/grails-quickcasts-retrieving-config-values'
           branch: 'master'
@@ -3605,8 +3939,13 @@ guides:
         sourcePath: guides/grails-rabbitmq/v4
         publicationDate: '2018-03-05'
         tags:
-          - 'rabbitMQ'
+          - 'rabbitmq'
           - 'message-queues'
+          - 'amqp'
+          - 'async'
+          - 'event-driven'
+          - 'pub-sub'
+          - 'integration'
         sampleRef:
           repo: 'grails-guides/grails-rabbitmq'
           branch: 'master'
@@ -3641,15 +3980,17 @@ guides:
     subtitle: 'Build a backend for an already existing AngularJS application (Angular 1) with Grails rest api profile'
     authors:
       - 'Sergio del Amo'
-    category: 'Grails + AngularJS'
+    category: 'Frontend SPA'
     publicationDate: '2017-02-20'
     versions:
       '4':
         sourcePath: guides/grails-restapi-angularjs/v4
         publicationDate: '2017-02-20'
         tags:
-          - 'cors'
           - 'angularjs'
+          - 'rest-api'
+          - 'cors'
+          - 'spa'
         sampleRef:
           repo: 'grails-guides/grails-restapi-angularjs'
           branch: 'grails4'
@@ -3685,15 +4026,18 @@ guides:
         sourcePath: guides/grails-rest-library/v8
         publicationDate: '2026-05-03'
         tags:
-          - 'rest'
           - 'rest-api'
           - 'json-views'
           - 'gson'
-          - 'restful-controller'
-          - 'gorm'
-          - 'pagination'
           - 'validation'
-          - 'grails8'
+          - 'pagination'
+          - 'api-versioning'
+          - 'crud'
+          - 'domain-classes'
+          - 'restful-controller'
+          - 'spring-boot'
+          - 'controllers'
+          - 'gorm'
         sampleRef:
           repo: 'grails-guides/grails-rest-library'
           branch: 'grails8'
@@ -3740,14 +4084,13 @@ guides:
         sourcePath: guides/grails-scheduled/v3
         publicationDate: '2018-02-26'
         tags:
+          - 'scheduling'
           - 'spring'
           - 'spring-boot'
-          - 'task'
-          - 'execution'
-          - 'scheduling'
-          - 'job'
           - 'cron'
-          - 'grails3'
+          - 'async'
+          - 'job-scheduling'
+          - 'background-tasks'
         sampleRef:
           repo: 'grails-guides/grails-scheduled'
           branch: 'grails3'
@@ -3773,14 +4116,13 @@ guides:
         sourcePath: guides/grails-scheduled/v4
         publicationDate: '2018-02-26'
         tags:
+          - 'scheduling'
           - 'spring'
           - 'spring-boot'
-          - 'task'
-          - 'execution'
-          - 'scheduling'
-          - 'job'
           - 'cron'
-          - 'grails4'
+          - 'async'
+          - 'job-scheduling'
+          - 'background-tasks'
         sampleRef:
           repo: 'grails-guides/grails-scheduled'
           branch: 'grails4'
@@ -3816,8 +4158,13 @@ guides:
         publicationDate: '2018-01-23'
         tags:
           - 'quartz'
-          - 'job'
-          - 'schwatz'
+          - 'schwartz'
+          - 'scheduling'
+          - 'cron'
+          - 'async'
+          - 'job-scheduling'
+          - 'background-tasks'
+          - 'plugin-development'
         sampleRef:
           repo: 'grails-guides/grails-schwartz'
           branch: 'master'
@@ -3852,8 +4199,13 @@ guides:
         publicationDate: '2017-10-03'
         tags:
           - 'soap'
+          - 'web-services'
+          - 'xml'
+          - 'wsdl'
+          - 'integration'
+          - 'enterprise'
           - 'geb'
-          - 'grails3'
+          - 'functional-tests'
         sampleRef:
           repo: 'grails-guides/grails-soap'
           branch: 'grails3'
@@ -3877,8 +4229,13 @@ guides:
         publicationDate: '2017-10-03'
         tags:
           - 'soap'
+          - 'web-services'
+          - 'xml'
+          - 'wsdl'
+          - 'integration'
+          - 'enterprise'
           - 'geb'
-          - 'grails4'
+          - 'functional-tests'
         sampleRef:
           repo: 'grails-guides/grails-soap'
           branch: 'master'
@@ -3911,13 +4268,18 @@ guides:
         publicationDate: '2026-05-03'
         tags:
           - 'spock'
-          - 'testing'
-          - 'gorm'
-          - 'data-test'
-          - 'integration-test'
+          - 'unit-tests'
+          - 'integration-tests'
+          - 'functional-tests'
           - 'geb'
+          - 'testing'
+          - 'data-test'
+          - 'domain-classes'
+          - 'controllers'
           - 'jacoco'
-          - 'grails8'
+          - 'code-coverage'
+          - 'mocking'
+          - 'services'
         sampleRef:
           repo: 'grails-guides/grails-spock-test-tour'
           branch: 'grails8'
@@ -3951,7 +4313,7 @@ guides:
     subtitle: 'Shows how to create a custom authentication with Spring Security Core Plugin'
     authors:
       - 'Sergio del Amo'
-    category: 'Advanced Grails'
+    category: 'Security'
     publicationDate: '2017-04-10'
     versions:
       '3':
@@ -3959,7 +4321,12 @@ guides:
         publicationDate: '2017-04-10'
         tags:
           - 'spring-security-core'
-          - 'grails3'
+          - 'spring-security'
+          - 'authentication'
+          - 'custom-authentication'
+          - 'authorization'
+          - 'security'
+          - 'plugin-development'
         sampleRef:
           repo: 'grails-guides/grails-spring-security-core-plugin-custom-authentication'
           branch: 'grails3'
@@ -3989,7 +4356,12 @@ guides:
         publicationDate: '2017-04-10'
         tags:
           - 'spring-security-core'
-          - 'grails4'
+          - 'spring-security'
+          - 'authentication'
+          - 'custom-authentication'
+          - 'authorization'
+          - 'security'
+          - 'plugin-development'
         sampleRef:
           repo: 'grails-guides/grails-spring-security-core-plugin-custom-authentication'
           branch: 'master'
@@ -4027,11 +4399,17 @@ guides:
         sourcePath: guides/grails-tailwindcss/v8
         publicationDate: '2026-05-03'
         tags:
-          - 'tailwindcss'
+          - 'tailwind'
           - 'css'
           - 'gsp'
           - 'asset-pipeline'
-          - 'grails8'
+          - 'utility-classes'
+          - 'dark-mode'
+          - 'gradle'
+          - 'server-rendering'
+          - 'styling'
+          - 'responsive-design'
+          - 'frontend-build'
         sampleRef:
           repo: 'grails-guides/grails-tailwindcss'
           branch: 'grails8'
@@ -4074,7 +4452,11 @@ guides:
         tags:
           - 'taglib'
           - 'trix-editor'
-          - 'grails3'
+          - 'wysiwyg'
+          - 'gsp'
+          - 'frontend'
+          - 'plugin-development'
+          - 'unit-tests'
         sampleRef:
           repo: 'grails-guides/grails-taglib-wyswyg-trix'
           branch: 'grails3'
@@ -4102,7 +4484,11 @@ guides:
         tags:
           - 'taglib'
           - 'trix-editor'
-          - 'grails4'
+          - 'wysiwyg'
+          - 'gsp'
+          - 'frontend'
+          - 'plugin-development'
+          - 'unit-tests'
         sampleRef:
           repo: 'grails-guides/grails-taglib-wyswyg-trix'
           branch: 'grails4'
@@ -4137,8 +4523,14 @@ guides:
         sourcePath: guides/grails-test-domain-class-constraints/v3
         publicationDate: '2017-04-03'
         tags:
-          - 'unit-test'
-          - 'grails3'
+          - 'domain-classes'
+          - 'unit-tests'
+          - 'validation'
+          - 'gorm'
+          - 'spock'
+          - 'testing'
+          - 'constraints'
+          - 'data-integrity'
         sampleRef:
           repo: 'grails-guides/grails-test-domain-class-constraints'
           branch: 'grails3'
@@ -4159,8 +4551,14 @@ guides:
         sourcePath: guides/grails-test-domain-class-constraints/v4
         publicationDate: '2017-04-03'
         tags:
-          - 'unit-test'
-          - 'grails4'
+          - 'domain-classes'
+          - 'unit-tests'
+          - 'validation'
+          - 'gorm'
+          - 'spock'
+          - 'testing'
+          - 'constraints'
+          - 'data-integrity'
         sampleRef:
           repo: 'grails-guides/grails-test-domain-class-constraints'
           branch: 'grails4'
@@ -4183,7 +4581,7 @@ guides:
     subtitle: 'In this guide you will see how to test the security constraints you added with Grails Spring Security REST Plugin and Grails Spring Security Core Plugin.'
     authors:
       - 'Sergio del Amo'
-    category: 'Grails Testing'
+    category: 'Security'
     publicationDate: '2017-01-16'
     versions:
       '3':
@@ -4191,12 +4589,14 @@ guides:
         publicationDate: '2017-01-16'
         tags:
           - 'spring-security-rest'
-          - 'rest-api'
-          - 'functional-test'
-          - 'geb'
           - 'spring-security-core'
+          - 'rest-api'
+          - 'functional-tests'
+          - 'geb'
           - 'micronaut-http-client'
-          - 'grails3'
+          - 'testing'
+          - 'security'
+          - 'authentication'
         sampleRef:
           repo: 'grails-guides/grails-test-security'
           branch: 'grails3'
@@ -4226,12 +4626,14 @@ guides:
         publicationDate: '2017-01-16'
         tags:
           - 'spring-security-rest'
-          - 'rest-api'
-          - 'functional-test'
-          - 'geb'
           - 'spring-security-core'
+          - 'rest-api'
+          - 'functional-tests'
+          - 'geb'
           - 'micronaut-http-client'
-          - 'grails4'
+          - 'testing'
+          - 'security'
+          - 'authentication'
         sampleRef:
           repo: 'grails-guides/grails-test-security'
           branch: 'master'
@@ -4267,11 +4669,12 @@ guides:
         sourcePath: guides/grails-tvmlapp/v3
         publicationDate: '2017-03-20'
         tags:
-          - 'tvml'
           - 'apple-tv'
-          - 'tvmljs'
           - 'tvos'
-          - 'grails3'
+          - 'tvml'
+          - 'apple'
+          - 'mobile-client'
+          - 'i18n'
         sampleRef:
           repo: 'grails-guides/grails-tvmlapp'
           branch: 'grails3'
@@ -4301,11 +4704,12 @@ guides:
         sourcePath: guides/grails-tvmlapp/v4
         publicationDate: '2017-03-20'
         tags:
-          - 'tvml'
           - 'apple-tv'
-          - 'tvmljs'
           - 'tvos'
-          - 'grails4'
+          - 'tvml'
+          - 'apple'
+          - 'mobile-client'
+          - 'i18n'
         sampleRef:
           repo: 'grails-guides/grails-tvmlapp'
           branch: 'master'
@@ -4344,10 +4748,15 @@ guides:
         sourcePath: guides/grails-upload-file/v3
         publicationDate: '2017-03-13'
         tags:
-          - 'command-object'
+          - 'file-upload'
+          - 'command-objects'
           - 'aws'
           - 's3'
-          - 'grails3'
+          - 'cloud-storage'
+          - 'controllers'
+          - 'validation'
+          - 'gsp'
+          - 'forms'
         sampleRef:
           repo: 'grails-guides/grails-upload-file'
           branch: 'grails3'
@@ -4385,10 +4794,15 @@ guides:
         sourcePath: guides/grails-upload-file/v4
         publicationDate: '2017-03-13'
         tags:
-          - 'command-object'
+          - 'file-upload'
+          - 'command-objects'
           - 'aws'
           - 's3'
-          - 'grails4'
+          - 'cloud-storage'
+          - 'controllers'
+          - 'validation'
+          - 'gsp'
+          - 'forms'
         sampleRef:
           repo: 'grails-guides/grails-upload-file'
           branch: 'grails4'
@@ -4439,9 +4853,13 @@ guides:
           - 'react'
           - 'spa'
           - 'json-views'
-          - 'two-tier'
+          - 'rest-api'
           - 'monorepo'
-          - 'grails8'
+          - 'gradle'
+          - 'multi-project'
+          - 'spring-boot'
+          - 'node'
+          - 'webpack'
         sampleRef:
           repo: 'grails-guides/grails-vite-spa'
           branch: 'grails8'
@@ -4477,7 +4895,7 @@ guides:
     subtitle: 'Learn how to replace a RESTful API in Node/Express with Grails'
     authors:
       - 'Zachary Klein, Sergio del Amo'
-    category: 'Grails + React'
+    category: 'Frontend SPA'
     publicationDate: '2017-07-17'
     versions:
       '4':
@@ -4485,11 +4903,14 @@ guides:
         publicationDate: '2017-07-17'
         tags:
           - 'react'
-          - 'rest'
+          - 'node'
+          - 'rest-api'
           - 'authentication'
           - 'security'
           - 'ssl'
           - 'websockets'
+          - 'migration'
+          - 'comparison'
         sampleRef:
           repo: 'grails-guides/grails-vs-nodejs'
           branch: 'master'
@@ -4528,7 +4949,7 @@ guides:
     subtitle: 'Learn how to generate a JAR file which combines Vue and Grails production artefacts.'
     authors:
       - 'Nirav Assar, Zachary Klein'
-    category: 'Grails + Vue.js'
+    category: 'Frontend SPA'
     publicationDate: '2018-11-05'
     versions:
       '4':
@@ -4536,9 +4957,11 @@ guides:
         publicationDate: '2018-11-05'
         tags:
           - 'vue'
-          - 'javascript'
           - 'gradle'
           - 'multi-project'
+          - 'spa'
+          - 'rest-api'
+          - 'profile'
         sampleRef:
           repo: 'grails-guides/grails-vue-combined'
           branch: 'master'
@@ -4572,11 +4995,11 @@ guides:
         tags:
           - 'yourkit'
           - 'profiling'
-          - 'heap-memory'
+          - 'jvm-performance'
+          - 'memory-analysis'
+          - 'cpu-profiling'
           - 'garbage-collection'
-          - 'cpu'
-          - 'web-profile'
-          - 'grails4'
+          - 'optimization'
         sampleRef:
           repo: 'grails-guides/grails-yourkit-profiling'
           branch: 'master'
@@ -4617,9 +5040,12 @@ guides:
         publicationDate: '2017-03-27'
         tags:
           - 'neo4j'
-          - 'nosql'
-          - 'graph'
           - 'gorm'
+          - 'graph-database'
+          - 'nosql'
+          - 'rest-api'
+          - 'cypher'
+          - 'domain-classes'
         sampleRef:
           repo: 'grails-guides/neo4j-movies'
           branch: 'master'
@@ -4657,9 +5083,13 @@ guides:
         publicationDate: '2017-09-25'
         tags:
           - 'gorm'
+          - 'dynamic-finders'
           - 'query'
           - 'database'
-          - 'grails3'
+          - 'hibernate'
+          - 'criteria-queries'
+          - 'domain-classes'
+          - 'performance'
         sampleRef:
           repo: 'grails-guides/querying-gorm-dynamic-finders'
           branch: 'grails3'
@@ -4698,9 +5128,13 @@ guides:
         publicationDate: '2017-09-25'
         tags:
           - 'gorm'
+          - 'dynamic-finders'
           - 'query'
           - 'database'
-          - 'grails4'
+          - 'hibernate'
+          - 'criteria-queries'
+          - 'domain-classes'
+          - 'performance'
         sampleRef:
           repo: 'grails-guides/querying-gorm-dynamic-finders'
           branch: 'master'
@@ -4740,7 +5174,7 @@ guides:
     subtitle: 'Learn how to generate a JAR file which combines React and Grails production artefacts.'
     authors:
       - 'Zachary Klein'
-    category: 'Grails + React'
+    category: 'Frontend SPA'
     publicationDate: '2017-06-12'
     versions:
       '4':
@@ -4748,9 +5182,11 @@ guides:
         publicationDate: '2017-06-12'
         tags:
           - 'react'
-          - 'javascript'
           - 'gradle'
           - 'multi-project'
+          - 'spa'
+          - 'rest-api'
+          - 'profile'
         sampleRef:
           repo: 'grails-guides/react-combined'
           branch: 'grails4'
@@ -4774,7 +5210,7 @@ guides:
     subtitle: 'Learn how to add Spring Security to your React app'
     authors:
       - 'Ben Rhine, Zachary Klein'
-    category: 'Grails + React'
+    category: 'Security'
     publicationDate: '2018-02-10'
     versions:
       '4':
@@ -4782,11 +5218,14 @@ guides:
         publicationDate: '2018-02-10'
         tags:
           - 'react'
-          - 'grails'
-          - 'javascript'
-          - 'security'
           - 'spring-security-rest'
+          - 'spring-security'
           - 'rest-api'
+          - 'authentication'
+          - 'jwt'
+          - 'spa'
+          - 'frontend'
+          - 'security'
         sampleRef:
           repo: 'grails-guides/react-spring-security'
           branch: 'master'
@@ -4842,11 +5281,15 @@ guides:
         sourcePath: guides/rest-hibernate/v3
         publicationDate: '2016-11-23'
         tags:
-          - 'hibernate'
           - 'rest-api'
-          - 'json'
+          - 'hibernate'
           - 'gorm'
-          - 'grails3'
+          - 'json-views'
+          - 'json'
+          - 'crud'
+          - 'controllers'
+          - 'restful-controller'
+          - 'serialization'
         sampleRef:
           repo: 'grails-guides/rest-hibernate'
           branch: 'grails3'
@@ -4879,11 +5322,15 @@ guides:
         sourcePath: guides/rest-hibernate/v4
         publicationDate: '2016-11-23'
         tags:
-          - 'hibernate'
           - 'rest-api'
-          - 'json'
+          - 'hibernate'
           - 'gorm'
-          - 'grails4'
+          - 'json-views'
+          - 'json'
+          - 'crud'
+          - 'controllers'
+          - 'restful-controller'
+          - 'serialization'
         sampleRef:
           repo: 'grails-guides/rest-hibernate'
           branch: 'grails4'
@@ -4925,11 +5372,14 @@ guides:
         sourcePath: guides/rest-mongodb/v4
         publicationDate: '2016-11-23'
         tags:
-          - 'mongodb'
           - 'rest-api'
-          - 'json'
+          - 'mongodb'
           - 'gorm'
-          - 'grails4'
+          - 'json-views'
+          - 'nosql'
+          - 'crud'
+          - 'controllers'
+          - 'serialization'
         sampleRef:
           repo: 'grails-guides/rest-mongodb'
           branch: 'master'
@@ -4971,10 +5421,14 @@ guides:
         sourcePath: guides/server-sent-events/v3
         publicationDate: '2016-11-11'
         tags:
+          - 'server-sent-events'
           - 'rxjava'
           - 'reactive'
+          - 'async'
+          - 'real-time'
           - 'html5'
-          - 'grails3'
+          - 'event-stream'
+          - 'web-layer'
         sampleRef:
           repo: 'grails-guides/server-sent-events'
           branch: 'grails3'
@@ -4999,10 +5453,14 @@ guides:
         sourcePath: guides/server-sent-events/v4
         publicationDate: '2016-11-11'
         tags:
+          - 'server-sent-events'
           - 'rxjava'
           - 'reactive'
+          - 'async'
+          - 'real-time'
           - 'html5'
-          - 'grails4'
+          - 'event-stream'
+          - 'web-layer'
         sampleRef:
           repo: 'grails-guides/server-sent-events'
           branch: 'grails4'
@@ -5037,9 +5495,14 @@ guides:
         publicationDate: '2017-04-17'
         tags:
           - 'hal'
-          - 'rest'
-          - 'json views'
-          - 'grails3'
+          - 'rest-api'
+          - 'json-views'
+          - 'hateoas'
+          - 'hypermedia'
+          - 'pagination'
+          - 'links'
+          - 'api-design'
+          - 'serialization'
         sampleRef:
           repo: 'grails-guides/using-hal-with-json-views'
           branch: 'grails3'
@@ -5071,9 +5534,14 @@ guides:
         publicationDate: '2017-04-17'
         tags:
           - 'hal'
-          - 'rest'
-          - 'json views'
-          - 'grails4'
+          - 'rest-api'
+          - 'json-views'
+          - 'hateoas'
+          - 'hypermedia'
+          - 'pagination'
+          - 'links'
+          - 'api-design'
+          - 'serialization'
         sampleRef:
           repo: 'grails-guides/using-hal-with-json-views'
           branch: 'master'
@@ -5106,7 +5574,7 @@ guides:
     subtitle: 'This guide introduces the React profile for Grails.'
     authors:
       - 'Zachary Klein'
-    category: 'Grails + React'
+    category: 'Frontend SPA'
     publicationDate: '2016-11-24'
     versions:
       '4':
@@ -5115,8 +5583,11 @@ guides:
         tags:
           - 'react'
           - 'node'
-          - 'javascript'
-          - 'grails4'
+          - 'json-views'
+          - 'profile'
+          - 'spa'
+          - 'multi-project'
+          - 'rest-api'
         sampleRef:
           repo: 'grails-guides/using-the-react-profile'
           branch: 'master'
@@ -5138,7 +5609,7 @@ guides:
     subtitle: 'This guide introduces the Vue.js profile for Grails.'
     authors:
       - 'Zachary Klein'
-    category: 'Grails + Vue.js'
+    category: 'Frontend SPA'
     publicationDate: '2018-03-12'
     versions:
       '3':
@@ -5147,9 +5618,11 @@ guides:
         tags:
           - 'vue'
           - 'node'
-          - 'javascript'
-          - 'vue-profile'
-          - 'grails3'
+          - 'profile'
+          - 'spa'
+          - 'multi-project'
+          - 'rest-api'
+          - 'json-views'
         sampleRef:
           repo: 'grails-guides/using-the-vue-profile'
           branch: 'grails3'
@@ -5171,9 +5644,11 @@ guides:
         tags:
           - 'vue'
           - 'node'
-          - 'javascript'
-          - 'vue-profile'
-          - 'grails4'
+          - 'profile'
+          - 'spa'
+          - 'multi-project'
+          - 'rest-api'
+          - 'json-views'
         sampleRef:
           repo: 'grails-guides/using-the-vue-profile'
           branch: 'master'
@@ -5195,7 +5670,7 @@ guides:
     subtitle: 'Learn how to build a Grails 3 application with the Vaadin 8 Framework'
     authors:
       - 'Ben Rhine'
-    category: 'Grails + RIA (Rich Internet Application)'
+    category: 'Web Layer'
     publicationDate: '2017-07-24'
     versions:
       '4':
@@ -5203,8 +5678,10 @@ guides:
         publicationDate: '2017-07-24'
         tags:
           - 'vaadin'
-          - 'frontend'
-          - 'framework'
+          - 'plugin-development'
+          - 'rich-ui'
+          - 'enterprise'
+          - 'java'
         sampleRef:
           repo: 'grails-guides/vaadin-grails'
           branch: 'grails4'
