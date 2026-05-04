@@ -1,13 +1,20 @@
-Both webapps consume `shared-core` via a single line in their `dependencies` block:
+Each webapp should consume `shared-core` through the Grails plugin block in its `build.gradle`, not through a plain `dependencies { ... }` entry:
 
 [source,groovy]
+.webapp-customer/build.gradle and webapp-admin/build.gradle
 ----
-implementation project(':shared-core')
+grails {
+    plugins {
+        implementation project(':shared-core')
+    }
+}
 ----
 
-That line goes immediately under `profile "org.apache.grails.profiles:web"` in each webapp's `build.gradle`. Once it is in place, the plugin's `Book` domain and `BookService` data service are visible to the consumer's controllers, services, and GSPs at compile time, *and* GORM treats the consumer's persistent context as the place those entities live at runtime.
+That is the Grails-aware multi-project path documented in `grails-doc/src/en/guide/plugins/creatingAndInstallingPlugins.adoc`. Under the hood, `grails-gradle/plugins/src/main/groovy/org/grails/gradle/plugin/core/PluginDefiner.groovy` tags project plugin dependencies so `bootRun` can request the exploded plugin variant, while `grails-gradle/plugins/src/main/groovy/org/grails/gradle/plugin/exploded/GrailsExplodedPlugin.groovy` publishes that exploded classes/resources variant from the plugin project. A plain `dependencies { implementation project(':shared-core') }` declaration still compiles, but it bypasses that built-in reload path.
 
-Each webapp owns its own controller package. The customer webapp uses `customer.*`:
+Once wired, the plugin's `example.Book` domain and `example.BookService` data service are available to both webapps at compile time and runtime.
+
+The customer webapp owns its own controller package:
 
 [source,groovy]
 .webapp-customer/grails-app/controllers/customer/CatalogController.groovy
@@ -15,7 +22,7 @@ Each webapp owns its own controller package. The customer webapp uses `customer.
 include::../snippets/webapp-customer/grails-app/controllers/customer/CatalogController.groovy[]
 ----
 
-The admin webapp uses `admin.*`:
+The admin webapp owns a different controller package:
 
 [source,groovy]
 .webapp-admin/grails-app/controllers/admin/BookController.groovy
@@ -23,10 +30,15 @@ The admin webapp uses `admin.*`:
 include::../snippets/webapp-admin/grails-app/controllers/admin/BookController.groovy[]
 ----
 
-Three patterns to highlight:
+Three patterns to keep:
 
-* Both controllers reference `example.Book` and `example.BookService` from the plugin. Neither one duplicates a single line of domain or service code.
-* The customer-side `CatalogController` is hand-rolled; it deliberately does not extend `RestfulController`. Customers should not see `/v1/books` (POST/PUT/DELETE).
-* The admin-side `BookController` extends `RestfulController<Book>`. The full CRUD surface comes for free; the admin webapp picks it up by reference.
+* Both controllers import `example.Book` and `example.BookService` from the plugin. The shared data model still has exactly one owner.
+* The customer-side `CatalogController` is intentionally hand-rolled and read-only.
+* The admin-side `BookController` extends `RestfulController<Book>` and gets the CRUD-oriented web surface that belongs only in the admin app.
 
-The package separation (`customer.*` vs `admin.*` for controllers, `example.*` for domain/service) is not enforced by Grails; it is a convention. But it is the convention that keeps refactors honest: a piece of code that lives under `example.*` belongs to the data layer, and any UI concern that creeps in there (a controller, a tag library, a flash-message string) is by definition misplaced.
+Files touched:
+
+- webapp-customer/build.gradle
+- webapp-admin/build.gradle
+- webapp-customer/grails-app/controllers/customer/CatalogController.groovy
+- webapp-admin/grails-app/controllers/admin/BookController.groovy

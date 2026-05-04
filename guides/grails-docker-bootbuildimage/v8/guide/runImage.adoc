@@ -24,3 +24,7 @@ The first request renders the Grails welcome page. The second returns `{"status"
 ====
 ``docker history ghcr.io/grails-guides/grails-docker-bootbuildimage:0.1`` shows you the layer breakdown the buildpack produced. Notice that classes/resources sit on top of dependencies; a code-only change rebuilds only that one layer.
 ====
+
+Files touched in this chapter:
+
+* None

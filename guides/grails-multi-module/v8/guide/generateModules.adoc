@@ -1,22 +1,41 @@
-Each of the three modules is a fresh forge zip. The plugin is the `web_plugin` application type; the two webapps are the `web` type:
+Open link:https://start.grails.org[start.grails.org] in three browser tabs and generate three starters with the same baseline settings: JDK 21, Groovy, Gradle, Spock, and package `example`.
+
+[cols="1,1,1",options="header"]
+|===
+| Forge application type | UI label | Application name
+
+| `web_plugin`
+| Web Plugin
+| `shared-core`
+
+| `web`
+| Web Application
+| `webapp-customer`
+
+| `web`
+| Web Application
+| `webapp-admin`
+|===
+
+The naming here is straight from the Grails 8 forge source: `ApplicationType.WEB_PLUGIN` in `grails-forge/grails-forge-core/src/main/java/org/grails/forge/application/ApplicationType.java` and the `@Named("web_plugin")` registry in `grails-forge/grails-forge-core/src/main/java/org/grails/forge/application/WebPluginAvailableFeatures.java`.
+
+Each downloaded archive uses the application name as the zip filename, so unzip the three archives under one parent directory:
 
 [source,bash]
 ----
-mkdir grails-multi-module && cd grails-multi-module && mkdir initial complete && cd complete
+mkdir grails-multi-module
+cd grails-multi-module
 
-# shared-core - the plugin that holds the shared domain model + services
-curl -L -o p.zip "https://prev-snapshot.grails.org/create/web_plugin/example.shared?lang=GROOVY&build=GRADLE&test=SPOCK&javaVersion=JDK_21"
-unzip p.zip && mv shared shared-core && rm p.zip
-
-# webapp-customer - read-only catalog
-curl -L -o c.zip "https://prev-snapshot.grails.org/create/web/example.customer?lang=GROOVY&build=GRADLE&test=SPOCK&javaVersion=JDK_21"
-unzip c.zip && mv customer webapp-customer && rm c.zip
-
-# webapp-admin - back-office CRUD
-curl -L -o a.zip "https://prev-snapshot.grails.org/create/web/example.admin?lang=GROOVY&build=GRADLE&test=SPOCK&javaVersion=JDK_21"
-unzip a.zip && mv admin webapp-admin && rm a.zip
+unzip ~/Downloads/shared-core.zip
+unzip ~/Downloads/webapp-customer.zip
+unzip ~/Downloads/webapp-admin.zip
 ----
 
-Patch `compileJava.options.release = 17` to `21` in each of the three `build.gradle` files (the forge ships JDK 17 by default even when `javaVersion=JDK_21` is requested).
+If you selected JDK 21 in the browser, keep the generated `compileJava.options.release = 21` lines exactly as they are. Grails Forge writes that value from the selected target JDK in `grails-forge/grails-forge-core/src/main/java/org/grails/forge/feature/build/gradle/templates/buildGradle.rocker.raw`, so there is no Grails 8 era "patch 17 to 21" cleanup step anymore.
 
-Each subdirectory is currently a stand-alone Grails project. The next chapter wires them into a single multi-project build.
+Files touched:
+
+- shared-core/build.gradle
+- shared-core/src/main/groovy/example/SharedCoreGrailsPlugin.groovy
+- webapp-customer/build.gradle
+- webapp-admin/build.gradle

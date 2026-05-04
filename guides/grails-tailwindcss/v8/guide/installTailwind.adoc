@@ -6,11 +6,16 @@ Tailwind 4 ships as the npm package `tailwindcss`, with a separate `@tailwindcss
 include::../snippets/package.json[]
 ----
 
-Then run `npm install` once to populate `node_modules/`:
+Then run `npm install` once to populate `node_modules/` and create `package-lock.json`:
 
 [source,bash]
 ----
 npm install
 ----
 
-The `tailwindBuild` Gradle task we will add in a later chapter calls `npm install` automatically the first time it runs (and skips it on subsequent invocations as long as `package.json` has not changed), so committing the lock file is enough; no hand-rolled bootstrap step is needed in CI.
+The `build` and `watch` scripts call the `tailwindcss` binary that `@tailwindcss/cli` exposes, while the Gradle task you will add in a later chapter runs the same compiler through `npx @tailwindcss/cli`. That keeps the npm side and Gradle side aligned.
+
+Files touched in this chapter:
+
+* `package.json`
+* `package-lock.json`

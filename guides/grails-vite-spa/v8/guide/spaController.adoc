@@ -12,3 +12,9 @@ include::../snippets/backend/grails-app/controllers/example/SpaController.groovy
 ====
 *Why not a wildcard URL mapping like `'/$path**'(controller: 'spa', action: 'index')`?* Because URL mappings resolve before static resources. A wildcard mapping would intercept `/favicon.ico` and `/assets/main-abc123.js`, returning the SPA's `index.html` instead of the asset. Letting Spring Boot's static-resource handler claim everything except `/api/**` and `/` is the simplest correct shape.
 ====
+
+The `forward` method available on every Grails controller is the same one the framework uses internally for URL-mapping rewrites; see `grails-controllers/src/main/groovy/grails/web/util/WebUtils.java` for the underlying implementation and `grails-doc/src/en/guide/theWebLayer/controllers/forwarding.adoc` for the user-facing reference.
+
+Files touched in this chapter:
+
+* `backend/grails-app/controllers/example/SpaController.groovy`

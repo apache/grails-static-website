@@ -18,3 +18,7 @@ The `application.yml` we wrote in the env-profiles chapter resolves these three 
 ====
 For functional tests, the `testcontainers` feature means you do not need a long-running Postgres at all - Spock specs can spin one up per spec via Testcontainers' Postgres module, run their assertions, and tear it down. The CI/CD guide shows how that integrates with GitHub Actions.
 ====
+
+Files touched in this chapter:
+
+* `compose.yml`

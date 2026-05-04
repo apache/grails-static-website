@@ -5,9 +5,9 @@ import grails.persistence.Entity
 @Entity
 class Task {
 
-    String  title
+    String title
     Boolean done = false
-    Date    dateCreated
+    Date dateCreated
 
     static constraints = {
         title blank: false, maxSize: 255

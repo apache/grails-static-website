@@ -1,4 +1,4 @@
-A root `settings.gradle` and a root `build.gradle` turn three side-by-side Grails projects into one Gradle build:
+A root `settings.gradle` and a root `build.gradle` turn the three generated starters into one Gradle build:
 
 [source,groovy]
 .settings.gradle
@@ -12,10 +12,20 @@ include::../snippets/settings.gradle[]
 include::../snippets/build.gradle[]
 ----
 
-Three patterns to point at:
+This root pattern intentionally mirrors two Grails 8 authority sources:
 
-* `rootProject.name = 'grails-multi-module'` is what `./gradlew projects` shows at the top of the tree. Without it, Gradle uses the directory name, which is fine for this sample but may not match your repo name in a real layout.
-* The `subprojects { repositories { ... } }` block is where every module's Apache Grails snapshot + staging Maven repos live. Avoid the temptation to also put `dependencies { ... }` here - you want each module to declare what it needs explicitly.
-* `plugins.withId('groovy') { tasks.withType(Test).configureEach { useJUnitPlatform() } }` ensures the JUnit 5 runner is used in every module that loads the Groovy plugin (which is every Grails module). Without it, only the Grails 8 starter's own build.gradle would have it; the plugin module would default to the Vintage runner.
+* `grails-forge/grails-forge-core/src/main/java/org/grails/forge/build/gradle/GradleRepository.java` for the default starter repositories.
+* `grails-profiles/base/skeleton/build.gradle` plus `grails-forge/grails-forge-core/src/main/java/org/grails/forge/feature/build/gradle/templates/buildGradle.rocker.raw` for the per-project `tasks.withType(Test).configureEach { useJUnitPlatform() }` block.
 
-The per-module `build.gradle` files keep their dependency lists. Sharing too aggressively at root level (e.g. `dependencies { implementation '...' }` inside `subprojects`) creates surprise transitive dependencies that are hard to debug.
+Three details matter:
+
+* `rootProject.name = 'grails-multi-module'` gives the whole workspace a stable Gradle identity.
+* `subprojects { repositories { ... } }` centralises the same Maven repos every generated Grails 8 module would otherwise repeat. On the live `8.0.x` line that includes filtered Apache snapshot and staging repos, because the current forge default still adds them for snapshot Grails builds.
+* `tasks.withType(Test).configureEach { useJUnitPlatform() }` is the exact Grails 8 starter pattern. Lifting that block to the root keeps `test` and `integrationTest` aligned across all three modules without changing their dependency lists.
+
+Do not move ordinary library dependencies to the root. The generated module builds already know which Grails plugins and starters they need. This root file should only carry cross-cutting build policy.
+
+Files touched:
+
+- settings.gradle
+- build.gradle

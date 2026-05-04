@@ -1,10 +1,18 @@
-Most multi-module layouts grow out of a monolith that already exists. The migration from "one Grails app with two areas" to "one shared plugin plus two webapps" is mechanical:
+Most multi-module workspaces start from a monolith that already exists. The split is mechanical if you keep the ownership lines clear.
 
-1. *Decide what the plugin owns.* Domain classes, GORM data services, security policy beans, and any tag library that emits content the customer and admin pages both render. Anything UI-shaped (controllers, GSPs, JSON views) stays in the consuming webapp.
-2. *Generate a Grails 8 plugin* (the forge `web_plugin` type) into a new `shared-core/` directory next to the existing app.
-3. *Move (`git mv`) the chosen files* out of `app/grails-app/...` into `shared-core/grails-app/...`. Keep package names. The history follows the rename.
-4. *In `settings.gradle` of the existing app, ``include 'shared-core'``.* In the existing app's `build.gradle`, add `implementation project(':shared-core')`. Run `./gradlew build` - it should still pass.
-5. *Generate the second webapp* (the forge `web` type) into `webapp-customer/`. Add `implementation project(':shared-core')` to its `build.gradle`. Move whichever controllers/views logically belong there from the original app.
-6. *Rename the original app* to `webapp-admin/` (or whichever role it ended up playing).
+1. Generate `shared-core` as a Grails `web_plugin`, not as a plain library project.
+2. Move only genuinely shared code into the plugin: domain classes, GORM data services, shared taglibs, and reusable Spring beans. Leave `Application.groovy`, `UrlMappings.groovy`, controllers, GSPs, JSON views, and `BootStrap` classes in the webapps.
+3. Keep or recreate the plugin descriptor class (`SharedCoreGrailsPlugin.groovy`). If the extracted code needs plugin ordering or watched resources, express that there using the normal `Plugin` conventions.
+4. Wire the original app to the plugin with `grails { plugins { implementation project(':shared-core') } }`. If you want live reload while the split is in flight, also apply `org.apache.grails.gradle.grails-exploded` in `shared-core/build.gradle`.
+5. Create the second webapp, wire the same plugin, and move the customer-facing or admin-facing controllers and views into their target module.
+6. Choose one webapp to own database migrations and startup data changes.
 
-The third commit on the timeline is a single commit that moves files; the fourth is the wiring change. Reviewers can see exactly what moved without unrelated diffs.
+Keep package names stable while you move files. `git mv` plus unchanged packages makes the review readable and keeps history attached to the files that actually moved.
+
+Files touched:
+
+- settings.gradle
+- shared-core/build.gradle
+- shared-core/src/main/groovy/example/SharedCoreGrailsPlugin.groovy
+- webapp-customer/build.gradle
+- webapp-admin/build.gradle

@@ -24,4 +24,4 @@ The practical consequence: you customise the _highest-impact_ template at the le
 
 The rest of this guide walks each of those layers in turn.
 
-TIP: If you want to see exactly which path the plugin chose, set the log level on `org.grails.plugin.formfields.FormFieldsTemplateService` to `DEBUG`. Each lookup logs every path it tried in order.
+TIP: If you want to see exactly which path the plugin chose, set the log level on `org.grails.plugin.formfields.FormFieldsTemplateService` to `DEBUG`. Each lookup logs every path it tried in order. The lookup logic itself lives in `grails-fields/src/main/groovy/grails/plugin/formfields/FormFieldsTemplateService.groovy` if you want to read the source. The plugin also supports a `_themes/<theme>/` lookup level (controlled by `grails.plugin.fields.theme`) that comes _before_ the per-class layer; see `grails-doc/src/en/guide/theWebLayer/fields.adoc` for the theme story.

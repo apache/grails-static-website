@@ -10,67 +10,83 @@ class TaskController {
             create: 'POST', update: 'PATCH', delete: 'DELETE', toggle: 'POST'
     ]
 
-    /** Full page (index.gsp). */
     def index() {
-        respond Task.list(params), model: [tasks: Task.list(params), q: '']
+        List<Task> tasks = Task.list(params)
+        render view: 'index', model: [tasks: tasks, task: new Task(), q: '']
     }
 
-    /** Live-search endpoint - returns just the rows partial. */
+    def show(Long id) {
+        Task task = Task.get(id)
+        if (!task) {
+            response.status = HttpStatus.NOT_FOUND.value()
+            return
+        }
+        render template: 'task', model: [task: task]
+    }
+
     def search() {
-        String q = (params.q ?: '') as String
+        String q = (params.q ?: '').trim()
         List<Task> rows = q ? Task.findAllByTitleIlike("%${q}%") : Task.list()
         render template: 'taskRows', model: [tasks: rows]
     }
 
-    /** Add a new task - returns the new row prepended to the list. */
     @Transactional
     def create() {
-        Task t = new Task(title: params.title)
-        if (!t.save()) {
+        Task task = new Task(title: params.title)
+        if (!task.validate()) {
             response.status = HttpStatus.UNPROCESSABLE_ENTITY.value()
-            render template: 'taskForm', model: [task: t]
+            render template: 'taskForm', model: [task: task]
             return
         }
-        render template: 'task', model: [task: t]
+        task.save(flush: true)
+        render template: 'taskCreated', model: [task: task, formTask: new Task()]
     }
 
-    /** Inline-edit endpoint - returns the edit form for a single row. */
     def editForm(Long id) {
-        Task t = Task.get(id)
-        if (!t) { response.status = 404; return }
-        render template: 'taskEdit', model: [task: t]
+        Task task = Task.get(id)
+        if (!task) {
+            response.status = HttpStatus.NOT_FOUND.value()
+            return
+        }
+        render template: 'taskEdit', model: [task: task]
     }
 
-    /** Apply an inline edit - returns the read-only row partial. */
     @Transactional
     def update(Long id) {
-        Task t = Task.get(id)
-        if (!t) { response.status = 404; return }
-        t.properties = params
-        if (!t.save()) {
-            response.status = HttpStatus.UNPROCESSABLE_ENTITY.value()
-            render template: 'taskEdit', model: [task: t]
+        Task task = Task.get(id)
+        if (!task) {
+            response.status = HttpStatus.NOT_FOUND.value()
             return
         }
-        render template: 'task', model: [task: t]
+        task.title = params.title
+        if (!task.save(flush: true)) {
+            response.status = HttpStatus.UNPROCESSABLE_ENTITY.value()
+            render template: 'taskEdit', model: [task: task]
+            return
+        }
+        render template: 'task', model: [task: task]
     }
 
-    /** Toggle the `done` flag - returns the row partial. */
     @Transactional
     def toggle(Long id) {
-        Task t = Task.get(id)
-        if (!t) { response.status = 404; return }
-        t.done = !t.done
-        t.save()
-        render template: 'task', model: [task: t]
+        Task task = Task.get(id)
+        if (!task) {
+            response.status = HttpStatus.NOT_FOUND.value()
+            return
+        }
+        task.done = !task.done
+        task.save(flush: true)
+        render template: 'task', model: [task: task]
     }
 
-    /** Delete - HTMX swaps the row out via hx-target="closest tr" hx-swap="outerHTML". */
     @Transactional
     def delete(Long id) {
-        Task t = Task.get(id)
-        if (!t) { response.status = 404; return }
-        t.delete()
+        Task task = Task.get(id)
+        if (!task) {
+            response.status = HttpStatus.NOT_FOUND.value()
+            return
+        }
+        task.delete(flush: true)
         render ''
     }
 }

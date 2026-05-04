@@ -23,3 +23,8 @@ The matching `.dockerignore` file excludes `.gradle/`, `build/`, `out/`, and oth
 include::../snippets/.dockerignore[]
 ----
 ====
+
+Files touched in this chapter:
+
+* `Dockerfile`
+* `.dockerignore`

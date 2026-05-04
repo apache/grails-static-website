@@ -1918,7 +1918,7 @@ guides:
             howto: How to Complete the Guide
           createApp:
             title: Creating the Application
-            download: Download a Grails 8 Snapshot Starter
+            download: Download a Grails 8 Starter
           dockerOverview:
             title: Two Paths to a Container Image
           bootBuildImage:
@@ -2318,7 +2318,7 @@ guides:
             howto: How to Complete the Guide
           createApp:
             title: Creating the Application
-            download: Download a Grails 8 Snapshot Starter
+            download: Download a Grails 8 Starter
             fieldsPluginAlreadyIncluded: The Fields Plugin in Grails 8
           domainModel:
             title: The Book and Author Domain Model
@@ -2550,7 +2550,7 @@ guides:
             howto: How to Complete the Guide
           createApp:
             title: Creating the Application
-            download: Download a Grails 8 Snapshot Starter
+            download: Download a Grails 8 Starter
           workflowOverview:
             title: The Multi-Stage Job Graph
           ciYml:
@@ -3396,6 +3396,8 @@ guides:
             title: The Two Webapps Consume shared-core
           runningEach:
             title: Running and Packaging Each Webapp
+          devReload:
+            title: Dev-Mode Auto-Reload Across Projects
           testingPerModule:
             title: Per-Module Testing
           extractingPlugin:
@@ -4049,7 +4051,7 @@ guides:
             howto: How to Complete the Guide
           createApp:
             title: Creating the Application
-            download: Download a Grails 8 rest_api Starter
+            download: Download a Grails 8 Rest API Starter
           domainModel:
             title: The Book and Author Domain Model
             bootstrapData: Bootstrap Sample Data
@@ -4257,7 +4259,7 @@ guides:
 
   - name: 'grails-spock-test-tour'
     title: 'A Spock Test Tour for Grails 8'
-    subtitle: 'Working examples of every Spock test layer Grails 8 supports - DomainUnitTest, ServiceUnitTest + DataTest, ControllerUnitTest, @Integration + @Rollback, plus parameterised where: data tables.'
+    subtitle: 'Working examples of every Spock test layer Grails 8 supports - DomainUnitTest, ServiceUnitTest + DataTest, ControllerUnitTest, @Integration + @Rollback, ContainerGebSpec functional tests, plus parameterised where: data tables.'
     authors:
       - 'James Fredley'
     category: 'Grails Testing'
@@ -4300,7 +4302,7 @@ guides:
           integrationTest:
             title: '@Integration With @Rollback'
           functionalTest:
-            title: Geb Functional Tests
+            title: ContainerGebSpec Functional Tests
           parameterised:
             title: 'Parameterised where: Data Tables'
           platform:
@@ -4421,7 +4423,7 @@ guides:
             howto: How to Complete the Guide
           createApp:
             title: Creating the Application
-            download: Download a Grails 8 Snapshot Starter
+            download: Download a Grails 8 Starter
           installTailwind:
             title: Installing Tailwind CSS 4
           configureTailwind:

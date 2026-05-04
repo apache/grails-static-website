@@ -1,4 +1,4 @@
-As of Apache Grails 7 the Fields plugin is bundled with `grails-core`. You do not need to add a dependency for it. The taglib namespace `f` is registered automatically and the default templates live on the runtime classpath inside `grails-fields.jar`.
+As of Apache Grails 7 the Fields plugin is bundled with `grails-core` as the `grails-fields` module. You do not need to add a dependency for it. The taglib namespace `f` is registered automatically by `grails-app/taglib/grails/plugin/formfields/FormFieldsTagLib.groovy` (inside `grails-fields.jar`) and the default templates live on the runtime classpath.
 
 You can confirm the plugin is on the classpath by listing the resolved configurations:
 
@@ -7,4 +7,6 @@ You can confirm the plugin is on the classpath by listing the resolved configura
 ./gradlew dependencies --configuration runtimeClasspath | grep -i fields
 ----
 
-You should see `org.apache.grails:grails-fields:8.0.0-SNAPSHOT` (or whichever Grails version your project pins) in the output. There is no separate plugin descriptor to register and no `BuildConfig.groovy` to edit.
+You should see `org.apache.grails:grails-fields:<version>` matching the Grails version your project pins. There is no separate plugin descriptor to register and no `BuildConfig.groovy` to edit.
+
+The official 8.0.x reference for the plugin lives at `grails-doc/src/en/guide/theWebLayer/fields.adoc` (and the `fields/` subdirectory). That chapter covers the high-level `f:` taglib API; this guide complements it with worked examples of customising the per-property and per-class templates that the plugin's `FormFieldsTemplateService` looks up.

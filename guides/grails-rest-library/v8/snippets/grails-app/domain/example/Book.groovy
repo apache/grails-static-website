@@ -14,7 +14,7 @@ class Book {
 
     static constraints = {
         title       blank: false, maxSize: 255
-        isbn        blank: false, unique: true, matches: /^(97(8|9))?\d{9}(\d|X)$/
+        isbn        blank: false, unique: true, maxSize: 20, matches: /^(97(8|9))?\d{9}(\d|X)$/
         pageCount   nullable: true, min: 1
         publishedOn nullable: true
     }

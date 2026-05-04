@@ -6,18 +6,19 @@ class AuthorController extends RestfulController<Author> {
 
     static responseFormats = ['json']
 
-    AuthorController() { super(Author) }
+    AuthorController() {
+        super(Author)
+    }
 
-    /**
-     * GET /v1/authors?max=20&offset=0&sort=name&order=asc
-     *
-     * Bound `max` defaults to 25 and is hard-capped at 100 so a paginating
-     * client cannot ask for the full table in one request. `offset`,
-     * `sort`, and `order` flow through to the GORM query unchanged.
-     */
     @Override
-    protected List<Author> listAllResources(Map params) {
-        params.max = Math.min(params.int('max', 25), 100)
-        Author.list(params)
+    def index(Integer max) {
+        if (max != null && max < 0) {
+            max = null
+        }
+
+        params.max = Math.min(max ?: 25, 100)
+        params.offset = Math.max(params.int('offset', 0), 0)
+
+        respond listAllResources(params), model: [authorCount: countResources()]
     }
 }

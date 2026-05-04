@@ -28,4 +28,9 @@ def search() {
 }
 ----
 
-`findAllByTitleIlike` is GORM's case-insensitive LIKE; it forwards to a parameterised SQL query, so no SQL injection concerns. The `_taskRows.gsp` partial handles both the populated and empty states.
+`findAllByTitleIlike` is GORM's case-insensitive LIKE. The `_taskRows.gsp` partial handles both the populated and empty states, so the controller action stays tiny.
+
+Files touched:
+
+* `grails-app/controllers/example/TaskController.groovy`
+* `grails-app/views/task/_taskRows.gsp`

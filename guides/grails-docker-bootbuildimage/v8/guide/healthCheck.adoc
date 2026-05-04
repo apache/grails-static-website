@@ -14,3 +14,7 @@ The `health.livenessstate` and `health.readinessstate` flags expose the two prob
 * `/actuator/health/readiness` answers "should the platform send traffic to this pod?". Returns `DOWN` while the application is starting up, or while the database is unreachable. Use as a Kubernetes `readinessProbe` and as the Docker `HEALTHCHECK`.
 
 For Docker Compose, the `HEALTHCHECK` lives on the service definition (next chapter). For Kubernetes, you would use `httpGet: { path: /actuator/health/readiness, port: 8080 }` instead.
+
+Files touched in this chapter:
+
+* `grails-app/conf/application.yml`

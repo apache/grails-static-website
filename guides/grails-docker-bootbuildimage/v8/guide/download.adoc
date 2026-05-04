@@ -1,10 +1,4 @@
-[source,bash]
-----
-curl -L -o docker-app.zip \
-  "https://prev-snapshot.grails.org/create/web/example.docker?lang=GROOVY&build=GRADLE&test=SPOCK&javaVersion=JDK_21&features=postgres,testcontainers,database-migration"
-unzip docker-app.zip
-cd docker
-----
+Open link:https://start.grails.org[start.grails.org], pick the `web` profile, name the application `docker`, set the package to `example`, choose JDK 21, tick the `postgres`, `testcontainers`, and `database-migration` features, and download the generated zip. Unzip it and `cd` into the `docker` directory.
 
 The forge unpacks into a `docker/` directory containing a vanilla Grails 8 layout plus the three feature-driven additions:
 

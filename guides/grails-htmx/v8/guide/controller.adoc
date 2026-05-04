@@ -1,4 +1,4 @@
-`TaskController` has seven actions, but only `index` returns a full page. Every other action returns a single GSP partial via `render template: '...'`:
+`TaskController` keeps the full-page render and the fragment renders separate. `index` uses `render view:` for the initial page; every HTMX endpoint returns a fragment with `render template:`:
 
 [source,groovy]
 .grails-app/controllers/example/TaskController.groovy
@@ -10,5 +10,12 @@ A few patterns to point at:
 
 * `static allowedMethods = [...]` rejects mismatched HTTP verbs at the framework level. Sending `GET /tasks` to `create` returns 405, not silently calling the action.
 * The `@Transactional(readOnly = true)` class annotation flips read-only mode on for the whole controller; individual mutating actions override with their own `@Transactional`.
-* On a validation failure (`!t.save()`), the controller returns a 422 with the error fragment. HTMX swaps that fragment into the page, the user sees the error inline, and the form remains in the DOM ready for another attempt.
-* `delete` returns an empty body. Combined with `hx-swap="outerHTML"` on the delete button, this removes the row from the DOM.
+* `show(Long id)` returns the read-only row fragment. That gives the Cancel button in the edit form a clean endpoint to reload.
+* On a validation failure the controller returns `422 Unprocessable Entity` with the same fragment the browser was already showing. HTMX swaps that fragment in place, so the user keeps context and sees the errors inline.
+* `create()` renders `_taskCreated.gsp`, which combines a fresh form plus an out-of-band prepend of the new row. This avoids hand-written client-side reset logic.
+* `delete()` returns an empty body. Combined with `hx-target="closest li"` and `hx-swap="outerHTML"`, that removes the row from the DOM.
+
+Files touched:
+
+* `grails-app/controllers/example/TaskController.groovy`
+* `grails-app/views/task/_taskCreated.gsp`

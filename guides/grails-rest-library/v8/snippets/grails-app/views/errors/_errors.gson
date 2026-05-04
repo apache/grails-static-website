@@ -1,0 +1,25 @@
+import org.springframework.http.HttpStatus
+import org.springframework.validation.Errors
+import org.springframework.validation.FieldError
+
+model {
+    Errors errors
+}
+
+response.status HttpStatus.UNPROCESSABLE_ENTITY.value()
+
+json {
+    errors this.errors.allErrors.collect { error ->
+        Map<String, Object> payload = [
+            object : error.objectName,
+            code   : error.code,
+            message: messageSource.getMessage(error, locale)
+        ]
+        if (error instanceof FieldError) {
+            payload.field = error.field
+            payload.rejectedValue = error.rejectedValue
+            payload.bindingFailure = error.bindingFailure
+        }
+        payload
+    }
+}

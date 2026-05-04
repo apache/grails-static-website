@@ -15,7 +15,11 @@ json {
         name book.author.name
     }
     _links {
-        self   url: g.createLink(controller: 'book',   action: 'show', id: book.id,        absolute: true)
-        author url: g.createLink(controller: 'author', action: 'show', id: book.author.id, absolute: true)
+        self {
+            href g.link(resource: book, absolute: true)
+        }
+        author {
+            href g.link(resource: book.author, absolute: true)
+        }
     }
 }

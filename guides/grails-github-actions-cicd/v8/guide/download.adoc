@@ -1,13 +1,8 @@
-[source,bash]
-----
-curl -L -o cicd-app.zip \
-  "https://prev-snapshot.grails.org/create/web/example.cicd?lang=GROOVY&build=GRADLE&test=SPOCK&javaVersion=JDK_21&features=postgres,testcontainers,geb-with-webdriver-binaries"
-unzip cicd-app.zip
-cd cicd
-----
+Open link:https://start.grails.org[start.grails.org], pick the `web` profile, name the application `cicd`, set the package to `example`, choose JDK 21, tick the `postgres` and `testcontainers` features, and download the generated zip. Unzip it and `cd` into the `cicd` directory.
 
-The forge unpacks into a `cicd/` directory containing a vanilla Grails 8 web layout with three feature-driven additions:
+The forge unpacks into a `cicd/` directory containing a vanilla Grails 8 web layout with two feature-driven additions:
 
 * `runtimeOnly "org.postgresql:postgresql"` and a Postgres datasource template
 * `testImplementation "org.testcontainers:postgresql"` (and `org.testcontainers:spock` + `:testcontainers`)
-* `integrationTestImplementation testFixtures("org.apache.grails:grails-geb")` and `com.energizedwork.gebish:webdriver-binaries-gradle-plugin` for downloading Chrome/Firefox driver binaries automatically
+
+Geb container support comes from `testFixtures("org.apache.grails:grails-geb")`, which is already on the test classpath in the standard `web` profile - no extra forge feature is needed.

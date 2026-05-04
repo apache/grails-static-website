@@ -20,4 +20,8 @@ The browser opens `http://localhost:5173`. Every `fetch('/api/books')` call from
 Two things to keep an eye on:
 
 * *Same-origin in dev too.* Because the SPA always calls relative paths and Vite proxies them, the browser never sees a cross-origin request. CORS preflight requests do not happen even in dev.
-* *Spring DevTools for the backend, Vite HMR for the frontend.* Each side reloads independently; you can edit `App.jsx` without restarting Grails, and edit a Groovy controller without losing your SPA state.
+* *Spring DevTools for the backend, Vite HMR for the frontend.* Each side reloads independently; you can edit `App.jsx` without restarting Grails, and edit a Groovy controller without losing your SPA state. The Spring DevTools story for Grails 8 is covered in `grails-doc/src/en/guide/gettingStarted/developmentReloading.adoc`.
+
+Files touched in this chapter:
+
+* None directly (this chapter is a runbook)

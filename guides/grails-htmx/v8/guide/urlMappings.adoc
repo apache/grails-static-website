@@ -6,4 +6,10 @@ Each HTMX endpoint is its own URL with an explicit method:
 include::../snippets/grails-app/controllers/example/UrlMappings.groovy[]
 ----
 
-The repetition (`/tasks` for both index and create, distinguished by method) is intentional: HTMX requests carry their semantics in the HTTP method, exactly as REST does. Using `'/tasks'(resources: 'task')` would also work, but the explicit-route form makes the surface easier to read for an author who has never seen Grails' resource-mapping shorthand.
+The repetition (`/tasks` for both index and create, distinguished by method) is intentional: HTMX requests carry their semantics in the HTTP method, exactly as REST does. Using `"/tasks"(resources: 'task')` would also work, but the explicit-route form makes the surface easier to read for an author who has never seen Grails' resource-mapping shorthand.
+
+This is also close to the Grails 8 `web` profile skeleton, which still shows explicit `"/$controller/$action?/$id?(.$format)?"` mappings in `UrlMappings.groovy`.
+
+Files touched:
+
+* `grails-app/controllers/example/UrlMappings.groovy`

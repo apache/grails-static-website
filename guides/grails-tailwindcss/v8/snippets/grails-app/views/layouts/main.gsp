@@ -1,3 +1,4 @@
+<%-- tag::layout[] --%>
 <!doctype html>
 <html lang="en" class="h-full">
 <head>
@@ -7,6 +8,7 @@
     <asset:link rel="icon" href="favicon.ico" type="image/x-ico"/>
     <asset:stylesheet src="application.css"/>
 
+    <%-- tag::themePreload[] --%>
     <%-- Pre-paint dark-mode resolution: read the user's saved choice (or
          system preference) and apply the `dark` class on <html> BEFORE
          the body renders. This avoids the light-to-dark flash on reload. --%>
@@ -19,6 +21,7 @@
             }
         })();
     </script>
+    <%-- end::themePreload[] --%>
     <g:layoutHead/>
 </head>
 
@@ -33,6 +36,7 @@
         <div class="flex items-center gap-6">
             <a href="https://grails.apache.org/docs/" class="nav-link" target="_blank" rel="noopener">Docs</a>
             <a href="https://grails.apache.org/community.html" class="nav-link" target="_blank" rel="noopener">Community</a>
+            <%-- tag::themeToggleButton[] --%>
             <button id="theme-toggle"
                     type="button"
                     aria-label="Toggle dark mode"
@@ -40,12 +44,12 @@
                 <span aria-hidden="true" class="dark:hidden">&#9788;</span>
                 <span aria-hidden="true" class="hidden dark:inline">&#9789;</span>
             </button>
+            <%-- end::themeToggleButton[] --%>
         </div>
     </div>
 </nav>
 
 <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-    <g:flashMessages />
     <g:layoutBody/>
 </div>
 
@@ -61,6 +65,7 @@
     </div>
 </footer>
 
+<%-- tag::themeToggleScript[] --%>
 <script>
     document.getElementById('theme-toggle').addEventListener('click', function () {
         var html = document.documentElement;
@@ -68,5 +73,8 @@
         localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
     });
 </script>
+<%-- end::themeToggleScript[] --%>
+<asset:javascript src="application.js"/>
 </body>
 </html>
+<%-- end::layout[] --%>

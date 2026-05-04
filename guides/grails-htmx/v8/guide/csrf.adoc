@@ -1,23 +1,42 @@
-Grails' `<g:form>` tag automatically inserts a `SYNCHRONIZER_TOKEN` parameter when the controller declares `static withForm = ...`. HTMX requests do not go through `<g:form>`, so the token has to be wired in differently.
+There are two different token stories to keep straight in Grails 8.
 
-The HTMX configuration block in `main.gsp` reads the token from a `<meta>` tag and forwards it as a custom header on every request:
+First, Grails core has the long-standing `useToken` / `withForm` mechanism. It is implemented by `FormTagLib`, `Controller.withForm`, and `SynchronizerTokensHolder`, and it is primarily a duplicate-submit token flow:
+
+[source,groovy]
+----
+<g:form useToken="true" ...>
+    ...
+</g:form>
+
+withForm {
+    // valid token
+}.invalidToken {
+    // invalid or replayed token
+}
+----
+
+That mechanism works well for normal Grails forms. It is not, by itself, a built-in HTMX-wide CSRF filter for button-driven `hx-post`, `hx-patch`, or `hx-delete` requests.
+
+Second, if Spring Security's CSRF filter is on the classpath and active, Grails exposes the `_csrf` request attribute and `FormTagLib` automatically writes the hidden field into `<g:form>`. For HTMX requests triggered from links and buttons, forward that header globally:
 
 [source,html]
+.grails-app/views/layouts/main.gsp
 ----
-<meta name="csrf-token" content="${useToken().token}"/>
-<script>
-    document.body.addEventListener('htmx:configRequest', function(evt) {
-        var meta = document.querySelector('meta[name="csrf-token"]');
-        if (meta) {
-            evt.detail.headers['X-Grails-Csrf-Token'] = meta.content;
-        }
-    });
-</script>
+include::../snippets/grails-app/views/layouts/main.gsp[]
 ----
 
-A matching `before` interceptor checks the header on every state-changing request and rejects mismatches with a 403. For a sample app the token check is overkill; for a real back-office the few lines of plumbing buy you the same protection `<g:form>` provides for traditional forms.
+This guide's layout only adds those `<meta>` tags and the `htmx:configRequest` listener when `_csrf` exists. That keeps the sample app truthful:
+
+* without Spring Security, the app is just a plain Grails 8 sample and the listener is inert;
+* with Spring Security CSRF enabled, HTMX requests automatically carry the expected header name and token value.
 
 [NOTE]
 ====
-The `Origin` and `Referer` headers also defeat CSRF for fetch-based clients. Modern browsers send them automatically and a same-origin check is one line of interceptor code. Belt-and-braces shops do both; pick the discipline that matches your threat model.
+If you stay entirely inside `<g:form>` submissions, Grails' form helpers already do the right thing for both token systems. You only need the global HTMX header hook for non-form triggers such as row-level toggle and delete buttons.
 ====
+
+Files touched:
+
+* `grails-app/views/layouts/main.gsp`
+* `grails-app/views/task/_taskForm.gsp`
+* `grails-app/views/task/_taskEdit.gsp`

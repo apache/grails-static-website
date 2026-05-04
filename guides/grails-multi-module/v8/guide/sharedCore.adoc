@@ -1,4 +1,16 @@
-The plugin module holds the domain model and the GORM data services. A simple Book domain in `shared-core/grails-app/domain/example/Book.groovy`:
+`shared-core` is a Grails web plugin, not a plain Groovy library. Keep the generated plugin descriptor class:
+
+[source,groovy]
+.shared-core/src/main/groovy/example/SharedCoreGrailsPlugin.groovy
+----
+include::../snippets/shared-core/src/main/groovy/example/SharedCoreGrailsPlugin.groovy[]
+----
+
+That class name and location are conventions, not decoration. Grails discovers plugins from a class under `src/main/groovy/<package>/` whose name ends in `GrailsPlugin` and whose base class is `grails.plugins.Plugin`. The lifecycle hooks available to you - `doWithSpring`, `doWithApplicationContext`, `doWithDynamicMethods`, `onChange`, `onConfigChange`, and `onShutdown` - come from `grails-core/src/main/groovy/grails/plugins/Plugin.groovy`.
+
+Core Grails plugins use additional descriptor conventions as plain properties on that class: `profiles`, `watchedResources`, `observe`, `loadAfter`, and `pluginExcludes`. See `grails-domain-class/src/main/groovy/org/grails/plugins/domain/DomainClassGrailsPlugin.groovy` and `grails-data-hibernate5/grails-plugin/src/main/groovy/grails/plugin/hibernate/HibernateGrailsPlugin.groovy` for live Grails 8 examples.
+
+The plugin module then owns the shared domain model and GORM data services. Start with a simple `Book` domain:
 
 [source,groovy]
 .shared-core/grails-app/domain/example/Book.groovy
@@ -6,7 +18,7 @@ The plugin module holds the domain model and the GORM data services. A simple Bo
 include::../snippets/shared-core/grails-app/domain/example/Book.groovy[]
 ----
 
-And a GORM data service that both webapps consume:
+And a GORM data service that both webapps inject:
 
 [source,groovy]
 .shared-core/grails-app/services/example/BookService.groovy
@@ -14,9 +26,19 @@ And a GORM data service that both webapps consume:
 include::../snippets/shared-core/grails-app/services/example/BookService.groovy[]
 ----
 
-Two things to highlight:
+The domain auto-discovery story in Grails 8 is now easy to verify in source:
 
-* The `@Service(Book)` interface is auto-implemented by GORM at compile time. The webapps inject `BookService bookService` directly; there is no `BookServiceImpl` to write.
-* The package is `example`, not `shared` or `core`. This is the *domain* package - it is what the data layer is "about", not what module owns it. The two webapps' UI controllers will live in `customer.*` and `admin.*` so the package separation makes the layering explicit.
+* `grails-core/src/main/groovy/org/grails/core/artefact/DomainClassArtefactHandler.java` recognises domain artefacts from `grails-app/domain` and `@Entity`.
+* `grails-domain-class/src/main/groovy/org/grails/plugins/domain/support/DefaultMappingContextFactoryBean.groovy` adds every `DomainClassArtefactHandler.TYPE` artefact to the mapping context.
+* `grails-data-hibernate5/grails-plugin/src/main/groovy/grails/plugin/hibernate/HibernateGrailsPlugin.groovy` collects those same artefacts from `grailsApplication.getArtefacts(...)` and hands them to `HibernateDatastoreSpringInitializer`.
 
-The plugin's `build.gradle` should already contain `apply plugin: 'org.apache.grails.gradle.grails-plugin'` (the forge generates this for `web_plugin`). That is what registers the plugin's domain classes and services for GORM auto-discovery in any consumer.
+That is why a sibling plugin's `Book` domain becomes part of the consuming webapp's Hibernate model without any manual registration step.
+
+Keep `apply plugin: 'org.apache.grails.gradle.grails-plugin'` in `shared-core/build.gradle`. In `grails-gradle/plugins/src/main/groovy/org/grails/gradle/plugin/core/GrailsPluginGradlePlugin.groovy` that Gradle plugin applies `java-library`, disables `bootJar` for the plugin project, packages a plain jar, and prepares plugin resources. If you remove it, `shared-core` stops behaving like a Grails plugin build.
+
+Files touched:
+
+- shared-core/build.gradle
+- shared-core/src/main/groovy/example/SharedCoreGrailsPlugin.groovy
+- shared-core/grails-app/domain/example/Book.groovy
+- shared-core/grails-app/services/example/BookService.groovy

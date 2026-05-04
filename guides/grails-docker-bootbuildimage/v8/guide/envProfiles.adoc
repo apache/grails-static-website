@@ -15,3 +15,7 @@ Three things to notice:
 * The username and password resolve from `SPRING_DATASOURCE_USERNAME` and `SPRING_DATASOURCE_PASSWORD` regardless of profile, with the username defaulting to `postgres` for local development.
 
 The Compose file we will write later passes these three variables to the container. Kubernetes deployments would pass the same variables via a `Secret` and `envFrom: { secretRef: ... }`.
+
+Files touched in this chapter:
+
+* `grails-app/conf/application.yml`

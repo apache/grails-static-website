@@ -19,3 +19,7 @@ The resulting jar serves the SPA from `/` and the API from `/api/**`, both from 
 ====
 The matching link:../grails-docker-bootbuildimage/8/guide/index.html[Docker bootBuildImage] guide turns this exact bootJar into an OCI image. Combined, the two guides give you `git push` -> tagged GHCR image -> single-container deploy.
 ====
+
+Files touched in this chapter:
+
+* None directly (this chapter is a runbook for the build chain wired up in `layout.adoc`)
