@@ -4,12 +4,18 @@ You can either build the workspace from scratch by following the chapters or ski
 ----
 git clone -b grails8 https://github.com/grails-guides/grails-multi-module.git
 cd grails-multi-module/complete
-./gradlew :webapp-customer:bootRun     # http://localhost:8080
-# in a second shell, with the customer port freed:
-./gradlew :webapp-admin:bootRun        # http://localhost:8080
+./gradlew :webapp-customer:bootRun
+# In a second shell:
+./gradlew :webapp-admin:bootRun --args='--server.port=8081'
 ----
 
 The repository contains two top-level directories:
 
 * `initial/` - intentionally empty; the README points at the three forge URLs that produce each module starter.
 * `complete/` - the assembled three-module workspace this guide builds.
+
+Each chapter ends with the paths you should have touched by that point, so you can compare your workspace against the finished sample.
+
+Files touched:
+
+- None yet

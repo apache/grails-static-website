@@ -1918,7 +1918,7 @@ guides:
             howto: How to Complete the Guide
           createApp:
             title: Creating the Application
-            download: Download a Grails 8 Snapshot Starter
+            download: Download a Grails 8 Starter
           dockerOverview:
             title: Two Paths to a Container Image
           bootBuildImage:
@@ -2318,7 +2318,7 @@ guides:
             howto: How to Complete the Guide
           createApp:
             title: Creating the Application
-            download: Download a Grails 8 Snapshot Starter
+            download: Download a Grails 8 Starter
             fieldsPluginAlreadyIncluded: The Fields Plugin in Grails 8
           domainModel:
             title: The Book and Author Domain Model
@@ -2550,7 +2550,7 @@ guides:
             howto: How to Complete the Guide
           createApp:
             title: Creating the Application
-            download: Download a Grails 8 Snapshot Starter
+            download: Download a Grails 8 Starter
           workflowOverview:
             title: The Multi-Stage Job Graph
           ciYml:
@@ -4049,7 +4049,7 @@ guides:
             howto: How to Complete the Guide
           createApp:
             title: Creating the Application
-            download: Download a Grails 8 rest_api Starter
+            download: Download a Grails 8 Rest API Starter
           domainModel:
             title: The Book and Author Domain Model
             bootstrapData: Bootstrap Sample Data
@@ -4421,7 +4421,7 @@ guides:
             howto: How to Complete the Guide
           createApp:
             title: Creating the Application
-            download: Download a Grails 8 Snapshot Starter
+            download: Download a Grails 8 Starter
           installTailwind:
             title: Installing Tailwind CSS 4
           configureTailwind:

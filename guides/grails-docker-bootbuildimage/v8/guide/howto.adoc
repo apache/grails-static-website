@@ -10,7 +10,7 @@ docker compose up
 
 The repository contains two top-level directories:
 
-* `initial/` - the starting Grails 8 snapshot project, generated from `https://prev-snapshot.grails.org` with the `postgres`, `testcontainers`, and `database-migration` features and no further customisations.
+* `initial/` - the starting Grails 8 project, generated from link:https://start.grails.org[start.grails.org] with the `postgres`, `testcontainers`, and `database-migration` features and no further customisations.
 * `complete/` - the same project with all Docker-related changes from this guide already in place.
 
 Each chapter ends with the file paths it touches relative to the project root, so you can match what you typed against the `complete/` reference.

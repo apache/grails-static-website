@@ -1,1 +1,1 @@
-Generate a fresh Apache Grails 8 *Rest API* application from link:https://prev-snapshot.grails.org[prev-snapshot.grails.org]. Pick the `rest_api` application type (not `web`); it ships JSON views by default and skips the GSP view layer the regular `web` profile drags along.
+Generate a fresh Apache Grails 8 *Rest API* application from link:https://start.grails.org[start.grails.org]. Pick the `rest_api` application type (not `web`); it ships JSON views by default and skips the GSP view layer the regular `web` profile drags along.

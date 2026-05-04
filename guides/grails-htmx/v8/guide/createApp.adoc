@@ -1,11 +1,30 @@
-Generate a fresh Apache Grails 8 web application from link:https://prev-snapshot.grails.org[prev-snapshot.grails.org]:
+Open link:https://start.grails.org[start.grails.org], pick the `web` profile, name the application `htmxtasks`, set the package to `example`, choose JDK 21, and download the generated zip. Unzip it and `cd` into the `htmxtasks` directory.
 
-[source,bash]
+The default `web` starter already gives you the pieces this guide needs from Grails 8 core:
+
+* GSP support via `org.apache.grails:grails-gsp`, managed by the Grails BOM.
+* Asset Pipeline support via the `cloud.wondrify:asset-pipeline-*` modules, with version `5.0.32` coming from the Grails BOM.
+* Bootstrap and Bootstrap Icons webjars, which the starter's asset manifests already require.
+
+HTMX is not part of the Grails 8 BOM or the `web` profile starter, so add the htmx webjar yourself:
+
+[source,groovy]
+.build.gradle
 ----
-curl -L -o htmx-app.zip \
-  "https://prev-snapshot.grails.org/create/web/example.htmxtasks?lang=GROOVY&build=GRADLE&test=SPOCK&javaVersion=JDK_21"
-unzip htmx-app.zip
-cd htmxtasks
+include::../snippets/build.gradle[]
 ----
 
-The default `web` starter ships GSP, the asset pipeline, and Bootstrap 5 webjars - all of which we will reuse.
+Then require the htmx asset in the JavaScript manifest:
+
+[source,javascript]
+.grails-app/assets/javascripts/application.js
+----
+include::../snippets/grails-app/assets/javascripts/application.js[]
+----
+
+Using `org.webjars.npm:htmx.org:2.0.4` keeps the delivery story consistent with the Grails 8 starter: Asset Pipeline serves the file from the webjar, just as it already does for Bootstrap and jQuery.
+
+Files touched:
+
+* `build.gradle`
+* `grails-app/assets/javascripts/application.js`

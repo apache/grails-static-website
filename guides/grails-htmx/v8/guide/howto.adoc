@@ -8,4 +8,6 @@ cd grails-htmx/complete
 # open http://localhost:8080/tasks
 ----
 
-`initial/` is a vanilla Grails 8 starter. `complete/` adds the Task domain, the controller, the GSP partials, and the HTMX script tag.
+`initial/` is a vanilla Grails 8 web starter. `complete/` adds the Task domain, the controller, the URL mappings, the GSP partials, the `htmx.org` webjar dependency, and the asset-pipeline manifest entry that serves `htmx.min.js`.
+
+Files touched: none.
