@@ -1,4 +1,4 @@
-The `functional-test` job boots the application against a Testcontainers-managed Postgres and drives it with Geb 8 specs. Because it does not declare a `services.postgres` block, the runner is a plain Ubuntu VM; Testcontainers spins up Postgres on demand from the test JVM via the local Docker socket (which GitHub-hosted runners expose by default).
+The `functional-test` job boots the application against a Testcontainers-managed Postgres and drives it with Geb 8 specs that extend `ContainerGebSpec` (from `testFixtures("org.apache.grails:grails-geb")`). The browser itself runs in a Selenium-Chrome container started by Testcontainers, so the runner never needs Chrome/Firefox installed on the host. Because the job does not declare a `services.postgres` block, the runner is a plain Ubuntu VM; Testcontainers spins up both Postgres and Selenium on demand from the test JVM via the local Docker socket (which GitHub-hosted runners expose by default).
 
 [source,yaml]
 ----
@@ -27,4 +27,4 @@ The `functional-test` job boots the application against a Testcontainers-managed
 
 `if: always()` on the geb-reports upload is intentional: even on a green run you may want the screenshots from `build/geb-reports/` to confirm the page rendered as expected. On a red run, those screenshots are how you debug "works on my machine" failures - the runner's screenshot of the failed page is usually enough to spot the missing element.
 
-The `geb-with-webdriver-binaries` feature you selected at the forge step downloads matching Chrome/Firefox driver binaries on the fly via `webdriver-binaries-gradle-plugin`, so no `apt-get install` of the browsers themselves is needed - the plugin handles both the browser and the driver.
+No `apt-get install` of Chrome/Firefox is needed - the browser process lives inside the Selenium container Testcontainers pulls (`selenium/standalone-chrome` by default). The first cold run pulls the image (~200 MB) and is slower; subsequent runs reuse the cached layer. The legacy `geb-with-webdriver-binaries` forge feature is obsolete in Grails 8 and is not used here.
