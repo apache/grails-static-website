@@ -2,12 +2,12 @@ import example.Book
 
 model {
     Iterable<Book> bookList
-    Long           bookCount
+    Integer        bookCount
 }
 
 json {
-    page    Math.max(0, (params.int('offset', 0) ?: 0).intdiv(params.int('max', 25) ?: 25))
+    page     Math.max(0, (params.int('offset', 0) ?: 0).intdiv(params.int('max', 25)))
     pageSize params.int('max', 25)
-    total   bookCount
-    items   bookList.collect { Book b -> g.render(template: 'book', model: [book: b]) }
+    total    bookCount
+    items    g.render(template: 'book', collection: bookList ?: [], var: 'book')
 }

@@ -9,9 +9,12 @@ json {
     name        author.name
     biography   author.biography
     dateOfBirth author.dateOfBirth?.format('yyyy-MM-dd')
-    bookCount   author.books?.size() ?: 0
     _links {
-        self  url: g.createLink(controller: 'author', action: 'show', id: author.id, absolute: true)
-        books url: g.createLink(controller: 'book', action: 'index', params: [author: author.id], absolute: true)
+        self {
+            href g.link(resource: author, absolute: true)
+        }
+        books {
+            href g.link(controller: 'book', action: 'index', params: [author: author.id], absolute: true)
+        }
     }
 }

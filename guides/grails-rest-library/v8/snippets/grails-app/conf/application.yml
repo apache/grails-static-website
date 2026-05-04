@@ -1,0 +1,4 @@
+grails:
+    plugin:
+        databasemigration:
+            updateOnStart: true
