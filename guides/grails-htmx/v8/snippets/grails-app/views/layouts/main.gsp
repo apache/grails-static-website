@@ -7,11 +7,20 @@
     <asset:link rel="icon" href="favicon.ico" type="image/x-ico"/>
     <asset:stylesheet src="application.css"/>
 
-    <%-- HTMX 2.x via CDN. For production, vendor the file under
-         grails-app/assets/javascripts/ and load via asset:javascript. --%>
-    <script src="https://unpkg.com/htmx.org@2.0.4"
-            integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+"
-            crossorigin="anonymous"></script>
+    <g:set var="csrfToken" value="${request.getAttribute('_csrf')}"/>
+    <g:if test="${csrfToken}">
+        <meta name="csrf-header" content="${csrfToken.headerName}"/>
+        <meta name="csrf-token" content="${csrfToken.token}"/>
+        <script>
+            document.addEventListener('htmx:configRequest', function(event) {
+                const header = document.querySelector('meta[name="csrf-header"]')?.content;
+                const token = document.querySelector('meta[name="csrf-token"]')?.content;
+                if (header && token) {
+                    event.detail.headers[header] = token;
+                }
+            });
+        </script>
+    </g:if>
 
     <g:layoutHead/>
 </head>

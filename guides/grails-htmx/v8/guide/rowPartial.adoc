@@ -14,8 +14,8 @@ include::../snippets/grails-app/views/task/_task.gsp[]
 Three HTMX-specific things in this partial:
 
 * The toggle-done button uses `hx-target="closest li"` `hx-swap="outerHTML"`. After the POST, the new HTML replaces *this entire row* in place. The `closest` modifier walks up the DOM until it finds an `<li>`.
-* Clicking the title fires a `hx-get` for the edit form. Same swap target. The result is the inline edit form, replacing the read-only row.
-* The delete button uses `hx-confirm` for an in-browser confirm dialog, `hx-swap="outerHTML swap:200ms"` for a 200 ms fade-out animation, and a DELETE that returns an empty body.
+* Clicking the title button fires a `hx-get` for the edit form. Same swap target. The result is the inline edit form, replacing the read-only row.
+* The delete button uses `hx-confirm` for an in-browser confirm dialog, `hx-swap="outerHTML swap:200ms"` for a 200 ms delayed swap, and a DELETE that returns an empty body.
 
 The list partial is even simpler:
 
@@ -25,4 +25,9 @@ The list partial is even simpler:
 include::../snippets/grails-app/views/task/_taskRows.gsp[]
 ----
 
-It iterates `_task.gsp` and falls back to a placeholder when the list is empty.
+It uses `<g:render template="task" collection="${tasks}" var="task"/>`, which is the idiomatic Grails way to render one template per element, and falls back to a placeholder when the list is empty.
+
+Files touched:
+
+* `grails-app/views/task/_task.gsp`
+* `grails-app/views/task/_taskRows.gsp`

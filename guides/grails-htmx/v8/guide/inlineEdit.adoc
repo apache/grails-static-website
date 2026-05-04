@@ -8,6 +8,12 @@ include::../snippets/grails-app/views/task/_taskEdit.gsp[]
 
 Three patterns to highlight:
 
-* The form's `hx-patch` posts to `/tasks/{id}` with the PATCH method. The response is either the read-only `_task.gsp` (success) or the same edit form with the validation errors rendered (failure).
-* `<g:eachError bean="${task}">` renders the field errors inline. Because Grails populates `task.errors` when `save()` fails, the same partial template handles both success and failure. The HTTP status (200 vs 422) is what tells HTMX which one - both swap into the same slot.
-* The Cancel button does a `hx-get` for `/tasks/{id}` (which returns the read-only row partial) so cancelling does not require any new wiring.
+* The form's `hx-patch` posts to `/tasks/{id}` with the PATCH method. The response is either the read-only `_task.gsp` on success or the same edit form with validation errors on failure.
+* Wrapping the markup in `<g:form>` keeps the snippet idiomatic Grails. If Spring Security CSRF is active, `FormTagLib` will automatically add its hidden field to this form.
+* `<g:eachError bean="${task}" field="title">` renders only the field errors we care about. Because Grails populates `task.errors` when `save()` fails, the same partial template handles both failure and re-render.
+* The Cancel button does a `hx-get` for `/tasks/{id}` so cancelling reloads the canonical read-only row fragment instead of trying to rebuild it in JavaScript.
+
+Files touched:
+
+* `grails-app/views/task/_taskEdit.gsp`
+* `grails-app/controllers/example/TaskController.groovy`

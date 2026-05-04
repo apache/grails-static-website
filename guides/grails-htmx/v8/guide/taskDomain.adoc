@@ -6,4 +6,8 @@ A small Task domain class drives the UI:
 include::../snippets/grails-app/domain/example/Task.groovy[]
 ----
 
-`title blank: false, maxSize: 255` is the only constraint that matters for this guide; we will exercise it via the validation feedback path on inline edit. `dateCreated` is a GORM-managed timestamp. `static mapping { sort 'dateCreated'; order 'desc' }` makes new tasks appear at the top of the list.
+`title blank: false, maxSize: 255` is the only constraint that matters for this guide; we will exercise it in both the create form and the inline edit form. `dateCreated` is a GORM-managed timestamp. `static mapping { sort 'dateCreated'; order 'desc' }` makes new tasks appear at the top of the list without any controller-side sorting code.
+
+Files touched:
+
+* `grails-app/domain/example/Task.groovy`

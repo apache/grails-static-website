@@ -1,9 +1,13 @@
 By the end of the guide your application will have:
 
-* A `Task` domain with `title` (required) and `done` (boolean), with sample data seeded by `BootStrap` so the page is non-empty on first load.
-* A `TaskController` with seven actions: `index` (full page), `search` (live filter), `create` (new task), `editForm` + `update` (inline edit), `toggle` (flip the done flag), `delete`. Every non-`index` action returns a tiny GSP partial, not a full page.
-* GSP partials at `_task.gsp`, `_taskRows.gsp`, and `_taskEdit.gsp` that the controller renders via `<g:render template="..."/>`. One partial per logical state.
+* A `Task` domain with `title` (required) and `done` (boolean).
+* A `TaskController` with eight actions: `index` (full page), `show` (single row), `search` (live filter), `create` (new task), `editForm` + `update` (inline edit), `toggle` (flip the done flag), and `delete`. Every non-`index` action returns a tiny GSP fragment, not a full page.
+* GSP partials at `_task.gsp`, `_taskRows.gsp`, `_taskEdit.gsp`, `_taskForm.gsp`, and `_taskCreated.gsp`. The create flow returns one response that refreshes the form and prepends the new row with `hx-swap-oob`.
 * The four core HTMX attributes (`hx-get`, `hx-post`, `hx-patch`, `hx-delete`) plus the swap targeting attributes (`hx-target`, `hx-swap`).
 * Live search via `hx-trigger="keyup changed delay:300ms"` so the rows partial refreshes after the user pauses typing.
 * Optimistic delete with confirm via `hx-confirm` and an outerHTML swap that animates the row out.
-* CSRF token forwarding configured globally so HTMX requests carry the right header on every POST/PATCH/DELETE.
+* A CSRF section that distinguishes Grails' built-in `useToken` / `withForm` duplicate-submit token support from Spring Security's `_csrf` request attribute and shows how to forward the Spring Security header for HTMX requests when that filter is present.
+
+Files touched: none.
+
+Files touched: none.
