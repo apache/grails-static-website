@@ -19,6 +19,7 @@
 package website.model.guides
 
 import java.text.SimpleDateFormat
+import java.util.regex.Pattern
 
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
@@ -32,23 +33,41 @@ import static website.utils.RenderUtils.renderHtml
 class GuidesPage {
 
     public static final Integer NUMBER_OF_LATEST_GUIDES = 8
+    public static final Integer TAG_CLOUD_LIMIT = 50
     public static final String GUIDES_URL = 'https://grails.apache.org/guides'
 
+    /**
+     * Tag slugs that are version labels masquerading as topics (e.g. {@code grails3},
+     * {@code grails8}). These are filtered out of the tag cloud because they
+     * dwarf real topic tags by occurrence count and add no navigational value -
+     * the version is already implicit in the guide URL.
+     */
+    private static final Pattern VERSION_TAG_PATTERN = ~/^grails\d+$/
+
+    /**
+     * The category-image map. Categories listed here are rendered both on the
+     * guides index page AND as standalone category pages under
+     * {@code /guides/categories/<slug>.html}. Categories that exist in
+     * {@code conf/guides.yml} but are NOT listed here are reachable only via
+     * tags / search / Latest Guides.
+     *
+     * <p>The set has been pruned to the categories that actually carry traffic
+     * in the current Grails 7/8 era. Single-guide legacy categories
+     * (Grails + RIA, Grails + Android, Grails + Angular, Grails + AngularJS,
+     * Grails + iOS) have been dropped - those guides remain accessible via
+     * their tag pages and are still indexed by search engines via direct URLs.</p>
+     */
     static Map<String, Category> categories = [
             advanced: new Category(name: 'Advanced Grails', image: 'advancedgrails.svg'),
-            android: new Category(name: 'Grails + Android', image: 'grails_android.svg'),
-            angular: new Category(name: 'Grails + Angular', image: 'grailsangular.svg'),
-            angularjs: new Category(name: 'Grails + AngularJS', image: 'grailsangular.svg'),
             apprentice: new Category(name: 'Grails Apprentice', image: 'grailaprrentice.svg'),
             async: new Category(name: 'Grails Async', image: 'async.svg'),
             devops: new Category(name: 'Grails + DevOps', image: 'grailsdevops.svg'),
             googlecloud: new Category(name: 'Grails + Google Cloud', image: 'googlecloud.svg'),
             gorm: new Category(name: 'GORM', image: 'gorm.svg'),
-            ios: new Category(name: 'Grails + iOS', image: 'ios.svg'),
             react: new Category(name: 'Grails + React', image: 'react.svg'),
-            ria: new Category(name: 'Grails + RIA (Rich Internet Application)', image: 'ria.svg'),
             testing: new Category(name: 'Grails Testing', image: 'testing.svg'),
             vue: new Category(name: 'Grails + Vue.js', image: 'vue.svg'),
+            weblayer: new Category(name: 'Web Layer', image: 'views.svg'),
     ]
     
     
@@ -145,6 +164,13 @@ class GuidesPage {
                         }
                     }
                 }
+                // The two-column grid pairs a "primary" category on the left with
+                // a complementary one on the right. Reading order goes top-down by
+                // pair, so the first pair (apprentice / advanced) is the most
+                // prominent. Categories that no longer earn a section in this grid
+                // (Grails + Android, Grails + iOS, Grails + Angular, Grails + AngularJS,
+                // Grails + RIA) have been removed entirely; their guides remain
+                // reachable via tags, search, and the Latest Guides sidebar.
                 div(class: 'two-columns') {
                     div(class: 'column') {
                         if (!(tag || category)) {
@@ -161,32 +187,37 @@ class GuidesPage {
                 div(class: 'two-columns') {
                     div(class: 'column') {
                         if (!(tag || category)) {
-                            mkp.yieldUnescaped(guideGroupByCategory(categories.gorm, guides, true, 'margin-top: 0'))
+                            mkp.yieldUnescaped(guideGroupByCategory(categories.weblayer, guides, true, 'margin-top: 0'))
                         }
                     }
                     div(class: 'column') {
-                        if ( !(tag || category) ) {
-                            mkp.yieldUnescaped(guideGroupByCategory(categories.testing, guides, true, 'margin-top: 0'))
-
+                        if (!(tag || category)) {
+                            mkp.yieldUnescaped(guideGroupByCategory(categories.devops, guides, true, 'margin-top: 0'))
                         }
                     }
                 }
                 div(class: 'two-columns') {
                     div(class: 'column') {
-                        if ( !(tag || category) ) {
-                            mkp.yieldUnescaped(guideGroupByCategory(categories.devops, guides, true, 'margin-top: 0'))
-                            mkp.yieldUnescaped(guideGroupByCategory(categories.googlecloud, guides))
-                            mkp.yieldUnescaped(guideGroupByCategory(categories.ios, guides))
-                            mkp.yieldUnescaped(guideGroupByCategory(categories.android, guides))
-                            mkp.yieldUnescaped(guideGroupByCategory(categories.ria, guides))
+                        if (!(tag || category)) {
+                            mkp.yieldUnescaped(guideGroupByCategory(categories.gorm, guides, true, 'margin-top: 0'))
                         }
                     }
                     div(class: 'column') {
                         if (!(tag || category)) {
+                            mkp.yieldUnescaped(guideGroupByCategory(categories.testing, guides, true, 'margin-top: 0'))
+                        }
+                    }
+                }
+                div(class: 'two-columns') {
+                    div(class: 'column') {
+                        if (!(tag || category)) {
                             mkp.yieldUnescaped(guideGroupByCategory(categories.vue, guides, true, 'margin-top: 0'))
-                            mkp.yieldUnescaped(guideGroupByCategory(categories.angular, guides, true, 'margin-top: 0'))
-                            mkp.yieldUnescaped(guideGroupByCategory(categories.angularjs, guides))
-                            mkp.yieldUnescaped(guideGroupByCategory(categories.react, guides))
+                            mkp.yieldUnescaped(guideGroupByCategory(categories.googlecloud, guides))
+                        }
+                    }
+                    div(class: 'column') {
+                        if (!(tag || category)) {
+                            mkp.yieldUnescaped(guideGroupByCategory(categories.react, guides, true, 'margin-top: 0'))
                         }
                     }
                 }
@@ -242,13 +273,25 @@ class GuidesPage {
         }
     }
 
+    /**
+     * Renders the tag cloud sidebar. Filters out version-label tags
+     * (e.g. {@code grails3}, {@code grails8}) that artificially dominate
+     * the cloud by occurrence count without adding navigational value, and
+     * caps the visible set to the {@link #TAG_CLOUD_LIMIT} most-used tags
+     * before re-sorting alphabetically for display.
+     */
     @CompileDynamic
     static String tagCloud(Set<Tag> tags) {
+        List<Tag> curated = tags
+                .findAll { Tag t -> t.title && !VERSION_TAG_PATTERN.matcher(t.title).matches() }
+                .sort { Tag a, Tag b -> b.occurrence <=> a.occurrence ?: a.title <=> b.title }
+                .take(TAG_CLOUD_LIMIT)
+                .sort { Tag a, Tag b -> a.title <=> b.title }
         renderHtml {
             div(class: 'tags-by-topic') {
                 h3(class: 'column-header', 'Guides by Tag')
                 ul(class: 'tag-cloud') {
-                    tags.sort { it.slug }.each { tag ->
+                    curated.each { tag ->
                         li(class: "tag$tag.occurrence") {
                             a(href: "$GUIDES_URL/tags/${tag.slug.toLowerCase()}.html", tag.title)
                         }

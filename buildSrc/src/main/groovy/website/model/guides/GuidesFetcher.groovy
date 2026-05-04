@@ -26,248 +26,170 @@ import org.yaml.snakeyaml.Yaml
 
 import website.utils.DateUtils
 
+/**
+ * Loads the local guide registry ({@code conf/guides.yml}) and produces the
+ * flat list of {@link Guide} objects rendered by {@link GuidesPage}.
+ *
+ * <p>Each top-level YAML entry maps to exactly one {@link Guide}:</p>
+ * <ul>
+ *   <li>One {@code versions:} child &rarr; {@link SingleGuide}</li>
+ *   <li>Two or more {@code versions:} children &rarr; {@link GrailsVersionedGuide}
+ *       which renders one link per version (the YAML version key is used
+ *       directly as the integer major-version, so the registry's primary key
+ *       is stable across Grails major releases).</li>
+ * </ul>
+ *
+ * <p>Guides are identified by their YAML {@code name} field. {@code sampleRef.repo}
+ * is treated only as the "Get the Code" target on the rendered guide chrome
+ * &mdash; it is NOT used to identify or group guides. Two YAML entries that
+ * happen to point at the same external repo are still rendered as two separate
+ * guides.</p>
+ */
 @CompileStatic
 class GuidesFetcher {
 
     private static final String DEFAULT_BRANCH = 'master'
 
-    /** Maps git branch names to Grails major version numbers. */
-    private static final Map<String, Integer> BRANCH_TO_MAJOR = [
-            grails3: 3,
-            grails4: 4,
-            master : 4,
-            grails5: 5,
-            grails6: 6,
-    ]
-
     /**
-     * Internal DTO for a single guide-version. The metadata file is hierarchical
-     * (one entry per guide, with a nested {@code versions} map), but the
-     * downstream rendering logic expects a flat list of one DTO per
-     * (slug, branch) pair, so {@link #parseGuides} flattens during load.
-     */
-    private static final class GuideDto {
-        String category
-        String githubBranch
-        String githubSlug
-        String grailsVersion
-        String name
-        String publicationDate
-        String subtitle
-        String title
-
-        List<String> authors
-        List<String> tags
-    }
-
-    /**
-     * Loads and parses all guides from the local YAML metadata file.
-     * Groups guides by their GitHub slug and creates either a {@link SingleGuide}
-     * or {@link GrailsVersionedGuide} depending on whether multiple branches exist.
+     * Loads and parses every guide entry in the YAML registry.
      *
      * @param guidesYml the YAML metadata file (typically {@code conf/guides.yml})
-     * @param skipFuture if {@code true}, excludes guides with publication dates in the future
-     * @return list of guides sorted by publication date in descending order (newest first)
+     * @param skipFuture if {@code true}, drops guides whose publication date is
+     *                   in the future (today + 1)
+     * @return list of guides sorted by publication date in descending order
+     *         (newest first)
      */
     static List<Guide> fetchGuides(File guidesYml, boolean skipFuture = true) {
-        def entries = parseGuides(guidesYml)
-        def slugsToBranches = [:] as Map<String, Set<String>>
-        entries.each { entry ->
-            def slug = entry.githubSlug
-            def branch = entry.githubBranch ?: DEFAULT_BRANCH
-            slugsToBranches.computeIfAbsent(slug) { [] as Set<String> }.add(branch)
-        }
-
-        def guides = [] as List<Guide>
-        for (def slug : slugsToBranches.keySet()) {
-            def branches = slugsToBranches[slug]
-            if (branches.size() == 1) {
-                def branch = branches.first()
-                def guideDto = entries.find {
-                    it.githubSlug == slug && (!it.githubBranch || it.githubBranch == branch)
-                }
-                def guide = guideDto ? toSingleGuide(guideDto) : null
-                if (guide) {
-                    guides << guide
-                }
-            } else {
-                def guide = toVersionedGuide(entries, slug, branches)
-                if (guide) {
-                    guides << guide
-                }
+        List<Guide> guides = parseGuides(guidesYml)
+        if (skipFuture) {
+            Date cutoff = tomorrow()
+            guides = guides.findAll { Guide g ->
+                g.publicationDate != null && g.publicationDate.before(cutoff)
             }
         }
-
-        if (skipFuture) {
-            guides = guides.findAll { it.publicationDate.before(tomorrow()) }
-        }
-        guides.sort { a, b ->
-            b.publicationDate <=> a.publicationDate
-        }
+        guides.sort { Guide a, Guide b -> b.publicationDate <=> a.publicationDate }
     }
 
     /**
-     * Parses the local YAML metadata file and flattens each guide-version
-     * pair into a {@link GuideDto}.
+     * Walks each top-level YAML guide entry and builds one {@link Guide} per entry.
      *
-     * <p>The file's top-level shape is:
-     * <pre>
-     * defaults:
-     *   category: '...'
-     *   authors: []
-     *   tags: []
-     * guides:
-     *   - name: my-guide
-     *     title: '...'
-     *     subtitle: '...'
-     *     authors: ['Author']
-     *     category: '...'
-     *     publicationDate: '2020-01-15'
-     *     versions:
-     *       '3':
-     *         sourcePath: guides/my-guide/v3
-     *         tags: [grails3]
-     *         sampleRef:
-     *           repo: grails-guides/my-guide
-     *           branch: grails3
-     * </pre>
-     *
-     * Each {@code versions.<N>} entry produces one {@link GuideDto} whose
-     * {@code githubSlug} comes from {@code sampleRef.repo} (defaulting to
-     * "grails-guides/<name>") and {@code githubBranch} from
-     * {@code sampleRef.branch} (defaulting to "master").
-     *
-     * @param yamlFile the YAML metadata file
-     * @return list of parsed guide DTOs, one per (guide, version) pair
+     * <p>Per-version fields ({@code tags}, {@code sampleRef}, {@code publicationDate})
+     * are read from the version block; per-guide fields ({@code title},
+     * {@code subtitle}, {@code authors}, {@code category}, {@code publicationDate})
+     * are read from the guide entry, with the {@code defaults:} block as fallback.</p>
      */
     @CompileDynamic
-    private static List<GuideDto> parseGuides(File yamlFile) {
-        Map root = yamlFile.withReader('UTF-8') { reader -> new Yaml().load(reader) as Map }
+    private static List<Guide> parseGuides(File yamlFile) {
+        Map root = yamlFile.withReader('UTF-8') { reader ->
+            new Yaml().load(reader) as Map
+        }
         Map defaults = (root.defaults ?: [:]) as Map
-        List guides = (root.guides ?: []) as List
+        List entries = (root.guides ?: []) as List
 
-        List<GuideDto> result = []
-        guides.each { Map guide ->
-            String name = guide.name as String
-            Map versions = (guide.versions ?: [:]) as Map
-            versions.each { Object versionKeyObj, Object versionObj ->
-                if (!(versionObj instanceof Map)) {
-                    return
+        List<Guide> result = []
+        for (Map entry : entries) {
+            String name = entry.name as String
+            if (!name) {
+                continue
+            }
+            Map<String, Map> validVersions = [:]
+            ((entry.versions ?: [:]) as Map).each { Object versionKeyObj, Object versionObj ->
+                if (versionObj instanceof Map) {
+                    validVersions[versionKeyObj as String] = versionObj as Map
                 }
-                Map version = versionObj as Map
-                Map sampleRef = (version.sampleRef ?: [:]) as Map
+            }
+            if (validVersions.isEmpty()) {
+                continue
+            }
 
-                String slug = (sampleRef.repo ?: "grails-guides/${name}") as String
-                String branch = (sampleRef.branch ?: DEFAULT_BRANCH) as String
-
-                List<String> tags = (version.tags ?: defaults.tags ?: []) as List<String>
-                List<String> authors = (guide.authors ?: defaults.authors ?: []) as List<String>
-                String category = (guide.category ?: defaults.category) as String
-                String pubDate = (version.publicationDate ?: guide.publicationDate) as String
-
-                result << new GuideDto(
-                        grailsVersion: versionKeyObj as String,
-                        authors: authors,
-                        category: category,
-                        githubSlug: slug,
-                        githubBranch: branch,
-                        name: name,
-                        title: guide.title as String,
-                        subtitle: guide.subtitle as String,
-                        tags: tags,
-                        publicationDate: pubDate
-                )
+            if (validVersions.size() == 1) {
+                Map.Entry<String, Map> only = validVersions.entrySet().iterator().next()
+                result << buildSingleGuide(entry, defaults, only.key, only.value)
+            } else {
+                result << buildVersionedGuide(entry, defaults, validVersions)
             }
         }
         result
     }
 
-    /**
-     * Converts a {@link GuideDto} into a {@link SingleGuide} domain object.
-     * Used when a guide exists only for a single Grails version/branch.
-     *
-     * @param dto the guide DTO to convert
-     * @return a new {@link SingleGuide} instance with all fields populated
-     */
-    private static SingleGuide toSingleGuide(GuideDto dto) {
-        def guide = new SingleGuide(
-                versionNumber: dto.grailsVersion,
-                authors: dto.authors,
-                category: dto.category,
-                githubSlug: dto.githubSlug,
-                githubBranch: dto.githubBranch,
-                name: dto.name,
-                title: dto.title,
-                subtitle: dto.subtitle,
-                tags: dto.tags
+    @CompileDynamic
+    private static SingleGuide buildSingleGuide(
+            Map entry, Map defaults, String versionKey, Map version) {
+        Map sampleRef = (version.sampleRef ?: [:]) as Map
+        new SingleGuide(
+                versionNumber: versionKey,
+                authors: (entry.authors ?: defaults.authors ?: []) as List<String>,
+                category: (entry.category ?: defaults.category) as String,
+                githubSlug: (sampleRef.repo ?: "grails-guides/${entry.name}") as String,
+                githubBranch: (sampleRef.branch ?: DEFAULT_BRANCH) as String,
+                name: entry.name as String,
+                title: entry.title as String,
+                subtitle: entry.subtitle as String,
+                tags: (version.tags ?: defaults.tags ?: []) as List<String>,
+                publicationDate: parsePublicationDate(
+                        (version.publicationDate ?: entry.publicationDate) as String)
         )
-        setPublicationDate(guide, dto)
+    }
+
+    /**
+     * Builds a {@link GrailsVersionedGuide} from every version block under a
+     * single YAML entry. The map key in {@code grailsMayorVersionTags} is the
+     * YAML version key parsed as an integer (e.g. {@code '8' -> 8}); non-numeric
+     * version keys are silently skipped because the rendered URL slot
+     * ({@code /guides/<name>/<major>/...}) requires an integer.
+     *
+     * <p>The "primary" version surfaced as {@code versionNumber} /
+     * {@code githubBranch} / {@code githubSlug} on the guide is the version
+     * with the most recent publication date (or the last-iterated version if
+     * dates are missing/equal). This drives the "Read More" link in the
+     * {@code Latest Guides} sidebar.</p>
+     */
+    @CompileDynamic
+    private static GrailsVersionedGuide buildVersionedGuide(
+            Map entry, Map defaults, Map<String, Map> versions) {
+        GrailsVersionedGuide guide = new GrailsVersionedGuide(
+                authors: (entry.authors ?: defaults.authors ?: []) as List<String>,
+                category: (entry.category ?: defaults.category) as String,
+                name: entry.name as String,
+                title: entry.title as String,
+                subtitle: entry.subtitle as String,
+        )
+
+        Date latestPubDate = null
+        String latestVersionKey = null
+        String latestBranch = DEFAULT_BRANCH
+        String latestSlug = "grails-guides/${entry.name}"
+
+        versions.each { String versionKey, Map version ->
+            if (!versionKey.isInteger()) {
+                return
+            }
+            Integer majorVersion = versionKey.toInteger()
+            guide.grailsMayorVersionTags[majorVersion] =
+                    (version.tags ?: defaults.tags ?: []) as List<String>
+
+            Date pubDate = parsePublicationDate(
+                    (version.publicationDate ?: entry.publicationDate) as String)
+            if (pubDate != null && (latestPubDate == null || pubDate.after(latestPubDate))) {
+                latestPubDate = pubDate
+                latestVersionKey = versionKey
+                Map sampleRef = (version.sampleRef ?: [:]) as Map
+                latestBranch = (sampleRef.branch ?: DEFAULT_BRANCH) as String
+                latestSlug = (sampleRef.repo ?: "grails-guides/${entry.name}") as String
+            }
+        }
+
+        guide.publicationDate = latestPubDate
+        guide.versionNumber = latestVersionKey
+        guide.githubBranch = latestBranch
+        guide.githubSlug = latestSlug
         guide
     }
 
-    /**
-     * Creates a {@link GrailsVersionedGuide} from multiple branch-specific DTOs.
-     * Used when a guide exists across multiple Grails versions (e.g., grails3, grails4).
-     * Aggregates tags from each branch and maps them to their respective major versions.
-     *
-     * @param entries all guide DTOs to search through
-     * @param slug the GitHub slug identifying the guide repository
-     * @param branches the set of branch names (e.g., grails3, grails4) for this guide
-     * @return a new {@link GrailsVersionedGuide} or {@code null} if no matching DTOs found
-     */
-    private static GrailsVersionedGuide toVersionedGuide(
-            List<GuideDto> entries,
-            String slug,
-            Set<String> branches
-    ) {
-        def guide = null
-        for (def branch : branches) {
-            def dto = entries.find {
-                it.githubSlug == slug && it.githubBranch == branch
-            }
-            if (!dto) {
-                continue
-            }
-            if (guide == null) {
-                guide = new GrailsVersionedGuide()
-            }
-            guide.versionNumber = dto.grailsVersion
-            guide.authors = dto.authors
-            guide.category = dto.category
-            guide.githubSlug = dto.githubSlug
-            guide.githubBranch = dto.githubBranch
-            guide.name = dto.name
-            guide.title = dto.title
-            guide.subtitle = dto.subtitle
-
-            def majorVersion = BRANCH_TO_MAJOR[branch]
-            if (majorVersion) {
-                guide.grailsMayorVersionTags[majorVersion] = dto.tags
-            }
-            setPublicationDate(guide, dto)
-        }
-        guide
+    private static Date parsePublicationDate(String dateStr) {
+        dateStr ? DateUtils.parseDate(dateStr) : null
     }
 
-    /**
-     * Parses and sets the publication date on a guide from the DTO's date string.
-     * Uses {@link DateUtils#parseDate} to handle the date parsing.
-     *
-     * @param guide the guide to update
-     * @param dto the DTO containing the publication date string
-     */
-    private static void setPublicationDate(Guide guide, GuideDto dto) {
-        if (dto.publicationDate) {
-            guide.publicationDate = DateUtils.parseDate(dto.publicationDate)
-        }
-    }
-
-    /**
-     * Returns a {@link Date} representing tomorrow (current date plus one day).
-     * Used for filtering out guides with future publication dates.
-     *
-     * @return tomorrow's date
-     */
     @CompileDynamic
     static Date tomorrow() {
         use(TimeCategory) {

@@ -1048,7 +1048,7 @@ guides:
           - 'gradle'
           - 'grails3'
         sampleRef:
-          repo: 'grails-guides/grails-docker-bootbuildimage'
+          repo: 'grails-guides/grails-as-docker-container'
           branch: 'grails3'
         toc:
           training:
@@ -1076,7 +1076,7 @@ guides:
           - 'gradle'
           - 'grails4'
         sampleRef:
-          repo: 'grails-guides/grails-docker-bootbuildimage'
+          repo: 'grails-guides/grails-as-docker-container'
           branch: 'grails4'
         toc:
           training:
@@ -3127,7 +3127,7 @@ guides:
           - 'multi-project'
           - 'grails4'
         sampleRef:
-          repo: 'grails-guides/grails-multi-module'
+          repo: 'grails-guides/grails-multi-project-build'
           branch: 'master'
         toc:
           training:
@@ -3312,7 +3312,7 @@ guides:
           - 'geb'
           - 'grails4'
         sampleRef:
-          repo: 'grails-guides/grails-github-actions-cicd'
+          repo: 'grails-guides/grails-on-github-actions'
           branch: 'master'
         toc:
           training:
@@ -4848,7 +4848,7 @@ guides:
           - 'gorm'
           - 'grails3'
         sampleRef:
-          repo: 'grails-guides/grails-rest-library'
+          repo: 'grails-guides/rest-hibernate'
           branch: 'grails3'
         toc:
           training:
@@ -4885,7 +4885,7 @@ guides:
           - 'gorm'
           - 'grails4'
         sampleRef:
-          repo: 'grails-guides/grails-rest-library'
+          repo: 'grails-guides/rest-hibernate'
           branch: 'grails4'
         toc:
           training:
