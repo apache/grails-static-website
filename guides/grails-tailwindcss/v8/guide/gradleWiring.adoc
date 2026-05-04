@@ -1,4 +1,4 @@
-A two-task block at the bottom of `build.gradle` is everything the build needs:
+A small block at the bottom of `build.gradle` is everything the build needs:
 
 [source,groovy]
 .build.gradle
@@ -6,14 +6,24 @@ A two-task block at the bottom of `build.gradle` is everything the build needs:
 include::../snippets/build.gradle[tag=tailwind,indent=0]
 ----
 
-Two new `Exec` tasks are added:
+And the asset manifest becomes a one-line include of the generated Tailwind output:
 
-* `npmInstall` runs `npm install` and caches its result. The `outputs.dir('node_modules')` declaration plus the `inputs.file('package.json')` declaration mean Gradle reruns it only when `package.json` changes.
-* `tailwindBuild` calls `npx @tailwindcss/cli` with the same `-i` and `-o` paths used by the npm scripts. Its `inputs` cover `package.json`, the entry CSS, and the two directory trees we declared as `@source` paths in `input.css`. Its single output is the compiled `app.css`.
+[source,css]
+.grails-app/assets/stylesheets/application.css
+----
+include::../snippets/grails-app/assets/stylesheets/application.css[]
+----
 
-The two `tasks.named` lines hook `tailwindBuild` into the standard Grails build graph so plain `./gradlew bootRun` (or `assemble`, or `bootJar`) regenerates `app.css` on every cold start. For iterative work without Gradle in the loop, run `npm run watch` in a second shell.
+Two `Exec` tasks do the work:
 
-[NOTE]
-====
-Asset-pipeline manifest: replace the contents of `grails-app/assets/stylesheets/application.css` with `*= require app` so the manifest pulls in the Tailwind output instead of the Bootstrap CSS the starter shipped with. The `app.css` file itself is regenerated on every build, so it is git-ignored.
-====
+* `npmInstall` runs `npm install` and caches its result. The `node_modules/` output plus the `package.json` and `package-lock.json` inputs mean Gradle reruns it only when the Node dependency graph changes.
+* `tailwindBuild` calls `npx @tailwindcss/cli` with the same `-i` and `-o` paths used by the npm scripts. Its `inputs` cover the entry CSS and every directory that the `@source` directives scan.
+
+The two `tasks.named` lines hook `tailwindBuild` into the standard Grails build graph so plain `./gradlew bootRun`, `assemble`, or `bootJar` regenerates `app.css` before resources and Groovy sources compile. For iterative work without Gradle in the loop, run `npm run watch` in a second shell.
+
+The compiled `app.css` lands inside `grails-app/assets/stylesheets/`, which is the asset pipeline's source directory. The layout still asks for `application.css` via `<asset:stylesheet>`, but the manifest now pulls in the Tailwind output instead of the starter's Bootstrap CSS. `app.css` itself is regenerated on every build, so it is git-ignored.
+
+Files touched in this chapter:
+
+* `build.gradle`
+* `grails-app/assets/stylesheets/application.css`

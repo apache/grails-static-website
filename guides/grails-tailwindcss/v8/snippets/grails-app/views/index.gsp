@@ -1,6 +1,8 @@
+<%-- tag::index[] --%>
 <%@ page import="grails.util.Environment"%>
 <%@ page import="org.springframework.boot.SpringBootVersion"%>
 <%@ page import="org.springframework.core.SpringVersion"%>
+<g:set var="pluginManager" bean="pluginManager"/>
 <g:set var="numControllers" value="${grailsApplication.controllerClasses.size()}"/>
 <g:set var="numDomains" value="${grailsApplication.domainClasses.size()}"/>
 <g:set var="numPlugins" value="${pluginManager.allPlugins.size()}"/>
@@ -29,7 +31,7 @@
                target="_blank" rel="noopener">
                 Read the guide
             </a>
-            <a href="https://github.com/grails-guides/grails-tailwindcss"
+            <a href="https://github.com/grails-guides/grails-tailwindcss/tree/grails8/complete"
                class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
                target="_blank" rel="noopener">
                 View source
@@ -121,3 +123,4 @@
 </main>
 </body>
 </html>
+<%-- end::index[] --%>

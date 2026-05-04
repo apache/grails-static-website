@@ -1,9 +1,13 @@
-Tailwind 4 introduced a CSS-first configuration model: most projects no longer need a `tailwind.config.js` file at all. Theme tokens, content sources, and custom variants are declared in your CSS entry point with the `@theme`, `@source`, and `@custom-variant` at-rules.
+Tailwind 4 introduced a CSS-first configuration model. Most projects no longer need a `tailwind.config.js` file at all. Theme tokens, content sources, and custom variants are declared in your CSS entry point with the `@theme`, `@source`, and `@custom-variant` at-rules.
 
 For a Grails app that means three knobs to set:
 
-* *Where to scan for class names.* Tailwind 4's JIT scanner does not know about `.gsp` files out of the box, and it is conservative about reading utility-class string literals from `.groovy` source. Both have to be added with explicit `@source` directives.
+* *Where to scan for class names.* Tailwind 4's scanner does not know about `.gsp` files out of the box, and it is conservative about reading utility-class string literals from `.groovy` source. Both have to be added with explicit `@source` directives.
 * *How to opt into class-based dark mode.* The default dark variant follows `prefers-color-scheme`. To let the user pick a theme and persist it, override the variant so `dark:` utilities apply when an ancestor has the `dark` class.
-* *Reusable component classes (optional).* Anything you find yourself spelling more than three or four times across GSPs is a candidate for the `@layer components` block.
+* *Reusable component classes (optional).* Tailwind 4 adds `@utility` for custom utilities, but a small `@layer components` block is still a good fit when you want a few named classes that read well in GSPs.
 
 All three live in `src/main/css/input.css`, which we will write next.
+
+Files touched in this chapter:
+
+* `src/main/css/input.css`

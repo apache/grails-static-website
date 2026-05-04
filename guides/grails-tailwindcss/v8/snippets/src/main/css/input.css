@@ -1,3 +1,4 @@
+/* tag::input[] */
 /*
  * Tailwind CSS 4 entry point.
  *
@@ -9,6 +10,7 @@
 
 @import "tailwindcss";
 
+/* tag::sources[] */
 /*
  * Where to scan for class names. Tailwind 4 auto-detects most file types,
  * but does not know about .gsp out of the box and is conservative about
@@ -18,15 +20,20 @@
 @source "../../../grails-app/views";
 @source "../../../grails-app/controllers";
 @source "../../../grails-app/services";
+@source "../../../grails-app/taglib";
 @source "../../../src/main/groovy";
+/* end::sources[] */
 
+/* tag::darkVariant[] */
 /*
  * Dark mode via a class on <html>. Toggled at runtime in main.gsp.
  * The default Tailwind 4 dark variant follows prefers-color-scheme; this
  * override lets a user persist their choice across sessions.
  */
 @custom-variant dark (&:where(.dark, .dark *));
+/* end::darkVariant[] */
 
+/* tag::components[] */
 /*
  * A small component layer: classes you can spell once and reuse across
  * GSPs without the full utility chain. Good fit for buttons, cards, and
@@ -44,3 +51,5 @@
         @apply text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white;
     }
 }
+/* end::components[] */
+/* end::input[] */

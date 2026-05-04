@@ -3,36 +3,33 @@ Two patterns repeat across the welcome page: the primary action button and the w
 The relevant section of `input.css`:
 
 [source,css]
+.src/main/css/input.css
 ----
-@layer components {
-    .btn-primary {
-        @apply inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-offset-gray-900;
-    }
-    .card {
-        @apply rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800;
-    }
-    .nav-link {
-        @apply text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white;
-    }
-}
+include::../snippets/src/main/css/input.css[tag=components,indent=0][]
 ----
 
 GSPs then reference them by the short name:
 
 [source,html]
 ----
-<a href="${createLink(controller: 'book', action: 'create')}" class="btn-primary">New book</a>
-<div class="card">...</div>
-<a href="..." class="nav-link">Docs</a>
+<a href="https://grails.apache.org/guides/grails-tailwindcss/8/guide/index.html" class="btn-primary">Read the guide</a>
+<section class="card">...</section>
+<a href="https://grails.apache.org/docs/" class="nav-link">Docs</a>
 ----
 
 Three things to notice:
 
-* `@apply` is still allowed in v4 - the deprecation warnings you may have seen in early v4 betas were about scoping rules, not the directive itself.
-* Component classes in v4 still respect the source order of `@layer base`, `@layer components`, `@layer utilities`. A utility class on a single element will override the same property in a `@layer components` rule.
-* Component classes do *not* defeat purging: the scanner picks them up via the `@source` directives just like raw utility classes.
+* `@apply` is still supported in v4, which keeps the component layer readable even for long utility chains.
+* Tailwind 4 also introduces `@utility` for custom utilities. For this guide we stay with `@layer components` because the goal is a tiny named component surface that reads naturally in GSPs.
+* Component classes do not defeat purging. The scanner still decides what utilities to emit from the classes and variants it can see in your source files.
 
 [TIP]
 ====
-*Dynamic class names in Groovy code:* if a controller or tag library composes a class string at runtime (e.g. `"alert-${level}"`), Tailwind's static analyser cannot see the result and will purge those classes from the output. Add the variants to a safelist by writing them out as a comment in any scanned file (`/* alert-info alert-warn alert-error */`) - the scanner reads literal class names from any file matched by `@source`.
+*Dynamic class names in Groovy code:* if a controller or tag library composes a class string at runtime, Tailwind's static analyser cannot see the result. In v4 the explicit fix is `@source inline(...)` in `input.css`, for example `@source inline("alert-info alert-warn alert-error");`.
 ====
+
+Files touched in this chapter:
+
+* `src/main/css/input.css`
+* `grails-app/views/layouts/main.gsp`
+* `grails-app/views/index.gsp`

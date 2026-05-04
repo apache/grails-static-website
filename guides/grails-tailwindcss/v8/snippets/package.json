@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "description": "Tailwind CSS 4 build wiring for the grails-tailwindcss/v8 sample app.",
+  "engines": {
+    "node": ">=20",
+    "npm": ">=10"
+  },
   "scripts": {
     "build": "tailwindcss -i src/main/css/input.css -o grails-app/assets/stylesheets/app.css --minify",
     "watch": "tailwindcss -i src/main/css/input.css -o grails-app/assets/stylesheets/app.css --watch"

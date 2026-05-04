@@ -110,6 +110,9 @@ dependencies {
     runtimeOnly "com.h2database:h2"
     runtimeOnly "com.zaxxer:HikariCP"
     runtimeOnly "org.fusesource.jansi:jansi"
+    testAndDevelopmentOnly "org.webjars.npm:bootstrap"
+    testAndDevelopmentOnly "org.webjars.npm:bootstrap-icons"
+    testAndDevelopmentOnly "org.webjars.npm:jquery"
     integrationTestImplementation testFixtures("org.apache.grails:grails-geb")
     testImplementation "org.apache.grails:grails-testing-support-datamapping"
     testImplementation "org.apache.grails:grails-testing-support-web"
@@ -127,22 +130,24 @@ tasks.withType(Test).configureEach {
 def npxCmd = org.gradle.internal.os.OperatingSystem.current().isWindows() ? 'npx.cmd' : 'npx'
 def npmCmd = org.gradle.internal.os.OperatingSystem.current().isWindows() ? 'npm.cmd' : 'npm'
 
-tasks.register('npmInstall', Exec) {
-    description = 'Install npm dependencies (Tailwind CSS 4 CLI)'
+def npmInstall = tasks.register('npmInstall', Exec) {
+    description = 'Install npm dependencies for Tailwind CSS 4'
     group = 'tailwind'
-    inputs.file('package.json')
+    inputs.files('package.json', 'package-lock.json')
     outputs.dir('node_modules')
     commandLine npmCmd, 'install', '--no-fund', '--no-audit'
 }
 
-tasks.register('tailwindBuild', Exec) {
-    description = 'Compile src/main/css/input.css into grails-app/assets/stylesheets/app.css via the Tailwind 4 CLI'
+def tailwindBuild = tasks.register('tailwindBuild', Exec) {
+    description = 'Compile src/main/css/input.css into grails-app/assets/stylesheets/app.css'
     group = 'tailwind'
-    dependsOn 'npmInstall'
-    inputs.file('package.json')
-    inputs.file('src/main/css/input.css')
+    dependsOn npmInstall
+    inputs.files('package.json', 'package-lock.json', 'src/main/css/input.css')
     inputs.dir('grails-app/views')
     inputs.dir('grails-app/controllers')
+    inputs.dir('grails-app/services')
+    inputs.dir('grails-app/taglib')
+    inputs.dir('src/main/groovy')
     outputs.file('grails-app/assets/stylesheets/app.css')
     commandLine npxCmd, '@tailwindcss/cli',
             '-i', 'src/main/css/input.css',
@@ -150,7 +155,7 @@ tasks.register('tailwindBuild', Exec) {
             '--minify'
 }
 
-tasks.named('processResources').configure { dependsOn 'tailwindBuild' }
-tasks.named('compileGroovy').configure { dependsOn 'tailwindBuild' }
+tasks.named('processResources').configure { dependsOn tailwindBuild }
+tasks.named('compileGroovy').configure { dependsOn tailwindBuild }
 // end::tailwind[]
 
