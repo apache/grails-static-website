@@ -304,10 +304,10 @@ class GuidesPage {
      *       the version is implicit in the guide URL.</li>
      *   <li>Empty-title tags are skipped defensively.</li>
      * </ul>
-     * After retagging the registry to a curated taxonomy of ~70 canonical
-     * tags, every survivor is worth showing, so there is no top-N cap.
-     * Tags are sorted alphabetically for display (occurrence still drives
-     * the {@code tagN} CSS class so popular tags render larger).
+     * After retagging the registry to a hand-curated taxonomy, every
+     * survivor is worth showing, so there is no top-N cap. Tags are
+     * sorted alphabetically for display (occurrence still drives the
+     * {@code tagN} CSS class so popular tags render larger).
      */
     @CompileDynamic
     static String tagCloud(Set<Tag> tags) {
