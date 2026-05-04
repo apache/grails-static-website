@@ -33,14 +33,14 @@ import static website.utils.RenderUtils.renderHtml
 class GuidesPage {
 
     public static final Integer NUMBER_OF_LATEST_GUIDES = 8
-    public static final Integer TAG_CLOUD_LIMIT = 50
     public static final String GUIDES_URL = 'https://grails.apache.org/guides'
 
     /**
      * Tag slugs that are version labels masquerading as topics (e.g. {@code grails3},
-     * {@code grails8}). These are filtered out of the tag cloud because they
-     * dwarf real topic tags by occurrence count and add no navigational value -
-     * the version is already implicit in the guide URL.
+     * {@code grails8}). The retag pass dropped these from {@code conf/guides.yml}
+     * but the filter is kept defensively so any future YAML drift can't
+     * resurrect them in the cloud - the version is already implicit in the
+     * guide URL.
      */
     private static final Pattern VERSION_TAG_PATTERN = ~/^grails\d+$/
 
@@ -51,22 +51,34 @@ class GuidesPage {
      * {@code conf/guides.yml} but are NOT listed here are reachable only via
      * tags / search / Latest Guides.
      *
-     * <p>The set has been pruned to the categories that actually carry traffic
-     * in the current Grails 7/8 era. Single-guide legacy categories
-     * (Grails + RIA, Grails + Android, Grails + Angular, Grails + AngularJS,
-     * Grails + iOS) have been dropped - those guides remain accessible via
-     * their tag pages and are still indexed by search engines via direct URLs.</p>
+     * <p>Tags are the primary browse mechanism (see {@link #tagCloud}); the
+     * category grid is a small curated set of high-level "tracks" that lets
+     * users skim by axis. The set has been pruned to the tracks that actually
+     * carry traffic in the current Grails 7/8 era:
+     * <ul>
+     *   <li>The Web Layer track was added (htmx, tailwind, vite, fields, REST).</li>
+     *   <li>The Security track was added - previously these guides were buried
+     *       under "Advanced Grails" alongside multi-tenancy and SOAP, even
+     *       though spring-security-* alone covers ~10 guides.</li>
+     *   <li>Single-version legacy SPA tracks (Angular, AngularJS) and the
+     *       per-mobile-OS tracks (iOS, Android) and Grails + RIA were dropped;
+     *       their guides remain reachable via tags, search, and direct URL.</li>
+     *   <li>"Grails + React" and "Grails + Vue.js" were merged into a single
+     *       "Frontend SPA" track since the integration patterns overlap heavily
+     *       and neither category alone justified its own column on the index.</li>
+     * </ul>
+     * </p>
      */
     static Map<String, Category> categories = [
             advanced: new Category(name: 'Advanced Grails', image: 'advancedgrails.svg'),
             apprentice: new Category(name: 'Grails Apprentice', image: 'grailaprrentice.svg'),
             async: new Category(name: 'Grails Async', image: 'async.svg'),
             devops: new Category(name: 'Grails + DevOps', image: 'grailsdevops.svg'),
-            googlecloud: new Category(name: 'Grails + Google Cloud', image: 'googlecloud.svg'),
+            cloud: new Category(name: 'Grails + Cloud', image: 'googlecloud.svg'),
             gorm: new Category(name: 'GORM', image: 'gorm.svg'),
-            react: new Category(name: 'Grails + React', image: 'react.svg'),
+            security: new Category(name: 'Security', image: 'security.svg'),
+            spa: new Category(name: 'Frontend SPA', image: 'react.svg'),
             testing: new Category(name: 'Grails Testing', image: 'testing.svg'),
-            vue: new Category(name: 'Grails + Vue.js', image: 'vue.svg'),
             weblayer: new Category(name: 'Web Layer', image: 'views.svg'),
     ]
     
@@ -167,15 +179,13 @@ class GuidesPage {
                 // The two-column grid pairs a "primary" category on the left with
                 // a complementary one on the right. Reading order goes top-down by
                 // pair, so the first pair (apprentice / advanced) is the most
-                // prominent. Categories that no longer earn a section in this grid
-                // (Grails + Android, Grails + iOS, Grails + Angular, Grails + AngularJS,
-                // Grails + RIA) have been removed entirely; their guides remain
-                // reachable via tags, search, and the Latest Guides sidebar.
+                // prominent. Tags - rendered in the right-hand sidebar above -
+                // are the primary navigation; this grid is a small curated set
+                // of high-level tracks for skimming by axis.
                 div(class: 'two-columns') {
                     div(class: 'column') {
                         if (!(tag || category)) {
                             mkp.yieldUnescaped(guideGroupByCategory(categories.apprentice, guides, true, 'margin-top: 0'))
-                            mkp.yieldUnescaped(guideGroupByCategory(categories.async, guides, true, 'margin-top: 0'))
                         }
                     }
                     div(class: 'column') {
@@ -211,13 +221,24 @@ class GuidesPage {
                 div(class: 'two-columns') {
                     div(class: 'column') {
                         if (!(tag || category)) {
-                            mkp.yieldUnescaped(guideGroupByCategory(categories.vue, guides, true, 'margin-top: 0'))
-                            mkp.yieldUnescaped(guideGroupByCategory(categories.googlecloud, guides))
+                            mkp.yieldUnescaped(guideGroupByCategory(categories.security, guides, true, 'margin-top: 0'))
                         }
                     }
                     div(class: 'column') {
                         if (!(tag || category)) {
-                            mkp.yieldUnescaped(guideGroupByCategory(categories.react, guides, true, 'margin-top: 0'))
+                            mkp.yieldUnescaped(guideGroupByCategory(categories.spa, guides, true, 'margin-top: 0'))
+                        }
+                    }
+                }
+                div(class: 'two-columns') {
+                    div(class: 'column') {
+                        if (!(tag || category)) {
+                            mkp.yieldUnescaped(guideGroupByCategory(categories.async, guides, true, 'margin-top: 0'))
+                        }
+                    }
+                    div(class: 'column') {
+                        if (!(tag || category)) {
+                            mkp.yieldUnescaped(guideGroupByCategory(categories.cloud, guides, true, 'margin-top: 0'))
                         }
                     }
                 }
@@ -274,18 +295,24 @@ class GuidesPage {
     }
 
     /**
-     * Renders the tag cloud sidebar. Filters out version-label tags
-     * (e.g. {@code grails3}, {@code grails8}) that artificially dominate
-     * the cloud by occurrence count without adding navigational value, and
-     * caps the visible set to the {@link #TAG_CLOUD_LIMIT} most-used tags
-     * before re-sorting alphabetically for display.
+     * Renders the tag cloud sidebar. Tags are the primary navigation
+     * mechanism on the guides index - clicking a tag lands on a curated page
+     * listing every guide carrying that tag. The cloud renders every tag
+     * defined in {@code conf/guides.yml} with two filters:
+     * <ul>
+     *   <li>Version-label tags ({@code grails3}..{@code grails8}) are dropped:
+     *       the version is implicit in the guide URL.</li>
+     *   <li>Empty-title tags are skipped defensively.</li>
+     * </ul>
+     * After retagging the registry to a hand-curated taxonomy, every
+     * survivor is worth showing, so there is no top-N cap. Tags are
+     * sorted alphabetically for display (occurrence still drives the
+     * {@code tagN} CSS class so popular tags render larger).
      */
     @CompileDynamic
     static String tagCloud(Set<Tag> tags) {
         List<Tag> curated = tags
                 .findAll { Tag t -> t.title && !VERSION_TAG_PATTERN.matcher(t.title).matches() }
-                .sort { Tag a, Tag b -> b.occurrence <=> a.occurrence ?: a.title <=> b.title }
-                .take(TAG_CLOUD_LIMIT)
                 .sort { Tag a, Tag b -> a.title <=> b.title }
         renderHtml {
             div(class: 'tags-by-topic') {
