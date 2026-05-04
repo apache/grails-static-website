@@ -3396,6 +3396,8 @@ guides:
             title: The Two Webapps Consume shared-core
           runningEach:
             title: Running and Packaging Each Webapp
+          devReload:
+            title: Dev-Mode Auto-Reload Across Projects
           testingPerModule:
             title: Per-Module Testing
           extractingPlugin:

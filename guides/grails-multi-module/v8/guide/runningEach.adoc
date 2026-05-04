@@ -4,22 +4,29 @@ Run each webapp independently:
 ----
 ./gradlew :webapp-customer:bootRun
 # In another shell:
-./gradlew :webapp-admin:bootRun
+./gradlew :webapp-admin:bootRun --args='--server.port=8081'
 ----
 
-Both default to port 8080, so you cannot run them at the same time without overrides. For dev work you have two cheap options:
+Both generated webapps default to port 8080. Grails 8 documents two accurate override styles:
 
-* `./gradlew :webapp-admin:bootRun --args='--server.port=8081'` - one-shot port override.
-* Set `server.port: 8081` in `webapp-admin/grails-app/conf/application.yml` so the admin app permanently uses 8081 in dev. The customer app keeps 8080.
+* `--args='--server.port=8081'` in `grails-doc/src/en/ref/Command Line/bootRun.adoc`
+* `-Dgrails.server.port=8081` in `grails-doc/src/en/guide/gettingStarted/runningAndDebuggingAnApplication.adoc`
 
-Production deployment uses `bootJar` instead of `bootRun`:
+Use either form, but keep it consistent across your team.
+
+Production packaging uses `bootJar` for the two webapps and `jar` for the plugin:
 
 [source,bash]
 ----
+./gradlew :shared-core:jar
 ./gradlew :webapp-customer:bootJar
 ./gradlew :webapp-admin:bootJar
-ls webapp-customer/build/libs/   # webapp-customer-0.1.jar
-ls webapp-admin/build/libs/      # webapp-admin-0.1.jar
 ----
 
-Each `bootJar` embeds the `shared-core` plugin classes (and only the *transitive* runtime dependencies the plugin actually needs). The two jars deploy independently to different hosts, different containers, different release cadences. The data model they share is the byte-for-byte identical compiled `Book.class` produced once by the `shared-core:compileGroovy` task and packaged into both.
+`shared-core` does not produce a deployable `bootJar`. `grails-gradle/plugins/src/main/groovy/org/grails/gradle/plugin/core/GrailsPluginGradlePlugin.groovy` disables `bootJar` and keeps the plain jar as the plugin artifact. The two webapps are the only deployable applications in this workspace.
+
+For the day-to-day inner loop where you save a file in `shared-core` and want a running `bootRun` to pick it up, the next chapter covers the Grails 8 supported reload path.
+
+Files touched:
+
+- None, unless you choose a fixed port in `webapp-admin/grails-app/conf/application.yml`

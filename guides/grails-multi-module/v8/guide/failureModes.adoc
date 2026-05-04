@@ -1,12 +1,13 @@
-Three failure modes show up in real multi-module Grails layouts. Recognise them early, address them once.
+Three failure modes show up again and again in real Grails multi-module workspaces.
 
-* *Circular plugin dependencies.* If `shared-core` reaches "up" into either webapp - e.g. via a `MessageSource` lookup that depends on a webapp's `i18n/` - the build still passes locally (because the consumer is on the classpath at run time) but breaks the moment you try to publish `shared-core` to a Maven repo. Fix the direction: the plugin should never know about its consumers.
+* *Circular module dependencies, disguised as plugin wiring.* The `dependsOn` and `loadAfter` properties on a Grails plugin descriptor are runtime ordering hints from `grails-core/src/main/groovy/grails/plugins/Plugin.groovy`. They do not replace Gradle project dependencies. If a webapp depends on `shared-core`, then `shared-core` must not depend back on that webapp. Keep the dependency arrow one-way: webapps depend on the plugin.
 
-* *GORM mapping conflicts when the same domain class loads twice.* A common mistake: copying a domain class from `shared-core` into `webapp-admin` "just to add an admin-only field". GORM sees two `example.Book` classes on the classpath, registers both, and either silently picks one or fails at startup. The fix is always the same: the field belongs on `shared-core.Book`, with `nullable: true` and an admin-only setter.
+* *Mapping collisions in the Hibernate model.* Grails 8 collects every domain artefact into the mapping context and Hibernate bootstrap path. You can see that in `grails-domain-class/src/main/groovy/org/grails/plugins/domain/support/DefaultMappingContextFactoryBean.groovy` and `grails-data-hibernate5/grails-plugin/src/main/groovy/grails/plugin/hibernate/HibernateGrailsPlugin.groovy`. If the plugin and a webapp both define separate entities that map to the same table or incompatible association metadata, startup fails or the schema becomes ambiguous. Keep one authoritative domain model in `shared-core`.
 
-* *Two webapps disagree on the schema migration order.* If both webapps run Liquibase changesets at startup, one of them will be racing the other on first deploy. Pick one - typically `webapp-admin` - to own migrations; the other (`webapp-customer`) reads the migrated schema with `dbCreate: none`. Document the discipline; do not rely on lock acquisition from Liquibase for cross-app coordination.
+* *Both webapps try to run startup migrations.* `grails-data-hibernate5/dbmigration/src/main/groovy/org/grails/plugins/databasemigration/DatabaseMigrationGrailsPlugin.groovy` runs Liquibase updates at startup when `grails.plugin.databasemigration.updateOnStart*` flags are enabled. Liquibase locking prevents corruption, but it still leaves startup order and deploy timing to chance. Pick one app to own migrations. Let the other app boot against an already-migrated schema.
 
-[NOTE]
-====
-*Cross-repo iteration.* If `shared-core` later moves to its own GitHub repository, `includeBuild('../shared-core')` in the webapps' `settings.gradle` still gives you live cross-iteration during development - the consumer compiles against the live source tree, not a published JAR.
-====
+Files touched:
+
+- shared-core/build.gradle
+- webapp-customer/build.gradle
+- webapp-admin/build.gradle
