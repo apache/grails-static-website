@@ -7,4 +7,4 @@ cd grails-spock-test-tour/complete
 ./gradlew test integrationTest
 ----
 
-`initial/` is a vanilla Grails 8 starter with the `postgres`, `testcontainers`, `geb-with-webdriver-binaries`, and `mockito` features. `complete/` adds the Book domain, the BookService, the BookController, and the four spec files this guide walks through.
+`initial/` is a vanilla Grails 8 starter with the `postgres`, `testcontainers`, and `mockito` features. `complete/` adds the Book domain, the BookService, the BookController, and the five spec files this guide walks through. The functional spec uses `ContainerGebSpec` from the standard `org.apache.grails:grails-geb` test fixtures, so no `geb-with-webdriver-binaries` feature is needed - just a running Docker daemon when you `./gradlew integrationTest`.

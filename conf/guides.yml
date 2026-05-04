@@ -4257,7 +4257,7 @@ guides:
 
   - name: 'grails-spock-test-tour'
     title: 'A Spock Test Tour for Grails 8'
-    subtitle: 'Working examples of every Spock test layer Grails 8 supports - DomainUnitTest, ServiceUnitTest + DataTest, ControllerUnitTest, @Integration + @Rollback, plus parameterised where: data tables.'
+    subtitle: 'Working examples of every Spock test layer Grails 8 supports - DomainUnitTest, ServiceUnitTest + DataTest, ControllerUnitTest, @Integration + @Rollback, ContainerGebSpec functional tests, plus parameterised where: data tables.'
     authors:
       - 'James Fredley'
     category: 'Grails Testing'
@@ -4300,7 +4300,7 @@ guides:
           integrationTest:
             title: '@Integration With @Rollback'
           functionalTest:
-            title: Geb Functional Tests
+            title: ContainerGebSpec Functional Tests
           parameterised:
             title: 'Parameterised where: Data Tables'
           platform:
