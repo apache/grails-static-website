@@ -21,3 +21,8 @@ Three patterns:
 * `npmInstall` -> `frontendBuild` -> `copyFrontendToBackend` is a chain. Each task declares its `inputs`/`outputs` so Gradle's up-to-date check skips the chain when nothing has changed.
 * `copyFrontendToBackend` writes into `backend/src/main/resources/public/`. Spring Boot serves anything under that directory at `/` automatically; no further wiring needed.
 * The `afterEvaluate { tasks.named('processResources').configure { dependsOn ... } }` line is what makes plain `./gradlew :backend:bootJar` (or `bootRun`) trigger the SPA build. Readers never type the frontend tasks directly.
+
+Files touched in this chapter:
+
+* `settings.gradle`
+* `build.gradle`

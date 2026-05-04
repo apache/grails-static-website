@@ -23,3 +23,9 @@ Two run-modes:
 
 * *Dev*: `./gradlew :backend:bootRun` in one shell, `cd frontend && npm run dev` in another. Vite serves the SPA on `:5173` with HMR; the proxy forwards `/api/**` to the Grails app on `:8080`.
 * *Prod*: `./gradlew :backend:bootJar`. Gradle runs `npm run build`, copies `frontend/dist/` into `backend/src/main/resources/public/`, and packages everything into one bootJar. The SPA serves from `/` and `/api/**` from the same origin - CORS irrelevant.
+
+The official Grails 8 reference manual (`grails-doc/src/en/guide/REST/`) covers the JSON-rendering side this guide consumes. The CORS chapter (`grails-doc/src/en/guide/theWebLayer/cors.adoc`) covers the `grails.cors.enabled` block this guide does NOT use - because the same-origin layout this guide builds removes the need for CORS entirely. Both chapters are worth knowing about.
+
+Files touched in this chapter:
+
+* None

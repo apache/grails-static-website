@@ -12,3 +12,7 @@ Two pieces are doing the work:
 * `build.outDir = 'dist'` controls where `npm run build` writes the static bundle. Our root `build.gradle`'s `copyFrontendToBackend` task reads from this exact path.
 
 `emptyOutDir: true` makes a clean rebuild every time, so a renamed asset does not leave a stale predecessor in `dist/`.
+
+Files touched in this chapter:
+
+* `frontend/vite.config.js`

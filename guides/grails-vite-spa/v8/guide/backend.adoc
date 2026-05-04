@@ -26,4 +26,11 @@ include::../snippets/backend/grails-app/views/book/_book.gson[]
 include::../snippets/backend/grails-app/views/book/index.gson[]
 ----
 
-This is exactly the pattern from the link:../grails-rest-library/8/guide/index.html[REST Library] guide, narrowed to a single domain so the Vite-and-React story stays in focus.
+This is exactly the pattern from the link:../grails-rest-library/8/guide/index.html[REST Library] guide, narrowed to a single domain so the Vite-and-React story stays in focus. The `RestfulController` and `.gson` view conventions are documented in `grails-doc/src/en/guide/REST/` (subchapters `domainResources.adoc`, `restRendering.adoc`).
+
+Files touched in this chapter:
+
+* `backend/grails-app/domain/example/Book.groovy`
+* `backend/grails-app/controllers/example/BookController.groovy`
+* `backend/grails-app/views/book/_book.gson`
+* `backend/grails-app/views/book/index.gson`

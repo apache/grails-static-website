@@ -27,3 +27,10 @@ include::../snippets/frontend/src/App.jsx[]
 The single `fetch('/api/books')` call is the only contract between the two halves. The relative path means the same code runs in dev (where Vite proxies to `:8080`) and in prod (where the SPA is served from the bootJar at `:8080` already).
 
 To use Vue 3 instead of React, swap the dependency to `vue` + `@vitejs/plugin-vue` and replace `App.jsx` with an `App.vue` single-file component. The Gradle wiring, Vite proxy, and backend never change.
+
+Files touched in this chapter:
+
+* `frontend/package.json`
+* `frontend/index.html`
+* `frontend/src/main.jsx`
+* `frontend/src/App.jsx`
