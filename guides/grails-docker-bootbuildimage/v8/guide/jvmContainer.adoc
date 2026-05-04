@@ -17,3 +17,8 @@ environment = [
 The `BPE_APPEND` variant *adds* to whatever the buildpack-supplied `JAVA_TOOL_OPTIONS` already contains. The buildpack ships its own memory calculator output (heap, direct memory, metaspace, reserved code cache, thread stacks); appending preserves all of that and just bolts our two flags on the end.
 
 If you switch to the hand-rolled Dockerfile you set the same two flags via `ENV JAVA_TOOL_OPTIONS=...` instead.
+
+Files touched in this chapter:
+
+* `build.gradle` (the `bootBuildImage` block)
+* `Dockerfile` (only if you take the alternative path)

@@ -19,3 +19,7 @@ securityContext:
 ----
 
 `readOnlyRootFilesystem: true` is the strictest setting. The Paketo image already supports it; the hand-rolled Dockerfile may need a `tmpfs` volume mounted at `/tmp` for things like Tomcat's work directory. The trade-off is yours to make.
+
+Files touched in this chapter:
+
+* None directly (`Dockerfile` already creates the non-root user)

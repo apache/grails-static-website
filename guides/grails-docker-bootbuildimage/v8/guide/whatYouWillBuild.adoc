@@ -6,3 +6,9 @@ By the end of the guide you will have:
 * A `compose.yml` stack that runs the image alongside `postgres:16-alpine`, with a Spring Boot Actuator-driven `HEALTHCHECK` and a `depends_on: condition: service_healthy` block so the app waits for the database to be ready before it starts.
 * An equivalent multi-stage `Dockerfile` (build stage on `bellsoft/liberica-openjdk-debian:21`, runtime stage on the matching JRE image) that runs the app as UID `10001` and shows what the buildpack does for you when you let it.
 * The commands you need to push the image to GitHub Container Registry, and a one-paragraph note on consuming it from the matching CI/CD guide.
+
+The official Grails 8 reference manual at `grails-doc/src/en/guide/deployment.adoc` (and the `deployment/` subdirectory) covers WAR file deployment to a servlet container. This guide complements that by walking the modern OCI-image path that Spring Boot 4's `bootBuildImage` task makes possible.
+
+Files touched in this chapter:
+
+* None

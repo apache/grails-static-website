@@ -16,3 +16,7 @@ The first time an image is pushed under a given repo path, GHCR creates the pack
 ====
 The matching CI/CD guide automates this whole flow on every git tag: a `release.yml` workflow runs `bootBuildImage` against the tag's source, pushes to GHCR with the tag name as the image tag, and creates a GitHub Release with the bootJar attached. See the link:../grails-github-actions-cicd/8/guide/index.html[GitHub Actions CI/CD with Grails 8] guide for the workflow file.
 ====
+
+Files touched in this chapter:
+
+* None (push happens from the developer shell or from CI)

@@ -21,3 +21,7 @@ docker compose up
 ----
 
 The first run pulls the Postgres image, creates the volume, starts Postgres, waits for healthy, then starts the app. Subsequent runs skip the pull.
+
+Files touched in this chapter:
+
+* `compose.yml`

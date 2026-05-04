@@ -16,3 +16,9 @@ Three pieces are doing the work:
 ====
 Paketo also exposes ``BPL_JVM_HEAD_ROOM``, ``BPL_JVM_LOADED_CLASS_COUNT``, and ``BPL_JVM_THREAD_COUNT`` as runtime tuning knobs. The defaults are reasonable for a typical Grails app; reach for them only when JVM memory profiles drive the conversation.
 ====
+
+The Spring Boot Gradle plugin pinned in `grails-core` 8.0.x is `spring-boot-gradle-plugin:4.0.5` (see `git show 8.0.x:dependencies.gradle` for the exact coordinate); `bootBuildImage` is part of that plugin and is enabled automatically by the `org.apache.grails.gradle.web` plugin the `web` profile applies.
+
+Files touched in this chapter:
+
+* `build.gradle`
