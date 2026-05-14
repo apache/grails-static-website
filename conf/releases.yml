@@ -57,6 +57,11 @@ companionArtifacts:
       releaseNotesRepo: apache/grails-gradle-publish
       displayName: Grails Publish Gradle Plugin
   '8':
+    - artifactId: grails-spring-security
+      version: '8.0.0-M1'
+      mirrorDirectory: spring-security
+      releaseNotesRepo: apache/grails-spring-security
+      displayName: Grails Spring Security Plugin
     - artifactId: grails-publish
       version: '1.0.0-M1'
       mirrorDirectory: grails-publish
