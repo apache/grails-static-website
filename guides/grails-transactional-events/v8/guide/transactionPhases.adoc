@@ -25,7 +25,7 @@ A few rules that catch everyone the first time:
 
 * *No active transaction means no listener fires.* If `publishEvent(...)` is called outside a transactional context, the event is discarded. Override with `fallbackExecution = true` on the annotation if you really need the listener to run in the non-transactional case - but in a Grails service, `@Transactional` is almost always present and the fallback is rarely needed.
 * *`BEFORE_COMMIT` listeners run inside the publisher's transaction.* Anything the listener does to GORM is part of the same database commit. This is occasionally exactly what you want (e.g. derived totals) but it's a sharp edge - a listener exception unwinds the originating service call.
-* *`AFTER_COMMIT` listeners run *after* the publisher's transaction commits.* The publisher's GORM session is closed by the time the listener fires. The listener must open its own transaction (`REQUIRES_NEW`) to do any database work.
+* *`AFTER_COMMIT` listeners run *after* the publisher's transaction commits.* The original transaction has already concluded by the time the listener fires - Spring is in the middle of draining its synchronization callbacks before tearing the transaction context down. The listener body is therefore not "in" a usable transaction; any database work must open a fresh one via `@Transactional(propagation = REQUIRES_NEW)`.
 * *Listener execution order is unspecified.* Spring does not guarantee the order in which two `AFTER_COMMIT` listeners for the same event fire. If you need ordering, use `@Order(...)` on the listener methods, but better: design the listeners so the order does not matter.
 
 References:

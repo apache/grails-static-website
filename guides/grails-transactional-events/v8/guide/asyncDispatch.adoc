@@ -43,7 +43,7 @@ The "no inherited transaction context" point is important. If the async listener
 
 A few footguns:
 
-* *Exception handling is detached.* Exceptions thrown from an async listener don't reach the publisher. They land in Spring's `AsyncUncaughtExceptionHandler` (default: log at WARN). For listeners that drive critical infrastructure, install an explicit handler.
+* *Exception handling is detached.* Exceptions thrown from an async listener don't reach the publisher. They land in Spring's `AsyncUncaughtExceptionHandler` - the default implementation, `SimpleAsyncUncaughtExceptionHandler`, logs them at `ERROR` level. For listeners that drive critical infrastructure, install an explicit handler so failures fan out to your alerting pipeline instead of getting buried in the log.
 * *Return values are detached.* Don't return a value from an async listener expecting Spring to publish it as a follow-up event - that mechanism (`@EventListener` returning a value to be auto-published) does not compose with async dispatch. Inject `ApplicationEventPublisher` and call `publishEvent(...)` explicitly if you need a follow-up event.
 * *Thread-pool tuning matters.* The default `taskExecutor` is sized for development. For production, declare a `ThreadPoolTaskExecutor` bean with a bounded queue and a sensible rejection policy - otherwise a burst of orders can pile up an unbounded queue of pending notification work.
 
