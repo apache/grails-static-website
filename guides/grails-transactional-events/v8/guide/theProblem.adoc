@@ -1,0 +1,21 @@
+Picture a checkout flow. `OrderService.placeOrder(...)` persists an `Order`. Three other things need to happen "right after" - but only if the order actually commits:
+
+* The `Customer.lifetimeValue` field on the buyer needs to be incremented.
+* An `AuditLog` row needs to be written for compliance.
+* A confirmation email needs to go out.
+
+The three obvious-but-wrong solutions:
+
+*Stuff every side-effect into `OrderService.placeOrder()`.* The service now reaches into `Customer`, into `AuditLog`, into the email subsystem. Add a fourth side-effect later (a search-index update, a Slack webhook, a usage-counter increment) and you keep editing the same method. Every concern in the system gets a line in `placeOrder`. The "place an order" intent disappears under the maintenance work.
+
+*Use a GORM domain-class callback like `Order.afterInsert`.* Closer, but two issues. The callback fires inside the Hibernate flush, not after the database commit. If the surrounding transaction rolls back later, the side-effects in `afterInsert` roll back too only if they used the same GORM session. Anything that touched an external system - the email send, the webhook - is already gone. Worse, GORM lifecycle callbacks live on the domain class itself, which has no Spring context, so calling other Spring beans from them is awkward and brittle.
+
+*Use a plain Spring `ApplicationEvent` (without the transactional flavour).* This fires the listeners immediately when `publishEvent(...)` is called - which happens *inside* `OrderService.placeOrder()`, before its surrounding transaction has committed. A rollback after `publishEvent` leaves phantom audit rows, phantom emails, and (depending on isolation level) listeners that read the to-be-rolled-back order from the database and act on data that will not durably exist.
+
+The pattern this guide teaches is `@TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)`. The publisher calls `publishEvent(...)` unconditionally. Spring buffers the event in the transaction synchronization manager and dispatches it to listener beans *only* after the database commit succeeds. Roll back, and the listeners never see the event. Each side-effect lives in its own class. Adding a fifth side-effect means writing a fifth class, not editing `OrderService`.
+
+Because GORM is implemented on top of Spring's `PlatformTransactionManager`, the wiring is the wiring you already have - no plugins, no GORM events bus, no `@EnableJpa*` annotations. Spring sees the commit on the GORM session, fires the synchronisation callback, and dispatches the event.
+
+Files touched in this chapter:
+
+* None

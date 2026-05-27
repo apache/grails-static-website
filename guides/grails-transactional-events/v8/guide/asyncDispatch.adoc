@@ -1,0 +1,58 @@
+The third listener stands in for "send a confirmation email" - exactly the kind of side-effect you don't want to do on the caller's thread. Composing `@Async` with `@TransactionalEventListener` hands the listener body to Spring's task executor *after* the commit lands.
+
+[source,groovy]
+.grails-app/services/example/NotificationListener.groovy
+----
+include::../snippets/grails-app/services/example/NotificationListener.groovy[]
+----
+
+Two pieces of wiring this listener needs:
+
+`@EnableAsync` somewhere in your Spring configuration. The typical home is the `Application` class:
+
+[source,groovy]
+.grails-app/init/example/Application.groovy
+----
+package example
+
+import grails.boot.GrailsApp
+import grails.boot.config.GrailsAutoConfiguration
+import grails.plugins.metadata.PluginSource
+import org.springframework.scheduling.annotation.EnableAsync
+
+@PluginSource
+@EnableAsync
+class Application extends GrailsAutoConfiguration {
+    static void main(String[] args) {
+        GrailsApp.run(Application, args)
+    }
+}
+----
+
+Without `@EnableAsync`, the `@Async` annotation is silently a no-op and the listener runs on the publisher's thread.
+
+The composition order with `@TransactionalEventListener` is exact:
+
+. The publisher's transaction commits.
+. Spring's `TransactionSynchronizationManager` fires the AFTER_COMMIT callback.
+. The callback dispatches the event to listener method references.
+. Because this listener method is also `@Async`, the call is handed to the `taskExecutor` bean instead of running on the synchronization thread.
+. The executor thread invokes `onOrderPlaced(...)` with no inherited transaction context.
+
+The "no inherited transaction context" point is important. If the async listener needs database access, it must open its own transaction with `@Transactional(propagation = REQUIRES_NEW)` on the listener method, exactly like the `CustomerLifetimeValueListener` did. Forgetting this and writing GORM code directly in an `@Async` listener body produces an enigmatic `org.hibernate.HibernateException: No Session found for current thread` from a stack frame that has nothing else to do with persistence.
+
+A few footguns:
+
+* *Exception handling is detached.* Exceptions thrown from an async listener don't reach the publisher. They land in Spring's `AsyncUncaughtExceptionHandler` (default: log at WARN). For listeners that drive critical infrastructure, install an explicit handler.
+* *Return values are detached.* Don't return a value from an async listener expecting Spring to publish it as a follow-up event - that mechanism (`@EventListener` returning a value to be auto-published) does not compose with async dispatch. Inject `ApplicationEventPublisher` and call `publishEvent(...)` explicitly if you need a follow-up event.
+* *Thread-pool tuning matters.* The default `taskExecutor` is sized for development. For production, declare a `ThreadPoolTaskExecutor` bean with a bounded queue and a sensible rejection policy - otherwise a burst of orders can pile up an unbounded queue of pending notification work.
+
+References:
+
+* link:https://docs.spring.io/spring-framework/docs/6.2.x/javadoc-api/org/springframework/context/event/EventListener.html[`@EventListener` javadoc - "Asynchronous Listeners" section]
+* link:https://docs.spring.io/spring-framework/docs/6.2.x/javadoc-api/org/springframework/scheduling/annotation/EnableAsync.html[`@EnableAsync` javadoc]
+
+Files touched in this chapter:
+
+* `grails-app/services/example/NotificationListener.groovy`
+* `grails-app/init/example/Application.groovy` (add `@EnableAsync`)

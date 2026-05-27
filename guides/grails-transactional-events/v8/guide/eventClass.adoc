@@ -1,0 +1,19 @@
+The event itself is a plain Groovy POGO. It carries the *minimum* data a listener needs to do its job - typically the IDs of the domain objects involved, plus any snapshotted value the listener should not look up again.
+
+[source,groovy]
+.src/main/groovy/example/events/OrderPlacedEvent.groovy
+----
+include::../snippets/src/main/groovy/example/events/OrderPlacedEvent.groovy[]
+----
+
+Three deliberate choices:
+
+* *No `extends ApplicationEvent`.* Since Spring Framework 4.2 (released 2015), `ApplicationEventPublisher` accepts any `Object`. If the published value isn't already an `ApplicationEvent`, Spring wraps it in a `PayloadApplicationEvent<T>` transparently. Listener methods declare the payload type as their parameter, never the wrapper. See link:https://docs.spring.io/spring-framework/docs/6.2.x/javadoc-api/org/springframework/context/PayloadApplicationEvent.html[`PayloadApplicationEvent` javadoc].
+* *`@Immutable`.* The event is data, not a state machine. Listeners may run on different threads (the `@Async` listener you'll write later runs on Spring's task executor), and the listener-execution order is unspecified - mutating the event from one listener to communicate with another is a contract violation waiting to happen. Groovy's `@Immutable` AST transformation generates a final-field, `equals`/`hashCode`-correct class for free.
+* *IDs, not references.* The event carries `customerId`, not a `Customer` instance. By the time the AFTER_COMMIT listeners run, the original Hibernate session is closed; passing a `Customer` instance would hand listeners a detached entity. Listeners that need the full row look it up by ID inside their own transaction.
+
+The event class lives under `src/main/groovy/example/events/` rather than `grails-app/services/` because it isn't a Grails artefact - Grails doesn't auto-register it as a Spring bean and there's nothing to inject. Plain Groovy under `src/main/groovy/` is the right home for it.
+
+Files touched in this chapter:
+
+* `src/main/groovy/example/events/OrderPlacedEvent.groovy`

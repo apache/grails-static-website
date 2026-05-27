@@ -1,0 +1,12 @@
+By the end of the guide you will have:
+
+* A three-domain model - `Customer`, `Order`, and `AuditLog` - with `Order belongsTo: Customer` and a denormalised `Customer.lifetimeValue` field that downstream listeners maintain.
+* An immutable POGO event class `OrderPlacedEvent` under `src/main/groovy/example/events/`. No `ApplicationEvent` inheritance: Spring 4.2+ accepts any object as a published event.
+* An `OrderService.placeOrder(...)` method annotated `@Transactional` that persists an `Order` and publishes an `OrderPlacedEvent` via an injected `ApplicationEventPublisher`.
+* Three independent listener services:
+** `CustomerLifetimeValueListener` - bumps `Customer.lifetimeValue` after commit.
+** `AuditListener` - writes an `AuditLog` row after commit.
+** `NotificationListener` - dispatched off-thread via `@Async` after commit (a stand-in for sending email).
+* Two Spock integration specs that prove the non-negotiable contract: AFTER_COMMIT listeners fire when (and only when) the publisher's transaction commits, and are silently skipped when it rolls back.
+* A reference table of all four `TransactionPhase` values - `BEFORE_COMMIT`, `AFTER_COMMIT`, `AFTER_ROLLBACK`, `AFTER_COMPLETION` - explaining what each one is good for.
+* A side-by-side contrast with GORM's domain-class lifecycle callbacks (`beforeInsert` / `afterInsert`) and Grails' `@Subscriber` / `@Listener` annotations, so you know which mechanism to reach for and when.

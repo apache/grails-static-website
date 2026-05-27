@@ -1,0 +1,21 @@
+The first listener bumps `Customer.lifetimeValue` after an order commits.
+
+[source,groovy]
+.grails-app/services/example/CustomerLifetimeValueListener.groovy
+----
+include::../snippets/grails-app/services/example/CustomerLifetimeValueListener.groovy[]
+----
+
+Walk through it:
+
+* The class lives in `grails-app/services/`, so Grails auto-registers it as a Spring bean named `customerLifetimeValueListener`. Spring's `EventListenerMethodProcessor` scans every bean's methods at startup for `@EventListener` / `@TransactionalEventListener` annotations and wires the listener registry from what it finds. There is no extra configuration step.
+* `@TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)` binds the listener to the *publisher's* transaction synchronization. When `OrderService.placeOrder(...)` commits, Spring's `TransactionSynchronizationManager` fires the `afterCommit()` callback that drains the buffered events into this method. If `placeOrder(...)` rolls back, the buffered event is discarded and the method below is never called.
+* `@Transactional(propagation = REQUIRES_NEW)` opens a *new* transaction for the listener body. The publisher's transaction has already committed and its `Session` is closed by the time we get here - this method has no inherited GORM session. `REQUIRES_NEW` opens a fresh one and binds it to the calling thread for the duration of the listener.
+* The method parameter type `OrderPlacedEvent` is how Spring picks which listener to call for which event. A second listener that accepts `CustomerRegisteredEvent` won't see `OrderPlacedEvent`s, and vice versa. The event-to-listener wiring is implicit in the parameter type.
+* The `if (customer)` guard handles the (degenerate) case where the customer row has been deleted between the publisher commit and the listener firing. In a single-node deployment this is essentially impossible; in a multi-node deployment with concurrent admin tooling it can happen and the listener should noop rather than throw.
+
+One thing the listener deliberately doesn't do: re-publish another event. AFTER_COMMIT listeners can call `applicationEventPublisher.publishEvent(...)` themselves, but doing so creates an event chain that lives outside the original publisher's transaction. Keep listener responsibilities narrow; if a second event is logically part of the same business operation, publish it from the original service.
+
+Files touched in this chapter:
+
+* `grails-app/services/example/CustomerLifetimeValueListener.groovy`
