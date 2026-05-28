@@ -4705,6 +4705,8 @@ guides:
             title: Publishing Events From a Transactional Service
           transactionalListener:
             title: The First @TransactionalEventListener
+          registeringListeners:
+            title: Registering the Listeners (and the Factory That Makes Them Fire)
           transactionPhases:
             title: The Four TransactionPhase Values
           multipleListeners:
@@ -4715,6 +4717,16 @@ guides:
             title: vs. GORM Lifecycle Callbacks and @Subscriber
           integrationTest:
             title: Proving the Contract With an Integration Spec
+          sameTransactionProblem:
+            title: When the Side-Effect IS the Transaction
+          workOrderDomainModel:
+            title: The CustomerRequest, WorkOrder, and WorkOrderAssignee Domain Model
+          synchronousOrchestration:
+            title: Synchronous Orchestration With a Plain @EventListener
+          atomicRollbackTest:
+            title: Proving Atomic Rollback With an Integration Spec
+          testingThePattern:
+            title: Testing the Pattern Inside and Out
           helpWithGrails:
             title: Do you need help with Grails?
 

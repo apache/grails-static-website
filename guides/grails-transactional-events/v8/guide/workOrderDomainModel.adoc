@@ -1,0 +1,52 @@
+Three domains and two status enums model the workflow. A `CustomerRequest` owns one or more `WorkOrder`s; each `WorkOrder` owns its `WorkOrderAssignee`s. The status fields are the state the orchestration moves.
+
+Start with the enums. Keeping status in a typed enum rather than a free `String` means the orchestration logic reads like the business rule it implements, and an illegal value is a compile error rather than a runtime surprise.
+
+[source,groovy]
+.src/main/groovy/example/CustomerRequestStatus.groovy
+----
+include::../snippets/src/main/groovy/example/CustomerRequestStatus.groovy[]
+----
+
+[source,groovy]
+.src/main/groovy/example/WorkOrderStatus.groovy
+----
+include::../snippets/src/main/groovy/example/WorkOrderStatus.groovy[]
+----
+
+The `isTerminal()` helper on `CustomerRequestStatus` is the one piece of business logic that lives on the enum: a request that is `COMPLETED` or `CANCELLED` is closed and cannot be dragged back into `IN_PROGRESS`. The orchestration listener consults it before advancing a request, and it is exactly the guard the rollback test will trip.
+
+Now the domains.
+
+[source,groovy]
+.grails-app/domain/example/CustomerRequest.groovy
+----
+include::../snippets/grails-app/domain/example/CustomerRequest.groovy[]
+----
+
+[source,groovy]
+.grails-app/domain/example/WorkOrder.groovy
+----
+include::../snippets/grails-app/domain/example/WorkOrder.groovy[]
+----
+
+[source,groovy]
+.grails-app/domain/example/WorkOrderAssignee.groovy
+----
+include::../snippets/grails-app/domain/example/WorkOrderAssignee.groovy[]
+----
+
+A few choices worth pointing at:
+
+* *The `belongsTo` chain is deliberate.* `WorkOrder belongsTo CustomerRequest` and `WorkOrderAssignee belongsTo WorkOrder` give the listener a clean navigation path: from the assignee's work order, `workOrder.customerRequest` reaches the request without a separate query. Because the listener runs in the publisher's session (next chapter), that navigation hits the first-level cache, not the database.
+* *Status fields default to the entry state and are never edited from a controller.* `CustomerRequest.status` starts `SUBMITTED`; `WorkOrder.status` starts `OPEN`. The orchestration listener is the only writer of those transitions. Single-writer status, like the single-writer `Customer.lifetimeValue` in the first half of the guide, is what keeps the pattern composable.
+* *`WorkOrder` maps to `work_orders`.* `order` is a reserved word in most SQL dialects and `work order` collides with the same keyword family; the explicit table name sidesteps it, exactly as `Order` did earlier.
+* *Validation lives on the domains.* The orchestration uses `save(failOnError: true)`, so a domain constraint violation becomes a thrown exception - and, as the next chapter shows, that exception is what makes the whole transaction roll back.
+
+Files touched in this chapter:
+
+* `src/main/groovy/example/CustomerRequestStatus.groovy`
+* `src/main/groovy/example/WorkOrderStatus.groovy`
+* `grails-app/domain/example/CustomerRequest.groovy`
+* `grails-app/domain/example/WorkOrder.groovy`
+* `grails-app/domain/example/WorkOrderAssignee.groovy`

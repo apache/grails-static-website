@@ -26,8 +26,8 @@ class OrderServiceIntegrationSpec extends Specification {
     void "AFTER_COMMIT listeners run only after the outer transaction commits"() {
         given:
         Customer customer = createCommitted('Eve Lin', 'eve@example.com')
-        long auditBefore = AuditLog.count()
-        BigDecimal lvBefore = Customer.get(customer.id).lifetimeValue
+        long auditBefore = AuditLog.withNewTransaction { AuditLog.count() }
+        BigDecimal lvBefore = Customer.withNewTransaction { Customer.get(customer.id).lifetimeValue }
 
         when: 'placeOrder runs inside a transaction that commits'
         Order placed = null
@@ -36,8 +36,8 @@ class OrderServiceIntegrationSpec extends Specification {
         }
 
         then: 'Both AFTER_COMMIT listeners fired'
-        AuditLog.count() == auditBefore + 1
-        Customer.get(customer.id).lifetimeValue == lvBefore + new BigDecimal('19.95')
+        AuditLog.withNewTransaction { AuditLog.count() } == auditBefore + 1
+        Customer.withNewTransaction { Customer.get(customer.id).lifetimeValue } == lvBefore + new BigDecimal('19.95')
 
         cleanup:
         deleteCommitted(placed, customer)
@@ -46,8 +46,8 @@ class OrderServiceIntegrationSpec extends Specification {
     void "AFTER_COMMIT listeners are skipped when the outer transaction rolls back"() {
         given:
         Customer customer = createCommitted('Fay Park', 'fay@example.com')
-        long auditBefore = AuditLog.count()
-        BigDecimal lvBefore = Customer.get(customer.id).lifetimeValue
+        long auditBefore = AuditLog.withNewTransaction { AuditLog.count() }
+        BigDecimal lvBefore = Customer.withNewTransaction { Customer.get(customer.id).lifetimeValue }
 
         when: 'placeOrder runs inside a transaction that explicitly rolls back'
         Order.withNewTransaction { status ->
@@ -56,11 +56,35 @@ class OrderServiceIntegrationSpec extends Specification {
         }
 
         then: 'Neither AFTER_COMMIT listener fired'
-        AuditLog.count() == auditBefore
-        Customer.get(customer.id).lifetimeValue == lvBefore
+        AuditLog.withNewTransaction { AuditLog.count() } == auditBefore
+        Customer.withNewTransaction { Customer.get(customer.id).lifetimeValue } == lvBefore
 
         cleanup:
         deleteCommitted(null, customer)
+    }
+
+    void "placing two orders accumulates lifetime value and writes one audit row each"() {
+        given:
+        Customer customer = createCommitted('Gus Hall', 'gus@example.com')
+        long auditBefore = AuditLog.withNewTransaction { AuditLog.count() }
+
+        when: 'two orders are placed in separate committed transactions'
+        Order first = null
+        Order second = null
+        Order.withNewTransaction { first = orderService.placeOrder(customer.id, new BigDecimal('10.00')) }
+        Order.withNewTransaction { second = orderService.placeOrder(customer.id, new BigDecimal('5.50')) }
+
+        then: 'both AFTER_COMMIT fan-outs ran: two audit rows and the summed lifetime value'
+        AuditLog.withNewTransaction { AuditLog.count() } == auditBefore + 2
+        Customer.withNewTransaction { Customer.get(customer.id).lifetimeValue } == new BigDecimal('15.50')
+
+        cleanup:
+        Order.withNewTransaction {
+            AuditLog.where { orderId == first.id || orderId == second.id }.deleteAll()
+            Order.get(first.id)?.delete()
+            Order.get(second.id)?.delete()
+            Customer.get(customer.id)?.delete(flush: true)
+        }
     }
 
     private Customer createCommitted(String name, String email) {
