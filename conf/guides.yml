@@ -2827,6 +2827,8 @@ guides:
             title: CSRF With HTMX
           spaComparison:
             title: HTMX vs an SPA
+          testing:
+            title: Testing the HTMX UI
           helpWithGrails:
             title: Do you need help with Grails?
 

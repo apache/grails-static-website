@@ -3,7 +3,7 @@
             action="update"
             id="${task.id}"
             class="d-flex gap-2"
-            hx-patch="${createLink(controller: 'task', action: 'update', id: task.id)}"
+            hx-patch="${createLink(uri: '/tasks/' + task.id)}"
             hx-target="closest li"
             hx-swap="outerHTML">
         <g:textField name="title"
@@ -14,7 +14,7 @@
         <button type="submit" class="btn btn-primary btn-sm">Save</button>
         <button type="button"
                 class="btn btn-outline-secondary btn-sm"
-                hx-get="${createLink(controller: 'task', action: 'show', id: task.id)}"
+                hx-get="${createLink(uri: '/tasks/' + task.id)}"
                 hx-target="closest li"
                 hx-swap="outerHTML">Cancel</button>
     </g:form>
