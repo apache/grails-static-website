@@ -4441,6 +4441,8 @@ guides:
             title: Class-Based Dark Mode
           componentLayer:
             title: Reusable Component Classes with @apply
+          testing:
+            title: Testing the Tailwind Build
           helpWithGrails:
             title: Do you need help with Grails?
 
