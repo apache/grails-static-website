@@ -1939,6 +1939,8 @@ guides:
             title: Pushing to GitHub Container Registry
           nonRoot:
             title: Running as a Non-Root User
+          testing:
+            title: Testing the Health Probes
           helpWithGrails:
             title: Do you need help with Grails?
 
