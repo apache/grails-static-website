@@ -1,0 +1,62 @@
+The backend is covered at three layers: fast domain and controller unit tests, an `@Integration` test for persistence against a real database, and functional HTTP tests that exercise the JSON API, the same-origin CORS behaviour, and the SPA-serving path. The integration and functional layers run against a Testcontainers-managed PostgreSQL database; running `:backend:integrationTest` also triggers the frontend Vite build (via `processResources` -> `copyFrontendToBackend`), so the functional tests run against the *actually built* SPA bundle.
+
+== Test dependencies
+
+Testcontainers artifacts are not in the Grails BOM, and a `rest-api` profile app needs the web testing support for `ControllerUnitTest`:
+
+[source,groovy]
+.backend/build.gradle (test dependencies)
+----
+testImplementation "org.apache.grails:grails-testing-support-datamapping"
+testImplementation "org.apache.grails:grails-testing-support-views-gson"
+testImplementation "org.apache.grails:grails-testing-support-web"
+testImplementation "org.spockframework:spock-core"
+testImplementation platform("org.testcontainers:testcontainers-bom:1.20.4")
+testImplementation "org.testcontainers:postgresql"
+testImplementation "org.testcontainers:spock"
+testImplementation "org.testcontainers:testcontainers"
+----
+
+== Unit: domain and controller
+
+[source,groovy]
+.backend/src/test/groovy/example/BookSpec.groovy
+----
+include::../snippets/backend/src/test/groovy/example/BookSpec.groovy[]
+----
+
+The `BookController` overrides `listAllResources` to clamp the page size. Because it reads `params.int('max', 25)`, the spec drives it through the controller's `GrailsParameterMap` (a plain `Map` has no `int()` accessor):
+
+[source,groovy]
+.backend/src/test/groovy/example/BookControllerSpec.groovy
+----
+include::../snippets/backend/src/test/groovy/example/BookControllerSpec.groovy[]
+----
+
+== Integration: persistence against a real database
+
+[source,groovy]
+.backend/src/integration-test/groovy/example/BookIntegrationSpec.groovy
+----
+include::../snippets/backend/src/integration-test/groovy/example/BookIntegrationSpec.groovy[]
+----
+
+== Functional: the API, CORS, and SPA serving over real HTTP
+
+The functional spec sends real requests with `java.net.http.HttpClient`. It asserts the JSON envelope shape (`{total, items:[{id,title,author,isbn}]}` - the `items` must be nested objects, which is why the JSON view renders the `book` template with `collection:` rather than collecting rendered strings), the same-origin layout's *absence* of CORS headers, and that both the SPA shell (`/`) and its hashed JS bundle (`/assets/**`) are served same-origin:
+
+[source,groovy]
+.backend/src/integration-test/groovy/example/ApiFunctionalSpec.groovy
+----
+include::../snippets/backend/src/integration-test/groovy/example/ApiFunctionalSpec.groovy[]
+----
+
+The SPA-serving assertions are the ones that catch the subtle wiring bugs: a `rest-api` Grails app registers no servlet static-resource handler, so `SpaController` reads `index.html` off the classpath and `AssetController` streams the `/assets/**` bundle - without both, the deployed SPA would render an empty shell that never loads its script. The functional test fails loudly if either route regresses.
+
+Run it:
+
+[source,bash]
+----
+./gradlew :backend:test             # unit - milliseconds, no Docker
+./gradlew :backend:integrationTest  # builds the SPA, boots the app, drives HTTP - Docker + node required
+----

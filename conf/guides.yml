@@ -4884,7 +4884,7 @@ guides:
           urlMappings:
             title: URL Mappings (/api/** vs SPA)
           spaController:
-            title: The SpaController Forwarder
+            title: Serving the SPA Shell
           frontend:
             title: The Vite/React Frontend
           viteConfig:
@@ -4895,6 +4895,8 @@ guides:
             title: Prod Build (One bootJar, One Origin)
           cors:
             title: Why CORS Never Appears
+          testing:
+            title: Testing the API and SPA Serving
           helpWithGrails:
             title: Do you need help with Grails?
 

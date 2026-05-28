@@ -7,9 +7,10 @@ include::../snippets/backend/grails-app/controllers/example/UrlMappings.groovy[]
 ----
 
 * `/api/books` (and any other future `/api/**` route) hits the JSON controllers.
-* Everything else - `/`, `/books/42`, `/about` - resolves to `SpaController.index`, which forwards to the bundled `index.html`. The SPA's client-side router takes over from there.
+* `/assets/**` resolves to `AssetController`, which streams the Vite-built JS and CSS bundle from the classpath. The `rest-api` profile registers no servlet static-resource handler, so without this route the SPA's hashed assets would 404 - the page would load its shell but never its script.
+* `/` resolves to `SpaController.index`, which serves the bundled `index.html`. The SPA's client-side router takes over from there.
 
-The forward (rather than a redirect) is what makes deep links survive a browser refresh: a hard reload on `/books/42` returns the same `index.html` payload, the SPA boots, and React Router parses the URL.
+Serving `index.html` from the controller (rather than relying on a static-resource handler) is what makes a hard reload on `/` return the SPA shell reliably across profiles; the browser then loads the hashed bundle from `/assets/**` and React boots.
 
 The URL-mapping DSL itself is covered in `grails-doc/src/en/guide/theWebLayer/urlMappings.adoc` and the per-method-routing story in `grails-doc/src/en/guide/theWebLayer/urlmappings/restfulMappings.adoc`.
 
