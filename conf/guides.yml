@@ -2364,6 +2364,8 @@ guides:
             perColumnCells: Per-Column Cell Overrides
           cleanCrud:
             title: The Result - Clean CRUD GSPs
+          testing:
+            title: Testing the Widgets and Wrappers
           helpWithGrails:
             title: Do you need help with Grails?
 

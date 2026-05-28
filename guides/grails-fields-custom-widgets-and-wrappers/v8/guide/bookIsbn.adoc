@@ -11,3 +11,8 @@ include::../snippets/grails-app/views/_fields/book/isbn/_widget.gsp[]
 This is the most-specific lookup the plugin will try, so it _wins_ over `_fields/string/_widget.gsp`. The `String` dispatcher you wrote earlier still applies to every other `String` property on every domain class - only `Book.isbn` is special-cased.
 
 Note how the per-property widget can still reuse the wrapper from `_fields/default/_wrapper.gsp` by emitting just the input and the help line - the wrapper supplies the label, required marker, and validation feedback.
+
+[IMPORTANT]
+====
+The backslashes in the `pattern` attribute are *doubled* (`\\d`, not `\d`). A GSP attribute value is compiled into a Groovy string, and `\d` is not a valid Groovy escape sequence - it fails template compilation with `Unexpected character`. Writing `\\d` in the GSP emits a literal `\d` into the rendered HTML, which is what the browser's `pattern` attribute needs. The server-side `matches:` constraint, written in a normal Groovy file, keeps the single-backslash form.
+====
