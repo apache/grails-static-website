@@ -1,0 +1,8 @@
+dataSource:
+  url: jdbc:tc:postgresql:12:///postgres
+  driverClassName: org.testcontainers.jdbc.ContainerDatabaseDriver
+  dbCreate: create-drop
+grails:
+  plugin:
+    databasemigration:
+      updateOnStart: false

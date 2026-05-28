@@ -4069,6 +4069,8 @@ guides:
             title: All-or-Nothing Bulk Create
           versioning:
             title: URL-Prefix vs Content-Negotiation Versioning
+          testing:
+            title: Testing the API
           runningTheApp:
             title: Running the Application
           helpWithGrails:

@@ -11,4 +11,4 @@ Two guards keep this safe:
 * `Environment.current == Environment.PRODUCTION` early-exit means the seed never runs against a real database.
 * The `Author.count() > 0` check makes the seed idempotent during development - subsequent restarts do not create duplicate rows.
 
-The `@Transactional` annotation on the `init` closure means the four `save(failOnError: true)` calls all commit together or all roll back. Without it, a failure on book 3 would leave books 1 and 2 in the database in a half-loaded state.
+The `Author.withTransaction { }` wrapper means the four `save(failOnError: true)` calls all commit together or all roll back. Without it, a failure on book 3 would leave books 1 and 2 in the database in a half-loaded state - and a bare `save()` in `BootStrap` outside any transaction may not flush at all.

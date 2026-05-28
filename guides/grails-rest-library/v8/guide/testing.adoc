@@ -1,0 +1,72 @@
+The library API ships with a layered Spock suite: fast domain and controller unit tests, `@Integration` tests against a real database, and functional HTTP tests that drive the JSON endpoints end to end. The integration and functional layers run against a Testcontainers-managed PostgreSQL database, so a Docker daemon is the only host requirement.
+
+== Test dependencies
+
+Testcontainers artifacts are not in the Grails BOM, so they need an explicit `testcontainers-bom` to resolve a version. The web testing support is required for `ControllerUnitTest` even in a `rest-api` profile app:
+
+[source,groovy]
+.build.gradle (test dependencies)
+----
+testImplementation "org.apache.grails:grails-testing-support-datamapping"
+testImplementation "org.apache.grails:grails-testing-support-views-gson"
+testImplementation "org.apache.grails:grails-testing-support-web"
+testImplementation "org.spockframework:spock-core"
+testImplementation platform("org.testcontainers:testcontainers-bom:1.20.4")
+testImplementation "org.testcontainers:postgresql"
+testImplementation "org.testcontainers:spock"
+testImplementation "org.testcontainers:testcontainers"
+----
+
+Because this app uses the database-migration plugin, an empty `changelog.groovy` means GORM will not auto-create the schema in the test environment. The test profile therefore turns the migration off and lets GORM create the schema directly:
+
+[source,yaml]
+.src/test/resources/application-test.yml
+----
+include::../snippets/src/test/resources/application-test.yml[]
+----
+
+== Unit: domain constraints and controller paging
+
+`DataTest` registers the in-memory datastore for `Author` and `Book` so constraint logic runs in milliseconds with no Spring context. `Book` `belongsTo` `Author`, so both classes are mocked:
+
+[source,groovy]
+.src/test/groovy/example/BookSpec.groovy
+----
+include::../snippets/src/test/groovy/example/BookSpec.groovy[]
+----
+
+The `RestfulController` pagination clamping (default 25, hard cap 100, negative treated as default) is pinned with a `ControllerUnitTest`:
+
+[source,groovy]
+.src/test/groovy/example/BookControllerSpec.groovy
+----
+include::../snippets/src/test/groovy/example/BookControllerSpec.groovy[]
+----
+
+== Integration: relationships against a real database
+
+`@Integration` with `@Rollback` boots the full context and isolates each method. `BootStrap` seeds four books outside production, so these specs use ISBNs that do not collide with the seed set and filter queries by an author they create:
+
+[source,groovy]
+.src/integration-test/groovy/example/BookIntegrationSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/BookIntegrationSpec.groovy[]
+----
+
+== Functional: the REST surface over real HTTP
+
+The functional spec sends real requests with `java.net.http.HttpClient` against the booted app (port injected via `@Value('${local.server.port}')`). It asserts the paginated envelope, the page-size clamp, and - most importantly - the all-or-nothing `bulkCreate` contract: a request with one invalid entry returns `422` and persists *nothing*. `@Rollback` is not used (the endpoints commit), so the fixture is created and read back inside `withNewTransaction` blocks:
+
+[source,groovy]
+.src/integration-test/groovy/example/BookFunctionalSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/BookFunctionalSpec.groovy[]
+----
+
+Run the suite:
+
+[source,bash]
+----
+./gradlew test             # unit - milliseconds, no Docker
+./gradlew integrationTest  # integration + functional - Docker required
+----
