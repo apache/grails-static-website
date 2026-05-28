@@ -2,7 +2,7 @@
 
     <button type="button"
             class="btn btn-sm ${task.done ? 'btn-success' : 'btn-outline-secondary'}"
-            hx-post="${createLink(controller: 'task', action: 'toggle', id: task.id)}"
+            hx-post="${createLink(uri: '/tasks/' + task.id + '/toggle')}"
             hx-target="closest li"
             hx-swap="outerHTML"
             aria-pressed="${task.done}"
@@ -12,7 +12,7 @@
 
     <button type="button"
             class="btn btn-link p-0 text-start text-decoration-none flex-grow-1 ${task.done ? 'text-body-secondary' : 'text-body'}"
-            hx-get="${createLink(controller: 'task', action: 'editForm', id: task.id)}"
+            hx-get="${createLink(uri: '/tasks/' + task.id + '/edit')}"
             hx-target="closest li"
             hx-swap="outerHTML"
             title="Click to edit">
@@ -21,7 +21,7 @@
 
     <button type="button"
             class="btn btn-sm btn-outline-danger"
-            hx-delete="${createLink(controller: 'task', action: 'delete', id: task.id)}"
+            hx-delete="${createLink(uri: '/tasks/' + task.id)}"
             hx-target="closest li"
             hx-swap="outerHTML swap:200ms"
             hx-confirm="Delete this task?"

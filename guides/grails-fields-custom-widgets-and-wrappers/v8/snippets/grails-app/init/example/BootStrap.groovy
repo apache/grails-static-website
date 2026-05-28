@@ -3,6 +3,12 @@ package example
 class BootStrap {
 
     def init = { servletContext ->
+      // Wrap the seed in a transaction so the writes - including the
+      // many-to-many Book<->Tag join rows - flush and commit together.
+      // A bare save() in BootStrap runs outside any transaction, and the
+      // join table is not reliably persisted; save(flush: true) without a
+      // transaction throws TransactionRequiredException.
+      Book.withTransaction {
         Tag fantasy = new Tag(name: 'Fantasy').save(failOnError: true)
         Tag classic = new Tag(name: 'Classic').save(failOnError: true)
         Tag romance = new Tag(name: 'Romance').save(failOnError: true)
@@ -55,6 +61,7 @@ class BootStrap {
                 author: austen
         )
         pride.addToTags(romance).addToTags(classic).save(failOnError: true)
+      }
     }
 
     def destroy = {}

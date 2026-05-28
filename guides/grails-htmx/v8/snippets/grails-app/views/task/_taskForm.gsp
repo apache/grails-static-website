@@ -2,7 +2,7 @@
     <g:form controller="task"
             action="create"
             class="d-flex gap-2 mb-3 align-items-start"
-            hx-post="${createLink(controller: 'task', action: 'create')}"
+            hx-post="${createLink(uri: '/tasks')}"
             hx-target="#taskFormContainer"
             hx-swap="outerHTML">
         <div class="flex-grow-1">

@@ -2,6 +2,7 @@ package example
 
 import grails.gorm.transactions.Rollback
 import grails.testing.mixin.integration.Integration
+import grails.validation.ValidationException
 import spock.lang.Specification
 
 /**
@@ -37,14 +38,16 @@ class BookIntegrationSpec extends Specification {
         reloaded.isbn  == '9780547928227'
     }
 
-    void "saving a book with a duplicate isbn fails validation"() {
-        given:
+    void "saving a book with a duplicate isbn is rejected"() {
+        given: 'a persisted book, flushed so the unique validator can see it'
         bookService.save(new Book(title: 'First',  isbn: '9780547928227', pageCount: 100))
+        Book.withSession { it.flush() }
 
-        when:
-        Book second = bookService.save(new Book(title: 'Second', isbn: '9780547928227', pageCount: 200))
+        when: 'a second book reuses the isbn'
+        bookService.save(new Book(title: 'Second', isbn: '9780547928227', pageCount: 200))
 
-        then:
-        second == null || second.hasErrors()
+        then: 'the @Service save throws a ValidationException (failOnError is implicit) carrying the unique error'
+        ValidationException ex = thrown()
+        ex.message.contains('unique')
     }
 }

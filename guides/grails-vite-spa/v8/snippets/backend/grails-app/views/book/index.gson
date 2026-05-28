@@ -2,10 +2,10 @@ import example.Book
 
 model {
     Iterable<Book> bookList
-    Long           bookCount
+    Integer        bookCount
 }
 
 json {
-    total   bookCount
-    items   bookList.collect { Book b -> g.render(template: 'book', model: [book: b]) }
+    total bookCount
+    items g.render(template: 'book', collection: bookList ?: [], var: 'book')
 }

@@ -15,12 +15,31 @@ import spock.lang.Unroll
 class BookSpec extends Specification implements DomainUnitTest<Book> {
 
     void "rejects a book with no title"() {
-        when:
+        when: 'title is omitted from the map constructor, so it is null'
         Book b = new Book(isbn: '9780547928227', pageCount: 310)
+
+        then: 'the nullable constraint - not blank - is what fires for a null value'
+        !b.validate()
+        b.errors.getFieldError('title').code == 'nullable'
+    }
+
+    void "rejects a blank title"() {
+        when: 'a blank string is assigned directly (the map constructor would convert it to null)'
+        Book b = new Book(isbn: '9780547928227', pageCount: 310)
+        b.title = ''
+
+        then: 'now the blank constraint fires'
+        !b.validate()
+        b.errors.getFieldError('title').code == 'blank'
+    }
+
+    void "rejects a title longer than maxSize"() {
+        when:
+        Book b = new Book(title: 'x' * 256, isbn: '9780547928227', pageCount: 310)
 
         then:
         !b.validate()
-        b.errors.fieldError('title').code == 'blank'
+        b.errors.getFieldError('title').code == 'maxSize.exceeded'
     }
 
     void "rejects a book with a malformed ISBN"() {
@@ -29,7 +48,7 @@ class BookSpec extends Specification implements DomainUnitTest<Book> {
 
         then:
         !b.validate()
-        b.errors.fieldError('isbn').code == 'matches.invalid'
+        b.errors.getFieldError('isbn').code == 'matches.invalid'
     }
 
     void "accepts a book with a valid ISBN-13"() {

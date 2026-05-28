@@ -3,7 +3,7 @@
         <tr>
             <g:each in="${domainProperties}" var="prop">
                 <th scope="col">
-                    <g:message code="${domainClass.simpleName.toLowerCase()}.${prop.name}.label" default="${prop.naturalName}"/>
+                    <g:message code="${domainClass.javaClass.simpleName.toLowerCase()}.${prop.name}.label" default="${prop.naturalName}"/>
                 </th>
             </g:each>
             <th scope="col" class="text-end">Actions</th>

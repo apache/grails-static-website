@@ -22,9 +22,10 @@ class BookControllerSpec extends Specification
         Book b = new Book(title: 'The Hobbit', isbn: '9780547928227', pageCount: 310)
                   .save(failOnError: true, flush: true)
 
-        when:
+        when: 'RestfulController.show() reads params.id - it takes no argument'
         request.method = 'GET'
-        controller.show(b.id)
+        params.id = b.id
+        controller.show()
 
         then:
         response.status == HttpStatus.OK.value()
@@ -34,7 +35,8 @@ class BookControllerSpec extends Specification
     void "GET /books/{id} for a missing id returns 404"() {
         when:
         request.method = 'GET'
-        controller.show(99999L)
+        params.id = 99999L
+        controller.show()
 
         then:
         response.status == HttpStatus.NOT_FOUND.value()

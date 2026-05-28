@@ -1939,6 +1939,8 @@ guides:
             title: Pushing to GitHub Container Registry
           nonRoot:
             title: Running as a Non-Root User
+          testing:
+            title: Testing the Health Probes
           helpWithGrails:
             title: Do you need help with Grails?
 
@@ -2364,6 +2366,8 @@ guides:
             perColumnCells: Per-Column Cell Overrides
           cleanCrud:
             title: The Result - Clean CRUD GSPs
+          testing:
+            title: Testing the Widgets and Wrappers
           helpWithGrails:
             title: Do you need help with Grails?
 
@@ -2827,6 +2831,8 @@ guides:
             title: CSRF With HTMX
           spaComparison:
             title: HTMX vs an SPA
+          testing:
+            title: Testing the HTMX UI
           helpWithGrails:
             title: Do you need help with Grails?
 
@@ -4069,6 +4075,8 @@ guides:
             title: All-or-Nothing Bulk Create
           versioning:
             title: URL-Prefix vs Content-Negotiation Versioning
+          testing:
+            title: Testing the API
           runningTheApp:
             title: Running the Application
           helpWithGrails:
@@ -4437,6 +4445,8 @@ guides:
             title: Class-Based Dark Mode
           componentLayer:
             title: Reusable Component Classes with @apply
+          testing:
+            title: Testing the Tailwind Build
           helpWithGrails:
             title: Do you need help with Grails?
 
@@ -4878,7 +4888,7 @@ guides:
           urlMappings:
             title: URL Mappings (/api/** vs SPA)
           spaController:
-            title: The SpaController Forwarder
+            title: Serving the SPA Shell
           frontend:
             title: The Vite/React Frontend
           viteConfig:
@@ -4889,6 +4899,8 @@ guides:
             title: Prod Build (One bootJar, One Origin)
           cors:
             title: Why CORS Never Appears
+          testing:
+            title: Testing the API and SPA Serving
           helpWithGrails:
             title: Do you need help with Grails?
 

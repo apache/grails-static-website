@@ -1,0 +1,54 @@
+Custom widgets and wrappers render fine "on my machine" right up until a GSP attribute or a template-lookup assumption breaks them silently. The sample app is covered at three layers: domain unit tests, `@Integration` tests for the associations, and Geb browser tests that prove the custom widgets actually render in a real page.
+
+== Unit: the domain constraints
+
+`DataTest` mocks the associated domains so `belongsTo`/`hasMany` are satisfied without a Spring context:
+
+[source,groovy]
+.src/test/groovy/example/BookSpec.groovy
+----
+include::../snippets/src/test/groovy/example/BookSpec.groovy[]
+----
+
+[source,groovy]
+.src/test/groovy/example/AuthorSpec.groovy
+----
+include::../snippets/src/test/groovy/example/AuthorSpec.groovy[]
+----
+
+== Integration: the associations against a real database
+
+`@Integration` + `@Rollback` boots the full context against the in-memory H2 database and asserts on the `BootStrap` seed - including the `Book`-`Tag` many-to-many and the `Author`-`ContactInfo` one-to-one:
+
+[source,groovy]
+.src/integration-test/groovy/example/LibraryIntegrationSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/LibraryIntegrationSpec.groovy[]
+----
+
+== Browser: the custom widgets through Geb
+
+`ContainerGebSpec` starts a Selenium-Chrome container via Testcontainers and drives the booted app, so only a running Docker daemon is required. These specs are the ones that catch the GSP-level bugs custom widgets are prone to:
+
+[source,groovy]
+.src/integration-test/groovy/example/LibraryFunctionalSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/LibraryFunctionalSpec.groovy[]
+----
+
+The assertions map directly to the customisations earlier in the guide:
+
+* the index page renders the app-wide custom `f:table` with its dark header and the seeded rows;
+* the show page renders the value through the custom display widgets;
+* the create form renders the per-property ISBN widget (with its `pattern` and help text), the many-to-one author select, and one many-to-many checkbox per `Tag`;
+* the author show page renders the one-to-one `ContactInfo` through its `toString()`.
+
+A browser test here is not gold-plating: the custom ISBN widget's `pattern` attribute and the app-wide table's `domainClass.javaClass.simpleName` lookup are both the kind of thing that compiles cleanly and only fails when the page is actually rendered in a request. The Geb layer exercises exactly that path.
+
+Run it all:
+
+[source,bash]
+----
+./gradlew test             # unit - milliseconds, no Docker
+./gradlew integrationTest  # integration + Geb browser tests - Docker required
+----

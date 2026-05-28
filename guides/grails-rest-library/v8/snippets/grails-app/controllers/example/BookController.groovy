@@ -2,12 +2,15 @@ package example
 
 import grails.gorm.transactions.Transactional
 import grails.rest.RestfulController
+import org.springframework.context.MessageSource
 import org.springframework.http.HttpStatus
 import org.springframework.validation.FieldError
 
 class BookController extends RestfulController<Book> {
 
     static responseFormats = ['json']
+
+    MessageSource messageSource
 
     BookController() {
         super(Book)
@@ -77,7 +80,7 @@ class BookController extends RestfulController<Book> {
                         Map<String, Object> payload = [
                             object : error.objectName,
                             code   : error.code,
-                            message: message(error: error)
+                            message: messageSource.getMessage(error, request.locale)
                         ]
                         if (error instanceof FieldError) {
                             payload.field = error.field

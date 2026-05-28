@@ -17,7 +17,7 @@
            value="${q}"
            placeholder="Search tasks..."
            class="form-control mb-3"
-           hx-get="${createLink(controller: 'task', action: 'search')}"
+           hx-get="${createLink(uri: '/tasks/search')}"
             hx-trigger="keyup changed delay:300ms"
             hx-target="#taskList"
             hx-swap="innerHTML"/>
