@@ -28,3 +28,37 @@ The `functional-test` job boots the application against a Testcontainers-managed
 `if: always()` on the geb-reports upload is intentional: even on a green run you may want the screenshots from `build/geb-reports/` to confirm the page rendered as expected. On a red run, those screenshots are how you debug "works on my machine" failures - the runner's screenshot of the failed page is usually enough to spot the missing element.
 
 No `apt-get install` of Chrome/Firefox is needed - the browser process lives inside the Selenium container Testcontainers pulls (`selenium/standalone-chrome` by default). The first cold run pulls the image (~200 MB) and is slower; subsequent runs reuse the cached layer. The legacy `geb-with-webdriver-binaries` forge feature is obsolete in Grails 8 and is not used here.
+
+== Wiring the functionalTest task
+
+`./gradlew functionalTest` is not a built-in Grails task. Grails gives you `test` (unit) and `integrationTest`; the functional stage is a second `Test` task over the same `integration-test` source set, filtered to the Geb specs. The `integrationTest` task is filtered the opposite way so the two stages never overlap:
+
+[source,groovy]
+.build.gradle
+----
+tasks.named('integrationTest', Test) {
+    filter {
+        includeTestsMatching '*IntegrationSpec'
+    }
+}
+
+tasks.register('functionalTest', Test) {
+    group = 'verification'
+    description = 'Runs the Geb functional specs against the booted application.'
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    useJUnitPlatform()
+    filter {
+        includeTestsMatching '*FunctionalSpec'
+    }
+    shouldRunAfter tasks.named('integrationTest')
+}
+----
+
+Reusing the `integration-test` source set means `@Integration` boots the app exactly as it does for the integration stage - no separate source-set plumbing - while the name filter keeps the two CI jobs running disjoint sets of specs. The Geb spec itself extends `ContainerGebSpec` and is named to match the `functionalTest` filter:
+
+[source,groovy]
+.src/integration-test/groovy/example/HomePageFunctionalSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/HomePageFunctionalSpec.groovy[]
+----

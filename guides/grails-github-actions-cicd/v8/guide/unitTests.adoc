@@ -27,3 +27,19 @@ Two patterns worth pointing at:
 
 * `if: failure()` on the artefact upload uploads test reports only when the job fails. On success there is no point in carrying around `index.html` files; on failure they are the first thing you click on.
 * `--no-daemon` ensures the JVM starts cold and reports honest first-run times. The Gradle dependency cache is still warm; the daemon caching disagreement was about JVM warm-up, not classpath resolution.
+
+The stage needs at least one real unit test to be meaningful. A tiny domain class gives the suite something to exercise across all three layers:
+
+[source,groovy]
+.grails-app/domain/example/Message.groovy
+----
+include::../snippets/grails-app/domain/example/Message.groovy[]
+----
+
+`DomainUnitTest` runs the constraints in milliseconds with no Spring context and no database, so it belongs in the fast `unit-test` stage:
+
+[source,groovy]
+.src/test/groovy/example/MessageSpec.groovy
+----
+include::../snippets/src/test/groovy/example/MessageSpec.groovy[]
+----

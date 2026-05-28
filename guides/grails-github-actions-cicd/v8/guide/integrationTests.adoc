@@ -23,3 +23,13 @@ The three datasource environment variables on the `./gradlew integrationTest` st
 ====
 For the *functional* tests in the next chapter we switch from a service container to Testcontainers' Postgres. The trade-off: service containers are faster to spin up (the postgres image is already cached on the runner) but force every test in the suite to share the same database. Testcontainers gives each spec its own fresh container at the cost of an extra container start per spec class. For functional tests where database state isolation matters more than wall-clock speed, Testcontainers wins.
 ====
+
+An `@Integration` spec with `@Rollback` runs against that database in the `integration-test` stage:
+
+[source,groovy]
+.src/integration-test/groovy/example/MessageIntegrationSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/MessageIntegrationSpec.groovy[]
+----
+
+Both the DB-integration specs and the Geb functional specs live in `src/integration-test` so `@Integration` wires them identically, but they run as two distinct stages. The `integrationTest` task is narrowed to the `*IntegrationSpec` classes; the next chapter's `functionalTest` task picks up the `*FunctionalSpec` classes.
