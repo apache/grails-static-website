@@ -14,17 +14,28 @@ import grails.testing.mixin.integration.Integration
  * @Integration is mandatory: GrailsContainerGebExtension throws at
  * runtime if the annotation is missing. @Rollback is NOT used here -
  * functional tests exercise the full HTTP stack and need committed
- * data.
+ * data. The fixture is therefore seeded inside its own
+ * withNewTransaction block; a bare GORM call would fail because an
+ * @Integration spec without @Rollback has no ambient Hibernate session.
  */
 @Integration
 class BookFunctionalSpec extends ContainerGebSpec {
 
-    void "the book index page renders the seeded books"() {
+    void setup() {
+        Book.withNewTransaction {
+            if (!Book.findByIsbn('9780261103344')) {
+                new Book(title: 'The Hobbit', isbn: '9780261103344', pageCount: 310).save(failOnError: true)
+            }
+        }
+    }
+
+    void "the book index page renders the committed books"() {
         when:
         go '/books'
 
         then:
         title.contains('Book')
         $('table tbody tr').size() > 0
+        $('table tbody').text().contains('The Hobbit')
     }
 }

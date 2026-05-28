@@ -6,6 +6,34 @@ Functional tests use Geb 8 to drive a real browser against a real booted app. In
 include::../snippets/src/integration-test/groovy/example/BookFunctionalSpec.groovy[]
 ----
 
+== The page the test drives
+
+`go '/books'` needs a real HTML page with a table. `BookController` stays a `RestfulController` for the JSON CRUD surface, but its `index` action is overridden so the HTML format renders a GSP while JSON clients keep their collection response:
+
+[source,groovy]
+.grails-app/controllers/example/BookController.groovy
+----
+include::../snippets/grails-app/controllers/example/BookController.groovy[]
+----
+
+A `resources` URL mapping exposes the controller at `/books`:
+
+[source,groovy]
+.grails-app/controllers/example/UrlMappings.groovy
+----
+include::../snippets/grails-app/controllers/example/UrlMappings.groovy[]
+----
+
+and a minimal GSP renders the table the spec asserts against:
+
+[source,html]
+.grails-app/views/book/index.gsp
+----
+include::../snippets/grails-app/views/book/index.gsp[]
+----
+
+Because the spec is `@Integration` *without* `@Rollback`, it seeds its fixture inside a `withNewTransaction` block so the row is committed and visible to the browser. A bare GORM call in an un-rolled-back `@Integration` spec has no ambient Hibernate session and would throw. `BootStrap` seed data is *not* a substitute here: it does not populate the test database in the integration context, so the spec owns its own fixture.
+
 Three patterns to highlight:
 
 * `@Integration` is *mandatory* for `ContainerGebSpec`. The Spock extension validates the annotation at runtime and throws `IllegalArgumentException: ContainerGebSpec classes must be annotated with @Integration.` if it is missing.

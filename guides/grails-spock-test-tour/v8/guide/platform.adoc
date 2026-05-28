@@ -19,7 +19,7 @@ plugins {
 
 jacocoTestReport {
     dependsOn test, integrationTest
-    executionData fileTree(buildDir).include('jacoco/*.exec')
+    executionData fileTree(layout.buildDirectory.get().asFile).include('jacoco/*.exec')
     reports {
         xml.required = true       // for Codecov upload
         html.required = true      // for human inspection
