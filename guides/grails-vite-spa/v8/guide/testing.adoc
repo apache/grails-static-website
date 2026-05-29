@@ -11,10 +11,18 @@ testImplementation "org.apache.grails:grails-testing-support-datamapping"
 testImplementation "org.apache.grails:grails-testing-support-views-gson"
 testImplementation "org.apache.grails:grails-testing-support-web"
 testImplementation "org.spockframework:spock-core"
-testImplementation platform("org.testcontainers:testcontainers-bom:1.20.4")
+testImplementation platform("org.testcontainers:testcontainers-bom:$testcontainersVersion")
 testImplementation "org.testcontainers:postgresql"
 testImplementation "org.testcontainers:spock"
 testImplementation "org.testcontainers:testcontainers"
+----
+
+The `testcontainersVersion` is kept in `backend/gradle.properties` alongside `grailsVersion`, so the version lives in one place:
+
+[source,properties]
+.backend/gradle.properties
+----
+testcontainersVersion=1.20.4
 ----
 
 == Unit: domain and controller

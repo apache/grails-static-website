@@ -11,10 +11,18 @@ testImplementation "org.apache.grails:grails-testing-support-datamapping"
 testImplementation "org.apache.grails:grails-testing-support-views-gson"
 testImplementation "org.apache.grails:grails-testing-support-web"
 testImplementation "org.spockframework:spock-core"
-testImplementation platform("org.testcontainers:testcontainers-bom:1.20.4")
+testImplementation platform("org.testcontainers:testcontainers-bom:$testcontainersVersion")
 testImplementation "org.testcontainers:postgresql"
 testImplementation "org.testcontainers:spock"
 testImplementation "org.testcontainers:testcontainers"
+----
+
+The `testcontainersVersion` is kept in `gradle.properties` alongside `grailsVersion`, so the version lives in one place:
+
+[source,properties]
+.gradle.properties
+----
+testcontainersVersion=1.20.4
 ----
 
 Because this app uses the database-migration plugin, an empty `changelog.groovy` means GORM will not auto-create the schema in the test environment. The test profile therefore turns the migration off and lets GORM create the schema directly:
