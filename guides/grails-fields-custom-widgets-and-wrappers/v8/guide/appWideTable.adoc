@@ -35,6 +35,6 @@ The model variables passed to the table template are:
 | The `theme` attribute from `<f:table>`. Same passthrough rule.
 |===
 
-Inside the loop, render each cell with `<f:displayWidget bean="${book}" property="${prop.property}"/>`. That call DOES go through the standard lookup chain - it will pick up your per-property `_displayWidget.gsp` overrides (the `Date` formatter you wrote in chapter 9.2, the `Boolean` checkmark from 9.3, the per-column overrides we'll write in chapter 12.3, etc.).
+Inside the loop, render each cell with `<f:displayWidget bean="${instance}" property="${prop.name}"/>`. The loop variable is named `instance` rather than `book` precisely because this one template renders *every* domain class - hard-coding a `book`-shaped variable (or a `book.title` reference) is what breaks the moment `<f:table>` is used for a domain without a `title` property. That `f:displayWidget` call DOES go through the standard lookup chain - it will pick up your per-property `_displayWidget.gsp` overrides (the `Date` formatter you wrote in chapter 9.2, the `Boolean` checkmark from 9.3, the per-column overrides we'll write in chapter 12.3, etc.).
 
 Because this template lives at `templates/_fields/_table.gsp`, *every* `<f:table>` in the application now uses this layout - books, authors, and any future domain class. Restart the app and visit `http://localhost:8080/book/index` and `http://localhost:8080/author/index`; both list pages now use the Bootstrap-styled table.
