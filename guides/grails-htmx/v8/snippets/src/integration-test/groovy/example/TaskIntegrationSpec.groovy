@@ -45,4 +45,45 @@ class TaskIntegrationSpec extends Specification {
         then:
         Task.get(t.id).done
     }
+
+    void "get returns null for non-existent id"() {
+        expect:
+        Task.get(999) == null
+    }
+
+    void "delete removes the entity from the database"() {
+        given:
+        Task t = new Task(title: 'Delete me').save(flush: true, failOnError: true)
+
+        when:
+        t.delete(flush: true)
+
+        then:
+        Task.get(t.id) == null
+    }
+
+    void "blank title is rejected at the database constraint level"() {
+        when:
+        new Task(title: '').save(flush: true, failOnError: true)
+
+        then:
+        thrown(Exception)
+    }
+
+    void "null title is rejected at the database constraint level"() {
+        when:
+        new Task(title: null).save(flush: true, failOnError: true)
+
+        then:
+        thrown(Exception)
+    }
+
+    void "search with ilike handles special regex characters safely"() {
+        given:
+        new Task(title: 'Foo (bar)').save(flush: true, failOnError: true)
+
+        expect:
+        Task.findAllByTitleIlike('%foo%')*.title == ['Foo (bar)']
+        Task.findAllByTitleIlike('%(bar)%')*.title == ['Foo (bar)']
+    }
 }

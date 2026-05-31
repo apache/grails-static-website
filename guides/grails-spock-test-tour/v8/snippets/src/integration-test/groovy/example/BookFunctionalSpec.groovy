@@ -38,4 +38,5 @@ class BookFunctionalSpec extends ContainerGebSpec {
         $('table tbody tr').size() > 0
         $('table tbody').text().contains('The Hobbit')
     }
+
 }

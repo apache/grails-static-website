@@ -19,4 +19,13 @@ class HomePageFunctionalSpec extends ContainerGebSpec {
         then: 'the page title is correct'
         title == 'Welcome to Grails'
     }
+
+    void 'a non-existent page renders a 404 response'() {
+        when: 'visiting a non-existent URL'
+        go '/doesNotExist'
+
+        then: 'the 404 page is displayed'
+        title == 'Page Not Found'
+        $('h1').text().contains('Page Not Found (404)')
+    }
 }

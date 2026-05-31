@@ -43,4 +43,53 @@ class BookServiceSpec extends Specification
         expect:
         service.findByIsbn('9999999999999') == null
     }
+
+    void "get returns the book when it exists"() {
+        given: 'the isbn from the setup fixture'
+        Book b = Book.findByIsbn('9780000000001')
+
+        expect:
+        service.get(b.id)?.title == 'Short Story'
+    }
+
+    void "get returns null when the id does not exist"() {
+        expect:
+        service.get(99999L) == null
+    }
+
+    void "save persists a book and returns it with an id"() {
+        when:
+        Book saved = service.save(new Book(
+            title: 'New Book', isbn: '9780000000005', pageCount: 200))
+
+        then:
+        saved.id != null
+        saved.title == 'New Book'
+
+        and: 'it is visible to a subsequent query'
+        service.countByPageCountGreaterThanEquals(0) == 5
+    }
+
+    void "save rejects a duplicate isbn with ValidationException"() {
+        given:
+        service.save(new Book(title: 'Original', isbn: '9780000000005', pageCount: 100))
+        Book.withSession { it.flush() }
+
+        when:
+        service.save(new Book(title: 'Duplicate', isbn: '9780000000005', pageCount: 200))
+
+        then:
+        def ex = thrown(grails.validation.ValidationException)
+        ex.message.contains('unique')
+    }
+
+    void "list returns all books when called without constraints"() {
+        expect:
+        service.list([:]).size() == 4
+    }
+
+    void "list respects the max parameter"() {
+        expect:
+        service.list([max: 2]).size() == 2
+    }
 }

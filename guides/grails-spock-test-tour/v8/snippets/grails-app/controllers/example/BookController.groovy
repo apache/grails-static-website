@@ -10,6 +10,13 @@ class BookController extends RestfulController<Book> {
     BookService bookService
     BookController() { super(Book) }
 
+    // Minimal override so the show action is explicitly registered as a
+    // controller action (sibling project debugging revealed that inherited
+    // RestfulController actions can be invisible to the URL-mapping layer).
+    def show() {
+        respond queryForResource(params.get('id'))
+    }
+
     // Override index so the HTML format renders the GSP table view (through the
     // sitemesh layout) while JSON clients still get the REST collection.
     def index(Integer max) {
@@ -20,4 +27,5 @@ class BookController extends RestfulController<Book> {
             json { respond books, [model: [bookCount: countResources()]] }
         }
     }
+
 }

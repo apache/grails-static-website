@@ -120,6 +120,7 @@ dependencies {
     testImplementation "org.apache.grails:grails-testing-support-web"
     testImplementation "org.mockito:mockito-core"
     testImplementation "org.spockframework:spock-core"
+    testImplementation platform("org.testcontainers:testcontainers-bom:$testcontainersVersion")
     testImplementation "org.testcontainers:postgresql"
     testImplementation "org.testcontainers:spock"
     testImplementation "org.testcontainers:testcontainers"
