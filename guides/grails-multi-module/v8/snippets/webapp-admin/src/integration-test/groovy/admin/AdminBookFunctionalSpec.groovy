@@ -28,7 +28,7 @@ class AdminBookFunctionalSpec extends Specification {
 
     private URI uri(String path) { URI.create("http://localhost:${serverPort}${path}") }
 
-    void "POST /book creates a shared-core Book and returns 201"() {
+    void "POST /books creates a shared-core Book and returns 201"() {
         given:
         String body = JsonOutput.toJson([title: 'Dune', isbn: '9780441013593', pageCount: 412])
 
@@ -45,7 +45,7 @@ class AdminBookFunctionalSpec extends Specification {
         Book.withNewTransaction { Book.findByIsbn('9780441013593')?.title == 'Dune' }
     }
 
-    void "GET /book lists the shared-core Books as JSON"() {
+    void "GET /books lists the shared-core Books as JSON"() {
         given:
         Book.withNewTransaction {
             if (!Book.findByIsbn('9780547928227')) {
@@ -64,7 +64,7 @@ class AdminBookFunctionalSpec extends Specification {
         json*.isbn.contains('9780547928227')
     }
 
-    void "POST /book with a malformed isbn returns 422"() {
+    void "POST /books with a malformed isbn returns 422"() {
         given:
         String body = JsonOutput.toJson([title: 'Bad', isbn: 'not-an-isbn'])
 
@@ -80,7 +80,7 @@ class AdminBookFunctionalSpec extends Specification {
         resp.statusCode() == 422
     }
 
-    void "GET /book/:id shows a single book as JSON"() {
+    void "GET /books/:id shows a single book as JSON"() {
         given:
         Book.withNewTransaction {
             if (!Book.findByIsbn('9780451524935')) {
@@ -102,7 +102,7 @@ class AdminBookFunctionalSpec extends Specification {
         json.title == '1984'
     }
 
-    void "PUT /book/:id updates an existing book"() {
+    void "PUT /books/:id updates an existing book"() {
         given:
         Book.withNewTransaction {
             if (!Book.findByIsbn('9780141439518')) {
@@ -127,7 +127,7 @@ class AdminBookFunctionalSpec extends Specification {
         }
     }
 
-    void "DELETE /book/:id removes a book"() {
+    void "DELETE /books/:id removes a book"() {
         given:
         Long bookId = Book.withNewTransaction {
             def b = new Book(title: 'Temp', isbn: '9780000000999', pageCount: 50).save(failOnError: true)
@@ -146,7 +146,7 @@ class AdminBookFunctionalSpec extends Specification {
         Book.withNewTransaction { Book.get(bookId) == null }
     }
 
-    void "GET /book/:id returns 404 for a nonexistent id"() {
+    void "GET /books/:id returns 404 for a nonexistent id"() {
         when:
         HttpResponse<String> resp = client.send(
                 HttpRequest.newBuilder(uri('/books/99999.json')).GET().build(),

@@ -12,9 +12,10 @@ class BookController extends RestfulController<Book> {
 
     // Minimal override so the show action is explicitly registered as a
     // controller action (sibling project debugging revealed that inherited
-    // RestfulController actions can be invisible to the URL-mapping layer).
+    // RestfulController actions can be invisible to the URL-mapping layer);
+    // it delegates to RestfulController.show() to stay framework-aligned.
     def show() {
-        respond queryForResource(params.get('id'))
+        super.show()
     }
 
     // Override index so the HTML format renders the GSP table view (through the

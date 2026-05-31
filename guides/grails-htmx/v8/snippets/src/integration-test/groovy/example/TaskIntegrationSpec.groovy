@@ -62,20 +62,20 @@ class TaskIntegrationSpec extends Specification {
         Task.get(t.id) == null
     }
 
-    void "blank title is rejected at the database constraint level"() {
+    void "blank title is rejected by validation"() {
         when:
         new Task(title: '').save(flush: true, failOnError: true)
 
         then:
-        thrown(Exception)
+        thrown(grails.validation.ValidationException)
     }
 
-    void "null title is rejected at the database constraint level"() {
+    void "null title is rejected by validation"() {
         when:
         new Task(title: null).save(flush: true, failOnError: true)
 
         then:
-        thrown(Exception)
+        thrown(grails.validation.ValidationException)
     }
 
     void "search with ilike handles special regex characters safely"() {
