@@ -1,0 +1,19 @@
+The publisher side is the boring side. `OrderService.placeOrder(...)` is just a regular `@Transactional` Grails service that injects `ApplicationEventPublisher` and calls `publishEvent` once the persistence work is done.
+
+[source,groovy]
+.grails-app/services/example/OrderService.groovy
+----
+include::../snippets/grails-app/services/example/OrderService.groovy[]
+----
+
+What's notable is what's *not* in this class:
+
+* No `Set<EventListener>` field, no `EventBus` injection, no `for (listener : listeners) listener.fire(...)` loop. The publisher doesn't know who listens, how many listen, or whether anyone listens at all. Adding a fifth listener doesn't touch this file.
+* No `try/catch` around `publishEvent`. A failure in a listener is a listener bug; it must not unwind the originating order placement. (For AFTER_COMMIT listeners the order has already durably committed by the time the listener runs - rolling back the listener is mostly meaningless anyway.)
+* No transaction management beyond `@Transactional`. The method runs in a single GORM transaction. The `publishEvent` call hands the event to Spring's transaction synchronization manager; the listeners fire later, *after* this method's transaction commits.
+
+`ApplicationEventPublisher` is auto-injected because `ApplicationContext` implements it - every Spring application has exactly one publisher, available as a bean. `@Autowired` is explicit here but in Groovy services `def applicationEventPublisher` works too; the explicit declaration documents the type for readers.
+
+Files touched in this chapter:
+
+* `grails-app/services/example/OrderService.groovy`

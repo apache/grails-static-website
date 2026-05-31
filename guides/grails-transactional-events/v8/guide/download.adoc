@@ -1,0 +1,14 @@
+Generate a Grails 8 starter from link:https://start.grails.org[start.grails.org]:
+
+[source,bash]
+----
+curl -sL "https://start.grails.org/grails/grails-transactional-events.zip?type=web&javaVersion=21&grailsVersion=8.0.0" -o grails-transactional-events.zip
+unzip grails-transactional-events.zip -d grails-transactional-events
+cd grails-transactional-events
+----
+
+You now have a Grails 8 / Spring Boot 4 / JDK 21 project ready to edit. The default `web` profile generates a GSP-rendered app; nothing else is required for the pattern.
+
+Files touched in this chapter:
+
+* None (project generation only)

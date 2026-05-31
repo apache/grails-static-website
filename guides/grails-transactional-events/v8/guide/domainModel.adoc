@@ -1,0 +1,32 @@
+Three domains model the example. `Customer` carries a denormalised `lifetimeValue`. `Order` belongs to a `Customer`. `AuditLog` is a flat append-only record of business events.
+
+[source,groovy]
+.grails-app/domain/example/Customer.groovy
+----
+include::../snippets/grails-app/domain/example/Customer.groovy[]
+----
+
+[source,groovy]
+.grails-app/domain/example/Order.groovy
+----
+include::../snippets/grails-app/domain/example/Order.groovy[]
+----
+
+[source,groovy]
+.grails-app/domain/example/AuditLog.groovy
+----
+include::../snippets/grails-app/domain/example/AuditLog.groovy[]
+----
+
+A few choices to point at:
+
+* `Customer.lifetimeValue` defaults to `BigDecimal.ZERO` and is constrained `min: BigDecimal.ZERO`. The `CustomerLifetimeValueListener` you'll write later is the only writer; the field never gets edited from `OrderService` or from a controller. That single-writer property is what makes the listener pattern composable - if any other listener wrote to the same field, you'd have a race.
+* `Order` declares `static mapping = { table 'orders' }` because `order` is a reserved word in most SQL dialects (it's the keyword in `ORDER BY`). Without the override the schema-generation either quotes the table name aggressively or fails outright depending on the database.
+* `AuditLog` deliberately does *not* use a foreign key to `Order` or `Customer`. It stores raw IDs and the snapshotted total. Audit history must survive the deletion of the rows it describes, and it must survive schema migrations that change the shape of `Order`.
+* Validation lives on the domains, not on the event class or the listeners. A listener receiving a malformed event is a programmer error; a listener receiving a well-formed event that fails domain validation is a domain change that needs a real migration.
+
+Files touched in this chapter:
+
+* `grails-app/domain/example/Customer.groovy`
+* `grails-app/domain/example/Order.groovy`
+* `grails-app/domain/example/AuditLog.groovy`

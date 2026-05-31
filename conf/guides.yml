@@ -4669,6 +4669,77 @@ guides:
           helpWithGrails:
             title: Do you need help with Grails?
 
+  - name: 'grails-transactional-events'
+    title: 'Cross-Domain Logic in Grails with Transactional Spring Events'
+    subtitle: 'Fan out business logic across multiple domains after a domain object changes state, using Spring ApplicationEventPublisher and @TransactionalEventListener(AFTER_COMMIT) - the pattern that just works with GORM because GORM rides on Spring''s PlatformTransactionManager.'
+    authors:
+      - 'James Fredley'
+    category: 'Grails Async'
+    publicationDate: '2026-05-27'
+    versions:
+      '8':
+        sourcePath: guides/grails-transactional-events/v8
+        publicationDate: '2026-05-27'
+        tags:
+          - 'events'
+          - 'event-publishing'
+          - 'async'
+          - 'transactional'
+          - 'spring-events'
+          - 'spring-boot'
+          - 'gorm'
+          - 'service-layer'
+          - 'services'
+          - 'domain-classes'
+          - 'integration-tests'
+          - 'testing'
+        sampleRef:
+          repo: 'grails-guides/grails-transactional-events'
+          branch: 'grails8'
+        toc:
+          gettingStarted:
+            title: Getting Started
+            whatYouWillBuild: What You Will Build
+            requirements: What You Will Need
+            howto: How to Complete the Guide
+          theProblem:
+            title: The Missing Pattern
+          createApp:
+            title: Creating the Application
+            download: Download a Grails 8 Starter
+          domainModel:
+            title: The Customer, Order, and AuditLog Domain Model
+          eventClass:
+            title: The OrderPlacedEvent POGO
+          publishingEvents:
+            title: Publishing Events From a Transactional Service
+          transactionalListener:
+            title: The First @TransactionalEventListener
+          registeringListeners:
+            title: Registering the Listeners (and the Factory That Makes Them Fire)
+          transactionPhases:
+            title: The Four TransactionPhase Values
+          multipleListeners:
+            title: Fanning Out - A Second Listener
+          asyncDispatch:
+            title: Off-Thread Dispatch With @Async
+          vsGormEvents:
+            title: vs. GORM Lifecycle Callbacks and @Subscriber
+          integrationTest:
+            title: Proving the Contract With an Integration Spec
+          sameTransactionProblem:
+            title: When the Side-Effect IS the Transaction
+          workOrderDomainModel:
+            title: The CustomerRequest, WorkOrder, and WorkOrderAssignee Domain Model
+          synchronousOrchestration:
+            title: Synchronous Orchestration With a Plain @EventListener
+          atomicRollbackTest:
+            title: Proving Atomic Rollback With an Integration Spec
+          testingThePattern:
+            title: Testing the Pattern Inside and Out
+          helpWithGrails:
+            title: Do you need help with Grails?
+
   - name: 'grails-tvmlapp'
     title: 'Build a TVML App with Grails'
     subtitle: 'Build an app for Apple TV with Grails. Leverage markup views, asset-pipeline and internazionalization capabilities of Grails to streamline TVML development'
