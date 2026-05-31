@@ -127,4 +127,164 @@ class ApiFunctionalSpec extends Specification {
         then: 'the static bundle is served from the same origin'
         asset.statusCode() == 200
     }
+
+    // ---------------------------------------------------------------------------
+    // Missing CRUD endpoint coverage
+    // ---------------------------------------------------------------------------
+
+    void "GET /api/books/:id returns a single book"() {
+        given:
+        Book.withNewTransaction {
+            if (!Book.findByIsbn('9780553380954')) {
+                new Book(title: 'Foundation', author: 'Isaac Asimov', isbn: '9780553380954').save(failOnError: true)
+            }
+        }
+        Long id = Book.withNewTransaction { Book.findByIsbn('9780553380954').id }
+
+        when:
+        HttpResponse<String> resp = client.send(
+                HttpRequest.newBuilder(uri("/api/books/${id}")).GET().build(),
+                HttpResponse.BodyHandlers.ofString())
+        Map json = new JsonSlurper().parseText(resp.body()) as Map
+
+        then:
+        resp.statusCode() == 200
+        json.title == 'Foundation'
+        json.author == 'Isaac Asimov'
+        json.isbn == '9780553380954'
+    }
+
+    void "GET /api/books/:id returns 404 for a non-existent book"() {
+        when:
+        HttpResponse<String> resp = client.send(
+                HttpRequest.newBuilder(uri('/api/books/999999')).GET().build(),
+                HttpResponse.BodyHandlers.ofString())
+
+        then:
+        resp.statusCode() == 404
+    }
+
+    void "PUT /api/books/:id updates an existing book"() {
+        given:
+        Book.withNewTransaction {
+            if (!Book.findByIsbn('9780345391803')) {
+                new Book(title: 'Hitchhiker', author: 'Douglas Adams', isbn: '9780345391803').save(failOnError: true)
+            }
+        }
+        Long id = Book.withNewTransaction { Book.findByIsbn('9780345391803').id }
+        String body = JsonOutput.toJson([title: 'Hitchhikers Guide', author: 'Douglas Adams', isbn: '9780345391803'])
+
+        when:
+        HttpResponse<String> resp = client.send(
+                HttpRequest.newBuilder(uri("/api/books/${id}"))
+                        .header('Content-Type', 'application/json')
+                        .PUT(HttpRequest.BodyPublishers.ofString(body)).build(),
+                HttpResponse.BodyHandlers.ofString())
+
+        then:
+        resp.statusCode() == 200
+        Book.withNewTransaction {
+            Book.findByIsbn('9780345391803').title == 'Hitchhikers Guide'
+        }
+    }
+
+    void "PUT /api/books/:id with invalid data returns 422"() {
+        given:
+        Book.withNewTransaction {
+            if (!Book.findByIsbn('9780451524935')) {
+                new Book(title: '1984', author: 'George Orwell', isbn: '9780451524935').save(failOnError: true)
+            }
+        }
+        Long id = Book.withNewTransaction { Book.findByIsbn('9780451524935').id }
+        String body = JsonOutput.toJson([title: '', author: '', isbn: '9780451524935'])
+
+        when:
+        HttpResponse<String> resp = client.send(
+                HttpRequest.newBuilder(uri("/api/books/${id}"))
+                        .header('Content-Type', 'application/json')
+                        .PUT(HttpRequest.BodyPublishers.ofString(body)).build(),
+                HttpResponse.BodyHandlers.ofString())
+
+        then:
+        resp.statusCode() == 422
+    }
+
+    void "PUT /api/books/:id for non-existent returns 404"() {
+        given:
+        String body = JsonOutput.toJson([title: 'Ghost', author: 'Nobody', isbn: '9780000000000'])
+
+        when:
+        HttpResponse<String> resp = client.send(
+                HttpRequest.newBuilder(uri('/api/books/999999'))
+                        .header('Content-Type', 'application/json')
+                        .PUT(HttpRequest.BodyPublishers.ofString(body)).build(),
+                HttpResponse.BodyHandlers.ofString())
+
+        then:
+        resp.statusCode() == 404
+    }
+
+    void "DELETE /api/books/:id deletes a book and returns 204"() {
+        given:
+        Book.withNewTransaction {
+            if (!Book.findByIsbn('9780439023481')) {
+                new Book(title: 'Mockingjay', author: 'Suzanne Collins', isbn: '9780439023481').save(failOnError: true)
+            }
+        }
+        Long id = Book.withNewTransaction { Book.findByIsbn('9780439023481').id }
+
+        when:
+        HttpResponse<Void> resp = client.send(
+                HttpRequest.newBuilder(uri("/api/books/${id}")).DELETE().build(),
+                HttpResponse.BodyHandlers.discarding())
+
+        then:
+        resp.statusCode() == 204
+        Book.withNewTransaction { Book.findByIsbn('9780439023481') == null }
+    }
+
+    void "DELETE /api/books/:id for non-existent returns 404"() {
+        when:
+        HttpResponse<Void> resp = client.send(
+                HttpRequest.newBuilder(uri('/api/books/999999')).DELETE().build(),
+                HttpResponse.BodyHandlers.discarding())
+
+        then:
+        resp.statusCode() == 404
+    }
+
+    void "POST /api/books with blank title returns 422"() {
+        given:
+        String body = JsonOutput.toJson([title: '', author: 'Someone', isbn: '9780140449266'])
+
+        when:
+        HttpResponse<String> resp = client.send(
+                HttpRequest.newBuilder(uri('/api/books'))
+                        .header('Content-Type', 'application/json')
+                        .POST(HttpRequest.BodyPublishers.ofString(body)).build(),
+                HttpResponse.BodyHandlers.ofString())
+
+        then:
+        resp.statusCode() == 422
+    }
+
+    void "GET /assets with path traversal returns 400"() {
+        when:
+        HttpResponse<String> resp = client.send(
+                HttpRequest.newBuilder(uri('/assets/../../etc/passwd')).GET().build(),
+                HttpResponse.BodyHandlers.ofString())
+
+        then:
+        resp.statusCode() == 400
+    }
+
+    void "GET /assets for a non-existent file returns 404"() {
+        when:
+        HttpResponse<String> resp = client.send(
+                HttpRequest.newBuilder(uri('/assets/nonexistent-bundle.js')).GET().build(),
+                HttpResponse.BodyHandlers.ofString())
+
+        then:
+        resp.statusCode() == 404
+    }
 }

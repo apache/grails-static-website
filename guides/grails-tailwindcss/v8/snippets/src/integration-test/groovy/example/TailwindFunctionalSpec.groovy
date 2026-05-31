@@ -53,6 +53,23 @@ class TailwindFunctionalSpec extends ContainerGebSpec {
         bg && bg != 'rgba(0, 0, 0, 0)' && bg != 'transparent'
     }
 
+    void 'the 404 page renders when navigating to an unknown path'() {
+        when:
+        go '/nonexistent-route'
+
+        then:
+        title == 'Page Not Found'
+        $('h1').text().contains('Page Not Found (404)')
+    }
+
+    void 'the 404 page shows the requested path'() {
+        when:
+        go '/some/missing/page'
+
+        then:
+        $('body').text().contains('/some/missing/page')
+    }
+
     void 'the dark-mode toggle adds the dark class and persists the choice'() {
         given:
         go '/'

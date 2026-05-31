@@ -87,6 +87,10 @@ class TaskController {
             return
         }
         task.delete(flush: true)
-        render ''
+        if (Task.count() == 0) {
+            render template: 'taskRows', model: [tasks: []]
+        } else {
+            render ''
+        }
     }
 }

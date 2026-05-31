@@ -10,6 +10,8 @@ import grails.testing.mixin.integration.Integration
  *
  * Each htmx swap type is exercised: the create OOB prepend, the toggle/edit
  * outerHTML swaps, the live-search innerHTML swap, and the delete removal.
+ * Additional tests cover validation error paths (create/update with blank title),
+ * the inline edit cancel button, and the show fragment endpoint.
  * @Rollback is not used (the endpoints commit); tests use unique titles so
  * they stay independent of rows left by earlier feature methods.
  */
@@ -111,5 +113,48 @@ class TaskTrackerFunctionalSpec extends ContainerGebSpec {
 
         then:
         waitFor { !$('#taskList').text().contains('Deletable task') }
+    }
+
+    void 'submitting the empty add form leaves the page intact and focused'() {
+        given:
+        go '/tasks'
+
+        when: 'try to submit with empty title (HTML5 validation blocks it)'
+        $('#taskFormContainer').find('button', type: 'submit').click()
+
+        then: 'the page stays on the same form, no task list change'
+        $('#taskFormContainer').size() == 1
+        !$('#taskList').text().contains('oops')
+    }
+
+    void 'cancelling an inline edit reverts to the task display'() {
+        given:
+        go '/tasks'
+        addTaskThroughForm('Cancel test task')
+        Long id = Task.withNewTransaction { Task.findByTitle('Cancel test task').id }
+
+        when: 'open the edit form'
+        $("#task-${id}").find('button', title: 'Click to edit').click()
+        waitFor { $("#task-${id}").find('input', name: 'title').size() == 1 }
+
+        and: 'click the Cancel button'
+        $("#task-${id}").find('button', text: 'Cancel').click()
+
+        then: 'the task display is restored with the original title visible'
+        waitFor { $("#task-${id}").find('button', title: 'Click to edit').size() == 1 }
+    }
+
+    void 'the show endpoint returns a rendered task fragment'() {
+        given:
+        go '/tasks'
+        addTaskThroughForm('Show endpoint task')
+        Long id = Task.withNewTransaction { Task.findByTitle('Show endpoint task').id }
+
+        when:
+        go "/tasks/${id}"
+
+        then: 'the raw fragment contains the task title'
+        waitFor { $('li[id="task-' + id + '"]').size() == 1 }
+        $('li[id="task-' + id + '"]').text().contains('Show endpoint task')
     }
 }

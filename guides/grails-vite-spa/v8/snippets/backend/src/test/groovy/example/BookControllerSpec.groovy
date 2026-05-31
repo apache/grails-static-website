@@ -6,9 +6,9 @@ import spock.lang.Specification
 
 /**
  * Controller unit test for the page-size clamp the overridden
- * listAllResources applies. It reads params.int('max', 25), so the spec
- * drives it through the controller's GrailsParameterMap (a plain Map has
- * no int() accessor). No Spring context boots.
+ * listAllResources applies and other controller behaviours that
+ * do not require GSON view rendering (which is covered by the
+ * functional HTTP tests in ApiFunctionalSpec).
  */
 class BookControllerSpec extends Specification
         implements ControllerUnitTest<BookController>, DataTest {

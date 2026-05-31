@@ -48,4 +48,36 @@ class CatalogFunctionalSpec extends Specification {
         json*.isbn.contains('9780547928227')
         json*.isbn.contains('9780441013593')
     }
+
+    void "GET /catalog/show/:id returns a single book as JSON"() {
+        given:
+        Long bookId = Book.withNewTransaction {
+            Book.findByIsbn('9780547928227').id
+        }
+
+        when:
+        HttpResponse<String> resp = client.send(
+                HttpRequest.newBuilder(URI.create("http://localhost:${serverPort}/catalog/show/${bookId}.json"))
+                        .header('Accept', 'application/json')
+                        .GET().build(),
+                HttpResponse.BodyHandlers.ofString())
+        def json = new JsonSlurper().parseText(resp.body())
+
+        then:
+        resp.statusCode() == 200
+        json.title == 'The Hobbit'
+        json.isbn == '9780547928227'
+    }
+
+    void "GET /catalog/show/:id returns 404 for nonexistent book"() {
+        when:
+        HttpResponse<String> resp = client.send(
+                HttpRequest.newBuilder(URI.create("http://localhost:${serverPort}/catalog/show/99999.json"))
+                        .header('Accept', 'application/json')
+                        .GET().build(),
+                HttpResponse.BodyHandlers.ofString())
+
+        then:
+        resp.statusCode() == 404
+    }
 }

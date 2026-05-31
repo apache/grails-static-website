@@ -31,4 +31,9 @@ class MessageSpec extends Specification implements DomainUnitTest<Message> {
         expect:
         new Message(content: 'hello').validate()
     }
+
+    void "toString returns the message content"() {
+        expect:
+        new Message(content: 'display me').toString() == 'display me'
+    }
 }

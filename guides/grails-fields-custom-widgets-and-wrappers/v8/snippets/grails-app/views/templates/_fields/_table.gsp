@@ -10,19 +10,19 @@
         </tr>
     </thead>
     <tbody>
-        <g:each in="${collection}" var="book">
+        <g:each in="${collection}" var="instance">
             <tr>
                 <g:each in="${domainProperties}" var="prop">
                     <td>
-                        <f:displayWidget bean="${book}" property="${prop.name}"/>
+                        <f:displayWidget bean="${instance}" property="${prop.name}"/>
                     </td>
                 </g:each>
                 <td class="text-end">
-                    <g:link resource="${book}" action="show" class="btn btn-sm btn-outline-secondary">View</g:link>
-                    <g:link resource="${book}" action="edit" class="btn btn-sm btn-outline-warning">Edit</g:link>
-                    <g:form resource="${book}" method="DELETE" class="d-inline">
+                    <g:link resource="${instance}" action="show" class="btn btn-sm btn-outline-secondary">View</g:link>
+                    <g:link resource="${instance}" action="edit" class="btn btn-sm btn-outline-warning">Edit</g:link>
+                    <g:form resource="${instance}" method="DELETE" class="d-inline">
                         <button type="submit" class="btn btn-sm btn-outline-danger"
-                                onclick="return confirm('Delete &quot;' + '${book.title.encodeAsJavaScript()}' + '&quot;?');">
+                                onclick="return confirm('Delete &quot;' + '${instance.toString().encodeAsJavaScript()}' + '&quot;?');">
                             Delete
                         </button>
                     </g:form>

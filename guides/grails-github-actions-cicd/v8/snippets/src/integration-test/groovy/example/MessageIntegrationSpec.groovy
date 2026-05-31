@@ -33,4 +33,22 @@ class MessageIntegrationSpec extends Specification {
         m.hasErrors()
         Message.get(m.id) == null
     }
+
+    void "toString returns the message content"() {
+        given:
+        Message m = new Message(content: 'hello world').save(flush: true, failOnError: true)
+
+        expect:
+        m.toString() == 'hello world'
+    }
+
+    void "a message exceeding maxSize is rejected"() {
+        when:
+        Message m = new Message(content: 'x' * 501)
+        m.save(flush: true)
+
+        then:
+        m.hasErrors()
+        m.errors.getFieldError('content').code == 'maxSize.exceeded' || m.errors.getFieldError('content').code == 'maxSize'
+    }
 }
