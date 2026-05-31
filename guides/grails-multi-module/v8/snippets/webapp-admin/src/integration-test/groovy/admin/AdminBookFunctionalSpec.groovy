@@ -79,4 +79,80 @@ class AdminBookFunctionalSpec extends Specification {
         then:
         resp.statusCode() == 422
     }
+
+    void "GET /book/:id shows a single book as JSON"() {
+        given:
+        Book.withNewTransaction {
+            if (!Book.findByIsbn('9780451524935')) {
+                new Book(title: '1984', isbn: '9780451524935', pageCount: 328).save(failOnError: true)
+            }
+        }
+        // Retrieve the id that was assigned
+        Long bookId = Book.withNewTransaction { Book.findByIsbn('9780451524935').id }
+
+        when:
+        HttpResponse<String> resp = client.send(
+                HttpRequest.newBuilder(uri("/books/${bookId}.json")).GET().build(),
+                HttpResponse.BodyHandlers.ofString())
+        def json = new JsonSlurper().parseText(resp.body())
+
+        then:
+        resp.statusCode() == 200
+        json.isbn == '9780451524935'
+        json.title == '1984'
+    }
+
+    void "PUT /book/:id updates an existing book"() {
+        given:
+        Book.withNewTransaction {
+            if (!Book.findByIsbn('9780141439518')) {
+                new Book(title: 'Pride', isbn: '9780141439518', pageCount: 280).save(failOnError: true)
+            }
+        }
+        Long bookId = Book.withNewTransaction { Book.findByIsbn('9780141439518').id }
+        String updateBody = JsonOutput.toJson([title: 'Pride and Prejudice', isbn: '9780141439518', pageCount: 432])
+
+        when:
+        HttpResponse<String> resp = client.send(
+                HttpRequest.newBuilder(uri("/books/${bookId}"))
+                        .header('Content-Type', 'application/json')
+                        .header('Accept', 'application/json')
+                        .PUT(HttpRequest.BodyPublishers.ofString(updateBody)).build(),
+                HttpResponse.BodyHandlers.ofString())
+
+        then:
+        resp.statusCode() == 200
+        Book.withNewTransaction {
+            Book.findByIsbn('9780141439518').title == 'Pride and Prejudice'
+        }
+    }
+
+    void "DELETE /book/:id removes a book"() {
+        given:
+        Long bookId = Book.withNewTransaction {
+            def b = new Book(title: 'Temp', isbn: '9780000000999', pageCount: 50).save(failOnError: true)
+            b.id
+        }
+
+        when:
+        HttpResponse<String> resp = client.send(
+                HttpRequest.newBuilder(uri("/books/${bookId}"))
+                        .header('Accept', 'application/json')
+                        .DELETE().build(),
+                HttpResponse.BodyHandlers.ofString())
+
+        then:
+        resp.statusCode() == 204
+        Book.withNewTransaction { Book.get(bookId) == null }
+    }
+
+    void "GET /book/:id returns 404 for a nonexistent id"() {
+        when:
+        HttpResponse<String> resp = client.send(
+                HttpRequest.newBuilder(uri('/books/99999.json')).GET().build(),
+                HttpResponse.BodyHandlers.ofString())
+
+        then:
+        resp.statusCode() == 404
+    }
 }
