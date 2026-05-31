@@ -8,7 +8,7 @@ Create the file at the path the plugin actually looks up:
 include::../snippets/grails-app/views/templates/_fields/_table.gsp[]
 ----
 
-The model variables passed to the table template are:
+The model variables this template uses are:
 
 [cols="1,1,3"]
 |===
@@ -16,24 +16,18 @@ The model variables passed to the table template are:
 
 | `collection`
 | `Collection<?>`
-| The list of beans to render.
+| The list of beans to render (one table row each).
 
 | `domainClass`
 | `org.grails.datastore.mapping.model.PersistentEntity`
-| The persistent entity for the bean type. Use `domainClass.javaClass.simpleName.toLowerCase()` to compute a controller name for `<g:link>`.
+| The persistent entity for the bean type. `domainClass.javaClass.simpleName.toLowerCase()` builds the per-property i18n message code (e.g. `book.title.label`). The action buttons below use `<g:link resource="${instance}">`, which derives the controller from the instance itself - no controller name is computed here.
 
 | `domainProperties`
-| `List<Map>`
-| The columns the plugin selected, already filtered by the `properties=`/`except=` attributes. Each map has `property`, `label`, and `bean` keys (plus `class` and `theme` if those attributes were passed).
-
-| `displayStyle`
-| `String`
-| The `displayStyle` attribute from `<f:table>`, defaulting to `'table'`. Pass it through to per-cell `<f:displayWidget>` calls so cell templates can branch on style.
-
-| `theme`
-| `String`
-| The `theme` attribute from `<f:table>`. Same passthrough rule.
+| `List`
+| The columns the plugin selected, already filtered by the `properties=`/`except=` attributes. Each entry exposes `name` (the property name, used both for the message code and as the `<f:displayWidget property=...>` lookup) and `naturalName` (a humanized fallback label).
 |===
+
+`<f:table>` also exposes `displayStyle` and `theme` attributes, but this template does not forward them: each cell is rendered with just `<f:displayWidget bean="${instance}" property="${prop.name}"/>` and relies on the standard widget lookup chain.
 
 Inside the loop, render each cell with `<f:displayWidget bean="${instance}" property="${prop.name}"/>`. The loop variable is named `instance` rather than `book` precisely because this one template renders *every* domain class - hard-coding a `book`-shaped variable (or a `book.title` reference) is what breaks the moment `<f:table>` is used for a domain without a `title` property. That `f:displayWidget` call DOES go through the standard lookup chain - it will pick up your per-property `_displayWidget.gsp` overrides (the `Date` formatter you wrote in chapter 9.2, the `Boolean` checkmark from 9.3, the per-column overrides we'll write in chapter 12.3, etc.).
 

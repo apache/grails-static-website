@@ -25,10 +25,15 @@ class TaskIntegrationSpec extends Specification {
     }
 
     void "tasks list newest first per the domain mapping"() {
-        given:
-        new Task(title: 'Older').save(flush: true, failOnError: true)
-        Thread.sleep(20)
-        new Task(title: 'Newer').save(flush: true, failOnError: true)
+        given: 'two tasks with explicit, distinct creation timestamps (no wall-clock sleep)'
+        Task older = new Task(title: 'Older').save(flush: true, failOnError: true)
+        Task newer = new Task(title: 'Newer').save(flush: true, failOnError: true)
+        // dateCreated is auto-assigned on insert; autoTimestamp does not touch it on
+        // update, so overriding it here gives the dateCreated-desc mapping a stable order.
+        older.dateCreated = new Date(1_000_000L)
+        newer.dateCreated = new Date(2_000_000L)
+        older.save(flush: true, failOnError: true)
+        newer.save(flush: true, failOnError: true)
 
         expect:
         Task.list().first().title == 'Newer'
@@ -78,7 +83,7 @@ class TaskIntegrationSpec extends Specification {
         thrown(grails.validation.ValidationException)
     }
 
-    void "search with ilike handles special regex characters safely"() {
+    void "search matches titles that contain punctuation characters"() {
         given:
         new Task(title: 'Foo (bar)').save(flush: true, failOnError: true)
 

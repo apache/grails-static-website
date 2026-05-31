@@ -54,21 +54,20 @@ class BookControllerSpec extends Specification
         response.status == HttpStatus.UNPROCESSABLE_ENTITY.value()
     }
 
-    void "GET /books returns the book list as JSON"() {
+    void "index returns the persisted books in its model"() {
         given:
         new Book(title: 'First', isbn: '9780547928227', pageCount: 100)
             .save(flush: true, failOnError: true)
         new Book(title: 'Second', isbn: '9780547928228', pageCount: 200)
             .save(flush: true, failOnError: true)
 
-        when:
+        when: 'the index action builds its model (HTML format returns the model map)'
         request.method = 'GET'
-        request.format = 'json'
-        controller.index(10)
+        Map model = controller.index(10)
 
         then:
-        response.status == HttpStatus.OK.value()
-        response.contentAsString != null
+        model.bookCount == 2
+        model.bookList*.title.containsAll(['First', 'Second'])
     }
 
     void "POST /books with valid data saves and returns 201"() {

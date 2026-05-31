@@ -290,17 +290,24 @@ class BookFunctionalSpec extends Specification {
     // -------------------------------------------------------------------------
 
     void "GET /v1/books?author= filters by author"() {
-        given:
-        Long firstAuthorId = Book.withNewTransaction { Author.list().first().id }
+        given: 'two authors, each owning a distinct book, so the filter has something to exclude'
+        Long targetAuthorId = Book.withNewTransaction {
+            Author target = new Author(name: 'Filter Target Author').save(failOnError: true)
+            Author other = new Author(name: 'Filter Other Author').save(failOnError: true)
+            new Book(author: target, title: 'Target Book', isbn: '9784444444443', pageCount: 100).save(failOnError: true)
+            new Book(author: other, title: 'Excluded Book', isbn: '9785555555556', pageCount: 100).save(failOnError: true)
+            target.id
+        }
 
         when:
-        HttpResponse<String> resp = getJson("/v1/books?author=${firstAuthorId}")
+        HttpResponse<String> resp = getJson("/v1/books?author=${targetAuthorId}")
         Map json = new JsonSlurper().parseText(resp.body()) as Map
 
-        then:
+        then: 'only the target author\'s books come back; the other author\'s book is excluded'
         resp.statusCode() == 200
         json.items.size() > 0
-        json.items.every { it.author.id == firstAuthorId }
+        json.items.every { it.author.id == targetAuthorId }
+        json.items.every { it.isbn != '9785555555556' }
     }
 
     // -------------------------------------------------------------------------
