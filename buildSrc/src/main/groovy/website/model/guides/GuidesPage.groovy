@@ -131,18 +131,21 @@ class GuidesPage {
             List<Guide> guides,
             Set<Tag> tags,
             Category category = null,
-            Tag tag = null
+            Tag tag = null,
+            String version = null
     ) {
         renderHtml {
             div(class: 'header-bar chalices-bg') {
                 div(class: 'content') {
-                    if (tag || category) {
+                    if (tag || category || version) {
                         h1 {
                             a(href: '[%url]/index.html', 'Guides')
                             if (tag) {
                                 mkp.yield(" → #$tag.title")
                             } else if(category) {
                                 mkp.yield(" → $category.name")
+                            } else if (version) {
+                                mkp.yield(" → Grails $version")
                             }
                         }
                     } else {
@@ -155,10 +158,10 @@ class GuidesPage {
                 omitNullAttributes = true
                 div(class: 'two-columns') {
                     div(class: 'column') {
-                        mkp.yieldUnescaped(rightColumn(tag, category, guides))
+                        mkp.yieldUnescaped(rightColumn(tag, category, version, guides))
                     }
                     div(class: 'column') {
-                        mkp.yieldUnescaped(leftColumn(tag, category, tags))
+                        mkp.yieldUnescaped(leftColumn(tag, category, tags, GuidesPage.availableVersions(guides), version))
                         if (tag) {
                             mkp.yieldUnescaped(guideGroupByTag(tag, guides))
                         } else if (category) {
@@ -169,7 +172,9 @@ class GuidesPage {
                                             false
                                     )
                             )
-                        } else {
+                        } else if (!version) {
+                            // Version pages render their list in the left column
+                            // (see rightColumn); this column only holds the clouds.
                             div(class: 'search-results') {
                                 mkp.yieldUnescaped('')
                             }
@@ -184,60 +189,60 @@ class GuidesPage {
                 // of high-level tracks for skimming by axis.
                 div(class: 'two-columns') {
                     div(class: 'column') {
-                        if (!(tag || category)) {
+                        if (!(tag || category || version)) {
                             mkp.yieldUnescaped(guideGroupByCategory(categories.apprentice, guides, true, 'margin-top: 0'))
                         }
                     }
                     div(class: 'column') {
-                        if (!(tag || category)) {
+                        if (!(tag || category || version)) {
                             mkp.yieldUnescaped(guideGroupByCategory(categories.advanced, guides, true, 'margin-top: 0'))
                         }
                     }
                 }
                 div(class: 'two-columns') {
                     div(class: 'column') {
-                        if (!(tag || category)) {
+                        if (!(tag || category || version)) {
                             mkp.yieldUnescaped(guideGroupByCategory(categories.weblayer, guides, true, 'margin-top: 0'))
                         }
                     }
                     div(class: 'column') {
-                        if (!(tag || category)) {
+                        if (!(tag || category || version)) {
                             mkp.yieldUnescaped(guideGroupByCategory(categories.devops, guides, true, 'margin-top: 0'))
                         }
                     }
                 }
                 div(class: 'two-columns') {
                     div(class: 'column') {
-                        if (!(tag || category)) {
+                        if (!(tag || category || version)) {
                             mkp.yieldUnescaped(guideGroupByCategory(categories.gorm, guides, true, 'margin-top: 0'))
                         }
                     }
                     div(class: 'column') {
-                        if (!(tag || category)) {
+                        if (!(tag || category || version)) {
                             mkp.yieldUnescaped(guideGroupByCategory(categories.testing, guides, true, 'margin-top: 0'))
                         }
                     }
                 }
                 div(class: 'two-columns') {
                     div(class: 'column') {
-                        if (!(tag || category)) {
+                        if (!(tag || category || version)) {
                             mkp.yieldUnescaped(guideGroupByCategory(categories.security, guides, true, 'margin-top: 0'))
                         }
                     }
                     div(class: 'column') {
-                        if (!(tag || category)) {
+                        if (!(tag || category || version)) {
                             mkp.yieldUnescaped(guideGroupByCategory(categories.spa, guides, true, 'margin-top: 0'))
                         }
                     }
                 }
                 div(class: 'two-columns') {
                     div(class: 'column') {
-                        if (!(tag || category)) {
+                        if (!(tag || category || version)) {
                             mkp.yieldUnescaped(guideGroupByCategory(categories.async, guides, true, 'margin-top: 0'))
                         }
                     }
                     div(class: 'column') {
-                        if (!(tag || category)) {
+                        if (!(tag || category || version)) {
                             mkp.yieldUnescaped(guideGroupByCategory(categories.cloud, guides, true, 'margin-top: 0'))
                         }
                     }
@@ -247,10 +252,14 @@ class GuidesPage {
     }
 
     @CompileDynamic
-    static String leftColumn(Tag tag, Category category, Set<Tag> tags) {
+    static String leftColumn(Tag tag, Category category, Set<Tag> tags, List<String> versions, String version = null) {
         renderHtml {
             div {
+                // Clouds stay visible on the index AND on version pages (so a
+                // reader on /versions/8 can jump to another version or a tag),
+                // but not on tag/category pages where they'd be redundant.
                 if (!(tag || category)) {
+                    mkp.yieldUnescaped(GuidesPage.versionCloud(versions))
                     mkp.yieldUnescaped(GuidesPage.tagCloud(tags))
                 }
             }
@@ -258,12 +267,16 @@ class GuidesPage {
     }
 
     @CompileDynamic
-    static String rightColumn(Tag tag, Category category, List<Guide> guides) {
+    static String rightColumn(Tag tag, Category category, String version, List<Guide> guides) {
         renderHtml {
             div {
-                mkp.yieldUnescaped(searchBox(tag, category))
-                if (!(tag || category)) {
-                    mkp.yieldUnescaped(GuidesPage.latestGuides(guides))
+                if (version) {
+                    mkp.yieldUnescaped(GuidesPage.guidesForVersion(version, guides))
+                } else {
+                    mkp.yieldUnescaped(searchBox(tag, category, version))
+                    if (!(tag || category)) {
+                        mkp.yieldUnescaped(GuidesPage.latestGuides(guides))
+                    }
                 }
             }
         }
@@ -329,8 +342,8 @@ class GuidesPage {
     }
 
     @CompileDynamic
-    static String searchBox(Tag tag, Category category) {
-        if (!(tag || category)) {
+    static String searchBox(Tag tag, Category category, String version = null) {
+        if (!(tag || category || version)) {
             renderHtml {
                 div(class: 'searchbox', style: 'margin-top: 50px !important') {
                     div(class: 'search', style: 'margin-bottom: 0px !important') {
@@ -389,5 +402,118 @@ class GuidesPage {
                 }
             }
         }
+    }
+
+    /**
+     * Renders the Grails-version cloud sidebar, sitting directly above the tag
+     * cloud (see {@link #tagCloud}). Where tags are a long, free-form taxonomy,
+     * the version axis is a short, closed set (the Grails major versions that
+     * actually carry guides), so it is the more useful first cut for a reader
+     * who only cares about "what can I read for the Grails I'm on". Each entry
+     * links to a statically generated {@code /guides/versions/<N>.html} page -
+     * exactly mirroring how tag entries link to {@code /guides/tags/<slug>.html}.
+     */
+    @CompileDynamic
+    static String versionCloud(List<String> versions) {
+        renderHtml {
+            div(class: 'versions-by-grails') {
+                h3(class: 'column-header', 'Guides by Grails Version')
+                ul(class: 'version-cloud') {
+                    versions.each { String v ->
+                        li {
+                            a(href: "$GUIDES_URL/versions/${v}.html", "Grails $v")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Renders every guide published for {@code version} using the same visual
+     * treatment as the {@link #latestGuides} list on the index (title, date +
+     * category, "Read More"), but with no {@code take()} cap - the version
+     * filter is meant to surface the full set, newest first. Each "Read More"
+     * link targets the matching version variant of the guide. This list lives
+     * in the left column with the version + tag clouds beside it on the right,
+     * mirroring the index layout.
+     */
+    @CompileDynamic
+    static String guidesForVersion(String version, List<Guide> guides) {
+        renderHtml {
+            div(class: 'latest-guides') {
+                h3(class: 'column-header', "Guides for Grails $version")
+                ul {
+                    guides
+                            .findAll { Guide guide -> GuidesPage.guideHasVersion(guide, version) }
+                            .sort { Guide a, Guide b ->
+                                Date da = a.publicationDate
+                                Date db = b.publicationDate
+                                if (da == db) {
+                                    return 0
+                                }
+                                if (da == null) {
+                                    return 1
+                                }
+                                if (db == null) {
+                                    return -1
+                                }
+                                db <=> da
+                            }
+                            .each { guide ->
+                                li {
+                                    b(guide.title)
+                                    span {
+                                        if (guide.publicationDate) {
+                                            mkp.yield(new SimpleDateFormat('MMM dd, yyyy').format(guide.publicationDate))
+                                            mkp.yield(' - ')
+                                        }
+                                        mkp.yield(guide.category)
+                                    }
+                                    a(
+                                            href: "$GUIDES_URL/${guide.name}/${version}/guide/index.html",
+                                            'Read More'
+                                    )
+                                }
+                            }
+                }
+            }
+        }
+    }
+
+    /**
+     * The distinct Grails major versions across all guides, newest first.
+     * A {@link SingleGuide} contributes its single {@code versionNumber}; a
+     * {@link GrailsVersionedGuide} contributes every key in
+     * {@code grailsMayorVersionTags}. Versions are guaranteed numeric major
+     * versions in {@code conf/guides.yml}, so they sort numerically descending.
+     */
+    static List<String> availableVersions(List<Guide> guides) {
+        Set<String> versions = [] as Set<String>
+        for (Guide guide : guides) {
+            if (guide instanceof GrailsVersionedGuide) {
+                for (Integer v : ((GrailsVersionedGuide) guide).grailsMayorVersionTags.keySet()) {
+                    versions.add(v.toString())
+                }
+            } else if (guide.versionNumber) {
+                versions.add(guide.versionNumber)
+            }
+        }
+        List<String> list = new ArrayList<String>(versions)
+        list.sort { String a, String b -> (b as Integer) <=> (a as Integer) }
+        list
+    }
+
+    /** Whether {@code guide} is published for the given Grails major version. */
+    static boolean guideHasVersion(Guide guide, String version) {
+        if (guide instanceof GrailsVersionedGuide) {
+            for (Integer v : ((GrailsVersionedGuide) guide).grailsMayorVersionTags.keySet()) {
+                if (v.toString() == version) {
+                    return true
+                }
+            }
+            return false
+        }
+        guide.versionNumber == version
     }
 }

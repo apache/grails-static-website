@@ -159,6 +159,13 @@ abstract class GuidesTask extends GrailsWebsiteTask {
                 templateText,
                 partialsArg
         )
+        RenderSiteTask.renderPages(
+                meta,
+                parseVersionsPages(tempDir),
+                new File(distDir, 'versions').tap { it.mkdirs() },
+                templateText,
+                partialsArg
+        )
     }
 
     static List<Page> parseCategoryPages(File pages) {
@@ -173,6 +180,14 @@ abstract class GuidesTask extends GrailsWebsiteTask {
         List<Page> listOfPages = []
         new File(pages, 'tags').eachFile { tagFile ->
             listOfPages << pageWithFile(tagFile)
+        }
+        listOfPages
+    }
+
+    static List<Page> parseVersionsPages(File pages) {
+        List<Page> listOfPages = []
+        new File(pages, 'versions').eachFile { versionFile ->
+            listOfPages << pageWithFile(versionFile)
         }
         listOfPages
     }
@@ -212,6 +227,15 @@ abstract class GuidesTask extends GrailsWebsiteTask {
             new File(categoriesDir, slug).setText(
                     "---\ntitle: Guides at category $category.name | Grails Framework\nbody: guides\n---\n" +
                             GuidesPage.mainContent(guides, tags, category, null),
+                    'UTF-8'
+            )
+        }
+        def versionsDir = new File(pages, 'versions').tap { it.mkdirs() }
+        for (def version : GuidesPage.availableVersions(guides)) {
+            def slug = "${version}.html"
+            new File(versionsDir, slug).setText(
+                    "---\ntitle: Guides for Grails $version | Grails Framework\nbody: guides\n---\n" +
+                            GuidesPage.mainContent(guides, tags, null, null, version),
                     'UTF-8'
             )
         }

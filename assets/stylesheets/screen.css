@@ -992,6 +992,38 @@ body.grails3-plugins .tags-by-topic ul {
 .tags-by-topic li.tag49{ font-size: 24px; background-color: #feb672;}
 .tags-by-topic li.tag50{ font-size: 24px; background-color: #feb672;}
 
+.versions-by-grails ul {
+	margin: 40px 0 20px 0;
+	padding: 0;
+	overflow: auto;
+}
+body.grails3-plugins .versions-by-grails ul {
+	padding-left: 20px;
+}
+.versions-by-grails li {
+	list-style-type: none;
+	background-color: #255AA8;
+	float: left;
+	margin-right: 6px;
+	margin-bottom: 6px;
+	height: 20px;
+	font-size: 16px;
+	line-height: 14px;
+	vertical-align: middle;
+	padding: 7px 12px 5px;
+	border-radius: 3px;
+}
+.versions-by-grails li:hover {
+	background-color: #1d4684;
+}
+.versions-by-grails li a {
+	display: block;
+	text-decoration: none;
+	color: #ffffff;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
 footer {
 	clear: both;
 	background-color: #ffffff;
