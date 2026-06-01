@@ -205,7 +205,7 @@ abstract class GuidesTask extends GrailsWebsiteTask {
         def guides = GuidesFetcher.fetchGuides(guidesYml)
         def tags = TagUtils.populateTags(guides)
         new File(pages, PAGE_NAME_GUIDES).setText(
-                "title: Guides | Grails Framework\nbody: guides\nJAVASCRIPT: $url/javascripts/search.js\n---\n" +
+                "title: Guides | Grails Framework\nbody: guides\nogurl: $url/guides/index.html\nJAVASCRIPT: $url/javascripts/search.js\n---\n" +
                         GuidesPage.mainContent(guides, tags),
                 'UTF-8'
 
@@ -215,7 +215,7 @@ abstract class GuidesTask extends GrailsWebsiteTask {
         for (def tag : tags) {
             def slug = "${tag.slug.toLowerCase()}.html"
             new File(tagsDir, slug).setText(
-                    "---\ntitle: Guides with tag: $tag.title | Grails Framework\nbody: guides\n---\n" +
+                    "---\ntitle: Guides with tag: $tag.title | Grails Framework\nbody: guides\nogurl: $url/guides/tags/$slug\n---\n" +
                             GuidesPage.mainContent(guides, tags, null, tag),
                     'UTF-8'
 
@@ -225,7 +225,7 @@ abstract class GuidesTask extends GrailsWebsiteTask {
         for (def category : GuidesPage.categories.values()) {
             def slug = "${category.slug.toLowerCase()}.html"
             new File(categoriesDir, slug).setText(
-                    "---\ntitle: Guides at category $category.name | Grails Framework\nbody: guides\n---\n" +
+                    "---\ntitle: Guides at category $category.name | Grails Framework\nbody: guides\nogurl: $url/guides/categories/$slug\n---\n" +
                             GuidesPage.mainContent(guides, tags, category, null),
                     'UTF-8'
             )
@@ -234,7 +234,7 @@ abstract class GuidesTask extends GrailsWebsiteTask {
         for (def version : GuidesPage.availableVersions(guides)) {
             def slug = "${version}.html"
             new File(versionsDir, slug).setText(
-                    "---\ntitle: Guides for Grails $version | Grails Framework\nbody: guides\n---\n" +
+                    "---\ntitle: Guides for Grails $version | Grails Framework\nbody: guides\nogurl: $url/guides/versions/$slug\n---\n" +
                             GuidesPage.mainContent(guides, tags, null, null, version),
                     'UTF-8'
             )
