@@ -9,6 +9,9 @@ The alternative is to treat the listener as a plain Spring component: put it und
 
 [source,groovy]
 ----
+import grails.boot.config.GrailsAutoConfiguration
+import org.springframework.context.annotation.ComponentScan
+
 @ComponentScan('example') // <1>
 class Application extends GrailsAutoConfiguration { /* ... */ }
 ----
