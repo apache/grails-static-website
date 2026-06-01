@@ -161,7 +161,11 @@ class GuidesPage {
                         mkp.yieldUnescaped(rightColumn(tag, category, version, guides))
                     }
                     div(class: 'column') {
-                        mkp.yieldUnescaped(leftColumn(tag, category, tags, GuidesPage.availableVersions(guides), version))
+                        // leftColumn only renders the clouds (and thus uses the
+                        // version list) on the index and version pages; skip the
+                        // scan/sort of availableVersions for tag/category pages.
+                        def versions = (tag || category) ? [] : GuidesPage.availableVersions(guides)
+                        mkp.yieldUnescaped(leftColumn(tag, category, tags, versions, version))
                         if (tag) {
                             mkp.yieldUnescaped(guideGroupByTag(tag, guides))
                         } else if (category) {
