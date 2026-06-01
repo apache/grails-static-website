@@ -27,6 +27,7 @@ import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.OutputDirectory
@@ -85,6 +86,16 @@ abstract class GuidesTask extends GrailsWebsiteTask {
     @OutputDirectory
     abstract DirectoryProperty getOutputDir()
 
+    /**
+     * Shared chrome partials ({@code templates/partials/}) wired in at
+     * configuration time. Captured as a task input rather than read through
+     * {@code project} at execution time so the task is compatible with the
+     * configuration cache, mirroring {@code RenderSiteTask.getPartialsDir()}.
+     */
+    @InputDirectory
+    @PathSensitive(PathSensitivity.RELATIVE)
+    abstract DirectoryProperty getPartialsDir()
+
     static TaskProvider<GuidesTask> register(
             Project project,
             GrailsWebsiteExtension siteExt,
@@ -99,6 +110,7 @@ abstract class GuidesTask extends GrailsWebsiteTask {
             it.releases.set(siteExt.releases)
             it.title.set(siteExt.title)
             it.url.set(siteExt.url)
+            it.partialsDir.set(siteExt.partialsDir)
             it.guidesYml.set(project.layout.projectDirectory.file('conf/guides.yml'))
         }
     }
@@ -131,9 +143,7 @@ abstract class GuidesTask extends GrailsWebsiteTask {
         // Resolve [%PARTIAL:<name>] tokens against the same partial bundle
         // RenderSiteTask uses, so guides/index.html, tag, and category pages
         // share the main-site chrome.
-        File partialsRoot = project.rootProject.layout.projectDirectory
-                .dir('templates/partials').asFile
-        File partialsArg = partialsRoot.isDirectory() ? partialsRoot : null
+        File partialsArg = partialsDir.isPresent() ? partialsDir.get().asFile : null
         RenderSiteTask.renderPages(meta, [page], distDir, templateText, partialsArg)
         RenderSiteTask.renderPages(
                 meta,
