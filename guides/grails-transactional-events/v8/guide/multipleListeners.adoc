@@ -1,12 +1,12 @@
 The whole point of the pattern is that fanning out is cheap: a new side-effect is a new class, not an edit to `OrderService`. Here's a second listener that writes an `AuditLog` row.
 
 [source,groovy]
-.grails-app/services/example/AuditListener.groovy
+.grails-app/services/example/AuditService.groovy
 ----
-include::../snippets/grails-app/services/example/AuditListener.groovy[]
+include::../snippets/grails-app/services/example/AuditService.groovy[]
 ----
 
-Notice that this file is independent of `CustomerLifetimeValueListener`. They share nothing - no inheritance, no interface. Adding a third side-effect tomorrow - a webhook, a search-index refresh, a metrics counter - means writing a `WebhookListener` class and adding one line to `resources.groovy` to register it as a bean. Spring then wires both against the `OrderPlacedEvent` type and calls both (in unspecified order) when an order commits; the publisher never changes.
+Notice that this file is independent of `CustomerLifetimeValueService`. They share nothing - no inheritance, no interface. Adding a third side-effect tomorrow - a webhook, a search-index refresh, a metrics counter - means writing a `WebhookService` class and nothing else: Grails auto-registers it, and Spring wires both against the `OrderPlacedEvent` type and calls both (in unspecified order) when an order commits; the publisher never changes.
 
 `AuditLog` snapshots the data it needs at event-time: `orderTotal` is copied from the event, not looked up by querying the (now-detached) `Order`. That decoupling has a few benefits:
 
@@ -18,4 +18,4 @@ A common temptation is to add a `@Order(0)` annotation here to guarantee the aud
 
 Files touched in this chapter:
 
-* `grails-app/services/example/AuditListener.groovy`
+* `grails-app/services/example/AuditService.groovy`

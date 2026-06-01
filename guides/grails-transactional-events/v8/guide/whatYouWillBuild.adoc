@@ -4,9 +4,9 @@ By the end of the guide you will have:
 * An immutable POGO event class `OrderPlacedEvent` under `src/main/groovy/example/events/`. No `ApplicationEvent` inheritance: Spring 4.2+ accepts any object as a published event.
 * An `OrderService.placeOrder(...)` method annotated `@Transactional` that persists an `Order` and publishes an `OrderPlacedEvent` via an injected `ApplicationEventPublisher`.
 * Three independent listener services:
-** `CustomerLifetimeValueListener` - bumps `Customer.lifetimeValue` after commit.
-** `AuditListener` - writes an `AuditLog` row after commit.
-** `NotificationListener` - dispatched off-thread via `@Async` after commit (a stand-in for sending email).
+** `CustomerLifetimeValueService` - bumps `Customer.lifetimeValue` after commit.
+** `AuditService` - writes an `AuditLog` row after commit.
+** `NotificationService` - dispatched off-thread via `@Async` after commit (a stand-in for sending email).
 * A Spock `@Integration` spec with two test methods that pin down the non-negotiable contract: AFTER_COMMIT listeners fire when (and only when) the publisher's transaction commits, and are silently skipped when it rolls back.
 * A reference table of all four `TransactionPhase` values - `BEFORE_COMMIT`, `AFTER_COMMIT`, `AFTER_ROLLBACK`, `AFTER_COMPLETION` - explaining what each one is good for.
 * A side-by-side contrast with GORM's domain-class lifecycle callbacks (`beforeInsert` / `afterInsert`) and Grails' `@Subscriber` / `@Listener` annotations, so you know which mechanism to reach for and when.
@@ -15,5 +15,5 @@ The second half of the guide builds the mirror-image pattern - cross-domain chan
 
 * A second three-domain model - `CustomerRequest`, `WorkOrder`, and `WorkOrderAssignee` - with a `belongsTo` chain and typed status enums.
 * A `WorkOrderAssignmentService.assignEmployee(...)` that creates an assignment and publishes an `EmployeeAssignedEvent` from inside its `@Transactional` method.
-* A `WorkOrderAssignmentListener` annotated with a plain `@EventListener` (no transaction phase) that runs *synchronously, inside the publisher's transaction* - reading in-flight state, cascading the `WorkOrder` to `PLANNED` and the `CustomerRequest` to `IN_PROGRESS`, and rolling all three writes back together on failure.
+* A `WorkOrderPlanningService` annotated with a plain `@EventListener` (no transaction phase) that runs *synchronously, inside the publisher's transaction* - reading in-flight state, cascading the `WorkOrder` to `PLANNED` and the `CustomerRequest` to `IN_PROGRESS`, and rolling all three writes back together on failure.
 * A Spock `@Integration` spec that proves the atomicity from both sides: all three changes commit as one unit on success, and a failure raised mid-orchestration leaves nothing persisted.

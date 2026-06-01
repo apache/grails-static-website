@@ -17,15 +17,15 @@ include::../snippets/grails-app/services/example/WorkOrderAssignmentService.groo
 This file is byte-for-byte the same *shape* as `OrderService`: inject `ApplicationEventPublisher`, do the persistence, call `publishEvent(...)`, return. The publisher does not know or care who listens. The difference is entirely on the listener side.
 
 [source,groovy]
-.grails-app/services/example/WorkOrderAssignmentListener.groovy
+.grails-app/services/example/WorkOrderPlanningService.groovy
 ----
-include::../snippets/grails-app/services/example/WorkOrderAssignmentListener.groovy[]
+include::../snippets/grails-app/services/example/WorkOrderPlanningService.groovy[]
 ----
 
 The single annotation that changes everything is `@EventListener` instead of `@TransactionalEventListener(AFTER_COMMIT)`. Walk through what that buys you:
 
 * *It fires synchronously, inline, now.* Spring's default `ApplicationEventMulticaster` is `SimpleApplicationEventMulticaster`, which invokes listeners directly on the calling thread. The call stack is `assignEmployee(...)` -> `publishEvent(...)` -> `onEmployeeAssigned(...)` -> back. No commit has happened yet; the publisher's `@Transactional` method has not even returned.
-* *It runs in the publisher's transaction and session.* No `REQUIRES_NEW`. The `@Transactional` here uses the default `REQUIRED` propagation, which *joins* the publisher's active transaction rather than starting a new one. That shared transaction is the entire point - it is why the listener's writes commit with the assignment and roll back with it.
+* *It runs in the publisher's transaction and session.* The listener service itself carries no `@Transactional` - it runs inline inside the publisher's `@Transactional` (default `REQUIRED`) method, so its GORM work simply *joins* that active transaction rather than starting a new one. That shared transaction is the entire point - it is why the listener's writes commit with the assignment and roll back with it.
 * *Its reads see in-flight state.* `WorkOrder.get(event.workOrderId)` returns the managed instance from the current session, with the `WorkOrderAssignee` that was inserted moments ago already attached. When the listener flips the work order to `PLANNED` and then reads `workOrder.customerRequest`, it is reading uncommitted, transaction-local data - exactly what you cannot do from an `AFTER_COMMIT` listener.
 * *Its failures roll the operation back.* The `isTerminal()` guard throws `IllegalStateException` for a closed request. That exception propagates out through `publishEvent(...)`, out of `assignEmployee(...)`, and Grails' transactional advice marks the transaction for rollback. The assignee insert, the work-order status change, and any partial request change are all discarded together.
 
@@ -49,4 +49,4 @@ Files touched in this chapter:
 
 * `src/main/groovy/example/events/EmployeeAssignedEvent.groovy`
 * `grails-app/services/example/WorkOrderAssignmentService.groovy`
-* `grails-app/services/example/WorkOrderAssignmentListener.groovy`
+* `grails-app/services/example/WorkOrderPlanningService.groovy`

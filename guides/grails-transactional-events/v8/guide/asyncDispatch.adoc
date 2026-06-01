@@ -1,9 +1,9 @@
 The third listener stands in for "send a confirmation email" - exactly the kind of side-effect you don't want to do on the caller's thread. Composing `@Async` with `@TransactionalEventListener` hands the listener body to Spring's task executor *after* the commit lands.
 
 [source,groovy]
-.grails-app/services/example/NotificationListener.groovy
+.grails-app/services/example/NotificationService.groovy
 ----
-include::../snippets/grails-app/services/example/NotificationListener.groovy[]
+include::../snippets/grails-app/services/example/NotificationService.groovy[]
 ----
 
 Two pieces of wiring this listener needs:
@@ -39,7 +39,7 @@ The composition order with `@TransactionalEventListener` is exact:
 . Because this listener method is also `@Async`, the call is handed to the `taskExecutor` bean instead of running on the synchronization thread.
 . The executor thread invokes `onOrderPlaced(...)` with no inherited transaction context.
 
-The "no inherited transaction context" point is important. If the async listener needs database access, it must open its own transaction with `@Transactional(propagation = REQUIRES_NEW)` on the listener method, exactly like the `CustomerLifetimeValueListener` did. Forgetting this and writing GORM code directly in an `@Async` listener body produces an enigmatic `org.hibernate.HibernateException: No Session found for current thread` from a stack frame that has nothing else to do with persistence.
+The "no inherited transaction context" point is important. If the async listener needs database access, it must open its own transaction with `withNewTransaction { }`, exactly like the `CustomerLifetimeValueService` did - and for the same reason it can't be declared with `@Transactional`: that annotation's AST transform would hide the listener method from Spring. Forgetting this and writing GORM code directly in an `@Async` listener body produces an enigmatic `org.hibernate.HibernateException: No Session found for current thread` from a stack frame that has nothing else to do with persistence.
 
 A few footguns:
 
@@ -54,5 +54,5 @@ References:
 
 Files touched in this chapter:
 
-* `grails-app/services/example/NotificationListener.groovy`
+* `grails-app/services/example/NotificationService.groovy`
 * `grails-app/init/example/Application.groovy` (add `@EnableAsync`)

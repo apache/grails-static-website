@@ -1,10 +1,28 @@
-There is a wiring step that is easy to miss and fails *silently* when you do: the listener beans have to be registered, and `@TransactionalEventListener` needs one extra bean before Spring will honour it.
+The listeners are ordinary services, so there is nothing to register by hand. Grails wires every class under `grails-app/services/` whose name ends in `Service` as a Spring bean automatically, and Spring's `EventListenerMethodProcessor` scans those beans for `@EventListener` / `@TransactionalEventListener` methods. Giving the listeners `Service` names is what buys that: registration is convention, not configuration.
 
-== grails-app/services/ does not auto-register a class unless it ends in `Service`
+[NOTE]
+.Two ways to make a listener a bean
+====
+The `Service` suffix is the lightest option, but it is not the only one. A class auto-registers only when it is a Grails artefact, and for `grails-app/services/` that means the name *must* end in `Service` - a class called `OrderAuditListener` in that directory is silently ignored.
 
-Grails turns a class under `grails-app/services/` into a Spring bean only when its name ends in `Service`. Our listeners are named `...Listener`, so Grails does *not* register them. A class that is never a bean is never scanned by Spring's `EventListenerMethodProcessor`, so its `@EventListener` / `@TransactionalEventListener` methods are never wired - and nothing warns you. The publisher calls `publishEvent(...)`, no listener runs, and the only symptom is a side-effect that quietly never happens.
+The alternative is to treat the listener as a plain Spring component: put it under `src/main/groovy`, annotate it `@Component`, and tell Spring which package to scan from your `Application` class.
 
-Register the listeners explicitly:
+[source,groovy]
+----
+@ComponentScan('example') // <1>
+class Application extends GrailsAutoConfiguration { /* ... */ }
+----
+
+<1> `@ComponentScan` tells Spring to look for `@Component`, `@Configuration`, and related classes in the given package. If no package is given, the package of the annotated class is used as the root.
+
+A default Grails `Application` scans only the `grails-app/` artefact directories, so plain `@Component` classes under `src/main/groovy` stay invisible until you add `@ComponentScan` (or override `packageNames()`). If your app keeps any non-artefact components under `src/main/groovy`, it is worth adding `@ComponentScan('your.package')` to `Application` once, up front - then anything you drop there later is wired with no further ceremony. This guide keeps the listeners as `Service` classes because they need no annotation at all.
+====
+
+There is exactly one bean you *do* have to declare, and forgetting it fails *silently*.
+
+== `@TransactionalEventListener` needs a `TransactionalEventListenerFactory` bean
+
+A plain `@EventListener` fires as soon as its class is a bean. `@TransactionalEventListener` does not: the transaction-phase-bound variant is only processed when a `TransactionalEventListenerFactory` bean exists in the context. A standard Spring Boot application contributes one automatically through `@EnableTransactionManagement`. Grails does *not* use `@EnableTransactionManagement` - it drives transactions through GORM's own `@Transactional` AST transform - so that factory is never registered, and every `@TransactionalEventListener` is silently ignored until you declare it yourself:
 
 [source,groovy]
 .grails-app/conf/spring/resources.groovy
@@ -12,17 +30,10 @@ Register the listeners explicitly:
 include::../snippets/grails-app/conf/spring/resources.groovy[]
 ----
 
-(You could instead rename the classes to end in `Service` - `AuditListenerService` - and let Grails auto-register them. The explicit `resources.groovy` registration is clearer about intent and keeps the descriptive `Listener` names.)
+That single line is the only wiring the pattern needs. The failure modes are worth committing to memory because they are both silent:
 
-== `@TransactionalEventListener` needs a `TransactionalEventListenerFactory` bean
-
-Registering the bean is enough for a *plain* `@EventListener` to fire. It is **not** enough for `@TransactionalEventListener`. The transaction-phase-bound variant is only processed when a `TransactionalEventListenerFactory` bean exists in the context. In a standard Spring Boot application `@EnableTransactionManagement` contributes that factory automatically; in this Grails application it is not registered by default, so every `@TransactionalEventListener` is silently ignored until you declare it yourself - which is the last bean in the `resources.groovy` above.
-
-The failure modes are worth committing to memory because they are all silent:
-
-* *Listener class not a `Spring` bean* (wrong suffix, not in `resources.groovy`) -> neither `@EventListener` nor `@TransactionalEventListener` fires.
-* *Bean registered but no `TransactionalEventListenerFactory`* -> plain `@EventListener` fires, every `@TransactionalEventListener` is ignored. This is the confusing one: the synchronous orchestration listener in the second half of this guide works, while the AFTER_COMMIT listeners appear dead.
-* *Both in place* -> everything fires.
+* *No `TransactionalEventListenerFactory`* -> plain `@EventListener` beans still fire, but every `@TransactionalEventListener` is ignored. This is the confusing one: the synchronous orchestration listener in the second half of this guide works, while the AFTER_COMMIT listeners appear dead.
+* *Factory in place* -> everything fires.
 
 A fast way to confirm the wiring during development is to drop a `log.error('listener fired')` as the first line of a listener and watch for it when a transaction commits.
 

@@ -4716,7 +4716,7 @@ guides:
           transactionalListener:
             title: The First @TransactionalEventListener
           registeringListeners:
-            title: Registering the Listeners (and the Factory That Makes Them Fire)
+            title: The One Bean That Makes the Listeners Fire
           transactionPhases:
             title: The Four TransactionPhase Values
           multipleListeners:
