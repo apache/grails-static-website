@@ -1,16 +1,16 @@
 The first listener bumps `Customer.lifetimeValue` after an order commits.
 
 [source,groovy]
-.grails-app/services/example/CustomerLifetimeValueListener.groovy
+.grails-app/services/example/CustomerLifetimeValueService.groovy
 ----
-include::../snippets/grails-app/services/example/CustomerLifetimeValueListener.groovy[]
+include::../snippets/grails-app/services/example/CustomerLifetimeValueService.groovy[]
 ----
 
 Walk through it:
 
-* The class lives in `grails-app/services/`, but because its name ends in `Listener` rather than `Service`, Grails does *not* auto-register it as a Spring bean. You wire it up explicitly in `resources.groovy` - covered in the next chapter. Once it is a bean (and a `TransactionalEventListenerFactory` is present), Spring's `EventListenerMethodProcessor` scans its methods and registers the `@TransactionalEventListener`.
+* It is an ordinary Grails service. Because the class name ends in `Service`, Grails auto-registers it as a Spring bean with no configuration, and Spring's `EventListenerMethodProcessor` scans its methods and registers the `@TransactionalEventListener`. The only extra wiring the pattern needs - a `TransactionalEventListenerFactory` bean - is covered in the next chapter.
 * `@TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)` binds the listener to the *publisher's* transaction synchronization. When `OrderService.placeOrder(...)` commits, Spring's `TransactionSynchronizationManager` fires the `afterCommit()` callback that drains the buffered events into this method. If `placeOrder(...)` rolls back, the buffered event is discarded and the method below is never called.
-* The listener does its GORM write inside `Customer.withNewTransaction { ... }`. The publisher's transaction has *already committed* by the time an AFTER_COMMIT listener runs - Spring is draining its after-commit callbacks before tearing the original transaction context down - so there is no transaction to piggy-back on and any GORM work needs a fresh one. `withNewTransaction` opens it programmatically. An `@Transactional(propagation = REQUIRES_NEW)` annotation would read more declaratively but does *not* work on a bean registered in `resources.groovy`: such a bean is not wrapped in Grails' transactional proxy, so the annotation is silently ignored and the `save` fails with `no transaction is in progress`.
+* The listener does its GORM write inside `Customer.withNewTransaction { ... }`. The publisher's transaction has *already committed* by the time an AFTER_COMMIT listener runs - Spring is draining its after-commit callbacks before tearing the original transaction context down - so there is no transaction to piggy-back on and any GORM work needs a fresh one. `withNewTransaction` opens it programmatically. An `@Transactional(propagation = REQUIRES_NEW)` annotation would read more declaratively, but you *cannot* use it here: Grails' `@Transactional` is a compile-time AST transform that relocates the method body, which hides the `@TransactionalEventListener` annotation from Spring's listener scanner - so the listener would never fire at all. `withNewTransaction` keeps the annotation where Spring can see it.
 * The method parameter type `OrderPlacedEvent` is how Spring picks which listener to call for which event. A second listener that accepts `CustomerRegisteredEvent` won't see `OrderPlacedEvent`s, and vice versa. The event-to-listener wiring is implicit in the parameter type.
 * The `if (customer)` guard handles the (degenerate) case where the customer row has been deleted between the publisher commit and the listener firing. In a single-node deployment this is essentially impossible; in a multi-node deployment with concurrent admin tooling it can happen and the listener should noop rather than throw.
 
@@ -18,4 +18,4 @@ One thing the listener deliberately doesn't do: re-publish another event. AFTER_
 
 Files touched in this chapter:
 
-* `grails-app/services/example/CustomerLifetimeValueListener.groovy`
+* `grails-app/services/example/CustomerLifetimeValueService.groovy`

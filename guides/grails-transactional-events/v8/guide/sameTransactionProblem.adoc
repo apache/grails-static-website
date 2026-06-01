@@ -10,11 +10,11 @@ Take a field-service workflow with three domains:
 
 The rule the business cares about: *when an employee is assigned to a work order, the work order becomes `PLANNED`, and because the work order is now planned, the originating customer request becomes `IN_PROGRESS`.* Three writes - the assignment, the work-order status, the request status - that must be atomic. If the request can't legally move to `IN_PROGRESS` (it was already cancelled, say), the assignment and the work-order status change must roll back too. You do not want a `PLANNED` work order hanging off a `CANCELLED` request because two of the three writes landed and the third didn't.
 
-`AFTER_COMMIT` cannot express this. By the time an `AFTER_COMMIT` listener runs, the assignment has *already committed*; its `REQUIRES_NEW` transaction is a separate unit of work, and a failure there leaves the assignment durably persisted with no way to walk it back. The same property that makes `AFTER_COMMIT` correct for emails - "the original is already safe" - makes it wrong for orchestration.
+`AFTER_COMMIT` cannot express this. By the time an `AFTER_COMMIT` listener runs, the assignment has *already committed*; the fresh `withNewTransaction` it would open is a separate unit of work, and a failure there leaves the assignment durably persisted with no way to walk it back. The same property that makes `AFTER_COMMIT` correct for emails - "the original is already safe" - makes it wrong for orchestration.
 
 The fix is the listener you have *not* used yet: a plain `@EventListener`, with no transaction phase, consuming an event that the publisher fires from *inside* its `@Transactional` method. Spring's default event multicaster is synchronous, so the listener runs inline - on the publisher's thread, inside the publisher's transaction, sharing the publisher's Hibernate session - before `publishEvent(...)` returns. Reads see in-flight, uncommitted state. Writes join the same commit. An exception unwinds the whole operation.
 
-This is the mirror image of the first half of the guide, and it reuses the same machinery (`ApplicationEventPublisher`, a POGO event, a listener bean in `grails-app/services/`). The only thing that changes is the listener annotation - and that one change moves the listener from "after the transaction" to "inside the transaction."
+This is the mirror image of the first half of the guide, and it reuses the same machinery (`ApplicationEventPublisher`, a POGO event, a listener service in `grails-app/services/`). The only thing that changes is the listener annotation - and that one change moves the listener from "after the transaction" to "inside the transaction."
 
 [cols="1,1", options="header"]
 |===
@@ -23,7 +23,7 @@ This is the mirror image of the first half of the guide, and it reuses the same 
 | Fires after the publisher's commit
 | Fires inline, the instant `publishEvent(...)` is called
 
-| Runs in a *new* transaction / session (needs `REQUIRES_NEW`)
+| Runs in a *new* transaction / session (opened with `withNewTransaction`)
 | Runs in the publisher's transaction / session
 
 | Reads committed data only
