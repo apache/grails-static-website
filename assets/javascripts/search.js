@@ -9,6 +9,7 @@ const elementsClassNames = [
     'training',
     'latest-guides',
     'guide-group',
+    'versions-by-grails',
     'tags-by-topic',
     'guides-suggestion',
 ]
