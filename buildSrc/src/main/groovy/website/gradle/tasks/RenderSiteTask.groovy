@@ -233,9 +233,17 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
             @Nullable File partialsRoot = null
     ) {
         for (def page : listOfPages) {
-            def resolvedMetadata = processMetadata(
-                    siteMeta + page.metadata + [ogurl: siteMeta['url'] + page.path]
-            )
+            // Default the Open Graph URL to <site><page path>, but let a page
+            // override it via its own `ogurl` metadata. Pages parsed from disk
+            // carry a root-relative path (e.g. "/faq.html"), so the default is
+            // correct for them; generated guide pages (index, tags, categories,
+            // versions) carry only a bare leaf filename (e.g. "8.html"), so they
+            // set `ogurl` explicitly to the right /guides/... URL.
+            def pageMetadata = siteMeta + page.metadata
+            if (!pageMetadata.containsKey('ogurl')) {
+                pageMetadata = pageMetadata + [ogurl: siteMeta['url'] + page.path]
+            }
+            def resolvedMetadata = processMetadata(pageMetadata)
             def html = renderHtmlWithTemplateContent(
                     page.content,
                     resolvedMetadata,
