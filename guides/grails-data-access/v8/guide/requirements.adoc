@@ -1,0 +1,8 @@
+[[requirements]]
+== What you will need
+
+* Approximately 45 minutes
+* JDK 21 (Apache Grails 8 requires Java 21)
+* A https://www.grails.org/[Grails] installation or the bundled Gradle wrapper in `initial/` and `complete/`
+* **Docker** — required for integration tests (Testcontainers PostgreSQL)
+* **PostgreSQL** on `localhost:5432` — required for `./gradlew bootRun` in `complete/` (default database `devDb`; see `grails-app/conf/application.yml`)

@@ -1,0 +1,14 @@
+= Grails Data Access with GORM
+:authors: Sanjana
+:toc: left
+:toclevels: 2
+:sectanchors:
+:icons: font
+:source-highlighter: coderay
+:imagesdir: img
+
+Learn how to model relational data with GORM, express associations, run criteria/HQL/`where` queries, expose REST endpoints, and bulletproof the stack with Spock unit and integration tests.
+
+This guide follows the standard Grails guides layout: work in the `initial/` project and compare your progress with `complete/`.
+
+include::requirements.adoc[]

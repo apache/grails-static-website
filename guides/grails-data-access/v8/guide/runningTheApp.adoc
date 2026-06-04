@@ -1,0 +1,15 @@
+[[runningTheApp]]
+== Running the application
+
+[source,bash]
+----
+cd complete
+./gradlew bootRun
+----
+
+Example requests:
+
+* `GET /api/authors`
+* `GET /api/books`
+* `GET /api/books/search?q=data`
+* `GET /api/books/byAuthor/1`

@@ -1761,6 +1761,57 @@ guides:
           helpWithGrails:
             title: Help with Grails
 
+  - name: 'grails-data-access'
+    title: 'Data Access with GORM in Grails 8'
+    subtitle: 'Model relational data with GORM, run criteria/HQL/where queries, expose REST endpoints, and test with Spock and Testcontainers.'
+    authors:
+      - 'Sanjana'
+    category: 'GORM'
+    publicationDate: '2026-06-04'
+    versions:
+      '8':
+        sourcePath: guides/grails-data-access/v8
+        publicationDate: '2026-06-04'
+        tags:
+          - 'gorm'
+          - 'hibernate'
+          - 'postgresql'
+          - 'criteria'
+          - 'hql'
+          - 'where-queries'
+          - 'rest-api'
+          - 'spock'
+          - 'testcontainers'
+          - 'integration-testing'
+        sampleRef:
+          repo: 'grails-guides/grails-data-access'
+          branch: 'grails8'
+        toc:
+          introduction:
+            title: Introduction
+            requirements: What you will need
+          gettingStarted:
+            title: Getting Started
+            cloneAndRun: Clone and run the sample
+          domainModel:
+            title: Domain model and associations
+            author: Author
+            book: Book and many-to-many tags
+          queries:
+            title: Querying with GORM
+            criteria: Criteria queries
+            hql: HQL
+            whereQueries: Where queries
+          servicesAndControllers:
+            title: Services and REST controllers
+          testing:
+            title: Testing data access
+            unitTests: Unit tests with Spock
+            integrationTests: Integration tests
+          runningTheApp:
+            title: Running the application
+          summary:
+            title: Summary
   - name: 'grails-database-migration'
     title: 'Grails Database Migration'
     subtitle: 'In this guide we will learn how to use the Grails Database Migration Plugin'
