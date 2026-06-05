@@ -1,0 +1,57 @@
+In addition to inequality comparisons (with types such as numbers and dates), we want to
+do inexact string comparisons... to know that one string is similar or "like" another string.
+Here follows three examples that we should improve with a dynamic finder.
+
+First, find all players having a certain last name.
+[source,groovy]
+----
+include::initial/grails-app/services/demo/QueryService.groovy[tag=findByLike,indent=0]
+----
+
+GORM provides the dynamic finder comparator `Like` for string comparisons, and it
+uses the character `%` in the search string as a wildcard. So the above can more
+efficiently be written as:
+[source,groovy]
+----
+include::complete/grails-app/services/demo/QueryService.groovy[tag=findByLike,indent=0]
+----
+
+The `%` wildcard can go anywhere in the search string: front, back, middle, even
+multiple locations. It can match any string, even empty.
+
+The second example finds all game mechanics whose name contains a snippet of text,
+case-insensitive.
+[source,groovy]
+----
+include::initial/grails-app/services/demo/QueryService.groovy[tag=findByIlike,indent=0]
+----
+
+The earlier comparator `Like` was case-sensitive; it matched anything where the `%`
+wildcards appeared, but other text was an exact match. If you want to search
+ignoring case, use the `Ilike` comparator. You can still use wildcards, as is done here.
+[source,groovy]
+----
+include::complete/grails-app/services/demo/QueryService.groovy[tag=findByIlike,indent=0]
+----
+
+In our third example, we find all games where the name matches a regular expression pattern.
+[source,groovy]
+----
+include::initial/grails-app/services/demo/QueryService.groovy[tag=findByRlike,indent=0]
+----
+
+NOTE: https://en.wikipedia.org/wiki/Regular_expression[Regular expressions] are a handy tool for
+developers to define complex search expressions in a compact form. Groovy provides
+http://docs.groovy-lang.org/latest/html/documentation/#_regular_expression_operators[support for regular expressions]
+built upon the
+https://docs.oracle.com/javase/tutorial/essential/regex/[Regular Expression APIs in Java].
+
+To do regular expression matching, use the `Rlike` comparator in your dynamic finder.
+[source,groovy]
+----
+include::complete/grails-app/services/demo/QueryService.groovy[tag=findByRlike,indent=0]
+----
+
+WARNING: The `Rlike` comparator is not universally supported! It is only supported if the underlying
+database supports regular expressions. If the database does not support regular expressions, then
+`Rlike` will fall back to `Like` behavior.

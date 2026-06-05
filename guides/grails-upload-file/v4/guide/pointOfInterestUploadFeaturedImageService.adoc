@@ -1,0 +1,36 @@
+The `uploadFeatureImage` controller's action uses the previously described command
+object to validate the upload form submission. If it does not find validation errors, it invokes a service.
+
+[source, groovy]
+./grails-app/controllers/example/grails/PointOfInterestController.groovy
+----
+include::../snippets/grails-app/controllers/example/grails/PointOfInterestController.groovy[tag=uploadFeaturedImage, indent=0]
+----
+
+We configure the local server url which will host the uploaded images and the local
+folder path where we are going to save the images to.
+
+[source, groovy]
+./grails-app/conf/application.yml
+----
+include::../snippets/grails-app/conf/application.yml[tag=ymlFive]
+----
+
+Service uses the `transferTo` method to transfer the file to a local file path.
+In case of error, the service deletes the file it has previously transfered
+
+[source, groovy]
+./grails-app/services/example/grails/UploadPointOfInterestFeaturedImageService.groovy
+----
+include::../snippets/grails-app/services/example/grails/UploadPointOfInterestFeaturedImageService.groovy[]
+----
+
+The service updates `featuredImageUrl` with the help of a GORM Data Service:
+
+[source, groovy]
+./grails-app/services/example/grails/PointOfInterestDataService.groovy
+----
+include::../snippets/grails-app/services/example/grails/PointOfInterestDataService.groovy[]
+----
+
+

@@ -1,0 +1,12 @@
+Create a https://grails.apache.org/docs/latest/guide/theWebLayer.html#gsp[Tag Library] to render the address:
+
+[source, groovy]
+.grails-app/taglib/example/grails/AddressTagLib.groovy
+----
+include::../../snippets/grails-app/taglib/example/grails/AddressTagLib.groovy[]
+----
+
+<1> By default, tags are added to the default Grails namespace and are used with the `g:` prefix in GSP pages. However, you can specify a different namespace by adding a static property to your TagLib class.
+<2> To obtain a reference to a Micronaut bean, you have to use the https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/beans/factory/annotation/Autowired.html[Autowired] annotation
+<3> Inject a Micronaut Bean (`AddressConfiguration`) into your TagLib using its type. 
+<4> Create a valid http://microformats.org/wiki/adr[adr microformat] HTML snippet.

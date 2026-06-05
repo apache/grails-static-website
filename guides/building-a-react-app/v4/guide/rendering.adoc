@@ -1,0 +1,69 @@
+The React 1.0.2 profile relies on Webpack to bundle React components into browser-ready JavaScript bundles, which can then be loaded via the Grails Asset Pipeline. The default application includes a single "index" bundle which is rendered on the index page. Let's set up a new bundle for our `Garage` app.
+
+In `webpack.config.js`, edit the `entry` section and add a line to load our `Garage.js` file, as seen below:
+
+[source,javascript]
+.webpack.config.js
+----
+include::../snippets/webpack.config.js[tags=garageEntry,indent=0]
+//...
+----
+<1> Add the path to `Garage.js` as the `garage` entry point
+<2> Don't forget the comma!
+
+This will cause Webpack to bundle two different React apps, "index" and "garage". We also need to configure Webpack to output separate bundles for each React app, so we can load them on different pages of our Grails app.
+
+In `webpack.config.js`, edit the `output` section and change the `filename` line as shown below:
+
+[source,javascript]
+.webpack.config.js
+----
+//...
+include::../snippets/webpack.config.js[tags=outputSection,indent=0]
+//...
+----
+<1> Add `-[name]` to the filename property
+
+Now when we start up our Grails app (or run `./gradlew webpack`), Webpack will generate two bundles, one called `bundle-index.js` and one called `bundle-Garage.js`. We can load these bundles on our page using the Grails Asset Pipeline tags.
+
+[NOTE]
+====
+Since we changed the filename of the bundle, we'll need to quickly update our original `index.gsp` page to use the new name.
+
+Edit `grails-app/views/index.gsp`, line 66:
+
+[source,xml]
+----
+        <div id="app"></div>
+        <asset:javascript src="bundle-index.js" /> // <1>
+----
+<1> Change "bundle.js" to "bundle-index.js"
+
+====
+
+
+Now we are finally ready to create a home page for our `Garage` app. Create a new Grails controller using a local Grails installation or `./grailsw`
+
+[source,bash]
+----
+./grailsw create-controller demo.GarageController
+----
+
+Make sure that `GarageController` contains a single `index` action.
+
+[source,groovy]
+.grails-app/controllers/demo/GarageController.groovy
+----
+include::../snippets/grails-app/controllers/demo/GarageController.groovy[]
+----
+
+Now, create a simple `index.gsp` page under `grails-app/views/garage`:
+
+[source,xml]
+.grails-app/views/garage/index.gsp
+----
+include::../snippets/grails-app/views/garage/index.gsp[]
+----
+
+Restart the app, and browse to `http://localhost:8080/garage`. You should see our new React app loaded on the page, with a single hard-coded row of data.
+

@@ -106,6 +106,10 @@ abstract class BlogTask extends GrailsWebsiteTask {
 
     @InputDirectory
     @PathSensitive(PathSensitivity.RELATIVE)
+    abstract DirectoryProperty getPartialsDir()
+
+    @InputDirectory
+    @PathSensitive(PathSensitivity.RELATIVE)
     abstract DirectoryProperty getPostsDir()
 
     @Input
@@ -133,6 +137,7 @@ abstract class BlogTask extends GrailsWebsiteTask {
             it.document.set(siteExt.template)
             it.keywords.set(siteExt.keywords)
             it.outputDir.set(siteExt.outputDir)
+            it.partialsDir.set(siteExt.partialsDir)
             it.postsDir.set(siteExt.postsDir)
             it.releases.set(siteExt.releases)
             it.robots.set(siteExt.robots)
@@ -163,7 +168,18 @@ abstract class BlogTask extends GrailsWebsiteTask {
                 .sort(false)
         def processed = processPosts(meta, posts)
         def blogOut = outputDir.dir('dist/blog').get().asFile.tap { it.mkdirs() }
-        def templateText = document.get().asFile.text
+        // Expand the [%PARTIAL:...] tokens once up front. The downstream
+        // static helpers (renderPostHtml, renderArchive, renderTags ->
+        // renderCards) all forward this expanded text into
+        // RenderSiteTask.renderHtmlWithTemplateContent without a partialsRoot,
+        // and that helper's internal expandPartials is a no-op when
+        // partialsRoot is null. Without this expansion, every rendered blog
+        // post and the blog index shipped the literal "[%PARTIAL:site-head]"
+        // tokens to production.
+        def templateText = RenderSiteTask.expandPartials(
+                document.get().asFile.text,
+                partialsDir.get().asFile
+        )
 
         renderPosts(meta, processed, blogOut, templateText)
 
@@ -359,6 +375,10 @@ abstract class BlogTask extends GrailsWebsiteTask {
                     tagCards,
                     new LinkedHashMap(meta).tap {
                         it.title = tag.toUpperCase() + ' | Blog | Grails Framework'
+                        // Per-tag Open Graph URL. Without this the [%ogurl]
+                        // token in templates/document.html ships verbatim on
+                        // every blog/tag/<tag>.html page.
+                        it.ogurl = "${it.url}/$BLOG/$TAG/${tag}.html".toString()
                     },
                     templateText,
                     renderTagTitle(tag)
@@ -407,6 +427,11 @@ abstract class BlogTask extends GrailsWebsiteTask {
     ) {
         def meta = RenderSiteTask.processMetadata(siteMeta).tap {
             it.title = 'Blog | Grails Framework'
+            // [%ogurl] is the per-page Open Graph URL token in
+            // templates/document.html. The blog archive index lives at
+            // <siteUrl>/blog/index.html; without this the rendered HTML
+            // shipped the literal [%ogurl] in the og:url meta tag.
+            it.ogurl = "${it.url}/$BLOG/$INDEX".toString()
         }
         def html = cardsHtml(postCards)
         html = RenderSiteTask.renderHtmlWithTemplateContent(html, meta, templateText)

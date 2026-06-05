@@ -1,0 +1,75 @@
+// tag::gradleBuildscript[]
+buildscript {
+    repositories {
+        mavenLocal()
+        maven { url "https://repo.grails.org/grails/core" }
+    }
+    dependencies {
+        classpath "org.grails:grails-gradle-plugin:$grailsVersion"
+        classpath 'com.google.cloud.tools:appengine-gradle-plugin:1.1.1' // <1>
+    }
+}
+// end::gradleBuildscript[]
+
+// tag::gradleGroupAndVersion[]
+version "0.1"
+group "google.home"
+// end::gradleGroupAndVersion[]
+
+
+// tag::gradleApplyPlugins[]
+apply plugin:"eclipse"
+apply plugin:"idea"
+apply plugin:"war"
+apply plugin:"org.grails.grails-web"
+apply plugin:"org.grails.grails-gsp"
+apply plugin: 'com.google.cloud.tools.appengine' // <1>
+// end::gradleApplyPlugins[]
+
+repositories {
+    mavenLocal()
+    maven { url "https://repo.grails.org/grails/core" }
+    jcenter()
+}
+
+// tag::configurations[]
+configurations {
+    compile.exclude module: "tomcat-juli"
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+}
+// end::configurations[]
+
+dependencies {
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    compile "org.springframework.boot:spring-boot-starter-logging"
+    compile "org.springframework.boot:spring-boot-autoconfigure"
+    compile "org.grails:grails-core"
+    compile "org.springframework.boot:spring-boot-starter-actuator"
+    // tag::springBootStarterJetty[]
+    provided "org.springframework.boot:spring-boot-starter-jetty"
+    // end::springBootStarterJetty[]
+    compile "org.grails:grails-dependencies"
+    compile "org.grails:grails-web-boot"
+    compile "org.grails.plugins:cache"
+    compile "org.grails.plugins:scaffolding"
+    console "org.grails:grails-console"
+    profile "org.grails.profiles:web"
+    testCompile "org.grails:grails-plugin-testing"    
+
+    // tag::cloudStorageDependency[]
+    compile 'com.google.cloud:google-cloud-storage:0.12.0-beta'
+    // end::cloudStorageDependency[]
+
+    // tag::gactionsDependency[]
+    compile 'com.frogermcs.gactions:gactions:0.1.1'
+    // end::gactionsDependency[]
+}
+
+
+bootRun {
+    jvmArgs('-Dspring.output.ansi.enabled=always')
+    sourceResources sourceSets.main
+}

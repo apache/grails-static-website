@@ -1,0 +1,54 @@
+When the logs into the application or inmediately after signup, app he is presented with a list of his
+favourite flavors. 
+
+To fetch those flavors, the React app sends a _GET_ request to the _/ice-cream/$username_ endpoint.
+We are going to map this with Grails. 
+
+First, we register the endpoint in URLMappings by adding the next line into the mappings:
+
+[source,groovy]
+./server/grails-app/controllers/demo/UrlMappings.groovy
+----
+include::../snippets/server/grails-app/controllers/demo/UrlMappings.groovy[tag=get]
+----
+
+Next, we create a controller action which fetches a list of flavors for the logged username
+
+[source,groovy]
+./server/grails-app/controllers/demo/IceCreamController.groovy
+----
+include::../snippets/server/grails-app/controllers/demo/IceCreamController.groovy[tag=package]
+include::../snippets/server/grails-app/controllers/demo/IceCreamController.groovy[tag=import]
+include::../snippets/server/grails-app/controllers/demo/IceCreamController.groovy[tag=class]
+include::../snippets/server/grails-app/controllers/demo/IceCreamController.groovy[tag=dependency]
+include::../snippets/server/grails-app/controllers/demo/IceCreamController.groovy[tag=index]
+include::../snippets/server/grails-app/controllers/demo/IceCreamController.groovy[tag=loggedUsername]
+----
+<1> The `@Secured` annotation specifies the access controls for this controller - authentication & ROLE_USER is required
+
+The controller action uses a service as a collaborators:
+
+[source, groovy]
+./server/grails-app/services/demo/UserIceCreamService.groovy
+----
+include::../snippets/server/grails-app/services/demo/UserIceCreamService.groovy[tag=package]
+include::../snippets/server/grails-app/services/demo/UserIceCreamService.groovy[tag=import]
+include::../snippets/server/grails-app/services/demo/UserIceCreamService.groovy[tag=class]
+include::../snippets/server/grails-app/services/demo/UserIceCreamService.groovy[tag=findAllIceCreamsByUsername]
+}
+----
+
+We render JSON with the help of https://grails.apache.org/docs/latest/guide/theWebLayer.html#gson[JSON Views]
+
+[source, groovy]
+./server/grails-app/views/iceCream/index.gson
+----
+include::../snippets/server/grails-app/views/iceCream/index.gson[]
+----
+
+[source, groovy]
+./server/grails-app/views/iceCream/_iceCream.gson
+----
+include::../snippets/server/grails-app/views/iceCream/_iceCream.gson[]
+----
+

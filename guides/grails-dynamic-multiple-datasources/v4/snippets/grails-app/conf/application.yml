@@ -1,0 +1,135 @@
+---
+grails:
+    profile: rest-api
+    codegen:
+        defaultPackage: demo
+    spring:
+        transactionManagement:
+            proxies: false
+#tag::multiTenancyConfiguration[]
+    gorm:
+        multiTenancy:
+            mode: DATABASE # <1>
+            tenantResolverClass: demo.CurrentUserByJwtTenantResolver # <2>
+#end::multiTenancyConfiguration[]
+        reactor:
+            # Whether to translate GORM events into Reactor events
+            # Disabled by default for performance reasons
+            events: false
+info:
+    app:
+        name: '@info.app.name@'
+        version: '@info.app.version@'
+        grailsVersion: '@info.app.grailsVersion@'
+spring:
+    main:
+        banner-mode: "off"
+    groovy:
+        template:
+            check-template-location: false
+
+# Spring Actuator Endpoints are Disabled by Default
+endpoints:
+    enabled: false
+    jmx:
+        enabled: true
+
+---
+grails:
+    mime:
+        disable:
+            accept:
+                header:
+                    userAgents:
+                        - Gecko
+                        - WebKit
+                        - Presto
+                        - Trident
+        types:
+            json:
+              - application/json
+              - text/json   
+            hal:
+              - application/hal+json
+              - application/hal+xml  
+            xml:
+              - text/xml
+              - application/xml                                 
+            atom: application/atom+xml
+            css: text/css
+            csv: text/csv
+            js: text/javascript
+            rss: application/rss+xml
+            text: text/plain
+            all: '*/*'            
+    urlmapping:
+        cache:
+            maxsize: 1000
+    controllers:
+        defaultScope: singleton
+    converters:
+        encoding: UTF-8
+---
+#tag::defaultDatasource[]
+hibernate:
+    cache:
+        queries: false
+        use_second_level_cache: false
+        use_query_cache: false
+dataSource:
+    pooled: true
+    jmxExport: true
+    driverClassName: com.mysql.jdbc.Driver
+    dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    username: root # <1>
+    password: root # <1>
+    dbCreate: update
+    url: jdbc:mysql://127.0.0.1:8889/minions # <1>
+#end::defaultDatasource[]
+---
+#tag::security[]
+grails:
+    plugin:
+        springsecurity:
+            rest:
+                token:
+                    storage:
+                        jwt:
+                            secret: qrD6h8K6S9503Q06Y6Rfk21TErImPYqa # change this for a new one
+            securityConfigType: InterceptUrlMap
+            userLookup:
+                userDomainClassName: demo.User
+                authorityJoinClassName: demo.UserRole
+            authority:
+                className: demo.Role
+            filterChain:
+                chainMap:
+                    - # Stateless chain
+                        pattern: /**
+                        filters: 'JOINED_FILTERS,-exceptionTranslationFilter,-authenticationProcessingFilter,-securityContextPersistenceFilter,-rememberMeAuthenticationFilter'
+            interceptUrlMap:
+                -
+                    pattern: /
+                    access:
+                        - ROLE_VILLAIN
+                -
+                    pattern: /error
+                    access:
+                        - permitAll
+                -
+                    pattern: /api/login
+                    access:
+                        - ROLE_ANONYMOUS
+                -
+                    pattern: /api/validate
+                    access:
+                        - ROLE_ANONYMOUS
+                -
+                    pattern: /oauth/access_token
+                    access:
+                        - ROLE_ANONYMOUS
+                -
+                    pattern: /plan
+                    access:
+                        - ROLE_VILLAIN
+#end::security[]

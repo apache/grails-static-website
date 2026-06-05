@@ -1,0 +1,19 @@
+Next create a new controller called `TickTock`. If you have Grails installed you can do this by running the `grails create-controller` command, otherwise you can use the included `grailsw` wrapper:
+
+[source,groovy]
+----
+$ ./grailsw create-controller TickTock
+----
+
+NOTE: The first time you run the `grails` command, application dependencies will be downloaded from the internet. Subsequent calls will be much faster.
+
+The output of the command will look like:
+
+----
+| Created grails-app/controllers/example/TickTockController.groovy
+| Created src/test/groovy/example/TickTockControllerSpec.groovy
+----
+
+As you can see a new controller was created in the `grails-app/controllers/example` directory. Grails will use the value defined by the `grails.codegen.defaultPackage` value in `grails-app/conf/application.yml` to decide which package to use.
+
+

@@ -1,0 +1,10 @@
+Modify `Hotel` domain class. Add two properties `featuredImageKey` and `featuredImageUrl``
+
+[source, groovy]
+./grails-app/domain/example/grails/Hotel.groovy
+----
+include::../snippets/grails-app/domain/example/grails/Hotel.groovy[indent=0]
+----
+
+<1> We store the AWS S3 url of the featured image
+<2> We store the file path. Useful to delete the file if necessary.

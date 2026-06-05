@@ -1,0 +1,109 @@
+Now we’re ready to turn to the client-side portion of our app. For this
+step, we are going to be using the code found in the Github repo for the
+https://objectcomputing.com/resources/publications/sett/april-2017-web-app-step-by-step[previous “Web App” article]. You can access the code here:
+https://github.com/mvolkmann/ice-cream-app/tree/master/src
+
+Download (or `git clone`) the source files at the URL above, and copy
+them into the `client/src` directory (overwriting any existing files).
+
+[source,bash]
+----
+~ cd ../
+~ git clone https://github.com/mvolkmann/ice-cream-app tmp
+~ cp -Rv tmp/* ice-cream/client/
+----
+
+This will make the `client` subproject identical to the Ice Cream app
+from the https://objectcomputing.com/resources/publications/sett/april-2017-web-app-step-by-step[previous article].
+
+Now, let’s delete the files we don’t need.
+
+[source,bash]
+----
+~ cd ice-cream/client
+~ rm -rf database/ server/ css/ images/
+----
+
+This should leave you with the following directories under `client`:
+
+[source,bash]
+----
+-rw-r--r--  LICENSE
+-rw-r--r--  README.md
+drwxr-xr-x  build
+-rw-r--r--  build.gradle
+drwxr-xr-x  node_modules
+-rw-r--r--  package.json
+drwxr-xr-x  public
+drwxr-xr-x  src
+-rw-r--r--  yarn.lock
+----
+
+And the following files under `client/src`:
+
+[source,bash]
+----
+-rw-r--r--  App.css
+-rw-r--r--  App.js
+-rw-r--r--  App.test.js
+-rw-r--r--  config.js
+-rw-r--r--  ice-cream-entry.js
+-rw-r--r--  ice-cream-list.js
+-rw-r--r--  ice-cream-row.js
+-rw-r--r--  index.css
+-rw-r--r--  index.js
+-rw-r--r--  login.js
+-rw-r--r--  main.js
+----
+
+We only have to edit 2 of these `src` files, and update our
+`package.json`, in order to hook up the React app with our new Grails
+backend.
+
+First, edit `client/package.json` as shown below:
+
+[source, javascript]
+./client/package.json
+----
+include::../snippets/client/package.json[]
+----
+
+We’ve removed several packages that were needed by the Node Express
+server, and we’ve replaced the `socket.io` package with `sockjs-client`
+and `stompjs`, which is supported by the Spring Websockets library we’ve
+configured previously (`socket.io` is designed for Node apps and is not
+compatible with Spring Websockets).
+
+We also need to edit the `config.js` file. This is provided by the React
+profile for Grails and simply holds a few config variables, including a
+`SERVER_URL` value which sets the API base URL. Edit the file as shown
+below:
+
+[source, javascript]
+./client/src/config.js
+----
+include::../snippets/client/src/config.js[]
+----
+
+Now we have to update two of the React components in our Ice Cream app,
+`Login` and `App`.
+
+Edit the `login.js` file as shown below (changes from the https://objectcomputing.com/resources/publications/sett/april-2017-web-app-step-by-step[original
+code] are marked with `//NEW:` comments).
+
+
+[source, javascript]
+./client/src/login.js
+----
+include::../snippets/client/src/login.js[]
+----
+
+Finally, we can edit the `App.js` file to support our new websocket
+channels, as well as our `SERVER_URL` config setting. Like above, all
+changes relative to the https://objectcomputing.com/resources/publications/sett/april-2017-web-app-step-by-step[original code] are marked with `NEW` comments.
+
+[source, javascript]
+./client/src/App.js
+----
+include::../snippets/client/src/App.js[]
+----

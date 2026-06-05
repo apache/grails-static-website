@@ -1,0 +1,41 @@
+While completely unnecessary for Vaadin we want to demonstrate that there is no conflict
+between Grails controllers and the Vaadin Framework.
+
+[source,bash]
+----
+  $ grails create-controller demo.GarageController
+----
+
+Now let’s edit our controller under grails-app/controllers/demo/.
+We will import one of our services, update our index method, and add the following annotation.
+
+- `@GrailsCompileStatic` - Code that is marked with `GrailsCompileStatic` will all be statically compiled except for Grails specific interactions that cannot be statically compiled but that GrailsCompileStatic can identify as permissible for dynamic dispatch. These include things like invoking dynamic finders and DSL code in configuration blocks like constraints and mapping closures in domain classes.
+
+
+[source,groovy]
+./grails-app/controllers/demo/GarageController.groovy
+----
+include::../snippets/grails-app/controllers/demo/GarageController.groovy[]
+----
+
+<1> Declaring our service
+<2> `index()` calls our service and renders the output as JSON
+
+At this point lets make sure everything is working properly and run <<runningTheApp>>
+the application.
+
+Now we can exercise the API using cURL or another API tool.
+
+Make a GET request to /garage to get a list of Vehicles:
+
+[source,bash]
+----
+  $ curl -X "GET" "http://localhost:8080/garage"
+
+    [{"id":1,"driver":{"id":1},"make":{"id":1},"model":{"id":1},"name":"Pickup"},
+     {"id":2,"driver":{"id":1},"make":{"id":1},"model":{"id":2},"name":"Economy"},
+     {"id":3,"driver":{"id":2},"make":{"id":2},"model":{"id":3},"name":"Minivan"}]
+----
+
+If data comes back everything is setup and connected properly at this point and we have
+verified that we have some test data. Now lets look at how to attach Vaadin to Grails

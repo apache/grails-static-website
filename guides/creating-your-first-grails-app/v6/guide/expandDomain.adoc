@@ -1,0 +1,44 @@
+For our `Vehicle` class, it doesn't really make sense that `make` and `model` are plain Strings, since models should actually be associated with makes. Let's update our domain model to be more robust.
+
+Create two new domain classes:
+
+
+[source, bash]
+----
+$ ./grailsw create-domain-class Make
+
+| Created grails-app/domain/org/grails/guides/Make.groovy
+| Created src/test/groovy/org/grails/guides/Make.groovy
+
+$ ./grailsw create-domain-class Model
+
+| Created grails-app/domain/org/grails/guides/Model.groovy
+| Created src/test/groovy/org/grails/guides/Model.groovy
+----
+
+Edit these two files with the following content:
+
+[source,groovy]
+.grails-app/domain/org/grails/guides/Make.groovy
+----
+include::../snippets/grails-app/domain/org/grails/guides/Make.groovy[]
+----
+
+[source,groovy]
+.grails-app/domain/org/grails/guides/Model.groovy
+----
+include::../snippets/grails-app/domain/org/grails/guides/Model.groovy[]
+----
+
+NOTE: The `belongsTo` property is one of several properties that GORM uses to determine associations between domain classes. Others include `hasMany` and `hasOne`. For more information please see the http://gorm.grails.org/6.0.x/hibernate/manual/#gormAssociation[GORM documentation].
+
+Now, update `Vehicle.groovy` to use the new `Make` and `Model` classes instead of `String`.
+
+[source,groovy]
+.grails-app/domain/org/grails/guides/Vehicle.groovy
+----
+include::../snippets/grails-app/domain/org/grails/guides/Vehicle.groovy[]
+----
+
+Grails (via GORM) will now create three tables in our database, for our three domain classes, and create the necessary associations between the tables. Run the app again and open the DB Console to view the new tables.
+

@@ -1,0 +1,12 @@
+We are going to write a simple application with logging.  For a simple concept, we will create a `Person` domain object with a
+`name` and `age`. The application will log "friendly" advice for the person based on age.  Through this contrived example, we will
+develop tests that verify the correct logging events occur.
+
+First, let's configure the application to only log items pertinent to the exercise.  In `logback.groovy`, delete the line at the bottom
+of the file: `root(ERROR, ['STDOUT'])`. Then add the below snippet. This will activate loggers in the package `example.grails`.
+
+[source, groovy]
+.grails-app/conf/logback.groovy
+----
+include::../snippets/grails-app/conf/logback.groovy[tag=logger]
+----

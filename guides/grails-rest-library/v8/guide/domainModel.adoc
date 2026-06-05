@@ -1,0 +1,21 @@
+Two domain classes model the library. `Author` is independent; `Book` belongs to an `Author`.
+
+[source,groovy]
+.grails-app/domain/example/Author.groovy
+----
+include::../snippets/grails-app/domain/example/Author.groovy[]
+----
+
+[source,groovy]
+.grails-app/domain/example/Book.groovy
+----
+include::../snippets/grails-app/domain/example/Book.groovy[]
+----
+
+A few constraint choices to highlight:
+
+* `name blank: false, maxSize: 255` on Author and `title` on Book reject empty strings and cap database column width, so the rejection is surfaced at validation time, not as a SQL error.
+* `isbn matches: /^(97(8|9))?\d{9}(\d|X)$/` is a soft ISBN-10/13 check. It is intentionally permissive (no checksum validation); the regex is a chapter-and-verse example of how Grails' `matches:` constraint composes with `unique: true`.
+* `pageCount nullable: true, min: 1` allows an unset value but rejects zero or negative integers.
+
+The `static mapping` block on `Author` lazy-loads `books`. With eager loading, every `Author.list()` call would fetch every book of every author - the textbook N+1 problem. Lazy loading delegates to GORM's session lifecycle, and views explicitly opt back in to eager fetch via `Author.list(fetch: [books: 'join'])` when they need it.

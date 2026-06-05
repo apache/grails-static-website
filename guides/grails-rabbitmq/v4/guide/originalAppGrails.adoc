@@ -1,0 +1,62 @@
+NOTE: We have already added the necessary assets (book cover images) to the `initial/grails-app/assets/images` folder for you.
+
+Moving forward we need to add additional functionality to our app since we will no longer be using just a single application.
+To start we first need to add a `Book` domain.
+
+[source,groovy]
+.grails-app/domain/demo/Book.groovy
+----
+include::../snippets/grails-app/domain/demo/Book.groovy[]
+----
+
+We will be using a custom `findAll` to return our list of books and for that we will need to use an additional `BookImage`
+object. First create your `BookImage` in the `src/main/groovy` directory
+
+[source,groovy]
+.src/main/groovy/demo/BookImage.groovy
+----
+include::../snippets/src/main/groovy/demo/BookImage.groovy[]
+----
+
+Create default CRUD actions for `Book` leveraging http://gorm.grails.org/latest/hibernate/manual/index.html#dataServices[GORM data services].
+
+[source,groovy]
+.grails-app/services/demo/BookDataService.groovy
+----
+include::../snippets/grails-app/services/demo/BookDataService.groovy[]
+----
+
+Next connect our new controller up to the services that we just created. Our index will leverage our custom `findAll` to
+return a complete list of books while our show will make use of the data services `findById`.
+
+[source,groovy]
+.grails-app/controllers/demo/BookController.groovy
+----
+include::../snippets/grails-app/controllers/demo/BookController.groovy[]
+----
+
+Then we need to actually create the book data with our `Bootstrap.groovy`
+
+[source,groovy]
+.grails-app/init/demo/Bootstrap.groovy
+----
+include::../snippets/grails-app/init/demo/BootStrap.groovy[]
+----
+
+Lastly we update our url mapping so that our default url will display our list of books
+
+[source,groovy]
+.grails-app/controllers/demo/UrlMappings.groovy
+----
+include::../snippets/grails-app/controllers/demo/UrlMappings.groovy[]
+----
+<1> Updated default URL
+
+Run the app
+
+[source,bash]
+----
+$ ./gradlew bootRun
+----
+
+image::booksHome.png[]

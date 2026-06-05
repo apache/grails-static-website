@@ -1,0 +1,7 @@
+=== Single File Components
+
+We wil create several Vue components to consume/interact with our API. We will be using *single-file components* in this guide. Single-file components allow us to encapsulate the template (HTML), styling, and the component's Vue *instance* (which handles the data and behavior of the component) in a single file. These files have an extension of `.vue`.
+
+Single-file components require some additional processing in order to be rendered in a browser.  The `client` project provided by the Vue profile is already configured to correctly compile single-file components.
+
+The components are exported and can be imported into other components. They can also accept *props*, trigger and respond to events, and contain internal data (just like all Vue components). Refer to the https://vuejs.org/v2/guide/single-file-components.html[Vue.js documentation] to learn more about single-file components.

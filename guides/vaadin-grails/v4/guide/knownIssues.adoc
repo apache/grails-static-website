@@ -1,0 +1,2 @@
+- https://github.com/macprzepiora/web-vaadin8/issues/3[Bug with multi-word package names]
+- https://github.com/grails-guides/vaadin-grails/issues/1[Issue with Grails 3.3.0 and Spring Boot 1.5]

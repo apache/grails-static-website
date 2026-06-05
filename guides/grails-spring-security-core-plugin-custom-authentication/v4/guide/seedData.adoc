@@ -1,0 +1,25 @@
+We are going to populate our database with some seed data:
+
+[source,groovy]
+./grails-app/services/demo/RoleService.groovy
+----
+include::../snippets/grails-app/services/demo/RoleService.groovy[indent=0]
+----
+
+[source,groovy]
+./grails-app/services/demo/UserService.groovy
+----
+include::../snippets/grails-app/services/demo/UserService.groovy[indent=0]
+----
+
+[source,groovy]
+./grails-app/services/demo/UserRoleService.groovy
+----
+include::../snippets/grails-app/services/demo/UserRoleService.groovy[indent=0]
+----
+
+[source,groovy]
+./grails-app/init/demo/BootStrap.groovy
+----
+include::../snippets/grails-app/init/demo/BootStrap.groovy[indent=0]
+----

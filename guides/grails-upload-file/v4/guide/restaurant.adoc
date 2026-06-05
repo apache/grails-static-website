@@ -1,0 +1,4 @@
+This part of the Guide illustrates how to upload a file to a Grails server
+app and store the file's bytes in the database.
+
+image::bytearray.png[]

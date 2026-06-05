@@ -1,0 +1,36 @@
+To get Twitter OAuth up and running on your application will take a bit of work and configuration on the
+https://developer.twitter.com/[Twitter Developer Console]. Go ahead and sign in and click `Apply`
+
+image::twitterDevHome.png[]
+
+Select `Get started with standard access`
+
+image::twitterDevApply.png[]
+
+This gives you a quick description of how to connect your app to Twitter. Click on the link `apps.twitter.com`.
+
+image::twitterDevStandard.png[]
+
+This will bring you to Twitters `Application Management`
+
+image::twitterAppsHome.png[]
+
+From the Twitter Application Management page click `Create New App`
+
+WARNING: Twitter does not accept `localhost` so give it the localhost ip address instead `127.0.0.1`.
+
+Fill out the form with a app name, basic description, your web address, and a callback (where you want Twitter to
+return to after you signin). Then click `Create your Twitter application`.
+
+image::twitterAppCreate.png[]
+
+You should now see that your app was created successfully with Twitter.
+
+image::twitterAppCreateSuccess.png[]
+
+Next select the `Keys and Access Tokens` tab
+
+image::twitterKeysAndTokens.png[]
+
+This is all the setup that needs to be done in Twitter. Save your Consumer Key and Secret for quick access later.
+Now we will take a look at setting up our application with our Twitter credentials.

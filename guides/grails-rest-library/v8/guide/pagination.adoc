@@ -1,0 +1,51 @@
+Every list endpoint in this guide exposes the same three query parameters:
+
+* `max` - page size, default 25, hard-capped at 100.
+* `offset` - zero-based starting offset, default 0.
+* `sort` - column name to sort by, with optional `order=asc` or `order=desc`.
+
+`RestfulController.index` reads `params.max` and `params.offset` automatically; the override on `listAllResources` we already wrote bounds them.
+
+Round-trip with `curl`:
+
+[source,bash]
+----
+curl -s 'http://localhost:8080/v1/books?max=2&offset=2&sort=publishedOn&order=desc' | jq
+----
+
+Returns:
+
+[source,json]
+----
+{
+  "page": 1,
+  "pageSize": 2,
+  "total": 4,
+  "items": [
+    { "id": 2, "title": "The Fellowship of the Ring", ... },
+    { "id": 1, "title": "The Hobbit", ... }
+  ]
+}
+----
+
+The `page` value is `offset / pageSize`; `total` is the unpaginated row count. A client that wants a page-and-size API instead of an offset-and-size API can compute either from the other.
+
+[TIP]
+====
+*Filtering* sits orthogonal to pagination. If you want `GET /v1/books?author=2`, override `listAllResources` to consume `params.author`:
+
+[source,groovy]
+----
+@Override
+protected List<Book> listAllResources(Map params) {
+    params.max = Math.min(params.int('max', 25), 100)
+    if (params.author) {
+        Book.findAllByAuthor(Author.get(params.long('author')), params)
+    } else {
+        Book.list(params)
+    }
+}
+----
+
+This stays out of the URL mappings layer; the same route serves both filtered and unfiltered queries.
+====

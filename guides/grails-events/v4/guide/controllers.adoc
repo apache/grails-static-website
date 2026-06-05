@@ -1,0 +1,15 @@
+Create a Command Object to handle the form data binding and validation.
+
+[source,groovy]
+.grails-app/controllers/demo/RegisterCommand.groovy
+----
+include::../snippets/grails-app/controllers/demo/RegisterCommand.groovy[]
+----
+
+Create a controller with two actions, one action presents the registration form the other action handles the form submission.
+
+[source,groovy]
+.grails-app/controllers/demo/RegisterController.groovy
+----
+include::../snippets/grails-app/controllers/demo/RegisterController.groovy[]
+----

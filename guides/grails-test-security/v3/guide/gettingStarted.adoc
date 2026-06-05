@@ -1,0 +1,5 @@
+In this guide you are going to:
+
+- Create a functional test of a REST API endpoint secured with the Grails Spring Security Rest Plugin
+- Create a `GebSpec` Functional test of a page secured with the Grails Spring Security Core Plugin. When you try
+to access such a page you are redirected to a sign-in form.

@@ -1,0 +1,7 @@
+The `initial` application contains a unit test which verifies the default UrlMapping for `/`.
+
+[source, groovy]
+.src/test/groovy/example/grails/UrlMappingsSpec.groovy
+----
+include::../snippets/src/test/groovy/example/grails/UrlMappingsSpec.groovy[]
+----

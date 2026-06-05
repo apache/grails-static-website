@@ -1,0 +1,37 @@
+If you are using a custom `Authentication`, you may need to create a filter.
+
+That means coding a custom `java.servlet.Filter` implementation.
+
+You have several options:
+
+- Extend `GenericFilterBean`
+
+`org.springframework.web.filter.GenericFilterBean`
+
+- Extend a similar filter e.g. `UsernamePasswordAuthenticationFilter`
+
+`org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter`
+
+- Directly implement the interface
+
+For this guide, we don't need to create a custom filter. Instead, we are using the `UsernamePasswordAuthenticationFilter`
+and overriding the `authenticationDetailsSource` bean used by that filter.
+
+[source,groovy]
+./grails-app/conf/spring/resources.groovy
+----
+include::../snippets/grails-app/conf/spring/resources.groovy[indent=0,tag=authenticationDetailsSource]
+----
+
+[source,groovy]
+./src/main/groovy/demo/TwoFactorAuthenticationDetailsSource.groovy
+----
+include::../snippets/src/main/groovy/demo/TwoFactorAuthenticationDetailsSource.groovy[indent=0]
+----
+
+
+[source,groovy]
+./src/main/groovy/demo/TwoFactorAuthenticationDetails.groovy
+----
+include::../snippets/src/main/groovy/demo/TwoFactorAuthenticationDetails.groovy[indent=0]
+----

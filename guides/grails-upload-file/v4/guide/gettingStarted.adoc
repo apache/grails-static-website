@@ -1,0 +1,5 @@
+In this guide, you are going to write three different domain classes. Moreover, you are going to write controllers, services, and views associated with them.
+
+We are going to explore different ways to save the uploaded files; byte[] in the database, local folder or remote server (AWS S3).
+
+We are going to use a Command Object to allow only images ( JPG or PNG ) uploads.

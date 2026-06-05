@@ -1,0 +1,22 @@
+The default scaffolded `_form.gsp` is generated from a static template inside `grails-scaffolding.jar` and produces verbose markup like this for every property:
+
+[source,html]
+----
+<div class="fieldcontain ${hasErrors(bean: book, field: 'title', 'error')} required">
+    <label for="title">
+        <g:message code="book.title.label" default="Title" />
+        <span class="required-indicator">*</span>
+    </label>
+    <g:textField name="title" required="" value="${book?.title}"/>
+</div>
+----
+
+That is _twelve_ properties times that block per form, copy-pasted into both `create.gsp` and `edit.gsp`, plus a similar block per property in `show.gsp`, plus a hand-built `<table>` in `list.gsp`. Multiply by every domain class.
+
+There are three concrete problems with this code that the Fields plugin solves:
+
+. *No central place to change form styling.* Switching the `<div class="fieldcontain">` to a Bootstrap 5 `<div class="mb-3">` requires editing every domain's GSPs.
+. *Constraints are not honoured for free.* `inList` does become a `<select>` because the scaffolding template knows about it, but if you change a domain class to use `widget: 'textarea'` you have to hand-edit its `_form.gsp` to swap the input type.
+. *Per-property special cases sprawl.* If `Book.isbn` needs a `pattern=` attribute, that one-line change goes into `book/_form.gsp`, mixed in with all the unrelated fields.
+
+The Fields plugin lets you replace the verbose blocks with `<f:all>` / `<f:display>` / `<f:table>`, then customise rendering in one well-known location: `grails-app/views/_fields/`.

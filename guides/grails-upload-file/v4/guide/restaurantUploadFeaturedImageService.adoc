@@ -1,0 +1,20 @@
+The `uploadFeatureImage` controller's action uses the previously described command
+object to validate the upload form submission. If it does not find validation errors, it invokes a http://gorm.grails.org/6.1.x/hibernate/manual/#dataServices[Gorm Data Service].
+
+[source, groovy]
+./grails-app/controllers/example/grails/RestaurantController.groovy
+----
+
+include::../snippets/grails-app/controllers/example/grails/RestaurantController.groovy[tag=uploadFeaturedImage]
+
+----
+
+The complete GORM Data Service is shown in the following code snippet:
+
+[source,groovy]
+./grails-app/services/example/grails/RestaurantDataService.groovy
+----
+include::../snippets/grails-app/services/example/grails/RestaurantDataService.groovy[]
+----
+
+<1> The first argument should be the id of the object to update. If any of the parameters don’t match up to a property on the domain class then a compilation error will occur.

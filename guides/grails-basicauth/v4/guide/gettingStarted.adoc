@@ -1,0 +1,4 @@
+https://tools.ietf.org/html/rfc7617[RFC7617] defines the "Basic" Hypertext Transfer Protocol (HTTP) authentication scheme, which transmits credentials as user-id/password pairs, encoded using Base64.
+
+In this guide you are going to create a Grails app and secure it with HTTP Basic Auth.
+

@@ -1,0 +1,15 @@
+Create the workflow file at `.github/workflows/ci.yml`:
+
+[source,yaml]
+..github/workflows/ci.yml
+----
+include::../snippets/.github/workflows/ci.yml[]
+----
+
+Three header blocks set the contract for every job:
+
+* `on:` triggers on every push and pull request to the `grails8` branch. We narrow to one branch on push (no point running CI for a feature branch's intermediate commits if a PR is going to do it anyway) but accept PRs from any branch.
+* `permissions: contents: read` follows the principle of least privilege: the CI workflow can only read the repo, not write to it. The release workflow asks for `contents: write` and `packages: write` separately.
+* `concurrency:` cancels older runs when a new push lands on the same ref. This stops a long functional-test run from blocking a fix-up commit; the older run is killed and the newer one starts immediately.
+
+Each job uses `runs-on: ubuntu-latest`, `actions/checkout@v4`, `actions/setup-java@v4` (with `distribution: liberica` and `java-version: 21`), and `gradle/actions/setup-gradle@v4`. The setup-gradle action manages the build cache and dependency cache; setting `cache-read-only: true` on consumer jobs (anything except the writer on `grails8`) means PR builds get a free read-through cache without polluting the cache with PR-specific artefacts.

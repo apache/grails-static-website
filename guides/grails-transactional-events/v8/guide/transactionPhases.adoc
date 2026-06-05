@@ -1,0 +1,39 @@
+`TransactionPhase` has four values. Pick the one that matches the side-effect's tolerance for the originating transaction being undone.
+
+[cols="1,2,3", options="header"]
+|===
+| Phase | Fires | Use for
+
+| `BEFORE_COMMIT`
+| Just before the database commit is issued, while the transaction is still open.
+| Side-effects that must be part of the same database commit as the originating change - typically derived data flushed into the same transaction. If the listener throws, the transaction rolls back.
+
+| `AFTER_COMMIT` (default)
+| After the database commit succeeds. The originating change is durable.
+| The 90% case: audit log writes, denormalised-field updates in other aggregates, outbound notifications, search-index refreshes, cache invalidations. Listener failures cannot undo the originating change - they must log and recover.
+
+| `AFTER_ROLLBACK`
+| After the database rollback completes. The originating change has been discarded.
+| Compensating side-effects: alerting on failed orders, releasing reserved inventory, decrementing speculative counters.
+
+| `AFTER_COMPLETION`
+| After the transaction completes, regardless of outcome. Aggregates both `AFTER_COMMIT` and `AFTER_ROLLBACK`.
+| Resource cleanup that must happen either way: closing a temporary file, releasing a distributed lock. Almost never the right choice for business logic, because the listener cannot easily tell which outcome occurred.
+|===
+
+A few rules that catch everyone the first time:
+
+* *No active transaction means no listener fires.* If `publishEvent(...)` is called outside a transactional context, the event is discarded. Override with `fallbackExecution = true` on the annotation if you really need the listener to run in the non-transactional case - but in a Grails service, `@Transactional` is almost always present and the fallback is rarely needed.
+* *`BEFORE_COMMIT` listeners run inside the publisher's transaction.* Anything the listener does to GORM is part of the same database commit. This is occasionally exactly what you want (e.g. derived totals) but it's a sharp edge - a listener exception unwinds the originating service call. For cross-domain orchestration that must share the transaction, a plain `@EventListener` (no phase) is usually the clearer tool, because it fires inline at the business step rather than deferred to commit time - the second half of this guide builds exactly that.
+* *`AFTER_COMMIT` listeners run *after* the publisher's transaction commits.* The original transaction has already concluded by the time the listener fires - Spring is in the middle of draining its synchronization callbacks before tearing the transaction context down. The listener body is therefore not "in" a usable transaction; any database work must open a fresh one with `withNewTransaction { ... }`. Reach for `withNewTransaction`, not `@Transactional(REQUIRES_NEW)`: on a listener method that annotation's AST transform would hide the listener from Spring (see _The First @TransactionalEventListener_).
+* *Listener execution order is unspecified.* Spring does not guarantee the order in which two `AFTER_COMMIT` listeners for the same event fire. If you need ordering, use `@Order(...)` on the listener methods, but better: design the listeners so the order does not matter.
+
+References:
+
+* link:https://docs.spring.io/spring-framework/reference/data-access/transaction/event.html[Spring Framework Reference - Transaction-bound events]
+* link:https://docs.spring.io/spring-framework/docs/6.2.x/javadoc-api/org/springframework/transaction/event/TransactionalEventListener.html[`@TransactionalEventListener` javadoc]
+* link:https://docs.spring.io/spring-framework/docs/6.2.x/javadoc-api/org/springframework/transaction/event/TransactionPhase.html[`TransactionPhase` javadoc]
+
+Files touched in this chapter:
+
+* None

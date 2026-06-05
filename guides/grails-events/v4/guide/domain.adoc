@@ -1,0 +1,13 @@
+Add two domain classes.
+
+[source,groovy]
+.grails-app/domain/demo/User.groovy
+----
+include::../snippets/grails-app/domain/demo/User.groovy[]
+----
+
+[source,groovy]
+.grails-app/domain/demo/Notification.groovy
+----
+include::../snippets/grails-app/domain/demo/Notification.groovy[]
+----

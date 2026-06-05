@@ -1,0 +1,119 @@
+
+We want to https://grails.apache.org/docs/latest/guide/testing.html[unit test] our validation constraints.
+
+Implement the `DomainUnitTest` trait. It indicates we are testing a Grails artifact; a domain class.
+
+[source,groovy]
+./src/test/groovy/demo/HotelSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/HotelSpec.groovy[indent=0,tags=testForTests]
+----
+
+This is the key take-away of this guide:
+
+**When you pass a list of Strings to the validate method, the validate method will only validate the
+properties you pass. A domain class may have many properties.
+This allows you to tests properties validation
+on isolation.**
+
+### Name property constraints testing
+We want to map our `name` property to a relational database with a VARCHAR(255). We
+want this property to be required and with a max length of 255 characters.
+
+
+[source,groovy]
+./src/test/groovy/demo/HotelSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/HotelSpec.groovy[indent=0,tags=nameTests]
+----
+
+### Url property constraints testing
+We want to map our `url` property to a relational database with a VARCHAR(255). We
+want this property to be either a valid url or a null or blank value.
+
+
+[source,groovy]
+./src/test/groovy/demo/HotelSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/HotelSpec.groovy[indent=0,tags=urlTests]
+----
+
+### Email property constraints testing
+We want `email` to be either a valid email or a null or blank value.
+
+[source,groovy]
+./src/test/groovy/demo/HotelSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/HotelSpec.groovy[indent=0,tags=emailTests]
+----
+
+NOTE: Email validator ensures it has less than 255 characters
+
+### Email Unique constraint testing
+
+We have added a `unique` constraint to the Hotel's email address.
+
+____
+Unique: It constrains a property as unique at the database level. Unique is a persistent call and will query the database.
+____
+
+You can test a unique constraint with such a test:
+
+[source,groovy]
+./src/test/groovy/demo/HotelEmailUniqueConstraintSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/HotelEmailUniqueConstraintSpec.groovy[]
+----
+
+### About property constraints testing
+
+We want `about` to be a null, blank or a block of text. We don't want `about` to be constrained
+to 255 characters. We used the `mapping` block in our domain class to indicate this characteristic.
+
+[source,javascript]
+./grails-app/domain/demo/Hotel.groovy
+----
+include::../snippets/grails-app/domain/demo/Hotel.groovy[indent=0,tags=hotelMapping]
+----
+
+These are the tests to validate `about` constraints.
+
+[source,groovy]
+./src/test/groovy/demo/HotelSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/HotelSpec.groovy[indent=0,tags=aboutTests]
+----
+
+### Latitude and longitude properties constraints testing
+
+We want `latitude` to be null or a value between -90 to 90 degrees.
+We want `longitude` to be null or a value between -180 to 180 degrees.
+
+You maybe tempted to use:
+
+[source,groovy]
+----
+latitude nullable: true, range: -90..90
+longitude nullable: true, range: -180..180
+----
+
+However, a value such as `latitude` of 90.1 will be a valid value using the  https://grails.apache.org/docs/latest/ref/Constraints/range.html[Range Constraint]
+____
+Set to a Groovy range which can contain numbers in the form of an IntRange, dates or any object that implements Comparable and provides next and previous methods for navigation.
+____
+
+Instead we are using a https://grails.apache.org/docs/latest/ref/Constraints/validator.html[custom validation].
+
+[source,javascript]
+./grails-app/domain/demo/Hotel.groovy
+----
+include::../snippets/grails-app/domain/demo/Hotel.groovy[indent=0,tags=latitudeCustomValidator]
+----
+
+These are the tests to validate `latitude` and `longitude` constraints.
+
+[source,groovy]
+./src/test/groovy/demo/HotelSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/HotelSpec.groovy[indent=0,tags=latitudeAndLongitudeTests]
+----

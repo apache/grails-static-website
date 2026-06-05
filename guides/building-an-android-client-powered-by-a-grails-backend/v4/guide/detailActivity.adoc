@@ -1,0 +1,25 @@
+When the user taps an announcement, the announcement is transmited using https://developer.android.com/reference/android/content/Intent.html[Android Intent Extras]
+
+image::extras.png[]
+
+
+You will need to add a second activity two the manifest.
+
+[source,xml]
+./app/src/main/AndroidManifest.xml
+----
+include::{sourcedir}/../complete-android-v1/app/src/main/AndroidManifest.xml[lines="19"]
+----
+
+
+[source,java]
+./app/src/main/java/intranet/client/android/activities/AnnouncementActivity.java
+----
+include::{sourcedir}/../complete-android-v1//app/src/main/java/intranet/client/android/activities/AnnouncementActivity.java[]
+----
+
+[source,xml]
+./app/src/main/res/layout/activity_announcement.xml
+----
+include::{sourcedir}/../complete-android-v1/app/src/main/res/layout/activity_announcement.xml[]
+----

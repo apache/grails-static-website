@@ -1,0 +1,1 @@
+In this guide you are going to build a Spring Boot application using GORM.

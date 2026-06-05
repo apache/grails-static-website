@@ -1,0 +1,38 @@
+Lastly a word on theming in Vaadin. Vaadin themes are located `src/main/webapp` directory and
+are placed inside the `VAADIN/themes` directory.
+
+WARNING: `VAADIN/themes` is a fixed location. If your theme files are not placed here they will not be
+available.
+
+If using our app or if you generated your own using the profile, the vaadin profile will create a new theme for you
+called vaadin-grails-theme. You can see that we are using this theme in our `DemoGrailsUI.groovy`
+
+[source,groovy]
+.src/main/groovy/demo/DemoGrailsUI.groovy
+----
+include::../snippets/src/main/groovy/demo/DemoGrailsUI.groovy[indent=0,lines="23..23"]
+----
+
+Vaadin themes are SASS based and have multiple ways in which they can be compiled. Since Vaadin themes
+have more flexibility than standard css,
+Vaadin themes require that a `styles.scss exist in the theme folder as it is the glue that pulls
+the different parts of the theme together.
+
+[source, css]
+./src/main/webapp/VAADIN/themes/vaadin-grails-theme/styles.scss
+----
+include::../snippets/src/main/webapp/VAADIN/themes/vaadin-grails-theme/styles.scss[]
+----
+
+To add custom styles then we look to add them in `vaadin-grails-theme.scss`
+
+[source,css]
+./src/main/webapp/VAADIN/themes/vaadin-grails-theme/vaadin-grails-theme.scss
+----
+include::../snippets/src/main/webapp/VAADIN/themes/vaadin-grails-theme/vaadin-grails-theme.scss[indent=0,lines="32..38"]
+----
+
+Add your rules under `Insert your own theme rules here`.
+For more details on how Vaadin handles theming look https://vaadin.com/docs/-/part/framework/themes/themes-overview.html[here].
+Vaadin gives a good overview of how they handle SASS compilation as well as how to build your
+own themes.

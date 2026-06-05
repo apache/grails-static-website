@@ -1,0 +1,3 @@
+The completed sample project for this article can be found at: 
+
+https://github.com/{githubSlug}/tree/master/complete

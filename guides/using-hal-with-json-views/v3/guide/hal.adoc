@@ -1,0 +1,7 @@
+We've customized our API somewhat now, but we have a few issues:
+
+1. By customizing our `id` property for orders, it's no longer clear to clients how to *reference a particulate record* (since our API still relies on the database id)
+2. Our three exposed domain classes have a number of *associations where only ids are exposed* - this means that clients need to make a new request to get the details on an associated object (e.g, a client consuming an order would need to make separate requests to obtain the fields for its products)
+3. Our API is rather opaque - without documentation, users of our API would have to guess the endpoints to arrive at associated records. Even with documentation, clients would likely need to use custom code to navigate our API, *without a consistent standard* to follow.
+
+The conventions of the HAL+JSON standard can help us solve these issues, and JSON views provide first-class support for HAL - let's see how we can use it.

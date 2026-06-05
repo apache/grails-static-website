@@ -1,0 +1,19 @@
+Create a controller:
+
+[source, groovy]
+.grails-app/controllers/example/grails/ExcelController.groovy
+----
+include::../../snippets/grails-app/controllers/example/grails/ExcelController.groovy[]
+----
+
+<1> Implement `grails.core.support.GrailsConfigurationAware` to
+configure mime types and encoding configuration.
+<2> A controller method can access the https://grails.apache.org/docs/3.3.8/ref/Servlet%20API/response.html[response] object which is an instace of Servlet API’s https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletResponse.html[HttpServletResponse] class
+<3> Set `Content-Disposition` to indicate the file should be downloaded.
+<4> Set the download `Content-Type`.
+<5> Write excel file to output stream, flush and close it.
+
+
+By default, a Grails application created from scratch contains a link to every controller registered in the application. We will test that clicking that links downloads an Excel file.
+
+image::home.png[]

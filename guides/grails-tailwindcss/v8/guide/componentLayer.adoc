@@ -1,0 +1,35 @@
+Two patterns repeat across the welcome page: the primary action button and the white card with a header. Once a utility chain shows up four or five times across GSPs it is worth promoting to a named class in the `@layer components` block.
+
+The relevant section of `input.css`:
+
+[source,css]
+.src/main/css/input.css
+----
+include::../snippets/src/main/css/input.css[tag=components,indent=0][]
+----
+
+GSPs then reference them by the short name:
+
+[source,html]
+----
+<a href="https://grails.apache.org/guides/grails-tailwindcss/8/guide/index.html" class="btn-primary">Read the guide</a>
+<section class="card">...</section>
+<a href="https://grails.apache.org/docs/" class="nav-link">Docs</a>
+----
+
+Three things to notice:
+
+* `@apply` is still supported in v4, which keeps the component layer readable even for long utility chains.
+* Tailwind 4 also introduces `@utility` for custom utilities. For this guide we stay with `@layer components` because the goal is a tiny named component surface that reads naturally in GSPs.
+* Component classes do not defeat purging. The scanner still decides what utilities to emit from the classes and variants it can see in your source files.
+
+[TIP]
+====
+*Dynamic class names in Groovy code:* if a controller or tag library composes a class string at runtime, Tailwind's static analyser cannot see the result. In v4 the explicit fix is `@source inline(...)` in `input.css`, for example `@source inline("alert-info alert-warn alert-error");`.
+====
+
+Files touched in this chapter:
+
+* `src/main/css/input.css`
+* `grails-app/views/layouts/main.gsp`
+* `grails-app/views/index.gsp`

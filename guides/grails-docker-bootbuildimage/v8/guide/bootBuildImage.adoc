@@ -1,0 +1,24 @@
+The Spring Boot Gradle plugin (already on the classpath via the Grails web plugin) registers a `bootBuildImage` task out of the box. The default image name is `docker.io/library/<rootProject.name>:<version>`, which is rarely what you want. Override it - and pin the JVM version - with a small block at the bottom of `build.gradle`:
+
+[source,groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[tag=bootBuildImage,indent=0]
+----
+
+Three pieces are doing the work:
+
+* `imageName` accepts a fully-qualified registry path. We default to `ghcr.io/grails-guides/grails-docker-bootbuildimage:<version>` so the image is ready to push to GitHub Container Registry, but allow `-PimageName=...` on the command line to override per-environment.
+* `BP_JVM_VERSION` is read by Paketo's Liberica buildpack and pins the runtime JDK in the produced image. Match it to `compileJava.options.release` so build-time and run-time bytecode levels agree.
+* `BPE_DELIM_JAVA_TOOL_OPTIONS` + `BPE_APPEND_JAVA_TOOL_OPTIONS` together append `-XX:MaxRAMPercentage=75.0 -XX:+UseContainerSupport` to whatever `JAVA_TOOL_OPTIONS` the buildpack-managed memory calculator already sets. The two flags make the JVM (a) honour the cgroup memory limit set by the container runtime, (b) right-size its heap as 75% of that limit. We will look at why those numbers in the next-but-one chapter.
+
+[TIP]
+====
+Paketo also exposes ``BPL_JVM_HEAD_ROOM``, ``BPL_JVM_LOADED_CLASS_COUNT``, and ``BPL_JVM_THREAD_COUNT`` as runtime tuning knobs. The defaults are reasonable for a typical Grails app; reach for them only when JVM memory profiles drive the conversation.
+====
+
+The Spring Boot Gradle plugin pinned in `grails-core` 8.0.x is `spring-boot-gradle-plugin:4.0.5` (see `git show 8.0.x:dependencies.gradle` for the exact coordinate); `bootBuildImage` is part of that plugin and is enabled automatically by the `org.apache.grails.gradle.web` plugin the `web` profile applies.
+
+Files touched in this chapter:
+
+* `build.gradle`

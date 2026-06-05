@@ -1,0 +1,69 @@
+Create a new Grails application for this additional app. For example by using
+http://start.grails.org/[Grails Application Forge] or the command line:
+
+[source,bash]
+----
+$ grails create-app example.grails.complete-analytics --profile=rest-api
+----
+
+For the multi app part of this guide we will need to be able to run both apps simultaneously. To avoid a running port conflict update your app's `application.yml` to include the following:
+
+[source,yml]
+.grails-app/conf/application.yml
+----
+include::complete-analytics/grails-app/conf/application.yml[indent=0, tag=serverPort]
+----
+
+Create a Domain class `BookAnalytics` which will keep track of how many times a book has been viewed:
+
+[source,groovy]
+.grails-app/domain/example/grails/BookAnalytics.groovy
+----
+include::complete-analytics/grails-app/domain/example/grails/BookAnalytics.groovy[]
+----
+
+Create a GORM Data service for this domain class:
+
+[source,groovy]
+.grails-app/services/example/grails/BookAnalyticsGormService.groovy
+----
+include::complete-analytics/grails-app/services/example/grails/BookAnalyticsGormService.groovy[]
+----
+
+<1> Implement update operations using JPA-QL
+
+Create a controller which uses the previous service:
+
+[source,groovy]
+.grails-app/controllers/example/grails/AnalyticsController.groovy
+----
+include::complete-analytics/grails-app/controllers/example/grails/AnalyticsController.groovy[]
+----
+
+Create two JSON Views: 
+
+[source,groovy]
+.grails-app/views/analytics/_bookAnalytics.gson
+----
+include::complete-analytics/grails-app/views/analytics/_bookAnalytics.gson[]
+----
+
+[source,groovy]
+.grails-app/views/analytics/index.gson
+----
+include::complete-analytics/grails-app/views/analytics/index.gson[]
+----
+
+Create a new class to act as a consumer of the messages sent to Kafka by the books microservice. The Micronaut framework will implement logic to invoke the consumer at compile time. Create the `AnalyticsListener` class:
+
+
+[source,groovy]
+.src/main/groovy/example/grails/AnalyticsListener.groovy
+----
+include::complete-analytics/src/main/groovy/example/grails/AnalyticsListener.groovy[]
+----
+
+<1> Do not load this bean for the test environment - this lets us run the tests without having Kafka running
+<2> Annotate the class with @KafkaListener to indicate that this bean will consume messages from Kafka
+<3> Constructor injection for `BookAnalyticsGormService`
+<4> Annotate the method with `@Topic` and specify the topic name to use

@@ -1,0 +1,20 @@
+import com.example.Product
+
+model {
+    Iterable<Product> productList //<1>
+    Integer productCount //<2>
+    Integer max
+    Integer offset
+    String sort
+    String order
+}
+
+json {
+    hal.paginate(Product, productCount, offset, max, sort, order) //<3>
+    products tmpl.product(productList ?: [])
+    count productCount
+    max max
+    offset offset
+    sort sort
+    order order
+}

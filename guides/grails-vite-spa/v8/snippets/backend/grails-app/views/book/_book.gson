@@ -1,0 +1,10 @@
+import example.Book
+
+model { Book book }
+
+json {
+    id     book.id
+    title  book.title
+    author book.author
+    isbn   book.isbn
+}

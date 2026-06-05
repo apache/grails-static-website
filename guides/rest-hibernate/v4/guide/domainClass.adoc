@@ -1,0 +1,33 @@
+Each table in the SQL database is represented by a link:{hibernateGuide}/index.html#domainClasses[GORM domain class].
+
+To create a domain class you can use the `create-domain-class` CLI command from a Terminal window within the root of your project:
+
+[source,bash]
+----
+$ ./grailsw create-domain-class Product
+| Created grails-app/domain/hibernate/example/Product.groovy
+| Created src/test/groovy/hibernate/example/ProductSpec.groovy
+----
+
+Alternatively, you can equally create a domain class with your favourite text editor or IDE.
+
+A domain class is a simple Groovy class and you can represent each column of a table in the database using a property. For example:
+
+[source,groovy]
+.grails-app/domain/hibernate/example/Product.groovy
+----
+include::../snippets/grails-app/domain/hibernate/example/Product.groovy[indent=0,lines="1..9"]
+}
+----
+
+Each domain class defined in the application will be compiled to implement the link:{hibernateGormApi}/org/grails/datastore/gorm/GormEntity.html[GormEntity] trait. If you prefer you can define this explicitly:
+
+[source,groovy]
+.grails-app/domain/hibernate/example/Product.groovy
+----
+import org.grails.datastore.gorm.*
+
+class Product implements GormEntity<Product> {
+    ..
+}
+----

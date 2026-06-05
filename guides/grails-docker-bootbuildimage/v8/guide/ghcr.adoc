@@ -1,0 +1,22 @@
+GitHub Container Registry (GHCR) is the easiest place to host an image for a project that already lives on GitHub: it inherits the repository's visibility and access policies, supports anonymous pulls for public repos, and is free for public images.
+
+Push the locally built image:
+
+[source,bash]
+----
+echo "$GITHUB_TOKEN" | docker login ghcr.io -u <your-github-username> --password-stdin
+docker push ghcr.io/grails-guides/grails-docker-bootbuildimage:0.1
+----
+
+`$GITHUB_TOKEN` is a personal access token with the `write:packages` scope. From a GitHub Actions workflow it is the auto-provisioned `${{ secrets.GITHUB_TOKEN }}`; from a developer laptop it is a token you mint at link:https://github.com/settings/tokens[github.com/settings/tokens].
+
+The first time an image is pushed under a given repo path, GHCR creates the package and links it to the same GitHub repo. Make it public via the GHCR UI (Package settings -> Change visibility -> Public) so anonymous pulls work without authentication.
+
+[NOTE]
+====
+The matching CI/CD guide automates this whole flow on every git tag: a `release.yml` workflow runs `bootBuildImage` against the tag's source, pushes to GHCR with the tag name as the image tag, and creates a GitHub Release with the bootJar attached. See the link:../grails-github-actions-cicd/8/guide/index.html[GitHub Actions CI/CD with Grails 8] guide for the workflow file.
+====
+
+Files touched in this chapter:
+
+* None (push happens from the developer shell or from CI)

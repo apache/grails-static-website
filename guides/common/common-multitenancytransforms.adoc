@@ -1,0 +1,23 @@
+GORM features a set of
+link:{gormapi}/grails/gorm/multitenancy/package-summary.html[Multi-Tenancy transformations]
+which facilitate the resolution of the tenant and the binding of a Hibernate Session
+for that particular tenant in the scope of a method.
+
+.Multi Tenancy Transformations
+|===
+| Type | Description
+
+|link:{gormapi}/grails/gorm/multitenancy/CurrentTenant.html[CurrentTenant]
+|Resolves the current tenant and binds a Hibernate session for the scope of the method
+
+|link:{gormapi}/grails/gorm/multitenancy/Tenant.html[Tenant]
+|Resolves a specific tenant and binds a Hibernate session for the scope of the method
+
+|link:{gormapi}/grails/gorm/multitenancy/WithoutTenant.html[WithoutTenant]
+|Execute some logic within a method without a tenant present
+
+|===
+
+These should generally be applied to services in a Grails application and they
+work really well when combined with the link:{gormdocs}#dataServices[GORM Data Services]
+concept introduced in GORM 6.1.  

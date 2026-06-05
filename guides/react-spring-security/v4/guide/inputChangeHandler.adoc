@@ -1,0 +1,8 @@
+As we discussed while we were creating the `Login` component (see <<loginScreen>>), we need to define a handler function to update our `userDetails` state object when the username/password values are changed.
+
+[source, javascript]
+.client/src/App.js
+----
+include::../snippets/client/src/App.js[indent=0,tag=inputChangeHandler]
+----
+<1> Note that we will use the same handler for both username and password, as the `name` attributes set on each form input can be used to assign the correct variable.

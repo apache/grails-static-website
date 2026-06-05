@@ -1,0 +1,77 @@
+We name our app _color finder_. We want to achieve the scenario pictured below:
+
+image::scenarioA.jpeg[]
+
+First, we are going to add a dependency to https://github.com/frogermcs/Google-Actions-Java-SDK[Google Actions Java SDK] 
+
+[source,groovy]
+./build.gradle
+----
+include::../snippets/build.gradle[indent=0, tag=gactionsDependency]
+----
+
+The illustrated conversation is managed with the handlers. We instantiate the handlers with factories. Add the next classes 
+to your app: 
+
+[source,groovy]
+./src/main/groovy/demo/MainRequestHandlerFactory.groovy
+----
+include::../snippets/src/main/groovy/demo/MainRequestHandlerFactory.groovy[indent=0]
+----
+
+
+[source,groovy]
+./src/main/groovy/demo/MainRequestHandler.groovy
+----
+include::../snippets/src/main/groovy/demo/MainRequestHandler.groovy[indent=0]
+----
+
+[source,groovy]
+./src/main/groovy/demo/MainRequestHandler.groovy
+----
+include::../snippets/src/main/groovy/demo/MainRequestHandler.groovy[indent=0]
+----
+
+[source,groovy]
+./src/main/groovy/demo/TextRequestHandlerFactory.groovy
+----
+include::../snippets/src/main/groovy/demo/TextRequestHandlerFactory.groovy[indent=0]
+----
+
+[source,groovy]
+./src/main/groovy/demo/TextRequestHandler.groovy
+----
+include::../snippets/src/main/groovy/demo/TextRequestHandler.groovy[indent=0]
+----
+
+
+We are going to handle the request that come from Google in a Grails Controller:
+
+include::{commondir}/common-quoteController.adoc[]
+
+The Grails Controller, in turn, will  delegate to Actions SDK.
+
+
+[source,groovy]
+./grails-app/controllers/demo/AssistantActionController.groovy
+----
+include::../snippets/grails-app/controllers/demo/AssistantActionController.groovy[tag=packageImport]
+include::../snippets/grails-app/controllers/demo/AssistantActionController.groovy[tag=importStatements]
+include::../snippets/grails-app/controllers/demo/AssistantActionController.groovy[tag=classDeclaration]
+include::../snippets/grails-app/controllers/demo/AssistantActionController.groovy[tag=index]
+include::../snippets/grails-app/controllers/demo/AssistantActionController.groovy[tag=parseActionRequest]
+include::../snippets/grails-app/controllers/demo/AssistantActionController.groovy[tag=logToFile]
+----
+
+<1> We can chain handlers
+<2> Grails action delegates to Actions SDK to handle requests that come from Google. 
+<3> We do not want to return a grails view. The handlers manage the response
+
+
+Add `GrailsResponseHandler` to your project. As illustrated above, it allow us to use a controller to process the incoming requests.
+
+[source,groovy]
+./src/main/groovy/demo/GrailsResponseHandler.groovy
+----
+include::../snippets/src/main/groovy/demo/GrailsResponseHandler.groovy[indent=0]
+----

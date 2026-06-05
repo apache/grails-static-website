@@ -1,0 +1,15 @@
+Externalize your styles configuration into a class implementing `builders.dsl.spreadsheet.builder.api.Stylesheet` interface to maximize code reuse.
+
+[source, groovy]
+.src/main/groovy/example/grails/BookExcelStylesheet.groovy
+----
+include::../../snippets/src/main/groovy/example/grails/BookExcelStylesheet.groovy[]
+----
+
+Create a service which generates the excel file.
+
+[source, groovy]
+.grails-app/services/example/grails/BookExcelService.groovy
+----
+include::../../snippets/grails-app/services/example/grails/BookExcelService.groovy[]
+----

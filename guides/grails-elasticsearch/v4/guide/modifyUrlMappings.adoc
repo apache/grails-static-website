@@ -1,0 +1,15 @@
+Modify `UrlMappings.groovy` by adding the following to the end of the `mappings` block:
+
+[source, groovy]
+.grails-app/controllers/demo/UrlMappings.groovy
+----
+include::../snippets/grails-app/controllers/demo/UrlMappings.groovy[tag=urlMappings]
+----
+
+Test the mapping
+
+[source, groovy]
+.src/test/groovy/demo/UrlMappingsSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/UrlMappingsSpec.groovy[]
+----

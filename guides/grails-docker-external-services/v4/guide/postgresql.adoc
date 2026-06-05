@@ -1,0 +1,15 @@
+Modify `build.gradle` and add PostgreSQL dependency:
+
+[source, groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[indent=0, tag=postgresql]
+----
+
+Configure the `dataSource` of the development environment to use the PostgreSQL database running inside Docker.
+
+[source, yaml]
+.grails-app/conf/application.yml
+----
+include::../snippets/grails-app/conf/application.yml[indent=0, tag=devDataSource]
+----

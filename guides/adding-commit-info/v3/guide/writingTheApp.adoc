@@ -1,0 +1,6 @@
+There are two basic steps
+
+ * Adding the <<gradlePlugin, gradle-git-properties plugin>>
+ * Enabling the <<actuator, `/info` endpoint>>
+
+Let's get started!

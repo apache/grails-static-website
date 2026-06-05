@@ -1,0 +1,3 @@
+During this guide, we learned how to configure Jobs manually, with cron statements, with the plugin fluid API. Moreover, we learned how to disable concurrent execution or pass Job Data.
+
+Please, refer to the http://blog.agileorbit.com/grails-schwartz/latest/index.html[Grails Schwartz plugin's documentation] to learn more. 

@@ -1,0 +1,14 @@
+Create a `HomeController` which uses the previous service: 
+
+[source, groovy]
+.grails-app/controllers/demo/HomeController.groovy
+----
+include::{sourcedir}/grails-app/controllers/demo/HomeController.groovy[]
+----
+
+In `UrlMapping.groovy` map the root URL to this controller: 
+
+[source, groovy]
+----
+"/"(controller: 'home')`
+----

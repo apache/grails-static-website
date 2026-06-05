@@ -1,0 +1,10 @@
+In summary, here is list of YourKit's most endearing qualities:
+
+- easy to install and integrates with your IDE
+- contains profiles of method execution times and counts
+- conditions can be set in the tool in association with triggers
+- local or remote monitoring
+- manages exports of data and dumps
+- features are user friendly and more sophisticated compared to conventional tools (jvisualvm, JConsole
+javamelody)
+

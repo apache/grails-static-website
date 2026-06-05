@@ -1,0 +1,1 @@
+Thanks to Grails ease of API versioning we can now support two Android applications running different versions.

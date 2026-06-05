@@ -1,0 +1,45 @@
+By default Grails will create an application that uses an http://h2database.com[H2 in-memory SQL database], thus allowing your to develop Grails without the need to setup a database.
+
+However, if you do want to configure a database then you can do so by adding a runtime dependency to the corresponding JDBC driver to `build.gradle`. For example, for MySQL:
+
+[source,groovy]
+.build.gradle
+----
+dependencies {
+    ...
+    runtime 'mysql:mysql-connector-java:6.0.5'
+}
+----
+
+And then altering the configuration found in `grails-app/conf/application.yml`. The default global configuration can be seen below:
+
+[source,yaml]
+.grails-app/conf/application.yml
+----
+include::../snippets/grails-app/conf/application.yml[tags=dataSourceConfig,indent=0]
+----
+
+You will notice that there is environment specific configuration:
+
+[source,yaml]
+.grails-app/conf/application.yml
+----
+include::../snippets/grails-app/conf/application.yml[tags=envConfig,indent=0]
+----
+
+Grails comes with three built in environments `development`, `test` and `production` corresponding to the different environments that the application will run in.
+
+To alter this for MySQL you should specify the driver class name, username and password. In order to change it only for the `development` environment, you can specify it under the `development` block:
+
+[source,yaml]
+.grails-app/conf/application.yml
+----
+development:
+    dataSource:
+        driverClassName: com.mysql.jdbc.Driver
+        dbCreate: create-drop
+        url: jdbc:mysql://localhost/test
+        username: xxxxx
+        password: yyyyy
+----
+

@@ -1,0 +1,27 @@
+We are going to populate the database with several announcements when the application startups.
+
+In order to do that, we edit _grails-app/init/grails/company/intranet/BootStrap.groovy_.
+
+[source,groovy]
+----
+package grails.company.intranet
+
+class BootStrap {
+
+    def init = { servletContext ->
+        announcements().each { it.save() }
+    }
+    def destroy = {
+    }
+
+    static List<Announcement> announcements() {
+        [
+                new Announcement(title: 'Grails Quickcast #1: Grails Interceptors'),
+                new Announcement(title: 'Grails Quickcast #2: JSON Views')
+        ]
+    }
+}
+----
+
+NOTE: Announcements in the previous code snippet don't contain _body_ content
+to keep the code sample small. Checkout `grails-app/init/intranet/backend/BootStrap.groovy` to see the complete code.

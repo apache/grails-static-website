@@ -1,0 +1,3 @@
+include::{commondir}/common-runapp.adoc[]
+
+include::{commondir}/common-testApp.adoc[]

@@ -1,0 +1,47 @@
+To honor our app's name we want to handle the next scenario as well:
+
+image::scenarioB.jpeg[]
+
+Similar to the previous example. We need a handler and a factory to instantiate the handler.
+
+This handler demonstrates passing a verbal parameter into the intent. When the user asks for a brighter color for X it will try to find a brighter color with a name and say it to the user.
+
+[source,groovy]
+./src/main/groovy/demo/ColorRequestHandlerFactory.groovy
+----
+include::../snippets/src/main/groovy/demo/ColorRequestHandlerFactory.groovy[indent=0]
+----
+
+[source,groovy]
+./src/main/groovy/demo/ColorRequestHandler.groovy
+----
+include::../snippets/src/main/groovy/demo/ColorRequestHandler.groovy[indent=0]
+----
+
+
+We are going to handle the request that come from Google in another action of our controller:
+
+[source,groovy]
+./grails-app/controllers/demo/AssistantActionController.groovy
+----
+include::../snippets/grails-app/controllers/demo/AssistantActionController.groovy[tag=packageImport]
+include::../snippets/grails-app/controllers/demo/AssistantActionController.groovy[tag=importStatements]
+include::../snippets/grails-app/controllers/demo/AssistantActionController.groovy[tag=classDeclaration]
+include::../snippets/grails-app/controllers/demo/AssistantActionController.groovy[tag=color]
+include::../snippets/grails-app/controllers/demo/AssistantActionController.groovy[tag=parseActionRequest]
+include::../snippets/grails-app/controllers/demo/AssistantActionController.groovy[tag=logToFile]
+----
+
+<1> Instantiate the handler with the help of the factory
+<2> Grails action delegates to Actions SDK to handle requests that come from Google. 
+<3> We do not want to return a grails view. The handlers manage the response
+
+Let’s use a simple utility class to make our action do something interesting. This will help us map a given `java.awt.Color` to give us a english name for it.
+
+[source,groovy]
+./src/main/groovy/demo/util/ColorUtils.java
+----
+include::../snippets/src/main/groovy/demo/util/ColorUtils.java[indent=0]
+----
+
+Previous class is a Java Class. **Grails allows us to mix Groovy and Java code seamlessly**.

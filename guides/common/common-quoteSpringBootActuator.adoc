@@ -1,0 +1,3 @@
+[quote, Documentation for Spring Boot Actuator, 'http://docs.spring.io/spring-boot/docs/current/reference/html/production-ready.html']
+Spring Boot includes a number of additional features to help you monitor and manage your application when it’s pushed to production. You can choose to manage and monitor your application using HTTP endpoints, with JMX or even by remote shell (SSH or Telnet). Auditing, health and metrics gathering can be automatically applied to your application.
+that has some production ready features already built into it.

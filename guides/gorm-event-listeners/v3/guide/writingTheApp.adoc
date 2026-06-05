@@ -1,0 +1,24 @@
+Our application's domain model is fairly simple. We will create four domain classes, `Book`, `Tag`, `BookTag`, and `Audit`. The roles of these classes are described in the table below:
+
+.Domain Classes
+|===
+|Class |Role
+|Book
+|Core domain model
+|Audit
+|Log messages to record persistence events for a given `Book`
+|===
+
+Create the domain classes and edit them as shown below:
+
+[source,groovy]
+.grails-app/domain/demo/Book.groovy
+----
+include::../snippets/grails-app/domain/demo/Book.groovy[]
+----
+
+[source,groovy]
+.grails-app/domain/demo/Audit.groovy
+----
+include::../snippets/grails-app/domain/demo/Audit.groovy[]
+----

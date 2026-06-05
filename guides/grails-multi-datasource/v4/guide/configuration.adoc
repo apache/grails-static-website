@@ -1,0 +1,7 @@
+Wire-up two data sources in `application.yml`
+
+[source,groovy]
+.grails-app/conf/application.yml
+----
+include::../snippets/grails-app/conf/application.yml[tag=dataSource]
+----

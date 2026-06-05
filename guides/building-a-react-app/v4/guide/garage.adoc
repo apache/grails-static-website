@@ -1,0 +1,41 @@
+Now we need to give our `Vehicles` component access to data from our API. We could have done this from within the `Vehicles` component, but a more flexible option is to create a "container" component which will obtain the data from the API and pass it down to the "presentational" component (`Vehicles`, in this case) via props.
+
+With this separated approach, we can expand our app in the future to make additional API calls (and even render different components, perhaps a `Drivers` table for example), without having to clutter up our `Vehicles` component. Let's call our "container" component `Garage`.
+
+Create a new JavaScript file under `src/main/webapp/app/` called `Garage.js`.
+
+Here's our `Garage` component:
+
+[source,javascript]
+----
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Vehicles from './Vehicles';
+
+class Garage extends React.Component {
+
+  constructor() {
+    super();
+
+    this.state = {
+      vehicles: [{"id":1,"name":"Pickup","make":{"name":"Nissan","id":1},"model":{"name":"Titan","id":1},"driver":{"name":"Susan","id":1}}],
+    }
+  }
+
+  render() {
+    const {vehicles} = this.state;
+
+    return <div>
+      <Vehicles vehicles={vehicles} />
+    </div>;
+  }
+}
+
+ReactDOM.render(<Garage />, document.getElementById('garage'));
+----
+
+The `Garage` component uses a `state` object, which is available to all React components but is optional. We did not need `state` in our `Vehicles` component because it receives all it's data via the `vehicles` prop. A good practice when writing React is to centralize your state in a few components (even a single one) and pass down peices of relevant data to the child components.
+
+Notice that we are hard-coding a single JSON object in the `vehicles` collection of our `state` - that's because we haven't set up our API calls yet - we'll get to that part in a couple sections.
+
+The `Garage` component includes a call to `ReactDOM.render` in order to render the components onto the page. Now we will create a new page from which to load our React components.

@@ -1,0 +1,20 @@
+Create a POGO `BookImage` in the `src/main/groovy` directory
+
+[source,groovy]
+.src/main/groovy/demo/BookImage.groovy
+----
+include::../snippets/src/main/groovy/demo/BookImage.groovy[]
+----
+Create default CRUD actions for `Book` leveraging http://gorm.grails.org/latest/hibernate/manual/index.html#dataServices[GORM data services].
+
+[source,groovy]
+.grails-app/services/demo/BookDataService.groovy
+----
+include::../snippets/grails-app/services/demo/BookDataService.groovy[]
+----
+
+<1> Delete a domain class as you normally would. The book's `deleted` property is set to true, but book stays in the persistence storage.
+<1> This `Where Query` does not retrieve books which have been logically deleted.
+<3> For cases where you would like logically deleted records to be included in query results, queries may be wrapped in a call to `withDeleted`.
+<4> In order to reverse the deleted field use `unDelete()`.
+

@@ -1,0 +1,27 @@
+We will create a Domain class `Student`.
+
+include::{commondir}/common-quoteDomainClass.adoc[]
+
+[source, bash]
+----
+> grails create-domain-class Student
+----
+
+Add domain properties (`name` and `grade`) to the created domain class:
+
+[source, groovy]
+.grails-app/domain/demo/Student.groovy
+----
+include::../snippets/grails-app/domain/demo/Student.groovy[indent=0]
+----
+
+If you generated the domain class with the `create-domain-class` command, a Spock Specification
+for the domain class is created.
+
+Delete this file:
+[source, bash]
+----
+$ src/test/groovy/demo/StudentSpec.groovy
+----
+
+Learn more about testing domain classes in the https://grails.apache.org/guides/grails-test-domain-class-constraints/guide/index.html[How to test Domain Class constraints?] Guide.

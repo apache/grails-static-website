@@ -1,0 +1,42 @@
+There are two different token stories to keep straight in Grails 8.
+
+First, Grails core has the long-standing `useToken` / `withForm` mechanism. It is implemented by `FormTagLib`, `Controller.withForm`, and `SynchronizerTokensHolder`, and it is primarily a duplicate-submit token flow:
+
+[source,groovy]
+----
+<g:form useToken="true" ...>
+    ...
+</g:form>
+
+withForm {
+    // valid token
+}.invalidToken {
+    // invalid or replayed token
+}
+----
+
+That mechanism works well for normal Grails forms. It is not, by itself, a built-in HTMX-wide CSRF filter for button-driven `hx-post`, `hx-patch`, or `hx-delete` requests.
+
+Second, if Spring Security's CSRF filter is on the classpath and active, Grails exposes the `_csrf` request attribute and `FormTagLib` automatically writes the hidden field into `<g:form>`. For HTMX requests triggered from links and buttons, forward that header globally:
+
+[source,html]
+.grails-app/views/layouts/main.gsp
+----
+include::../snippets/grails-app/views/layouts/main.gsp[]
+----
+
+This guide's layout only adds those `<meta>` tags and the `htmx:configRequest` listener when `_csrf` exists. That keeps the sample app truthful:
+
+* without Spring Security, the app is just a plain Grails 8 sample and the listener is inert;
+* with Spring Security CSRF enabled, HTMX requests automatically carry the expected header name and token value.
+
+[NOTE]
+====
+If you stay entirely inside `<g:form>` submissions, Grails' form helpers already do the right thing for both token systems. You only need the global HTMX header hook for non-form triggers such as row-level toggle and delete buttons.
+====
+
+Files touched:
+
+* `grails-app/views/layouts/main.gsp`
+* `grails-app/views/task/_taskForm.gsp`
+* `grails-app/views/task/_taskEdit.gsp`

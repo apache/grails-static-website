@@ -1,0 +1,24 @@
+A CSS build is easy to break silently: a misconfigured `@source`, a broken Gradle wiring, or an unserved bundle all render as "the page looks unstyled" with no error. A browser test catches every one of those because it asserts on *computed* styles in a real browser, against the real compiled `app.css`.
+
+`ContainerGebSpec` (from `testFixtures("org.apache.grails:grails-geb")`) starts a Selenium-Chrome container via Testcontainers and drives the booted app; the only host requirement is a running Docker daemon. The Tailwind build runs as part of the normal Gradle build (`tailwindBuild` is a dependency of `processResources` and `compileGroovy`), so by the time the app boots, `app.css` is compiled and bundled.
+
+[source,groovy]
+.src/integration-test/groovy/example/TailwindFunctionalSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/TailwindFunctionalSpec.groovy[]
+----
+
+The assertions go beyond "the page loaded":
+
+* *The stylesheet is served* - the layout's `application.css` bundle (which `require`s the compiled `app.css`) is linked in the page head.
+* *Component classes apply real styles* - `getComputedStyle` confirms `.card` has non-zero padding and a non-transparent background, and `.btn-primary` resolves to a real background colour. If the `@apply` component layer or the `@source` scanning silently dropped those rules, the computed style would be the browser default and the test would fail.
+* *Dark mode works and persists* - clicking the toggle adds the `dark` class to `<html>` and writes `theme=dark` to `localStorage`; toggling back reverses both. This exercises the `@custom-variant dark` configuration end to end.
+
+Run it:
+
+[source,bash]
+----
+./gradlew integrationTest   # runs tailwindBuild, boots the app, drives Geb - Docker required
+----
+
+Because the build wires `tailwindBuild` ahead of `processResources`, there is no separate "build the CSS first" step - `./gradlew integrationTest` compiles the stylesheet, boots the app, and runs the browser assertions in one command.

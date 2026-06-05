@@ -1,0 +1,62 @@
+Create a persistent entity to store Todos. Most common way to handle persistence in Grails is the use of https://grails.apache.org/docs/latest/ref/Domain%20Classes/Usage.html[Grails Domain Classes]:
+
+include::{commondir}/common-quoteDomainClass.adoc[]
+
+[source,bash]
+----
+complete$ ./grailsw create-domain-class Todo
+----
+
+The `Todo` domain class is our data model. We define different properties to store the `Todo` characteristics.
+
+[source,groovy]
+./grails-app/domain/demo/Todo.groovy
+----
+include::../snippets/grails-app/domain/demo/Todo.groovy[indent=0]
+----
+
+With a https://grails.apache.org/docs/latest/guide/testing.html[Unit Test], we test that `name` is a required property.
+
+[source,groovy]
+./src/test/groovy/demo/TodoSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/TodoSpec.groovy[indent=0]
+----
+
+We then load some test data in `BootStrap.groovy`.
+
+[source,javascript]
+./grails-app/init/demo/BootStrap.groovy
+----
+include::../snippets/grails-app/init/demo/BootStrap.groovy[indent=0]
+----
+
+**We annotated the domain class with `@Resource`**
+
+[source,groovy]
+./grails-app/domain/demo/Todo.groovy
+----
+include::../snippets/grails-app/domain/demo/Todo.groovy[indent=0,lines=3..6]
+----
+
+This annotation exposes the `Todo` domain class as a https://grails.apache.org/docs/latest/guide/webServices.html#domainResources[REST resource]
+
+____
+The easiest way to create a RESTful API in Grails is to expose a domain class as a REST resource.
+Simply by adding the Resource transformation and specifying a URI, your domain class will automatically be available
+as a REST resource in either XML or JSON formats.
+The transformation will automatically create a controller called TodoController and register the necessary RESTful URL mapping
+____
+
+This is the URL Mapping registered for our domain class.
+
+|===
+| HTTP Method	URI	Grails Action | URI | Grails Action
+| GET  | /todos | index
+| GET  | /todos/create | create
+| POST | /todos | save
+| GET  | /todos/${id} | show
+| GET  | /todos/${id}/edit | edit
+| PUT  | /todos/${id} | update
+| DELETE  | /todos/${id} | delete
+| ===

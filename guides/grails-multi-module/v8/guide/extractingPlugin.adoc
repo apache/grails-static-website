@@ -1,0 +1,18 @@
+Most multi-module workspaces start from a monolith that already exists. The split is mechanical if you keep the ownership lines clear.
+
+1. Generate `shared-core` as a Grails `web_plugin`, not as a plain library project.
+2. Move only genuinely shared code into the plugin: domain classes, GORM data services, shared taglibs, and reusable Spring beans. Leave `Application.groovy`, `UrlMappings.groovy`, controllers, GSPs, JSON views, and `BootStrap` classes in the webapps.
+3. Keep or recreate the plugin descriptor class (`SharedCoreGrailsPlugin.groovy`). If the extracted code needs plugin ordering or watched resources, express that there using the normal `Plugin` conventions.
+4. Wire the original app to the plugin with `grails { plugins { implementation project(':shared-core') } }`. If you want live reload while the split is in flight, also apply `org.apache.grails.gradle.grails-exploded` in `shared-core/build.gradle`.
+5. Create the second webapp, wire the same plugin, and move the customer-facing or admin-facing controllers and views into their target module.
+6. Choose one webapp to own database migrations and startup data changes.
+
+Keep package names stable while you move files. `git mv` plus unchanged packages makes the review readable and keeps history attached to the files that actually moved.
+
+Files touched:
+
+- settings.gradle
+- shared-core/build.gradle
+- shared-core/src/main/groovy/example/SharedCoreGrailsPlugin.groovy
+- webapp-customer/build.gradle
+- webapp-admin/build.gradle

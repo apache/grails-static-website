@@ -1,0 +1,61 @@
+The search endpoint allows clients to search for movies by title, without knowing the exact title. To implement the persistence logic add a new method to `MovieService` that implements the search logic:
+
+[source,groovy]
+.grails-app/services/neo4j/movies/MovieService.groovy
+----
+include::../snippets/grails-app/services/neo4j/movies/MovieService.groovy[tags=search, indent=0]
+----
+
+<1> The `search` method takes a query parameter and a `limit` parameter for maximum results
+<2> A http://gorm.grails.org/6.1.x/hibernate/manual/index.html#whereQueries[Where Query] is used in combination with a like expression which GORM translates into a Cypher `CONTAINS` query
+<3> If no query is specified an empty list is returned
+
+When the query is executed the following Cypher is produced:
+
+[source,cypher]
+----
+MATCH (n:Movie) WHERE ( n.title CONTAINS {1} ) RETURN n as data LIMIT {2}
+----
+
+The `{1}` and `{2}` are named arguments which are populated by parameters, ensuring correct escaping and preventing injection attacks.
+
+TIP: This example also demonstrates an important concept with GORM Data Services, in that you can mix `abstract` methods that are implemented automatically by GORM with custom logic.
+
+Now let's implement the controller action that will invoke this method:
+
+[source,groovy]
+.grails-app/controllers/neo4j/movies/MovieController.groovy
+----
+include::../snippets/grails-app/controllers/neo4j/movies/MovieController.groovy[tags=search, indent=0]
+----
+
+Finally, the `search` endpoint returns the result in a different JSON format to the `show` endpoint. So we create a `grails-app/views/movie/search.gson` view to format the JSON result:
+
+[source,groovy]
+.grails-app/views/movie/search.gson
+----
+include::../snippets/grails-app/views/movie/search.gson[]
+----
+
+If you now go to the http://localhost:8080/search?q=Matrix URL the resulting JSON will look like:
+
+[source,json]
+----
+[
+  {
+    "released": 1999,
+    "tagline": "Welcome to the Real World",
+    "title": "The Matrix"
+  },
+  {
+    "released": 2003,
+    "tagline": "Free your mind",
+    "title": "The Matrix Reloaded"
+  },
+  {
+    "released": 2003,
+    "tagline": "Everything that has a beginning has an end",
+    "title": "The Matrix Revolutions"
+  }
+]
+----

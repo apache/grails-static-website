@@ -1,0 +1,20 @@
+The full page is rendered once on `GET /tasks`:
+
+[source,html]
+.grails-app/views/task/index.gsp
+----
+include::../snippets/grails-app/views/task/index.gsp[]
+----
+
+Three HTMX patterns are in play:
+
+* The *add-task form* comes from `_taskForm.gsp`, not raw inline markup in `index.gsp`. Wrapping it in a partial lets the controller return the same fragment on validation failure and a fresh fragment after success.
+* The *live-search input* fires a `GET /tasks/search?q=...` whenever the user pauses typing for 300 ms (`hx-trigger="keyup changed delay:300ms"`). The response replaces the contents of `#taskList`.
+* The *initial render* uses `<g:render template="taskRows" .../>` to populate the list server-side. HTMX takes over from there.
+
+This is the canonical HTMX recipe: render once on the server, then let small fragments shuttle in and out of well-defined slots in the DOM.
+
+Files touched:
+
+* `grails-app/views/task/index.gsp`
+* `grails-app/views/task/_taskForm.gsp`

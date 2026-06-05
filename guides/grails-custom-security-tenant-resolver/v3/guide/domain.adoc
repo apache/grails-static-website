@@ -1,0 +1,23 @@
+[source,groovy]
+.grails-app/domain/demo/Plan.groovy
+----
+include::../snippets/grails-app/domain/demo/Plan.groovy[]
+----
+
+<1> Implement http://gorm.grails.org/latest/hibernate/api/grails/gorm/MultiTenant.html[MultiTenant] trait to regard this domain class as multi tenant.
+<2> Setup the tenant identifier as a column named `username`
+
+Create an interface `PlanService` which is a http://gorm.grails.org/latest/hibernate/manual/index.html#dataServices[GORM Data Service].
+
+[source,groovy]
+.grails-app/services/demo/PlanDataService.groovy
+----
+include::../snippets/grails-app/services/demo/PlanDataService.groovy[]
+----
+
+<1> Annotate it with the `grails.gorm.services.Service` annotation with the domain class the service applies to.
+<2> Resolve the current tenant for the context of this class
+
+
+
+

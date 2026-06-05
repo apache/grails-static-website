@@ -1,0 +1,8 @@
+The initial Grails application, which you can find in the _initial_ folder, was created with the command:
+
+[source,bash]
+----
+grails create-app --profile rest-api -features=hibernate5,markup-views,asset-pipeline
+----
+
+include::{commondir}/common-grailsApplicationForge.adoc[]

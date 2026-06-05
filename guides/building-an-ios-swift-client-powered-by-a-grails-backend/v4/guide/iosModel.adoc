@@ -1,0 +1,7 @@
+The announcements sent by the server are gonna be rendered into an object:
+
+[source,swift]
+./complete-swift-ios-v1/IntranetClient/Announcement.h
+----
+include::{sourcedir}/../complete-swift-ios-v1/IntranetClient/Announcement.swift[]
+----

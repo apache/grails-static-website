@@ -1,0 +1,5 @@
+In this guide you are going to build a Multi-Tenant application which partitions
+its data using a discriminator column with Grails and GORM.
+
+Using a discriminator column allows you handle different tenants (users)
+with a unique tenant identifier within the same database.

@@ -1,0 +1,21 @@
+When running the tests in a continuous integration server is useful to have a more verbose output.
+
+Modify `build.gradle`:
+
+[source, groovy]
+.build.gradle
+----
+tasks.withType(Test) {
+include::../snippets/build.gradle[tag=testLogging]
+}
+----
+
+When we execute the tests we will see output such as:
+
+[source, bash]
+----
+$ ./gradlew test
+....
+...
+example.grails.UrlMappingsSpec > test forward mappings PASSED
+----

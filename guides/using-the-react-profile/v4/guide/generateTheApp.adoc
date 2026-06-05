@@ -1,0 +1,55 @@
+To get started with this profile, specify it when generating your app:
+
+[source,bash]
+----
+$ grails create-app myApp --profile=react
+----
+
+You can also generate your project using the http://start.grails.org[Application Forge], either from the web interface or using the following `curl` command:
+
+[source,bash]
+----
+curl -O start.grails.org/myApp.zip -d version=3.3.2 -d profile=react
+----
+
+
+Take a look at the directory structure - you will see a typical Gradle multi-project build, with separate client and server projects.
+
+[source,groovy]
+----
+drwxr-xr-x  9 zak  staff   306 Nov  1 13:15 client
+drwxr-xr-x  3 zak  staff   102 Nov  1 13:10 gradle
+-rwxr--r--  1 zak  staff  4971 Nov  1 13:10 gradlew
+-rwxr--r--  1 zak  staff  2314 Nov  1 13:10 gradlew.bat
+drwxr-xr-x  8 zak  staff   272 Nov  1 13:12 server
+-rw-r--r--  1 zak  staff    26 Nov  1 13:10 settings.gradle
+----
+
+`server` is of course our Grails application. The profile will generate a Grails app using the `rest-api` profile, which provides support for creating domain classes as restful resources as well as JSON and Markup views.
+
+`client` is our React app.
+
+[source,groovy]
+----
+-rw-r--r--   1 zak  staff  44412 Nov  1 13:10 README.md
+-rw-r--r--   1 zak  staff    669 Nov  1 13:10 build.gradle
+-rw-r--r--   1 zak  staff    404 Nov  1 13:10 package.json
+drwxr-xr-x   4 zak  staff    136 Nov  1 13:10 public
+drwxr-xr-x  10 zak  staff    340 Nov  1 13:10 src
+----
+
+The `client` project structure (with the exception of `build.gradle`, which is specific to the react profile) is all courtesy of `create-react-app`, and includes an excellent README file. In short, the `src/` directory is where the React code is kept, `public/` is for public resources that you wish to make available from your React app without going through webpack’s bundling - this directory also includes a template `index.html` file which is used to generate the React app’s home page. Again, see the `create-react-app` documentation for more details.
+
+
+One significant customization of the `client` project (besides the Grails-branded UI) is the file `src/config.js`. This file is used to specify the URL of the backend, by default `http://localhost:8080`. It also obtains the current version of the React app from `package.json`.
+
+[source, javascript]
+----
+import pjson from './../package.json';
+
+export const SERVER_URL = 'http://localhost:8080/';
+export const CLIENT_VERSION = pjson.version;
+export const REACT_VERSION = pjson.dependencies.react;
+----
+
+You may edit the contents of this file to add additional variables or to change the `SERVER_URL` to point to another backend server.

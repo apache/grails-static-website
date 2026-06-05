@@ -1,0 +1,3 @@
+To further your understanding read through the plugin documentation found https://budjb.github.io/grails-rabbitmq-native/3.x/latest/[here].
+Additionally feel free to read the RabbitMQ documentation https://www.rabbitmq.com/documentation.html[here], and take a
+look at there many examples available in different languages https://www.rabbitmq.com/getstarted.html[here].

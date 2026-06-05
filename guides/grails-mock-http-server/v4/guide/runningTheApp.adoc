@@ -1,0 +1,5 @@
+include::{commondir}/common-runapp.adoc[]
+
+If you setup a valid API Key in `application.yml`, you will see the London weather prediction.
+
+image::homepage.png[]

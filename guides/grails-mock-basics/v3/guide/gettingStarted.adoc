@@ -1,0 +1,6 @@
+In this guide you are going explore Service Testing in Grails. You are going to learn
+about:
+
+- Grails Services Unit tests - Mocking Collaborators
+- Grails Services Unit tests - GORM code
+- Grails Services Integration tests

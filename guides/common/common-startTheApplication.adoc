@@ -1,0 +1,9 @@
+[NOTE]
+====
+At any point, you can start the application by typing `./gradlew bootRun` on the
+command line; it is running and ready when you see:
+
+    Grails application running at http://localhost:8080 in environment: development
+
+Stop the application by pressing *Ctrl-C*.
+====

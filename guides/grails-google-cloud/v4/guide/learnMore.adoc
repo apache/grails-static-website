@@ -1,0 +1,11 @@
+If you want to learn more about Google Cloud and Grails integration, checkout a more complete sample app.
+
+The https://grails-samples.github.io/google-bookshelf/[Google Cloud Bookshelf with Grails]
+application shows how to use a variety of Google Cloud Platform products, including some of
+the services described in this guides and other services such as:
+
+- Google https://cloud.google.com/vision/[Cloud Vision API]
+
+- Google https://cloud.google.com/translate[Cloud Translation API]
+
+- Authentication using https://developers.google.com/identity/[Google Identity Platform]

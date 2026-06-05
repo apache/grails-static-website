@@ -1,0 +1,2 @@
+Lucky for us using Spring Task Execution and Scheduling is an out of the box feature for Grails so
+there is no need to add any additional dependencies. Lets go ahead and get started.

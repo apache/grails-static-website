@@ -1,0 +1,9 @@
+In this guide you will wire link:https://tailwindcss.com[Tailwind CSS 4] into a fresh Apache Grails 8 application so every GSP view can be styled with utility classes, with class-based dark mode and a small `@apply` component layer for the patterns that repeat.
+
+The end state stays close to the Grails 8 `web` starter. GSPs still render through the standard layout tags, the asset pipeline still serves `application.css`, and Gradle owns the extra Tailwind compile step.
+
+This guide targets Apache Grails 8.
+
+Files touched in this chapter:
+
+* None

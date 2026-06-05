@@ -1,0 +1,27 @@
+JPA-QL (JPA Query Language) queries query the *entity* model using a SQL-like text query language. Queries are expressed using entities, properties, and relationship.
+
+GORM Data Service support JPA-QL Queries via the `grails.gorm.services.Query` annotation.
+
+JPA-QL queries allows for more complicated queries. Nonetheless, they are still statically compiled and safeguard against SQL injection attacks.
+
+Create a query that searches people by country.
+
+[source, groovy]
+.grails-app/services/example/grails/PersonDataService.groovy
+----
+include::../snippets/grails-app/services/example/grails/PersonDataService.groovy[tag=findAllByCountry, indent=false]
+----
+
+<1> `@Query` used to define a JPA-QL query.
+<2> You can use multiline strings to define your JPA-QL queries which adds readability.
+<3> `country` param can be used within the HQL query.
+
+Create an integration test:
+
+[source, groovy]
+.src/integration-test/groovy/example/grails/PersonDataServiceIntSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/grails/PersonDataServiceIntSpec.groovy[tag=clazz]
+
+include::../snippets/src/integration-test/groovy/example/grails/PersonDataServiceIntSpec.groovy[tag=findAllByCountry]
+----

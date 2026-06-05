@@ -1,0 +1,57 @@
+The application JVM memory is set `512m`. This is sufficient for a moderate load of xls imports, but will fail as the load
+increases. Let's first attempt to import a moderate load of students. Click `Import 25k Students` and observe that the application
+is responsive and successfully imports the records.
+
+An increase on the load of import will cause an Out of Memory exception. Before we run into this scenario we must start
+profiling.
+
+=== Analyze In Profiler
+
+. Start Object Allocation Recording.
+
+.. image:memory_profile.jpg[700,700]
+
+. Proceed to the Memory Tab->Memory & GC Telemetry. Here you can see the live graph of the Heap in real time.
+
+.. image:memory_gctelemetry.jpg[700,700]
+
+. Execute `Import 75k Students`. Note that processing will occur for a few minutes then Out of Memory exceptions will occur. Upon
+the error, YourKit will autogenerate an `.hprof` memory dump file. This is the standard JVM profiling format. Load the file
+and click on `Class` and see the first object `Xobj$AttrXobj`.  This class has instances that are exceeding the current JVM Heap
+size.
+
+.. image:memory_hprof1.jpg[700,700]
+
+. Now let's `Capture Memory Snapshot`. The snapshot will have a more detailed views and let us pinpoint the problematic areas
+of memory usage.
+
+.. image:memory_snapshot.jpg[700,700]
+
+. Go to `Allocations by site`, then `Hot spots by object count`, click on the Method Area (1st item), then
+`Back Traces` tab at the bottom right. Expand the trace to see `demo.StudentService.importStudents(String)`. This method is
+where the objects are being generated.
+
+.. image:memory_error.jpg[700,700]
+
+=== Examine the Code
+
+The code for `importStudents()` invokes the POI API to load a `WorkbookFactory.` It is at this invocation where the JVM Heap
+memory increases significantly. The object instances of `Xobj$AttrXobj`, along with `chars` and `Strings` increase proportionally
+with the the size of the `xlsx` file. As a result, the JVM Heap is exceeded.
+
+[source, groovy]
+.grails-app/services/demo/StudentService.groovy
+----
+include::../snippets/grails-app/services/demo/StudentService.groovy[tag=importStudents]
+----
+
+=== Increase the Memory
+
+This type of memory issue is difficult to track down but fortunately the solution is straight forward. A reasonable increase
+in memory will solve the object allocation. No code change is needed. Adjust the file below:
+
+[source, groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[tag=jvmargs]
+----

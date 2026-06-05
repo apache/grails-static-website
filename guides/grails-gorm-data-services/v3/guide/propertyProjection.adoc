@@ -1,0 +1,18 @@
+Add a method to the GORM Data Service which returns a projection. This has the advantage of bringing back only one column instead of the
+whole object. There are a few ways to implement projections. One way is to is to use the convention `T find[Domain Class][Property]`.
+
+For example, for the property `age` of domain class `Person` the method will be:
+
+[source, groovy]
+.grails-app/services/example/grails/PersonDataService.groovy
+----
+include::../snippets/grails-app/services/example/grails/PersonDataService.groovy[tag=findPersonAge, indent=false]
+----
+
+Add to the unit test to verify correctness.
+
+[source, groovy]
+.src/test/groovy/example/grails/PersonDataServiceSpec.groovy
+----
+include::../snippets/src/test/groovy/example/grails/PersonDataServiceSpec.groovy[tag=test1, indent=false]
+----

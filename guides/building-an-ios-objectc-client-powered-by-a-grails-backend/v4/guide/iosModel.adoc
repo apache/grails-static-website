@@ -1,0 +1,13 @@
+The announcements sent by the server are gonna be rendered into an object:
+
+[source,objectivec]
+./complete-objectivec-ios-v1/IntranetClient/Announcement.h
+----
+include::{sourcedir}/../complete-objectivec-ios-v1/IntranetClient/Announcement.h[]
+----
+
+[source,objectivec]
+./complete-objectivec-ios-v1/IntranetClient/Announcement.m
+----
+include::{sourcedir}/../complete-objectivec-ios-v1/IntranetClient/Announcement.m[]
+----

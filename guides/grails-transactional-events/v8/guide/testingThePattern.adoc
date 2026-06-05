@@ -1,0 +1,85 @@
+Event-driven, transaction-bound behaviour is exactly the kind of thing that looks correct in isolation and breaks at the seams. The sample app tests it at four layers, fastest first.
+
+== Unit: domain constraints and the status state machine
+
+Plain Spock specs with `DomainUnitTest` / `DataTest` verify every constraint, and a no-Grails spec pins the enum state machine the orchestration relies on. These run in milliseconds with no database.
+
+[source,groovy]
+.src/test/groovy/example/CustomerRequestStatusSpec.groovy
+----
+include::../snippets/src/test/groovy/example/CustomerRequestStatusSpec.groovy[]
+----
+
+The sample repo carries one spec per domain (`CustomerSpec`, `OrderSpec`, `AuditLogSpec`, `CustomerRequestSpec`, `WorkOrderSpec`, `WorkOrderAssigneeSpec`). One worth calling out: a blank string set through the *map constructor* is converted to `null` by Grails data binding, so a `blank: false` field reports a `nullable` error rather than `blank`. To test the `blank` constraint itself, assign the property directly.
+
+== Integration: the transactional contract
+
+The two `@Integration` specs earlier in this guide - link:#integrationTest[the AFTER_COMMIT spec] and link:#atomicRollbackTest[the atomic-rollback spec] - are the heart of the suite. They run against a real `PlatformTransactionManager` and a Testcontainers PostgreSQL database because the commit/rollback behaviour is invisible without one. They also cover the edge cases: a second assignment that must *not* re-run the cascade, and a closed request that must roll the whole operation back.
+
+== Functional: the REST endpoints over real HTTP
+
+Two controllers expose the operations so the flows can be driven over HTTP:
+
+[source,groovy]
+.grails-app/controllers/example/OrderController.groovy
+----
+include::../snippets/grails-app/controllers/example/OrderController.groovy[]
+----
+
+[source,groovy]
+.grails-app/controllers/example/WorkOrderController.groovy
+----
+include::../snippets/grails-app/controllers/example/WorkOrderController.groovy[]
+----
+
+The functional spec sends real HTTP requests to the booted app (port injected via `@Value('${local.server.port}')`) and asserts both the response and the committed database state - including that a closed request yields `409 Conflict` with *nothing* persisted.
+
+[source,groovy]
+.src/integration-test/groovy/example/WorkOrderAssignmentFunctionalSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/WorkOrderAssignmentFunctionalSpec.groovy[]
+----
+
+== Browser: the full stack through Geb
+
+The top of the pyramid drives a real Selenium-Chrome browser (started in a Testcontainers container by `grails.plugin.geb.ContainerGebSpec`) against a minimal HTML screen, asserting the cascaded statuses a user actually sees. A small controller renders the page and form inline:
+
+[source,groovy]
+.grails-app/controllers/example/WorkOrderUiController.groovy
+----
+include::../snippets/grails-app/controllers/example/WorkOrderUiController.groovy[]
+----
+
+[source,groovy]
+.src/integration-test/groovy/example/pages/WorkOrderPage.groovy
+----
+include::../snippets/src/integration-test/groovy/example/pages/WorkOrderPage.groovy[]
+----
+
+[source,groovy]
+.src/integration-test/groovy/example/WorkOrderAssignmentGebSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/WorkOrderAssignmentGebSpec.groovy[]
+----
+
+`ContainerGebSpec` comes from `testFixtures("org.apache.grails:grails-geb")` and needs only a running Docker daemon - no local WebDriver binaries. The first run pulls the Selenium image (~200 MB); later runs reuse it.
+
+Run it all:
+
+[source,bash]
+----
+./gradlew test            # unit - milliseconds
+./gradlew integrationTest  # integration + functional + Geb (Docker required)
+----
+
+Files touched in this chapter:
+
+* `grails-app/controllers/example/OrderController.groovy`
+* `grails-app/controllers/example/WorkOrderController.groovy`
+* `grails-app/controllers/example/WorkOrderUiController.groovy`
+* `grails-app/controllers/example/UrlMappings.groovy`
+* `src/test/groovy/example/*Spec.groovy`
+* `src/integration-test/groovy/example/OrderFunctionalSpec.groovy`
+* `src/integration-test/groovy/example/WorkOrderAssignmentFunctionalSpec.groovy`
+* `src/integration-test/groovy/example/WorkOrderAssignmentGebSpec.groovy`
+* `src/integration-test/groovy/example/pages/WorkOrderPage.groovy`

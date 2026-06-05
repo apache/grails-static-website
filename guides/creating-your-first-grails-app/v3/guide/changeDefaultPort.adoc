@@ -1,0 +1,17 @@
+If you'd like to change the port number, simply edit the `application.yml` file under `grails-app/conf/`, and add the following line:
+
+[source, yml]
+----
+server:
+    port: 8090
+----
+
+You can supply the port number directly in the command invocation:
+
+[source, bash]
+----
+$ ./grailsw run-app --port=8090
+
+| Running application...
+Grails application running at http://localhost:8090 in environment: development
+----

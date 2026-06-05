@@ -1,0 +1,29 @@
+As mentioned earlier in section 3.1 <<setupRabbit>> we have access to the rabbit management console located at `http://localhost:15672`.
+Go ahead and navigate to the console and login. Once logged in select `Queues` from the menu.
+
+image::messageQueues.png[]
+
+from here you can see the two queues which we have created with our applications. Now select the `Overview tab and
+return to the management home page. When looking at the home page note that there are 0 messages in the queue.
+
+image::emptyQueue.png[]
+
+At this point stop your analytics app from the terminal with `Ctrl-C` and then go back to your still running app and go click
+on and view a few more books. Once you have viewed a few more books, return to your admin home and you will see that new
+messages have been generated and are waiting in the queue.
+
+image::updatedAdminHome.png[]
+
+Go ahead and restart your analytics app now from your terminal
+
+[source,bash]
+----
+$ ./gradlew bootRun
+----
+
+Once your analytics app has restarted you will see it process the waiting messages and when you return to the rabbit admin
+you will see the message queue has returned to 0.
+
+image::processingPrePostedMessages.png[]
+
+image::rabbitAdminHome.png[]

@@ -1,0 +1,118 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        maven { url "https://repo.grails.org/grails/core" }
+    }
+    dependencies {
+        classpath "org.grails:grails-gradle-plugin:$grailsVersion"
+        classpath "org.grails.plugins:hibernate5:7.0.0"
+        classpath "com.bertramlabs.plugins:asset-pipeline-gradle:$assetPipelineVersion"
+        //tag::buildscriptwebdriverbinaries[]
+        classpath "gradle.plugin.com.github.erdi.webdriver-binaries:webdriver-binaries-gradle-plugin:2.1" // <1>
+        //end::buildscriptwebdriverbinaries[]
+    }
+}
+
+version "0.1"
+group "example.grails"
+
+apply plugin:"eclipse"
+apply plugin:"idea"
+apply plugin:"war"
+apply plugin:"org.grails.grails-web"
+apply plugin:"com.bertramlabs.asset-pipeline"
+apply plugin:"org.grails.grails-gsp"
+//tag::applywebdriverbinaries[]
+apply plugin:"com.github.erdi.webdriver-binaries" // <1>
+//end::applywebdriverbinaries[]
+
+repositories {
+    mavenLocal()
+    maven { url "https://repo.grails.org/grails/core" }
+}
+
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+}
+
+dependencies {
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    compile "org.springframework.boot:spring-boot-starter-logging"
+    compile "org.springframework.boot:spring-boot-autoconfigure"
+    compile "org.grails:grails-core"
+    compile "org.springframework.boot:spring-boot-starter-actuator"
+    compile "org.springframework.boot:spring-boot-starter-tomcat"
+    compile "org.grails:grails-web-boot"
+    compile "org.grails:grails-logging"
+    compile "org.grails:grails-plugin-rest"
+    compile "org.grails:grails-plugin-databinding"
+    compile "org.grails:grails-plugin-i18n"
+    compile "org.grails:grails-plugin-services"
+    compile "org.grails:grails-plugin-url-mappings"
+    compile "org.grails:grails-plugin-interceptors"
+    compile "org.grails.plugins:cache"
+    compile "org.grails.plugins:async"
+    compile "org.grails.plugins:scaffolding"
+    compile "org.grails.plugins:events"
+    compile "org.grails.plugins:hibernate5"
+    compile "org.hibernate:hibernate-core:5.4.0.Final"
+    compile "org.grails.plugins:gsp"
+    console "org.grails:grails-console"
+    profile "org.grails.profiles:web"
+    runtime "org.glassfish.web:el-impl:2.1.2-b03"
+    runtime "com.h2database:h2"
+    runtime "org.apache.tomcat:tomcat-jdbc"
+    runtime "javax.xml.bind:jaxb-api:2.3.0"
+    runtime "com.bertramlabs.plugins:asset-pipeline-grails:$assetPipelineVersion"
+    testCompile "org.grails:grails-gorm-testing-support"
+    testCompile "org.mockito:mockito-core"
+    testCompile "org.grails:grails-web-testing-support"
+    //tag::gebdependencies[]
+    testCompile "org.grails.plugins:geb" // <2>
+    testCompile "org.seleniumhq.selenium:htmlunit-driver:2.35.1"
+    testRuntime 'net.sourceforge.htmlunit:htmlunit:2.35.0'
+    testRuntime "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"  // <3>
+    testRuntime "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion" // <4>
+    testCompile "org.seleniumhq.selenium:selenium-remote-driver:$seleniumVersion"  // <5>
+    testCompile "org.seleniumhq.selenium:selenium-api:$seleniumVersion"            // <5>
+    testCompile "org.seleniumhq.selenium:selenium-support:$seleniumVersion"        // <5>
+    //end::gebdependencies[]
+}
+
+//tag::webdriverBinaries[]
+webdriverBinaries {
+    chromedriver "${chromeDriverVersion}"  // <6>
+    geckodriver "${geckodriverVersion}" // <7>
+}
+//end::webdriverBinaries[]
+
+bootRun {
+    jvmArgs(
+            '-Dspring.output.ansi.enabled=always',
+            '-noverify',
+            '-XX:TieredStopAtLevel=1',
+            '-Xmx1024m')
+    sourceResources sourceSets.main
+    String springProfilesActive = 'spring.profiles.active'
+    systemProperty springProfilesActive, System.getProperty(springProfilesActive)
+}
+
+
+tasks.withType(Test) {
+    systemProperty "geb.env", System.getProperty('geb.env')
+    systemProperty "geb.build.reportsDir", reporting.file("geb/integrationTest")
+// tag::testLogging[]
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat 'full'
+    }
+// end::testLogging[]
+}
+
+assets {
+    minifyJs = true
+    minifyCss = true
+}

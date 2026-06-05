@@ -1,0 +1,13 @@
+https://openweathermap.org[OpenWeatherMap] is a web application which offers an API which allows you to:
+
+____
+Get current weather, daily forecast for 16 days, and 3-hourly forecast 5 days for your city. Helpful stats, graphics, and this day in history charts are available for your reference. Interactive maps show precipitation, clouds, pressure, wind around your location.
+____
+
+They have a FREE plan which allows you to get the https://openweathermap.org/current[Current Weather Data] of a city.
+
+After you register, you get an API Key. You will need an API key to interact with the Open Weather Map API.
+
+image::apiKey.png[]
+
+TIP: the API key may take several minutes to become active.

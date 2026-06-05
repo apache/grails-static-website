@@ -1,0 +1,1 @@
+To further your understanding read through https://alvarosanchez.github.io/grails-spring-security-rest/latest/docs/index.html[Grails Spring Security Rest] and https://grails-plugins.github.io/grails-spring-security-core/[Spring Security Core] documentation.

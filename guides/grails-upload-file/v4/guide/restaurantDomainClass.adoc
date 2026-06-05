@@ -1,0 +1,12 @@
+Modify `Restaurant` domain class. Add two properties `featuredImageBytes` and
+`featuredImageContentType`.
+
+[source, groovy]
+./grails-app/domain/example/grails/Restaurant.groovy
+----
+include::../snippets/grails-app/domain/example/grails/Restaurant.groovy[indent=0]
+----
+
+<1> Use a domain class property to store the bytes of the image in the database
+<2> Content-Type of the image. E.g. 'image/jpeg'
+<3> Images may be big files; we use the mapping closure to configure the sqlType

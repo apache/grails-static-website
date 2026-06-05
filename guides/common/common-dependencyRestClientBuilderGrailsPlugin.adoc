@@ -1,0 +1,2 @@
+We use the https://github.com/grails-plugins/grails-rest-client-builder[Rest Client Builder Grails Plugin].
+This plugin is added for you if you create a Grails app with the _rest-api_ profile.

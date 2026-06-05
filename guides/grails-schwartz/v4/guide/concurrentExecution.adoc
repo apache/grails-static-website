@@ -1,0 +1,22 @@
+Imagine you develop a Software as a Service application with Grails. Each 
+day at 7:00 AM you want to check if any user's subscription has expired. If it is finished you want to create an invoice for the new period, save the invoice and update the user's subscription expiration date in the database. 
+
+You want to disable the concurrent execution of such a Job. Using just Quartz you need to annotate the job with
+`@DisallowConcurrentExecution`. With _Schwartz_ you still can do it, or, if you prefer you can implement the trait `StatefulSchwartzJob` instead of `SchwartzJob`. `StatefulSchwartzJob` extends form `SchwartzJob` and adds two annotations `@DisallowConcurrentExecution`, `@PersistJobDataAfterExecution`. 
+
+A sample code could look like: 
+
+[source, groovy]
+.grails-app/services/demo/GenerateInvoiceJobService.groovy
+----
+include::../snippets/grails-app/services/demo/GenerateInvoiceJobService.groovy[]
+----
+
+<1> Wrap the job's execution in a transaction.
+
+[source, groovy]
+.grails-app/services/demo/GenerateInvoiceService.groovy
+----
+include::../snippets/grails-app/services/demo/GenerateInvoiceService.groovy[]
+----
+

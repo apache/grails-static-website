@@ -1,0 +1,28 @@
+In order to handle the persistence logic in our application (e.g., updating and deleting books and tags), we will create several http://gorm.grails.org/latest/hibernate/manual/index.html#dataServices[GORM Data Services].
+
+Data Services allow us to centralize the data access and persistence functions of our application. Rather than calling dynamic finders or updating our domain objects directly, we can define the kinds of queries and persistence actions that we need in an interface (or abstract class), allowing GORM to provide the implementation.  Data Services are transactional and can be injected into other services or controllers just like any other Spring Bean. All the same GORM "magic" is at work - e.g., within a Service we can specify a method such as `Book findByTitleAndPagesGreaterThan(String title, Long pages)`, and GORM will provide the same sort of implementation that you would get using a dynamic finder with the same name.
+
+TIP: Why use Data Services? The primary advantages of GORM Data Services over dynamic finders are type-checking (the method shown above will not compile if there is not a `String title` and `Long pages` property on the `Book` class) and the ability to be statically compiled. In addition, there may be some architectural benefits to centralizing common queries and updates in a Data Service - should you choose to optimize a query within a Data Service for better performance, all of your code that uses that method can benefit from the change, without requiring you to track down each dynamic finder or `where` query and update them individually.
+
+Create the following files under `grails-app/services/demo/`:
+
+```
+~ touch AuditDataService.groovy
+~ touch BookDataService.groovy
+```
+
+Edit the files as shown below:
+
+[source,groovy]
+.grails-app/services/demo/AuditDataService.groovy
+----
+include::../snippets/grails-app/services/demo/AuditDataService.groovy[]
+----
+
+[source,groovy]
+.grails-app/services/demo/BookDataService.groovy
+----
+include::../snippets/grails-app/services/demo/BookDataService.groovy[]
+----
+
+Notice that the two Data Services above are *interfaces*, without any implementation of our own. This means that GORM will supply its default implementation for each of the methods in the class. However, there may be times when you need to supply some custom logic within a Data Service method. To accomplish this, we can define our Data Service as an *abstract class*, and create non-abstract methods to handle our custom code (any *abstract* methods will still be implemented by GORM).

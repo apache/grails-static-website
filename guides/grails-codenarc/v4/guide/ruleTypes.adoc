@@ -1,0 +1,11 @@
+Current CodeNarc version (0.27.0) includes http://codenarc.sourceforge.net/codenarc-rule-index.html[348 rules] divided
+in 22 categories:
+
+- **Basic**: For example to check that there are no empty `else` or `finally` blocks.
+- **Braces**: How many times have you seen an `if` or `else` with only one statement without the curly-braces? I personally
+don't like code without curly-braces because it's a source of bugs in the future. We can add the rules in this category to perform these checks.
+- **Convention**: There are rules to check for some conventions: when we write an "inverted" `if`, an `if` that can be
+converted to an elvis operator,...
+- **Exceptions**: Rules that will fail if, for example, we throw a `NullPointerException`.
+
+And there are many more categories to check for duplicated imports, unused variables, unnecessary ifs,... And of course there's a specific category for Grails rules.

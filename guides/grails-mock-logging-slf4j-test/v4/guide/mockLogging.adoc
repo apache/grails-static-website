@@ -1,0 +1,29 @@
+https://projects.lidalia.org.uk/slf4j-test/[Slf4j Test] is a test implementation of Slf4j that stores log messages in memory and provides methods to retrieving them for verification.
+It is basically a substitute implementation and should be the only one on the test classpath. To achieve this, declare the dependency and also
+exclude the Logback dependency from the testCompile build phase.
+
+[source, groovy]
+.build.gradle
+----
+dependencies {
+    ...
+include::../snippets/build.gradle[tag=slf4jDependency]
+}
+----
+
+[source, groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[tag=excludeLogback]
+----
+
+In addition, we will be using the `HttpClient` for testing. Add this dependency below.
+
+[source, groovy]
+.build.gradle
+----
+dependencies {
+    ...
+include::../snippets/build.gradle[tag=httpclient]
+}
+----

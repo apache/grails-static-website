@@ -1,0 +1,21 @@
+https://grails.apache.org/docs/latest/guide/testing.html#functionalTesting[Functional Tests] involve making HTTP
+requests against the running application and verifying the resultant behavior.
+
+We use the https://github.com/grails-plugins/grails-rest-client-builder[Rest Client Builder Grails Plugin] whose
+dependency is added when we create an app with the _rest-api_ profile.
+
+{sourceDir}
+
+[source,groovy]
+./src/integration-test/groovy/intranet/backend/AnnouncementControllerSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/intranet/backend/AnnouncementControllerSpec.groovy[indent=0,lines="1..38, 99"]
+----
+
+<1> serverPort property is automatically injected. It contains the random port where the Grails app runs during the functional test
+<2> Pass the api version as an Http header
+<3> Verify the response code is 200; OK
+<4> Body is present in the JSON paylod
+
+Grails command _test-app_ runs unit, integration and functional tests.
+

@@ -1,0 +1,12 @@
+plugins {
+    id 'groovy'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    implementation 'org.codenarc:CodeNarc:1.4' // <1>
+    testCompile 'junit:junit:4.12'
+}

@@ -1,0 +1,9 @@
+import demo.Plan
+
+model {
+    Plan plan
+}
+
+json {
+    title plan.title
+}

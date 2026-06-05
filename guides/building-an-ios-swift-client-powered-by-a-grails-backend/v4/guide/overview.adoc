@@ -1,0 +1,11 @@
+The next image illustrates the behavior of iOS app version 1.
+The iOS app is composed by two View Controllers.
+
+* When the iOS application initial screen loads, it requests an announcements list.
+* The Grails app sends a JSON payload which includes a list of announcements. For each announcement a unique identifier, a title and a HTML body is included.
+* The iOS app renders the JSON Payload in a _UITableView_
+* The user taps an announcement's title and the app segues to a detail screen. The initial screen sends the
+detail screen the announcement identiifer, title and HTML body.
+The latter will be rendered in a _UIWebView_
+
+image::overview.jpeg[]

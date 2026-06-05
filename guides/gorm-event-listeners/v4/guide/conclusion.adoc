@@ -1,0 +1,1 @@
+Event listeners are a powerful concept, and GORM's implementation will allow you to write intelligent business logic around persistence events without "cluttering" your domain classes.  In addition, the improved testing support in the latest Grails releases make it easier than ever to write simple, thorough tests for your event listeners. Happy coding!

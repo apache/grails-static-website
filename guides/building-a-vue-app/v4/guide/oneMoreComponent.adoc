@@ -1,0 +1,161 @@
+Create a new file named `Garage.vue` under `client/src/components/`, and edit it as shown below:
+
+[source,html]
+./client/src/components/Garage.vue
+----
+<template>
+  <div id="garage">
+    <app-header></app-header>
+    <vehicle-form v-model="vehicle"
+                  :makes="makes"
+                  :models="models"
+                  :drivers="drivers"
+                  @submit="submitNewVehicle()">
+
+    </vehicle-form>
+    <vehicle-table :vehicles="vehicles"></vehicle-table>
+  </div>
+</template>
+
+<script>
+  import AppHeader from './AppHeader'
+  import VehicleForm from './form/VehicleForm'
+  import VehicleTable from './table/VehicleTable'
+
+  export default {
+    components: {
+      AppHeader,
+      VehicleForm,
+      VehicleTable
+    },
+    data: function () {
+      return {
+        vehicles: [],
+        vehicle: {name: '', make: null, model: null, driver: null},
+        models: [],
+        makes: [],
+        drivers: [],
+        serverURL: process.env.SERVER_URL
+      }
+    },
+    created () {
+      this.fetchData()
+    },
+    methods: {
+      fetchData: async function () {
+        try {
+          await Promise.all([
+            this.fetchVehicles(),
+            this.fetchModels(),
+            this.fetchModels(),
+            this.fetchMakes(),
+            this.fetchDrivers()
+          ])
+        } catch (error) {
+          console.log(error)
+        }
+      },
+      fetchVehicles: function () {
+        fetch(`${this.serverURL}/vehicle`)
+          .then(r => r.json())
+          .then(json => { this.vehicles = json })
+          .catch(error => console.error('Error retrieving vehicles: ' + error))
+      },
+      fetchModels: function () {
+        fetch(`${this.serverURL}/model`)
+          .then(r => r.json())
+          .then(json => { this.models = json })
+          .catch(error => console.error('Error retrieving models: ' + error))
+      },
+      fetchMakes: function () {
+        fetch(`${this.serverURL}/make`)
+          .then(r => r.json())
+          .then(json => { this.makes = json })
+          .catch(error => console.error('Error retrieving makes: ' + error))
+      },
+      fetchDrivers: function () {
+        fetch(`${this.serverURL}/driver`)
+          .then(r => r.json())
+          .then(json => { this.drivers = json })
+          .catch(error => console.error('Error retrieving drivers: ' + error))
+      },
+      submitNewVehicle: function () {
+        const vehicle = this.vehicle
+        fetch(`${this.serverURL}/vehicle`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(vehicle)
+        }).then(r => r.json())
+          .then(json => {
+            this.vehicles.push(json)
+            this.vehicle = {name: '', make: null, model: null, driver: null}
+          })
+          .catch(ex => console.error('Unable to save vehicle', ex))
+    }
+  }
+</script>
+
+<!-- Per Component Custom CSS Rules -->
+<style>
+  #garage {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    text-align: center;
+    color: #2c3e50;
+  }
+</style>
+----
+
+=== Breaking it down
+
+Because this is a large component, we'll go through it in sections.
+
+[source,html]
+./client/src/components/Garage.vue
+----
+include::../snippets/client/src/components/Garage.vue[tag=template]
+----
+<1> We've set the `submitNewVehicle()` method (which we'll see shortly) as an event handler for the `submit` event (which we emitted in the `VehicleForm.submit()` function).
+<2> We bind our `vehicles` data variable to the `vehicles` prop of the `VehicleTable` component.
+
+[source,html]
+./client/src/components/Garage.vue
+----
+include::../snippets/client/src/components/Garage.vue[tag=component]
+----
+<1> Importing our components for use in the template
+<2> Our `data()` function returns the initial state for the component. It is important that we initialize all the variables we intend to use in this `data` object, because if we add a variable afterwards it will not be treated as a reactive property (i.e, changes to the variable will not trigger an update to the component).
+<3> `SERVER_URL` is a config variable set in `client/config/dev.env.js` (there are equivalent config files for `test` and `prod` environments). You can change the base URL for the API calls below by changing the `SERVER_URL` variable.
+
+[source,html]
+./client/src/components/Garage.vue
+----
+include::../snippets/client/src/components/Garage.vue[tag=fetch]
+----
+<1> `created` is one of several *lifecycle hooks*, which are methods that are called at specific points in a component lifecycle (other methods available include *beforeUpdate*, *updated*, *mounted*, etc. You can learn about the available lifecycle hooks from the https://vuejs.org/v2/guide/instance.html#Instance-Lifecycle-Hooks:[Vue.js documentation]
+<2> The `fetchData` method is where we call several other methods to retrieve data from the API. Since these API calls are independent and don't need to be run synchronously, we have added the *async* keyword to this function.
+<3> Within a `try`/`catch` block, we "chain" our multiple API calls using the `Promise` API. Since we are not returning anything from these methods, we don't need to use the `await` keyword that is often used in an `async` function.
+
+
+[source,html]
+./client/src/components/Garage.vue
+----
+include::../snippets/client/src/components/Garage.vue[tag=methods]
+----
+<1> The next few methods will make the respective API calls referenced in the previous code snippet. We are using the `fetch` API to make GET calls to our resource endpoints, parse the JSON, and store the data in the appropriate `data` variable.
+
+
+[source,html]
+./client/src/components/Garage.vue
+----
+include::../snippets/client/src/components/Garage.vue[tag=submit]
+----
+<1> Because we stored the `vehicle` object (used by the `VehicleForm` component) in our top-level component's `data`, making a `POST` request to save the vehicle instance is trivial - we simply grab the variable from our `data` (e.g., `this.vehicle`), convert it to a JSON string, and make a POST request using `fetch`.
+<2> The `POST` request will return the newly created vehicle instance, which we simply `push` onto our `data.vehicles` array.
+<3> After adding the new vehicle to the list, we "reset" the form by setting `data.vehicle` to an empty object (remembering to initialize the needed fields with empty/`null` values)
+
+[source,html]
+./client/src/components/Garage.vue
+----
+include::../snippets/client/src/components/Garage.vue[tag=css]
+----
+<1> A few styles are included here to pretty up the layout of the app - feel free to use whatever styles you'd like. Note that these styles are constrained (or *scoped*) to the component's own template.

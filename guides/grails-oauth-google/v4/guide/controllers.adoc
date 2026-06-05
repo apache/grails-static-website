@@ -1,0 +1,20 @@
+After we are done creating our service layer we need to get our controllers in place. First we have our basic book
+controller that can either return a list of all books or show a selected book.
+
+[source,groovy]
+.grails-app/controllers/demo/BookController.groovy
+----
+include::../snippets/grails-app/controllers/demo/BookController.groovy[]
+----
+
+Next is our Favourites controller that can return a list of books we have favourited, and our action to favourite a
+desired book.
+
+[source,groovy]
+.grails-app/controllers/demo/BookFavouriteController.groovy
+----
+include::../snippets/grails-app/controllers/demo/BookFavouriteController.groovy[]
+----
+<1> Call our custom favourite book finder
+<2> Call our custom `findAll`
+<3> Call to save our favourite

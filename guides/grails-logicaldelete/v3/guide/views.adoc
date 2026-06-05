@@ -1,0 +1,8 @@
+Create a GSP view to list books. For each book, we add a delete button. If  `undoId` is present,
+we present an `Undo` button.
+
+[source,groovy]
+.grails-app/views/book/index.gsp
+----
+include::../snippets/grails-app/views/book/index.gsp[]
+----

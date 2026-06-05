@@ -1,0 +1,30 @@
+Run the app with Gradle `bootRun` task.
+
+[source,bash]
+----
+$ ./gradlew bootRun
+----
+
+as previously. Now that our app is running navigate to http://localhost:8080 to see the following.
+
+image::homeScreen.png[]
+
+Select a book and see that no `Favourite` button is available when not signed in.
+
+image::unauthorizedShow.png[]
+
+Click `Login with Twitter` from our menu and enter your twitter credentials:
+
+image::twitterSignin.png[]
+
+After you are succesfully redirected, you can inspect and discover the JWT token stored as a Cookie:
+
+image::cookies.png[]
+
+Select a book and see that the `Favourite` button is now available.
+
+image::authorizedShow.png[]
+
+Click on logout and you will see our logout message displayed.
+
+image::logoutMessage.png[]

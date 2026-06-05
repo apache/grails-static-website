@@ -1,0 +1,6 @@
+Render the controller output as a JSON Payload with the aid of https://grails.apache.org/docs/latest/guide/theWebLayer.html#gson[JSON Views].
+[source,groovy]
+.grails-app/views/home/index.gson
+----
+include::../../snippets/grails-app/views/home/index.gson[]
+----

@@ -1,0 +1,19 @@
+We have restricted the _save_ action to only POST requests with the help of
+the property `allowedMethods`.
+____
+allowedMethods: Limits access to controller actions based on the HTTP request method, sending a 405 (Method Not Allowed) error code when an incorrect HTTP method is used.
+____
+
+[source, groovy]
+.grails-app/controllers/demo/StudentController.groovy
+----
+include::../snippets/grails-app/controllers/demo/StudentController.groovy[tag=allowedMethods]
+----
+
+We can verify it with a unit test:
+
+[source, groovy]
+.src/test/groovy/demo/StudentControllerAllowedMethodsSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/StudentControllerAllowedMethodsSpec.groovy[]
+----

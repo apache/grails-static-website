@@ -1,0 +1,30 @@
+Spock 2.x runs on the JUnit Platform. Grails 8's forge-generated `build.gradle` already does the right thing:
+
+[source,groovy]
+----
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+}
+----
+
+That single line tells Gradle to invoke the JUnit 5 runner instead of the legacy `JUnit3 / 4` runner. Without it, Spock 2 specs would not be discovered and only legacy JUnit 4 specs would run.
+
+Coverage with JaCoCo is one block:
+
+[source,groovy]
+----
+plugins {
+    id 'jacoco'
+}
+
+jacocoTestReport {
+    dependsOn test, integrationTest
+    executionData fileTree(layout.buildDirectory.get().asFile).include('jacoco/*.exec')
+    reports {
+        xml.required = true       // for Codecov upload
+        html.required = true      // for human inspection
+    }
+}
+----
+
+The `dependsOn test, integrationTest` line is what makes the report cover both layers; without it, only `test` data is included and integration-only branches show as untested. The `xml.required = true` produces the `jacoco.xml` that Codecov reads from `build/reports/jacoco/test/jacocoTestReport.xml`.

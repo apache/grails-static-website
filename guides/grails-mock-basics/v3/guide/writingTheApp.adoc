@@ -1,0 +1,3 @@
+We are going to write a simple application involving a `Classroom` and a `Student` domain class.
+
+Several services will interact with those domain classes. We will use those services to discuss several testing topics. 

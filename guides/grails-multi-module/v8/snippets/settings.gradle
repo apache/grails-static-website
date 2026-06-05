@@ -1,0 +1,17 @@
+/*
+ * Multi-project root settings file.
+ *
+ * Three modules participate:
+ *   shared-core      : Grails plugin holding the domain model and GORM services.
+ *   webapp-customer  : customer-facing Grails web app (read-only catalog).
+ *   webapp-admin     : back-office Grails web app with full CRUD.
+ *
+ * Both webapps consume shared-core via their `grails { plugins { ... } }` block
+ * so bootRun can request the exploded plugin variant in development.
+ */
+
+rootProject.name = 'grails-multi-module'
+
+include 'shared-core'
+include 'webapp-customer'
+include 'webapp-admin'

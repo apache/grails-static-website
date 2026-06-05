@@ -1,0 +1,9 @@
+HAL+JSON is a flexible and powerful specification for structuring your API's output. It allows clients of your API - whether third-party integrations or your own webapps or native apps - to navigate your resources in an efficient and consistent way.
+
+There are many useful tools for developing and testing HAL+JSON APIs. If you use the Google Chrome browser, try installing the https://github.com/gildas-lormeau/JSONView-for-Chrome[JSONView plugin], and navigating your browser to `http://localhost:8080/api/products`. This plugin will render the JSON in a pleasant format, and allow you to follow links between your resources in your browser.
+
+image::jsonviewer.png[title="JSONViewer plugin for Google Chrome", alt="JSONViewer", width="500", link="https://github.com/gildas-lormeau/JSONView-for-Chrome"]
+
+Another powerful tool for testing and your API is https://www.getpostman.com[Postman], a Google Chrome-based app available for macOS, Windows, Linux and Chrome OS.
+
+image::postman.png[title="Postman", alt="Postman", width="500", link="https://www.getpostman.com"]

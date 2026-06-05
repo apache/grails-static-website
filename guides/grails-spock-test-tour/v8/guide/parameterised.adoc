@@ -1,0 +1,33 @@
+Spock's `where:` data tables turn N copy-pasted tests into one parameterised feature method. Reach for them whenever a test follows the shape "for input X, expect output Y", with N values of X.
+
+The `BookSpec` already contains one:
+
+[source,groovy]
+----
+@Unroll
+void "pageCount #pageCount is #expectedValid"() {
+    when:
+    Book b = new Book(title: 'X', isbn: '9780547928227', pageCount: pageCount)
+
+    then:
+    b.validate() == expectedValid
+
+    where:
+    pageCount || expectedValid
+    null      || true
+    1         || true
+    100       || true
+    0         || false
+    -1        || false
+}
+----
+
+Two patterns worth pointing at:
+
+* `@Unroll` makes the IDE's run-tree show every row as a separate test. Without it, the five rows show up as one combined test that either passes or fails.
+* `||` separates inputs from expected outputs. Spock allows `|` everywhere, but the convention `inputs || expected_outputs` is widely-followed and reads naturally.
+
+The other two Spock features that pay back disproportionately:
+
+* *Block discipline*: `given:` / `when:` / `then:` / `expect:`. A spec that uses `expect:` for one-liners and `given/when/then` for everything else is dramatically more readable than one that uses `def setup()` and assertions scattered everywhere.
+* *Mock interaction count*: `1 * service.save(_)` asserts the mock was called exactly once with any argument. `0 * _` asserts no further interactions. These are far more precise than verifying state after the fact.

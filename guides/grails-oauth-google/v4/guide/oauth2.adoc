@@ -1,0 +1,4 @@
+OAuth2 is an industry-standard authentication protocol used by many Fortune 500 companies to secure websites and applications.
+The mechanism by which it works allows for a third-party authorization server to issue access tokens by the account owner
+approving access. In our case we will be using Google so in more laymen's term a Google user approves their account to
+issue access tokens back to the requesting application.

@@ -1,0 +1,1 @@
+Now that the API is secured, we need to provide the user a means to authenticate with the server from the React app. Once the user logs in, we need to use their credentials to make requests to the API, as well as give the user the ability to logout and invalidate their token.

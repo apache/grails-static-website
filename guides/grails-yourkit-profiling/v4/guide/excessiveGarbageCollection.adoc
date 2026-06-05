@@ -1,0 +1,53 @@
+The application prints all the students to the screen in a very inefficient manner. Upon `Print Students`, the application creates
+an excessive amount of objects. This results in the JVM overcompensating with garbage collection.
+
+Set up the next scenario by restarting the application with profiling and execute `Insert Students` (2 times) to set up the scenario.
+
+=== Analyze In Profiler
+
+. Start Object Allocation Recording - this is used for memory and garbage collection issues.
+
+.. image:memory_profile.jpg[700,700]
+
+. Execute `Print Students`. Observe that print functionality takes a long while.
+
+. Now we must Capture Memory Snapshot. The snapshot will have a more detailed views and let us pinpoint the problematic areas
+of garbage collection.
+
+.. image:memory_snapshot.jpg[700,700]
+
+. Navigate to the Garbage Objects Tab, then to the Hot Spots by Object Count. View the Method area and observe the
+class `demo.StudentService.printStudents()` method. It is responsible for producing hundreds of thousands GC'd objects.
+This is the source of the issue.
+
+.. image:garbage_objects.jpg[800,800]
+
+. We can also view the Garbage Collection graph that further illustrates the issue. Navigate to the Memory Tab->Memory and GC
+telemetry and view the Garbage Collections graph. Notably the garbage collection activity has spiked during the `Print Students`
+operation.
+
+.. image:garbage_telemetry.jpg[800,800]
+
+=== Examine the Code
+
+The code for `printStudents()` retrieves all the students in the database. It then proceeds to take a string and repeatedly
+add it to the the `result` String object. This causes new String objects on every iteration.
+
+[source, groovy]
+.grails-app/services/demo/StudentService.groovy
+----
+include::../snippets/../initial/grails-app/services/demo/StudentService.groovy[tag=htmlUnorderedListOfStudents]
+----
+
+=== Improve the Code
+
+We can improve the code by using `StringBuffer`.
+
+[source, groovy]
+.grails-app/services/demo/StudentService.groovy
+----
+include::../snippets/grails-app/services/demo/StudentService.groovy[tag=htmlUnorderedListOfStudents]
+----
+
+Now that the code improvement is made, we should restart the application with the profiler. Repeat `Insert Students` again. Repeat the steps in
+`Analyze in Profiler`. Observe the garbage collection statistics go significantly down.

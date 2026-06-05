@@ -1,0 +1,17 @@
+`edit.gsp` is identical to `create.gsp` except the form action and the optimistic-locking version field:
+
+[source,html]
+.grails-app/views/book/edit.gsp
+----
+include::../snippets/grails-app/views/book/edit.gsp[]
+----
+
+`<g:hiddenField name="version" value="${book?.version}"/>` is what makes the `update` action throw a stale-object exception when two browsers edit the same record - keep it.
+
+[source,html]
+.grails-app/views/author/edit.gsp
+----
+include::../snippets/grails-app/views/author/edit.gsp[]
+----
+
+The `<f:all>` line is identical to `create.gsp`. Any customisation you make to a wrapper or widget template applies to both views automatically.

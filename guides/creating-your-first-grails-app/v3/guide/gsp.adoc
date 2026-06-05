@@ -1,0 +1,66 @@
+GSP pages have access to a rich set of tags. We've seen a few in action already. You can get much more detail on the available GSP tags (including how to define your own custom tags) from the Grails documentation.
+
+Let's soup up our `index.gsp` page a bit with some GSP tags.
+
+Edit `grails-app/views/home/index.gsp`
+
+[source,xml]
+.grails-app/views/home/index.gsp
+----
+<%@ page import="Vehicle" %>
+<html>
+<head>
+    <meta name="layout" content="public"/>
+    <title>Home Page</title>
+</head>
+<body>
+
+<div id="content" role="main">
+    <section class="row colset-2-its">
+        <h1>Welcome ${name}!</h1>
+        <g:if test="${flash.message}"> //<1>
+            <div class="message" role="status">${flash.message}</div>
+        </g:if>
+
+        <p>There are ${vehicleTotal} vehicles in the database.</p>
+
+        <ul>
+        <g:each in="${Vehicle.list()}" var="vehicle">
+            <li>
+                <g:link controller="vehicle" action="show" id="${vehicle.id}">
+                    ${vehicle.name} - ${vehicle.year} ${vehicle.make.name} ${vehicle.model.name}
+                </g:link>
+            </li>
+        </g:each>
+        </ul>
+
+        <g:form action="updateName" style="margin: 0 auto; width:320px"> //<2>
+            <g:textField name="name" value="" />
+            <g:submitButton name="Update name" />
+        </g:form>
+
+    </section>
+</div>
+
+</body>
+</html>
+----
+<1> Rather than rendering `flash.message` regardless of whether it exists, we use the `<g:if>` tag to test if there is a message, and then render the message (using some custom styling).
+<2> Replace the plain HTML `<form>` tags with their GSP equivalents.
+
+Let's take a closer look at `<g:if>`.
+
+[source,xml]
+----
+    <g:if test="${isThisTrue}}>
+        Some content
+    </g:if>
+----
+
+GSP tags can optionally accept attributes, such as `test` in this example. Different tags require different types of attributes, but typically you will end up passing a Groovy Expression like in this example. Any Groovy code between the `${` and `}` will be evaluated (on the server) and the result will be substituted on the rendered page.
+
+TIP: You can use Groovy Expressions anywhere on the GSP page, not just in tags. See the `${flash.message}` in our `index.gsp` page.
+
+Other tag attributes might accept plain strings or numbers. E.g, `<g:form action="updateName">`
+
+A GSP tag can also optionally include a body. In the case of `<g:if>`, the body will only be rendered if the `test` expression evaluates to true (following the http://docs.groovy-lang.org/latest/html/documentation/#Groovy-Truth[Groovy Truth] convention). Other GSP tags (like `<g:form>`) simply include the body within the resulting HTML output.

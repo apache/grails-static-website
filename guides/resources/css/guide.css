@@ -1,0 +1,347 @@
+/* ===========================================================================
+ * guide.css - guide-specific CSS appended to the main-site screen.css
+ *
+ * Loaded as ../css/guide.css from every rendered guide page (alongside the
+ * main-site stylesheets/screen.css and stylesheets/plugin.css). This file
+ * is the LAST stylesheet in the cascade, so any rule here wins over the
+ * main-site equivalents at the same specificity. Keep selectors scoped to
+ * the elements the guide template introduces (sidebar buttons, GitHub URL
+ * input, table-of-contents) so we don't accidentally restyle anything on
+ * the main grails.apache.org site.
+ *
+ * Companion file: assets/stylesheets/screen.css (the main-site stylesheet)
+ * carries the body.guide / article.guide typography, code-block, table,
+ * and admonition rules that apply to rendered guide content.
+ * ============================================================================ */
+
+/* ---- Sidebar: SSH / HTTPS toggle buttons ---------------------------------
+ * The two small buttons inside the GitHub-clone callout. Replace the legacy
+ * gradient-background look with a flat, modern white-card style that matches
+ * GitHub's secondary buttons. */
+.codeButton {
+	display: inline-block;
+	cursor: pointer;
+	background: #ffffff;
+	color: #24292f;
+	border: 1px solid #d0d7de;
+	border-radius: 6px;
+	font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	font-size: 13px;
+	font-weight: 500;
+	padding: 6px 14px;
+	text-decoration: none;
+	transition: background-color 0.15s ease, border-color 0.15s ease;
+	box-shadow: 0 1px 0 rgba(31, 35, 40, 0.04);
+	text-shadow: none;
+}
+.codeButton:hover {
+	background-color: #f3f4f6;
+	border-color: #c4cad1;
+}
+.codeButton:active {
+	background-color: #ebeef1;
+	box-shadow: inset 0 1px 0 rgba(31, 35, 40, 0.05);
+}
+
+/* ---- Sidebar: GitHub clone-URL input + copy button ------------------------ */
+.form-control,
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="tel"],
+input[type="url"],
+select,
+textarea {
+	background-color: #ffffff;
+	background-position: right 8px center;
+	background-repeat: no-repeat;
+	border: 1px solid #d0d7de;
+	border-radius: 6px;
+	box-shadow: inset 0 1px 0 rgba(31, 35, 40, 0.04);
+	color: #1f2328;
+	font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+	font-size: 12.5px;
+	min-height: 13px;
+	outline: none;
+	padding: 6px 10px;
+	vertical-align: middle;
+}
+
+.input-group {
+	display: table;
+	margin-top: 12px;
+}
+
+.input-group input:first-child,
+.input-group-button:first-child .clipbtn {
+	border-bottom-right-radius: 0;
+	border-top-right-radius: 0;
+}
+.input-group input,
+.input-group-button {
+	display: table-cell;
+}
+.input-group input {
+	position: relative;
+	width: 175px;
+}
+.input-group-button {
+	vertical-align: middle;
+	width: 1%;
+}
+.input-group-button:last-child .clipbtn {
+	margin-left: -1px;
+}
+.input-group input:last-child,
+.input-group-button:last-child .clipbtn {
+	border-bottom-left-radius: 0;
+	border-top-left-radius: 0;
+}
+.clipbtn {
+	-moz-user-select: none;
+	background-color: #f6f8fa;
+	border: 1px solid #d0d7de;
+	border-radius: 6px;
+	color: #24292f;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 13px;
+	font-weight: 500;
+	line-height: 18px;
+	padding: 6px 12px;
+	position: relative;
+	vertical-align: middle;
+	white-space: nowrap;
+	transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.clipbtn:hover {
+	background-color: #eaeef2;
+	border-color: #c4cad1;
+}
+
+/* ---- Sidebar: "Get the Code" + "Download ZIP" big buttons ----------------
+ * <button class="btn btn-large"> - the two prominent CTAs at the top of the
+ * aside. The legacy treatment was a glossy orange gradient with text-shadow
+ * and rounded corners. Modernise to a flat dark primary with a soft shadow
+ * for the GitHub button, and a flat outlined secondary for Download ZIP. */
+body.guide article.guide aside button.btn-large {
+	width: 100%;
+	height: 44px;
+	margin: 16px 0 8px 0;
+	background: #1f2328;
+	color: #ffffff;
+	border: 1px solid #1f2328;
+	border-radius: 8px;
+	box-shadow: 0 1px 0 rgba(31, 35, 40, 0.04);
+	font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	font-size: 14px;
+	font-weight: 600;
+	letter-spacing: 0.005em;
+	cursor: pointer;
+	transition: background-color 0.15s ease, border-color 0.15s ease;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	text-shadow: none;
+}
+body.guide article.guide aside button.btn-large:hover {
+	background-color: #32383f;
+	border-color: #32383f;
+}
+body.guide article.guide aside button.btn-large:active {
+	background-color: #14171a;
+}
+body.guide article.guide aside button.btn-large img {
+	height: 14px;
+	width: auto;
+}
+body.guide article.guide aside button.btn-large span {
+	margin: 0;
+}
+
+/* The "Download ZIP" button is the second .btn-large in the aside; render it
+ * as a flat outlined secondary so the GitHub button is visually primary. */
+body.guide article.guide aside button.btn-large + ul.githublinks + .input-group + script + button.btn-large {
+	background: #ffffff;
+	color: #24292f;
+	border-color: #d0d7de;
+}
+body.guide article.guide aside button.btn-large + ul.githublinks + .input-group + script + button.btn-large:hover {
+	background-color: #f6f8fa;
+	border-color: #c4cad1;
+}
+
+/* ---- Sidebar: Table of contents ------------------------------------------
+ * Pre-existing render structure (do NOT modify the renderer):
+ *   <div id="table-of-content">
+ *     <h3>Table of Contents</h3>
+ *     <div class="toc-item" style="margin-left:Npx">
+ *       <a href="#anchor"><strong>1.2</strong><span>Title</span></a>
+ *     </div>
+ *     ...
+ *   </div>
+ *
+ * Two visible defects in the live render:
+ *   1. The <strong> number and the <span> title were rendered with no
+ *      whitespace between them ("1.2What You Will Build"). Adding
+ *      margin-right on the strong fixes this purely in CSS.
+ *   2. Every TOC entry was underlined and rendered in a single muted
+ *      gray, so the entire ToC read as a wall of underlined text with
+ *      no hierarchy. Drop the underline, switch to a clean color
+ *      hierarchy, and add a subtle hover indicator.
+ */
+#table-of-content {
+	margin-top: 24px;
+	font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+#table-of-content h3 {
+	font-size: 13px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: #57606a;
+	margin: 0 0 12px 0;
+	padding-bottom: 8px;
+	border-bottom: 1px solid #d8dee4;
+}
+
+#table-of-content .toc-item {
+	margin: 0 !important;
+}
+
+#table-of-content .toc-item a,
+#table-of-content a {
+	display: flex;
+	align-items: baseline;
+	padding: 5px 0 5px 0;
+	color: #4b5563;
+	text-decoration: none !important;
+	border-bottom: none !important;
+	font-size: 13.5px;
+	line-height: 1.4;
+	transition: color 0.12s ease;
+}
+
+#table-of-content .toc-item a strong,
+#table-of-content a strong {
+	flex: 0 0 auto;
+	min-width: 2.4em;
+	margin-right: 8px;
+	color: #6b7280;
+	font-weight: 600;
+	font-variant-numeric: tabular-nums;
+	font-size: 12.5px;
+}
+
+#table-of-content .toc-item a span,
+#table-of-content a span {
+	flex: 1 1 auto;
+}
+
+#table-of-content .toc-item a:hover,
+#table-of-content a:hover {
+	color: #0969da;
+}
+
+#table-of-content .toc-item a:hover strong,
+#table-of-content a:hover strong {
+	color: #0969da;
+}
+
+/* Top-level toc-item (margin-left:0px from the renderer) gets stronger
+ * weight to anchor each chapter visually. The renderer-provided
+ * margin-left value handles indentation; we don't override it. */
+#table-of-content .toc-item[style*="margin-left:0px"] > a {
+	font-weight: 600;
+	color: #1f2328;
+}
+
+#table-of-content .toc-item[style*="margin-left:0px"] > a strong {
+	color: #1f2328;
+}
+
+#table-of-content .toc-item[style*="margin-left:0px"] > a:hover {
+	color: #0969da;
+}
+
+#table-of-content .toc-item[style*="margin-left:0px"] > a:hover strong {
+	color: #0969da;
+}
+
+/* ---- "Improve this doc" buttons ------------------------------------------
+ * AsciiDoc renders a <div class="contribute-btn"><button class="btn btn-default">
+ * after every <h1>/<h2>. The legacy treatment was a screaming orange CTA
+ * directly under each heading, which competed with the heading itself for
+ * attention. Render it as a calm, GitHub-style outlined button that is
+ * visible at rest (subtle background + border) and gains a colour accent
+ * on hover, instead of only revealing button chrome on hover. */
+.contribute-btn {
+	float: right;
+	margin: -28px 0 0 12px;
+	clear: right;
+}
+
+.contribute-btn button.btn,
+.contribute-btn button.btn-default {
+	background: #f6f8fa !important;
+	background-color: #f6f8fa !important;
+	background-image: none !important;
+	border: 1px solid #d0d7de !important;
+	border-radius: 6px !important;
+	color: #6b7280 !important;
+	font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+	font-size: 12px !important;
+	font-weight: 500 !important;
+	letter-spacing: 0 !important;
+	padding: 4px 10px !important;
+	cursor: pointer;
+	box-shadow: none !important;
+	text-shadow: none !important;
+	text-decoration: none;
+	transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.contribute-btn button.btn:hover,
+.contribute-btn button.btn-default:hover {
+	color: #0969da !important;
+	background-color: #eaeef2 !important;
+	border-color: #afb8c1 !important;
+}
+
+.contribute-btn .fa,
+.contribute-btn .fa-pencil-square-o {
+	margin-right: 4px;
+	color: inherit;
+}
+
+/* ---- Footer + menu hooks (preserved from the legacy guide.css) ---------- */
+#footer a,
+.menu a,
+.local .local-title a,
+.local .local-title .toggle {
+	color: #ffffff;
+}
+
+.local-title {
+	font-size: 1.4em;
+	font-weight: bold;
+}
+
+/* ---- Responsive: hide aside on small screens ----------------------------- */
+@media only screen and (max-device-width: 480px) and (orientation: portrait) {
+	#colset #col1 {
+		margin: 0;
+		padding: 0;
+	}
+	#main {
+		width: 98%;
+		margin: 0;
+		border: 0;
+	}
+	#colset #col2 {
+		display: none;
+	}
+}

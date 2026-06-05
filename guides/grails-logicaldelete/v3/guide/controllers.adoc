@@ -1,0 +1,7 @@
+Create a controller which in collaboration with a service retrieves a list of books, a book's detail and provide actions to delete and undo a book deletion.
+
+[source,groovy]
+.grails-app/controllers/demo/BookController.groovy
+----
+include::../snippets/grails-app/controllers/demo/BookController.groovy[]
+----

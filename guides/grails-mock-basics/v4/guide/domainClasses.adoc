@@ -1,0 +1,28 @@
+We will create Domain classes that serve as the basis for the application. The `Student` and `Classroom` have a one-to-many relationship, where the `Classroom` holds many `Student`(s).
+A `Student` can be enrolled in one `Classroom` or none.
+
+[source, bash]
+----
+> grails create-domain-class Student
+----
+
+Add domain properties to the created class file.
+
+[source, groovy]
+.grails-app/domain/grails/mock/basics/Student.groovy
+----
+include::../snippets/grails-app/domain/grails/mock/basics/Student.groovy[indent=0]
+----
+
+[source, bash]
+----
+> grails create-domain-class Classroom
+----
+
+Again, add domain properties to the created class file. This time note that Classroom `hasMany` Students. This creates the one-to-many relationship.
+
+[source, groovy]
+.grails-app/domain/grails/mock/basics/Classroom.groovy
+----
+include::../snippets/grails-app/domain/grails/mock/basics/Classroom.groovy[indent=0]
+----

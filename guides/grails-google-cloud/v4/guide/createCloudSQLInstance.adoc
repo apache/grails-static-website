@@ -1,0 +1,24 @@
+We are going to https://console.cloud.google.com/sql[create a new instance of Cloud SQL]
+associated to the same project we created before.
+
+Go to the Cloud SQL section of the console:
+
+image::cloudsql-5.png[]
+
+Next screenshots illustrate the process:
+
+image::cloudsql-6.png[]
+
+image::cloudsql-7.png[]
+
+image::cloudsql-8.png[]
+
+image::cloudsql-9.png[]
+
+Once the instance is ready, we create a database:
+
+image::cloudsql-10.png[]
+
+image::cloudsql-11.png[]
+
+image::cloudsql-12.png[]

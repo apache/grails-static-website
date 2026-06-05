@@ -1,0 +1,7 @@
+In this guide, we are going to do a deep dive into http://gorm.grails.org/latest/hibernate/manual/index.html#dataServices[GORM Data Services]. Introduced in GORM 6.1,
+GORM Data Services take the work out of implemented service layer logic by adding the ability to
+automatically implement abstract classes or interfaces using GORM logic. It results in less code to write, compile time optimization, and ease of testing.
+
+This guide will go into detail on how to create and use GORM Data Services with a sample Grails application.  The guide will stay focused on the
+service layer of the app consistent with persistence.
+

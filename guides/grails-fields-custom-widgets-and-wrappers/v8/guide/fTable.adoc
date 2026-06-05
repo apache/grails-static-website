@@ -1,0 +1,1 @@
+`<f:table>` renders a collection as an HTML table. Out of the box it picks the first seven non-trivial properties of the domain class, looks each one up in `_displayWidget.gsp` for the cell rendering, and emits a clickable header row.

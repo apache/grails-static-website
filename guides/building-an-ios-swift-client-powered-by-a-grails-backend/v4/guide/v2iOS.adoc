@@ -1,0 +1,54 @@
+First we need to change the Api version constant defined in _GrailsFetcher.h_
+
+[source,swift]
+./complete-swift-ios-v2/IntranetClient/GrailsApi.swift
+----
+include::{sourcedir}/../complete-swift-ios-v2/IntranetClient/GrailsApi.swift[]
+----
+
+<1> uses Api version 2.0
+
+In version 2.0 the Api does not return the body of the announcements. Instead of setting
+an announcement property we are going to set just the resource identifier(primary
+key) in the _DetailViewController_. We have changed the _prepareForSegue:sender_ method
+in _MasterViewController_ as illustrated below:
+
+[source,swift]
+./complete-swift-ios-v2/IntranetClient/MasterViewController.swift
+----
+include::{sourcedir}/../complete-swift-ios-v2/IntranetClient/MasterViewController.swift[lines="69..78"]
+----
+
+<1> Instead of setting an object, we set an _Int_
+
+_DetailViewController_ asks the server for a complete announcement; body included.
+
+[source,swift]
+./complete-swift-ios-v2/IntranetClient/DetailViewController.swift
+----
+include::{sourcedir}/../complete-swift-ios-v2/IntranetClient/DetailViewController.swift[]
+----
+
+It uses a new fetcher:
+
+[source,swift]
+./complete-swift-ios-v2/IntranetClient/AnnouncementFetcher.swift
+----
+include::{sourcedir}/../complete-swift-ios-v2/IntranetClient/AnnouncementFetcher.swift[]
+----
+
+We added a method to the builder to convert nework data to a single Announcement object
+
+[source,swift]
+./complete-swift-ios-v2/IntranetClient/AnnouncementBuilder.m
+----
+include::{sourcedir}/../complete-swift-ios-v2/IntranetClient/AnnouncementBuilder.swift[lines="24..37"]
+----
+
+And a delegate protocol to indicate if the announcement has been fetched
+
+[source,swift]
+./complete-swift-ios-v2/IntranetClient/AnnouncementFetcherDelegate.swift
+----
+include::{sourcedir}/../complete-swift-ios-v2/IntranetClient/AnnouncementFetcherDelegate.swift[]
+----

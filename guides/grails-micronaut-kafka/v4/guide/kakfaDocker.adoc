@@ -1,0 +1,19 @@
+A fast way to start using Kafka is via https://hub.docker.com/r/confluentinc/cp-kafka/[Docker]. Create this `docker-compose.yml` file:
+
+[source,yaml]
+.docker/docker-compose.yml
+----
+include::docker/docker-compose.yml[]
+----
+
+<1> Zookeeper uses port 2181 by default, but you can change the value if necessary.
+<2> Kafka uses port 9092 by default, but you can change the value if necessary.
+
+Start Zookeeper and Kafka (use CTRL-C to stop both)
+
+[source,bash]
+----
+$ docker-compose up
+----
+
+Alternatively you can https://kafka.apache.org/quickstart[install and run a local Kafka instance].

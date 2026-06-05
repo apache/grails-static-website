@@ -1,0 +1,6 @@
+With all our Google configuration in place its time get our app configured to use security and connect using
+OAuth2 over REST through Google.
+
+The next diagramm describes the security solution we are going to implement.
+
+image::diagramm.png[]

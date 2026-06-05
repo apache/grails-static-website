@@ -1,0 +1,9 @@
+If you do any real Grails Development, you will need to connect to external services; Databases, services such as ElasticSearch, Redis etc.
+
+Usually, you needed to install those services on your development machine to replicate production environments. You could
+be in scenarios such as developing on MacOS a Grails application which connects to MSSQL database. Installing such external services could be difficult
+or impossible in your development environment.
+
+Among many other things, Docker can help us simplify such a scenario. In this Guide, you will write a Grails application which connects to a PostgreSQL database
+running on a docker container. You will not install Postgres on your machine. Instead, you will pull a PostgreSQL image, create a container with that image and
+start the container. You will modify your Grails application to connect to the PostgreSQL database which runs in the container.

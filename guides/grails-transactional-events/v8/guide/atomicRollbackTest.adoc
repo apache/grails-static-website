@@ -1,0 +1,33 @@
+The whole promise of this pattern is atomicity: on a mid-orchestration failure, *nothing* persists. Like the `AFTER_COMMIT` contract, that property is invisible to unit tests - it only shows up against a real `PlatformTransactionManager` committing or rolling back a real database transaction. A Grails `@Integration` Spock spec is again the right layer.
+
+[source,groovy]
+.src/integration-test/groovy/example/WorkOrderAssignmentIntegrationSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/WorkOrderAssignmentIntegrationSpec.groovy[]
+----
+
+The two methods pin down the contract from both sides:
+
+* *The happy path proves the writes commit as one unit.* A `SUBMITTED` request with an `OPEN` work order gets an assignee; afterwards the work order is `PLANNED` and the request is `IN_PROGRESS`. All three landed.
+* *The failure path proves the writes roll back as one unit.* The scenario starts the request `COMPLETED` - a terminal state. Assigning an employee inserts the assignee and flips the work order to `PLANNED`, then the listener's `isTerminal()` guard throws. The `thrown(IllegalStateException)` block catches it; the `and:` block then proves the rollback was total: no assignee row, the work order is *still* `OPEN`, the request is *still* `COMPLETED`.
+
+That second assertion - work order back to `OPEN` after the listener had set it `PLANNED` - is the heart of the test. The status change was made, in memory, in the session, and then *undone* by the rollback, because it never belonged to a committed transaction.
+
+A few details that differ from the `AFTER_COMMIT` spec earlier in this guide:
+
+* *The failure is raised naturally, not simulated.* The earlier spec called `status.setRollbackOnly()` to model a user-initiated rollback, because for `AFTER_COMMIT` the *whole point* was that the listener never ran. Here the listener is supposed to run, and its own business guard is what fails the transaction - so the test triggers the real exception path rather than faking a rollback.
+* *Assertions read committed state in fresh transactions.* Each `then:`/`and:` check wraps its read in `withNewTransaction { ... }`. After a rollback, the mutated-then-discarded instances may still be cached on the session that ran the service call; reading in a new transaction guarantees the assertion sees what actually committed to the database, not a stale first-level-cache copy.
+* *Setup and cleanup commit explicitly.* As before, the spec is not `@Rollback` - it opens its own committed transactions with `withNewTransaction` and tears the rows down in `cleanup:` in dependency order (assignees, then the work order, then the request).
+
+Run the spec:
+
+[source,bash]
+----
+./gradlew integrationTest --tests example.WorkOrderAssignmentIntegrationSpec
+----
+
+Both methods should pass. Together with `OrderServiceIntegrationSpec`, the app now demonstrates both halves of the pattern: `AFTER_COMMIT` for side-effects that react to a durable commit, and a synchronous `@EventListener` for cross-domain orchestration that is part of the atomic unit of work.
+
+Files touched in this chapter:
+
+* `src/integration-test/groovy/example/WorkOrderAssignmentIntegrationSpec.groovy`

@@ -1,0 +1,15 @@
+We want our app to startup and by default use Spanish
+
+[source, groovy]
+.grails-app/conf/spring/resources.groovy
+----
+include::{sourcedir}/grails-app/conf/spring/resources.groovy[]
+----
+
+We can verify the default locale is Spanish with a Functional Test:
+
+[source, groovy]
+./src/integration-test/groovy/demo/DefaultLocaleSpec.groovy
+----
+include::{sourcedir}/src/integration-test/groovy/demo/DefaultLocaleSpec.groovy[]
+----

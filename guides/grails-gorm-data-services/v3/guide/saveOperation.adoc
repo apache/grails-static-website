@@ -1,0 +1,19 @@
+Data Services can perform write operations as well.
+
+[source, groovy]
+.grails-app/services/example/grails/PersonDataService.groovy
+----
+include::../snippets/grails-app/services/example/grails/PersonDataService.groovy[tag=save, indent=false]
+----
+
+Add to the unit test to verify correctness.
+
+[source, groovy]
+.src/test/groovy/example/grails/PersonDataServiceSpec.groovy
+----
+include::../snippets/src/test/groovy/example/grails/PersonDataServiceSpec.groovy[tag=test2, indent=false]
+----
+
+<1> With Spock's old method we get the value a statement had before the `when:` block is executed.
+
+TIP: Run all the tests to make sure they pass -> `gradlew check`.

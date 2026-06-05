@@ -1,0 +1,3 @@
+include::{commondir}/common-runapp.adoc[]
+
+To run the tests use `./gradlew check`.

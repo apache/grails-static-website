@@ -1,0 +1,36 @@
+We add a directive to detect when the users presses ENTER while editing a Todo name
+
+[source,html]
+./complete-angularjs/index.html
+----
+include::../snippets/../complete-angularjs/index.html[indent=0,lines=16]
+----
+
+[source,javascript]
+./complete-angularjs/scripts/directives/ngEnter.js
+----
+include::../snippets/../complete-angularjs/scripts/directives/ngEnter.js[indent=0]
+----
+
+We are going to modify the UI slightly. E.g. We are going to remove the save button, if the user modifies the todo (either changes the name or completes),
+we save the changes in the server.
+
+[source,javascript]
+./complete-angularjs/templates/todos.html
+----
+include::../snippets/../complete-angularjs/templates/todos.html[indent=0]
+----
+
+[source,javascript]
+./complete-angularjs/scripts/controllers/main.js
+----
+include::../snippets/../complete-angularjs/scripts/controllers/main.js[indent=0]
+----
+
+Data service now connects to a Grails backend instead of loading a mock json file.
+
+[source,javascript]
+./complete-angularjs/scripts/services/data.js
+----
+include::../snippets/../complete-angularjs/scripts/services/data.js[indent=0]
+----

@@ -1,0 +1,7 @@
+The logout handler simply calls the `Auth.logOut()` function we wrote earlier.  We then call `reset()`, which gets us back our initial state.
+
+[source, javascript]
+.client/src/App.js
+----
+include::../snippets/client/src/App.js[indent=0,tag=logout]
+----

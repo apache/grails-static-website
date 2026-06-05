@@ -1,0 +1,19 @@
+Clicking a task title swaps the row out for an edit form. Saving swaps it back. The state never leaves the server.
+
+[source,html]
+.grails-app/views/task/_taskEdit.gsp
+----
+include::../snippets/grails-app/views/task/_taskEdit.gsp[]
+----
+
+Three patterns to highlight:
+
+* The form's `hx-patch` posts to `/tasks/{id}` with the PATCH method. The response is either the read-only `_task.gsp` on success or the same edit form with validation errors on failure.
+* Wrapping the markup in `<g:form>` keeps the snippet idiomatic Grails. If Spring Security CSRF is active, `FormTagLib` will automatically add its hidden field to this form.
+* `<g:eachError bean="${task}" field="title">` renders only the field errors we care about. Because Grails populates `task.errors` when `save()` fails, the same partial template handles both failure and re-render.
+* The Cancel button does a `hx-get` for `/tasks/{id}` so cancelling reloads the canonical read-only row fragment instead of trying to rebuild it in JavaScript.
+
+Files touched:
+
+* `grails-app/views/task/_taskEdit.gsp`
+* `grails-app/controllers/example/TaskController.groovy`

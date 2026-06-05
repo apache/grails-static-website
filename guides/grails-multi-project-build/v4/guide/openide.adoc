@@ -1,0 +1,6 @@
+You can open you Grails multi-project build with an IDE such as IntelliJ IDEA by
+telling the IDE to open the `multiproject` folder.
+
+Once the project is imported you will see such as window:
+
+image::grails-multi-project-build-ide.png[link=../img/grails-multi-project-build-ide.png]

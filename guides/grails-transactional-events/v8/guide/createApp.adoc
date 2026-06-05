@@ -1,0 +1,11 @@
+Start from a vanilla Grails 8 application. The default `web` profile with the H2 in-memory database is enough; no extra features are needed for this guide.
+
+The pattern itself has zero dependencies beyond what every Grails 8 starter already includes:
+
+* `spring-context` ships `ApplicationEventPublisher`, `@EventListener`, and `PayloadApplicationEvent`.
+* `spring-tx` ships `@TransactionalEventListener` and `TransactionPhase`.
+* `grails-datastore-gorm-hibernate` registers Spring's `HibernateTransactionManager` as the `PlatformTransactionManager` Spring uses to fire AFTER_COMMIT callbacks.
+
+Files touched in this chapter:
+
+* None

@@ -1,0 +1,19 @@
+Functional tests require the app to be running, and are designed to exercise the application almost as a user would, by making HTTP requests against it. These tend to be the most complex tests to write.
+
+TIP: The testing framework used by Grails is http://spockframework.org/[Spock]. Spock provides an expressive syntax for writing test cases, based on the Groovy language, and so is a great fit for Grails. It includes a JUnit runner, which means IDE support is effectively universal (any IDE that can run JUnit tests can run Spock tests).
+
+Following is a functional test for  the `search` action of `BookController`
+
+[source, groovy]
+.src/integration-test/groovy/demo/RestSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/demo/RestSpec.groovy[]
+----
+
+[source, groovy]
+.src/integration-test/groovy/demo/BookControllerFunctionalSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/demo/BookControllerFunctionalSpec.groovy[]
+----
+
+NOTE: You will need to have an ElasticSearch instance running for this test to pass.

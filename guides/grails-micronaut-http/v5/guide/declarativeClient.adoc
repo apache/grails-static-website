@@ -1,0 +1,39 @@
+The same functionality can be implemented with Micronaut's Declarative HTTP Client.  The `@Client` annotation can be declared
+on an interface and at compilation time a client will be created for you.  The interface method can be declared with a `@Get` and return
+the data-binded POJO.  This simple and elegant approach cuts down on much of the code in the previous example.
+
+Create a declarative client:
+
+[source, groovy]
+.src/main/groovy/example/grails/ItunesClient.groovy
+----
+include::../snippets/src/main/groovy/example/grails/ItunesClient.groovy[]
+----
+
+<1> Declare with `@Client` and set the URL.
+<2> Define a `@Get` request with parameters.
+
+Inject the client into the service, and add the call to the interface method.
+
+[source, groovy]
+.grails-app/services/example/grails/ItunesSearchService.groovy
+----
+...
+include::../snippets/grails-app/services/example/grails/ItunesSearchService.groovy[tag=autoWireClient]
+include::../snippets/grails-app/services/example/grails/ItunesSearchService.groovy[tag=searchWithDeclarativeClient]
+...
+----
+
+Add a controller method that routes to the service method:
+
+[source, groovy]
+.grails-app/controllers/example/grails/SearchController.groovy
+----
+...
+include::../snippets/grails-app/controllers/example/grails/SearchController.groovy[tag=searchWithDeclarativeClientController]
+...
+----
+
+'''
+
+Run `./gradlew bootRun` and hit http://localhost:8080/search/searchWithDeclarativeClient?searchTerm=U2 and see the results.

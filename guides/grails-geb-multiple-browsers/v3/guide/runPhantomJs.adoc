@@ -1,0 +1,8 @@
+To run the tests in http://phantomjs.org/[PhantomJs], we need to
+download the appropriate drivers for our operating system
+and provide them as a System property.
+
+[source, bash]
+----
+./gradlew -Dgeb.env=phantomJs -Dphantomjs.binary.path=/Users/sdelamo/Applications/phantomjs-2.1.1-macosx/bin/phantomjs integrationTest
+----

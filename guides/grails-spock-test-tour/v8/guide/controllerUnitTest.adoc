@@ -1,0 +1,13 @@
+`ControllerUnitTest<BookController>` exercises just the controller plus its routing, without booting Spring. Add `DataTest` so the auto-generated `RestfulController` actions can find persisted entities.
+
+[source,groovy]
+.src/test/groovy/example/BookControllerSpec.groovy
+----
+include::../snippets/src/test/groovy/example/BookControllerSpec.groovy[]
+----
+
+Three things to point at:
+
+* `request.method = 'GET'` and `request.json = [...]` are the harness's way of constructing a request without a real HTTP transport. The action runs synchronously; `response` carries the result.
+* `response.status == HttpStatus.OK.value()` (and `HttpStatus.NOT_FOUND`, `HttpStatus.UNPROCESSABLE_ENTITY`) - check the HTTP status enum, not magic numbers. Tests stay readable; status code constants change rarely but the enum names never do.
+* The malformed-ISBN test verifies the 422 surface contract from the link:../grails-rest-library/8/guide/index.html[REST Library guide]'s validation chapter. The same input always returns a structured 422 with the right `errors[].code`.

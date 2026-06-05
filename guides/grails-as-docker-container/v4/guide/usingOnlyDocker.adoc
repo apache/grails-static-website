@@ -1,0 +1,33 @@
+Alternatively, you can create a Docker file manually. 
+
+- Remove Gradle tasks `createDockerfile` and `buildImage`.
+- Remove dependency to Gradle Docker Plugin
+- Remove `src/main/docker/app-entrypoint.sh`. We define the CMD directly in the Dockerfile.
+- Create file `src/main/docker/Dockerfile` 
+
+[source, Dockerfile]
+.src/main/docker/Dockerfile
+----
+FROM openjdk:8u151-jdk-alpine
+MAINTAINER John Doe "john.doe@example.com"
+
+EXPOSE 8080
+
+WORKDIR /app
+COPY *.jar application.jar
+
+CMD ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app/application.jar"]
+----
+
+Because we created `Dockerfile` under `src/main/docker`, the Gradle task `prepareDocker` copies it together with our app runnable jar.
+
+Create the image:
+
+[source, bash]
+----
+$ ./gradlew prepareDocker
+$ docker build --tag="grails-sample/complete:0.1" build/docker/
+----
+
+Creating a Dockerfile manually decouples your Docker image generation from the Docker Gradle Plugin.
+

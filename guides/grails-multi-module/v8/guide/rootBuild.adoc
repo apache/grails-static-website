@@ -1,0 +1,31 @@
+A root `settings.gradle` and a root `build.gradle` turn the three generated starters into one Gradle build:
+
+[source,groovy]
+.settings.gradle
+----
+include::../snippets/settings.gradle[]
+----
+
+[source,groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[]
+----
+
+This root pattern intentionally mirrors two Grails 8 authority sources:
+
+* `grails-forge/grails-forge-core/src/main/java/org/grails/forge/build/gradle/GradleRepository.java` for the default starter repositories.
+* `grails-profiles/base/skeleton/build.gradle` plus `grails-forge/grails-forge-core/src/main/java/org/grails/forge/feature/build/gradle/templates/buildGradle.rocker.raw` for the per-project `tasks.withType(Test).configureEach { useJUnitPlatform() }` block.
+
+Three details matter:
+
+* `rootProject.name = 'grails-multi-module'` gives the whole workspace a stable Gradle identity.
+* `subprojects { repositories { ... } }` centralises the same Maven repos every generated Grails 8 module would otherwise repeat. On the live `8.0.x` line that includes filtered Apache snapshot and staging repos, because the current forge default still adds them for snapshot Grails builds.
+* `tasks.withType(Test).configureEach { useJUnitPlatform() }` is the exact Grails 8 starter pattern. Lifting that block to the root keeps `test` and `integrationTest` aligned across all three modules without changing their dependency lists.
+
+Do not move ordinary library dependencies to the root. The generated module builds already know which Grails plugins and starters they need. This root file should only carry cross-cutting build policy.
+
+Files touched:
+
+- settings.gradle
+- build.gradle

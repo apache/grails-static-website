@@ -1,0 +1,12 @@
+The Ratpack app developed during this guide uses Google Guice. 
+https://code.google.com/p/google-guice/wiki/GettingStarted[Google Guice provides the concept of a module], which is a kind of recipe for providing object.
+
+Create a module to configure GORM.
+
+[source,groovy]
+.src/main/groovy/demo/GormModule.groovy
+----
+include::../snippets/src/main/groovy/demo/GormModule.groovy[]
+----
+
+GORM for Hibernate can be configured by passing a Map or instanceof the `PropertyResolver` interface to the `org.grails.orm.hibernate.HibernateDatastore` class when used standalone.

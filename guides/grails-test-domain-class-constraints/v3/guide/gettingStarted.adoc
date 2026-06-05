@@ -1,0 +1,1 @@
+In this guide, you are going to learn how to define constraints for your Domain classes and test those constraints in  isolation.

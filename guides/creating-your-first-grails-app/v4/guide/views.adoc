@@ -1,0 +1,54 @@
+Views are the third component of the MVC pattern. Views are responsible for presenting data to the user (which might be a browser page, an API endpoint, or some other sort of consumer). In many apps, views are HTML pages designed to be loaded in a browser. However, it is perfectly reasonable for a "view" to be an XML or JSON document, depending on the type of client requesting the view.
+
+Grails' primary view technology is https://grails.apache.org/docs/latest/guide/theWebLayer.html#gsp[Groovy Server Pages]. It follows many of the conventions of JSP and ASP, but naturally it is based upon the Groovy language. GSP pages are essentially HTML documents, but they support a number of special tags (typically prefix with `g:`) to allow programmatic control over your views. You can even write arbitrary Groovy code in your GSP pages, but this is *strongly* discouraged - ideally, the GSP page should only contain view-related logic and content; any sort of data manipulation or processing should happen in the controller (or in a service) prior to the view being rendered.
+
+You've already worked with GSP views in this guide, but let's quickly cover the basics.
+
+
+== Layouts
+
+GSP views in an application often need to share some general structure, and perhaps some shared assets like JavaScript files. Grails uses the http://wiki.sitemesh.org/wiki/display/sitemesh/Home[SiteMesh] templating technology to support the idea of "layouts", which are essentially GSP template files that your GSP page can "inherit".
+
+By convention, layouts are located under `grails-app/views/layouts`. Grails includes a `main.gsp` template in the default project, and that's the one that Grails scaffolding uses, as well as the default home page. We're using it as well. To use a GSP layout, simply specify the name of the layout using a `<meta name="layout">` tag:
+
+[source, xml]
+----
+<html>
+<html>
+<head>
+    <meta name="layout" content="main"/>
+</head>
+<!-- ... -->
+----
+
+You can create your own layouts as well. Let's create a new layout for our home page.
+
+[source, bash]
+----
+$ vim grails-app/views/layouts/public.gsp
+----
+
+Edit your new layout. We'll be copying the existing `main.gsp` as a start, but we'll add a custom logo image and remove some layout code we don't need on our pages.
+
+[source, xml]
+.grails-app/views/layouts/public.gsp
+----
+include::../snippets/grails-app/views/layouts/public.gsp[]
+----
+
+The key points of this layout are the `<g:layoutBody>` and `<g:layoutHead>` tags. These tags are substituted by SiteMesh for the `<head>` and `<body>` sections of any GSP page that uses the layout.
+
+TIP: Feel free to provide your own `logo.png` image, or use the one from the `completed` project (or https://github.com/grails-guides/creating-your-first-grails-app/blob/master/complete/grails-app/assets/images/logo.png[download at this link]). Place the image in the `grails-app/assets/images/` directory, and the layout should render it instead of the Grails logo.
+
+TIP: Don't worry about the `<asset>` tags in the new layout just yet - we'll be covering those shortly.
+
+Now edit the `home/index.gsp` view to use the new `public` layout.
+
+[source, xml]
+.grails-app/views/home/index.gsp
+----
+include::../snippets/grails-app/views/home/index.gsp[lines="1..4"]
+----
+<1> Change "main" to "public"
+
+Refresh the page (or restart the app) and you should see the new layout in action. Feel free to modify the `public.gsp` layout further if you wish.

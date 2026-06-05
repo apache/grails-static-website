@@ -1,0 +1,137 @@
+
+We have a class where serveral constants are initialized:
+
+[source,java]
+./app/src/main/java/intranet/client/network/Constants.java
+----
+include::{sourcedir}/../complete-android-v1/app/src/main/java/intranet/client/network/Constants.java[]
+----
+
+<1> Grails App server url.
+<2> The path we configured in the Grails app in _UrlMappings.groovy_
+<3> The version of the API
+
+NOTE: You may need to change the ip address to match your local machine.
+
+### Model
+
+The announcements sent by the server are gonna be rendered into this POJO:
+
+[source,java]
+./app/src/main/java/intranet/client/network/model/Announcement.java
+----
+include::{sourcedir}/../complete-android-v1/app/src/main/java/intranet/client/network/model/Announcement.java[]
+----
+
+### Networking Dependencies
+
+You will need to add INTERNET permission to _app/src/main/AndroidManifest.xml_
+
+[source,xml]
+./app/src/main/AndroidManifest.xml
+----
+include::{sourcedir}/../complete-android-v1/app/src/main/AndroidManifest.xml[lines="4"]
+----
+
+#### OkHttp
+
+We are going to use one of the most popular http clients for Android, http://square.github.io/okhttp/[OkHttp]
+
+To add OkHttp as a dependency, edit the file _app/build.gradle_ and add, in the
+dependencies block, the next line:
+
+[source,groovy]
+./app/build.gradle
+----
+include::{sourcedir}/../complete-android-v1/app/build.gradle[tag=okhttp]
+----
+
+#### Gson
+
+____
+
+https://github.com/google/gson[Gson] is a Java library that can be used to convert Java Objects into their JSON
+representation. It can also be used to convert a JSON string to an equivalent
+Java object.
+____
+
+To add Gson as a dependency, edit the file _app/build.gradle_ and add, in the
+dependencies block, the next line:
+
+[source,groovy]
+./app/build.gradle
+----
+include::{sourcedir}/../complete-android-v1/app/build.gradle[tag=gson]
+----
+
+We are going to encapsulate the instantiation of OkHttp Request in a class to ensure the Accept-Version Http header is
+always set with the value defined in the _Constants.java_ class
+
+[source,java]
+./app/src/main/java/intranet/client/network/NetworkTask.java
+----
+include::{sourcedir}/../complete-android-v1/app/src/main/java/intranet/client/network/NetworkTask.java[]
+----
+
+The next class fetches and returns a list of Announcements.
+
+[source,java]
+./app/src/main/java/intranet/client/network/AnnouncementsFetcher.java
+----
+include::{sourcedir}/../complete-android-v1/app/src/main/java/intranet/client/network/AnnouncementsFetcher.java[]
+----
+
+In order to avoid running networking code in the UI thread we are going to encapsulate the networking code in an
+https://developer.android.com/reference/android/os/AsyncTask.html[AsyncTask]
+
+[source,java]
+./app/src/main/java/intranet/client/android/asynctasks/RetrieveAnnouncementsTask.java
+----
+include::{sourcedir}/../complete-android-v1//app/src/main/java/intranet/client/android/asynctasks/RetrieveAnnouncementsTask.java[]
+----
+
+Once we get a list of announcements, we will communicate the response to classes implementing the delegate
+[source,java]
+./app/src/main/java/intranet/client/android/delegates/RetrieveAnnouncementsDelegate.java
+----
+include::{sourcedir}/../complete-android-v1//app/src/main/java/intranet/client/android/delegates/RetrieveAnnouncementsDelegate.java[]
+----
+
+The class which implements the delegate receiving the announcements is the initial Activity
+
+[source,java]
+./app/src/main/java/intranet/client/android/activities/MainActivity.java
+----
+include::{sourcedir}/../complete-android-v1/app/src/main/java/intranet/client/android/activities/MainActivity.java[]
+----
+
+<1> Triggers the async tasks to fetch the announcements asynchronously.
+<2> Refreshes the UI once we get a list of announcements
+
+MainActivity uses a ListView defined in:
+
+[source,xml]
+./app/src/main/res/layout/activity_main.xml
+----
+include::{sourcedir}/../complete-android-v1/app/src/main/res/layout/activity_main.xml[]
+----
+
+The next classes and layout files render the different announcements in a ListView and handle the user tap.
+
+[source,java]
+./app/src/main/java/intranet/client/android/adapters/AnnouncementAdapter.java
+----
+include::{sourcedir}/../complete-android-v1//app/src/main/java/intranet/client/android/adapters/AnnouncementAdapter.java[]
+----
+
+[source,java]
+./app/src/main/java/intranet/client/android/delegates/AnnouncementAdapterDelegate.java
+----
+include::{sourcedir}/../complete-android-v1//app/src/main/java/intranet/client/android/delegates/AnnouncementAdapterDelegate.java[]
+----
+
+[source,xml]
+./app/src/main/res/layout/item_announcement.xml
+----
+include::{sourcedir}/../complete-android-v1/app/src/main/res/layout/item_announcement.xml[]
+----

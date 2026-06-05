@@ -1,0 +1,20 @@
+The most-used widget is the one for `String`. The default renders a plain `<input type="text">`, but Grails constraints can change what the right widget actually is.
+
+Customise `_fields/string/_widget.gsp` to dispatch on the constraints:
+
+[source,html]
+.grails-app/views/_fields/string/_widget.gsp
+----
+include::../snippets/grails-app/views/_fields/string/_widget.gsp[]
+----
+
+The dispatcher reads from the `constraints` model variable (a `ConstrainedProperty`) and picks the right widget:
+
+* `inList` - render a `<select>` populated from the constraint.
+* `email` - render `<input type="email">` for HTML5 keyboard hints.
+* `url` - render `<input type="url">`.
+* `password` - render `<input type="password">`.
+* `widget == 'textarea'` - render a `<textarea>`.
+* Anything else - render `<input type="text">`.
+
+Every customisation lives in one file. Adding a new constraint-driven widget (say, `inList` rendered as radio buttons instead of a select) is a single-file edit that applies to every `String` property in every domain class in the app.

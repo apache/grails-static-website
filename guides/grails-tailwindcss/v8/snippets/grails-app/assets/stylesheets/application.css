@@ -1,0 +1,6 @@
+/*
+ * Asset-pipeline manifest. Pull the Tailwind CLI output into the canonical
+ * application.css bundle the layout already serves.
+ *
+ *= require app
+ */

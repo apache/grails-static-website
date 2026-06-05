@@ -1,0 +1,67 @@
+Finally lets create some controllers so we can have basic UI access to our data.
+
+[source,bash]
+----
+  $ cd src/main/groovy/demo/controller
+  $ touch ManufacturerController
+  $ touch VehicleController
+----
+
+Now let’s edit our controllers under `src/main/groovy/demo/controller`.
+
+The controllers will have
+the following annotations
+
+ - `@RestController` - Denotes the controller as restful and that it can return data via url
+ - `@Autowired` - Allows use to use dependency injection to access our services
+ - `@RequestMapping("/")` - Sets the url mapping for the method
+
+[source,groovy]
+./src/main/groovy/demo/controller/VehicleController.groovy
+----
+include::../snippets/src/main/groovy/demo/controller/VehicleController.groovy[]
+----
+
+Add a test:
+
+[source,groovy]
+./src/test/groovy/demo/controller/VehicleControllerTest.groovy
+----
+include::../snippets/src/test/groovy/demo/controller/VehicleControllerTest.groovy[]
+----
+
+[source,groovy]
+./src/main/groovy/demo/controller/ManufacturerController.groovy
+----
+include::../snippets/src/main/groovy/demo/controller/ManufacturerController.groovy[]
+----
+
+Add a test:
+
+[source,groovy]
+./src/test/groovy/demo/controller/ManufacturerControllerTest.groovy
+----
+include::../snippets/src/test/groovy/demo/controller/ManufacturerControllerTest.groovy[]
+----
+
+
+Run the app: 
+
+`./gradlew bootRun`
+
+
+You should be able to call the endpoints: 
+
+`curl "http://localhost:8080"`
+
+and get the response: 
+
+`["audi","ford"]`
+
+Or retrieve the vehicles of a manufacturer:
+
+`curl "http://localhost:8080/audi/vehicles"`
+
+and get the response: 
+
+`["A3","A4"]`

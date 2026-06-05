@@ -1,0 +1,10 @@
+Open link:https://start.grails.org[start.grails.org], pick the `web` profile, name the application `library`, set the package to `example`, and download the generated zip. Unzip it and `cd` into the project directory.
+
+Verify it boots before you go further:
+
+[source,bash]
+----
+./gradlew bootRun
+----
+
+Open `http://localhost:8080/` in a browser and you should see the default Grails landing page. Stop the application with `Ctrl+C` once you have confirmed it runs.

@@ -1,0 +1,20 @@
+import example.Author
+
+model {
+    Author author
+}
+
+json {
+    id          author.id
+    name        author.name
+    biography   author.biography
+    dateOfBirth author.dateOfBirth?.format('yyyy-MM-dd')
+    _links {
+        self {
+            href g.link(resource: author, absolute: true)
+        }
+        books {
+            href g.link(controller: 'book', action: 'index', params: [author: author.id], absolute: true)
+        }
+    }
+}

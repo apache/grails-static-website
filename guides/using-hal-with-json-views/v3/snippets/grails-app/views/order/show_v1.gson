@@ -1,0 +1,24 @@
+import com.example.Order
+
+model {
+    Order order
+}
+json {
+    id order.orderId
+    shippingCost order.shippingCost
+    date order.orderPlaced.format('M-dd-yyy') //<1>
+
+    shippingAddress { //<2>
+        street order.shippingAddress.street
+        street2 order.shippingAddress.street2
+        city order.shippingAddress.city
+        state order.shippingAddress.state
+        zip order.shippingAddress.zip
+    }
+
+    products order.products.collect { [id: it.id] } //<3>
+
+    customer {
+        id order.customer.id
+    }
+}

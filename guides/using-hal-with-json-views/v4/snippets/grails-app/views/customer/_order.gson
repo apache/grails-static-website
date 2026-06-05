@@ -1,0 +1,10 @@
+import com.example.Order
+
+model {
+    Order order
+}
+json {
+    hal.links(order)
+
+    id order.id
+}

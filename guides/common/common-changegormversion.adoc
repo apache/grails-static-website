@@ -1,0 +1,1 @@
+If you are using Grails 3.2.7 or above you can change the GORM version by modifying the _gormVersion_ setting in _gradle.properties_

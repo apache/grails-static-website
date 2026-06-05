@@ -1,0 +1,3 @@
+In this guide we will add monitoring to our application so we can collect statistics about
+how our app is performing. First we will build an app which lists books and the book's details,
+after which we will add the monitoring and discuss what we can do with it.

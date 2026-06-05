@@ -1,0 +1,9 @@
+There’s plenty of opportunities to expand the scope of this application. Here are a few ideas for improvements you can make on your own:
+
+- Create a modal dialog form to add new `Driver`, `Makes` & `Models` instances. Use Vaadin's https://vaadin.com/docs/-/part/framework/layout/layout-sub-window.html[Sub-Windows] to give you a head start.
+
+- Add support for updates to existing `Vehicle` instances. A modal dialog might work well for this as well, or perhaps an editable table row
+
+- Currently `Make` & `Model` domain classes are not related to each other. Adding an association between them, will allow us to display Models for the currently selected `Make` in the dropdowns. You will want to make use of the JavaScript Array.filter method.
+
+- Currently, views contain direct references to services. Although it's completely fine for a demo or a small application, things will tend to get out of hand when our codebase grows. Patterns such as Model-View-Presenter (MVP) may help to keep an organized codebase. You can read more about patterns and Vaadin in https://vaadin.com/docs/-/part/framework/advanced/advanced-architecture.html[the Book of Vaadin]
