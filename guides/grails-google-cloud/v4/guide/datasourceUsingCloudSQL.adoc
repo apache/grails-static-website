@@ -1,0 +1,39 @@
+
+As described in Using https://cloud.google.com/appengine/docs/flexible/java/using-cloud-sql[Cloud SQL]
+with a Flexible Environment documentation, we need to add several runtime dependencies and configure
+the production url to use the Cloud SQL MySQL database we created before.
+
+Add MySQL dependencies; JDBC library and Cloud SQL MySQL Socket Factory.
+
+[source,groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[tag=msyql]
+----
+
+Replace the `production` environment `datasource` configuration to point to the
+Cloud SQL MySQL database in `application.yml`
+
+[source,yml]
+.grails-app/conf/application.yml
+----
+environments:
+include::../snippets/grails-app/conf/application.yml[tag=datasourceProduction]
+----
+
+The production datasource url uses a custom url which is built with several components:
+
+`jdbc:mysql://google/{DATABASE_NAME}?socketFactory=com.google.cloud.sql.mysql.SocketFactory&cloudSqlInstance={INSTANCE_NAME}&useSSL=true`
+
+- **DATABASE_NAME** Use the database name you used when you created the database.
+
+- **INSTANCE_NAME** You can find your instance name in your Cloud SQL instance details:
+
+image::cloudsql-13.png[]
+
+- **USERNAME / PASSWORD** For this guide, we are using username: `root` and
+the password we entered when we created the SQL instance; see previous sections.
+
+https://github.com/GoogleCloudPlatform/cloud-sql-jdbc-socket-factory[Cloud SQL Socket Factory for JDBC drivers Github Repository]
+contains a tool in `examples/getting-started` that can help generate the JDBC
+URL and verify that connectivity can be established.

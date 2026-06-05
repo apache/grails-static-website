@@ -1,0 +1,5 @@
+To summarize this guide, we learned how . . .
+
+- To use controller unit test properties to validate `model, views, status and redirect`.
+- To validate data binding to command objects in a controller action method
+- To use integration tests to invoke controllers and test end to end

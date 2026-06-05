@@ -1,0 +1,11 @@
+To complete this guide you will need:
+
+* JDK 21
+* link:https://nodejs.org[Node.js] 20+
+* npm 10+
+* A Bash, PowerShell, or `cmd` shell capable of running the included Gradle wrapper (`./gradlew` or `gradlew.bat`)
+* About 30 minutes
+
+Files touched in this chapter:
+
+* None

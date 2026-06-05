@@ -1,0 +1,35 @@
+We are going to use create a new Controller to handle the version 2 of the API. We are going to use a Criteria
+query with a projection to fetch only the id and title of the announcements.
+
+[source,groovy]
+.grails-app/controllers/intranet/backend/v2/AnnouncementController.groovy
+----
+include::../snippets/grails-app/controllers/intranet/backend/v2/AnnouncementController.groovy[]
+----
+
+We encapsulate the querying in a service
+
+[source,groovy]
+.grails-app/services/intranet/backend/AnnouncementService.groovy
+----
+include::../snippets/grails-app/services/intranet/backend/AnnouncementService.groovy[]
+----
+
+and we test it:
+
+[source,groovy]
+./src/test/groovy/intranet/backend/AnnouncementServiceSpec.groovy
+----
+include::../snippets/src/test/groovy/intranet/backend/AnnouncementServiceSpec.groovy[]
+
+
+----
+
+### Url Mapping
+
+We need to map the version _2.0_ of the Accept-Header to the namespace _v2_
+
+[source,groovy]
+./grails-app/controllers/intranet/backend/UrlMappings.groovy
+----
+include::../snippets/grails-app/controllers/intranet/backend/UrlMappings.groovy[lines="15,16"]

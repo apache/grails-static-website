@@ -1,0 +1,27 @@
+Before customising anything, you need to understand how the Fields plugin _looks up_ which template to use. Every time `<f:field bean="book" property="isbn"/>` is rendered, the plugin walks an ordered list of candidate paths and uses the first match it finds.
+
+The lookup order, from most specific to least specific, is roughly:
+
+. *Per-class, per-property:* `grails-app/views/_fields/book/isbn/_widget.gsp`
+. *Inherited per-class, per-property:* the same path traversed up the superclass chain.
+. *Association type:* `_fields/oneToOne/_widget.gsp`, `_fields/manyToOne/_widget.gsp`, `_fields/manyToMany/_widget.gsp`, `_fields/oneToMany/_widget.gsp`.
+. *`widget:` constraint value:* if the domain says `widget: 'textarea'`, the plugin looks for `_fields/textarea/_widget.gsp`.
+. *Property type:* `_fields/string/_widget.gsp`, `_fields/date/_widget.gsp`, `_fields/boolean/_widget.gsp`, `_fields/bigDecimal/_widget.gsp`, etc. The type name is decapitalised and includes superclasses.
+. *Default fallback:* `_fields/default/_widget.gsp`.
+
+The same precedence applies to:
+
+* `_wrapper.gsp` (used by `<f:field>` and `<f:all>`)
+* `_displayWidget.gsp` (used by `<f:display>` and the cells of `<f:table>`)
+* `_displayWrapper.gsp` (used by `<f:display>`)
+* `_table.gsp` (used by `<f:table>`)
+
+The practical consequence: you customise the _highest-impact_ template at the level you want the change to apply.
+
+* Want every form in the app to use Bootstrap 5 markup? Customise `_fields/default/_wrapper.gsp` once.
+* Want every `Date` field to use a date picker? Customise `_fields/date/_widget.gsp` once.
+* Want only `Book.isbn` to have an HTML pattern attribute? Customise `_fields/book/isbn/_widget.gsp`.
+
+The rest of this guide walks each of those layers in turn.
+
+TIP: If you want to see exactly which path the plugin chose, set the log level on `org.grails.plugin.formfields.FormFieldsTemplateService` to `DEBUG`. Each lookup logs every path it tried in order. The lookup logic itself lives in `grails-fields/src/main/groovy/grails/plugin/formfields/FormFieldsTemplateService.groovy` if you want to read the source. The plugin also supports a `_themes/<theme>/` lookup level (controlled by `grails.plugin.fields.theme`) that comes _before_ the per-class layer; see `grails-doc/src/en/guide/theWebLayer/fields.adoc` for the theme story.

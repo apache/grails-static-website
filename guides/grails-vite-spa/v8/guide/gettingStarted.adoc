@@ -1,0 +1,5 @@
+In this guide you will build a two-tier application: an Apache Grails 8 `rest_api` backend that exposes JSON over `/api/**`, plus a link:https://vitejs.dev[Vite] + link:https://react.dev[React] single-page app that consumes it. Both halves live in one Gradle multi-project build and ship as a single `bootJar` so the SPA serves from the same origin as the API in production - no CORS, no two-deployment dance.
+
+This guide replaces the long-broken Webpack-era `react` and `vue` profiles with a modern Vite-based pipeline. The pattern works identically for Vue 3 (substitute `@vitejs/plugin-vue` for `@vitejs/plugin-react` and an equivalent `App.vue`).
+
+This guide targets Apache Grails 8 / Spring Boot 4 / Vite 5 / Node 20+.

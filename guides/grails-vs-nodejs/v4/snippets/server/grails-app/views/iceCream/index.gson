@@ -1,0 +1,7 @@
+import demo.IceCream
+
+model {
+    Iterable<IceCream> iceCreams
+}
+
+json tmpl.icecream(iceCreams)

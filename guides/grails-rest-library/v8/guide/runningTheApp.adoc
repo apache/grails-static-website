@@ -1,0 +1,40 @@
+With everything in place, run the app:
+
+[source,bash]
+----
+./gradlew bootRun
+----
+
+The bootstrap data populates two authors and four books on first start. Smoke-test the surface:
+
+[source,bash]
+----
+# List
+curl -s http://localhost:8080/v1/books | jq
+curl -s http://localhost:8080/v1/authors | jq
+
+# Show single
+curl -s http://localhost:8080/v1/books/1 | jq
+
+# Pagination
+curl -s 'http://localhost:8080/v1/books?max=2&offset=2&sort=title' | jq
+
+# Create
+curl -s -X POST http://localhost:8080/v1/books \
+  -H 'Content-Type: application/json' \
+  -d '{ "title": "The Silmarillion", "isbn": "9780544338012", "pageCount": 384, "author": { "id": 1 } }' | jq
+
+# Validation failure (422 with structured field errors)
+curl -s -X POST http://localhost:8080/v1/books \
+  -H 'Content-Type: application/json' \
+  -d '{ "title": "" }' | jq
+
+# Bulk create (all-or-nothing)
+curl -s -X POST http://localhost:8080/v1/books/bulk \
+  -H 'Content-Type: application/json' \
+  -d '[
+    { "title": "The Two Towers", "isbn": "9780547928203", "pageCount": 416, "author": { "id": 1 } }
+  ]' | jq
+----
+
+Each of these returns a sensible JSON body with the right HTTP status. The validation-failure curl returns 422 with the structured field errors from the validation chapter; the rest return 200 (list/show), 201 (create), or 204 (delete) as appropriate.

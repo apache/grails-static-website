@@ -1,0 +1,31 @@
+
+
+[source, javascript]
+.client/src/App.js
+----
+include::../snippets/client/src/App.js[indent=0,tag=login]
+----
+
+<1>  We call `e.preventDefault();` to disable the `Login` form's default submit event.
+
+<2> Using `fetch`, we make a POST request containing the credentials entered by the user via the `Login` form.
+
+<3> We chain the `checkResponseStatus` to our `fetch` call to validate that the request was successful.
+
+<4> Assuming success, we add `loginResponseHandler` to the chain to complete the login process.
+
+<5> Any errors are passed to the `defaultErrorHandler` function, along with our `customErrorHandler`.
+
+[source, javascript]
+.client/src/App.js
+----
+include::../snippets/client/src/App.js[indent=0,tag=handler]
+----
+
+Note the use of the "custom" handler functions:
+
+1. `customLoginHandler` updates `this.state.route` upon a successful login.
+2.  `customErrorHandler`clears the `userDetails` state variable, and sets an error message.
+
+At this point you should be able to successfully login to the application but there are a few more things
+to do before we are done.

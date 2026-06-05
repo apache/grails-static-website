@@ -1,0 +1,14 @@
+Of course this project has been a bit unusual in that we were taking an
+app designed with one technology stack and reimplementing in another.
+However, hopefully this exercise has shown you the capabilities and
+flexibility of the Grails framework, particularly with the minimal
+amount of changes needed to use the same React app against the new
+Grails backend.
+
+Grails offers a slew of powerful web development
+features that we haven’t had occasion or time to demonstrate in this app
+- including https://grails.apache.org/docs/latest/guide/theWebLayer.html#gson[JSON views], https://grails.apache.org/guides/using-hal-with-json-views[HAL+JSON support], http://gorm.grails.org/latest/hibernate/manual/index.html#constraints[custom data validation and
+constraints], https://grails.apache.org/guides/neo4j-movies[NoSQL support], https://grails.apache.org/guides/database-per-tenant[multi-tenancy], and much more. Please check
+out the https://grails.apache.org/guides[Grails Guides website] for more
+tutorials on building fun and powerful apps with Grails (including
+several Guides https://grails.apache.org/guides/building-a-react-app/[featuring React]).

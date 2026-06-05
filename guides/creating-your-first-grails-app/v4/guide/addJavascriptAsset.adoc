@@ -1,0 +1,18 @@
+Let's use the Asset Pipeline plugin to add jQuery to our page. Grails includes jQuery by default.
+The version of Grails used in this guide included jQuery 2.2.0 by default:
+
+ _grails-app/assets/javascripts/jquery-2.2.0.min.js_
+
+but let's instead download the latest version. Download jQuery from https://code.jquery.com/jquery-3.1.1.js
+
+Save `jquery-3.1.1.js` to `grails-app/assets/javascripts`.
+
+Edit `grails-app/views/home/index.gsp`, add the following snippet in the _head_ block.
+
+[source, xml]
+.grails-app/views/home/index.gsp
+----
+include::../snippets/grails-app/views/home/index.gsp[indent=0,lines="10..16"]
+----
+
+Refresh the page, and open your browser's developer console. You should see the string `jQuery 3.1.1 loaded!` in the console logs.

@@ -1,0 +1,29 @@
+A many-to-many association is bound through a join table. `Book.tags` (with matching `Tag belongsTo: Book` and `Tag hasMany: [books: Book]`) is rendered by the default Fields plugin as a `<select multiple>`, which works but is hostile on touch devices and confusing for users who do not know they need to hold Ctrl/Cmd.
+
+A checkbox group is almost always a better default:
+
+[source,html]
+.grails-app/views/_fields/manyToMany/_widget.gsp
+----
+include::../snippets/grails-app/views/_fields/manyToMany/_widget.gsp[]
+----
+
+The wire format Grails data binding wants for many-to-many is _multiple inputs with the same name and different values_:
+
+[source,html]
+----
+<input type="checkbox" name="tags" value="1"/>
+<input type="checkbox" name="tags" value="2"/>
+----
+
+That is what this template emits. When the form posts, Grails binds `book.tags = Tag.findAllByIdInList([1, 2])` and the `Book` save replaces the join-table rows accordingly. There is no need to call `addTo`/`removeFrom` manually in the controller - dynamic scaffolding handles that for you because the binder maps the multi-valued parameter back to a `Set<Tag>`.
+
+The display widget renders the collection as a list of badges:
+
+[source,html]
+.grails-app/views/_fields/manyToMany/_displayWidget.gsp
+----
+include::../snippets/grails-app/views/_fields/manyToMany/_displayWidget.gsp[]
+----
+
+NOTE: For very large candidate sets (hundreds of `Tag` rows), a checkbox group is unwieldy. Either fall back to `<select multiple>` for that one property by writing `_fields/book/tags/_widget.gsp` (per-property widget overrides the type-level template), or replace the widget with a typeahead control. The point of the type-level template is that it is a sensible default, not a hard rule.

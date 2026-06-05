@@ -1,0 +1,36 @@
+When you want a *specific* `<f:table>` invocation to use a different layout - for example, the books list page should show a card-grid instead of a table while every other list view keeps the standard table - opt into a per-page template via the `template=` attribute:
+
+[source,html]
+.grails-app/views/book/index.gsp
+----
+<f:table collection="${bookList}"
+         properties="title,author,genre,priceUSD,inStock"
+         template="bookCards"/>
+----
+
+The plugin resolves `template="bookCards"` to the path `/templates/_fields/bookCards`, so create the override at:
+
+[source,html]
+.grails-app/views/templates/_fields/_bookCards.gsp
+----
+<div class="row row-cols-1 row-cols-md-3 g-3">
+    <g:each in="${collection}" var="book">
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">${book.title.encodeAsHTML()}</h5>
+                    <p class="card-subtitle text-muted mb-2">
+                        <f:displayWidget bean="${book}" property="author"/>
+                    </p>
+                    <p class="card-text"><g:formatNumber number="${book.priceUSD}" type="currency" currencyCode="USD"/></p>
+                    <g:link resource="${book}" action="show" class="btn btn-sm btn-outline-primary">View</g:link>
+                </div>
+            </div>
+        </div>
+    </g:each>
+</div>
+----
+
+Inside this template, `collection` is the same model variable the app-wide `_table.gsp` receives. The `template=` attribute is only useful when you want a non-table layout for one specific page; if you want every list view to look like the new layout, change `_table.gsp` instead.
+
+You can also use `template=` to swap layouts based on a request attribute (e.g. a "list" vs "grid" toggle), since the attribute value is just a string passed to `render()` at runtime.

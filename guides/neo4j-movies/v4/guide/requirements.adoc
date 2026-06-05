@@ -1,0 +1,26 @@
+include::{commondir}/common-requirements.adoc[]
+
+You will also need to https://neo4j.com/download/[Download and Install] the "Community Edition" of Neo4j.
+
+For the Mac, Neo4j comes as a `DMG` containing the Neo4j server and can simply be installed directly into your `Applications` folder:
+
+image::neo4j-application.png[]
+
+NOTE: For Windows the executable installer will install the Neo4j server and make it available from the start menu. For *nix operating systems, you can use the https://neo4j.com/docs/operations-manual/current/installation/linux/tarball/[Unix console application].
+
+Once the Neo4j server application is running specify a data directory and click the "Start" button:
+
+image::neo4j-start.png[]
+
+This will start Neo4j on the default port which is `7474`, you can now access the Neo4j administrative UI using the link provided by the application:
+
+image::neo4j-localhost.png[]
+
+Now you can login to Neo4j with the default username and password, which are `neo4j` and `neo4j`:
+
+image::neo4j-password.png[]
+
+Once you are prompted to login you will be asked to change the password. Change the value to "movies" for this tutorial:
+
+image::neo4j-setpassword.png[]
+

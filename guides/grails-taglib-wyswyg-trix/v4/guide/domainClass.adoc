@@ -1,0 +1,16 @@
+Create a persistent entity to store _Announcement_ entities. Most common way to handle persistence in Grails is the use of https://grails.apache.org/docs/latest/ref/Domain%20Classes/Usage.html[Grails Domain Classes]:
+
+include::{commondir}/common-quoteDomainClass.adoc[]
+
+[source, bash]
+----
+ ./grailsw create-domain-class Announcement
+| Created grails-app/domain/demo/Announcement.groovy
+| Created src/test/groovy/demo/AnnouncementSpec.groov
+----
+
+[source,groovy]
+./grails-app/domain/demo/Announcement.groovy
+----
+include::../snippets/grails-app/domain/demo/Announcement.groovy[indent=0]
+----

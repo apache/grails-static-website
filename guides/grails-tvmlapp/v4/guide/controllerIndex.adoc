@@ -1,0 +1,57 @@
+We show first an https://developer.apple.com/library/prerelease/content/documentation/LanguagesUtilities/Conceptual/ATV_Template_Guide/StackTemplate.html[Apple TVML Stack Template]
+with the Grails Quickcasts:
+
+image::stackTemplate.png[]
+
+Create a https://grails.apache.org/docs/latest/guide/theWebLayer.html#controllers[Grails Controller] to handle requests
+
+include::{commondir}/common-quoteController.adoc[]
+
+[source,bash]
+----
+./grailsw create-controller com.ociweb.quickcasts.Quickcast
+
+----
+
+A request to _http://localhost:8080/quickcast_ executes the `index` action of `QuickcastController`
+
+[source,groovy]
+./grails-app/controllers/com/ociweb/quickcasts/QuickcastController.groovy
+----
+include::../snippets/grails-app/controllers/com/ociweb/quickcasts/QuickcastController.groovy[]
+----
+
+The `QuickcastController` index method renders every `Quickcast` using the next https://grails.apache.org/docs/latest/guide/theWebLayer.html#gson[Markup View]
+
+include::{commondir}/common-quoteMarkupViews.adoc[]
+
+[source,groovy]
+./grails-app/views/quickcast/index.gml
+----
+include::../snippets/grails-app/views/quickcast/index.gml[indent=0]
+----
+
+Markup Views are written in Groovy, end with the file extension `gml` and reside in the `grails-app/views` directory.
+
+Write a https://grails.apache.org/docs/latest/guide/testing.html#functionalTesting[functional test] to test the XML generated is what we expect.
+
+Add the Micronaut HTTP Client Dependency:
+
+[source,groovy]
+./build.gradle
+----
+include::../snippets/build.gradle[indent=0,tag=micronaut-http-client]
+----
+
+[source,groovy]
+./src/integration-test/groovy/com/ociweb/quickcasts/QuickcastControllerIndexSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/com/ociweb/quickcasts/QuickcastControllerIndexSpec.groovy[indent=0]
+----
+
+To facilitate XML comparison in the tests, we include `XMLUnit` as a dependency.
+[source,groovy]
+./build.gradle
+----
+include::../snippets/build.gradle[indent=0,tag=xmlunit]
+----

@@ -1,0 +1,164 @@
+GORM works with any JDBC-compatible database, which includes Postgres
+(as well as over 200 other databases). To begin using Postgres with our
+new Grails app, we have 2 steps to complete:
+
+Step #1::
+Install the JDBC driver in our `server` project. Edit
+`server/build.gradle`, and find the section named `dependencies`. Add
+the following line of code:
+`runtime 'org.postgresql:postgresql:9.4.1212'` This will tell Gradle to
+download version 9.4.1212 of the `org.postgresql.postgresql` library
+from the Maven Central repository, and install it in our app.
+
+[source, groovy]
+./server/build.gradle
+----
+include::../snippets/server/build.gradle[indent=0,tag=postgresDependency]
+----
+
+TIP: You can think of `build.gradle` as filling a similar purpose to a `package.json` file in a Node.js project. It specifies https://docs.gradle.org/current/userguide/artifact_dependencies_tutorial.html#sec:repositories_tutorial[repositories], https://docs.gradle.org/current/userguide/artifact_dependencies_tutorial.html#sec:declaring_your_dependencies[dependencies], and https://docs.gradle.org/current/userguide/tutorial_using_tasks.html[custom tasks] (similar to npm scripts) for your project.
+
+Step #2:: Configure GORM to use our PostgreSQL database instead of the default
+H2 database. Edit `server/grails-app/conf/application.yml`, scroll down
+to the section starting with `datasource`, and replace it with the
+following content:
+
+[source, yml]
+./server/grails-app/conf/application.yml
+----
+include::../snippets/server/grails-app/conf/application.yml[indent=0,tag=postgres]
+----
+
+Now our Grails app is connected to our database, but we haven’t created
+any tables yet. With Grails, there’s no need to create the database
+schema manually (although you certainly can do so if you want). Instead,
+we’ll specify our domain model in code, by writing https://grails.apache.org/docs/latest/ref/Domain%20Classes/Usage.html[*Domain Classes*].
+
+By convention, Grails will load any Groovy classes located under
+`grails-app/domain` as Domain Classes. This means that GORM will map
+these classes to tables in the database, and map the properties of these
+classes to columns in the respective tables. Optionally, GORM will
+create these tables for us, which we have already enabled in our
+`application.yml` file with the `dbCreate: update` setting.
+
+This means it’s actually quite trivial to set up the database schema
+from the https://objectcomputing.com/resources/publications/sett/april-2017-web-app-step-by-step[original article]. 
+
+The React + Node/express used the next database schema:
+
+[source, sql]
+----
+create table ice_creams (
+  id serial primary key,
+  flavor text
+);
+
+create table users (
+  username text primary key,
+  password text -- encrypted length
+);
+
+create table user_ice_creams (
+  username text references users(username),
+  ice_cream_id integer references ice_creams(id)
+);
+----
+
+
+GORM is the data access toolkit used by Grails by default.
+We can customize how the generated database schema looks like.
+
+https://grails.apache.org/docs/latest/ref/Database%20Mapping/Usage.html[Database Mapping]
+____
+Domain classes in Grails by default dictate the way they are mapped to the database using sensible defaults. You can customize these with the ORM Mapping DSL.
+____
+
+For each of the tables we need in our
+app, we will create a domain class under the `grails-app/domain`
+directory.
+
+Run the following commands:
+
+[source, bash]
+----
+~ ./grailsw create-domain-class demo.IceCream
+~ ./grailsw create-domain-class demo.User
+~ ./grailsw create-domain-class demo.UserIceCream
+----
+
+These commands will generate three Groovy classes, under
+`grails-app/domain/demo`. Edit these files with the following
+content to generate an identical database schema as in the previous app:
+
+[source, groovy]
+.server/grails-app/domain/demo/User
+----
+package demo
+
+class User implements Serializable {
+    String username
+    String password
+
+    static mapping = {
+        table 'users'
+        password type: 'text'
+        id name: 'username', generator: 'assigned'
+        version false
+    }
+}
+----
+
+TIP: You may have noticed we have not encrypted our `password` column
+- don’t worry, we’ll get to that later on.
+
+[source, groovy]
+.server/grails-app/domain/demo/IceCream
+----
+package demo
+
+class IceCream implements Serializable {
+    String flavor
+
+    static mapping = {
+        table 'ice_creams'
+        flavor type: 'text'
+        version false
+    }
+}
+----
+
+[source, groovy]
+.server/grails-app/domain/demo/UserIceCream
+----
+package demo
+
+class UserIceCream implements Serializable {
+    User user
+    IceCream iceCream
+
+    static mapping = {
+        table 'user_ice_creams'
+        id composite: ['user', 'iceCream']
+        user column: 'username'
+        iceCream column: 'ice_cream_id'
+        version false
+    }
+}
+----
+
+The previous domain class represents a join table for our `User` and `IceCream`
+classes.
+
+
+=== Package Naming
+
+As is common in Java projects, we have created a “package” for our
+domain classes. Packages help distinguish our classes from classes from
+libraries or plugins that we might use later. The package is reflected
+in the directory structure as well: these two files will be created
+under `grails-app/domain/demo/`.
+
+TIP: Why are we using period instead of dash separators, as was shown in the https://objectcomputing.com/resources/publications/sett/april-2017-web-app-step-by-step[previous article]?
+In Java it is generally considered against convention to use dashes (hyphen) in package names.
+http://docs.oracle.com/javase/specs/jls/se8/html/jls-6.html#jls-6.1[See this link for details on the Java naming conventions].
+

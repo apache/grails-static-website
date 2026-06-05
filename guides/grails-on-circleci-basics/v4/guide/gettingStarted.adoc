@@ -1,0 +1,17 @@
+Every software project needs https://circleci.com/continuous-integration/[Continuous Integration (CI)].
+
+[quote, Circle CI Docs]
+Continuous integration is a software development strategy that increases the speed of development while
+ensuring the quality of the code. Developers continually commit small increments of code (at least daily, or even
+several times a day), which is then automatically built and tested before it is merged with the shared repository.
+
+Circle CI is a continuous integration platform seamlessly integrated with https://github.com/features#documentation[GitHub].  It supports your development process by automatically
+building, testing and deploying code changes.
+
+In this guide you are going to create a Grails application on GitHub and use https://circleci.com/[Circle CI] to build
+and test your code. This guide assumes you are familiar with Git and GitHub. It also assumes that you already have a GitHub account.
+The guide will cover only build and test an Grails application with Circle CI.  However, Circle CI has the https://circleci.com/docs/2.0/test/[ability to deploy, send notifications, and
+highly customize CI jobs].
+
+Circle has one free plan for any project, and has progressively more costly plans for higher needs. Thus, it is really convenient
+to build and test an open source Grails Plugin which you may wish to contribute to the community.

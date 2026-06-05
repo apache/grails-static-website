@@ -1,0 +1,37 @@
+To add logic to perform write operations you can simply modify the `VehicleService` and add new abstract methods for `save` and `delete`:
+
+
+[source, groovy]
+.grails-app/services/example/VehicleService.groovy
+----
+include::{sourcedir}/grails-app/services/example/VehicleService.groovy[tags=save, indent=0]
+
+include::{sourcedir}/grails-app/services/example/VehicleService.groovy[tags=delete, indent=0]
+----
+
+The above `save` and `delete` methods will be implemented automatically for you.
+
+TIP: GORM Data Services are smart about adding appropriate transaction semantics to each method (for example, `readOnly` for read operations). However you can override the transaction semantics by adding the `@Transactional` annotation yourself.
+
+To implement updates you can add a new method that calls the existing abstract `find` method:
+
+[source, groovy]
+.grails-app/services/example/VehicleService.groovy
+----
+include::{sourcedir}/grails-app/services/example/VehicleService.groovy[tags=update, indent=0]
+----
+
+This demonstrates an important concept of GORM Data Services: It is possible to easily mix methods you define with ones that are automatically implemented for you by GORM.
+
+The corresponding controller actions to call `VehicleService` and expose these write operations are also trivial:
+
+[source, groovy]
+.grails-app/controllers/example/VehicleController.groovy
+----
+include::{sourcedir}/grails-app/controllers/example/VehicleController.groovy[tags=save, indent=0]
+
+include::{sourcedir}/grails-app/controllers/example/VehicleController.groovy[tags=update, indent=0]
+
+include::{sourcedir}/grails-app/controllers/example/VehicleController.groovy[tags=delete, indent=0]
+----
+

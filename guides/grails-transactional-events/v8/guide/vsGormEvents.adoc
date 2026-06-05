@@ -1,0 +1,41 @@
+Grails has *three* mechanisms that loosely resemble "do something when a domain object changes". They look interchangeable in tutorials and are not interchangeable in practice. Here's the contrast that the rest of this guide implicitly assumes.
+
+[cols="1,3,3,2", options="header"]
+|===
+| Mechanism | Fires when | Lives where | Use for
+
+| Domain-class lifecycle callbacks +
+(`beforeInsert`, `afterInsert`, `beforeUpdate`, `afterUpdate`, `beforeDelete`, `afterDelete`)
+| During the Hibernate flush, *inside* the surrounding transaction. Bound to a specific domain class.
+| As methods on the domain class itself. The domain class is not a Spring bean; injecting other Spring beans is awkward (use `Holders.applicationContext.getBean(...)` or the deprecated `defineBeans` indirection).
+| Trivial single-domain hygiene that *must* be in the same database transaction. Setting a `createdBy` field, normalising a string, computing a derived column. Never for cross-domain or external-system work.
+
+| Grails events (`@Listener`, `@Subscriber`, `EventBus`)
+| At Hibernate-event level, synchronously (`@Listener`) or via the EventBus (`@Subscriber`). Still bound to the persistence flush, not to the Spring transaction commit.
+| Beans annotated with the Grails-specific annotations. Publisher uses `EventPublisher` or the `eventBus` bean.
+| Grails-internal events you didn't define (think GORM-level audit, soft-delete plugin hooks). The vocabulary is GORM-flavoured: `PreInsertEvent`, `PostUpdateEvent`, `PreDeleteEvent`.
+
+| Spring application events +
+(`ApplicationEventPublisher`, `@EventListener`, *`@TransactionalEventListener`*)
+| `@EventListener` - the moment `publishEvent` is called. +
+`@TransactionalEventListener` - bound to the *Spring transaction* commit/rollback, not the Hibernate flush.
+| Any Spring bean. Publisher is `ApplicationEventPublisher`, available everywhere.
+| Cross-domain business logic, especially anything that touches an external system (email, search index, webhook, cache) and must only run on durable commit. *This guide's pattern.*
+|===
+
+Three rules that come out of the table:
+
+* If the side-effect is single-domain and *must* be in the same transaction (a derived column, a `createdBy` audit field), use a lifecycle callback. Don't reach for an event system.
+* If the side-effect crosses domains *and* should only happen on durable commit (an audit row, an email, a webhook), use `@TransactionalEventListener(AFTER_COMMIT)`. This is the gap GORM lifecycle callbacks don't fill.
+* If you're reading existing code that uses `@Subscriber` / `@Listener` for cross-domain business logic, treat it as a smell. Those annotations were originally designed for Grails plugin developers extending GORM, not for application-level cross-domain logic. The Spring-transactional pattern in this guide is the cleaner replacement.
+
+A common claim worth being precise about: "transactional Spring events just work with GORM." That's true, and the reason is mechanical, not magical. GORM ships `HibernateTransactionManager` as the Spring `PlatformTransactionManager` bean. `@TransactionalEventListener` registers a transaction-synchronization callback on the *current* `PlatformTransactionManager`. Since that's the same `HibernateTransactionManager` GORM is committing through, the AFTER_COMMIT callback fires exactly when the GORM transaction commits to the database. There is no Grails-specific bridge.
+
+References:
+
+* link:https://grails.apache.org/guides/gorm-event-listeners/4/guide/index.html[grails-guides/gorm-event-listeners - the official walk-through of the GORM lifecycle approach]
+* link:https://grails.apache.org/docs/snapshot/guide/async.html#_events_from_spring[Grails Async Guide - "Events from Spring"] - covers the legacy Grails EventBus bridge to Spring events, off by default.
+
+Files touched in this chapter:
+
+* None

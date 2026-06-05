@@ -1,0 +1,3 @@
+== Apache Grails Training
+
+Apache Grails is now part of the Apache Software Foundation. The community-maintained training catalog is being migrated; in the meantime see the https://grails.apache.org/learning.html[Learning] page for current resources, recorded talks, and links to other community-supplied training material.

@@ -1,0 +1,24 @@
+Now that we have a unified Gradle build target, we have a couple more configuration changes to make. All of these changes
+have to do with the URL differences between the separate Grails & Vue apps and our new combined deployment.
+
+By default, static resources in a deployed Grails app are served from the  `/static` base URL. That will conflict with
+what our Vue app expects, but fortunately, this is a very simple change.
+
+Edit `server/grails-app/conf/application.yml`:
+[source,yml]
+.server/grails-app/conf/application.yml
+----
+include::../snippets/server/grails-app/conf/application.yml[indent=0, tag=grailsResourcesPattern]
+----
+
+This simply sets the static resources URL to be set to the root context.
+
+Along similar lines, we need to edit the URL that the Vue app uses to make REST calls against the Grails app.
+This can be done within `client/config/prod.env.js` in the `client` project. This file is used in the production environment and
+sets the SERVER_URL to the root context.
+
+[source,javascript]
+.client/config/prod.env.js
+----
+include::../snippets/client/config/prod.env.js[indent=0]
+----

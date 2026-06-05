@@ -24,8 +24,14 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 
 import website.gradle.tasks.AssetsTask
+import website.gradle.tasks.AcceptanceReportTask
+import website.gradle.tasks.AsciidoctorWarningGateTask
 import website.gradle.tasks.BlogTask
 import website.gradle.tasks.BskyAtProtoDidTask
+import website.gradle.tasks.CrawlBuiltGuidesTask
+import website.gradle.tasks.CspScanTask
+import website.gradle.tasks.GenerateRedirectStubsTask
+import website.gradle.tasks.GenerateRedirectsManifestTask
 import website.gradle.tasks.DocumentationTask
 import website.gradle.tasks.DownloadTask
 import website.gradle.tasks.GrailsWebsiteTask
@@ -34,9 +40,13 @@ import website.gradle.tasks.HtaccessTask
 import website.gradle.tasks.MinutesTask
 import website.gradle.tasks.PluginsTask
 import website.gradle.tasks.ProfilesTask
+import website.gradle.tasks.PublishMainSiteTask
 import website.gradle.tasks.QuestionsTask
+import website.gradle.tasks.RecordCompanionReleaseTask
+import website.gradle.tasks.RecordReleaseTask
 import website.gradle.tasks.RenderSiteTask
 import website.gradle.tasks.SitemapTask
+import website.gradle.tasks.ValidateGuidesTask
 
 @CompileStatic
 class GrailsWebsitePlugin implements Plugin<Project> {
@@ -75,9 +85,7 @@ class GrailsWebsitePlugin implements Plugin<Project> {
 
         RenderSiteTask.register(project, siteExt).configure {
 
-            // The Grails Guides are not part of this site, they are published to https://guides.grails.org
-            // and hosted at gh-pages in https://github.com/grails/grails-guides-template
-            // The buildGuides task can be used to generate the guide site.
+            // The buildGuides task generates the guides site separately.
 
             it.dependsOn(AssetsTask.NAME)
             it.dependsOn(DocumentationTask.NAME)
@@ -94,18 +102,70 @@ class GrailsWebsitePlugin implements Plugin<Project> {
         }
 
         project.tasks.register('buildGuides') {
-            // Task for only generating the Grails Guides which are published to https://guides.grails.org
-            // and hosted at gh-pages in https://github.com/grails/grails-guides-template
             it.description = 'Build guides website - generates guides pages, copies assets and generates a sitemap'
             it.group = GrailsWebsiteTask.GROUP
             it.dependsOn(AssetsTask.NAME)
             it.dependsOn(GuidesTask.NAME)
+            it.dependsOn(GenerateRedirectsManifestTask.NAME)
             it.finalizedBy(SitemapTask.NAME)
+        }
 
+        // Backward-compatible alias for the historically-documented singular name.
+        project.tasks.register('buildGuide') {
+            it.description = 'Alias for buildGuides (kept for backward compatibility)'
+            it.group = GrailsWebsiteTask.GROUP
+            it.dependsOn('buildGuides')
         }
 
         project.tasks.named('build') {
             it.dependsOn(RenderSiteTask.NAME)
+        }
+
+        // Mirrors build/dist/ into the deploy repo and pushes when changed.
+        // Replaces the legacy publish.sh shell script; CI invokes
+        // `./gradlew clean publishMainSite` instead of `./publish.sh`.
+        PublishMainSiteTask.register(project)
+
+        // Appends a new release entry to conf/releases.yml. Replaces the
+        // legacy release.sh shell script; the release.yml workflow invokes
+        // `./gradlew recordRelease -PreleaseVersion=X.Y.Z`.
+        RecordReleaseTask.register(project)
+
+        // Bumps the version of an existing companion artifact entry under
+        // companionArtifacts:'N':. The release-companion.yml workflow invokes
+        // `./gradlew recordCompanionRelease -PgrailsMajor=N -PartifactId=name
+        //  -PartifactVersion=X.Y.Z` on each plugin's release day.
+        RecordCompanionReleaseTask.register(project)
+
+        // Validates conf/guides.yml against the schema.
+        // `-PvalidationMode=shape|existence|both` selects the rule set.
+        ValidateGuidesTask.register(project)
+
+        // Wires per-version guide-rendering tasks against conf/guides.yml.
+        // Registers one renderGuide_<name>_<version> task per (guide, version)
+        // pair whose sourcePath/guide/ exists on disk; aggregate is buildAllGuides.
+        // Renderer is the vendored grails.doc.* subtree -- see buildSrc/VENDOR.md.
+        RenderGuidesPlugin.apply(project)
+
+        // Scans build/dist/ HTML for non-allowlisted https:// references.
+        // Allowlist: conf/csp-allowlist.yml. Report: build/reports/csp-scan.md.
+        CspScanTask.register(project)
+
+        AsciidoctorWarningGateTask.register(project)
+        CrawlBuiltGuidesTask.register(project)
+        AcceptanceReportTask.register(project)
+        GenerateRedirectStubsTask.register(project)
+        GenerateRedirectsManifestTask.register(project, siteExt)
+
+        project.tasks.register('verifyAllGuides') {
+            it.group = 'migration'
+            it.description = 'Runs the rendered-guide verification harness in report-only mode by default. Use -PverificationMode=hard-fail to fail on violations.'
+            it.notCompatibleWithConfigurationCache('Guide verification runs vendored PublishGuide tasks with log capture and aggregate reports.')
+            it.dependsOn('buildAllGuides')
+            it.dependsOn(AsciidoctorWarningGateTask.NAME)
+            it.dependsOn(CrawlBuiltGuidesTask.NAME)
+            it.dependsOn(CspScanTask.NAME)
+            it.dependsOn(AcceptanceReportTask.NAME)
         }
     }
 }

@@ -1,0 +1,77 @@
+
+=== Create the project
+
+We need to create a new Groovy project because we want to package the rule in its own jar file using Gradle.
+
+[source, groovy]
+./codenarc-rule/build.gradle
+----
+include::{sourcedir}/codenarc-rule/build.gradle[]
+----
+<1> Only need CodeNarc dependency
+
+In order to be able to user this new CodeNarc rule in our Grails application we need to make sure that the jar file
+is available in the classpath during the `codenarcMain` taks:
+
+[source, groovy]
+./gradle/codenarc.gradle
+----
+include::{sourcedir}/gradle/codenarc.gradle[tag=codeNarcClasspath]
+----
+<1> CodeNarc tasks depend on the jar being generated
+<2> Add the jar to the `codenarcClasspath`
+
+==== Define the rule
+
+The first step is create a meta-information file with the information about the rule we want to create:
+
+[source, xml]
+./codenarc-rule/src/main/resources/rulesets/grails-extra.xml
+----
+include::{sourcedir}/codenarc-rule/src/main/resources/rulesets/grails-extra.xml[]
+----
+<1> The description of the group of rules.
+<2> One `rule` element per rule we create.
+
+
+Second we create a properties file with the description of the rule in both plain text and html. The messages will be
+used in the html report:
+
+[source, properties]
+./codenarc-rule/src/main/resources/codenarc-messages.properties
+----
+include::{sourcedir}/codenarc-rule/src/main/resources/codenarc-messages.properties[]
+----
+
+=== Implement the rule
+
+Finally, we implement the rule:
+
+[source, groovy]
+./codenarc-rule/src/main/groovy/org/codenarc/rule/grails/GrailsTransactionalRule.groovy
+----
+include::{sourcedir}/codenarc-rule/src/main/groovy/org/codenarc/rule/grails/GrailsTransactionalRule.groovy[]
+----
+<1> The rule needs to extend from `AbstractAstVisitorRule`
+<2> Define the violation priority
+<3> The name of the rule. It needs to be the same as defined previously in the meta-information file
+<4> The class that implements the rule
+<5> The visitor class needs to extend from `AbstractAstVisitor`
+<6> Check the annotations of the class and methods and in case that Spring `@Transactional` is used, add a new violation
+<7> Check the imports of the class and is case of Spring `@Transactional` is imported, add a new violation
+<8> It's important to set the `lineNumber` of the node because if not, the violation won't be added
+
+=== Testing
+
+And of course we need to write tests to make sure that everything is working as expected:
+
+[source, groovy]
+./codenarc-rule/src/test/groovy/org/codenarc/rule/grails/GrailsTransactionalRuleTest.groovy
+----
+include::{sourcedir}/codenarc-rule/src/test/groovy/org/codenarc/rule/grails/GrailsTransactionalRuleTest.groovy[]
+----
+<1> The test class needs to extend from `AbstractRuleTestCase`
+<2> Instantiate the rule we want to test
+<3> Write the source code we want to test as a String
+<4> In this case, as we use Grails `@Transactional` we expect no violations
+<5> As we use Spring `@Transactional` we expect to have one violation

@@ -1,0 +1,8 @@
+Create a taglib to help you, to encapsulate some rendering aspects: 
+
+[source, groovy]
+.grails-app/taglib/org/openweathermap/OpenweathermapTagLib.groovy
+----
+include::{sourcedir}/grails-app/taglib/org/openweathermap/OpenweathermapTagLib.groovy[]
+----
+

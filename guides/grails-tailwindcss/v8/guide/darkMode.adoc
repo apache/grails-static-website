@@ -1,0 +1,32 @@
+The `@custom-variant dark (&:where(.dark, .dark *));` line in `input.css` made every `dark:`-prefixed utility opt-in on the presence of the `dark` class on `<html>`. Two small bits of markup in `main.gsp` flip it on and off.
+
+The first is a pre-paint script in `<head>` that runs before any styled content reaches the screen:
+
+[source,html]
+.grails-app/views/layouts/main.gsp
+----
+include::../snippets/grails-app/views/layouts/main.gsp[tag=themePreload,indent=0][]
+----
+
+It reads the user's saved choice (or the OS preference if the user has not chosen) and adds the `dark` class to `<html>` synchronously. Because it runs before the body renders there is no light-to-dark flash on reload.
+
+The second is the toggle button in the navbar plus a click handler at the end of the body that flips the class and writes the new value to `localStorage`:
+
+[source,html]
+.grails-app/views/layouts/main.gsp
+----
+include::../snippets/grails-app/views/layouts/main.gsp[tag=themeToggleButton,indent=0][]
+----
+
+[source,html]
+.grails-app/views/layouts/main.gsp
+----
+include::../snippets/grails-app/views/layouts/main.gsp[tag=themeToggleScript,indent=0][]
+----
+
+Notice the icon swap: the sun glyph is hidden in dark mode (`dark:hidden`), the moon glyph is hidden in light mode (`hidden dark:inline`). The same `dark:`/non-`dark:` pairing pattern works for any element whose appearance depends on theme.
+
+Files touched in this chapter:
+
+* `src/main/css/input.css`
+* `grails-app/views/layouts/main.gsp`

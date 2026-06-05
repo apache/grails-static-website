@@ -1,0 +1,7 @@
+image::vue.png[Vue.js, 150, 150, role="related thumb left"]
+
+In this guide you are going to create an application using the https://grails-profiles.github.io/vue/latest/guide/index.html[Vue profile for Grails]. This profile will generate a multi-project build, which includes a Grails application, and a https://vuejs.org/[Vue.js] front-end app that access the RESTful API provided by Grails.
+
+This profile will generate two applications, `server` and `client`. `server` will be a Grails 3 application built using the `rest-api` profile, which includes support for creating domain resources, restful controllers, and JSON views.
+
+`client` is a standalone Vue.js app generated with the https://github.com/vuejs/vue-cli[Vue-CLI] (using the webpack template). The `client` app includes a complete UI implemented using https://router.vuejs.org/en/[Vue-Router] and the the https://uiv.wxsm.space/[UIV] (Bootstrap) library, and is configured to communicate with the Grails backend via REST. The `client` project also includes a functioning test suite (unit & e2e tests) and scripts for building and testing the app - see the  http://vuejs-templates.github.io/webpack/[`vue-cli` template documentation] for more information.

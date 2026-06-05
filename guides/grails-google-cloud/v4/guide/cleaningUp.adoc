@@ -1,0 +1,69 @@
+After you've finished this guide, you can clean up the resources you created on
+Google Cloud Platform so you won't be billed for them in the future. The following
+sections describe how to delete or turn off these resources.
+
+## Deleting the project
+
+The easiest way to eliminate billing is to delete the project you created for the tutorial.
+
+To delete the project:
+
+WARNING: Deleting a project has the following consequences:
+
+- If you used an existing project, you'll also delete any other work you've done in the project.
+
+- You can't reuse the project ID of a deleted project. If you created a custom project ID that you plan to use in the future, you should delete the resources inside the project instead. This ensures that URLs that use the project ID, such as an appspot.com URL, remain available.
+
+- If you are exploring multiple tutorials and quickstarts, reusing projects instead of deleting them prevents you from exceeding project quota limits.
+
+In the Cloud Platform Console, go to the Projects page.
+
+https://console.cloud.google.com/iam-admin/projects[GO TO THE PROJECTS PAGE]
+
+In the project list, select the project you want to delete and click Delete project. After selecting the checkbox next to the project name, click `Delete project`
+
+In the dialog, type the project ID, and then click Shut down to delete the project.
+
+Deleting or turning off specific resources
+
+You can individually delete or turn off some of the resources that you created during the tutorial.
+
+## Deleting app versions
+
+To delete an app version:
+
+In the Cloud Platform Console, go to the App Engine Versions page.
+
+https://console.cloud.google.com/appengine/versions[GO TO THE VERSIONS PAGE]
+
+Click the checkbox next to the non-default app version you want to delete.
+
+NOTE: The only way you can delete the default version of your App Engine app is by deleting your project. However, you can stop the default version in the Cloud Platform Console. This action shuts down all instances associated with the version. You can restart these instances later if needed.
+
+In the App Engine standard environment, you can stop the default version only if your app has manual or basic scaling.
+
+Click the Delete button at the top of the page to delete the app version.
+
+## Deleting Cloud SQL instances
+
+To delete a Cloud SQL instance:
+
+In the Cloud Platform Console, go to the SQL Instances page.
+
+https://console.cloud.google.com/sql/instances[GO TO THE SQL INSTANCES PAGE]
+
+Click the name of the SQL instance you want to delete.
+
+Click the Delete button at the top of the page to delete the instance.
+
+## Deleting Cloud Storage buckets
+
+To delete a Cloud Storage bucket:
+
+In the Cloud Platform Console, go to the Cloud Storage browser.
+
+https://console.cloud.google.com/storage/browser[GO TO THE CLOUD STORAGE BROWSER]
+
+Click the checkbox next to the bucket you want to delete.
+
+Click the Delete button at the top of the page to delete the bucket.

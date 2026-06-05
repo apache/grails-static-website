@@ -1,0 +1,27 @@
+We are going to use the https://github.com/bmuschko/gradle-clover-plugin[Gradle Clover Plugin]
+to generating a code coverage report using Clover.
+
+We are going to create a gradle file to keep the Clover configuration in one place
+
+[source, groovy]
+.gradle/clover.gradle
+----
+include::{sourcedir}/gradle/clover.gradle[]
+----
+
+<1> Although, Clover is open source, you need to create a dummy license file.
+<2> We don't want certain files to pollute our code coverage reports.
+<3> We want to include our Spock specifications as test files.
+<4> We want reports in both XML and HTML
+
+We are going to reference this file from the ROOT `build.gradle`
+
+[source, groovy]
+.build.gradle
+----
+include::{sourcedir}/build.gradle[]
+----
+
+<1> Add the plugin as a build script depedency
+<2> Apply the build file with Clover configuration.
+

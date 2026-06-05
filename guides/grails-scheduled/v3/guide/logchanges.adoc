@@ -1,0 +1,11 @@
+During this guide, we are going to use several log statements to show Job execution. 
+
+Add at the end of `logback.groovy` the next statement:
+
+[source, groovy]
+.grails-app/conf/logback.groovy
+----
+include::../snippets/grails-app/conf/logback.groovy[indent=0, tag=logdemo]
+----
+
+The above line configures a logger for package `demo` with log level INFO which uses the STDOUT appender and with adaptivity set to false.

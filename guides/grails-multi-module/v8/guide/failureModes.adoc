@@ -1,0 +1,13 @@
+Three failure modes show up again and again in real Grails multi-module workspaces.
+
+* *Circular module dependencies, disguised as plugin wiring.* The `dependsOn` and `loadAfter` properties on a Grails plugin descriptor are runtime ordering hints from `grails-core/src/main/groovy/grails/plugins/Plugin.groovy`. They do not replace Gradle project dependencies. If a webapp depends on `shared-core`, then `shared-core` must not depend back on that webapp. Keep the dependency arrow one-way: webapps depend on the plugin.
+
+* *Mapping collisions in the Hibernate model.* Grails 8 collects every domain artefact into the mapping context and Hibernate bootstrap path. You can see that in `grails-domain-class/src/main/groovy/org/grails/plugins/domain/support/DefaultMappingContextFactoryBean.groovy` and `grails-data-hibernate5/grails-plugin/src/main/groovy/grails/plugin/hibernate/HibernateGrailsPlugin.groovy`. If the plugin and a webapp both define separate entities that map to the same table or incompatible association metadata, startup fails or the schema becomes ambiguous. Keep one authoritative domain model in `shared-core`.
+
+* *Both webapps try to run startup migrations.* `grails-data-hibernate5/dbmigration/src/main/groovy/org/grails/plugins/databasemigration/DatabaseMigrationGrailsPlugin.groovy` runs Liquibase updates at startup when `grails.plugin.databasemigration.updateOnStart*` flags are enabled. Liquibase locking prevents corruption, but it still leaves startup order and deploy timing to chance. Pick one app to own migrations. Let the other app boot against an already-migrated schema.
+
+Files touched:
+
+- shared-core/build.gradle
+- webapp-customer/build.gradle
+- webapp-admin/build.gradle

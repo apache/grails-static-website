@@ -1,0 +1,55 @@
+Start up the server app (if it's not already running):
+
+[source,bash]
+----
+~ ./gradlew server:bootRun
+----
+
+In another terminal session, if you make a `curl` request to one of our resources, you'll get a 401 response.
+
+[source,javascript]
+----
+~ curl -i 0:8080/api/vehicle
+HTTP/1.1 401
+WWW-Authenticate: Bearer
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Thu, 08 Jun 2017 05:42:05 GMT
+
+{"timestamp":1496900525475,"status":401,"error":"Unauthorized","message":"No message available","path":"/api/vehicle"}
+----
+
+In order to make a secure request, we need to first authenticate with the server using valid user credentials. By default, we can use the `/api/login` endpoint for this purpose.
+
+Make a request to `/api/login` using the credentials for one of our `Driver` objects in `BootStrap.groovy`:
+
+[source,javascript]
+----
+curl -i -H "Content-Type: application/json" --data '{"username":"susan","password":"password1"}' 0:8080/api/login
+HTTP/1.1 200
+Cache-Control: no-store
+Pragma: no-cache
+Content-Type: application/json;charset=UTF-8
+Content-Length: 2157
+Date: Thu, 08 Jun 2017 05:45:44 GMT
+
+{"username":"susan","roles":["ROLE_DRIVER"],"token_type":"Bearer","access_token":"eyJhbGciOiJIUzI1NiJ9...","expires_in":3600,"refresh_token":"eyJhbGciOiJIUzI1NiJ9..."}
+----
+
+Notice that in the response, in addition to user details/granted roles, we received an `access_token` - this is what we need to provide to our server in order to authenticate our request. We do this by setting the `Authorization` header with our token. Let's try our `/api/vehicle` request again, using this `access_token`:
+
+[source,javascript]
+----
+curl -i -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9..." 0:8080/api/vehicle
+HTTP/1.1 200
+X-Application-Context: application:development
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Thu, 08 Jun 2017 05:49:01 GMT
+
+[{"id":1,"name":"Pickup","make":{"name":"Nissan","id":1},"model":{"name":"Titan","id":1},"driver":{"name":"Susan","id":1}},{"id":2,"name":"Economy","make":{"name":"Nissan","id":1},"model":{"name":"Leaf","id":2},"driver":{"name":"Susan","id":1}},{"id":3,"name":"Minivan","make":{"name":"Ford","id":2},"model":{"name":"Windstar","id":3},"driver":{"name":"Pedro","id":2}}]
+----
+
+Congratulations, your API is now secured! Now we can move on to supporting authentication in our React client app.
+
+TIP: Notice there's actually another token in the `/api/login` response: `refresh_token`. When the `access_token` expires, you can use the `refresh_token` to obtain a new `access_token`. We'll see how that works later on in this guide.

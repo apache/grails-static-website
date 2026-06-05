@@ -1,0 +1,14 @@
+Create an interface - `EmailService`. Any email integration present in the application should implement it.
+
+[source,groovy]
+.src/groovy/main/example/grails/EmailService.groovy
+----
+include::../../snippets/src/main/groovy/example/grails/EmailService.groovy[]
+----
+
+[source,groovy]
+.src/groovy/main/example/grails/Email.groovy
+----
+include::../../snippets/src/main/groovy/example/grails/Email.groovy[]
+----
+

@@ -1,0 +1,13 @@
+We could unit test a project query with a unit test. See:
+
+`.src/test/groovy/grails/mock/basics/ClassroomServiceSpec.groovy`
+
+However, you may want to use an integration test. For example, you may want to test the query against the same database which you use in production.
+
+Just use `@Autowired` to inject your service into your integration tests as displayed below:
+
+[source, groovy]
+.src/integration-test/groovy/grails/mock/basics/ClassroomServiceIntegrationSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/grails/mock/basics/ClassroomServiceIntegrationSpec.groovy[indent=0]
+----

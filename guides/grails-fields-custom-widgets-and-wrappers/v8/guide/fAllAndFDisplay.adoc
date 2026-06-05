@@ -1,0 +1,3 @@
+The first three tags you will use are `<f:all>`, `<f:field>`, and `<f:display>`. `<f:all>` walks every editable property of a bean and emits one `<f:field>` per property. `<f:display>` does the same in read-only mode using the display templates instead of the form templates.
+
+Switching from the scaffolded form to `<f:all>` is the move that lets you delete the verbose markup and keep all per-property concerns in `_fields/` instead.

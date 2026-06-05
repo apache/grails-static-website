@@ -1,0 +1,33 @@
+Each link:{mongodbApi}/com/mongodb/client/MongoCollection.html[MongoCollection] is represented by a http://gorm.grails.org/latest/hibernate/manual/index.html#domainClasses[GORM domain class].
+
+You can create a domain class with the `create-domain-class` CLI command from the root of your project:
+
+[source,bash]
+----
+$ ./grailsw create-domain-class Product
+| Created grails-app/domain/demo/Product.groovy
+| Created src/test/groovy/demo/ProductSpec.groovy
+----
+
+Alternatively, you can equally create a domain class with your favourite text editor or IDE.
+
+A domain class is a simple Groovy class and you can represent each attribute of a MongoDB link:{mongodbApi}/org/bson/Document.html[Document] using a property. For example:
+
+[source,groovy]
+.grails-app/domain/demo/Product.groovy
+----
+include::../snippets/grails-app/domain/demo/Product.groovy[indent=0,lines="1..6"]
+}
+----
+
+Each domain class defined in the application will be compiled to implement the link:{mongodbGormApi}/grails/mongodb/MongoEntity.html[MongoEntity] trait. If you prefer you can define this explicitly:
+
+[source,groovy]
+.grails-app/domain/demo/Product.groovy
+----
+import grails.mongodb.*
+
+class Product implements MongoEntity<Product> {
+    ..
+}
+----

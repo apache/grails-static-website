@@ -1,0 +1,4 @@
+Docker has become a nice way to run an application without the hassle of installing any of the dependencies to run it.
+
+In this Guide you will write a Grails application that will be packed as a Docker image and will run inside a Docker
+container.

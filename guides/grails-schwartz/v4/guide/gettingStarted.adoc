@@ -1,0 +1,5 @@
+Nowadays it is pretty usual to have some kind of _cron_ or scheduled task that needs to run every midnight, every hour,
+a few times a week,... In the Java world we have been using the _Quartz_ library for ages to do this.
+
+In this guide you will learn how to use the https://github.com/agileorbit/grails-schwartz[Grails Schwartz plugin] to
+schedule periodic tasks inside a Grails application

@@ -1,0 +1,11 @@
+import example.Book
+
+model {
+    Iterable<Book> bookList
+    Integer        bookCount
+}
+
+json {
+    total bookCount
+    items g.render(template: 'book', collection: bookList ?: [], var: 'book')
+}

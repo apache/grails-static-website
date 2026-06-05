@@ -1,0 +1,26 @@
+We override, both https://github.com/grails-plugins/grails-spring-security-core/blob/master/grails-app/controllers/grails/plugin/springsecurity/LoginController.groovy[LoginController] and https://github.com/grails-plugins/grails-spring-security-core/blob/master/grails-app/views/login/auth.gsp[auth.gsp], to display a random
+coordinate field each time the user is directed to the login form.
+
+[source,groovy]
+./grails-app/controllers/demo/LoginController.groovy
+----
+include::../snippets/grails-app/controllers/demo/LoginController.groovy[indent=0]
+----
+
+We have a list of valid positions as a configuration list in `application.yml`
+[source,groovy]
+.grails-app/conf/application.yml
+----
+include::../snippets/grails-app/conf/application.yml[indent=0, lines="1..44"]
+----
+
+The overriden GSP file displays the coordinate position input field
+
+image::login.png[]
+
+
+[source,groovy]
+./grails-app/views/login/auth.gsp
+----
+include::../snippets/grails-app/views/login/auth.gsp[indent=0]
+----

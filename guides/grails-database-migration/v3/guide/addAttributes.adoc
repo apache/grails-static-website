@@ -1,0 +1,116 @@
+We will add some attributes to the `Person` class for an address to demonstrate our second migration.
+
+image::migration2.jpg[400,400]
+
+[source, groovy]
+.grails-app/domain/demo/Person.groovy
+----
+include::../snippets/grails-app/domain/demo/Person.groovy[tag=package]
+
+include::../snippets/grails-app/domain/demo/Person.groovy[tag=import]
+
+include::../snippets/grails-app/domain/demo/Person.groovy[tag=class]
+
+include::../snippets/grails-app/domain/demo/Person.groovy[tag=properties]
+    String streetName
+    String city
+    String zipCode
+
+include::../snippets/grails-app/domain/demo/Person.groovy[tag=openConstraints]
+include::../snippets/grails-app/domain/demo/Person.groovy[tag=ageConstraints]
+        streetName nullable: true
+        city nullable: true
+        zipCode nullable: true
+include::../snippets/grails-app/domain/demo/Person.groovy[tag=closeConstraints]
+
+
+include::../snippets/grails-app/domain/demo/Person.groovy[tag=closeClass]
+----
+
+If we generate a changeset for these changes:
+
+[source, bash]
+----
+> grails dbm-gorm-diff add-address-fields-to-person.groovy --add
+----
+
+The command adds a new include statement to `changelog.groovy`
+
+[source, groovy]
+.grails-app/migrations/changelog.groovy
+----
+databaseChangeLog = {
+include::../snippets/grails-app/migrations/changelog.groovy[tag=createPersonTable]
+include::../snippets/grails-app/migrations/changelog.groovy[tag=changeAgeConstraintToNullable]
+include::../snippets/grails-app/migrations/changelog.groovy[tag=addAddressFieldsToPerson]
+}
+----
+
+An individual changeset is created too:
+
+[source, groovy]
+.grails-app/migrations/add-address-fields-to-person.groovy
+----
+include::../snippets/grails-app/migrations/add-address-fields-to-person.groovy[]
+----
+
+if we run the migration
+
+[source, bash]
+----
+$ grails dbm-update
+----
+
+New columns `streetName`, `city`, `zipCode` are created in the `person` table; 
+
+[source, sql]
+----
+$ describe person
+----
+
+
+|===
+|Field|Type|Null|Key|Default|Extra
+|id
+|bigint(20)
+|NO
+|Pri
+|<null>
+|auto_increment
+|version
+|bigint(20)
+|NO
+|
+|<null>
+|
+|age
+|int(11)
+|YES
+|
+|<null>
+|
+|name
+|varchar(255)
+|NO
+|
+|<null>
+|
+|city
+|varchar(255)
+|YES
+|
+|<null>
+|
+|street_name
+|varchar(255)
+|YES
+|
+|<null>
+|
+|zip_code
+|varchar(255)
+|YES
+|
+|<null>
+|
+|===

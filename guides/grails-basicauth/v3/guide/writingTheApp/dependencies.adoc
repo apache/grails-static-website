@@ -1,0 +1,34 @@
+First thing we need to do is add the `spring-security-core` Grails Plugin to `build.gradle`.
+
+[source,groovy]
+.build.gradle
+----
+include::../../snippets/build.gradle[indent=0, tag=secDependency]
+----
+
+Then run the command:
+
+`grails s2-quickstart example.grails User Role`
+
+The command generates the following domain classes:
+
+
+* `grails-app/domain/example.grails.User`
+* `grails-app/domain/example.grails.Role`
+* `grails-app/domain/example.grails.UserRole`
+
+a password encoder listener:
+
+`src/main/groovy/example.grails.UserPasswordEncoderListener`
+
+and default security configuration at:
+
+* `grails-app/conf/application.groovy`
+
+Modify the generated `application.groovy` to enable basic auth.
+
+[source,groovy]
+.grails-app/conf/application.groovy
+----
+include::../../snippets/grails-app/conf/application.groovy[indent=0, tag=basicauth]
+----

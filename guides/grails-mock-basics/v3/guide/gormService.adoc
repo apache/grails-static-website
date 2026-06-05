@@ -1,0 +1,7 @@
+The next service uses Criteria query with a projection to calculate the average grade of the students enrolled in a classroom, identified by its teacher name.
+
+[source, groovy]
+.grails-app/services/grails/mock/basics/ClassroomService.groovy
+----
+include::../snippets/grails-app/services/grails/mock/basics/ClassroomService.groovy[indent=0]
+----

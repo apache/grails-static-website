@@ -1,0 +1,34 @@
+http://sendgrid.com[SendGrid] is a transactional email service.
+
+____
+SendGrid is responsible for sending billions of emails for some of the best and brightest companies in the world.
+____
+
+There is a https://grails.apache.org/plugins.html[SendGrid Grails Plugin]. However, in this guide we are going to integrate AWS SDK SES directly.
+
+Add a dependency to SendGrid SDK:
+
+[source,groovy]
+.build.gradle
+----
+include::../../../snippets/build.gradle[tag=sendgrid]
+----
+
+Add configuration properties which can be passed via system properties / command line arguments:
+
+[source,groovy]
+.grails-app/conf/application.yml
+----
+include::../../../snippets/grails-app/conf/application.yml[tag=sendgrid]
+----
+
+
+Create a service which encapsulates the integration with SendGrid:
+
+[source,groovy]
+.grails-app/services/example/grails/SendGridEmailService.groovy
+----
+include::../../../snippets/grails-app/services/example/grails/SendGridEmailService.groovy[]
+----
+
+<1> http://grailsblog.objectcomputing.com/posts/2016/08/31/retrieving-config-values.html[Retrieve configuration values] with `GrailsConfigurationAware`

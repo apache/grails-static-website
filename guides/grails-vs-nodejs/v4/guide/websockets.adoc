@@ -1,0 +1,98 @@
+Our final server-side feature is to push “session timeout” events to the
+client over a websocket connection. We’ll use another Grails plugin, the
+https://grails.apache.org/plugins.html[Spring
+Websocket plugin], to support this feature.
+
+Install the plugin by adding another line to our `build.gradle` file:
+
+[source, groovy]
+./server/build.gradle
+----
+include::../snippets/server/build.gradle[indent=0,tag=websocketDependency]
+----
+
+We now have to implement three classes to get our web socket session
+timeout working:
+
+1.  A configuration class to configure our websocket connection
+2.  A “listener” class to keep track of when new authentication tokens
+are created
+3.  A “scheduler” class to periodically check for “expired” sessions and
+push events over the websocket connection.
+
+Because these classes are not Grails-specific, we will create them as
+Groovy classes under `server/src/main/groovy`.
+
+Here is the complete code for these three classes:
+
+[source, groovy]
+./server/src/main/groovy/demo/CustomWebSocketConfig.groovy
+----
+include::../snippets/server/src/main/groovy/demo/CustomWebSocketConfig.groovy[]
+----
+<1> Loads our `allowedOrigin` config property from application.yml
+<2> Configures the websocket connection to accept requests from our client server
+
+[source, groovy]
+./server/src/main/groovy/demo/TokenCreationEventListener.groovy
+----
+include::../snippets/server/src/main/groovy/demo/TokenCreationEventListener.groovy[]
+----
+<1> We are extending a `ApplicationListener` interface, which is part of the Spring Framework and allows us to "listen" to specific application events. In this case, we are listening for `RestTokenCreationEvent`. You can find other events to listen for in the http://alvarosanchez.github.io/grails-spring-security-rest/latest/docs/#_events[Spring Security REST plugin documentation].
+<2> The `withTransaction` method is needed here because our custom class doesn't have access to GORM by default (unlike controllers and services). The `User` domain class is not actually important - we could use any domain class here. `withNewSession` will initiate a GORM/Hibernate transaction and allow us to query the database and persist changes. See the http://gorm.grails.org/6.1.x/hibernate/manual/index.html#persistenceBasics[GORM documentation for more details.]
+
+[source, groovy]
+./server/src/main/groovy/demo/SessionExpirationJobHolder.groovy
+----
+include::../snippets/server/src/main/groovy/demo/SessionExpirationJobHolder.groovy[]
+----
+<1> This class is provided by the spring-websocket plugin and allows us to push an event over a websocket channel
+<2> Loads our timeout.minutes property from application.yml
+<3> Run method every minute
+<4> Use Groovy's http://docs.groovy-lang.org/latest/html/api/groovy/time/TimeCategory.html[`TimeCategory`] DSL for time operations
+<5> Send a websocket message to a user-specific "channel" for each expired user - we're using their username as the unique key for each channel
+
+With these classes in place, we need to plug them into the Spring
+context by adding them as “beans” in our `resources.groovy` file. Edit
+the file as shown below.
+
+[source, groovy]
+./server/grails-app/conf/spring/resources.groovy
+----
+include::../snippets/server/grails-app/conf/spring/resources.groovy[]
+----
+<1> Register the password encoder listener
+<2> Custom settings for websockets
+<3> Listens for new access tokens and sets the loginDate
+<4> Checks for expired sessions
+
+
+Next, in order for our scheduled `SessionExpirationJobHolder` class to
+actually fire as scheduled, we have to enable scheduling in our
+application (it’s not on by default). We do that by editing our app’s
+`Application.groovy` file (note the capitalization!).
+
+[source, groovy]
+./server/grails-app/init/demo/Application.groovy
+----
+include::../snippets/server/grails-app/init/demo/Application.groovy[]
+----
+
+And finally, you may remember we referenced a couple of new config
+properties in the classes above. Let’s add those to our
+`application.yml` file (add the lines below to the end of the file).
+
+[source, yml]
+./server/grails-app/conf/application.yml
+----
+include::../snippets/server/grails-app/conf/application.yml[indent=0,tag=allowedOrigin]
+----
+
+TIP: Grails applications can read config values set in a variety of
+ways, including YAML files, Groovy files, and system properties. See the
+https://grails.apache.org/docs/latest/guide/conf.html[Grails documentation] for
+more on how to use configuration files.
+
+That’s all for the Grails backend server - we have support for CORS (out
+of the box), websockets, authentication, RESTful web services, 
+scheduled methods, and persistence to PostgresSQL.

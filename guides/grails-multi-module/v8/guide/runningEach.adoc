@@ -1,0 +1,32 @@
+Run each webapp independently:
+
+[source,bash]
+----
+./gradlew :webapp-customer:bootRun
+# In another shell:
+./gradlew :webapp-admin:bootRun --args='--server.port=8081'
+----
+
+Both generated webapps default to port 8080. Grails 8 documents two accurate override styles:
+
+* `--args='--server.port=8081'` in `grails-doc/src/en/ref/Command Line/bootRun.adoc`
+* `-Dgrails.server.port=8081` in `grails-doc/src/en/guide/gettingStarted/runningAndDebuggingAnApplication.adoc`
+
+Use either form, but keep it consistent across your team.
+
+Production packaging uses `bootJar` for the two webapps and `jar` for the plugin:
+
+[source,bash]
+----
+./gradlew :shared-core:jar
+./gradlew :webapp-customer:bootJar
+./gradlew :webapp-admin:bootJar
+----
+
+`shared-core` does not produce a deployable `bootJar`. `grails-gradle/plugins/src/main/groovy/org/grails/gradle/plugin/core/GrailsPluginGradlePlugin.groovy` disables `bootJar` and keeps the plain jar as the plugin artifact. The two webapps are the only deployable applications in this workspace.
+
+For the day-to-day inner loop where you save a file in `shared-core` and want a running `bootRun` to pick it up, the next chapter covers the Grails 8 supported reload path.
+
+Files touched:
+
+- None, unless you choose a fixed port in `webapp-admin/grails-app/conf/application.yml`

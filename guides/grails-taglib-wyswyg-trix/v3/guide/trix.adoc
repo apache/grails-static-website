@@ -1,0 +1,34 @@
+https://trix-editor.org[Trix Editor] is an open-source rich text editor project developed
+by https://basecamp.com[Basecamp].
+
+____
+Compose beautifully formatted text in your web application. Trix is an editor for writing messages, comments, articles, and lists—the simple documents most web apps are made of. It features a sophisticated document model, support for embedded attachments, and outputs terse and consistent HTML.
+____
+
+image::trix.png[]
+
+To integrate into a Grails application:
+
+* Download the https://github.com/basecamp/trix/releases[latest stable release]. For this guide, we use version _0.10.0_
+* Copy _trix.js_ to _assets/javascripts/trix.js_
+* Copy _trix.css_ to _assets/javascripts/trix.css_
+* Reference _js_ and _css_ files with https://github.com/bertramdev/asset-pipeline[Asset Pipeline] Plugin
+____
+The Asset-Pipeline is a plugin used for managing and processing static assets in JVM applications primarily via Gradle (however not mandatory). Asset-Pipeline functions include processing and minification of both CSS and JavaScript files
+____
+
+Include the `js` file with Asset pipeline:
+
+[source,groovy]
+./grails-app/assets/javascripts/application.js
+----
+include::../snippets/grails-app/assets/javascripts/application.js[indent=0, lines=10]
+----
+
+Include the `css` file with Asset pipeline:
+
+[source,groovy]
+./grails-app/assets/stylesheets/application.css
+----
+include::../snippets/grails-app/assets/stylesheets/application.css[indent=0, lines=10]
+----

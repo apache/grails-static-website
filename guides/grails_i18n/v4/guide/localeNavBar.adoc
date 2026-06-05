@@ -1,0 +1,44 @@
+We define the supported languages in a configuration property:
+
+[source, groovy]
+./grails-app/conf/application.yml
+----
+include::{sourcedir}/grails-app/conf/application.yml[tag=configurationLanguages]
+----
+
+We are going to use a https://grails.apache.org/docs/latest/guide/single.html#taglibs[Tag Library]
+to render a languages dropdown:
+
+image::languages_drop_down.png[]
+
+[source, groovy]
+./grails-app/taglib/demo/LocaleNavbarTagLib.groovy
+----
+include::{sourcedir}/grails-app/taglib/demo/LocaleNavbarTagLib.groovy[]
+----
+
+<1> Retrieve configuration property
+<2> Access current locale
+<3> Retrieving a localized message
+
+We can test the TagLib rendering with a Unit Test.
+
+[source, groovy]
+./src/test/groovy/demo/LocaleNavbarTagLibSpec.groovy
+----
+include::{sourcedir}/src/test/groovy/demo/LocaleNavbarTagLibSpec.groovy[]
+----
+
+We invoke the `TagLib` inside the `<content>` element of the default GSP.
+
+[source, groovy]
+./grails-app/views/index.gsp
+----
+include::{sourcedir}/grails-app/views/index.gsp[tag=navBarLocaleDropDown, indent=0]
+----
+
+We supply to the Tag Lib the `request.forwardURI`
+
+____
+https://grails.apache.org/docs/latest/ref/Servlet%20API/request.html[forwardURI] - Useful for obtaining the current request URI since the request object’s requestURI property returns the original URI, not the matched one.
+____

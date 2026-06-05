@@ -1,0 +1,15 @@
+To install the plugin, modify `build.gradle`:
+
+[source, groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[indent=0, tag=buildscript]
+----
+<1> Schwartz Plugin
+
+And also add the following to the `dependencies` block:
+[source, groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[indent=0, tag=dependencies]
+----

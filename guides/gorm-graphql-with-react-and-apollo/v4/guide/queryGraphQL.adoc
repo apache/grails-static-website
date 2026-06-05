@@ -1,0 +1,116 @@
+Our React app is fairly simple, consisting of 3 main components, `SpeakerList`, `Speaker`, and `Talk`. The first two of these components include REST calls to load their data. Let's replace these calls with a GraphQL query.
+
+Edit `src/main/webapp/SpeakerList.js`
+
+[source,javascript]
+./src/main/webapp/SpeakerList.js
+----
+import React, {Component} from 'react'
+import Speaker from "./Speaker";
+import {graphql} from 'react-apollo'; //<1>
+import gql from 'graphql-tag';  //<2>
+
+class SpeakerList extends Component {
+
+//<3>
+  render() {
+    const speakers = this.props.data.speakerList; //<4>
+    return speakers ? [speakers.map(s => <Speaker key={s.id} speaker={s}/>)] : <p>Loading...</p>
+  }
+}
+
+const SPEAKER_QUERY = gql`query {	speakerList(max: 10) { //<5>
+  id, firstName, lastName,
+    talks { id }
+  }
+}`;
+
+//<6>
+const SpeakerListWithData = graphql(SPEAKER_QUERY,
+    {options: {pollInterval: 5000}} //<7>
+)(SpeakerList);
+export default SpeakerListWithData; //<8>
+----
+<1> The `graphql` is a https://reactjs.org/docs/higher-order-components.html[*higher-order component*], which means that it wraps an existing component and returns a new component with additional behavior.
+<2> `gql` is JavaScript https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals[template literal tag] that will parse our GraphQL queries
+<3> Note that we were able to completely remove our `componentDidMount` method (where the REST call had been made) and our constructor, as we no longer need to use `this.state`.
+<4> The data returned by our GraphQL query will be available via `this.props.data.[name of query]` - in this case, `speakerList`.
+<5> This constant represents our query - note that the syntax is the same as what you might have used in the GraphiQL browser.
+<6> Rather than exporting `SpeakerList` directly, we first "wrap" it using the `graphql` higher-order component, which will "connect" our `SpeakerList` component with our GraphQL schema, pass in our data requirements, and provide the data via the `data` prop within `SpeakerList`.
+<7> We've specified a `pollInterval`, which is one of several options available from `graphql`. This option will cause our GraphQL query to be run once every 10 seconds, updating our component with any new data automatically.
+<8> Finally, we export the "connected" version of `SpeakerList` as the default module.
+
+At this point, if you restart the application (or run `./gradlew webpack` in another terminal, to reload the JavaScript), you will see the React app is now retrieving the speakers via the GraphQL schema.
+
+Moving on the the `Speaker` component, we can again remove the `componentDidMount` method, and we can remove the `this.state.talks` property. Instead, in the `render` method, we will access each speakers' talks directly from the `speaker` prop.
+
+[source,javascript]
+./src/main/webapp/Speaker.js
+----
+import React, {Component} from 'react'
+import {Well} from 'react-bootstrap'
+import Talk from "./Talks";
+
+class Speaker extends Component {
+
+  constructor() {
+    super();
+
+    this.state = {
+      title: '',
+      duration: ''
+    }
+  }
+
+//... other methods ommitted for space
+
+  render() {
+    const {speaker} = this.props;
+    const {title, duration} = this.state;
+
+    return <Well>
+      <h3>{speaker.firstName} {speaker.lastName}</h3>
+      <hr/>
+
+      <ul>
+        {speaker.talks.map(t => <Talk key={t.id} talk={t} delete={() => this.deleteTalk(t.id)}/>)}
+        <li>
+          <label>Title</label>
+          <input type='text' name='title' value={title}
+                 onChange={this.handleNewTalkChange}/>
+
+          <label>Duration</label>
+          <input type="number" name="duration" value={duration}
+                 onChange={this.handleNewTalkChange}/>
+          <button onClick={this.addNewTalk}>Add Talk</button>
+        </li>
+      </ul>
+
+    </Well>
+  }
+}
+
+export default Speaker;
+----
+<1>
+<2>
+
+However, if we try to run the app now we will find that we only have access to the ids of each talk - we are missing `title` and `duration`. Thanks to GraphQL, we can easily add these properties to our retrieved data by simply adding them to the query.
+
+Edit `src/main/webapp/SpeakerList.js` and add `title` and `duration` to the `SPEAKER_QUERY`.
+
+[source,javascript]
+./src/main/webapp/SpeakerList.js
+----
+
+const SPEAKER_QUERY = gql`query {
+speakerList(max: 10) {
+  id, firstName, lastName,
+    talks { id, title, duration } //<1>
+  }
+}`;
+----
+
+With that, our multiple REST calls have been replaced with a single GraphQL query. You can inspect this query, and the response, using your Apollo's https://github.com/apollographql/apollo-client-devtools[developer tools browser extension].
+
+image::devtools.png[Apollo Dev Tools Extension]

@@ -1,0 +1,7 @@
+We are going to use a unit test to test the query:
+
+[source, groovy]
+.src/test/groovy/grails/mock/basics/StudentServiceSpec.groovy
+----
+include::../snippets/src/test/groovy/grails/mock/basics/StudentServiceSpec.groovy[indent=0]
+----

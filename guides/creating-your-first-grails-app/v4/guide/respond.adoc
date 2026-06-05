@@ -1,0 +1,105 @@
+Let's modify our `HomeController` to render some custom content on our home page. Edit `grails-app/controllers/org/grails/guides/HomeController.groovy`.
+
+[source, groovy]
+.grails-app/controllers/org/grails/guides/HomeController.groovy
+----
+package org.grails.guides
+
+class HomeController {
+
+    def index() {
+        respond([name: session.name ?: 'User', vehicleTotal: Vehicle.count()]) //<1>
+    }
+
+    def updateName(String name) {
+        session.name = name //<2>
+
+        flash.message = "Name has been updated" //<3>
+
+        redirect action: 'index' //<4>
+    }
+
+}
+----
+<1> We're calling the `respond` method to render a Groovy map of content to the requestor, containing a `name` property from the session (defaulting to "User" if no session value exists) and the current total of `Vehicle` instances from GORM's `count` method.
+<2> `session` is an instance of the Servlet API’s`HttpSession` class, and is available in every controller. We can retrieve and store properties in the session - in this case, we're storing a `String` with the attribute `name` in the session. For more see the https://grails.apache.org/docs/latest/ref/Controllers/session.html[Grails documentation].
+<3> We're using `flash` scope to set a message to display upon the next request
+<4> We don't have any specific content to display in this action, so we issue a redirect back to the `index` action (note that in Groovy method parenthesis are optional so long as there is at least one argument).
+
+We've updated our `index`  action to render some custom content to the page, and we've created a new action `updateName`, which takes a `String` parameter and saves it to the `session` for later retrieval. However, we need to update our view to 1. display the newly available content, and 2. provide some means of calling `updateName` and setting the `session` attribute.
+
+Edit `grails-app/views/home/index.gsp`:
+
+[source, xml]
+.grails-app/views/home/index.gsp
+----
+<html>
+<html>
+<head>
+    <meta name="layout" content="main"/>
+    <title>Home Page</title>
+</head>
+<body>
+
+<div id="content" role="main">
+    <section class="row colset-2-its">
+        <h1>Welcome ${name}!</h1> //<1>
+
+        <h4>${flash.message}</h4>  //<2>
+
+        <p>There are ${vehicleTotal} vehicles in the database.</p> //<1>
+
+        <form action="/home/updateName" method="post" style="margin: 0 auto; width:320px"> //<3>
+            <input type="text" name="name" value="" id="name">
+            <input type="submit" name="Update name" value="Update name" id="Update name">
+        </form>
+
+    </section>
+</div>
+
+</body>
+</html>
+----
+<1> We can refer to any values in our "model" by name in a GSP page, using Groovy String Expressions `${name}` `${vehicleTotal}`
+<2> Here we're accessing our `flash.message` property - if it's null then nothing will render here.
+<3> This is a plain HTML form that will submit the `name` text field to the `updateName` action we just created.
+
+Run the app and you should see our new message in the `<h1>` header: "Welcome User!", as well as the current total of `Vehicle` instances in the database.
+
+Try entering your own name in the form and submitting it - you should see the page reload and your own name will replace "User". Refresh the page a few times. Because we stored the `name` in the session, it will persist as long as the session is valid.
+
+== Content Negotiation
+
+Remember we used the `respond` method, instead of the simpler `render` method to send our "model" to the page. This means we can get our model using other formats besides an HTML page, such as JSON or XML.
+
+
+Run the following command in a terminal (while the app is running)
+[source, bash]
+----
+$ curl -i -H "Accept: application/json" "http://localhost:8080/home/index"
+
+HTTP/1.1 200
+X-Application-Context: application:development
+Set-Cookie: JSESSIONID=008B45AAA1A820CE5C9FDC2741D345F3;path=/;HttpOnly
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Wed, 11 Jan 2017 04:06:57 GMT
+
+{"name":"User","vehicleTotal":3}
+----
+
+We've used `curl` to call our `index` action, but we've changed our `Accept` header to `application/json`. Now instead of an HTML page, we receive the same data in JSON.
+
+You can request difference content types in the browser as well, thanks to Grails' default URL Mappings (shown below):
+
+[source,groovy]
+.grails-app/controllers/org/grails/guides/UrlMappings.groovy
+----
+include::../snippets/grails-app/controllers/org/grails/guides/UrlMappings.groovy[lines="6..10"]
+----
+
+Note the `(.$format)?` token in the mapping. This will match a suffix on our URL such as `.json` or `.xml`. Test this out in your browser.
+
+Browse to `http://localhost:8080/home/index.json`. You should see the same JSON body we retrieved using `curl`.
+
+Try changing `.json` to `.xml`. You should see an XML representation of the model. Content negotiation allows your controllers to be very versatile and to return appropriate data to different clients from the same actions.

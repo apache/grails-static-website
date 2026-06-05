@@ -1,0 +1,48 @@
+What if you need to find instances where some property falls in between two values?
+Maybe you want to know all the games played (represented by the domain class `Match`) between two dates?
+[source,groovy]
+----
+include::initial/grails-app/services/demo/QueryService.groovy[tag=findByBetween,indent=0]
+----
+
+Use the comparator `Between`. As mentioned earlier, most comparators expect a matching argument
+in the dynamic finder call. However, `Between` is one of the exceptions, and it expects *two* arguments:
+the lower and upper bounds. In the case of `QueryService.queryMatchesPlayedBetweenDates`, the lower and
+upper bounds are the start and finish dates.
+
+NOTE: We will use the `started` property of `Match` as the property to examine. We could
+have chosen to look at the `finished` property, but that could be null while `started`
+cannot be null according to the constraints of `Match`.
+
+Now we know the parts to build up our dynamic finder call: `findAllBy` to look for multiple,
+matching instances; `started` as the property to examine; and `Between` as the operator to
+find values of the property between provided lower and upper bounds. Here is the efficient
+implementation.
+[source,groovy]
+----
+include::complete/grails-app/services/demo/QueryService.groovy[tag=findByBetween,indent=0]
+----
+
+A similar comparator is `InRange`, which works like `Between` but accepts a Groovy range as
+the argument. As an example, we want to find out how many high scores there are across all
+played games. Let's define high scores to be in the range 90-100.
+[source,groovy]
+----
+Range highScore = 90..100
+def numHighScores = queryService.queryHowManyScoresWithinRange(highScore)
+----
+
+Here's the old, inefficient implementation of `queryHowManyScoresWithinRange`:
+[source,groovy]
+----
+include::initial/grails-app/services/demo/QueryService.groovy[tag=findByRange,indent=0]
+----
+
+Since we only want to know how many high scores there are (and not the scores themselves),
+we'll use the `countBy` prefix. We need to look at the `score` property of the `Score`
+domain class, and we'll use `InRange` to compare against the provided range. Here is
+the improved implementation.
+[source,groovy]
+----
+include::complete/grails-app/services/demo/QueryService.groovy[tag=findByRange,indent=0]
+----

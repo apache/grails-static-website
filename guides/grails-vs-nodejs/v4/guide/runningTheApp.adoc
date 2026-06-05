@@ -1,0 +1,33 @@
+Run the server application as follows:
+
+[source,bash]
+----
+~ ./gradlew server:bootRun
+Grails application running at http://localhost:8443 in environment: development
+----
+
+Run the client side application (with HTTPS enabled) as follows:
+
+[source,bash]
+----
+~ export HTTPS = true
+~ ./gradlew client:bootRun
+Starting the development server...
+
+Compiled successfully!
+
+The app is running at:
+
+  https://localhost:3000/
+----
+
+You should be able to browser to `https://localhost:3000`, create a new
+user, and login. Try out the app! Add/remove some flavors to your user
+account. After one minute, your user session will end and you’ll be
+logged out (you can change this duration in the Grails’ app’s
+`application.yml` file). If you open multiple browsers and login with
+different users at different times, each user will be logged out
+separately only when their own session expires.
+
+Congratulations! You’ve got the Ice Cream app running with a Grails
+backend.

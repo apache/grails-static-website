@@ -1,0 +1,54 @@
+Custom widgets and wrappers render fine "on my machine" right up until a GSP attribute or a template-lookup assumption breaks them silently. The sample app is covered at three layers: domain unit tests, `@Integration` tests for the associations, and Geb browser tests that prove the custom widgets actually render in a real page.
+
+== Unit: the domain constraints
+
+`DataTest` mocks the associated domains so `belongsTo`/`hasMany` are satisfied without a Spring context:
+
+[source,groovy]
+.src/test/groovy/example/BookSpec.groovy
+----
+include::../snippets/src/test/groovy/example/BookSpec.groovy[]
+----
+
+[source,groovy]
+.src/test/groovy/example/AuthorSpec.groovy
+----
+include::../snippets/src/test/groovy/example/AuthorSpec.groovy[]
+----
+
+== Integration: the associations against a real database
+
+`@Integration` + `@Rollback` boots the full context against the in-memory H2 database and asserts on the `BootStrap` seed - including the `Book`-`Tag` many-to-many and the `Author`-`ContactInfo` one-to-one:
+
+[source,groovy]
+.src/integration-test/groovy/example/LibraryIntegrationSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/LibraryIntegrationSpec.groovy[]
+----
+
+== Browser: the custom widgets through Geb
+
+`ContainerGebSpec` starts a Selenium-Chrome container via Testcontainers and drives the booted app, so only a running Docker daemon is required. These specs are the ones that catch the GSP-level bugs custom widgets are prone to:
+
+[source,groovy]
+.src/integration-test/groovy/example/LibraryFunctionalSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/LibraryFunctionalSpec.groovy[]
+----
+
+The spec covers every scaffolded page and action of *both* domain classes, not just `Book`:
+
+* `index` - both `/book/index` and `/author/index` render the app-wide custom `f:table` with its dark header and the seeded rows. The `/author/index` assertion matters most: because `<f:table>` resolves a single app-wide `_table.gsp` for every domain class, a `book`-shaped loop variable or a `book.title` reference in that template renders `/book/index` fine but throws `No such property: title` on `/author/index`. That spec is the regression guard;
+* `show` - the read-only display widgets render, including the one-to-one `ContactInfo` through its `toString()`;
+* `create` and `edit` - the per-property ISBN widget (with its `pattern` and help text), the many-to-one author select, one many-to-many checkbox per `Tag`, and the constraint-driven email/url/textarea widgets all render, and the edit form is pre-filled and keeps the optimistic-lock `version` field;
+* `save`, `update`, `delete` - exercised through the UI: an author is created and updated through its form, and a book is deleted through the custom `f:table` delete form.
+
+A browser test here is not gold-plating: the custom ISBN widget's `pattern` attribute and the app-wide table's `domainClass.javaClass.simpleName` lookup are both the kind of thing that compiles cleanly and only fails when the page is actually rendered in a request. The Geb layer exercises exactly that path - on every page, for every domain class.
+
+Run it all:
+
+[source,bash]
+----
+./gradlew test             # unit - milliseconds, no Docker
+./gradlew integrationTest  # integration + Geb browser tests - Docker required
+----

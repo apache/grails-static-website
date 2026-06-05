@@ -1,0 +1,40 @@
+Now that we have our basic application structure, its’s time to set up
+our database. We are trying to migrate a https://objectcomputing.com/resources/publications/sett/april-2017-web-app-step-by-step[React + Node/express application] which used PostgreSQL.
+However, it’s worth noting that Grails has already set up a basic
+datasource for us, in the form on an in-memory H2 database. This
+database is destroyed and recreated every time the app is run, and it
+will even be updated during runtime if new tables/columns are added to
+the domain classes (more on those later). For many apps, this default
+database will be very well suited for the initial stages of app
+development, especially if you’re making many iterative changes to your
+data model. However, in keeping with the https://objectcomputing.com/resources/publications/sett/april-2017-web-app-step-by-step[app being migrated], we are going
+to replace this default H2 datasource with our desired PostgreSQL database.
+
+Let’s recap the steps to install PostgresSQL on your machine:
+
+[quote, Web App, Step by Step -- Mark Volkmann]
+____
+To install PostgreSQL in Windows, see https://www.postgresql.org/download/windows/.
+
+To install PostgreSQL in macOS:
+
+Install Homebrew by following the instructions at http://brew.sh/.
+Enter the following: brew install postgresql
+To start the database server, enter `pg_ctl -D /usr/local/var/postgres start`.
+
+To stop the database server later, enter `pg_ctl -D /usr/local/var/postgres stop -m fast`.
+____
+
+Once you’ve installed Postgres (or if you already have it installed),
+create a new database for our app using `createdb`
+
+[source, bash]
+----
+~ createdb ice_cream_db_2
+----
+
+If you recall in the https://objectcomputing.com/resources/publications/sett/april-2017-web-app-step-by-step[previous article] (where the above installation
+steps were taken from), the next steps here would be to create the
+database tables needed for our app. However, we won’t be using any SQL
+in this project. That’s because Grails offers a powerful and
+developer-friendly alternative: the http://gorm.grails.org/[GORM]; a data access toolkit for the JVM.

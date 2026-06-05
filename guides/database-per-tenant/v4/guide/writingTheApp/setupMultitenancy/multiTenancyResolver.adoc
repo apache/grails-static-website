@@ -1,0 +1,29 @@
+Note that, in addition to the mode, the above example configures the `tenantResolverClass` to use to resolve the tenant.
+
+The `tenantResolverClass` is a class that implements the link:{gormapi}/org/grails/datastore/mapping/multitenancy/TenantResolver.html[TenantResolver] interface.
+
+Included within GORM there are several built-in `TenantResolver` implementations including:
+
+.Available TenantResolver Implementations
+|===
+| Type | Description
+
+|link:{gormapi}/org/grails/datastore/mapping/multitenancy/web/SessionTenantResolver.html[SessionTenantResolver]
+|Resolves the tenant id from the HTTP session using an attribute called `gorm.tenantId`
+
+|link:{gormapi}/org/grails/datastore/mapping/multitenancy/web/CookieTenantResolver.html[CookieTenantResolver]
+|Resolves the tenant id from the HTTP cookie using an attribute called `gorm.tenantId`
+
+|link:{gormapi}/org/grails/datastore/mapping/multitenancy/web/SubDomainTenantResolver.html[SubDomainTenantResolver]
+|Resolves the tenant id from the current sub-domain. For example if the subdomain is `foo.mycompany.com`, the tenant id would be `foo`
+
+|link:{gormapi}/org/grails/datastore/mapping/multitenancy/resolvers/SystemPropertyTenantResolver.html[SystemPropertyTenantResolver]
+| Resolves the tenant id from a system property called `gorm.tenantId`. Mainly useful for testing
+
+|===
+
+The above implementations are useful to have out-of-the-box, however GORM is flexible and you can implement your own strategy by implementing the `TenantResolver` interface.
+
+TIP: For example if you are using Spring Security you could write a `TenantResolver` that resolves the tenant id from the currently logged in user.
+
+For this example we are going to be using `SessionTenantResolver` and storing the tenant id within the current user session.

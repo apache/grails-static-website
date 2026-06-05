@@ -1,0 +1,27 @@
+It is best to encapsulate the countries which we want to support in the configuration files.
+
+That way, if a country leaves the EU (e.g. UK ) it is an easy change in our app.
+
+Add a list of countries in _application.yml_
+
+[source,yaml]
+.grails-app/conf/application.yml
+----
+include::../snippets/grails-app/conf/application.yml[tag=countries]
+----
+
+Create a POGO:
+
+[source,groovy]
+.src/main/groovy/demo/Country.groovy
+----
+include::../snippets/src/main/groovy/demo/Country.groovy[]
+----
+
+Read the countries in a Grails Service:
+
+[source,groovy]
+.grails-app/services/demo/CountryService.groovy
+----
+include::../snippets/grails-app/services/demo/CountryService.groovy[]
+----

@@ -1,0 +1,40 @@
+Previously, we saw that you could match instances by their boolean properties like these examples:
+[source,groovy]
+----
+    // Finds all strategy games.
+    Game.findAllByStrategy(true)
+
+    // Finds all non-party games.
+    Game.findAllByPartyNotEqual(true)
+
+    // Finds all family games the support at least four players.
+    Game.findAllByFamilyAndMinPlayersGreaterThanEquals(true, 4)
+----
+
+Dynamic finders with one boolean property as part of the query can be shorted by incorporating
+the property name into the prefix and dropping the corresponding argument. So the above examples
+can be shortened to:
+[source,groovy]
+----
+    // Finds all strategy games.
+    Game.findAllStrategy()
+
+    // Finds all non-party games.
+    Game.findAllNotParty()
+
+    // Finds all family games the support at least four players.
+    Game.findAllFamilyByMinPlayersGreaterThanEquals(4)
+----
+
+If you are only examining the boolean property, you can drop the `By` portion of the
+prefix (so `findAllByBooleanProperty` becomes `findAllBooleanProperty`).
+
+Checking against a `true` values uses the property name appended to `findAll`, while checking
+against a `false` value uses the property name appended to `findAllNot`.
+
+If you have other conditions (like the third example above), then append those conditions
+after `By` in the prefix as earlier.
+
+NOTE: Only *one* boolean property can be incorporated into the prefix in this manner. If you
+have other boolean properties to match against in the same query, add them as before, such as
+`Game.findAllStrategyByFamily(true)` to find all games considered both strategy and family.

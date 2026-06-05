@@ -1,0 +1,22 @@
+NOTE: This guide uses Multi-Tenancy DATABASE mode. To learn more, read https://grails.apache.org/guides/database-per-tenant/guide/index.html[Database per Tenant Multi-Tenancy] Guide.
+
+This guides shows a typical flow you will see when creating a SaaS ( Software as a Service ) application using Multi-Tenancy `DATABASE` mode.
+
+To simplify this guide, the Database provising process is simplified.
+
+Create two MySQL databases with the following schema.
+
+[source, sql]
+----
+CREATE TABLE `plan` (
+  `id` bigint(20) NOT NULL,
+  `version` bigint(20) NOT NULL,
+  `title` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+----
+
+The first database should be called `gru` and the second `vector`.
+
+In the guide application, when a user registers, a database with identical name as the username is provisioned for the user, thus each registered user will have their own unique database.
+
+In a real-world app, you will probably have a more complicated setup which may involve creating the database, creating the schema, saving the database url and credentials of each user's database in a secured way in a database table of the default datasource etc.

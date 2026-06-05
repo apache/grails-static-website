@@ -1,0 +1,12 @@
+Although CodeNarc provides some http://codenarc.sourceforge.net/codenarc-rules-grails.html[rules] specific for Grails,
+some times we may want to create our own rules.
+
+In this example we're going to create a rule to check that we use  + 
+`grails.gorm.transactions.Transactional` instead of
+`@org.springframework.transaction.annotation.Transactional`. + 
+As you probably know the Grails `@Transactional` annotation is better because it doesn't create a runtime proxy. It's an AST Transformation that it's applied during compilation time, so there's no runtime overhead. There's also other features that the Grails annotation provides and
+the Spring one don't.
+
+NOTE: `grails.gorm.transactions.Transactional` is only available for the latest versions of GORM (this guide uses GORM {gormVersion}), for previous versions you should use `@grails.transaction.Transactional`.
+
+The rule checks our code. If we use the Spring annotation, it adds a new violation to the report.

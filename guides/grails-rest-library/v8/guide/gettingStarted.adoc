@@ -1,0 +1,3 @@
+In this guide you will build a small Library REST API on Apache Grails 8 with two domain classes (`Book` and `Author`), a `RestfulController`-driven CRUD surface, JSON views (`.gson`), and the production-quality concerns most beginner REST guides skip: structured 422 validation responses, bounded pagination, URL-prefix versioning, and an all-or-nothing bulk-create endpoint.
+
+This guide targets Apache Grails 8 / Spring Boot 4 / JDK 21.

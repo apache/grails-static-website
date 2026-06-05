@@ -1,0 +1,23 @@
+Knowing how to find one instance by a property value, we can find multiple instances by a
+(non-unique) property value by changing the prefix. Instead of `findBy`, use `findAllBy` to
+return a list of matching instances. If none match, the list will be empty.
+
+Let's update `QueryService.queryGamesWithAverageDuration`, a method used to collect all of
+the board games with the provided average duration. Here is the existing, inefficient implementation:
+[source,groovy]
+----
+include::initial/grails-app/services/demo/QueryService.groovy[tag=findAllByProp, indent=0]
+----
+
+As before, this slow implementation loads all records into memory, then searches over them.
+The database engine is much quicker and the memory load is much lower if only the matching records
+are returned, so let's change this to a dynamic finder.
+
+To find multiple records, use the `findAllBy` prefix. Append the property name `averageDuration`
+(updating capitalization for consistent camel-case of the dynamic finder method name), and pass
+the `averageDuration` parameter from `queryGamesWithAverageDuration` as an argument to the
+dynamic finder method call.
+[source,groovy]
+----
+include::complete/grails-app/services/demo/QueryService.groovy[tag=findAllByProp, indent=0]
+----

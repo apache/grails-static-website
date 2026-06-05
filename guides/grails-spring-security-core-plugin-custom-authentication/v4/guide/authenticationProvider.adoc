@@ -1,0 +1,61 @@
+Create a Custom `AuthenticationProvider` implementation. That it is a class which implements:
+
+`org.springframework.security.authentication.AuthenticationProvider`
+
+You will normally:
+
+- Either extend one that it is similar. For example, `DaoAuthenticationProvider` which comes with the plugin.
+
+`org.springframework.security.authentication.dao.DaoAuthenticationProvider`
+
+- Or directly implement the `AuthenticationProvider` interface
+
+In this guide, we choose the first option.
+
+However, Let's start with the artifact we are going to use to validate the coordinate supplied by the user.
+In this guide, we use a Grails Service.
+
+[source,groovy]
+./src/main/groovy/demo/CoordinateValidator.groovy
+----
+include::../snippets/src/main/groovy/demo/CoordinateValidator.groovy[indent=0]
+----
+
+[source,groovy]
+./grails-app/services/demo/CoordinateValidatorService.groovy
+----
+include::../snippets/grails-app/services/demo/CoordinateValidatorService.groovy[indent=0]
+----
+
+We are going to inject this service as a bean in our custom authentication provider. In order to do that, we register the bean first
+
+[source,groovy]
+./grails-app/conf/spring/resources.groovy
+----
+include::../snippets/grails-app/conf/spring/resources.groovy[indent=0,tag=coordinateValidatorBeanDefinition]
+----
+
+We extend the `DaoAuthenticationProvider` to add our extra check.
+
+[source,groovy]
+./src/main/groovy/demo/TwoFactorAuthenticationProvider.groovy
+----
+include::../snippets/src/main/groovy/demo/TwoFactorAuthenticationProvider.groovy[indent=0]
+----
+
+We need to register our custom `AuthenticationProvider` as a bean.
+
+[source,groovy]
+./grails-app/conf/spring/resources.groovy
+----
+include::../snippets/grails-app/conf/spring/resources.groovy[indent=0,tag=twoFactorAuthenticationProviderBeanDefinition]
+----
+
+Moreover, we want to use our `TwoFactorAuthenticationProvider` instead of  `DaoAuthenticationProvider`.
+In order to do that, we define the providers which should be use to authenticate:
+
+[source,groovy]
+./grails-app/conf/application.groovy
+----
+include::../snippets/grails-app/conf/application.groovy[indent=0,tag=providerNames]
+----

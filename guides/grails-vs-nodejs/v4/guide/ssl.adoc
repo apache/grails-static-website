@@ -1,0 +1,41 @@
+We can follow the commands from the https://objectcomputing.com/resources/publications/sett/april-2017-web-app-step-by-step[previous “Web App” article] to
+generate our self-signed SSL certificate:
+
+[source,bash]
+----
+~ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365
+----
+
+However, we have one more step to use our SSL certificate with Grails.
+Grails (and Spring Boot) doesn’t support the PEM format. Instead, we
+need to use the PKCS12 format for our keys. Fortunately, there is a
+single `openssl` command to make the conversion:
+
+[source,bash]
+----
+~ openssl pkcs12 -export -in cert.pem -inkey key.pem -out keystore.p12 -name tomcat -caname root
+----
+
+[IMPORTANT]
+====
+When deploying to a server like Tomcat, it is necessary to use the Java KeyStore (`.jks`) format for SSL certificates. See the following links for information on the conversion and configuration of JKS:
+++++
+<ul>
+<li><a href="https://symantec.tbs-certificates.co.uk/index.html.en">Convert PKCS12 to JKS</a></li>
+<li><a href="https://grails.apache.org/docs/latest/guide/deployment.html#deploymentTasks">Configure JKS with Grails (docs)</a></li>
+</ul>
+++++
+
+====
+
+To configure Grails to use our SSL certification, update the
+`application.yml` config file with the following lines:
+
+[source, groovy]
+./server/grails-app/conf/application.yml
+----
+include::../snippets/server/grails-app/conf/application.yml[indent=0,tag=ssl]
+----
+
+TIP: In Java apps it is more typical to use port 8443 for HTTPS
+traffic, which eliminates the need to use `sudo` to run the server.

@@ -1,0 +1,62 @@
+Grails uses https://grails.apache.org/docs/latest/guide/theWebLayer.html#gson[JSON Views] to represent render JSON responses. The idea being to continue the philosophy of separating the controller logic from the view logic.
+
+The default view rendered if no specific view is found is `grails-app/views/object/_object.gson`:
+
+[source,groovy]
+.grails-app/views/object/_object.gson
+----
+include::../snippets/grails-app/views/object/_object.gson[indent=0]
+----
+
+The default `_object.gson` view simply uses the `g.render(..)` method to automatically product a JSON representation of the object.
+
+If you want to alter the output of the JSON the way that is done in Grails is by creating a view. You can generate a starting point with the `generate-views` command of the CLI:
+
+[source,bash]
+----
+./grailsw generate-views demo.Product
+| Rendered template index.gson to destination grails-app/views/product/index.gson
+| Rendered template show.gson to destination grails-app/views/product/show.gson
+| Rendered template _domain.gson to destination grails-app/views/product/_product.gson
+----
+
+As you can see 3 templates were generated:
+
+* `grails-app/views/product/index.gson` - This view will be used when a collection (typically a list of results from GORM) is rendered via the `respond` method in a controller.
+* `grails-app/views/product/show.gson` - This view will be rendered when a single `Product` instance is rendered via the `respond` method in a controller.
+* `grails-app/views/product/_product.gson` - This is the template used by both the `index.gson` and `show.gson` views to actually display the data.
+
+The contents of the `_product.gson` by default look like:
+
+[source,groovy]
+.grails-app/views/product/_product.gson
+----
+import demo.Product
+
+model {
+    Product product
+}
+
+json g.render(product)
+----
+
+The call to `g.render(product)` outputs all properties.
+
+However, the `json` property is an instance of Groovy's http://docs.groovy-lang.org/2.4.7/html/gapi/groovy/json/StreamingJsonBuilder.html[StreamingJsonBuilder] and you can use it to alter the output as per your needs.
+
+For example:
+
+[source,groovy]
+.grails-app/views/product/_product.gson
+----
+include::../snippets/grails-app/views/product/_product.gson[indent=0]
+----
+
+In this trivialized example, we output the currency symbol based on the user's locale. Now the resulting JSON will look like:
+
+[source,json]
+----
+[{id:1,"name":"Apple","price":"$2.0"}]
+----
+
+TIP: JSON Views are very flexible, for more information on customizing the output to your needs see https://grails.apache.org/docs/latest/guide/theWebLayer.html#gson[the documentation].

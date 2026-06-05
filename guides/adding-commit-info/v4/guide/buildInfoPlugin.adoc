@@ -1,0 +1,11 @@
+Another popular approach that was popular with Grails 2.x was to utilize the https://grails.apache.org/plugins.html[Build Info Plugin]
+The build-info plugin works by utilizing the environment variables available via a build system like Jenkins.
+
+* BUILD_NUMBER
+* BUILD_ID
+* BUILD_TAG
+* SVN_REVISION
+* GIT_COMMIT
+* GIT_BRANCH
+
+These values would then be available by accessing the `/buildInfo` endpoint.

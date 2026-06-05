@@ -1,0 +1,23 @@
+To get started do the following:
+
+* link:https://github.com/{githubSlug}/archive/master.zip[Download] and unzip the source
+
+or
+
+* Clone the https://git-scm.com/[Git] repository: +
+`git clone https://github.com/{githubSlug}.git`
+
+The Grails guides repositories contain three folders:
+
+* `docker`
+* `complete`
+* `complete-analytics`
+
+In this guide you are going to create two Grails Applications. Both `complete` and `complete-analytics` apps are completed examples. It is the result of working through the steps presented by the guide and applying those changes.
+
+To run Kafka in Docker the `docker` folder contains a docker compose file. You need
+https://www.docker.io/gettingstarted/#h_installation[Docker] and https://docs.docker.com/compose/install/[Docker Compose] installed.
+
+To complete the guide, follow the instructions in the next sections.
+
+TIP: You can go right to the **completed example** if you `cd` into `{githubSlug}/complete` and `{githubSlug}/complete-analytics`.

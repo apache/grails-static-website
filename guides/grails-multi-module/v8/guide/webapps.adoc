@@ -1,0 +1,44 @@
+Each webapp should consume `shared-core` through the Grails plugin block in its `build.gradle`, not through a plain `dependencies { ... }` entry:
+
+[source,groovy]
+.webapp-customer/build.gradle and webapp-admin/build.gradle
+----
+grails {
+    plugins {
+        implementation project(':shared-core')
+    }
+}
+----
+
+That is the Grails-aware multi-project path documented in `grails-doc/src/en/guide/plugins/creatingAndInstallingPlugins.adoc`. Under the hood, `grails-gradle/plugins/src/main/groovy/org/grails/gradle/plugin/core/PluginDefiner.groovy` tags project plugin dependencies so `bootRun` can request the exploded plugin variant, while `grails-gradle/plugins/src/main/groovy/org/grails/gradle/plugin/exploded/GrailsExplodedPlugin.groovy` publishes that exploded classes/resources variant from the plugin project. A plain `dependencies { implementation project(':shared-core') }` declaration still compiles, but it bypasses that built-in reload path.
+
+Once wired, the plugin's `example.Book` domain and `example.BookService` data service are available to both webapps at compile time and runtime.
+
+The customer webapp owns its own controller package:
+
+[source,groovy]
+.webapp-customer/grails-app/controllers/customer/CatalogController.groovy
+----
+include::../snippets/webapp-customer/grails-app/controllers/customer/CatalogController.groovy[]
+----
+
+The admin webapp owns a different controller package:
+
+[source,groovy]
+.webapp-admin/grails-app/controllers/admin/BookController.groovy
+----
+include::../snippets/webapp-admin/grails-app/controllers/admin/BookController.groovy[]
+----
+
+Three patterns to keep:
+
+* Both controllers import `example.Book` and `example.BookService` from the plugin. The shared data model still has exactly one owner.
+* The customer-side `CatalogController` is intentionally hand-rolled and read-only.
+* The admin-side `BookController` extends `RestfulController<Book>` and gets the CRUD-oriented web surface that belongs only in the admin app.
+
+Files touched:
+
+- webapp-customer/build.gradle
+- webapp-admin/build.gradle
+- webapp-customer/grails-app/controllers/customer/CatalogController.groovy
+- webapp-admin/grails-app/controllers/admin/BookController.groovy

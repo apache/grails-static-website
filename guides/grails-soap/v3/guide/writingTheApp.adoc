@@ -1,0 +1,8 @@
+VIES (http://ec.europa.eu/taxation_customs/vies/faq.html[VAT Information Exchange System]) is an electronic mean of validating VAT-identification numbers of economic operators registered in the European Union for cross border transactions on goods or services.
+
+For example, if you create an e-commerce Web application in the European union you would need to check the validity of the purchaser's
+VAT Number in order to create a proper invoice.
+
+To automate the validation checks, the EU does not offer a REST endpoint but a SOAP service. Its WSDL file can be obtained http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl[here].
+
+**SOAP** (originally Simple Object Access Protocol) is a protocol specification for exchanging structured information in the implementation of web services in computer networks. Its purpose is to induce extensibility, neutrality and independence

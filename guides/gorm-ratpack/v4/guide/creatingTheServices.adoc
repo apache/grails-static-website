@@ -1,0 +1,9 @@
+Create a `Handler`. We handle two requests. 
+
+Requests to `/` return a list of manufacturers. Requests to `/audi/vehicles` returns a list of vehicles of the manufacturer named `audi`
+
+[source,groovy]
+.src/main/groovy/demo/ManufacturerHandler.groovy
+----
+include::../snippets/src/main/groovy/demo/ManufacturerHandler.groovy[]
+----

@@ -1,0 +1,15 @@
+For versions of GORM older than 6.0.10 or Spring Security Core Plugin prior to 3.1.2, `s2-quickstart` handles password 
+encoding directly with the
+injection of `SpringSecurityService` in the User class. Since Grails 3.2.8. service injection
+is disabled in domain classes. However, you can turn service injection on in domain classes:
+
+[source,groovy]
+.grails-app/conf/application.yml
+----
+grails:
+    gorm:
+        # Whether to autowire entities.
+        # Disabled by default for performance reasons.
+        autowire: true
+----
+

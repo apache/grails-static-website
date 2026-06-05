@@ -1,0 +1,13 @@
+Adding git commit information to your application is handy for debugging and transparency.  The default simple mode only exposes the sha, time and branch name.
+There are some organizations who would would prefer to restrict commit info even further in their more sensitive environments.
+
+One approach is to leverage https://grails.apache.org/docs/latest/guide/conf.html#environments[per-environment configuration]
+to enable/disable and configure the endpoints differently according to the environment.
+For example if you only wanted simple mode enabled in production you might use the following config:
+
+[source,yaml]
+./complete/grails-app/conf/application.yml
+----
+include::../snippets/grails-app/conf/application.yml[tag=cmpYmlP2]
+include::../snippets/grails-app/conf/application.yml[tag=cmpYmlP3]
+----

@@ -1,0 +1,30 @@
+Configure several Gradle tasks which allow us to build the runnable jar, copy it along with the necessary resources
+to a temporal directory, generate a `Dockerfile` file and finally build the docker image.
+
+[source, groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[indent=0, tag=import]
+...
+..
+.
+include::../snippets/build.gradle[indent=0, tag=extVariables]
+include::../snippets/build.gradle[indent=0, tag=prepareDocker]
+include::../snippets/build.gradle[indent=0, tag=createDockerfile]
+include::../snippets/build.gradle[indent=0, tag=buildImage]
+----
+<1> Define the docker image name. It will be something like `grails-sample/myProject:0.1`
+<2> Temporal directory used to build the Docker image
+<3> Copy the runnable jar file and the additional files from `src/main/docker` to the temporary directory
+<4> Create the `Dockerfile` file
+<5> Copy the `app-entrypoint.sh` script and define it as entrypoint of the container
+<6> Build the Docker image
+
+The content of `app-entrypoint.sh` is:
+
+[source, bash]
+.src/main/docker/app-entrypoint.sh
+----
+include::../snippets/src/main/docker/app-entrypoint.sh[]
+----
+

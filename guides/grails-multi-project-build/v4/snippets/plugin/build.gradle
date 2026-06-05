@@ -1,0 +1,12 @@
+//tag::pluginversiongroup[]
+version "0.1"
+group "plugin"
+//end::pluginversiongroup[]
+
+apply from: "${rootProject.projectDir}/gradle/codenarc.gradle"
+
+dependencies {
+    // tag::dependencygroovylib[]
+    compile project(':groovylib')
+    // end::dependencygroovylib[]
+}

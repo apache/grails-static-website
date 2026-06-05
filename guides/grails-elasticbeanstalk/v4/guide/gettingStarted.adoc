@@ -1,0 +1,6 @@
+In this guide, you will learn how to deploy a Grails app to https://aws.amazon.com/elasticbeanstalk/[AWS Elastic Beanstalk].
+
+____
+
+AWS Elastic Beanstalk is an easy-to-use service for deploying and scaling web applications and services developed with Java.
+____

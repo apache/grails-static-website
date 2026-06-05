@@ -1,0 +1,27 @@
+Create a `Movie` domain class. If we don't specify any data source, it gets associated with the **default** data source.
+
+[source,groovy]
+.grails-app/domain/demo/Movie.groovy
+----
+include::../snippets/grails-app/domain/demo/Movie.groovy[]
+----
+
+Create a `Book` domain class.
+
+[source,groovy]
+.grails-app/domain/demo/Book.groovy
+----
+include::../snippets/grails-app/domain/demo/Book.groovy[]
+----
+
+<1> The `Book` domain class is associated with the `books` data source.
+
+Create a `Keyword` domain class.
+
+[source,groovy]
+.grails-app/domain/demo/Keyword.groovy
+----
+include::../snippets/grails-app/domain/demo/Keyword.groovy[]
+----
+
+<1> The `Keyword` domain class is associated with to both data sources (dataSource - default one - and  `books`).

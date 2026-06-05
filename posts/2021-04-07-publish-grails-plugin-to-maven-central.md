@@ -44,7 +44,7 @@ The Sonatype’s OSSRH service is the primary place to publish plugins to the Ce
       1. Create a new Issue in the "Community Support - Open Source Project Repository Hosting" project.
       2. The issue type should be "New Project".
       3. On the Project Details page, enter basic project details. See the screenshot below for an example:
-         ![](2021-04-07-img01.png)
+         ![Blog post image 2021-04-07-img01](2021-04-07-img01.png)
          **NOTE:** Once the ticket is resolved, you should be good to deploy your artifacts.
          
 3. ### Make sure your project meets the minimum requirements

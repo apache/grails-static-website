@@ -1,0 +1,30 @@
+For teams that need explicit control over every layer, the equivalent multi-stage Dockerfile lives at the project root:
+
+[source,dockerfile]
+.Dockerfile
+----
+include::../snippets/Dockerfile[]
+----
+
+A few patterns are worth pointing at:
+
+* The build stage uses `bellsoft/liberica-openjdk-debian:21` (a Debian-based JDK) and the runtime stage uses `bellsoft/liberica-openjre-debian:21` (the matching JRE). Splitting the two halves the runtime image and matches what the Paketo buildpack does internally.
+* The `--mount=type=cache,target=/root/.gradle` line tells BuildKit to keep the Gradle cache between builds. Without it every build re-downloads every dependency.
+* `groupadd` + `useradd` create UID `10001` with no shell and no home directory. `USER 10001:10001` then runs the app as that UID. A container break-out is now an unprivileged process on the host.
+* `HEALTHCHECK` calls the same Actuator readiness endpoint the Compose file does. Docker reports the result via `docker ps`'s `STATUS` column.
+
+[NOTE]
+====
+The matching `.dockerignore` file excludes `.gradle/`, `build/`, `out/`, and other ephemera so the build context stays small:
+
+[source,text]
+.dockerignore
+----
+include::../snippets/.dockerignore[]
+----
+====
+
+Files touched in this chapter:
+
+* `Dockerfile`
+* `.dockerignore`

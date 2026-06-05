@@ -1,0 +1,5 @@
+In this guide you will solve a problem every non-trivial Grails app eventually meets: how to fan out business logic across several unrelated domains after a single domain object changes state, without tangling those side-effects into the originating service and without firing them when the originating transaction rolls back.
+
+The pattern - underused in Grails codebases - is Spring's `ApplicationEventPublisher` combined with `@TransactionalEventListener(phase = AFTER_COMMIT)`. Because GORM rides on Spring's `PlatformTransactionManager`, the integration is essentially free: publish a plain Groovy event from a `@Transactional` service, declare any number of listener beans, and Spring buffers the events until the database commit lands. Roll back, and the listeners are silently skipped.
+
+This guide targets Apache Grails 8 / Spring Boot 4 / JDK 21.

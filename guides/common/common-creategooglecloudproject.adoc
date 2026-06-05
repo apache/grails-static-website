@@ -1,0 +1,4 @@
+Signup for https://console.cloud.google.com[Google Cloud Platform] and create a new project:
+
+image::createproject_1.png[]
+image::createproject_2.png[]

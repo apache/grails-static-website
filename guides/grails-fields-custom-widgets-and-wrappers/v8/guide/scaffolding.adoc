@@ -1,0 +1,1 @@
+Grails dynamic scaffolding generates a default `index/list/show/create/edit/delete` action set and matching GSPs at runtime, just by setting `static scaffold = SomeDomainClass` on a controller. This is the starting point we will improve on - the goal is _replacing_ the default views, not removing scaffolding.

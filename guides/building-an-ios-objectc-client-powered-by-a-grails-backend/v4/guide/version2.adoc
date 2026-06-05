@@ -1,0 +1,7 @@
+The problem with the first version of the API is that we include every announcement
+body in the payload used to displayed the list. An announcement's body can be a large block of HTML.
+A user will probably just wants to check a couple of announcements. It will save bandwidth and
+make the app faster if we don't send the announcement body in the initial request. Instead, we will ask
+the API for a complete announcement (including `body`) once the user taps the announcement.
+
+image::version2overview.jpeg[]

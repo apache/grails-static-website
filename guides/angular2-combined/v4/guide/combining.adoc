@@ -1,0 +1,21 @@
+Since a single project is desired, the `settings.gradle` file is no longer necessary.
+
+`rm -f settings.gradle`
+
+Move all of the contents of `server` to the current directory
+
+`mv server/* ./`
+
+Delete the `server` directory
+
+`rm -r server`
+
+Move the `client` directory to the `src/main` directory
+
+`mv client src/main/`
+
+Delete the no longer used `build.gradle` file in the client directory
+
+`rm -f src/main/client/build.gradle`
+
+Now you have a single Grails project with the client side application living in `src/main/client`!

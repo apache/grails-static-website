@@ -1,0 +1,11 @@
+import demo.IceCream
+
+model {
+    IceCream iceCream
+}
+
+json {
+    id iceCream.id
+    flavor iceCream.flavor
+}
+

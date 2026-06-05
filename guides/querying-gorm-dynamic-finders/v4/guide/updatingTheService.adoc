@@ -1,0 +1,18 @@
+http://gorm.grails.org/latest/hibernate/manual/index.html#finders[Dynamic finders] are methods generated
+at runtime. Though the methods don't exist initially, Grails uses the Groovy metaprogramming hooks
+http://groovy-lang.org/metaprogramming.html#_methodmissing[`methodMissing`] and
+http://groovy-lang.org/metaprogramming.html#_propertymissing[`propertyMissing`] to recognize when you
+attempt to call one. Grails will then examine the method name you use and generate an appropriate
+implementation, including the corresponding database query.
+
+Dynamic finders read like English commands. For example, if I want to find all the board games with an
+average play duration between 30 and 90 minutes, it might look like this:
+
+[source,groovy]
+----
+def games = Game.findAllByAverageDurationBetween(30, 90)
+----
+
+This guide will explore ways to build dynamic finders by updating all the methods in
+`QueryService` with implementations that use dynamic finders, such that the new
+implementations continue to pass all unit tests in `QueryServiceSpec`.

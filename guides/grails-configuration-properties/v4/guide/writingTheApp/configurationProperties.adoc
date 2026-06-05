@@ -1,0 +1,32 @@
+In this section we are going to explore how property values can be bound to structured objects through `@ConfigurationProperties`.
+
+First, we need to annotate `Application.groovy` with `@ComponentScan`.
+
+[source, groovy]
+.grails-app/init/example/grails/Application.groovy
+----
+include::../../snippets/grails-app/init/example/grails/Application.groovy[]
+----
+
+<1> `@ComponentScan` tells Spring to look for other components, configurations, and services in the specified package. Spring is able to auto scan, detect and register your beans or components from pre-defined project package. If no package is specified current class package is taken as the root package.
+
+Create a file named `AddressConfiguration.groovy`.
+
+[source, groovy]
+.src/main/groovy/example/grails/AddressConfiguration.groovy
+----
+include::../../snippets/src/main/groovy/example/grails/AddressConfiguration.groovy[]
+----
+
+<1> We have added the `@Configuration` annotation for Spring to be able to find this bean and make it a candidate for injection.
+<2> The `@ConfigurationProperties` annotation takes the configuration prefix.
+
+Any properties defined in the property file that has the prefix `address` and the same name as one of the properties are automatically assigned to this object.
+
+Add some properties to `application.yml`
+
+[source, groovy]
+.grails-app/conf/application.yml
+----
+include::../../snippets/grails-app/conf/application.yml[tag=address]
+----

@@ -1,0 +1,2 @@
+To further your understanding read through the https://micronaut-projects.github.io/micronaut-kafka/latest/guide/[Micronaut Kafka]
+plugin documentation.

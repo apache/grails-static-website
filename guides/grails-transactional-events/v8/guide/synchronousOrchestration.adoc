@@ -1,0 +1,52 @@
+The event is another plain POGO, identical in spirit to `OrderPlacedEvent`: immutable, carrying IDs rather than entity references.
+
+[source,groovy]
+.src/main/groovy/example/events/EmployeeAssignedEvent.groovy
+----
+include::../snippets/src/main/groovy/example/events/EmployeeAssignedEvent.groovy[]
+----
+
+The publisher is also familiar - a `@Transactional` service that persists, then publishes.
+
+[source,groovy]
+.grails-app/services/example/WorkOrderAssignmentService.groovy
+----
+include::../snippets/grails-app/services/example/WorkOrderAssignmentService.groovy[]
+----
+
+This file is byte-for-byte the same *shape* as `OrderService`: inject `ApplicationEventPublisher`, do the persistence, call `publishEvent(...)`, return. The publisher does not know or care who listens. The difference is entirely on the listener side.
+
+[source,groovy]
+.grails-app/services/example/WorkOrderPlanningService.groovy
+----
+include::../snippets/grails-app/services/example/WorkOrderPlanningService.groovy[]
+----
+
+The single annotation that changes everything is `@EventListener` instead of `@TransactionalEventListener(AFTER_COMMIT)`. Walk through what that buys you:
+
+* *It fires synchronously, inline, now.* Spring's default `ApplicationEventMulticaster` is `SimpleApplicationEventMulticaster`, which invokes listeners directly on the calling thread. The call stack is `assignEmployee(...)` -> `publishEvent(...)` -> `onEmployeeAssigned(...)` -> back. No commit has happened yet; the publisher's `@Transactional` method has not even returned.
+* *It runs in the publisher's transaction and session.* The listener service itself carries no `@Transactional` - it runs inline inside the publisher's `@Transactional` (default `REQUIRED`) method, so its GORM work simply *joins* that active transaction rather than starting a new one. That shared transaction is the entire point - it is why the listener's writes commit with the assignment and roll back with it.
+* *Its reads see in-flight state.* `WorkOrder.get(event.workOrderId)` returns the managed instance from the current session, with the `WorkOrderAssignee` that was inserted moments ago already attached. When the listener flips the work order to `PLANNED` and then reads `workOrder.customerRequest`, it is reading uncommitted, transaction-local data - exactly what you cannot do from an `AFTER_COMMIT` listener.
+* *Its failures roll the operation back.* The `isTerminal()` guard throws `IllegalStateException` for a closed request. That exception propagates out through `publishEvent(...)`, out of `assignEmployee(...)`, and Grails' transactional advice marks the transaction for rollback. The assignee insert, the work-order status change, and any partial request change are all discarded together.
+
+A note on `save(failOnError: true)`. Strictly, dirty-checking would flush the mutated `WorkOrder` and `CustomerRequest` at commit without an explicit `save`. Calling `save(failOnError: true)` is deliberate anyway: it runs validation *now*, at the business step, and turns a constraint violation into a thrown exception that participates in the same rollback - rather than a silent `null` return or a deferred flush exception surfacing at commit time from a confusing stack frame.
+
+[NOTE]
+====
+This pattern depends on *synchronous* delivery. Do not put `@Async` on this listener: an async listener runs on a different thread with no inherited transaction, its writes would land in (or fail to find) a separate transaction, and - critically - an exception it throws would go to Spring's `AsyncUncaughtExceptionHandler` instead of rolling the publisher back. Synchronous in-transaction orchestration and `@Async` are mutually exclusive by design.
+====
+
+*Single listener vs. a chain of events.* The example does both status transitions in one listener. You *can* model the cascade as a chain - have this listener publish a `WorkOrderPlannedEvent` that a second synchronous listener consumes to advance the request - and because every listener in the chain is synchronous, the whole chain runs depth-first inside the one transaction and rolls back as a unit. Reach for chaining only when the intermediate event (`WorkOrderPlannedEvent`) is independently meaningful to *other* consumers. Otherwise a single listener is clearer and avoids the chain's sharp edges: listener ordering, and the fact that Spring does no cycle detection, so a listener that (directly or transitively) re-publishes its own trigger will recurse until the stack overflows.
+
+*Why not `@TransactionalEventListener(BEFORE_COMMIT)`?* It also runs in the publisher's transaction and would also roll back on failure, so it can do atomic work. But it fires at a different time - after the service method body has fully returned, while the commit is being prepared - not at the business step that published the event. That makes it a transaction-lifecycle hook (good for last-moment validation or derived totals computed from the final state of the transaction), not the natural home for causal, mid-method orchestration that wants to read and react to in-flight state immediately. Lead with the plain `@EventListener`; reach for `BEFORE_COMMIT` only when you specifically need the deferred, just-before-commit timing.
+
+References:
+
+* link:https://docs.spring.io/spring-framework/reference/6.2/core/beans/context-introduction.html[Spring Framework Reference - Application Events] (synchronous delivery; publishing events from listener methods)
+* link:https://docs.spring.io/spring-framework/docs/6.2.x/javadoc-api/org/springframework/context/event/EventListener.html[`@EventListener` javadoc] (async exceptions are not propagated to the caller)
+
+Files touched in this chapter:
+
+* `src/main/groovy/example/events/EmployeeAssignedEvent.groovy`
+* `grails-app/services/example/WorkOrderAssignmentService.groovy`
+* `grails-app/services/example/WorkOrderPlanningService.groovy`

@@ -1,0 +1,12 @@
+By the end of the guide your application will:
+
+* Render `grails-app/views/layouts/main.gsp` and `grails-app/views/index.gsp` with Tailwind 4 utility classes instead of the default Bootstrap 5 classes the starter ships with.
+* Compile `src/main/css/input.css` (the Tailwind entry point) into `grails-app/assets/stylesheets/app.css` via a `tailwindBuild` Gradle task that runs before `processResources` and `compileGroovy`. The asset pipeline then bundles, fingerprints, and gzips that file into the `application.css` bundle the layout serves.
+* Toggle dark mode at runtime by adding the `dark` class on `<html>`, persisting the choice to `localStorage` so reloads do not flash light-to-dark.
+* Expose three reusable component classes (`btn-primary`, `card`, `nav-link`) defined in the `@layer components` block of `input.css` and used directly from GSP markup.
+
+The result is a small but production-shaped baseline you can copy into any Grails 8 app that still wants the GSP view layer but a modern utility-first CSS pipeline.
+
+Files touched in this chapter:
+
+* None

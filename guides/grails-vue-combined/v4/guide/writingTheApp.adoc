@@ -1,0 +1,9 @@
+If you open the `initial` project of this guide, you will find a plain project
+generated from the Vue profile.
+
+Both the `server` Grails app and the `client` Vue app have `production`
+build tasks set up - you can run `./gradlew server:assemble` to build a WAR or
+JAR file, and you can run `yarn build` (or `./gradlew client:build`) to generate
+a static Vue/webpack bundle.
+Our first step is to create a new `build.gradle` file at the top of our project
+structure, above the `client` and `server` sub-projects.

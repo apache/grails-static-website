@@ -1,0 +1,7 @@
+In this guide you will package an Apache Grails 8 application as a production-ready OCI container image and orchestrate it alongside a real PostgreSQL database with Docker Compose.
+
+The path most teams should pick is link:https://docs.spring.io/spring-boot/gradle-plugin/packaging-oci-image.html[Spring Boot 4's `bootBuildImage` Gradle task], which delegates to link:https://paketo.io[Paketo Buildpacks] and produces a minimal, layered, reproducible image with no Dockerfile to maintain. We will lead with that.
+
+For teams that need to control every layer, this guide also covers a hand-rolled multi-stage Dockerfile with a non-root user, and shows how the two paths produce equivalent runtime behaviour.
+
+This guide targets Apache Grails 8 / Spring Boot 4. It supersedes the earlier link:https://grails.apache.org/guides/grails-as-docker-container/3/guide/index.html[Grails as a Docker Container] guide for Grails 3 and 4, which used the now-deprecated link:https://github.com/palantir/gradle-docker[gradle-docker] plugin.

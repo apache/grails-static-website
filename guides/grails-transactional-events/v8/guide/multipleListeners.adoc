@@ -1,0 +1,21 @@
+The whole point of the pattern is that fanning out is cheap: a new side-effect is a new class, not an edit to `OrderService`. Here's a second listener that writes an `AuditLog` row.
+
+[source,groovy]
+.grails-app/services/example/AuditService.groovy
+----
+include::../snippets/grails-app/services/example/AuditService.groovy[]
+----
+
+Notice that this file is independent of `CustomerLifetimeValueService`. They share nothing - no inheritance, no interface. Adding a third side-effect tomorrow - a webhook, a search-index refresh, a metrics counter - means writing a `WebhookService` class and nothing else: Grails auto-registers it, and Spring wires both against the `OrderPlacedEvent` type and calls both (in unspecified order) when an order commits; the publisher never changes.
+
+`AuditLog` snapshots the data it needs at event-time: `orderTotal` is copied from the event, not looked up by querying the (now-detached) `Order`. That decoupling has a few benefits:
+
+* The listener doesn't need a `Order.get(...)` round-trip. One INSERT per audit row.
+* The audit history is immune to later edits of `Order.total` (which shouldn't happen, but might).
+* If `Order` is hard-deleted later, the audit row still tells the full story.
+
+A common temptation is to add a `@Order(0)` annotation here to guarantee the audit row is written before the customer lifetime value updates. Resist it unless ordering is part of the actual business contract. Two AFTER_COMMIT listeners that need a specific ordering are usually one chained business operation in disguise, and the right refactor is to make the audit listener publish a second event the lifetime listener listens for - or to merge them into a single listener that does both writes in one transaction.
+
+Files touched in this chapter:
+
+* `grails-app/services/example/AuditService.groovy`

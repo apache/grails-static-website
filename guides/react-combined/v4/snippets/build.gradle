@@ -1,0 +1,25 @@
+task copyClientResources(dependsOn: ':client:build') { // <1>
+    group = 'build'
+    description = 'Copy client resources into server'
+}
+
+task assembleServerAndClient(dependsOn: ['copyClientResources', ':server:assemble']) {  // <2>
+    group = 'build'
+    description = 'Build combined server & client JAR'
+
+    doLast {
+        copy {
+            from fileTree(dir: "${project(':server').buildDir}/libs/") // <4>
+            into "$rootDir/build/"
+        }
+
+        logger.quiet "JAR generated at $rootDir/build/. It combines the server and client projects."
+    }
+}
+
+copyClientResources.doFirst { // <3> 
+    copy {
+        from "${project(':client').buildDir.absolutePath}"
+        into "${project(':server').buildDir}/resources/main/public"
+    }
+}

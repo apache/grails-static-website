@@ -1,0 +1,24 @@
+The `config.yml` file tells Circle CI what to do. It must be located in a folder class `.circleci/` at the top level of your project.
+Circle CI uses a docker image as the container and has the ability to cache dependencies.
+
+.*.circleci/config.yml*
+[source, yml]
+----
+include::../snippets/.circleci/config.yml[]
+----
+
+<1> Check https://circleci.com/docs/2.0/language-java/[CircleCI 2.0 Java configuration] for more details
+<2> Set this Docker Image as the primary container; this is where all `steps` will run
+<3> Customize the JVM maximum heap limit
+<4> A collection of executable commands.
+<5> Checkout the source code to working directory.
+<6> Restore the saved cache after the first run or if `build.gradle` has changed.
+<7> Assembles test classes.
+<8> Assembles integration test classes.
+<9> Saves the project dependencies
+<10> Runs both integration, functional and unit tests. The feature method `DefaultHomePageSpec` is ignored if we do not specify the system property `geb.env`.
+<11> Uploads the HTML test reports from the `build/reports` as an artifact
+<12> Uploads the test metadata from the `build/tests-results` directory so that it can show up in the CircleCI dashboard.
+
+Commit the change to Git push them to the remote repository.  Upon the push, go to https://circleci.com/ and view the build running.
+Once the build is complete, restart the build to demonstrate that Circle CI will use the cache for dependencies.

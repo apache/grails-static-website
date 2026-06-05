@@ -1,0 +1,22 @@
+Now that we have a unified Gradle build target, we have a couple more configuration changes to make. All of these changes have to do with the URL differences between the separate Grails & React apps and our new combined deployment.
+
+By default, static resources in a deployed Grails app are served from the  `/static` base URL. That will conflict with what our React app expects, but fortunately, this is a very simple change.
+
+Edit `server/grails-app/conf/application.yml`:
+[source,yml]
+.server/grails-app/conf/application.yml
+----
+include::../snippets/server/grails-app/conf/application.yml[indent=0, tag=grailsResourcesPattern]
+----
+
+This simply sets the static resources URL to be set to the root context.
+
+Along similar lines, we need to edit the URL that the React app uses to make REST calls against the Grails app. This can be done within `src/config.js` in the `client` project.
+
+Edit `client/src/config.js`:
+[source,javascript]
+.client/src/config.js
+----
+include::../snippets/client/src/config.js[indent=0]
+----
+<1> The `process.env.NODE_ENV` is a NodeJS environment variable that will tell us if we are running in production or development mode. We're using a simple ternary operator to switch the `SERVER_URL` config property to point to our standalone Grails app during development, and to use the root context in production.

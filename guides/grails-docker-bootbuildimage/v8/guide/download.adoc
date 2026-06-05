@@ -1,0 +1,12 @@
+Open link:https://start.grails.org[start.grails.org], pick the `web` profile, name the application `docker`, set the package to `example`, choose JDK 21, tick the `postgres`, `testcontainers`, and `database-migration` features, and download the generated zip. Unzip it and `cd` into the `docker` directory.
+
+The forge unpacks into a `docker/` directory containing a vanilla Grails 8 layout plus the three feature-driven additions:
+
+* `runtimeOnly "org.postgresql:postgresql"` and a Postgres datasource template in `grails-app/conf/application.yml`
+* `testImplementation "org.testcontainers:postgresql"` (and `org.testcontainers:spock` + `:testcontainers`)
+* `implementation "org.apache.grails:grails-data-hibernate5-dbmigration"`
+
+[NOTE]
+====
+The forge's default `build.gradle` ships `compileJava.options.release = 17`. The `complete/` tree in the upstream repo patches it to `21`; do the same in your local checkout.
+====

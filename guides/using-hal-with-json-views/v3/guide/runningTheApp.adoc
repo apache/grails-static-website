@@ -1,0 +1,40 @@
+Grails provides excellent support for RESTful url mappings to expose domain resources. In the `initial` project, we've already annotated our domain classes with the `@Resource` annotation, which generates a `RestfulController` and associated URL mappings to expose each domain class as a restful resource.
+
+[source,groovy]
+.grails-app/domain/com/example/Customer.groovy
+----
+include::../snippets/../initial/grails-app/domain/com/example/Customer.groovy[indent=0,lines="1..7"]
+----
+<1> The `@Resource` annotation takes several optional arguments, including a URL endpoint and format options, as well as whether the API should only expose read endpoints
+
+Adding these annotations to our domain classes gives us a running start to creating our API. See the https://grails.apache.org/docs/latest/guide/webServices.html#domainResources[Grails documentation] for more information on `@Resource`
+
+include::{commondir}/common-runapp.adoc[]
+
+Now that the Grails app is running, we can try out the API that Grails generated for us via the `@Resource` annotation. Make a GET request to `/api/products` to retrieve a list of products:
+
+[source, bash]
+----
+curl -H "Accept: application/json" localhost:8080/api/products
+----
+
+[source, groovy]
+----
+include::../snippets/../initial/src/integration-test/groovy/com/example/ProductsListSpec.groovy[indent=0,lines=22..44]
+//...
+]
+----
+
+Here, a GET request to `/api/orders/1` returns the `Order` with an id of 1:
+
+[source, bash]
+----
+curl -H "Accept: application/json" localhost:8080/api/orders/1
+----
+
+[source, groovy]
+----
+include::../snippets/../initial/src/integration-test/groovy/com/example/OrderShowSpec.groovy[indent=0,lines=22..44]
+----
+
+NOTE: Because we've specified `readOnly = true` in our `@Resource` annotations, Grails will not generate endpoints for update/create/delete operations. This is sufficient for the steps in this guide, but you can remove the `readOnly` property (or set it to `false`) to enable the "write" operations.

@@ -1,0 +1,5 @@
+import example.grails.BookAnalytics
+model {
+    List<BookAnalytics> analytics = []
+}
+json tmpl.bookAnalytics(analytics)

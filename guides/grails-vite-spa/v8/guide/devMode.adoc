@@ -1,0 +1,27 @@
+Dev mode runs both servers in parallel and lets each one own what it is good at:
+
+[source,bash]
+----
+# Shell 1
+./gradlew :backend:bootRun
+# Backend on http://localhost:8080
+# Spring DevTools reloads on Groovy changes
+
+# Shell 2
+cd frontend
+npm install
+npm run dev
+# Vite on http://localhost:5173
+# HMR updates the browser on JSX/CSS changes without losing component state
+----
+
+The browser opens `http://localhost:5173`. Every `fetch('/api/books')` call from the SPA hits Vite first; Vite sees the `/api` prefix in the proxy config and forwards to `http://localhost:8080/api/books`. The response comes back the way it came.
+
+Two things to keep an eye on:
+
+* *Same-origin in dev too.* Because the SPA always calls relative paths and Vite proxies them, the browser never sees a cross-origin request. CORS preflight requests do not happen even in dev.
+* *Spring DevTools for the backend, Vite HMR for the frontend.* Each side reloads independently; you can edit `App.jsx` without restarting Grails, and edit a Groovy controller without losing your SPA state. The Spring DevTools story for Grails 8 is covered in `grails-doc/src/en/guide/gettingStarted/developmentReloading.adoc`.
+
+Files touched in this chapter:
+
+* None directly (this chapter is a runbook)

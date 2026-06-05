@@ -1,0 +1,15 @@
+`<f:display>` is the read-only counterpart of `<f:all>`. It uses the `_displayWrapper.gsp` and `_displayWidget.gsp` templates rather than `_wrapper.gsp` and `_widget.gsp`.
+
+[source,html]
+.grails-app/views/book/show.gsp
+----
+include::../snippets/grails-app/views/book/show.gsp[]
+----
+
+[source,html]
+.grails-app/views/author/show.gsp
+----
+include::../snippets/grails-app/views/author/show.gsp[]
+----
+
+`<f:display bean="book"/>` is one line and you never have to revisit it. The display formatting (date format, currency, association labels) lives in `_fields/.../_displayWidget.gsp` templates that we will customise later.

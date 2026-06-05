@@ -1,0 +1,2 @@
+We are going to write a simple application with the domains `Person` and `Address`. These domains have a one-to-many relationship.
+We will develop GORM Data Services which perform query and write operations.

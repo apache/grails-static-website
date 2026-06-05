@@ -1,0 +1,5 @@
+To summarize this guide, we learned how . . .
+
+- To unit test Service's methods with GORM code, use `HibernateSpec`.
+- To create an integration tests for a service, inject the service with `@Autowired`.
+- Mocking Services can be done with the Spock `Mock()` method. It abides by lenient mock principles, and comes with an array of features.

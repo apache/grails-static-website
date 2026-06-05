@@ -1,0 +1,11 @@
+You can either type the code in this guide as you read or skip ahead and clone the finished sample:
+
+[source,bash]
+----
+git clone -b grails8 https://github.com/grails-guides/grails-rest-library.git
+cd grails-rest-library/complete
+./gradlew bootRun
+curl -s http://localhost:8080/v1/books | jq
+----
+
+`initial/` is the vanilla Grails 8 `rest_api` starter from link:https://start.grails.org[start.grails.org] (with the `postgres`, `testcontainers`, `views-json`, and `database-migration` features). `complete/` adds the Book + Author domain model, the controllers, the JSON views, and the bootstrap data.

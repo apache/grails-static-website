@@ -1,0 +1,12 @@
+The `initial` folder contains a Grails 3 application created with the `web` profile.
+It has several Controllers, GORM Data Services, Domain classes and a simple CRUD interface built with https://grails.apache.org/docs/latest/guide/theWebLayer.html#gsp[GSP]s.
+It is an app to list tourism resources; hotels, restaurants, and points of interest.
+
+In the next sections, you are going to add a feature to the app. Each of those resources may include a
+ featured image.
+
+* For restaurants, we are going to store the image bytes directly in the domain class.
+
+* For points of interest, we transfer the file to a folder.
+
+* For hotels, we upload the file to AWS S3.

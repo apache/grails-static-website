@@ -1,0 +1,4 @@
+To complete this guide you will need:
+
+* JDK 21
+* About 30 minutes

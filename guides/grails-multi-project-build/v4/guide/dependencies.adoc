@@ -1,0 +1,37 @@
+We want to configure the next dependencies:
+
+image::dependencies.png[]
+
+## App dependencies
+
+`app` depends on `plugin`. You can express it in the `dependencies` block such as:
+
+[source, groovy]
+.app/build.gradle
+----
+dependencies {
+    ...
+    compile project(':plugin')
+}
+----
+
+or with:
+
+[source, groovy]
+.app/build.gradle
+----
+include::../snippets/app/build.gradle[tag=grailsplugins]
+----
+
+## Plugin dependencies
+
+`plugin` depends on `groovylib`
+
+[source, groovy]
+.plugin/build.gradle
+----
+dependencies {
+  ...
+include::../snippets/plugin/build.gradle[tag=dependencygroovylib]
+}
+----

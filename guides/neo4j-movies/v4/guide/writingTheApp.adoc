@@ -1,0 +1,10 @@
+As mentioned previously in this guide you are going to implement the Neo4j https://neo4j.com/developer/example-project/[Movies example application]. The Neo4j website describes the example as follows:
+
+[quote, Neo4j.com]
+It is a simple, one-page webapp, that uses Neo4j’s movie demo database (movie, actor, director) as data set. The same front-end web page in all applications consumes 3 REST endpoints provided by backend implemented in the different programming languages and drivers. 
+
+The REST endpoints to be implemented are:
+
+* single movie listing by title
+* movie search by title
+* graph visualization of the domain

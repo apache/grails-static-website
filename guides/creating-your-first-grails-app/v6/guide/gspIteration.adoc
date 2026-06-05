@@ -1,0 +1,28 @@
+== Iteration
+
+There are GSP tags for iteration as well - a very useful one is `<g:each>`. Let's try it out:
+
+[source,xml]
+.grails-app/views/home/index.gsp
+----
+<%@ page import="Vehicle" %> //<1>
+<html>
+<!-- ... -->
+        <p>There are ${vehicleTotal} vehicles in the database.</p>
+
+        <ul>
+            <g:each in="${Vehicle.list()}" var="vehicle">  <!--2-->
+                <li>
+                    <! -- ... -->
+                </li>
+            </g:each>
+        </ul>
+
+<!-- ... -->
+----
+The  `<g:each>` tag iterates through a collection of objects, provided by the `in` attribute. `var` sets the name for each object in the collection. Grails will iterate through the collection (in this case, the list of `Vehicles` returned by `Vehicle.list()`) and render the body of the `<g:each>` tag for every item.
+
+<1> This is a JSP-style expression that allows executing arbitrary Groovy code (without rendering a result). We're using it here to import our `Vehicle` class. This is *highly* discouraged - we'll explain why shortly.
+<2> Bad practice, accessing the Domain model directly from the view
+
+IMPORTANT: This sort of code is a *bad idea* - we are accessing our domain model (`Vehicle`) directly from our view, which tightly couples two separate parts of the application, and in general leads to very messy code. The better way to accomplish this feature is to get the `Vehicle` list in the `HomeController.index` action, and add the list to our model object (the one being passed to `respond`). Then we could refer to the list in the same way that we access `name` and `vehicleTotal`. Go ahead and change the controller and view to use this better approach - the completed project has this change already made if you need help.

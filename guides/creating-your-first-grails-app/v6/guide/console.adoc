@@ -1,0 +1,20 @@
+Right now we don't have any controllers or views set up to play with our domain model. We'll get there shortly, but for now, let's fire up the https://grails.apache.org/docs/latest/ref/Command%20Line/console.html[Grails Console] so we can explore what Grails and GORM have to offer.
+
+If the application is still running, shut it down with either kbd:[Ctrl+C], or (if running Grails in https://grails.apache.org/docs/latest/guide/commandLine.html#interactiveMode[Interactive Mode], the `stop-app` command).
+
+Launch the Grails Console:
+
+[source, bash]
+----
+$ ./grailsw console
+----
+
+The Grails Console application will launch. This application is based on the http://groovy-lang.org/groovyconsole.html[Groovy Console], but has the added benefit that our entire Grails application is up and running in the background, so we can access our domain classes and even persist to the database from the Console.
+
+Try playing with our new domain model from the Console. Here's a simple script to get you started - again, refer to the http://gorm.grails.org/6.0.x/hibernate/manual[GORM documentation] for more details on querying, persistence, configuration and more.
+
+[source,groovy]
+.docs/console.groovy
+----
+include::../snippets/docs/console.groovy[]
+----

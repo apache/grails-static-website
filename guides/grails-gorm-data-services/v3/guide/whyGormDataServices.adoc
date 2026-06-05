@@ -1,0 +1,20 @@
+Automatic implementation of an interface or an abstract class reduces the amount of code written.  In
+addition, GORM Data Services define transaction boundary semantics automatically.  For example, all public methods are
+marked with `@Transactional` (and read-only for query methods).
+
+=== Advantages of Data Services
+
+To summarize the advantages:
+
+- *Type Safety* - Data service method signatures are compile time checked and compilation will fail if the types of any
+parameters don't match up with properties in your domain class.
+
+- *Testing* - Since Data Services are interfaces this makes them easy to mock.
+
+- *Performance* - The generated services are statically compiled and unlike competing technologies in the Java space no
+proxies are created so runtime performance doesn't suffer. Moreover, update operations are performed with efficiency.
+
+- **Correctly define transaction semantics**. Users often don't correctly define transactions semantics. Each method in a Data Service is wrapped
+in an appropriate transaction (a read-only transaction in the case of read operations).
+
+- **Support Multi-tenancy**. In combination with `@CurrentTenant` annotation, GORM data services ease multi-tenancy development.

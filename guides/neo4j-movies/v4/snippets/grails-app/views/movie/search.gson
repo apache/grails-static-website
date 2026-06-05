@@ -1,0 +1,10 @@
+import groovy.transform.Field
+import neo4j.movies.Movie
+
+@Field Iterable<Movie> movieList = []
+
+json(movieList) { Movie movie ->
+	released movie.released
+	tagline movie.tagline
+	title movie.title
+}

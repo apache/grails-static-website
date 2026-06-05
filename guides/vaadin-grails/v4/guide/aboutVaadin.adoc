@@ -1,0 +1,21 @@
+
+https://vaadin.com/framework[Vaadin] is Java Web UI Framework for Business Applications. 
+
+____
+With Vaadin Framework, you'll use a familiar component based approach to build awesome single page web apps faster than with any other UI framework. Forget complex web technologies and just use Java or any other JVM language. Only a browser is needed to access your application - no plugins required.
+____
+
+image::charts-on-mobile-and-desktop.png[]
+
+TIP: The Vaadin 8 Grails profile allows you mix Vaadin endpoints and traditional Grails endpoints. 
+
+On the one hand, we are going to have endpoints which will be handled by Grails Controllers. They will render HTML, JSON or XML using  
+https://grails.apache.org/docs/latest/guide/theWebLayer.html#gsp[GSP] or https://grails.apache.org/docs/latest/guide/theWebLayer.html#gson[Grails Views]. 
+
+On the other hand, we are going to have Vaadin endpoints. We will develop the UI using Java or Groovy, and we will connect to the Grails service layer directly. 
+
+If you require additional information on Vaadin, please check out the official documentation
+https://vaadin.com/docs/-/part/framework/introduction/intro-overview.html[here]. Additionally,
+you may find a fair number of examples in an older version of Vaadin, and
+https://vaadin.com/framework/whatsnew[this] page gives a good explanation of how some of these
+features have been updated in Vaadin 8.

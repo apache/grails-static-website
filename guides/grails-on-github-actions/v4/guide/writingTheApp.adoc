@@ -1,0 +1,49 @@
+The `initial` project contains a Grails Application created with the `web`
+with the http://start.grails.org[Grails Application Forge].
+
+Your build file `build.gradle` is setup to run Geb tests seamlessly:
+
+[source, groovy]
+.gradle.properties
+----
+include::../snippets/gradle.properties[]
+----
+
+[source, groovy]
+.build.gradle
+----
+buildscript {
+...
+    dependencies {
+    ...
+include::../snippets/build.gradle[tag=buildscriptwebdriverbinaries]
+    }
+}
+...
+...
+...
+include::../snippets/build.gradle[tag=applywebdriverbinaries]
+
+...
+...
+...
+
+dependencies {
+    ...
+    ...
+include::../snippets/build.gradle[tag=gebdependencies]
+}
+
+include::../snippets/build.gradle[tag=webdriverBinaries]
+----
+
+<1> Apply the https://github.com/energizedwork/webdriver-binaries-gradle-plugin[Webdriver binaries Gradle Plugin]. A Gradle plugin that downloads WebDriver binaries specific to the operating system the build runs on. The plugin also as configures various parts of the build to use the downloaded binaries.
+<2> Include a `testCompile` dependency to the Geb Grails plugin which has a transitive dependency to `geb-spock`.
+<3> Adds the necessary selenium dependencies to use Chrome
+<4> Adds the necessary selenium dependencies to use Firefox
+<5> Geb is built on top of WebDriver. You need these `testCompile` dependencies.
+<6> Configures the http://chromedriver.chromium.org[ChromeDriver] version to be used by the Webdriver binaries Gradle Plugin.
+<7> Configures the https://github.com/mozilla/geckodriver/releases[GeckoDriver] version (e.g. Firefox) to be used by the Webdriver binaries Gradle Plugin.
+
+
+

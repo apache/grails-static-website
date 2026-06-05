@@ -1,0 +1,41 @@
+HAL resources can declare a custom "MIME Type" (or "Content Type") that clients should use in order to interact with the API. Grails includes two generic HAL MIME types in the default `application.yml`:
+
+[source,yml]
+.grails-app/conf/application.yml
+----
+include::../snippets/grails-app/conf/application.yml[indent=0,lines="36..52"]
+----
+
+You can specify a custom MIME type for your API if you wish, by adding an entry to this configuration:
+
+[source,yml]
+.grails-app/conf/application.yml
+----
+include::../snippets/grails-app/conf/application.yml[indent=0,lines="50..63"]
+----
+<1> Specifies a MIME type called `inventory`, and gives it a type specification (by convention, `vnd` indicates a "vendor" MIME type)
+
+Now you can use this custom MIME type in your JSON views, using the `type` helper method:
+
+[source, groovy]
+.grails-app/views/product/show.gson
+----
+include::../snippets/grails-app/views/product/show_mime.gson[]
+----
+<1> The `hal.type()` method takes a string to identify the custom MIME type in the `application.yml` file, or an explicit MIME specification as a string
+
+Make a request to `http://localhost:8080/api/products/1` to see the custom content-type:
+
+[source, bash]
+----
+$ curl -i localhost:8080/product/1
+
+HTTP/1.1 200
+X-Application-Context: application:development
+Content-Type: application/vnd.com.example.inventory+json;charset=UTF-8 //<1>
+Transfer-Encoding: chunked
+Date: Sun, 05 Feb 2017 01:51:08 GMT
+
+include::../snippets/src/test/groovy/com/example/ProductShowSpec.groovy[indent=0,lines=20..44]
+----
+<1> Note the new MIME type in the `Content-Type` header

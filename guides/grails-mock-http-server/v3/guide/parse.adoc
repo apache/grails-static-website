@@ -1,0 +1,7 @@
+Create the next class to encapsulte the parsing of JSON payload into Groovy Classes.
+
+[source, groovy]
+.grails-app/utils/org/openweathermap/OpenweathermapParser.groovy
+----
+include::{sourcedir}/grails-app/utils/org/openweathermap/OpenweathermapParser.groovy[]
+----

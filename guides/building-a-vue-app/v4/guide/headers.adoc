@@ -1,0 +1,25 @@
+Our first component will be a header bar. Create new file named `AppHeader.vue` under `client/src/components`, and edit as shown below:
+
+[source,javascript]
+./client/src/components/AppHeader.vue
+----
+include::../snippets/client/src/components/AppHeader.vue[]
+----
+
+The `<template>` contains the HTML template that will be rendered by the component. In the sample above, we are rendering a `<div>` tag to represent our UI's main header, including a banner image and `<h1>` tag.
+
+TIP: Every `<template>` must contain only one root-level element.
+
+Within the `<script>` tag, we export a JavaScript object as a *module*. This object will be used as the *instance definition* for the Vue component, and is used to supply data & behavior for the component. In this case, our component is entirely presentational, so we don't have much in this object. We will see more examples of the features available in this object, later in the guide.
+
+The final section of the single-file-component is the `<style>` tags. Here you can specify component-specific CSS rules. These rules will be "scoped" to the component’s template and will not affect any other HTML elements.
+
+Create a new file named `VehicleFormHeader.vue` under `client/src/components/form` (create the `form` directory if necessary), and edit it as shown below:
+
+[source,javascript]
+./client/src/components/VehicleAddHeader.vue
+----
+include::../snippets/client/src/components/form/VehicleFormHeader.vue[]
+----
+
+TIP: By default, when you use a component in a template, the element name will be the component's name, hyphenated. E.g, `AppHeader` will become `<app-header>`.

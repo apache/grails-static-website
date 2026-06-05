@@ -1,0 +1,7 @@
+import example.Book
+
+model {
+    Book book
+}
+
+json g.render(template: 'book', model: [book: book])

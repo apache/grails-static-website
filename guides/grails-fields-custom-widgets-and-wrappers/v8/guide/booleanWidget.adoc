@@ -1,0 +1,15 @@
+Booleans want a checkbox on edit and a check or cross on display. The default plugin widget is _almost_ right but does not include a label-aligned wrapper.
+
+[source,html]
+.grails-app/views/_fields/boolean/_widget.gsp
+----
+include::../snippets/grails-app/views/_fields/boolean/_widget.gsp[]
+----
+
+[source,html]
+.grails-app/views/_fields/boolean/_displayWidget.gsp
+----
+include::../snippets/grails-app/views/_fields/boolean/_displayWidget.gsp[]
+----
+
+The display widget here uses Bootstrap 5 icon classes (`bi-check-circle-fill`, `bi-x-circle`) but you can swap in any icon set or plain text. The point is that every boolean column in every list view, and every boolean field on every show page, now renders the same way without per-property work.

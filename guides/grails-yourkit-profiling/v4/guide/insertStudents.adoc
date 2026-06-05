@@ -1,0 +1,5 @@
+Once the application is binded to the profiler we are ready to execute operations. We will need to generate some data into
+the application.
+
+Execute the `Insert Students` operation, which will generate 20,000 student entries with random names and
+grades. At this point we are ready to continue with profiling in the following sections.

@@ -1,0 +1,1 @@
+At this point our `server` project is done and we are ready to begin building our Vue.js `client` app.  Let's get an overview of the project structure provided by the Vue profile and the Vue-CLI.

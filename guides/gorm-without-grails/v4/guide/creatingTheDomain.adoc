@@ -1,0 +1,32 @@
+Now with our packages in place lets go ahead and create our domain objects.
+
+ - Manufacturer.groovy
+ - Vehicle.groovy
+
+Feel free to use your favorite IDE to create these or execute the following
+
+[source,bash]
+----
+$ cd complete/src/main/groovy/demo/domain/
+$ touch Manufacturer.groovy
+$ touch Vehicle.groovy
+----
+
+Now that all our class stubs are in place lets go ahead and edit them.
+
+[source,groovy]
+./src/main/groovy/demo/domain/Manufacturer.groovy
+----
+include::../snippets/src/main/groovy/demo/domain/Manufacturer.groovy[]
+----
+
+[source,groovy]
+./src/main/groovy/demo/domain/Vehicle.groovy
+----
+include::../snippets/src/main/groovy/demo/domain/Vehicle.groovy[]
+----
+
+`Manufacturer` and `Vehicle` have a one-to-many relationship. 
+
+We are using GORM outside of Grails. Because of that, we need to annotate our domain classes with the `grails.gorm.annotation.Entity`. Additionally we implement the `GormEntity` trait. 
+ It is merely to aid IDE support of GORM outside of Grails. 

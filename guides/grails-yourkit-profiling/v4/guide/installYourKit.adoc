@@ -1,0 +1,8 @@
+Go to the https://www.yourkit.com/java/profiler/[YourKit] page and download the appropriate installation package. YourKit
+offers a 15 day evaluation license. It also has options for a per-seat and corporate licenses. Note that YourKit offers a
+cheaper license for students, while also offering a free license for open-source projects.
+
+=== IDE Integration
+
+Once the YourKit profile is installed, we can integrate the tool into an IDE. Note that this guide uses IntelliJ IDEA.
+Follow the instructions for https://www.yourkit.com/docs/java/help/ide_integration.jsp[IDE integration]

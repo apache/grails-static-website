@@ -1,0 +1,45 @@
+The React profile includes some default React sample code. Feel free to run the app as is if you want to see the sample in action.
+
+Let's start by creating our domain model for the application.
+
+[source,bash]
+----
+$ grails create-domain-class demo.Vehicle
+$ grails create-domain-class demo.Driver
+$ grails create-domain-class demo.Make
+$ grails create-domain-class demo.Model
+----
+
+Now let's edit our domain class under `grails-app/domain/demo/`. We'll add some properties and the `@Resource` annotation.
+
+[source,groovy]
+.grails-app/grails-app/domain/demo/Vehicle.groovy
+----
+include::../snippets/grails-app/domain/demo/Vehicle.groovy[]
+----
+
+[source,groovy]
+.grails-app/grails-app/domain/demo/Driver.groovy
+----
+include::../snippets/grails-app/domain/demo/Driver.groovy[]
+----
+
+[source,groovy]
+.grails-app/grails-app/domain/demo/Make.groovy
+----
+include::../snippets/grails-app/domain/demo/Make.groovy[]
+----
+
+[source,groovy]
+.grails-app/grails-app/domain/demo/Model.groovy
+----
+include::../snippets/grails-app/domain/demo/Model.groovy[]
+----
+
+Since we've added the `@Resource` annotation to our domain classes, Grails will generate RESTful URL mappings for each of them. Let's preload some data:
+
+[source,groovy]
+.grails-app/init/demo/BootStrap.groovy
+----
+include::../snippets/grails-app/init/demo/BootStrap.groovy[]
+----

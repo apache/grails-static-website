@@ -1,0 +1,15 @@
+You can either type the code in this guide as you read, or skip ahead and clone the finished sample app from the upstream repository:
+
+[source,bash]
+----
+git clone -b grails8 https://github.com/grails-guides/grails-fields-custom-widgets-and-wrappers.git
+cd grails-fields-custom-widgets-and-wrappers/complete
+./gradlew bootRun
+----
+
+The repository contains two top-level directories:
+
+* `initial/` - the starting Grails 8 project, generated from link:https://start.grails.org[start.grails.org] with no customisations applied.
+* `complete/` - the same project with all the widgets, wrappers, and table customisations from this guide already in place.
+
+Each chapter ends with the file paths it touches relative to the project root, so you can match what you typed against the `complete/` reference.

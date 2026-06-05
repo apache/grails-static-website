@@ -1,0 +1,71 @@
+Create security domain classes. You could create these classes with Spring Security Core `s2-quickstart`.
+
+[source,groovy]
+.grails-app/domain/demo/User.groovy
+----
+include::../snippets/grails-app/domain/demo/User.groovy[]
+----
+
+[source,groovy]
+.grails-app/domain/demo/Role.groovy
+----
+include::../snippets/grails-app/domain/demo/Role.groovy[]
+----
+
+Create a class `UserPasswordEncoderListener` which deals with the User's password encoding.
+
+It uses the `@Listener` annotation to listen *synchronously* to https://grails.apache.org/docs/latest/guide/async.html[Events from GORM].
+
+[source,groovy]
+.src/main/groovy/demo/UserPasswordEncoderListener.groovy
+----
+include::../snippets/src/main/groovy/demo/UserPasswordEncoderListener.groovy[]
+----
+
+Define the previous listener as a bean:
+
+[source,groovy]
+.grails-app/conf/spring/resources.groovy
+----
+include::../snippets/grails-app/conf/spring/resources.groovy[tag=passwordEncodingImport]
+include::../snippets/grails-app/conf/spring/resources.groovy[tag=beans]
+include::../snippets/grails-app/conf/spring/resources.groovy[tag=passwordEncodingBean]
+}
+----
+
+Configure Spring Security Core in `application.yml`
+
+[source,yml]
+.grails-app/conf/application.yml
+----
+grails
+include::../snippets/grails-app/conf/application.yml[tag=security]
+----
+
+Create several http://gorm.grails.org/latest/hibernate/manual/index.html#dataServices[GORM Data Services] to work with the Domain Classes involved in the securization of our app.
+
+[source,groovy]
+.grails-app/services/demo/RoleDataService.groovy
+----
+include::../snippets/grails-app/services/demo/RoleDataService.groovy[]
+----
+
+[source,groovy]
+.grails-app/services/demo/UserDataService.groovy
+----
+include::../snippets/grails-app/services/demo/UserDataService.groovy[]
+----
+
+[source,groovy]
+.grails-app/services/demo/UserRoleDataService.groovy
+----
+include::../snippets/grails-app/services/demo/UserRoleDataService.groovy[]
+----
+
+Create a service to handle User creation with a specific role.
+
+[source,groovy]
+.grails-app/services/demo/UserService.groovy
+----
+include::../snippets/grails-app/services/demo/UserService.groovy[]
+----

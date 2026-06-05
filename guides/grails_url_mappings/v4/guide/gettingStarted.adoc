@@ -1,0 +1,3 @@
+Whether you're building a traditional page-based application, a Single-Page App, or a microservice, having a logical, extendable API is a very important part of application design. Grails offers powerful support for building APIs with https://grails.apache.org/docs/latest/guide/theWebLayer.html#urlmappings[*URL Mappings*].
+
+The sample application we are going to build will be a conference scheduling app, called `agenda`. We will have a simple domain model consisting of *Speakers*, *Talks*, an *Agenda* (which ties together speakers and talks), and a *Conference* (which has an agenda). We won't be creating the domain model in this guide, but we'll create the web layer that will sit above it for now.

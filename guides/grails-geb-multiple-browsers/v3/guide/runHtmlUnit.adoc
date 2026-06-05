@@ -1,0 +1,4 @@
+[source, bash]
+----
+./gradlew -Dgeb.env=htmlUnit integrationTest
+----

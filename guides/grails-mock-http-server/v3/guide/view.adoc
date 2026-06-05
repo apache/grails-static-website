@@ -1,0 +1,29 @@
+Create the next GSPs to render the gathered Weather information as an HTML page. 
+
+[source, groovy]
+.grails-app/views/home/index.gsp
+----
+include::{sourcedir}/grails-app/views/home/index.gsp[]
+----
+
+[source, groovy]
+.grails-app/views/openweather/_currentWeather.gsp
+----
+include::{sourcedir}/grails-app/views/openweather/_currentWeather.gsp[]
+----
+
+Add the next CSS snippet to style the weather forecast.
+
+[source, css]
+.grails-app/assets/stylesheets/main.css
+----
+.weatherBlock {
+     width: 150px;
+     height: 200px;
+     margin: 10px auto;
+     text-align: center;
+     border: 1px solid #c0d3db;
+     float: left;
+}
+----
+

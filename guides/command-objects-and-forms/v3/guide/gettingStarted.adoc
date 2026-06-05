@@ -1,0 +1,5 @@
+In this guide you are going to use
+https://grails.apache.org/docs/latest/guide/theWebLayer.html#commandObjects[Command Objects]
+to process form submissions with automatic type conversion, custom validation, and
+simple error handling.
+

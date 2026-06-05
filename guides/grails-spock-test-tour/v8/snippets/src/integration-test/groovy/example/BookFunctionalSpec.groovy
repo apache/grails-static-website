@@ -1,0 +1,42 @@
+package example
+
+import grails.plugin.geb.ContainerGebSpec
+import grails.testing.mixin.integration.Integration
+
+/**
+ * Functional test driven by Geb 8 against a real booted application.
+ *
+ * ContainerGebSpec (from `testFixtures("org.apache.grails:grails-geb")`)
+ * starts a Selenium-Chrome container via Testcontainers and points the
+ * browser at the host-side Grails app. No local WebDriver binaries are
+ * installed; the only host requirement is a running Docker daemon.
+ *
+ * @Integration is mandatory: GrailsContainerGebExtension throws at
+ * runtime if the annotation is missing. @Rollback is NOT used here -
+ * functional tests exercise the full HTTP stack and need committed
+ * data. The fixture is therefore seeded inside its own
+ * withNewTransaction block; a bare GORM call would fail because an
+ * @Integration spec without @Rollback has no ambient Hibernate session.
+ */
+@Integration
+class BookFunctionalSpec extends ContainerGebSpec {
+
+    void setup() {
+        Book.withNewTransaction {
+            if (!Book.findByIsbn('9780261103344')) {
+                new Book(title: 'The Hobbit', isbn: '9780261103344', pageCount: 310).save(failOnError: true)
+            }
+        }
+    }
+
+    void "the book index page renders the committed books"() {
+        when:
+        go '/books'
+
+        then:
+        title.contains('Book')
+        $('table tbody tr').size() > 0
+        $('table tbody').text().contains('The Hobbit')
+    }
+
+}

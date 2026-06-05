@@ -1,0 +1,111 @@
+The implement finding a `Movie` by title we're first going to create a http://gorm.grails.org/6.1.x/hibernate/manual/index.html#dataServices[GORM Data Service] called `MovieService` to encapsulate the data access logic and interaction with Neo4j.
+
+You can do so with the `grails` CLI or via your favourite text editor or IDE by creating a class within the `grails-app/services/neo4j/movies` directory whose name ends with `Service`:
+
+
+[source,bash]
+----
+$ grails create-service neo4j.movies.MovieService
+----
+
+Make the service `abstract` and add the `@Service` annotation to it to tell GORM that the service should be implemented automatically:
+
+[source,groovy]
+.grails-app/services/neo4j/movies/MovieService.groovy
+----
+include::../snippets/grails-app/services/neo4j/movies/MovieService.groovy[tags=service]
+   ...
+}
+----
+
+Now add an `abstract` method called `find` to the `MovieService` that takes the `title` as an argument:
+
+[source,groovy]
+.grails-app/services/neo4j/movies/MovieService.groovy
+----
+include::../snippets/grails-app/services/neo4j/movies/MovieService.groovy[tags=find, indent=0]
+----
+
+The method will be automatically implemented for you by GORM, but note that we use the `@Join` annotation to indicate we want to fetch the `cast` association using the same query.
+
+Now let's implement the controller action that will invoke this method. First inject the service into the `MovieController` class:
+
+[source,groovy]
+.grails-app/controllers/neo4j/movies/MovieController.groovy
+----
+include::../snippets/grails-app/controllers/neo4j/movies/MovieController.groovy[tags=service, indent=0]
+----
+
+This uses Spring to inject the dependency and make the service implementation available. Next add an action called `show` that invokes the `find` method and responds with the result:
+
+[source,groovy]
+.grails-app/controllers/neo4j/movies/MovieController.groovy
+----
+include::../snippets/grails-app/controllers/neo4j/movies/MovieController.groovy[tags=show, indent=0]
+----
+
+If you now run the application and go to `http://localhost:8080/movie/The%20Matrix%20Reloaded` you will see a response as follows (shortened for brevity):
+
+
+[source,json]
+----
+{
+  "cast": [...],
+  "id": 9,
+  "released": 2003,
+  "tagline": "Free your mind",
+  "title": "The Matrix Reloaded"
+}
+----
+
+TIP: If you wish to debug the Cypher query GORM executed then enable debug logging for the `org.grails.datastore.gorm.neo4j` package in `grails-app/conf/logback.groovy`
+
+Although valid JSON, unfortunately this is not the exact format required to implement the Neo4j example application.
+
+To customize the JSON create a `grails-app/views/movie/_movie.gson` https://grails.apache.org/docs/latest/guide/theWebLayer.html#gson[JSON View] and populate it with the following contents:
+
+[source,groovy]
+.grails-app/views/movie/_movie.gson
+----
+include::../snippets/grails-app/views/movie/_movie.gson[]
+----
+
+<1> Define the `movie` to be rendered in the model
+<2> Output the `Movie` title as JSON
+<3> Render another template for each member of the cast
+
+The call to `tmpl.cast(..)` requires the definition of a second template. The template namespace uses the method name to invoke a template of the same of name. So in this case we need to create a `grails-app/views/movies/_cast.gson` template.
+
+[source,groovy]
+.grails-app/views/movie/_cast.gson
+----
+include::../snippets/grails-app/views/movie/_cast.gson[]
+----
+
+The `_cast.gson` template formats the `CastMember` relationship as JSON in the required format. Now if you run the application and visit the same URL as previously described, the resulting output is in the correct JSON format (shortened for brevity):
+
+[source,json]
+----
+{
+  "title": "The Matrix Reloaded",
+  "cast": [
+    {
+      "job": "acted",
+      "name": "Carrie-Anne Moss",
+      "role": [
+        "Trinity"
+      ]
+    },
+    {
+      "job": "acted",
+      "name": "Keanu Reeves",
+      "role": [
+        "Neo"
+      ]
+    },
+    ...
+  ]
+}
+----
+
+With the first endpoint done, let's implement search!

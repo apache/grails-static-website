@@ -1,0 +1,6 @@
+To complete this guide, you will need the following:
+
+* Some time on your hands
+* Elasticsearch v5.4.1 installed on your machine with ES_HOME configured properly
+* A decent text editor or IDE
+* JDK 1.7 or greater installed with JAVA_HOME configured appropriately

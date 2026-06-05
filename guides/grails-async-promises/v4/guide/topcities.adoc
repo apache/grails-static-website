@@ -1,0 +1,7 @@
+Add a class with the largest cities in USA.
+
+[source, groovy]
+.src/main/groovy/demo/LargestUSCities.groovy
+----
+include::{sourcedir}/src/main/groovy/demo/LargestUSCities.groovy[]
+----

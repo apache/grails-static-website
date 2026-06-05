@@ -1,0 +1,10 @@
+We have modified slightly the functional test of https://grails.apache.org/guides/grails-custom-security-tenant-resolver/guide/index.html#test[Custom Tenant Resolver by JWT] Guide to verify
+that a new connection source is created when a new `User` is inserted.
+
+[source,groovy]
+.src/integration-test/groovy/demo/PlanControllerSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/demo/PlanControllerSpec.groovy[]
+----
+
+<1> Verify a new connection source exists

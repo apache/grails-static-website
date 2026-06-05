@@ -1,0 +1,7 @@
+To build a Model object from Data, for example a network request, we use a builder class
+
+[source,swift]
+./complete-swift-v1/IntranetClient/AnnouncementBuilder.h
+----
+include::{sourcedir}/../complete-swift-ios-v1/IntranetClient/AnnouncementBuilder.swift[]
+----

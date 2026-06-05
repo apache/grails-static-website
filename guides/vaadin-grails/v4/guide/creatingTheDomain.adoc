@@ -1,0 +1,50 @@
+Lets start by creating our domain model for the application.
+
+[source,bash]
+----
+  $ grails create-domain-class demo.Driver
+  $ grails create-domain-class demo.Make
+  $ grails create-domain-class demo.Model
+  $ grails create-domain-class demo.User
+  $ grails create-domain-class demo.Vehicle
+----
+
+Now let’s edit our domain classes under grails-app/domain/demo/.
+We’ll add some properties and the three following annotations.
+
+- `@GrailsCompileStatic` - Code that is marked with `GrailsCompileStatic` will all be statically compiled except for Grails specific interactions that cannot be statically compiled but that GrailsCompileStatic can identify as permissible for dynamic dispatch. These include things like invoking dynamic finders and DSL code in configuration blocks like constraints and mapping closures in domain classes.
+- `@EqualsAndHashCode` - Auto generates equals and hashCode methods
+- `@ToString` - Auto generates toString method
+
+[source,groovy]
+./grails-app/domain/demo/Make.groovy
+----
+include::../snippets/grails-app/domain/demo/Make.groovy[]
+----
+
+[source,groovy]
+./grails-app/domain/demo/Model.groovy
+----
+include::../snippets/grails-app/domain/demo/Model.groovy[]
+----
+
+[source,groovy]
+./grails-app/domain/demo/Vehicle.groovy
+----
+include::../snippets/grails-app/domain/demo/Vehicle.groovy[]
+----
+
+There is a bit more to our `Driver.groovy` than meets the eye versus the first 3 classes. That's
+because we are actually extending our `User.groovy` class with driver. This will grant us
+some extra flexibility in the future as we grow our application.
+[source,groovy]
+./grails-app/domain/demo/Driver.groovy
+----
+include::../snippets/grails-app/domain/demo/Driver.groovy[]
+----
+
+[source,groovy]
+./grails-app/domain/demo/User.groovy
+----
+include::../snippets/grails-app/domain/demo/User.groovy[]
+----

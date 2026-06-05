@@ -1,0 +1,9 @@
+In this guide you will assemble a Grails 8 multi-project workspace with three modules: one shared Grails plugin (`shared-core`) and two Grails web applications (`webapp-customer`, `webapp-admin`).
+
+The shared module owns the domain model, GORM data services, and plugin-level configuration. The two webapps own their own controllers, views, and deployment lifecycle, but both run against the same compiled plugin jar in production and the same exploded plugin classes in development.
+
+This is the layout Grails 8 is built to support: plugin code lives in a plain jar, webapps build their own `bootJar`, and Grails plus Hibernate discover domain artefacts from the plugin at runtime.
+
+Files touched:
+
+- None yet

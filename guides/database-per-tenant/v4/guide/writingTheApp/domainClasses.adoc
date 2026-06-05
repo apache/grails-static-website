@@ -1,0 +1,29 @@
+When creating domain classes for your application you will typically have domain classes that are Multi-Tenant and others that are not.
+
+For domain classes which won't be using Multi-Tenancy simply define them as you would normally do and they will be mapped to the default `dataSource`.
+
+For this example the `Manufacturer` will be the provider of tenant ids. The name of the `Manufacturer` will be used as the tenant `id` allowing access to each configured database:
+
+[source, groovy]
+.grails-app/domain/example/Manufacturer.groovy
+----
+include::{sourcedir}/grails-app/domain/example/Manufacturer.groovy[]
+----
+
+Next step is to define domain classes that can only be accessed by a given tenant:
+
+[source, groovy]
+.grails-app/domain/example/Engine.groovy
+----
+include::{sourcedir}/grails-app/domain/example/Engine.groovy[]
+----
+
+[source, groovy]
+.grails-app/domain/example/Vehicle.groovy
+----
+include::{sourcedir}/grails-app/domain/example/Vehicle.groovy[]
+----
+
+<1> Both domain class implement the link:{gormapi}/grails/gorm/MultiTenant.html[MultiTenant trait]
+
+The `Vehicle` and `Engine` domain classes both implement the link:{gormapi}/grails/gorm/MultiTenant.html[MultiTenant] trait which results in GORM resolving the database to use from the resulting tenant id returned from the configured link:{gormapi}/org/grails/datastore/mapping/multitenancy/TenantResolver.html[TenantResolver].

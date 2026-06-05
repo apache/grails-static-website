@@ -1,0 +1,40 @@
+We need to change where the client side assets will be stored after they are built and bundled. Modify the `apps.outDir` setting to point to the `webapp` folder.
+
+[source,json]
+.src/main/client/angular-cli.json
+----
+...
+  "apps": [
+    {
+      "root": "src",
+      "outDir": "../webapp",
+...
+----
+
+Because CORS is no longer a requirement of this application, it should be turned off in configuration. Find `grails.cors.enabled` and remove the configuration or set it to false.
+
+[source,yaml]
+.grails-app/conf/application.yml
+----
+grails:
+    cors:
+        enabled: false
+----
+
+In order to resolve our `index.html` without the `/static` prefix, it is necessary to set the resources pattern.
+
+[source,yaml]
+.grails-app/conf/application.yml
+----
+grails:
+    resources:
+        pattern: /**
+----
+
+When a user vists your page, it should direct them to the client side application. By default in a rest-api application, it will show some metadata about your application. To change that behavior, modify `UrlMappings.groovy`.
+
+[source,yaml]
+.grails-app/controllers/angular2/combined/UrlMappings.groovy
+----
+"/"(uri: "/index.html")
+----

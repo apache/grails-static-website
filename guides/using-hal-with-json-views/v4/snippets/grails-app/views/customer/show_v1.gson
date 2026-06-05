@@ -1,0 +1,21 @@
+import com.example.Customer
+
+model {
+    Customer customer
+}
+json {
+    id customer.id
+    firstName customer.firstName
+    lastName customer.lastName
+    fullName "${customer.firstName} ${customer.lastName}"
+
+    address {
+        street customer.address.street
+        street2 customer.address.street2
+        city customer.address.city
+        state customer.address.state
+        zip customer.address.zip
+    }
+
+    orders customer.orders.collect { [id: it.id] }
+}

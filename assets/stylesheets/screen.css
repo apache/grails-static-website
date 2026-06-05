@@ -70,6 +70,55 @@
 	font-style: normal;
 }
 
+/* Inter - body / UI text. Self-hosted under same-origin so no CSP changes
+ * are needed. Used by body.guide as the primary readable face. SIL OFL 1.1,
+ * see NOTICE + assets/fonts/OFL.txt. */
+@font-face {
+	font-family: 'Inter';
+	src: url('../fonts/inter-regular.woff2') format('woff2');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Inter';
+	src: url('../fonts/inter-medium.woff2') format('woff2');
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Inter';
+	src: url('../fonts/inter-semibold.woff2') format('woff2');
+	font-weight: 600;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Inter';
+	src: url('../fonts/inter-bold.woff2') format('woff2');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* JetBrains Mono - code listings and inline code on guide pages. Same-origin,
+ * SIL OFL 1.1, see NOTICE + assets/fonts/OFL.txt. */
+@font-face {
+	font-family: 'JetBrains Mono';
+	src: url('../fonts/jetbrains-mono-regular.woff2') format('woff2');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'JetBrains Mono';
+	src: url('../fonts/jetbrains-mono-medium.woff2') format('woff2');
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
 body {
 	color: #7c7c7c;
 	background-color: #F5F5F5;
@@ -102,6 +151,21 @@ body.guides .column-header a:hover {
 }
 .align-right {
 	float: right;
+}
+
+/* Modern Grid System - Flexbox Fallback for older browsers, but mostly Flex now */
+.two-columns,
+.three-columns,
+.four-columns,
+.five-columns,
+.golden-ratio {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.column {
+	box-sizing: border-box;
 }
 
 ul, ol {
@@ -142,6 +206,7 @@ body.home {
 
 a {
 	text-decoration: underline;
+	transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
 
 .column-header a {
@@ -189,6 +254,16 @@ button {
 	border: none;
 	padding: 10px;
 	font-size: 18px;
+	transition: background-color 0.2s ease, transform 0.1s ease;
+	cursor: pointer;
+}
+
+button:hover {
+	background-color: #fdb658;
+}
+
+button:active {
+	transform: translateY(1px);
 }
 
 th {
@@ -332,9 +407,17 @@ code {
 .book {
 	background-color: #ffffff;
 	border: 1px solid #f5f5f5;
-	-webkit-box-shadow: 0 8px 6px -6px #ccc;
-	-moz-box-shadow: 0 8px 6px -6px #ccc;
 	box-shadow: 0 8px 6px -6px #ccc;
+	transition: box-shadow 0.3s ease;
+}
+
+.quote:hover,
+.post:hover,
+.user-group:hover,
+.question:hover,
+.event:hover,
+.book:hover {
+	box-shadow: 0 10px 12px -6px #bbb;
 }
 
 .quote,
@@ -785,8 +868,6 @@ div.search {
 	padding-left: 28px;
 	font-size: 18px;
 	line-height: 28px;
-	-webkit-box-shadow: 0 8px 6px -6px #ccc;
-	-moz-box-shadow: 0 8px 6px -6px #ccc;
 	box-shadow: 0 8px 6px -6px #ccc;
 	margin-top: 50px;
 	margin-bottom: 50px;
@@ -910,6 +991,38 @@ body.grails3-plugins .tags-by-topic ul {
 .tags-by-topic li.tag48{ font-size: 24px; background-color: #feb672;}
 .tags-by-topic li.tag49{ font-size: 24px; background-color: #feb672;}
 .tags-by-topic li.tag50{ font-size: 24px; background-color: #feb672;}
+
+.versions-by-grails ul {
+	margin: 40px 0 20px 0;
+	padding: 0;
+	overflow: auto;
+}
+body.grails3-plugins .versions-by-grails ul {
+	padding-left: 20px;
+}
+.versions-by-grails li {
+	list-style-type: none;
+	background-color: #255AA8;
+	float: left;
+	margin-right: 6px;
+	margin-bottom: 6px;
+	height: 20px;
+	font-size: 16px;
+	line-height: 14px;
+	vertical-align: middle;
+	padding: 7px 12px 5px;
+	border-radius: 3px;
+}
+.versions-by-grails li:hover {
+	background-color: #1d4684;
+}
+.versions-by-grails li a {
+	display: block;
+	text-decoration: none;
+	color: #ffffff;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
 
 footer {
 	clear: both;
@@ -1070,8 +1183,6 @@ article.quote h2 {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	-webkit-box-shadow: 1px 4px 4px #ccc;
-	-moz-box-shadow: 1px 4px 4px #ccc;
 	box-shadow: 1px 4px 4px #ccc;
 	margin: 0 auto;
 	font-family: 'Archia-Light', 'Roboto-Light', "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -1348,6 +1459,10 @@ article.quote h2 {
 	footer {
 		overflow: auto;
 	}
+	footer .content {
+		display: flex;
+		justify-content: center;
+	}
 	.partners-nav li {
 		text-align: right;
 	}
@@ -1381,8 +1496,6 @@ article.quote h2 {
 	background-color: #feb672;
 	color: #ffffff;
 	border: none !important;
-	-webkit-box-shadow: 1px 2px 2px #ccc;
-	-moz-box-shadow: 1px 2px 2px #ccc;
 	box-shadow: 1px 2px 2px #ccc;
 }
 article.guide {
@@ -1420,8 +1533,6 @@ article.guide aside button.btn-large {
 	width: 100%;
 	height: 60px;
 	margin: 20px 0;
-	-webkit-box-shadow: 1px 2px 2px #ccc;
-	-moz-box-shadow: 1px 2px 2px #ccc;
 	box-shadow: 1px 2px 2px #ccc;
 	border: none;
 }
@@ -1948,3 +2059,545 @@ li.plugin.p {
 	border-color: #ddd;
 	border-radius: 2px;
 }
+
+/* ---------------------------------------------------------------------------
+ * Guide-page polish (modernised)
+ *
+ * Rendered guide pages live under
+ * grails.apache.org/guides/<name>/<v>/guide/index.html with body.guide and
+ * <article class="guide"> as the wrapper. Every selector here is scoped to
+ * body.guide / article.guide so the rules don't affect any page on the
+ * main site. The reference quality bar is docs.spring.io,
+ * kotlinlang.org/docs, and docs.gradle.org/current/userguide.
+ *
+ * History:
+ *   - PR #482 added a first pass of code-block CSS to the wrong file
+ *     (buildSrc/src/main/template/css/main.css, which the modern
+ *     RenderGuidesPlugin never loads).
+ *   - PR #484 re-applied the same rules to guides/resources/css/guide.css,
+ *     which IS loaded - but the inline-code chip used a Bootstrap-3
+ *     raspberry colour (#c7254e) that the user reported as "worse than
+ *     before" against the rest of the page.
+ *   - This block (May 2026) replaces both: it restyles inline code as a
+ *     calm GitHub-style pill, drops in self-hosted Inter + JetBrains Mono,
+ *     fixes selectors to actually match the rendered DOM, and tightens
+ *     headings, links, code-block chrome, tables, admonitions.
+ * --------------------------------------------------------------------------- */
+
+/* === Base typography on the guide article =============================== */
+
+body.guide article.guide {
+	font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+	font-size: 16px;
+	line-height: 1.65;
+	color: #24292f;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+}
+
+body.guide article.guide p {
+	font-size: 16px;
+	line-height: 1.65;
+	color: #24292f;
+	margin: 0 0 18px 0;
+}
+
+body.guide article.guide ul,
+body.guide article.guide ol {
+	margin: 0 0 18px 0;
+	padding-left: 28px;
+}
+
+body.guide article.guide ul li,
+body.guide article.guide ol li {
+	margin-bottom: 8px;
+	line-height: 1.65;
+	color: #24292f;
+}
+
+/* Cap the outer page width so prose doesn't run edge-to-edge on widescreens. */
+@media screen and (min-width: 961px) {
+	body.guide .fullwidth {
+		max-width: 1280px;
+		margin: 0 auto;
+	}
+}
+
+/* === Headings =========================================================== */
+
+body.guide article.guide h1,
+body.guide article.guide h2,
+body.guide article.guide h3,
+body.guide article.guide h4,
+body.guide article.guide h5,
+body.guide article.guide h6 {
+	font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	color: #1f2328;
+	font-weight: 600;
+	letter-spacing: -0.011em;
+	line-height: 1.25;
+	margin: 32px 0 12px 0;
+}
+
+body.guide article.guide h1 {
+	font-size: 28px;
+	font-weight: 700;
+	letter-spacing: -0.018em;
+	margin-top: 40px;
+	padding-bottom: 8px;
+	border-bottom: 1px solid #d8dee4;
+}
+
+body.guide article.guide h2 {
+	font-size: 22px;
+	font-weight: 600;
+	margin-top: 32px;
+}
+
+body.guide article.guide h3 {
+	font-size: 18px;
+	font-weight: 600;
+}
+
+body.guide article.guide h4 {
+	font-size: 16px;
+	font-weight: 600;
+}
+
+/* The page banner inside <article><header>: keep the brand orange, but
+ * with a modern weight + larger size, and ditch the textShadow. */
+body.guide article.guide > header h1 {
+	color: #d97706;
+	font-size: 32px;
+	font-weight: 700;
+	letter-spacing: -0.022em;
+	border-bottom: none;
+	margin-top: 8px;
+	margin-bottom: 12px;
+	padding-bottom: 0;
+	text-shadow: none;
+}
+
+body.guide article.guide > header p {
+	font-size: 17px;
+	color: #57606a;
+	line-height: 1.5;
+	margin-bottom: 16px;
+}
+
+body.guide article.guide > header strong {
+	color: #1f2328;
+	font-weight: 600;
+}
+
+/* === Links ============================================================== */
+
+body.guide article.guide a {
+	color: #0969da;
+	text-decoration: none;
+	border-bottom: 1px solid transparent;
+	transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+body.guide article.guide a:hover {
+	color: #0a4ba8;
+	border-bottom-color: rgba(9, 105, 218, 0.4);
+}
+
+body.guide article.guide a:visited {
+	color: #6f42c1;
+}
+
+body.guide article.guide a.bare {
+	word-break: break-word;
+}
+
+/* === Inline <code> ====================================================== */
+/*
+ * Replaces the over-loud Bootstrap-3 raspberry styling (#c7254e on #f3f3f4)
+ * with a calm, GitHub-style chip: dark slate text on a soft gray pill, in
+ * JetBrains Mono with a system-monospace fallback. Selectors target the
+ * actual rendered DOM (article.guide directly, NOT a non-existent .content
+ * wrapper).
+ */
+body.guide article.guide p > code,
+body.guide article.guide li > code,
+body.guide article.guide td > code,
+body.guide article.guide dd > code,
+body.guide article.guide dt > code,
+body.guide article.guide a > code,
+body.guide article.guide h1 > code,
+body.guide article.guide h2 > code,
+body.guide article.guide h3 > code,
+body.guide article.guide h4 > code,
+body.guide article.guide h5 > code,
+body.guide article.guide h6 > code {
+	font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+	font-size: 0.92em;
+	color: #1f2328;
+	background-color: rgba(175, 184, 193, 0.18);
+	padding: 0.15em 0.4em;
+	border-radius: 4px;
+	word-break: break-word;
+}
+
+/* Inline code inside a heading: smaller relative size + don't override the
+ * heading's own weight. */
+body.guide article.guide h1 > code,
+body.guide article.guide h2 > code,
+body.guide article.guide h3 > code,
+body.guide article.guide h4 > code,
+body.guide article.guide h5 > code,
+body.guide article.guide h6 > code {
+	font-size: 0.85em;
+	font-weight: 600;
+}
+
+/* === Images ============================================================ */
+
+body.guide .imageblock img,
+body.guide .imageblock svg {
+	max-width: 100% !important;
+	height: auto !important;
+	display: block;
+	margin: 0 auto;
+	border: 1px solid #d0d7de;
+	border-radius: 6px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+	background-color: #ffffff;
+}
+
+body.guide .imageblock {
+	margin: 32px 0;
+	max-width: 100%;
+	overflow-x: auto;
+}
+
+body.guide .imageblock .title {
+	margin-top: 12px;
+	font-size: 14px;
+	color: #57606a;
+	text-align: center;
+	font-style: italic;
+}
+
+/* === Code blocks (listing + literal) ==================================== */
+
+body.guide .listingblock,
+body.guide .literalblock {
+	margin: 24px 0 !important;
+	text-align: left !important;
+	position: relative;
+}
+
+body.guide .listingblock > .content,
+body.guide .literalblock > .content {
+	width: auto !important;
+	max-width: 100% !important;
+	margin: 0 !important;
+}
+
+/* The "filename" caption above each listing block (rendered from the
+ * "[source,html]\n.path/to/file"-style title syntax) is a dark slate "tab"
+ * that joins flush to the code body. */
+body.guide .listingblock > .title {
+	display: inline-block;
+	margin: 0 !important;
+	padding: 6px 12px;
+	background-color: #1f2328;
+	color: #f6f8fa;
+	font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+	font-size: 12.5px;
+	font-style: normal;
+	font-weight: 500;
+	letter-spacing: 0.01em;
+	border-radius: 6px 6px 0 0;
+	border: 1px solid #1f2328;
+	border-bottom: 0;
+}
+
+body.guide .listingblock pre,
+body.guide .literalblock pre {
+	background-color: #f6f8fa !important;
+	border: 1px solid #d0d7de !important;
+	border-radius: 6px !important;
+	padding: 16px 18px !important;
+	margin: 0 !important;
+	overflow-x: auto !important;
+	font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace !important;
+	font-size: 13.5px !important;
+	line-height: 1.6 !important;
+	color: #1f2328;
+	box-shadow: 0 1px 2px rgba(31, 35, 40, 0.04);
+	-webkit-text-size-adjust: 100%;
+	word-wrap: normal;
+	white-space: pre;
+}
+
+/* When a .title tab is present, square the top-left corner of the pre so
+ * the tab and code body read as a single unit. */
+body.guide .listingblock > .title + .content > pre,
+body.guide .listingblock > .title + pre {
+	border-top-left-radius: 0 !important;
+}
+
+body.guide .listingblock pre code,
+body.guide .literalblock pre code {
+	background: none !important;
+	border: none !important;
+	padding: 0 !important;
+	font-family: inherit !important;
+	font-size: inherit !important;
+	color: inherit;
+	white-space: pre;
+}
+
+/* The data-lang ribbon on the top-right of each code block, so readers know
+ * the language at a glance. Suppressed when the listing has its own .title
+ * tab, to avoid double labels. */
+body.guide .listingblock code[data-lang]:before {
+	content: attr(data-lang);
+	display: block;
+	position: absolute;
+	top: 8px;
+	right: 10px;
+	padding: 1px 6px;
+	background: rgba(31, 35, 40, 0.06);
+	color: #57606a;
+	font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+	font-size: 11px;
+	font-weight: 500;
+	letter-spacing: 0.04em;
+	text-transform: lowercase;
+	border-radius: 3px;
+	pointer-events: none;
+	z-index: 1;
+}
+
+body.guide .listingblock > .title ~ .content code[data-lang]:before,
+body.guide .listingblock > .title + pre code[data-lang]:before {
+	display: none;
+}
+
+/* === Tables ============================================================ */
+
+body.guide .tableblock {
+	margin: 24px 0;
+	max-width: 100%;
+	overflow-x: auto;
+}
+
+body.guide .tableblock table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+body.guide .tableblock th,
+body.guide .tableblock td {
+	padding: 10px 14px;
+	border: 1px solid #d0d7de;
+	text-align: left;
+	vertical-align: top;
+}
+
+body.guide .tableblock th {
+	background-color: #f6f8fa;
+	color: #1f2328;
+	font-weight: 600;
+	font-size: 14px;
+}
+
+body.guide .tableblock tr:nth-child(even) > td {
+	background-color: #fafbfc;
+}
+
+/* === Admonitions ======================================================== */
+
+body.guide .admonitionblock {
+	margin: 24px 0;
+	padding: 14px 18px;
+	border-left: 4px solid #0969da;
+	background-color: #ddf4ff;
+	border-radius: 0 6px 6px 0;
+	color: #1f2328;
+}
+
+body.guide .admonitionblock.warning,
+body.guide .admonitionblock.caution {
+	border-left-color: #bf8700;
+	background-color: #fff8c5;
+}
+
+body.guide .admonitionblock.important {
+	border-left-color: #cf222e;
+	background-color: #ffebe9;
+}
+
+body.guide .admonitionblock.tip {
+	border-left-color: #1a7f37;
+	background-color: #dafbe1;
+}
+
+body.guide .admonitionblock .icon {
+	font-weight: 600;
+	margin-bottom: 4px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	font-size: 12px;
+}
+
+body.guide .admonitionblock .content > :first-child {
+	margin-top: 0;
+}
+
+body.guide .admonitionblock .content > :last-child {
+	margin-bottom: 0;
+}
+
+/* AsciiDoc default emits NOTE/TIP/WARNING as a TR-based row layout; null out
+ * the cell borders so the call-out reads as one block. */
+body.guide article.guide .note td.icon,
+body.guide article.guide .warning td.icon,
+body.guide article.guide .tip td.icon {
+	border: none;
+	padding-right: 12px;
+}
+
+body.guide article.guide .note td.content,
+body.guide article.guide .warning td.content,
+body.guide article.guide .tip td.content {
+	border: none;
+}
+
+/* ==========================================================================
+   Multi-version downloads / documentation page redesign
+   ----------------------------------------------------------------------
+   The legacy two-column-stack layout collapsed every release into the left
+   column. The redesigned layout features one card per active minor line in
+   a flex grid (today: 7.0 + 7.1; once 8.0 ships: 7.0 + 7.1 + 8.0). Cards
+   reuse the existing .guide-group visual treatment so this is purely an
+   additive container layer - no changes to the per-card chrome.
+   ========================================================================== */
+
+.release-page-intro {
+	margin: 30px 0 30px 0;
+	font-size: 16px;
+	line-height: 1.6;
+}
+
+.release-section-header {
+	margin-top: 50px;
+	margin-bottom: 20px;
+	color: #FFFFFF;
+	background-color: #C8C8C8;
+}
+
+.release-section-header.column-header {
+	color: #FFFFFF;
+	background-color: #C8C8C8;
+}
+
+.release-grid {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 24px;
+	margin: 0 0 32px 0;
+	align-items: stretch;
+}
+
+.release-grid .guide-group {
+	flex: 1 1 380px;
+	min-width: 0;
+	max-width: 480px;
+	margin-bottom: 0;
+}
+
+.release-grid .guide-group h2 {
+	height: auto;
+	min-height: 60px;
+	padding-top: 20px;
+}
+
+@media (max-width: 768px) {
+	.release-grid .guide-group {
+		flex-basis: 100%;
+		max-width: 100%;
+	}
+}
+
+/* ==========================================================================
+   Home page hero cards
+   ----------------------------------------------------------------------
+   One card per active stable minor line, rendered by RenderSiteTask via the
+   [%hero_cards] placeholder in pages/index.html. Pre-releases / milestones
+   are intentionally absent here per Apache release-policy guidance.
+   ========================================================================== */
+
+.hero-cards {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 24px;
+	justify-content: center;
+	margin: 30px 0;
+}
+
+.hero-card {
+	flex: 1 1 280px;
+	min-width: 0;
+	max-width: 360px;
+	padding: 24px 20px;
+	background-color: rgba(255, 255, 255, 0.95);
+	border-radius: 4px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+	text-align: center;
+}
+
+.hero-card-label {
+	font-family: 'Roboto-Medium', sans-serif;
+	font-size: 22px;
+	color: #4f4f4f;
+	letter-spacing: 0.5px;
+	margin-bottom: 18px;
+}
+
+.hero-card-actions {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.hero-card-actions .hero-action {
+	display: inline-block;
+	padding: 12px 20px;
+	font-family: 'Roboto-Medium', sans-serif;
+	font-size: 16px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	text-decoration: none;
+	border-radius: 3px;
+	transition: opacity 0.15s ease;
+}
+
+.hero-card-actions .hero-action:hover {
+	opacity: 0.85;
+}
+
+.hero-action-download {
+	background-color: #feb672;
+	color: #4f4f4f;
+}
+
+.hero-action-docs {
+	background-color: #ffffff;
+	color: #4f4f4f;
+	border: 1px solid #d8d8d8;
+}
+
+@media (max-width: 768px) {
+	.hero-card {
+		flex-basis: 100%;
+		max-width: 100%;
+	}
+}
+

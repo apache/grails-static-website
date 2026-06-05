@@ -1,0 +1,18 @@
+The `SpaController` is one action that hands every non-`/api/**` request to the SPA's bundled `index.html`:
+
+[source,groovy]
+.backend/grails-app/controllers/example/SpaController.groovy
+----
+include::../snippets/backend/grails-app/controllers/example/SpaController.groovy[]
+----
+
+The action reads the bundled `index.html` straight off the classpath (`classpath:public/index.html` - where the `copyFrontendToBackend` task placed the Vite output) and renders it as `text/html`. Reading the resource directly is robust across profiles and environments: a `rest-api` Grails app does not register a servlet static-resource handler for arbitrary paths, so a `forward url: '/index.html'` is claimed by Grails' URL mappings and returns a 404 instead of the file. Injecting `ResourceLoader` and rendering the resource sidesteps that entirely - a client-side route like `/books/42` that hard-reloads to `/` always gets the SPA shell, which then re-resolves the route in the browser.
+
+[NOTE]
+====
+*Why not a wildcard URL mapping like `'/$path**'(controller: 'spa', action: 'index')`?* Because that would also intercept `/api/**` and `/assets/**`. Mapping only `/` to the SPA controller, and routing `/assets/**` to the `AssetController` (next chapter), is the simplest correct shape. The `index.html` Vite emits references its JS and CSS by hashed `/assets/...` paths, which the SPA loads as a second request.
+====
+
+Files touched in this chapter:
+
+* `backend/grails-app/controllers/example/SpaController.groovy`

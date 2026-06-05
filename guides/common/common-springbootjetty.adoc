@@ -1,0 +1,28 @@
+As shown in the previous app engine configuration file, we are using Jetty.
+
+Following SpringBoot's documentation, we need to do the following changes to
+https://docs.spring.io/spring-boot/docs/current/reference/html/howto-embedded-servlet-containers.html[deploy to Jetty instead of Tomcat]
+
+Replace tomcat:
+
+[source, groovy]
+.app/build.gradle
+----
+provided 'org.springframework.boot:spring-boot-starter-tomcat'
+----
+
+with jetty:
+
+[source,groovy]
+./build.gradle
+----
+include::{sourceDir}/build.gradle[indent=0, tag=springBootStarterJetty]
+----
+
+We need to exclude the tomcat-juli dependency as well. Add:
+
+[source,groovy]
+./build.gradle
+----
+include::{sourceDir}/build.gradle[indent=0, tag=configurations]
+----

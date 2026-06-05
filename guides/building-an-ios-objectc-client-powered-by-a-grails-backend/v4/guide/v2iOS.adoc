@@ -1,0 +1,58 @@
+First we need to change the Api version constant defined in _GrailsFetcher.h_
+
+[source,objectivec]
+./complete-objectivec-ios-v2/IntranetClient/GrailsFetcher.h
+----
+include::{sourcedir}/../complete-objectivec-ios-v2/IntranetClient/GrailsFetcher.h[]
+----
+
+<1> uses Api version 2.0
+
+In version 2.0 the Api does not return the body of the announcements. Instead of setting
+an announcement property we are going to set just the resource identifier(primary
+key) in the _DetailViewController_. We have changed the _prepareForSegue:sender_ method
+in _MasterViewController_ as illustrated below:
+
+[source,objectivec]
+./complete-objectivec-ios-v2/IntranetClient/MasterViewController.m
+----
+include::{sourcedir}/../complete-objectivec-ios-v2/IntranetClient/MasterViewController.m[lines="61..71"]
+----
+
+<1> Instead of setting an object, we set an _NSNumber_
+
+_DetailViewController_ asks the server for a complete announcement; body included.
+
+[source,objectivec]
+./complete-objectivec-ios-v2/IntranetClient/DetailViewController.h
+----
+include::{sourcedir}/../complete-objectivec-ios-v2/IntranetClient/DetailViewController.h[]
+----
+
+[source,objectivec]
+./complete-objectivec-ios-v2/IntranetClient/DetailViewController.m
+----
+include::{sourcedir}/../complete-objectivec-ios-v2/IntranetClient/DetailViewController.m[]
+----
+
+It uses a new fetcher:
+
+[source,objectivec]
+./complete-objectivec-ios-v2/IntranetClient/AnnouncementFetcher.h
+----
+include::{sourcedir}/../complete-objectivec-ios-v2/IntranetClient/AnnouncementFetcher.h[]
+----
+
+[source,objectivec]
+./complete-objectivec-ios-v2/IntranetClient/AnnouncementFetcher.m
+----
+include::{sourcedir}/../complete-objectivec-ios-v2/IntranetClient/AnnouncementFetcher.m[]
+----
+
+And a delegate protocol to indicate if the announcement has been fetched
+
+[source,objectivec]
+./complete-objectivec-ios-v2/IntranetClient/AnnouncementFetcherDelegate.h
+----
+include::{sourcedir}/../complete-objectivec-ios-v2/IntranetClient/AnnouncementFetcherDelegate.h[]
+----

@@ -1,0 +1,4 @@
+Now we're ready to start creating our React components to view and interact with our API. We'll just handle listing Vehicles and creating new instances for now.
+
+
+

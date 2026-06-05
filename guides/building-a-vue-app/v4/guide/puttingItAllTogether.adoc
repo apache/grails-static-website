@@ -1,0 +1,16 @@
+If you were to run the `client` app now (or reload if you've kept the `client:start` task running while you followed through the guide), you would notice that the default home page hasn't changed. This is because Vue Router - the official routing library for Vue.js apps - is configured to display the `Welcome` component at the index route. Fortunately, this is a simple change.
+
+Edit the file `client/src/router/index.js` as shown below:
+
+[source,javascript]
+./client/src/router/index.js
+----
+include::../snippets/client/src/router/index.js[]
+----
+<1> Replace the import and usages of the `Welcome` component with our `Garage` component, for the index `/` route.
+
+== Run the Application
+
+Run the `client` project with `./gradlew client:start`, and browse to `http://localhost:3000`. You should see our new Vue app, and be able to interact with the Grails REST API. Congratulations, you've built a Vue.js app with Grails!
+
+image::complete.png[]

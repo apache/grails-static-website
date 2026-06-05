@@ -38,6 +38,7 @@ import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.OutputDirectory
@@ -69,6 +70,10 @@ abstract class PluginsTask extends GrailsWebsiteTask {
     @PathSensitive(PathSensitivity.RELATIVE)
     abstract RegularFileProperty getDocument()
 
+    @InputDirectory
+    @PathSensitive(PathSensitivity.RELATIVE)
+    abstract DirectoryProperty getPartialsDir()
+
     @Input
     abstract ListProperty<String> getKeywords()
 
@@ -86,6 +91,7 @@ abstract class PluginsTask extends GrailsWebsiteTask {
         project.tasks.register(name, PluginsTask) {
             it.document.set(siteExt.template)
             it.outputDir.set(siteExt.outputDir)
+            it.partialsDir.set(siteExt.partialsDir)
             it.url.set(siteExt.url)
         }
     }
@@ -106,7 +112,18 @@ abstract class PluginsTask extends GrailsWebsiteTask {
         def resolvedMetadata = RenderSiteTask.processMetadata(metadata)
         def result = new JsonSlurper().parse(GRAILS_PLUGINS_JSON.toURL()) as List<Object>
         def plugins = pluginsFromJson(result)
-        renderHtml(plugins, document.get().asFile.text, resolvedMetadata, 'plugins.html')
+        // Expand the [%PARTIAL:site-head] / [%PARTIAL:site-header] /
+        // [%PARTIAL:site-footer] tokens once up front. Downstream static
+        // helpers all forward this expanded template text into
+        // RenderSiteTask.renderHtmlWithTemplateContent without a partialsRoot,
+        // and the second expandPartials pass inside that helper is a no-op
+        // when partialsRoot is null. Without this, the rendered plugins.html
+        // shipped the literal "[%PARTIAL:site-head]" tokens to production.
+        def expandedTemplate = RenderSiteTask.expandPartials(
+                document.get().asFile.text,
+                partialsDir.get().asFile
+        )
+        renderHtml(plugins, expandedTemplate, resolvedMetadata, 'plugins.html')
     }
 
     void renderHtml(List<Plugin> plugins, String templateText, Map<String, String> metadata, String fileName) {
@@ -116,12 +133,25 @@ abstract class PluginsTask extends GrailsWebsiteTask {
         def pluginsTagsDir   = outputDir.dir('dist/plugins/tags').get().asFile.tap { mkdirs() }
         def pluginsOwnersDir = outputDir.dir('dist/plugins/owners').get().asFile.tap { mkdirs() }
 
-        def wrap = { String html -> RenderSiteTask.renderHtmlWithTemplateContent(html, metadata, templateText) }
+        // [%ogurl] is the per-page Open Graph URL token in templates/document.html.
+        // The base metadata map is shared across the main page and every tag/owner
+        // page, so we need to thread a per-page ogurl through wrap() rather than
+        // reusing the same metadata map; otherwise every rendered page would ship
+        // the same og:url meta tag (or, as on the live site today, the literal
+        // [%ogurl] token).
+        def wrap = { String html, String ogurl ->
+            def pageMetadata = new LinkedHashMap<String, String>(metadata)
+            pageMetadata['ogurl'] = ogurl
+            RenderSiteTask.renderHtmlWithTemplateContent(html, pageMetadata, templateText)
+        }
 
         // main plugins page
         new File(distDir, fileName).setText(
                 RenderSiteTask.highlightMenu(
-                        wrap(PluginsPage.mainContent(siteUrl, plugins, 'Grails Plugins', null)),
+                        wrap(
+                                PluginsPage.mainContent(siteUrl, plugins, 'Grails Plugins', null),
+                                "${siteUrl}/plugins.html".toString()
+                        ),
                         metadata,
                         '/plugins.html'
                 ),
@@ -134,7 +164,10 @@ abstract class PluginsTask extends GrailsWebsiteTask {
                 .unique()
                 .each { tag ->
                     new File(pluginsTagsDir, "${tag}.html").setText(
-                            wrap(renderHtmlPagesForTags(siteUrl, plugins, tag)),
+                            wrap(
+                                    renderHtmlPagesForTags(siteUrl, plugins, tag),
+                                    "${siteUrl}/plugins/tags/${tag}.html".toString()
+                            ),
                             'UTF-8'
                     )
                 }
@@ -145,11 +178,12 @@ abstract class PluginsTask extends GrailsWebsiteTask {
                 .findAll { it }
                 .unique()
                 .each { owner ->
-                    new File(
-                            pluginsOwnersDir,
-                            "${owner.replace(' ', '').toLowerCase()}.html"
-                    ).setText(
-                            wrap(renderHtmlPagesForOwners(siteUrl, plugins, owner)),
+                    def ownerSlug = owner.replace(' ', '').toLowerCase()
+                    new File(pluginsOwnersDir, "${ownerSlug}.html").setText(
+                            wrap(
+                                    renderHtmlPagesForOwners(siteUrl, plugins, owner),
+                                    "${siteUrl}/plugins/owners/${ownerSlug}.html".toString()
+                            ),
                             'UTF-8'
                     )
                 }

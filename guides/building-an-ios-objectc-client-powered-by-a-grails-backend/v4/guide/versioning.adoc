@@ -1,0 +1,24 @@
+It is important to think about API versioning from the beginning, especially when you create an API
+consumed by mobile phone applications. Users will run different versions of the app, and you will need to version
+your API to create advanced functionality but keep supporting legacy versions.
+
+Grails allows multiple ways to https://grails.apache.org/docs/latest/guide/webServices.html#versioningResources[Version REST Resources].
+
+* Using the URI
+* Using the Accept-Version Header
+* Using Hypermedia/Mime Types
+
+In this guide we are going to version the API using the Accept-Version header.
+
+Devices running version 1.0 will invoke the _announcements_ enpoint passing the 1.0 in the `Accept Version` HTTP Header.
+
+[source,bash]
+----
+$ curl -i -H "Accept-Version: 1.0" -X GET http://localhost:8080/announcements
+----
+Devices running version 2.0 will invoke the _announcements_ enpoint passing the 2.0 in the Accept Version Header.
+
+[source,bash]
+----
+$ curl -i -H "Accept-Version: 2.0" -X GET http://localhost:8080/announcements
+----

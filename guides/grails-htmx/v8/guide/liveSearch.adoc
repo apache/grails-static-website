@@ -1,0 +1,36 @@
+Live search is one input element with three HTMX attributes:
+
+[source,html]
+----
+<input type="text"
+       name="q"
+       placeholder="Search tasks..."
+       hx-get="${createLink(controller: 'task', action: 'search')}"
+       hx-trigger="keyup changed delay:300ms"
+       hx-target="#taskList"
+       hx-swap="innerHTML"/>
+----
+
+The `hx-trigger="keyup changed delay:300ms"` modifier composition is the entire UX:
+
+* `keyup` - fire on every key release.
+* `changed` - skip if the input value did not actually change since the last request (so arrow keys, modifiers, and Ctrl+A do not trigger a network round-trip).
+* `delay:300ms` - wait 300 ms after the last keyup before sending. New keypresses cancel the pending request and reset the timer.
+
+The server-side action is one line of GORM:
+
+[source,groovy]
+----
+def search() {
+    String q = (params.q ?: '') as String
+    List<Task> rows = q ? Task.findAllByTitleIlike("%${q}%") : Task.list()
+    render template: 'taskRows', model: [tasks: rows]
+}
+----
+
+`findAllByTitleIlike` is GORM's case-insensitive LIKE. The `_taskRows.gsp` partial handles both the populated and empty states, so the controller action stays tiny.
+
+Files touched:
+
+* `grails-app/controllers/example/TaskController.groovy`
+* `grails-app/views/task/_taskRows.gsp`

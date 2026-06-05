@@ -1,0 +1,33 @@
+After all the customisation you have done, the CRUD GSPs for `Book` and `Author` are tiny. Compare the original scaffolded `_form.gsp` (typically 100+ lines per domain class) with what now lives in `grails-app/views/book/`:
+
+[source,html]
+.grails-app/views/book/create.gsp
+----
+include::../snippets/grails-app/views/book/create.gsp[]
+----
+
+Eight lines, including the `<head>` and the form action. Every per-property concern - the date picker, the ISBN pattern, the description character counter, the `inList` select for genre - is somewhere under `grails-app/views/_fields/`, written once, and applies everywhere.
+
+The list view is even smaller:
+
+[source,html]
+.grails-app/views/book/index.gsp
+----
+include::../snippets/grails-app/views/book/index.gsp[]
+----
+
+Two attributes on a single `<f:table>` tag. The Bootstrap 5 striped layout, the action buttons, the currency formatting, and the boolean checkmark all come from `_fields/book/_table.gsp` and the cell-level `_displayWidget.gsp` templates.
+
+The pattern that makes this work:
+
+. *Layer customisations from broad to narrow.* `_fields/default/_wrapper.gsp` first (all forms), `_fields/<type>/_widget.gsp` next (all `String`/`Date`/`Boolean`), `_fields/<class>/<property>/_widget.gsp` last (specific cases).
+. *Keep the GSPs in `views/<domain>/` thin.* `<f:all>`, `<f:display>`, and `<f:table>` are the three tags you should see; anything else belongs in `_fields/`.
+. *Reuse the wrapper from custom widgets.* When you write a per-property widget, render the input only - let the wrapper provide the label and the error feedback.
+
+Adding a third domain class to this application now takes three steps:
+
+. Write the domain class with its constraints.
+. Set `static scaffold = NewClass` on a controller.
+. Override `views/newClass/{create,edit,show,index}.gsp` with the four-line template that calls `<f:all>`, `<f:display>`, and `<f:table>`.
+
+The new domain class inherits every type-level and constraint-level customisation you wrote for `Book` and `Author`. That is the payoff for keeping the formatting logic in `_fields/`.

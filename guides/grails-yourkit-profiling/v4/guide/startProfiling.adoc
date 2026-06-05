@@ -1,0 +1,23 @@
+There are two ways to bind the profiler to a running application. Either one is preferable:
+
+1. Bind After Application Running
+- This type of binding relies on the conventional Grails startup of the application, but at times binding may not be instant
+with the attachment or other profiling functions.
+- Start the application with the command `grails run-app` or use the Run Configuration in the IDE `Grails: initial`
+- Start the YourKit Profiler and in the Monitor Local Applications section, click on the `Application` PID.
+- Initiate the binding early in the application startup process for best results.
+
+2. Bind on Startup
+- This type of binding results in quicker response times, but requires some startup configuration.
+- Create a Run Configuration with the main class `demo.Application`. Be sure to set the `Working Directory` to
+`grails-yourkit-profiling\initial`, and also set the `Use of classpath module` to `initial_main`.
+- In the `VM Options:` set it to `-Xmx512m -Xms512m`. The VM in this Startup ignores the build.gradle entry.
+- Start the application with the pinwheel icon  from your IDE. Since Grails 3 relies on Gradle for its lifecyle management,
+in IntelliJ, the pinwheel icon is not active unless you start the application from `Application.groovy`.
+
+
+===== Pinwheel icon
+image::pinwheel.jpg[20,20]
+
+===== Monitor Local Applications
+image::monitoring.jpg[500,500]

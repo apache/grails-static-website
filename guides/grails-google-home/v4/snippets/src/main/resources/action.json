@@ -1,0 +1,44 @@
+{
+  "actions": [
+    {
+      "description": "Default Welcome Intent",
+      "name": "MAIN",
+      "fulfillment": {
+        "conversationName": "color-finder-echo"
+      },
+      "intent": {
+        "name": "actions.intent.MAIN"
+      }
+
+    },
+    {
+      "description": "Deep link that finds brighter colors",
+      "name":"color.intent",
+      "fulfillment": {
+        "conversationName": "color.intent"
+      },
+      "intent": {
+        "name": "color.intent",
+        "parameters": [{
+          "name": "color",
+          "type": "SchemaOrg_Color"
+        }],
+        "trigger": {
+          "queryPatterns": [
+            "find a brighter color for $SchemaOrg_Color:color"
+          ]
+        }
+      }
+    }
+  ],
+  "conversations": {
+    "color-finder-echo": {
+      "name": "color-finder-echo",
+      "url": "https://grails-color-finder.appspot.com/assistantAction/index"
+    },
+    "color.intent": {
+      "name": "color.intent",
+      "url": "https://grails-color-finder.appspot.com/assistantAction/color"
+    }
+  }
+}

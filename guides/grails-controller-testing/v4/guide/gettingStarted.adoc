@@ -1,0 +1,14 @@
+In this guide, you explore Controller Testing in Grails. We are going
+to focus on some of the most common use cases:
+
+**Unit Tests**
+
+* Validate allowed methods.
+* Validate _model_, _views_, _status_ and _redirect_
+* Use a Stub when you work with a service
+* Validate HTTP parameters bind to a command object
+* Validate a JSON payload is bound to a command object
+
+**Functional Tests**
+
+- JSON response, status code

@@ -1,0 +1,30 @@
+Although the previous example is valid, usually you don't want to put your business logic in a Job. A better approach is to create an additional service which the `JobService` invokes. This approach decouples your business logic from the scheduling logic. Moreover, it facilities testing and maintenance. Let's see an example:
+
+Create the following service:
+
+[source, groovy]
+.grails-app/services/demo/EmailService.groovy
+----
+include::../snippets/grails-app/services/demo/EmailService.groovy[]
+----
+
+And then the job:
+
+[source, groovy]
+.grails-app/services/demo/DailyEmailJobService.groovy
+----
+include::../snippets/grails-app/services/demo/DailyEmailJobService.groovy[tag=dailyEmailJobService]
+----
+<1> Inject the service
+<2> Call it
+<3> Trigger the job once a day at 04:30 AM
+
+Cron notation is often confusing. To simplify trigger definition, the plugin comes with several builders. The builders support a fluent API, and you end up with readable and intuitive code to define triggers, and IDE autocompletion. 
+
+The previous cron configuration can be written as: 
+
+[source, groovy]
+.grails-app/services/demo/todayat/DailyEmailJobService.groovy
+----
+include::../snippets/grails-app/services/demo/todayat/DailyEmailJobService.groovy[tag=dailyEmailJobService]
+----

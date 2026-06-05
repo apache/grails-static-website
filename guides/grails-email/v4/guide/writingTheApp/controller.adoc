@@ -1,0 +1,37 @@
+Add an entry to `UrlMappings`:
+
+[source,groovy]
+.grails-app/controllers/example/grails/UrlMappings.groovy
+----
+package example.grails
+
+class UrlMappings {
+
+    static mappings = {
+    ...
+    ..
+    .
+include::../../snippets/grails-app/controllers/example/grails/UrlMappings.groovy[tag=urlmapping]
+    }
+}
+----
+
+Create `MailController` which use a collaborator, `emailService` to send and email.
+
+[source,groovy]
+.grails-app/controllers/example/grails/MailController.groovy
+----
+include::../../snippets/grails-app/controllers/example/grails/MailController.groovy[]
+----
+
+The previous controller uses a https://grails.apache.org/docs/snapshot/guide/single.html#commandObjects[command object]:
+
+[source,groovy]
+.grails-app/controllers/example/grails/EmailCmd.groovy
+----
+include::../../snippets/grails-app/controllers/example/grails/EmailCmd.groovy[]
+----
+
+<1> `recipient` is required
+<2> `subject` is required
+<3> You must specify either `textBody` or `htmlBody`

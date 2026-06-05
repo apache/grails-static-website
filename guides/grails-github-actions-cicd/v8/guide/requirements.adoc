@@ -1,0 +1,5 @@
+To complete this guide you will need:
+
+* JDK 21
+* A GitHub account that owns or has push access to the repository hosting the application
+* About 30 minutes

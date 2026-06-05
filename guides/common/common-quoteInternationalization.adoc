@@ -1,0 +1,3 @@
+____
+Grails supports Internationalization (i18n) out of the box by leveraging the underlying Spring MVC internationalization support. With Grails you are able to customize the text that appears in a view based on the user’s Locale.
+____

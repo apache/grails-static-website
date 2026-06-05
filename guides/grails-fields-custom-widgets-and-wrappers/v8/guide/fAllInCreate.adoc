@@ -1,0 +1,23 @@
+Override the runtime-generated `create.gsp` for `Book` by creating the file under `grails-app/views/book/`:
+
+[source,html]
+.grails-app/views/book/create.gsp
+----
+include::../snippets/grails-app/views/book/create.gsp[]
+----
+
+Three things to notice:
+
+. The body of the form is a single `<f:all bean="book"/>` line.
+. `except="dateCreated,lastUpdated"` skips audit columns the user has no business editing - the Fields plugin already excludes `id`, `version`, `errors`, and Hibernate's `belongsTo` back-references by default.
+. Validation feedback is handled by `<g:hasErrors>` once at the top of the form - the per-field error display is the wrapper template's responsibility, which we will customise later.
+
+You can do exactly the same thing for `Author`:
+
+[source,html]
+.grails-app/views/author/create.gsp
+----
+include::../snippets/grails-app/views/author/create.gsp[]
+----
+
+Restart the app and visit `http://localhost:8080/book/create`. The form renders with the Fields plugin's _default_ wrapper and widget templates - which produce sensible but plain markup. We will customise it to match the rest of the application later.

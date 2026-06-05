@@ -1,0 +1,15 @@
+A frequent ask from API consumers is "let me create N records in one round trip". The single `POST /v1/books/bulk` endpoint added in the URL mappings handles it:
+
+[source,bash]
+----
+curl -s -X POST http://localhost:8080/v1/books/bulk \
+  -H 'Content-Type: application/json' \
+  -d '[
+    { "title": "The Two Towers", "isbn": "9780547928203", "pageCount": 416, "publishedOn": "1954-11-11", "author": { "id": 1 } },
+    { "title": "The Return of the King", "isbn": "9780547928197", "pageCount": 432, "publishedOn": "1955-10-20", "author": { "id": 1 } }
+  ]'
+----
+
+The `bulkCreate` action validates every entry first, *then* saves them. If any single book fails validation, the whole transaction rolls back via `transactionStatus.setRollbackOnly()` and the response is a 422 with structured field errors for every failing entry. If all entries validate, the response is a 201 with the persisted bodies.
+
+This is the safest semantic for bulk creates in a typed API: clients never have to deal with "of the ten you sent, six made it through and four did not". They get either all ten or none, with a precise diagnosis on failure.

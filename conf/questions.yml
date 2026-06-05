@@ -17,7 +17,7 @@ questions:
     answer: |
       Read the [User Guide](/documentation.html) for the version you are planning to use.
       We recommend you start with the latest stable version of the framework. We have also
-      written a collection of [Guides](https://guides.grails.org), which contain step-by-step
+      written a collection of [Guides](https://grails.apache.org/guides), which contain step-by-step
       tutorials for solving common scenarios.
   -
     slug: 'question_training'
