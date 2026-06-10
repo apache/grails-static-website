@@ -1,0 +1,43 @@
+[[queries]]
+== Querying with GORM
+
+Encapsulate query logic in services so controllers stay thin.
+
+[source,groovy]
+.grails-app/services/example/BookService.groovy
+----
+include::../snippets/grails-app/services/example/BookService.groovy[]
+----
+
+Additional read-only queries live in `BookQueryService`:
+
+[source,groovy]
+.grails-app/services/example/BookQueryService.groovy
+----
+include::../snippets/grails-app/services/example/BookQueryService.groovy[]
+----
+
+[[criteria]]
+=== Criteria
+
+`listByAuthor` uses the criteria DSL to filter and order results.
+
+[[hql]]
+=== HQL
+
+`BookQueryService.countBooksForAuthor` runs an HQL aggregate with a named parameter:
+
+[source,groovy]
+----
+Long count = Book.executeQuery(
+    'select count(b) from Book b where b.author.id = :authorId',
+    [authorId: authorId]
+)[0] as Long
+----
+
+Criteria and `where` queries cover the other examples in this guide.
+
+[[whereQueries]]
+=== Where queries
+
+`findPublishedSince` uses type-safe `where` queries for date filters. `searchByTitle` uses criteria `ilike` for case-insensitive title search (consistent with `findBooksByAuthorName`).

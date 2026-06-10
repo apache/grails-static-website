@@ -1,0 +1,10 @@
+[[summary]]
+== Summary
+
+You created a REST API backed by GORM with:
+
+* `belongsTo`, `hasMany`, and many-to-many associations
+* Criteria, HQL, and `where` queries in a service layer
+* Spock unit and integration tests
+
+Next steps: enable the database-migration plugin, add validation groups, or extend the API with pagination and filtering.

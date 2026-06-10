@@ -1,0 +1,40 @@
+[[domainModel]]
+== Domain model and associations
+
+We model a small catalog: authors write books, and books carry many tags (many-to-many).
+
+[[author]]
+=== Author
+
+Create `grails-app/domain/example/Author.groovy`:
+
+[source,groovy]
+.grails-app/domain/example/Author.groovy
+----
+include::../snippets/grails-app/domain/example/Author.groovy[]
+----
+
+[[book]]
+=== Book and Tag
+
+`Book` belongs to `Author` and links to many `Tag` instances through a join table:
+
+[source,groovy]
+.grails-app/domain/example/Book.groovy
+----
+include::../snippets/grails-app/domain/example/Book.groovy[]
+----
+
+[source,groovy]
+.grails-app/domain/example/Tag.groovy
+----
+include::../snippets/grails-app/domain/example/Tag.groovy[]
+----
+
+Seed data in `BootStrap` (development only) demonstrates cascading associations:
+
+[source,groovy]
+.grails-app/init/example/BootStrap.groovy
+----
+include::../snippets/grails-app/init/example/BootStrap.groovy[]
+----
