@@ -1,6 +1,3 @@
-[[summary]]
-== Summary
-
 You created a REST API backed by GORM with:
 
 * `belongsTo`, `hasMany`, and many-to-many associations

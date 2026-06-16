@@ -1,6 +1,3 @@
-[[servicesAndControllers]]
-== Services and REST controllers
-
 REST resources are mapped under `/api`:
 
 [source,groovy]

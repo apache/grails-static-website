@@ -1792,26 +1792,20 @@ guides:
             requirements: What you will need
           gettingStarted:
             title: Getting Started
-            cloneAndRun: Clone and run the sample
           domainModel:
             title: Domain model and associations
-            author: Author
-            book: Book and many-to-many tags
           queries:
             title: Querying with GORM
-            criteria: Criteria queries
-            hql: HQL
-            whereQueries: Where queries
           servicesAndControllers:
             title: Services and REST controllers
           testing:
             title: Testing data access
-            unitTests: Unit tests with Spock
-            integrationTests: Integration tests
           runningTheApp:
             title: Running the application
           summary:
             title: Summary
+          helpWithGrails:
+            title: Do you need help with Grails?
   - name: 'grails-database-migration'
     title: 'Grails Database Migration'
     subtitle: 'In this guide we will learn how to use the Grails Database Migration Plugin'

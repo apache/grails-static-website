@@ -1,6 +1,3 @@
-[[runningTheApp]]
-== Running the application
-
 [source,bash]
 ----
 cd complete

@@ -1,8 +1,5 @@
-[[testing]]
-== Testing data access
-
 [[unitTests]]
-=== Unit tests
+== Unit tests
 
 Domain constraints and associations:
 
@@ -29,7 +26,7 @@ include::../snippets/src/test/groovy/example/BookQueryServiceSpec.groovy[]
 HQL (`countBooksForAuthor`) is exercised in the integration spec below because `executeQuery` requires a Hibernate session.
 
 [[integrationTests]]
-=== Integration tests
+== Integration tests
 
 Integration specs boot the full application context and hit the database:
 
