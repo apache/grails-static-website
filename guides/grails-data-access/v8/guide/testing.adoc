@@ -1,0 +1,52 @@
+[[unitTests]]
+== Unit tests
+
+Domain constraints and associations:
+
+[source,groovy]
+.src/test/groovy/example/BookSpec.groovy
+----
+include::../snippets/src/test/groovy/example/BookSpec.groovy[]
+----
+
+Service-level criteria, HQL, and `where` queries with `DataTest`:
+
+[source,groovy]
+.src/test/groovy/example/BookServiceSpec.groovy
+----
+include::../snippets/src/test/groovy/example/BookServiceSpec.groovy[]
+----
+
+[source,groovy]
+.src/test/groovy/example/BookQueryServiceSpec.groovy
+----
+include::../snippets/src/test/groovy/example/BookQueryServiceSpec.groovy[]
+----
+
+HQL (`countBooksForAuthor`) is exercised in the integration spec below because `executeQuery` requires a Hibernate session.
+
+[[integrationTests]]
+== Integration tests
+
+Integration specs boot the full application context and hit the database:
+
+[source,groovy]
+.src/integration-test/groovy/example/BookDataAccessIntegrationSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/BookDataAccessIntegrationSpec.groovy[]
+----
+
+Run unit tests:
+
+[source,bash]
+----
+cd complete
+./gradlew test
+----
+
+Run integration tests (requires Docker):
+
+[source,bash]
+----
+./gradlew integrationTest
+----
