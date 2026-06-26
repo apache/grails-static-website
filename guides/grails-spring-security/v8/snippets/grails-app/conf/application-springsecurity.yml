@@ -1,0 +1,19 @@
+  plugin:
+    springsecurity:
+      useBasicAuth: true
+      basic:
+        realmName: Securing Grails Applications
+      rejectIfNoRule: true
+      userLookup:
+        userDomainClassName: example.User
+        authorityJoinClassName: example.UserRole
+      authority:
+        className: example.Role
+      controllerAnnotations:
+        staticRules:
+          - { pattern: '/', access: ['permitAll'] }
+          - { pattern: '/error', access: ['permitAll'] }
+          - { pattern: '/notFound', access: ['permitAll'] }
+          - { pattern: '/shutdown', access: ['permitAll'] }
+          - { pattern: '/assets/**', access: ['permitAll'] }
+          - { pattern: '/**/favicon.ico', access: ['permitAll'] }

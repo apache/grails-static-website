@@ -1,0 +1,19 @@
+Add the Spring Security Core plugin to `build.gradle`:
+
+[source,groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[]
+----
+
+Configure HTTP Basic authentication and point the plugin at your domain classes in `grails-app/conf/application.yml`:
+
+[source,yaml]
+.grails-app/conf/application.yml
+----
+include::../snippets/grails-app/conf/application-springsecurity.yml[]
+----
+
+`useBasicAuth: true` enables HTTP Basic for REST clients. `rejectIfNoRule: true` denies any controller action that lacks an explicit `@Secured` rule — a safe default for APIs.
+
+The `userLookup` and `authority` settings tell the plugin which domain classes represent users, roles, and their join table.

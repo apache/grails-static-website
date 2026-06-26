@@ -4363,6 +4363,51 @@ guides:
           helpWithGrails:
             title: Do you need help with Grails?
 
+  - name: 'grails-spring-security'
+    title: 'Securing Grails Applications with Spring Security Core'
+    subtitle: 'Configure Spring Security Core on a Grails 8 REST API with User/Role domains, HTTP Basic auth, @Secured controller rules, and Spock tests.'
+    authors:
+      - 'Sanjana'
+    category: 'Security'
+    publicationDate: '2026-06-19'
+    versions:
+      '8':
+        sourcePath: guides/grails-spring-security/v8
+        publicationDate: '2026-06-19'
+        tags:
+          - 'spring-security'
+          - 'spring-security-core'
+          - 'authentication'
+          - 'authorization'
+          - 'rest-api'
+          - 'http-basic'
+          - 'spock'
+          - 'testcontainers'
+          - 'integration-testing'
+        sampleRef:
+          repo: 'grails-guides/grails-spring-security'
+          branch: 'grails8'
+        toc:
+          introduction:
+            title: Introduction
+          requirements: What you will need
+          gettingStarted:
+            title: Getting Started
+          installingPlugin:
+            title: Install Spring Security Core
+          userDomain:
+            title: User, Role, and password encoding
+          securingControllers:
+            title: Securing REST controllers
+          testing:
+            title: Testing security rules
+          runningTheApp:
+            title: Running the application
+          summary:
+            title: Summary
+          helpWithGrails:
+            title: Do you need help with Grails?
+
   - name: 'grails-spring-security-core-plugin-custom-authentication'
     title: 'Grails Spring Security Core Plugin Custom Authentication'
     subtitle: 'Shows how to create a custom authentication with Spring Security Core Plugin'

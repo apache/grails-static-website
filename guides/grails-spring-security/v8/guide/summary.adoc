@@ -1,0 +1,8 @@
+You secured a Grails 8 REST API with Spring Security Core:
+
+* Plugin dependency and HTTP Basic configuration
+* `User`, `Role`, and `UserRole` domains with password encoding
+* `@Secured` rules on controller actions
+* Spock unit and integration tests against real HTTP and PostgreSQL
+
+Next steps: add JWT or session-based authentication, integrate Spring Security REST, or extend role-based access to service-layer methods.

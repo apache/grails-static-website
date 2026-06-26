@@ -1,0 +1,3 @@
+Learn how to secure a Grails 8 REST API with Spring Security Core: configure the plugin, model `User` and `Role` domains, enforce access with `@Secured` on controller actions, and verify behaviour with Spock unit and integration tests.
+
+This guide follows the standard Grails guides layout: work in the `initial/` project and compare your progress with `complete/`.

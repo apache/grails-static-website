@@ -1,0 +1,38 @@
+Map REST resources under `/api`:
+
+[source,groovy]
+.grails-app/controllers/example/UrlMappings.groovy
+----
+include::../snippets/grails-app/controllers/example/UrlMappings.groovy[]
+----
+
+Apply `@Secured` on each action. Spring Security evaluates access before your controller runs:
+
+[source,groovy]
+.grails-app/controllers/example/ResourceController.groovy
+----
+include::../snippets/grails-app/controllers/example/ResourceController.groovy[]
+----
+
+* `permitAll` — anonymous read access on `index` and `show`
+* `isAuthenticated()` — any logged-in user can create resources
+* `ROLE_ADMIN` — only administrators can update or delete
+
+Call `validate()` after binding request JSON and before `save`. That returns structured `422` responses for constraint violations.
+
+Seed development users and sample data in `BootStrap`:
+
+[source,groovy]
+.grails-app/init/example/BootStrap.groovy
+----
+include::../snippets/grails-app/init/example/BootStrap.groovy[]
+----
+
+Development users:
+
+[cols="1,1,2",options="header"]
+|===
+| Username | Password | Roles
+| `user` | `password` | `ROLE_USER`
+| `admin` | `password` | `ROLE_ADMIN`, `ROLE_USER`
+|===
