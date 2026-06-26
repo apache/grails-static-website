@@ -1,0 +1,1 @@
+    implementation "org.apache.grails:grails-spring-security:8.0.0-SNAPSHOT"

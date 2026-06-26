@@ -1,0 +1,35 @@
+[source,bash]
+----
+cd complete
+./gradlew bootRun
+----
+
+Public read access (no credentials):
+
+[source,bash]
+----
+curl -s http://localhost:8080/api/resources
+curl -s http://localhost:8080/api/resources/1
+----
+
+Create a resource (requires authentication — any logged-in user):
+
+[source,bash]
+----
+curl -s -u user:password -H 'Content-Type: application/json' \
+  -d '{"name":"Team Notes","description":"Shared notes"}' \
+  http://localhost:8080/api/resources
+----
+
+Update or delete (requires `ROLE_ADMIN`):
+
+[source,bash]
+----
+curl -s -u admin:password -X PUT -H 'Content-Type: application/json' \
+  -d '{"name":"Admin Console","description":"Updated by admin"}' \
+  http://localhost:8080/api/resources/2
+
+curl -s -u admin:password -X DELETE http://localhost:8080/api/resources/2
+----
+
+Anonymous create attempts return **401**; authenticated users without `ROLE_ADMIN` receive **403** on update/delete.
