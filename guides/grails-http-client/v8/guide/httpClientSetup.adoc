@@ -1,0 +1,39 @@
+Register HTTP service interfaces on the application class with `@ImportHttpServices`:
+
+[source,groovy]
+.grails-app/init/example/Application.groovy
+----
+include::../snippets/grails-app/init/example/Application.groovy[]
+----
+
+Spring Boot scans `example` for `@HttpExchange` interfaces and auto-configures a `RestClient` proxy for each one.
+
+[[itunesClient]]
+== ItunesClient
+
+Declare the iTunes Search API client as a Spring HTTP service interface:
+
+[source,groovy]
+.src/main/groovy/example/ItunesClient.groovy
+----
+include::../snippets/src/main/groovy/example/ItunesClient.groovy[]
+----
+
+[[dtos]]
+== Response DTOs
+
+Map the JSON response with simple POGOs:
+
+[source,groovy]
+.src/main/groovy/example/Album.groovy
+----
+include::../snippets/src/main/groovy/example/Album.groovy[]
+----
+
+[source,groovy]
+.src/main/groovy/example/SearchResult.groovy
+----
+include::../snippets/src/main/groovy/example/SearchResult.groovy[]
+----
+
+Spring deserializes the iTunes JSON into these types automatically.

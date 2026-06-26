@@ -2823,6 +2823,51 @@ guides:
           helpWithGrails:
               title: Help with Grails
 
+  - name: 'grails-http-client'
+    title: 'Calling REST APIs with Spring HTTP Services in Grails 8'
+    subtitle: 'Add a declarative @HttpExchange client to a Grails 8 REST API, combine GORM data with external API results, and test with Spock.'
+    authors:
+      - 'Sanjana'
+    category: 'Grails REST APIs'
+    publicationDate: '2026-06-26'
+    versions:
+      '8':
+        sourcePath: guides/grails-http-client/v8
+        publicationDate: '2026-06-26'
+        tags:
+          - 'rest-api'
+          - 'http-client'
+          - 'http-exchange'
+          - 'spring-boot'
+          - 'gorm'
+          - 'postgresql'
+          - 'spock'
+          - 'testcontainers'
+          - 'integration-testing'
+        sampleRef:
+          repo: 'grails-guides/grails-http-client'
+          branch: 'grails8'
+        toc:
+          introduction:
+            title: Introduction
+          requirements: What you will need
+          gettingStarted:
+            title: Getting Started
+          httpClientSetup:
+            title: HTTP client setup
+          domainAndControllers:
+            title: Domain and local REST API
+          searchService:
+            title: Search service and controller
+          testing:
+            title: Testing
+          runningTheApp:
+            title: Running the application
+          summary:
+            title: Summary
+          helpWithGrails:
+            title: Do you need help with Grails?
+
   - name: 'grails-htmx'
     title: 'HTMX with Grails 8'
     subtitle: 'Build a small task tracker with server-rendered Grails 8 GSP and HTMX-driven inline editing, live search, optimistic delete, and toggle - no SPA, no JSON.'

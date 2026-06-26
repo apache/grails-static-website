@@ -1,0 +1,22 @@
+Clone the repository and run the starting application:
+
+[source,bash]
+----
+git clone -b grails8 https://github.com/grails-guides/grails-http-client.git
+cd grails-http-client/initial
+./gradlew bootRun
+----
+
+Open http://localhost:8080/[http://localhost:8080/] for the welcome JSON payload. The `initial/` project is a vanilla Grails 8 REST API starter with no HTTP client yet.
+
+To skip ahead, `cd complete` and run the same commands — that tree contains the finished `@HttpExchange` client, services, and tests.
+
+[[cloneAndRun]]
+== Verify tests
+
+[source,bash]
+----
+./gradlew test
+----
+
+Both `initial` and `complete` must pass in CI (see `.github/workflows/grails8.yml`).

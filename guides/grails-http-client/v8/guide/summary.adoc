@@ -1,0 +1,8 @@
+You added a declarative HTTP client to a Grails 8 REST API:
+
+* `@ImportHttpServices` and a `@HttpExchange` interface for the iTunes Search API
+* A Grails service that injects the generated client
+* Local GORM data alongside external API results
+* Spock unit and integration tests
+
+Next steps: add error handling for remote API failures, cache search results, or secure outbound calls with API keys.
