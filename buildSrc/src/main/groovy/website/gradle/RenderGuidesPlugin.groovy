@@ -82,6 +82,8 @@ class RenderGuidesPlugin {
     static final String AGGREGATE_TASK = 'buildAllGuides'
     static final String GUIDES_YML_PATH = 'conf/guides.yml'
     static final String GUIDE_TEMPLATE_PATH = 'guides/resources'
+    /** Public base URL for published guides; used to build absolute canonical links. */
+    static final String SITE_GUIDES_BASE = 'https://grails.apache.org/guides'
 
     static void apply(Project project) {
         File guidesYml = project.rootProject.layout.projectDirectory
@@ -211,10 +213,40 @@ class RenderGuidesPlugin {
                     // dist tree so `<img src="../img/foo.png">` resolves.
                     task.doLast {
                         File targetRoot = task.targetDir.get().asFile
+                        File guideIndex = new File(targetRoot, 'guide/index.html')
                         File singleHtml = new File(targetRoot, 'guide/single.html')
+                        // DocPublisher writes the full single-page guide to
+                        // single.html and a separate TOC-only stub to
+                        // guide/index.html. Promote the single page to the
+                        // canonical guide/index.html URL.
                         if (singleHtml.isFile()) {
-                            File indexHtml = new File(targetRoot, 'guide/index.html')
-                            indexHtml.bytes = singleHtml.bytes
+                            guideIndex.bytes = singleHtml.bytes
+                        }
+                        // De-duplicate every other HTML the renderer emits for
+                        // this guide-version onto that one canonical URL so they
+                        // do not compete with it in search results, while still
+                        // resolving for any old bookmark:
+                        //   - the per-version top-level index.html (empty
+                        //     frameset-era stub) -> guide/index.html
+                        //   - guide/single.html (byte-identical duplicate of
+                        //     guide/index.html) -> index.html (its sibling)
+                        //   - guide/pages/*.html (granular sub-section pages the
+                        //     vendored renderer itself flags as unnecessary, and
+                        //     which nothing links to) -> ../index.html
+                        if (guideIndex.isFile()) {
+                            RenderGuidesPlugin.writeRedirectStub(
+                                    new File(targetRoot, 'index.html'), 'guide/index.html')
+                            if (singleHtml.isFile()) {
+                                RenderGuidesPlugin.writeRedirectStub(singleHtml, 'index.html')
+                            }
+                            File pagesDir = new File(targetRoot, 'guide/pages')
+                            if (pagesDir.isDirectory()) {
+                                pagesDir.eachFile { File p ->
+                                    if (p.isFile() && p.name.endsWith('.html')) {
+                                        RenderGuidesPlugin.writeRedirectStub(p, '../index.html')
+                                    }
+                                }
+                            }
                         }
                         File stagedImgDir = project.layout.buildDirectory
                                 .dir(stagedRelPath + '/img').get().asFile
@@ -620,7 +652,46 @@ class RenderGuidesPlugin {
         // Legacy guide layout templates expect this name directly.
         attrs['grailsVersion'] = versionKey
 
+        // Absolute canonical URL for every page of this guide-version. All
+        // rendered pages (the single-page guide, the per-chapter pages, and
+        // the redirect stubs) point their <link rel="canonical"> here so the
+        // search engines treat /guide/index.html as the one indexable URL and
+        // the per-chapter / single.html duplicates do not compete with it.
+        if (guide.name) {
+            attrs['canonicalUrl'] =
+                    "${SITE_GUIDES_BASE}/${guide.name}/${versionKey}/guide/index.html".toString()
+        }
+
         attrs
+    }
+
+    /**
+     * Overwrites {@code target} with a meta-refresh redirect to {@code dest},
+     * a path relative to {@code target} so it resolves both locally
+     * ({@code file://}) and on the published site. Used to collapse the
+     * duplicate / empty guide pages the vendored DocPublisher emits (the
+     * per-version root {@code index.html}, {@code guide/single.html}, and
+     * {@code guide/pages/*.html}) onto the canonical {@code guide/index.html}
+     * without ever leaving a dangling URL. The {@code canonical} link and
+     * {@code noindex} keep the redirect out of search results, and no inline
+     * script is used so the page stays within the guides CSP allowlist.
+     */
+    static void writeRedirectStub(File target, String dest) {
+        target.parentFile.mkdirs()
+        target.setText("""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Redirecting to ${dest}</title>
+<link rel="canonical" href="${dest}">
+<meta http-equiv="refresh" content="0; url=${dest}">
+<meta name="robots" content="noindex">
+</head>
+<body>
+<p>This page has moved. <a href="${dest}">View the guide</a>.</p>
+</body>
+</html>
+""", 'UTF-8')
     }
 
     @CompileDynamic
