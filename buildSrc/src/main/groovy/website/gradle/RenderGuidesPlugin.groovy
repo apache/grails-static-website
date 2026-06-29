@@ -216,6 +216,17 @@ class RenderGuidesPlugin {
                             File indexHtml = new File(targetRoot, 'guide/index.html')
                             indexHtml.bytes = singleHtml.bytes
                         }
+                        // DocPublisher also emits a per-version top-level
+                        // index.html with an empty body (legacy frameset-era
+                        // stub). Nothing links to it - the canonical entry is
+                        // guide/index.html - but it is reachable via old
+                        // bookmarks and renders as a blank page. Replace it
+                        // with a meta-refresh redirect to the single-page guide.
+                        File guideIndex = new File(targetRoot, 'guide/index.html')
+                        if (guideIndex.isFile()) {
+                            RenderGuidesPlugin.writeGuideIndexRedirect(
+                                    new File(targetRoot, 'index.html'))
+                        }
                         File stagedImgDir = project.layout.buildDirectory
                                 .dir(stagedRelPath + '/img').get().asFile
                         if (stagedImgDir.isDirectory()) {
@@ -621,6 +632,35 @@ class RenderGuidesPlugin {
         attrs['grailsVersion'] = versionKey
 
         attrs
+    }
+
+    /**
+     * Writes a meta-refresh redirect at the per-version guide root
+     * ({@code /<guide>/<version>/index.html}) pointing at the canonical
+     * single-page rendering ({@code guide/index.html}). The vendored
+     * DocPublisher emits an empty-bodied stub there (legacy frameset-era
+     * behaviour); this replaces it so old bookmarks land on real content
+     * instead of a blank page. The target is relative so it resolves both
+     * locally (file://) and on the published site. No inline script is used,
+     * keeping the page within the guides CSP allowlist.
+     */
+    static void writeGuideIndexRedirect(File target) {
+        String dest = 'guide/index.html'
+        target.parentFile.mkdirs()
+        target.setText("""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Redirecting to ${dest}</title>
+<link rel="canonical" href="${dest}">
+<meta http-equiv="refresh" content="0; url=${dest}">
+<meta name="robots" content="noindex">
+</head>
+<body>
+<p>This page has moved. <a href="${dest}">View the guide</a>.</p>
+</body>
+</html>
+""", 'UTF-8')
     }
 
     @CompileDynamic
