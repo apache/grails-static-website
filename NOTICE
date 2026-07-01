@@ -1,0 +1,32 @@
+Apache Grails Static Website
+Copyright 2024-2026 The Apache Software Foundation
+
+This product includes software developed at
+The Apache Software Foundation (https://www.apache.org/).
+
+Portions of this product include code derived from apache/grails-core
+(https://github.com/apache/grails-core), specifically the
+`build-logic/docs-core/` subproject from the 7.2.x release line, vendored
+into `buildSrc/src/main/groovy/grails/doc/`,
+`buildSrc/src/main/resources/grails/doc/`,
+`buildSrc/src/main/resources/radeox_messages_en.properties`, and
+`buildSrc/src/main/template/`. Source commit:
+3d2d795680f43e129ce4a736f7e2388ef04166ca (apache/grails-core@7.2.x).
+Used under the Apache License 2.0. See `buildSrc/VENDOR.md` for the
+full vendored-file inventory and re-vendor procedure.
+
+This product self-hosts the following third-party fonts under
+`assets/fonts/`:
+
+  Inter (inter-regular.woff2, inter-medium.woff2, inter-semibold.woff2,
+  inter-bold.woff2). Copyright (c) 2016 The Inter Project Authors
+  (https://github.com/rsms/inter). Licensed under the SIL Open Font
+  License, Version 1.1. See `assets/fonts/OFL.txt`.
+
+  JetBrains Mono (jetbrains-mono-regular.woff2, jetbrains-mono-medium.woff2).
+  Copyright 2020 The JetBrains Mono Project Authors
+  (https://github.com/JetBrains/JetBrainsMono). Licensed under the SIL
+  Open Font License, Version 1.1. See `assets/fonts/OFL.txt`.
+
+  Roboto (roboto-regular.*, roboto-light.*, roboto-medium.*). Copyright
+  Google Inc. Licensed under the Apache License, Version 2.0.

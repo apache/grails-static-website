@@ -1,0 +1,2 @@
+include::{commondir}/common-requirements.adoc[]
+* Latest stable version of https://developer.apple.com/xcode/[XCode]. We wrote this guide with Xcode 8.2.1.

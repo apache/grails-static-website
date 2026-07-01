@@ -1,0 +1,17 @@
+In order to implement our authentication we will write several "handler" functions that we can import and reuse throughout our app.
+
+Let's begin by creating a `handlers` directory under `client/src`.
+
+[source,bash]
+----
+~ cd client/src
+~ mkdir handlers
+----
+
+Now we are ready to write our first handlers. Create the following two files:
+
+[source, bash]
+----
+~ touch responseHandlers.js
+~ touch errorHandlers.js
+----

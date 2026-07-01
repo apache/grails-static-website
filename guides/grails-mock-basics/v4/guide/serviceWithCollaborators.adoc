@@ -1,0 +1,14 @@
+We have a service which collaborates with another service to perform an action. This is a common use case. We are going to
+learn how to mock collaborators to test the service logic in isolation.
+
+[source, groovy]
+.grails-app/services/grails/mock/basics/ClassroomGradesNotificationService.groovy
+----
+include::../snippets/grails-app/services/grails/mock/basics/ClassroomGradesNotificationService.groovy[indent=0]
+----
+
+[source, groovy]
+.grails-app/services/grails/mock/basics/EmailService.groovy
+----
+include::../snippets/grails-app/services/grails/mock/basics/EmailService.groovy[indent=0]
+----

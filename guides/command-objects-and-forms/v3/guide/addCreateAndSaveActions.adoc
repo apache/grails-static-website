@@ -1,0 +1,177 @@
+Next, let's add the ability to create new players. To `PlayerController`, add the `create`
+action.
+
+[source,groovy]
+./grails-app/controllers/demo/PlayerController.groovy
+----
+include::../snippets/grails-app/controllers/demo/PlayerController.groovy[tags=create, indent=0]
+----
+
+While this action does make use of the `Player` class, the instance of `Player` *is not* a command object
+since it is not an argument to the action. This should make sense: since the intent of the
+action is to create a new player object, there is no form or input handling necessary.
+
+From the Player List (http://localhost:8080/player/index), click the *New Player* button
+to see the form to create a new player (located at http://localhost:8080/player/create).
+If you were to enter values into the form and click the *Create* button now, you would get
+a `404 Page Not Found` error, since the `save` action is not defined yet.
+Add that now to `PlayerController`.
+
+[source,groovy]
+----
+    def save(Player player) {
+        // ...
+    }
+----
+
+Here, `player` *is* a command object, because it is an argument to the action. Behind
+the scenes, Grails will recognize this and rewrite your action to fetch existing records
+(if necessary), bind input data to the command object, perform dependency injection, and
+validate the object. All of these tasks could be done manually, but by making use of a
+command object, all of this behavior is automatic and leaves your code uncluttered of so
+much boilerplate.
+
+Arguably, the best feature here is https://grails.apache.org/docs/latest/guide/theWebLayer.html#dataBinding[Data Binding],
+part of the automatic behavior you get from using command objects. While on the create
+page, view the HTML source code (generated from the compiled `create.gsp`) and look for
+the `<form>` tag:
+
+[source,html]
+----
+<form action="/player/save" method="post" >
+    <fieldset class="form">
+        <div class='fieldcontain required'>
+          <label for='name'>Name<span class='required-indicator'>*</span></label>
+          <input type="text" name="name" value="" required="" id="name" />
+        </div>
+        <div class='fieldcontain required'>
+          <label for='game'>Game<span class='required-indicator'>*</span></label>
+          <input type="text" name="game" value="" required="" id="game" />
+        </div>
+        <div class='fieldcontain'>
+          <label for='region'>Region</label>
+          <input type="text" name="region" value="" id="region" />
+        </div>
+        <div class='fieldcontain required'>
+          <label for='wins'>Wins<span class='required-indicator'>*</span></label>
+          <input type="number" name="wins" value="0" required="" min="0" id="wins" />
+        </div>
+        <div class='fieldcontain required'>
+          <label for='losses'>Losses<span class='required-indicator'>*</span></label>
+          <input type="number" name="losses" value="0" required="" min="0" id="losses" />
+        </div>
+    </fieldset>
+    <fieldset class="buttons">
+        <input type="submit" name="create" class="save" value="Create" id="create" />
+    </fieldset>
+</form>
+----
+
+The `<input>` tag names match exactly the properties of the domain class `Player`.
+
+[source,groovy]
+./grails-app/domain/demo/Player.groovy
+----
+include::../snippets/grails-app/domain/demo/Player.groovy[]
+----
+
+Data binding will take the form-submitted string values for `name`, `game`, and `region`
+(if set) and set those properties in your command object `player`. The form-submitted
+string values for `wins` and `losses` will also be set in `player` after automatic
+type-conversion to `*int*`. The convention of using the same name for domain class properties
+and input fields greatly simplifies coding and application development: view fields are
+pre-filled with values from domain class objects, and command objects are filled with
+submitted form data, requiring very little developer effort.
+
+After binding, data validation will be done; as this is a domain class, any constraints
+set in the class's `constraits` block will be checked. This gives us the opportunity to
+add simple error-checking. Near the top of `PlayerController.groovy`, add:
+
+[source,groovy]
+----
+import org.springframework.http.HttpStatus
+----
+
+Then update the `save` action of `PlayerController`.
+
+[source,groovy]
+./grails-app/controllers/demo/PlayerController.groovy
+----
+include::../snippets/grails-app/controllers/demo/PlayerController.groovy[tags=save;save-handleErrors, indent=0]
+----
+
+The existing, generated `gsp` files include Javascript to do as much client-side form
+validation as possible. To see the Grails server-side validation and error checking, try
+using `curl`. On the command line (while the Grails application is running), type:
+
+[source]
+----
+$ curl --request POST --form "name=Bob Smith" --form "wins=42" --form "losses=abc" "http://localhost:8080/player/save.json"
+----
+
+You should receive the following response (displayed nicely here):
+
+[source]
+----
+{"errors": [
+        {"object": "demo.Player",
+         "field": "losses",
+         "rejected-value": "abc",
+         "message": "Property losses is type-mismatched"},
+
+        {"object": "demo.Player",
+         "field": "game",
+         "rejected-value": null,
+         "message": "Property [game] of class [class demo.Player] cannot be null"}
+]}
+----
+
+We are going to verify this with a Functional Test.
+
+include::{commondir}/common-functionalTestsIntro.adoc[]
+
+include::{commondir}/common-dependencyRestClientBuilderGrailsPlugin.adoc[]
+
+We created the app with the web profile but it is easy to add the testCompile dependency to our build file. Add the next
+line to the dependencies block.
+
+[source,groovy]
+./build.gradle
+----
+include::../snippets/build.gradle[tags=restClientDep, indent=0]
+----
+
+[source,groovy]
+./src/integration-test/groovy/demo/demo/PlayerControllerSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/demo/PlayerControllerFuncSpec.groovy[]
+----
+
+<1> `serverPort` property is automatically injected. It contains the random port where the Grails application runs during the functional test.
+<2> If your client accepts JSON it is always a good idea to set the Accept Http Header
+<3> If your are sending a JSON Payload, you should set the Content-Type Http Header to application/json
+<4> Since command object validation failed, the server returns the Http Status - 422 Unprocessable Entity
+
+
+Now that data binding, validation, and error-checking is done, update the `save` action
+to actually save the object and respond to the form submission. This completes the action.
+
+[source,groovy]
+----
+include::../snippets/grails-app/controllers/demo/PlayerController.groovy[tags=save-full, indent=0]
+----
+
+You should now be able to successfully create and save new players to the database.
+
+[NOTE]
+====
+The example controller code presented here for `save` and other actions in this guide is
+kept intentionally simple in order to focus on command objects. You will most likely want
+additional functionality in your actions. When building your own controllers, a good
+starting point is to generate your initial controller with the Grails `generate-controller`
+script:
+
+----
+./grailsw generate-controller demo.Player
+----
+====

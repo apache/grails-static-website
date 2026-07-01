@@ -1,0 +1,3 @@
+Dynamic finders are a great tool for building simple database queries: readable, full
+efficiency, with little hassle. In addition to all the possibilities described in earlier
+sections, there are a couple of special, convenient forms to add to your toolbox.

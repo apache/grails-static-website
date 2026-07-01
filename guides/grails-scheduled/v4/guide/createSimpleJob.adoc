@@ -1,0 +1,66 @@
+Since scheduling is native functionality. Just execute:
+
+[source, bash]
+----
+./grailsw create-service HelloWorldJob
+----
+
+This will create the file `grails-app/services/demo/HelloWorldJobService.groovy` with a empty template method.
+
+The very basic skeleton is:
+
+[source, groovy]
+.grails-app/services/demo/HelloWorldJobService.groovy
+----
+@Transactional // <1>
+class HelloWorldJobService {
+
+    def serviceMethod() {
+        // <2>
+    }
+}
+----
+<1> By default services are `Transactional`
+<2> The job logic goes here
+
+
+Let's modify the previous code and add the following:
+
+[source, groovy]
+.grails-app/services/demo/HelloWorldJobService.groovy
+----
+include::../snippets/grails-app/services/demo/HelloWorldJobService.groovy[]
+----
+<1> Although Grails artifacts ( services, controllers ) inject a logger automatically, we annotate the class with `@Slf4j` to get better IDE support. Depending on the Grails version you are using, `@Slf4j` annotation will have an impact on aspects such as static compilation, logger name, etc. as described in the https://www.youtube.com/watch?v=3TppFy3lq1A[Grails Logging Quickcast].
+<2> Remove `@Transactional` as this service does not require transactions. Add `@CompileStatic` for performance. 
+<3> By default Grails' services are lazily initialized. You can disable this and make initialization eager with the lazyInit property. Without forcing the service to be eagerly initialized the jobs will not execute.
+<4> Create trigger every 10 seconds
+<5> Create another trigger every 45 seconds with an initial delay of 5 seconds (5000 millis)
+
+Now start the application:
+
+[source, bash]
+----
+./gradlew bootRun
+----
+
+And after a few seconds you will see the following output:
+
+[source, bash]
+----
+Simple Job every 45 seconds :14/2/2018 02:06:50 # <1>
+Simple Job every 10 seconds :14/2/2018 02:06:55 # <2>
+Simple Job every 10 seconds :14/2/2018 02:07:05 # <3>
+Simple Job every 10 seconds :14/2/2018 02:07:15
+Simple Job every 10 seconds :14/2/2018 02:07:25
+Simple Job every 45 seconds :14/2/2018 02:07:35 # <4>
+Simple Job every 10 seconds :14/2/2018 02:07:35
+----
+<1> First execution of 10 seconds job just after the application starts
+<2> The 45 seconds job just starts 5 seconds after the app starts. See `startDelay` in the trigger configuration.
+<3> Second execution of 10 seconds job just 10 seconds after the first execution
+<4> Second execution of 45 seconds job just 45 seconds after the first execution
+
+WARNING: When using `@Scheduled`, `static lazyInit = false` is required or your schedule will not run.
+
+NOTE: `@Scheduled` requires the use of CONSTANT values. Meaning that attempting to generate / build values for `fixedDelay`, `initialDelay`, `cron`, ect. will not work and cause compile errors.

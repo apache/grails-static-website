@@ -1,0 +1,1 @@
+For this guide, you should use the `initial` project included in the guide's repo to get started. This project contains a working Grails/React app which provides basic CRUD functionality and a simple (unsecured) RESTful API. Feel free to start up the app and play around with it, and look at the existing code.

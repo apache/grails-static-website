@@ -1,0 +1,15 @@
+Add _micronaut-http-client_ as a _testCompile_ dependency:
+
+[source,groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[tag=restclient, indent=0]
+----
+
+Add a functional test which verifies Grails handles Multiple data sources as expected:
+
+[source,groovy]
+.src/integration-test/groovy/demo/MultipleDataSourceSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/demo/MultipleDataSourceSpec.groovy[]
+----

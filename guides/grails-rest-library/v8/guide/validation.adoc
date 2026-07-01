@@ -1,0 +1,34 @@
+When a `POST /v1/books` body fails validation, `RestfulController` returns a 422 by default - but the body shape is not always what API consumers expect. The hand-rolled `bulkCreate` action in `BookController` shows the structured-422 pattern:
+
+[source,groovy]
+.grails-app/controllers/example/BookController.groovy
+----
+include::../snippets/grails-app/controllers/example/BookController.groovy[]
+----
+
+When validation fails, the body looks like:
+
+[source,json]
+----
+{
+  "books": [
+    {
+      "index": 0,
+      "errors": [
+        { "field": "title", "code": "blank",   "message": "Property [title] of class [Book] cannot be blank" },
+        { "field": "isbn",  "code": "matches", "message": "Property [isbn] of class [Book] does not match the required pattern" }
+      ]
+    },
+    {
+      "index": 2,
+      "errors": [
+        { "field": "isbn", "code": "unique", "message": "Property [isbn] of class [Book] with value [9780547928227] must be unique" }
+      ]
+    }
+  ]
+}
+----
+
+The shape is opinionated: each failing object has its source-array `index` so the client can map the failure back to the input, and each error has a stable `code` (`blank`, `matches`, `unique`, `nullable`, `min`, `max`) the client can branch on without parsing free-text messages. Any client building a form on top of this API can light up the right field with the right error without string-matching.
+
+The `transactionStatus.setRollbackOnly()` line is what makes `bulkCreate` all-or-nothing: even though the action's `@Transactional` started a transaction implicitly, this call marks it for rollback regardless of what the action returns. The four books that *did* validate never reach the database.

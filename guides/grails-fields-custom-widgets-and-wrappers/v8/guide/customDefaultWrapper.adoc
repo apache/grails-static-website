@@ -1,0 +1,50 @@
+The wrapper is the markup _around_ a widget: the label, the required-marker, the validation feedback, and the column or grid container. Customising `_fields/default/_wrapper.gsp` is the single highest-impact change you can make - every form in the app picks it up automatically.
+
+Create the file:
+
+[source,html]
+.grails-app/views/_fields/default/_wrapper.gsp
+----
+include::../snippets/grails-app/views/_fields/default/_wrapper.gsp[]
+----
+
+The wrapper template receives a fixed set of model variables from the plugin:
+
+[cols="1,1,3"]
+|===
+| Variable | Type | Description
+
+| `bean`
+| `Object`
+| The bean being rendered (`book`, `author`, etc.).
+
+| `property`
+| `String`
+| The property path (e.g. `"title"`, `"author"`, `"address.city"`).
+
+| `value`
+| `Object`
+| The current property value.
+
+| `label`
+| `String`
+| The label text, already i18n-resolved if a `book.title.label` message exists.
+
+| `required`
+| `boolean`
+| `true` if the constraints declare the field non-nullable and non-blank.
+
+| `invalid`
+| `boolean`
+| `true` if the bean has validation errors on this property.
+
+| `errors`
+| `List<String>`
+| The validation error messages for this property.
+
+| `widget`
+| `String`
+| The HTML produced by the widget template - splice it into the wrapper with `${widget}`.
+|===
+
+The wrapper above wraps `${widget}` in a Bootstrap 5 `<div class="mb-3">`, adds the required asterisk, and renders the error list. Every form field in the app now uses this layout without any per-domain or per-property markup.

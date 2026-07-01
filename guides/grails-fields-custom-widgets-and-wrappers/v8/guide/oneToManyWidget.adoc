@@ -1,0 +1,25 @@
+A one-to-many association is the read-only side of the relationship. `Author.books` is implemented by a foreign-key column on the `book` table - editing it from `Author.create.gsp` is _almost always wrong_ because it mixes parent and child lifecycles. The right behaviour on the parent form is to render the existing children as a list of links, plus a quick-add button that opens the child controller pre-populated with the parent reference.
+
+[source,html]
+.grails-app/views/_fields/oneToMany/_widget.gsp
+----
+include::../snippets/grails-app/views/_fields/oneToMany/_widget.gsp[]
+----
+
+The template:
+
+* Reads `persistentProperty.referencedPropertyName` to find the back-reference name on the other side. For `Author.books`, the back-reference on `Book` is `author`, so the quick-add link passes `author.id=<parent>` to `BookController.create()` - which Spring binds straight onto the new `Book.author` field.
+* Renders zero work on the parent form. Submitting the parent form does not save children.
+* Includes a tiny "no children yet" placeholder so the field is not visually empty.
+
+The display side is a comma-separated inline list:
+
+[source,html]
+.grails-app/views/_fields/oneToMany/_displayWidget.gsp
+----
+include::../snippets/grails-app/views/_fields/oneToMany/_displayWidget.gsp[]
+----
+
+`<f:display bean="author"/>` will now render `Author.books` as a list of clickable book titles, and `<f:table collection="${authorList}"/>` will get the same list inside the `books` column if you include it in `properties=`.
+
+CAUTION: Avoid putting one-to-many on a `<f:table>` for very large collections - rendering 50 link badges per row is slow and unhelpful. Either skip the property in `properties=` or write a per-property `_displayWidget.gsp` that emits a count link instead (`12 books -> /author/12/books`).

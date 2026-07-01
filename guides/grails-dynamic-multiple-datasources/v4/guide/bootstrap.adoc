@@ -1,0 +1,6 @@
+When the app restarts, we want to wire-up a dataSource for every registered user. Modify `BootStrap.groovy` to achieve that:
+[source,groovy]
+.grails-app/init/demo/BootStrap.groovy
+----
+include::../snippets/grails-app/init/demo/BootStrap.groovy[]
+----

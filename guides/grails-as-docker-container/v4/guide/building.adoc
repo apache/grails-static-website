@@ -1,0 +1,73 @@
+After creating the new Gradle tasks, now we can execute:
+
+`./gradlew buildImage`
+
+[source, bash]
+----
+...
+...
+:complete:jar
+:complete:bootRepackage
+:complete:assemble # <1>
+:complete:prepareDocker
+:complete:createDockerfile
+:complete:buildImage # <2>
+Building image using context '/home/ivan/workspaces/oci/guides/grails-as-docker-container/complete/build/docker'.
+Using tag 'grails-sample/complete:0.1' for image.
+Step 1/8 : FROM openjdk:8u151-jdk-alpine
+---> 3642e636096d
+Step 2/8 : MAINTAINER John Doe "john.doe@example.com"
+---> Using cache
+---> 3e1c67b067e8
+Step 3/8 : EXPOSE 8080
+---> Using cache
+---> 144aadd0580e
+Step 4/8 : WORKDIR /app
+---> Using cache
+---> c9af01e696f8
+Step 5/8 : COPY complete-0.1.jar application.jar
+---> e4f41e8f0840
+Removing intermediate container 6dccf4039811
+Step 6/8 : COPY app-entrypoint.sh app-entrypoint.sh
+---> 0be562313720
+Removing intermediate container 595d0cb7b9d2
+Step 7/8 : RUN chmod +x app-entrypoint.sh
+---> Running in 3b41eb944045
+---> 5f6fa6b0ab9a
+Removing intermediate container 3b41eb944045
+Step 8/8 : ENTRYPOINT /app/app-entrypoint.sh
+---> Running in 3221a85ae904
+---> 68f5588d1134
+Removing intermediate container 3221a85ae904
+Successfully built 68f5588d1134
+Successfully tagged grails-sample/complete:0.1 # <3>
+Created image with ID '68f5588d1134'.
+
+BUILD SUCCESSFUL
+
+Total time: 11.453 secs
+----
+<1> After the `assemble` task the new docker tasks are executed
+<2> Build image using the `Dockerfile` generated in the previous task. The output of the docker command is displayed
+<3> The image `grails-sample/complete:0.1` has been created
+
+
+[source, bash]
+----
+$ docker images
+REPOSITORY                     TAG                 IMAGE ID            CREATED             SIZE
+grails-sample/complete         0.1                 68f5588d1134        3 minutes ago       143MB
+----
+
+
+== Running the application
+
+Running our _dockerized_ Grails application is as simple as:
+
+[source, bash]
+----
+$ docker run -p 8080:8080 grails-sample/complete:0.1
+----
+
+And after a few seconds we will see the message
+`Grails application running at http://localhost:8080 in environment: production`

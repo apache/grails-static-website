@@ -1,0 +1,25 @@
+We are going to use the React + Node.js application described by https://github.com/mvolkmann[Mark Volkmann] in the https://objectcomputing.com/resources/publications/sett[SETT] article https://objectcomputing.com/resources/publications/sett/april-2017-web-app-step-by-step[Web App Step by Step, April 2017 issue of SETT]. The article laid out a
+detailed blueprint for developing a modern web application from beginning to end. The sample project in this article featured a React frontend and a Node/express.jsbackend, backed by PostgresSQL database. The project included several advanced features, including WebSockets and HTTPS.
+
+In this guide, we will demonstrate how to develop
+the same web app, using the Grails framework. The only explicit
+technology change we will be making will be the use of Grails over
+Node/express.js for the backend - otherwise we will use the same stack,
+including React and PostgresSQL. However, we will see how Grails
+simplifies and accelerates the development process and makes developers
+more productive without giving up finer grain control where needed.
+
+The emphasis of this guide will not be so much learning how the
+“innards” of how web applications work, but rather on _developer
+productivity_. In addition, we will refer readers to the original SETT article for
+details on the implementation of the React application, as there we will
+be using almost the exact same code (any changes will be highlighted and
+explained).
+
+This guide shows how to transition an application from a technology stack such as:
+
+image::technologystack_node.png[]
+
+to: 
+
+image::technologystack_grails.png[]

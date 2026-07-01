@@ -1,0 +1,15 @@
+We are going to deploy the Grails application developed in this guide to the https://cloud.google.com/appengine/docs/flexible/[Google App Engine Flexible Environment]
+____
+App Engine allows developers to focus on doing what they do best: writing code. Based on Google Compute Engine,
+the App Engine flexible environment automatically scales your app up and down while balancing the load. Microservices,
+authorization, SQL and NoSQL databases, traffic splitting, logging, versioning, security scanning, and content delivery networks are all supported natively.
+____
+
+Run the command:
+
+[source, bash]
+----
+$ gcloud app create
+----
+
+to initialize an App Engine application within the current Google Cloud project.

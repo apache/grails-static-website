@@ -1,0 +1,35 @@
+Finally time to start adding Vaadin code to our application!
+
+Consider `src/main/groovy/demo/DemoGrailsUI.groovy` to be your Vaadin
+controller / dispatcher as it will help you understand the Vaadin flow. Our `init()`
+method is the applications entry point to Vaadin itself, this is your top level view
+essentially. From here you can setup navigation and other whole app view components.
+
+Our `DemoGrailsUI.groovy` as it currently is, is great for a
+single page web application but its not the most flexible if we want to add navigation
+components or other pages later on. With this in mind we are going to make it a bit more
+flexible using views. Using views is also beneficial in helping keep our Vaadin frontend
+well organized.
+
+NOTE: For more information on views and navigation with Vaadin look
+https://vaadin.github.io/spring-tutorial/#_views_and_navigation_with_vaadin_spring[here].
+
+[source,groovy]
+.src/main/groovy/demo/DemoGrailsUI.groovy
+----
+include::../snippets/src/main/groovy/demo/DemoGrailsUI.groovy[]
+----
+
+<1> We add the `@Title` annotation to give our window / tab a nice name
+<2> Add `@SpringViewDisplay` so we can use views
+<3> Along with and `implements ViewDisplay` to our class
+<4> Next create an additional panel for our UI
+<5> Initial entry point into our Vaadin View
+<6> Helper method for building our header
+<7> Additional function required for using views; dynamically controls setting our view components
+
+TIP: The order in which you add components to the layout, can determin their position within the layout. 
+
+TIP: `init()` can get quite large quite fast so it is best to break out UI components
+into their own methods like `buildHeader()` to keep your files clear and concise.
+

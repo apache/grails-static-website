@@ -1,0 +1,4 @@
+Next image illustrates the classes involved in the fetching and rendering of the
+announcements exposed by the Grails application.
+
+image::ios-announcements-overview.jpeg[]

@@ -1,0 +1,25 @@
+We need to create persistent entities to store company announcements. Grails handles persistence with the use of https://grails.apache.org/docs/latest/ref/Domain%20Classes/Usage.html[Grails Domain Classes]:
+
+include::{commondir}/common-quoteDomainClass.adoc[]
+
+Grails simplifies the creation of domain classes with the https://grails.apache.org/docs/latest/ref/Command%20Line/create-domain-class.html[create-domain-class command].
+[source,bash]
+----
+ ./grailsw create-domain-class Announcement
+| Resolving Dependencies. Please wait...
+CONFIGURE SUCCESSFUL
+Total time: 4.53 secs
+| Created grails-app/grails/company/intranet/Announcement.groovy
+| Created src/test/groovy/grails/company/intranet/AnnouncementSpec.groovy
+----
+
+Just to keep it simple, we assume the company announcements just contain a _title_ and a _HTML body_.
+We are going to modify the domain class generated in the previous step to store that information.
+
+[source,groovy]
+.grails-app/domain/intranet/backend/Announcement.groovy
+----
+include::../snippets/grails-app/domain/intranet/backend/Announcement.groovy[indent=0,lines="1..16"]
+----
+
+<1> it enables us to store strings with more than 255 characters in the _body_.

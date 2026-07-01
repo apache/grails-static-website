@@ -1,0 +1,41 @@
+Open link:https://start.grails.org[start.grails.org] in three browser tabs and generate three starters with the same baseline settings: JDK 21, Groovy, Gradle, Spock, and package `example`.
+
+[cols="1,1,1",options="header"]
+|===
+| Forge application type | UI label | Application name
+
+| `web_plugin`
+| Web Plugin
+| `shared-core`
+
+| `web`
+| Web Application
+| `webapp-customer`
+
+| `web`
+| Web Application
+| `webapp-admin`
+|===
+
+The naming here is straight from the Grails 8 forge source: `ApplicationType.WEB_PLUGIN` in `grails-forge/grails-forge-core/src/main/java/org/grails/forge/application/ApplicationType.java` and the `@Named("web_plugin")` registry in `grails-forge/grails-forge-core/src/main/java/org/grails/forge/application/WebPluginAvailableFeatures.java`.
+
+Each downloaded archive uses the application name as the zip filename, so unzip the three archives under one parent directory:
+
+[source,bash]
+----
+mkdir grails-multi-module
+cd grails-multi-module
+
+unzip ~/Downloads/shared-core.zip
+unzip ~/Downloads/webapp-customer.zip
+unzip ~/Downloads/webapp-admin.zip
+----
+
+If you selected JDK 21 in the browser, keep the generated `compileJava.options.release = 21` lines exactly as they are. Grails Forge writes that value from the selected target JDK in `grails-forge/grails-forge-core/src/main/java/org/grails/forge/feature/build/gradle/templates/buildGradle.rocker.raw`, so there is no Grails 8 era "patch 17 to 21" cleanup step anymore.
+
+Files touched:
+
+- shared-core/build.gradle
+- shared-core/src/main/groovy/example/SharedCoreGrailsPlugin.groovy
+- webapp-customer/build.gradle
+- webapp-admin/build.gradle

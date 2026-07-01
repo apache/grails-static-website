@@ -1,0 +1,17 @@
+Clone the finished sample and run it:
+
+[source,bash]
+----
+git clone -b grails8 https://github.com/grails-guides/grails-vite-spa.git
+cd grails-vite-spa/complete
+
+# Dev (two shells):
+./gradlew :backend:bootRun                  # http://localhost:8080
+cd frontend && npm install && npm run dev   # http://localhost:5173
+
+# Prod (one bootJar packages both halves):
+./gradlew :backend:bootJar
+java -jar backend/build/libs/backend-0.1.jar  # http://localhost:8080
+----
+
+`initial/` contains just the vanilla Grails 8 `rest_api` starter. `complete/` is the assembled two-tier setup this guide builds.

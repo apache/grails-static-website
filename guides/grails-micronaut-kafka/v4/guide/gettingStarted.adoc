@@ -1,0 +1,1 @@
+In this guide we will show you how to setup and use https://micronaut-projects.github.io/micronaut-kafka/latest/guide/[Micronaut Kafka] with a Grails application.

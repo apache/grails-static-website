@@ -1,0 +1,74 @@
+If you were to start up your app now, Grails will connect to the
+Postgres database, create the tables and columns needed to persist your
+domain objects. Of course, there would be no data in the database
+initially. We will solve that issue shortly, but for now, we can run a
+Grails command that will give as an interactive console where we can
+create, update, delete and query our domain objects.
+
+Run the following command:
+
+[source, bash]
+----
+~ ./grailsw console
+----
+
+(If you have Grails installed locally on your machine, you can run the
+`grails` command directly, e.g.: `grails console`. However, Grails
+projects include the `grailsw` "wrapper" command which will install the
+correct version of Grails for you.)
+
+Now you should see the Grails Console. You can import any classes from
+your project (both your own code as well as any dependencies) and run
+any Groovy code you'd like.
+
+The following code will show how to accomplish the database operations
+from the previous https://objectcomputing.com/resources/publications/sett/april-2017-web-app-step-by-step["Web App" article], using GORM and the Groovy language:
+
+[source,groovy]
+----
+import demo.*
+
+// Delete all rows from these tables:
+// user and ice_cream via HQL updates (efficient for batch operations)
+IceCream.executeUpdate("delete from IceCream")
+User.executeUpdate("delete from User")
+
+// Insert three new rows corresponding to three flavors.
+def iceCreams = ['vanilla', 'chocolate', 'strawberry'].collect { flavor ->
+    new IceCream(flavor: flavor).save(flush: true)
+}
+
+// Get an array of the ids of the new rows.
+def ids = iceCreams*.id
+println "Inserted records with ids ${ids.join(',')}"
+
+// Delete the first row (vanilla)
+def vanilla = IceCream.get(ids[0])
+vanilla.delete()
+
+// Change the flavor of the second row (chocolate) to "chocolate chip".
+def chocolate = IceCream.findByFlavor('chocolate')
+chocolate.flavor = 'chocolate chip'
+chocolate.save(flush: true)
+
+// Get all the rows in the table.
+iceCreams = IceCream.list()
+
+// Output their ids and flavors.
+iceCreams.each { iceCream ->
+    println "${iceCream.id}: ${iceCream.flavor}"
+}
+----
+
+Enter the above code into the Grails Console (launched with the previous
+command), and click the "Run" button to execute the script. If you like,
+you can save the script to be reused later (note that this Groovy script
+will only work in the Grails Console, not via the "plain" Groovy Console
+or Groovy compiler (`groovyc`) - this is because our domain classes need
+to be loaded by Grails in order for this code to work).
+
+You might think this method could be used to populate our database with
+some initial data, and you'd be correct - any inserts/updates we make in
+the Console are persisted to the database we configured in our
+`application.yml` file. However, Grails provides a `BootStrap.groovy`
+file which is much better suited to this task as you will see in the next section. 

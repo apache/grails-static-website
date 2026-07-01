@@ -1,0 +1,21 @@
+In our previous cron example we did mention that many times cron can be confusing and is not intuitive. To alleviate some
+of that confusion here is the previous cron configuration written using the TaskScheduler
+
+[source, groovy]
+.grails-app/services/demo/todayat/DailyMailJobService.groovy
+----
+include::../snippets/grails-app/services/demo/todayat/DailyMailJobService.groovy[tag=dailyEmailJobService]
+----
+<1> Dependency injection of our TaskScheduler bean
+<2> Dependency injection of emailService
+<3> Calculate start time
+<4> Calculate repeat interval
+<5> Schedule task with start time and repeat interval
+
+Once you have written your schedule using TaskScheduler, register the job in bootstrap.
+
+[source, groovy]
+.grails-app/init/demo/BootStrap.groovy
+----
+include::../snippets/grails-app/init/demo/BootStrap.groovy[]
+----

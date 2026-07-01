@@ -1,0 +1,11 @@
+Every Grails project includes a `BootStrap.groovy` file under `grails-app/init`. This file can be used for any custom logic you want to happen during application startup. One excellent use of the file is to preload some data in our database. Let's create a few instances of our three domain classes.
+
+Edit `grails-app/init/org/grails/guides/BootStrap.groovy`, as shown below:
+
+[source,groovy]
+.grails-app/init/org/grails/guides/BootStrap.groovy
+----
+include::../snippets/grails-app/init/org/grails/guides/BootStrap.groovy[]
+----
+
+Now restart the application, and browse to the DBConsole, you should be able to expand the three tables and see our newly created data.

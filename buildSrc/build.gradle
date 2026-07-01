@@ -2,10 +2,11 @@ plugins {
     id 'groovy-gradle-plugin'
 }
 
-ext {
-    flexmarkVersion = '0.64.8'
-    micronautVersion = '4.10.4'
-}
+// Dependency versions are centralized in buildSrc/gradle.properties so a
+// single edit there bumps every consumer here. Mirrors the spirit of
+// apache/grails-core's `dependencies.gradle` (single source of truth for
+// versions) while keeping the format simple given this repo's much smaller
+// dep set. Properties are referenced via `$name` interpolation below.
 
 repositories {
     mavenCentral()
@@ -20,7 +21,35 @@ dependencies {
     implementation 'io.micronaut.rss:micronaut-rss-core'
     implementation 'io.micronaut.validation:micronaut-validation'
     implementation 'jakarta.annotation:jakarta.annotation-api'
-    implementation 'org.yaml:snakeyaml'
+
+    // Explicit pin >= 2.0 mitigates CVE-2022-1471. Was previously transitive
+    // unversioned via the Micronaut platform BOM.
+    implementation "org.yaml:snakeyaml:$snakeyamlVersion"
+
+    // AsciiDoc parser used by the guides build (custom include resolver,
+    // include:: vendoring helpers).
+    implementation "org.asciidoctor:asciidoctorj:$asciidoctorjVersion"
+
+    // HTML parser used by the guides verification harness.
+    implementation "org.jsoup:jsoup:$jsoupVersion"
+
+    // Runtime dependencies for the vendored grails/doc/* renderer.
+    // The renderer (DocPublisher, DocEngine, AsciiDocEngine, macros, filters)
+    // was vendored from apache/grails-core 7.2.x build-logic/docs-core.
+    // See buildSrc/VENDOR.md for source SHA + re-vendor procedure.
+    implementation "org.apache.commons:commons-text:$commonsTextVersion"
+    implementation "org.apache.ant:ant:$antVersion"
+    implementation "org.grails:grails-gdoc-engine:$grailsGdocEngineVersion"
+    implementation "org.slf4j:slf4j-api:$slf4jVersion"
+    implementation "org.slf4j:jcl-over-slf4j:$slf4jVersion"
+
+    // Canonical Grails version model. ReleaseVersion delegates parsing and comparison
+    // to org.grails.datastore.mapping.core.grailsversion.GrailsVersion so this codebase
+    // doesn't maintain its own regex-based version parser. The BOM is required because
+    // grails-datastore-core's transitive deps (grails-common, etc.) use unversioned
+    // constraints and rely on the BOM for resolution.
+    implementation platform("org.apache.grails:grails-bom:$grailsBomVersion")
+    implementation "org.apache.grails.data:grails-datastore-core:$grailsDatastoreCoreVersion"
 
     testImplementation 'org.spockframework:spock-core'
 
@@ -36,6 +65,24 @@ gradlePlugin {
             description = 'Creates tasks to generate the Grails Website'
         }
     }
+}
+
+// Package the vendored grails-doc templates (style/, css/, js/, fonts/, img/)
+// into a jar that the vendored DocPublisher loads at runtime via
+// `getClassLoader().getResource('grails-doc-files.jar')`. The inner jar is
+// nested inside the outer buildSrc jar so the classloader can resolve it
+// by name. Mirrors apache/grails-core 7.2.x build-logic/docs-core's
+// docFilesJar pattern; required to unblock DocPublisher.unpack().
+def docFilesJar = tasks.register('docFilesJar', Jar) {
+    description = 'Package vendored grails-doc templates so DocPublisher can locate them on the runtime classpath.'
+    archiveBaseName = 'grails-doc-files'
+    archiveVersion = ''
+    from 'src/main/template'
+}
+
+tasks.named('jar', Jar) {
+    dependsOn docFilesJar
+    from(docFilesJar.flatMap { it.archiveFile })
 }
 
 tasks.withType(Test).configureEach {

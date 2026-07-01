@@ -1,0 +1,51 @@
+In the above sections, we have been able to find instances through a property: by equality,
+by inequality, by values between bounds. Sometimes, though, the matching values for a property
+do not form a simple range. With dynamic finders, you can find records where a property is
+tested against items from a provided list: use the `InList` comparator.
+
+Here are two examples. The first finds all of the `Game` records that match a list of `String` game
+names, while the second example finds all `Match` records that track the game play of the games
+listed.
+[source,groovy]
+----
+include::initial/grails-app/services/demo/QueryService.groovy[tag=findStringInList]
+
+include::initial/grails-app/services/demo/QueryService.groovy[tag=findDomainInList]
+----
+
+By using the `InList` comparator and passing in the list of items to match against, we can
+reduce these methods to be more efficient.
+[source,groovy]
+----
+include::complete/grails-app/services/demo/QueryService.groovy[tag=findStringInList]
+
+include::complete/grails-app/services/demo/QueryService.groovy[tag=findDomainInList]
+----
+
+In the second example, `QueryService.queryMatchesForGames`, note that the list does not
+contain simple types (like `Number` or `String`), but actually contains a list of `Game`
+domain objects. This is reasonable, since the property `game` of `Match` *is an instance
+of `Game`*.
+
+Anytime you have a relationship like this, you can use domain class instances as part of
+your query. As another example, the `Score` domain references the `Player` domain, and so,
+for example, to find all of the scores by a particular player:
+[source,groovy]
+----
+    def jeffBrown = Player.findByName('Jeff Brown')
+    def scores = Score.findByPlayer(jeffBrown)
+----
+
+Related to the `InList` comparator is the `NotInList` comparator which, as it sounds, finds
+matching instances where the property under test is *not* found in the provided list. So, for
+the inefficient implementation of `QueryService.queryGamesOtherThan`:
+[source,groovy]
+----
+include::initial/grails-app/services/demo/QueryService.groovy[tag=findNotInList]
+----
+
+This can be replaced using the `NotInList` comparator:
+[source,groovy]
+----
+include::complete/grails-app/services/demo/QueryService.groovy[tag=findNotInList]
+----

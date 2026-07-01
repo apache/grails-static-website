@@ -1,0 +1,3 @@
+A widget is the markup _inside_ the wrapper - the actual `<input>`, `<select>`, or `<textarea>` element. The Fields plugin ships defaults that handle every Java type Grails knows about, but the defaults are deliberately plain. Customising widgets per type is what turns the form from "functional" to "fits the rest of the application".
+
+Three type-level customisations cover most of the surface area.

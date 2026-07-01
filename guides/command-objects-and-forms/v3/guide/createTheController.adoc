@@ -1,0 +1,34 @@
+Before we can create any actions using command objects, we need a controller. Create a
+`PlayerController` class to work with the existing domain object `Player`.
+
+[source,groovy]
+----
+$ ./grailsw create-controller demo.Player
+----
+
+include::{commondir}/common-firstTimeYouRunGrailsCommand.adoc[]
+
+The output of the command will look like:
+
+----
+| Created grails-app/controllers/demo/PlayerController.groovy
+| Created src/test/groovy/demo/PlayerControllerSpec.groovy
+----
+
+You will now have a new, mostly empty controller named `PlayerController.groovy`
+in the `grails-app/controllers/demo` directory. Update the `index` action and add
+the `show` action to look like this:
+
+[source,groovy]
+./grails-app/controllers/demo/PlayerController.groovy
+----
+include::../snippets/grails-app/controllers/demo/PlayerController.groovy[tags=indexShow, indent=0]
+----
+
+The domain class, views, and some sample data are provided for you. At this point,
+you should be able to run the application and navigate to http://localhost:8080/player/
+to see a list of players, and click on a player's name to view that individual player.
+However, none of the other actions (e.g. create, save, edit, update, delete) will work yet,
+not until you write those actions.
+
+include::{commondir}/common-startTheApplication.adoc[]

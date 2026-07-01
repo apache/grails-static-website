@@ -1,0 +1,12 @@
+Every software project needs https://martinfowler.com/articles/continuousIntegration.html[Continuous Integration (CI)].
+
+[quote, Martin Fowler]
+Continuous Integration is a software development practice where members of a team integrate their work frequently, usually each person integrates at least daily - leading to multiple integrations per day. Each integration is verified by an automated build (including test) to detect integration errors as quickly as possible. Many teams find that this approach leads to significantly reduced integration problems and allows a team to develop cohesive software more rapidly.
+
+In this guide, we use Github Actions:
+
+____
+GitHub Actions makes it easy to automate all your software workflows, now with world-class CI/CD. Build, test, and deploy your code right from GitHub. Make code reviews, branch management, and issue triaging work the way you want.
+____
+
+You are going to create a Grails application on GitHub and use https://github.com/features/actions[Github Actions] to build and test your code. This guide assumes you are familiar with Git and GitHub. It also assumes that you already have a GitHub account.

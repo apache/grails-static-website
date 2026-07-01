@@ -1,0 +1,20 @@
+Grails ships a `<g:datePicker>` taglib that emits three separate `<select>` elements (year, month, day). Modern HTML has `<input type="date">` for the same job in one element. Replace the default with the HTML5 control:
+
+[source,html]
+.grails-app/views/_fields/date/_widget.gsp
+----
+include::../snippets/grails-app/views/_fields/date/_widget.gsp[]
+----
+
+A few subtleties:
+
+* The `value` model variable is a `java.util.Date` (or `java.time.LocalDate` if your domain uses the JSR-310 type). Convert to ISO-8601 (`yyyy-MM-dd`) which is the only format `<input type="date">` accepts.
+* `<g:formatDate>` produces the localised display string in `_displayWidget.gsp` - we will write that next.
+
+[source,html]
+.grails-app/views/_fields/date/_displayWidget.gsp
+----
+include::../snippets/grails-app/views/_fields/date/_displayWidget.gsp[]
+----
+
+Now every `Date` property in the app renders as an HTML5 date picker on edit and a localised long-form date on display. Adding a `Date startDate` to any domain class needs zero per-property GSP work.

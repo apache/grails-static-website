@@ -1,0 +1,24 @@
+When the user taps an announcement, a _Notification_ is posted which contains
+the tapped announcement. In the method _prepareForSegue:sender_ of _MasterViewController_
+we set the announcement property of _DetailViewController_
+
+[source,swift]
+./complete-swift-ios-v1/IntranetClient/MasterViewController.swift
+----
+include::{sourcedir}/../complete-swift-ios-v1/IntranetClient/MasterViewController.swift[lines="69..77"]
+----
+
+image::segue.jpeg[]
+
+To render the announcement we use a UILabel and UIWebView which we wire up to IBOutlets in the StoryBoard as illustrated below:
+
+image::connect_detail_iboutlets.png[]
+
+
+This is the complete _DetailViewController_ code. There is no networking code involved.
+
+[source,swift]
+./complete-swift-ios-v1/IntranetClient/DetailViewController.swift
+----
+include::{sourcedir}/../complete-swift-ios-v1/IntranetClient/DetailViewController.swift[]
+----

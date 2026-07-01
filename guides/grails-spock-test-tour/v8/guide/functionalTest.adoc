@@ -1,0 +1,51 @@
+Functional tests use Geb 8 to drive a real browser against a real booted app. In Grails 8 the canonical (and only fully supported) base class is `grails.plugin.geb.ContainerGebSpec` from `testFixtures("org.apache.grails:grails-geb")`, already on the test classpath in the standard `web` profile. It starts a Selenium-Chrome browser inside a Testcontainers container instead of relying on local WebDriver binaries, so the host's only requirement is a running Docker daemon.
+
+[source,groovy]
+.src/integration-test/groovy/example/BookFunctionalSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/BookFunctionalSpec.groovy[]
+----
+
+== The page the test drives
+
+`go '/books'` needs a real HTML page with a table. `BookController` stays a `RestfulController` for the JSON CRUD surface, but its `index` action is overridden so the HTML format renders a GSP while JSON clients keep their collection response:
+
+[source,groovy]
+.grails-app/controllers/example/BookController.groovy
+----
+include::../snippets/grails-app/controllers/example/BookController.groovy[]
+----
+
+A `resources` URL mapping exposes the controller at `/books`:
+
+[source,groovy]
+.grails-app/controllers/example/UrlMappings.groovy
+----
+include::../snippets/grails-app/controllers/example/UrlMappings.groovy[]
+----
+
+and a minimal GSP renders the table the spec asserts against:
+
+[source,html]
+.grails-app/views/book/index.gsp
+----
+include::../snippets/grails-app/views/book/index.gsp[]
+----
+
+Because the spec is `@Integration` *without* `@Rollback`, it seeds its fixture inside a `withNewTransaction` block so the row is committed and visible to the browser. A bare GORM call in an un-rolled-back `@Integration` spec has no ambient Hibernate session and would throw. `BootStrap` seed data is *not* a substitute here: it does not populate the test database in the integration context, so the spec owns its own fixture.
+
+Three patterns to highlight:
+
+* `@Integration` is *mandatory* for `ContainerGebSpec`. The Spock extension validates the annotation at runtime and throws `IllegalArgumentException: ContainerGebSpec classes must be annotated with @Integration.` if it is missing.
+* `@Rollback` is *not* used here. Functional tests exercise the full HTTP stack against committed data, so transactional rollback would hide what the user actually sees.
+* The `geb-with-webdriver-binaries` forge feature from earlier Grails majors is obsolete. `ContainerGebSpec` brings its own browser via Testcontainers; adding the legacy feature wires up a second Chrome driver no test ever uses.
+
+Three keep-it-fast disciplines:
+
+* *Run unit and integration tests first, functional last.* Failure is then localised: if every functional test fails it is because the app would not boot, which is an integration-test problem.
+* *Reuse a single browser session across feature methods in the same spec* - Geb does this by default. Re-launching Chrome between every method would add real overhead.
+* *Let Testcontainers reuse the Selenium image* across runs. The first cold start pulls the image (~200 MB); subsequent runs reuse it.
+
+Functional specs are an order of magnitude slower than integration specs (10-60 s per spec) because the full HTTP stack and a real browser are involved. Use them only for what integration tests genuinely cannot answer: end-to-end user flows, JavaScript-driven interactions, multi-page form journeys.
+
+The matching link:../grails-github-actions-cicd/8/guide/index.html[CI/CD guide] models this as a four-stage job graph (validation -> unit -> integration -> functional) so a broken unit test does not waste 60 seconds on functional runs. The CI runner needs Docker available too; GitHub-hosted Linux runners ship with Docker out of the box.

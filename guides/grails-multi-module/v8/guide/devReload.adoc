@@ -1,0 +1,66 @@
+Grails 8 already ships a supported cross-project reload path for plugin subprojects. You do not need the manual `bootRun` classpath patch as the primary recipe.
+
+The supported setup has two moving parts:
+
+* the plugin project publishes exploded classes and resources by applying `org.apache.grails.gradle.grails-exploded`
+* the webapp consumes the plugin through `grails { plugins { ... } }`, which lets `bootRun` request that exploded variant automatically
+
+In `shared-core/build.gradle`, add the exploded plugin:
+
+[source,groovy]
+----
+apply plugin: 'org.apache.grails.gradle.grails-exploded'
+----
+
+In each webapp `build.gradle`, keep the plugin dependency inside the `grails` block:
+
+[source,groovy]
+----
+grails {
+    plugins {
+        implementation project(':shared-core')
+    }
+}
+----
+
+Those two pieces line up exactly with:
+
+* `grails-gradle/plugins/src/main/groovy/org/grails/gradle/plugin/exploded/GrailsExplodedPlugin.groovy`
+* `grails-gradle/plugins/src/main/groovy/org/grails/gradle/plugin/core/PluginDefiner.groovy`
+* `grails-doc/src/en/guide/plugins/creatingAndInstallingPlugins.adoc`
+
+Now keep `shared-core` compiled in one shell and run whichever webapps you need in the others:
+
+[source,bash]
+----
+./gradlew :shared-core:classes --continuous          # shell 1
+./gradlew :webapp-customer:bootRun                   # shell 2
+./gradlew :webapp-admin:bootRun --args='--server.port=8081'  # shell 3
+----
+
+Save a file under `shared-core/grails-app/services/` or `shared-core/src/main/groovy/`, shell 1 recompiles it, and the running webapp restarts from the exploded output directories. No manual classpath surgery is required.
+
+What reloads cleanly versus what still needs a full restart:
+
+[cols="3,1,4"]
+|===
+| Change | Reloads? | Reason
+
+| Service or controller method body | yes | DevTools restart picks up the new bean classes
+| GSP under `shared-core/grails-app/views/` | yes | The view layer is resolved from plugin resources during development
+| Static asset | yes | Served from source/build outputs in dev mode
+| Add or change a domain class field | no | Hibernate metadata is built once at startup
+| Edit `application.yml` | no | Configuration is read at startup
+| Edit `*GrailsPlugin.groovy` | no | Plugin lifecycle hooks run during startup
+|===
+
+[NOTE]
+====
+The older manual `bootRun { doFirst { classpath = ... } }` patch can still work because `bootRun` ultimately runs with a mutable classpath. But on Grails 8 it is now a fallback for unusual cases, not the guide's primary recipe, because the framework already includes a first-class exploded-plugin mechanism.
+====
+
+Files touched:
+
+- shared-core/build.gradle
+- webapp-customer/build.gradle
+- webapp-admin/build.gradle

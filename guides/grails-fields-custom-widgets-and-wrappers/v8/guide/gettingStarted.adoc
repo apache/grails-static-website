@@ -1,0 +1,5 @@
+In this guide you will build a small library application with two domain classes - `Book` and `Author` - and use the link:https://grails.apache.org/docs/snapshot/guide/theWebLayer.html#fields[Grails Fields plugin] to drive every CRUD page (create, edit, show, list) with a single line of GSP each.
+
+By the end of the guide your `create.gsp`, `edit.gsp`, `show.gsp`, and `list.gsp` will contain almost no field-by-field markup. All of the formatting, validation feedback, and per-property layout will live once in `grails-app/views/_fields/` as custom widgets, wrappers, and table templates - reused across every domain class in the app.
+
+This is the first guide that targets Apache Grails 8.

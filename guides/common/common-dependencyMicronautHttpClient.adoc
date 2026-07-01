@@ -1,0 +1,3 @@
+We use the https://docs.micronaut.io/snapshot/guide/index.html#httpClient[Micronaut HTTP Client].
+
+Ensure you have the dependency `io.micronaut:micronaut-http-client`

@@ -1,0 +1,60 @@
+To get started with this profile, specify it when generating your app:
+
+[source,groovy]
+----
+$ grails create-app myApp --profile=vue
+----
+
+You can also generate your project using the http://start.grails.org[Application Forge], either from the web interface or using the following `curl` command:
+
+[source,bash]
+----
+curl -O start.grails.org/myApp.zip -d version=3.3.3 -d profile=vue
+----
+
+
+Take a look at the directory structure - you will see a typical Gradle multi-project build, with separate client and server projects.
+
+[source,groovy]
+----
+drwxr-xr-x  9 zak  staff   306 Nov  1 13:15 client
+drwxr-xr-x  3 zak  staff   102 Nov  1 13:10 gradle
+-rwxr--r--  1 zak  staff  4971 Nov  1 13:10 gradlew
+-rwxr--r--  1 zak  staff  2314 Nov  1 13:10 gradlew.bat
+drwxr-xr-x  8 zak  staff   272 Nov  1 13:12 server
+-rw-r--r--  1 zak  staff    26 Nov  1 13:10 settings.gradle
+----
+
+The `server` project is our Grails application. The profile will generate a Grails app using the `rest-api` profile, which provides support for creating domain classes as restful resources, https://grails.apache.org/docs/snapshot/guide/single.html#cors[CORS enabled by default], as well as JSON and Markup views.
+
+`client` is our Vue app.
+
+[source,groovy]
+----
+-rw-r--r--   1 zak  staff  44412 Nov  1 13:10 README.md
+-rw-r--r--   1 zak  staff    669 Nov  1 13:10 build.gradle
+-rw-r--r--   1 zak  staff    404 Nov  1 13:10 package.json
+drwxr-xr-x   4 zak  staff    136 Nov  1 13:10 public
+drwxr-xr-x  10 zak  staff    340 Nov  1 13:10 src
+----
+
+The `client` project structure (with the exception of `build.gradle`, which is specific to the profile) is all courtesy of Vue-CLI's `webpack` template, and includes an excellent README file. In short, the `src/` directory is where the Vue source code is kept, with subdirectories for `/components` , `/assets`, and `config`.
+
+The `static` directory is for public resources that you wish to make available from your Vue app without being bundled by webpack. There is also a root `index.html` file which is used to generate the Vue app’s home page. Again, see the http://vuejs-templates.github.io/webpack/[Vue-CLI template documentation] for more details.
+
+If you edit the file `config/dev.env.js`, you will see that the profile has added an additional configuration property to the template defaults:
+[source, javascript]
+----
+'use strict'
+const merge = require('webpack-merge')
+const prodEnv = require('./prod.env')
+
+module.exports = merge(prodEnv, {
+  NODE_ENV: '"development"',
+  SERVER_URL: '"http://localhost:8080"' //<1>
+})
+
+----
+<1> `SERVER_URL` points to the default address of the `server` Grails application, and is used as the base URL for REST calls from the Vue app.
+
+You can change the existing configuration properties or add new ones to this file; they will apply to the "development" environment (note that the `client` environments are based on the scripts in `client/package.json`, and are not related to Grails' environments).

@@ -1,0 +1,7 @@
+In this guide you will build a small task tracker on Apache Grails 8 with link:https://htmx.org[HTMX] driving the UI - server-rendered initial page, then HTMX-driven inline editing, live search, optimistic delete with confirm, and toggle, all without committing to a full SPA.
+
+The pattern is a natural fit for Grails: GSP partials become HTMX response fragments. Your controllers return small chunks of HTML instead of JSON; HTMX swaps them into the right slot. Forms post to controllers via `hx-post` and validation errors come back as the same partial with the errors rendered inline.
+
+This guide targets Apache Grails 8 / HTMX 2.x.
+
+Files touched: none.

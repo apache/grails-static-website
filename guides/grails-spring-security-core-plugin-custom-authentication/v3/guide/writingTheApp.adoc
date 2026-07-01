@@ -1,0 +1,22 @@
+When we talk about two-factor authentication we often think about two things:
+
+- Something the user knows (e.g. username/password)
+- Something the user has.
+
+For the latter, in Spain, banks often issue a https://es.wikipedia.org/wiki/Tarjeta_de_coordenadas[Coordinate Card]
+
+image::caja_espagna_coordenadas.jpg[]
+
+Users need to enter username, password and a coordinate to login into their bank.
+
+We are going to customize https://grails-plugins.github.io/grails-spring-security-core/v3/index.html[Spring Security Core Plugin]
+to achieve such a login in a Grails 3 application.
+
+
+First, We need to add Spring Security Core Plugin as a dependency:
+
+[source,groovy]
+./build.gradle
+----
+include::../snippets/build.gradle[indent=0,tag=dependencySSC]
+----

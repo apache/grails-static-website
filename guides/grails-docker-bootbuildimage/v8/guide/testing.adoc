@@ -1,0 +1,34 @@
+The deployment contract for this app is not a web page - it is the Actuator health surface that the Docker `HEALTHCHECK` and a Kubernetes readiness/liveness probe poll. A functional test pins exactly that contract, booting the app against a Testcontainers PostgreSQL database (the readiness probe checks the datasource, so a real database is required for it to report `UP`).
+
+== Test configuration
+
+Testcontainers artifacts are not in the Grails BOM, so they need an explicit `testcontainers-bom`. Because the app uses the database-migration plugin with an empty changelog, the test profile turns migration off and lets GORM create the schema directly:
+
+[source,yaml]
+.src/test/resources/application-test.yml
+----
+include::../snippets/src/test/resources/application-test.yml[]
+----
+
+== The health-probe functional spec
+
+[source,groovy]
+.src/integration-test/groovy/example/ActuatorHealthFunctionalSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/ActuatorHealthFunctionalSpec.groovy[]
+----
+
+The assertions encode the operational contract from the link:#healthCheck[health-probe chapter]:
+
+* `/actuator/health`, `/actuator/health/liveness`, and `/actuator/health/readiness` all report `UP` (the status is nested as `status.code` in Spring Boot's health JSON);
+* the readiness probe reports `UP` only because a real database is reachable - this is why the spec runs against Testcontainers PostgreSQL rather than a mock;
+* the operator-grade endpoints (`/actuator/env`, `/actuator/metrics`) stay closed (`404`), confirming the `exposure.include: health,info` restriction actually holds.
+
+Run it:
+
+[source,bash]
+----
+./gradlew integrationTest   # boots the app against Testcontainers PostgreSQL - Docker required
+----
+
+This is the same `readiness` endpoint the Compose `HEALTHCHECK` polls, so a green functional run is direct evidence the container's health check will pass once the image is built and run.

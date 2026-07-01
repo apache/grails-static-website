@@ -1,0 +1,1 @@
+We are going to show how to run Geb tests with multiple browsers (Firefox, HtmlUnit and Chrome)

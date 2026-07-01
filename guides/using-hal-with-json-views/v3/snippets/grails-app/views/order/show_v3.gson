@@ -1,0 +1,22 @@
+import com.example.Order
+
+model {
+    Order order
+}
+json {
+    hal.links(self: order, customer: order.customer)
+
+    id order.orderId
+    shippingCost order.shippingCost
+    date order.orderPlaced.format('M-dd-yyy')
+
+    shippingAddress {
+        street order.shippingAddress.street
+        street2 order.shippingAddress.street2
+        city order.shippingAddress.city
+        state order.shippingAddress.state
+        zip order.shippingAddress.zip
+    }
+
+    products tmpl.product(order.products) //<1>
+}

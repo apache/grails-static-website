@@ -1,0 +1,104 @@
+=== Create root project
+
+[source, bash]
+----
+$ mkdir multiproject
+$ cd multiproject
+----
+
+=== Create Grails App with `web` profile
+
+[source, bash]
+----
+multiproject$ mkdir app
+multiproject$ cd app
+multiproject/app$ grails
+grails> create-app --profile web --inplace
+| Application created at multiproject/app
+| Resolving Dependencies. Please wait…
+CONFIGURE SUCCESSFUL
+Total time: 12.262 secs
+grails> exit
+multiproject/app$ cd ..
+----
+
+=== Create Grails Plugin with `plugin` profile
+
+[source, bash]
+----
+multiproject$ mkdir plugin
+multiproject$ cd plugin
+multiproject/plugin$ grails
+grails> create-app --profile plugin --inplace
+| Application created at multiproject/plugin
+| Resolving Dependencies. Please wait…
+CONFIGURE SUCCESSFUL
+Total time: 12.262 secs
+grails> exit
+multiproject/plugin$ cd ..
+----
+
+=== Create Groovy Lib
+
+[source, bash]
+----
+multiproject$ mkdir groovylib
+multiproject$ cd groovylib
+multiproject/groovylib$ touch build.gradle
+----
+
+Create a build file for the Groovy Lib:
+
+[source, groovy]
+.groovylib/build.gradle
+----
+include::../snippets/groovylib/build.gradle[indent=0]
+----
+
+=== Move Gradle files to Root Project
+
+[source, bash]
+----
+multiproject$ mv app/gradlew .
+multiproject$ mv app/gradlew.bat .
+multiproject$ mv app/gradle.properties .
+multiproject$ mv app/gradle .
+----
+
+=== Add projects to `settings.gradle`
+
+[source, groovy]
+.settings.gradle
+----
+include::../snippets/settings.gradle[indent=0]
+----
+
+=== Remove unnecessary files
+
+Clean-up plugin folder
+
+[source, bash]
+----
+multiproject$ rm plugin/gradlew
+multiproject$ rm plugin/gradlew.bat
+multiproject$ rm plugin/grailsw.bat
+multiproject$ rm plugin/grailsw
+multiproject$ rm plugin/grailsw.bat
+multiproject$ rm plugin/grails-wrapper.jar
+multiproject$ rm plugin/settings.gradle
+multiproject$ rm plugin/gradle.properties
+multiproject$ rm -rf plugin/gradle
+multiproject$ rm plugin/.gitignore
+
+----
+
+Clean-up app folder
+
+[source, bash]
+----
+multiproject$ rm app/grailsw
+multiproject$ rm app/grailsw.bat
+multiproject$ rm app/grails-wrapper.jar
+multiproject$ rm app/settings.gradle
+multiproject$ rm app/.gitignore
+----

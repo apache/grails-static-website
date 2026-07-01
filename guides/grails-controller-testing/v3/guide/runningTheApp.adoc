@@ -1,0 +1,15 @@
+To run the tests:
+
+[source, bash]
+----
+./grailsw
+grails> test-app
+grails> open test-report
+----
+
+or
+
+[source, bash]
+----
+./gradlew test
+----

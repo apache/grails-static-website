@@ -1,0 +1,11 @@
+include::{commondir}/common-runapp.adoc[]
+
+Now perform the following steps:
+
+1. Navigate to the home page and select "Audi"
+2. Enter data for a `Vehicle` to create a new `Vehicle`
+3. Note that the data will be created with `audi` as the value for the discriminator column `manufacturer` in the `vehicle` table.
+
+If you then navigate back to the homepage and select "Ford" the current tenant
+is switched. The webapp displays the data for the tenant `ford`. The discriminator column
+effectively isolates the data between the two tenants.

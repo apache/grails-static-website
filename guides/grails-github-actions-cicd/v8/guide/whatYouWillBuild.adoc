@@ -1,0 +1,11 @@
+By the end of the guide your project will have:
+
+* `actions/setup-java@v4` pinning the JDK to Liberica 21 (the same distribution Paketo's bootBuildImage uses, so build-time and runtime bytecode levels agree).
+* `gradle/actions/wrapper-validation@v4` running before any other Gradle invocation, so a tampered `gradle-wrapper.jar` cannot exfiltrate build-time secrets.
+* `gradle/actions/setup-gradle@v4` configuring the Gradle build cache + dependency cache so the `unitTest`, `integrationTest`, and `functionalTest` jobs each cold-start in seconds, not minutes.
+* A multi-stage job graph - `validation` -> `unit-test` + `integration-test` -> `functional-test` -> `coverage` - so failures are isolated to the layer that broke and `functional-test` does not run if the unit suite is already broken.
+* PostgreSQL service containers for the `integration-test` job and Testcontainers-driven Postgres for the `functional-test` job (Geb specs against the real booted app).
+* A separate `release.yml` triggered on `v*.*.*` tags that builds the OCI image with `bootBuildImage`, pushes to GHCR, and attaches the `bootJar` to a GitHub Release.
+* A `codecov/codecov-action@v5` upload from the `coverage` job.
+* A `dependabot.yml` covering Gradle and GitHub Actions, with grouped PRs so a Grails minor bump arrives as one PR instead of fifteen.
+* A README badge that turns green when the latest build on `grails8` passes.

@@ -1,0 +1,28 @@
+Create `AuthController.groovy`. When the user logs in successfully with Twitter, `AuthController.success` is invoked.
+
+NOTE: The path to `AuthController.success` is used in `frontendCallbackUrl` in `application.groovy`.
+
+[source,groovy]
+.grails-app/controllers/demo/AuthController.groovy
+----
+include::../snippets/grails-app/controllers/demo/AuthController.groovy[indent=0]
+----
+
+<1> Responds a Cookie with the JWT token as value
+<2> Responding a cookie with the same name and `maxAge` equals 0 deletes the cookie. Thus, it logs out the user.
+<3> Prevents any Javascript executed in your site ( even your own javascript ) to do `document.cookies` and access the cookies
+<4> Cookie won't leave if you do http:// instead of https://. You should use https in production.
+<5> Set the cookie expiration to match JWT expiration
+<6> Use the same cookie name, the custom `tokenReader` we previoulsy defined expects.
+
+NOTE: Due to the stateless nature of the security solution of this application. To log out a user involves the deletion the cookie containing his JWT token.
+
+The GSP of `success` action performs simple redirect to the home page. We do the redirect in the
+client side to ensure the cookie is correctly set.
+
+[source,groovy]
+.grails-app/views/auth/success.gsp
+----
+include::../snippets/grails-app/views/auth/success.gsp[indent=0]
+----
+

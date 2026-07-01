@@ -1,0 +1,50 @@
+Let's start by creating the login component. We will pass 4 props to this component: `userDetails` and `error` variables (to represent the form input and possible error message), and `changeHandler` and `onSubmit` functions.
+
+TIP: If you're familiar with React, you may recognize this is a "stateless functional component". This style of React component is literally a simple function, with no internal state. This component gets its state and dynamic functionality via props only, which are passed in from the parent component, in this case, `App`.
+
+[source, javascript]
+.client/src/Login.js
+----
+import React from 'react';
+import {Jumbotron, Row, Col, Form, FormGroup, ControlLabel, FormControl, Button} from 'react-bootstrap';
+
+const Login = ({userDetails, error, inputChangeHandler, onSubmit}) => {
+
+  return (
+    <Row>
+      <Jumbotron>
+        <h1>Welcome to the Garage</h1>
+      </Jumbotron>
+      <Row>
+        <Col sm={4} smOffset={4}>
+
+          {error ? <p className="alert alert-danger">{error} </p> : null} //<1>
+
+          <Form onSubmit={onSubmit}> //<2>
+            <FormGroup>
+              <ControlLabel>Login</ControlLabel >
+              <FormControl type='text' name='username' placeholder='Username'
+                           value={userDetails.username} //<3>
+                           onChange={inputChangeHandler}/>  //<4>
+              <FormControl type='password' name='password' placeholder='Password'
+                           value={userDetails.password} //<3>
+                           onChange={inputChangeHandler}/>  //<4>
+            </FormGroup>
+            <FormGroup>
+              <Button bsStyle="success" type="submit">Login</Button>
+            </FormGroup>
+          </Form>
+        </Col>
+      </Row>
+    </Row>
+  );
+};
+
+export default Login;
+----
+<1> If we have an `error`, render the error message - otherwise render nothing.
+<2> The `onSubmit` function will be called when the login form is submitted.
+<3> The `userDetails` prop contains the username and password that the user has typed so far.
+<4> The `inputChangeHandler` function will fire every time the user types character into the form fields. We'll see what it does in the next section.
+
+TIP: This style of form is an example of a https://facebook.github.io/react/docs/forms.html["controlled component"]. This means that the value of the inputs is set "upstream" (in this case, in the `userDetails` prop) and is updated only when that upstream value is changed. That change will take place when our `inputChangeHandler` function is called. This is also referred to as "one-way data-binding".

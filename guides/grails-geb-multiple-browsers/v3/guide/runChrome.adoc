@@ -1,0 +1,7 @@
+To run the tests in https://www.google.com/chrome[Google Chrome], you need
+to https://sites.google.com/a/chromium.org/chromedriver/downloads[download the appropriate drivers].
+
+[source, bash]
+----
+./gradlew -Dgeb.env=chrome -Dwebdriver.chrome.driver=/Users/sdelamo/Applications/chromedriver integrationTest
+----

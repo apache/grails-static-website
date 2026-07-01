@@ -1,0 +1,69 @@
+=== Enable Google Actions API
+
+Go to https://console.developers.google.com/apis/dashboard[Google API Manager Console] and 
+enable Google Actions API.
+
+image::enablegoogleactions.png[]
+
+=== Import your Project to the Google Actions Console
+
+Go to the new https://console.actions.google.com/[Google Actions Console] and import the project your previoulsy created: 
+
+image::googleactionsconsole.png[]
+
+=== Configure your project ID in `action.json`
+
+`action.json` is a metadata file which we use to inform the Google Cloud Actions Console about the 
+actions supported by our application. 
+
+Here you can also control:
+
+    * sample queries to help google understand which action to call
+    * intent to call
+    
+[source,json]
+.src/main/resources/action.json
+----
+include::../snippets/src/main/resources/action.json[indent=0]
+----
+
+As shown above, our app supports two actions. We explain those actions with more detail in the next sections of this guide. 
+
+We will need to modify the httpExecution items to match your deployed application endpoints.
+
+
+[source,json]
+.src/main/resources/action.json
+----
+"url": "https://PROJECT_ID.appspot.com/assistantAction/index"
+----
+
+=== Add Actions to your assistant app
+
+The first time you select a project in the Google Cloud Actions Console, you will need to supply the action package JSON via the `gactions` tool like so:
+
+image::useactionssdk.png[]
+
+[source,bash]
+----
+gactions update --action_package src/main/resources/action.json --project PROJECT_ID
+----
+
+Follow the instructions prompted by the above command. It involves an authorization process. 
+
+At the end you will see an output similar to: 
+
+[source,bash]
+----
+Your app for the Assistant for project PROJECT_ID was successfully updated with your actions. Visit the Actions on Google console to finish registering your app and submit it for review at https://console.actions.google.com/project/PROJECT_ID/overview
+----
+
+=== Add App Information
+
+After you actions package has been validated, you will be able to enter directory information such as images, privacy policy, and descriptions. Here you can also pick the voice of the speaker in your skill.
+
+image::appinfo.png[]
+
+image::appinfo2.png[]
+
+The previous screenshots display two buttons. Test and Submit. We will click the `Test` in the previous screenshots once we have deployed our app to Google App Engine Flexible and we are ready to test our actions. 

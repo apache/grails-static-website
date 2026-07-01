@@ -1,0 +1,29 @@
+As shown in the previous app engine configuration file, we are using Jetty.
+
+Grails is built on top of SpringBoot. Following SpringBoot’s documentation, we need to do the following changes to https://docs.spring.io/spring-boot/docs/current/reference/html/howto-embedded-servlet-containers.html[deploy to Jetty instead of Tomcat].
+
+Replace:
+
+[source, groovy]
+.build.gradle
+----
+compile "org.springframework.boot:spring-boot-starter-tomcat"
+----
+
+with:
+
+[source, groovy]
+.build.gradle
+----
+provided "org.springframework.boot:spring-boot-starter-jetty"
+----
+
+NOTE: it is important you set the `spring-boot-starter-jetty` dependency as `provided`.
+
+We need to exclude several dependencies too:
+
+[source,groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[tag=configurationsexclude]
+----

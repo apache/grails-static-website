@@ -1,0 +1,9 @@
+Create a functional test which verifies that we can consume the API switching users.
+
+[source,groovy]
+.src/integration-test/groovy/demo/PlanControllerSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/demo/PlanControllerSpec.groovy[]
+----
+
+<1> You can use a specific tenant id using the withId method

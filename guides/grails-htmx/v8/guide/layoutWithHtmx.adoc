@@ -1,0 +1,23 @@
+The Grails 8 `web` starter already serves frontend libraries through Asset Pipeline and webjars. Follow that same pattern for HTMX instead of adding a CDN `<script>` tag:
+
+[source,javascript]
+.grails-app/assets/javascripts/application.js
+----
+include::../snippets/grails-app/assets/javascripts/application.js[]
+----
+
+The layout then stays simple. It just loads the compiled `application.js` bundle and, if Spring Security has exposed a `_csrf` request attribute, it forwards that token for HTMX requests:
+
+[source,html]
+.grails-app/views/layouts/main.gsp
+----
+include::../snippets/grails-app/views/layouts/main.gsp[]
+----
+
+There is no official htmx dependency in the Grails 8 BOM or the `web` profile itself, but `org.webjars.npm:htmx.org:2.0.4` works cleanly with the same `//= require webjars/...` convention the starter already uses for Bootstrap and jQuery.
+
+Files touched:
+
+* `build.gradle`
+* `grails-app/assets/javascripts/application.js`
+* `grails-app/views/layouts/main.gsp`

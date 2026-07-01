@@ -1,0 +1,44 @@
+We are finally ready to connect everything up with a functional interface. First lets create an index page for our books
+so we can see a list of them located at `views/book`.
+
+[source,html]
+.grails-app/views/book/index.gsp
+----
+include::../snippets/grails-app/views/book/index.gsp[]
+----
+
+Next we will create a `show.gsp` also in `views/books` so that when we select a book we can view its details.
+
+[source,html]
+.grails-app/views/book/show.gsp
+----
+include::../snippets/grails-app/views/book/show.gsp[indent=0]
+----
+In the above code we wrap our favourite button in a logged in check as we should only be able to favourite a book when we are logged in
+
+Lastly we tie it all together in our layout file by adding a simple menu that allows us to select either all our books,
+our favourite books, or login / logout. We add this between the navigation div and the `<g:layoutBody/>`.
+
+[source,html]
+.grails-app/views/layouts/main.gsp
+----
+include::../snippets/grails-app/views/layouts/main.gsp[indent=0, tag=menu]
+----
+In the above code we:
+
+ * Center our menu; link to list all books; link to list favourite books, login with google / logout
+ * Include template with login link
+ * Include template with logout link
+ * Add a message block so we can view our login / logout messages
+
+We create a template to contain our link to trigger our OAuth login through Google; the link `/oauth/authenticate`
+is provided from the `spring-security-rest` plugin and ends with the provider we are using `/google` for the
+link `/oauth/authenticate/google`. This will redirect you to the normal Google login / account selection you are already familiar with.
+
+[source,html]
+.grails-app/views/auth/_loginWithGoogle.gsp
+----
+include::../snippets/grails-app/views/auth/_loginWithGoogle.gsp[]
+----
+
+NOTE: `btn_google_signin_dark_normal_web@2x.png` is already provided for you in assets

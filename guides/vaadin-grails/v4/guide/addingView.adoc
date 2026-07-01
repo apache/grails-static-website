@@ -1,0 +1,68 @@
+Now to add the view which is the bulk of our Vaadin code. Create a new file located in
+`src/main/groovy/demo` called `GarageView.groovy`.
+
+Next make the necessary updates.
+
+[source,groovy]
+.src/main/groovy/demo/GarageView.groovy
+----
+include::../snippets/src/main/groovy/demo/GarageView.groovy[]
+----
+
+<1> Add `@SpringView` annotation and set the name so that your view can be found.
+<2> The view should extend the layout style that is desired
+<3> Set the actual view name
+<4> Services will not be injected automatically into Vaadin Views. You need to use `@Autowired` annotation in order to get dependency injection to work properly.
+<5> Tells the view `init()` to execute after the main UI `init()`
+<6> Loads Vehicles and its associations eagerly.
+
+
+The usage of eager loading in the `vehicleService.listAll(false)` warrants further explanation. 
+
+When a Vaadin component calls a Grails service, once the service method completes, the Hibernate session is closed which means that any associations not loaded by the query could lead to a `LazyInitializationException` due to the closed session.
+
+It is therefore critical that your queries always return the data that is required to render the view. This typically leads to better performing queries anyway and will in fact help you design a better performing application.
+
+
+
+WARNING: Grails auto dependency injection is not able to detect services in Vaadin,
+thus we require using the more traditional Spring annotation @Autowired in order
+to get dependency injection to work properly.
+
+Our view is trying to mimic the layout of much of modern web design by making use of "Rows"
+in our case we have 3 rows, a header, data collection, and data display (grid). As we develop
+a pattern start to emerge in Vaadin for views.
+
+- Create layout
+- Create UI component
+- Add UI component to layout
+- Add layout to view
+
+When adding layout to the view you can just use `addComponent()` as it is aware that it is
+adding to itself, unlike the top level UI where `root.addComponent()` is required.
+
+To keep a clean file continue building each UI component as its own private method.
+
+Once we have built our UI components now we need to be able to interact with them. To do this
+we add listeners to our components making use of groovy closures to specify what would happen
+when an event occurs. In our case we are `updateVehicle()` which we then `submit()`
+
+[source,groovy]
+.src/main/groovy/demo/GarageView.groovy
+----
+include::../snippets/src/main/groovy/demo/GarageView.groovy[indent=0, tag=listeners]
+----
+
+Using the listeners we build the vehicle object which is then submitted when the button is clicked.
+The last line of our submit method reloads our view to refresh the newly updated data.
+
+[source,groovy]
+.src/main/groovy/demo/GarageView.groovy
+----
+include::../snippets/src/main/groovy/demo/GarageView.groovy[indent=0, tag=navigateTo]
+----
+
+Now that everything is in place return to <<runningTheApp>> to run your app. If everything is as
+it should be you will see the following.
+
+image::runningGarageApp.png[]

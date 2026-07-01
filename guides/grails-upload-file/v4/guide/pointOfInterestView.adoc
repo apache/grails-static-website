@@ -1,0 +1,47 @@
+We are going to modify the GSP views slightly to include functionality which enables to upload a featured image.
+
+In Point of Interest's listing, display only the hotel's name in the table. Checkout the http://grails3-plugins.github.io/fields/snapshot/ref/Tags/table.html[Fields Plugin f:table] documentation.
+
+[source, groovy]
+./grails-app/views/pointOfInterest/index.gsp
+----
+include::../snippets/grails-app/views/pointOfInterest/index.gsp[indent=0,lines="21"]
+----
+
+Edit and create form will not allow users to set featured image's url
+
+[source, groovy]
+./grails-app/views/pointOfInterest/create.gsp
+----
+include::../snippets/grails-app/views/pointOfInterest/create.gsp[indent=0,lines="30"]
+----
+
+[source, groovy]
+./grails-app/views/pointOfInterest/edit.gsp
+----
+include::../snippets/grails-app/views/pointOfInterest/edit.gsp[indent=0,lines="32"]
+----
+
+Instead we add a button which takes the user to a featured image edit page.
+
+[source, groovy]
+./grails-app/views/pointOfInterest/show.gsp
+----
+include::../snippets/grails-app/views/pointOfInterest/show.gsp[indent=0,lines="28"]
+----
+
+Modify `PointOfInterestController`. Add a controller's action named `editFeaturedImage`:
+
+[source, groovy]
+./grails-app/controllers/example/grails/PointOfInterestController.groovy
+----
+include::../snippets/grails-app/controllers/example/grails/PointOfInterestController.groovy[indent=0, tag=editFeaturedImage]
+----
+
+`editFeaturedImage` GSP is identical to `edit` GSP but it uses an `g:uploadForm` instead of a `g:form`
+
+[source, groovy]
+./grails-app/views/pointOfInterest/editFeaturedImage.gsp
+----
+include::../snippets/grails-app/views/pointOfInterest/editFeaturedImage.gsp[indent=0,lines="29..36"]
+----

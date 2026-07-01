@@ -1,0 +1,6 @@
+include::{commondir}/common-howto.adoc[]
+
+If you want to start from scratch, create a new Grails 3 application using
+http://start.grails.org/[Grails Application Forge].
+
+image::forgeDefault.png[]

@@ -1,0 +1,12 @@
+____
+GORM Data Services take the work out of implemented service layer logic by adding the ability to automatically implement abstract classes or interfaces using GORM logic.
+____
+
+Create a GORM Data service to ease `User` domain class CRUD operations.
+
+[source,groovy]
+.grails-app/services/example/grails/UserDataService.groovy
+----
+include::../../snippets/grails-app/services/example/grails/UserDataService.groovy[]
+----
+

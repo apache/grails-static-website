@@ -1,0 +1,2 @@
+In this guide, you are going to create a multi-project build from scratch. We are going
+to combine a Grails App, a Grails Plugin, and simple Groovy Lib.

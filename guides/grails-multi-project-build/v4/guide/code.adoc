@@ -1,0 +1,38 @@
+We are going to add code to different projects to verify the multi-project build
+is working.
+
+image::codedependencies.png[]
+
+[source, groovy]
+.app/grails-app/controllers/app/PersonController.groovy
+----
+include::../snippets/app/grails-app/controllers/app/PersonController.groovy[indent=0]
+----
+
+[source, groovy]
+.plugin/grails-app/services/demo/RandomPersonService.groovy
+----
+include::../snippets/plugin/grails-app/services/demo/RandomPersonService.groovy[indent=0]
+----
+
+
+[source, groovy]
+.groovylib/src/main/groovy/demo/OCI.groovy
+----
+include::../snippets/groovylib/src/main/groovy/demo/OCI.groovy[indent=0]
+----
+
+To verify our app, we use the https://github.com/grails-plugins/grails-rest-client-builder[Rest Client Builder Grails Plugin].
+Add the plugin to our `app` dependencies:
+
+[source, groovy]
+.app/build.gradle
+----
+include::../snippets/app/build.gradle[indent=0, tag= dependency_datastore_rest_client]
+----
+
+[source, groovy]
+.app/src/integration-test/groovy/app/PersonControllerSpec.groovy
+----
+include::../snippets/app/src/integration-test/groovy/app/PersonControllerSpec.groovy[indent=0]
+----

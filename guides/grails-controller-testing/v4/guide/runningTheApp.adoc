@@ -1,0 +1,22 @@
+To run the unit tests:
+
+[source, bash]
+----
+./grailsw
+grails> test-app
+grails> open test-report
+----
+
+or
+
+[source, bash]
+----
+./gradlew test
+----
+
+Run the integration tests
+
+[source, bash]
+----
+./gradlew integrationTest
+----

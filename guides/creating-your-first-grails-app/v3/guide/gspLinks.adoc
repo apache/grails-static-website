@@ -1,0 +1,9 @@
+Let's take a look at one more common GSP tag: `<g:link>`
+
+[source,xml]
+.grails-app/views/home/index.gsp
+----
+include::../snippets/grails-app/views/home/index.gsp[indent=0,lines="34..36"]
+----
+
+`<g:link>` renders an HTML `<a>` tag, but it has the advantage in that it allows you to specify your link target following Grails conventions, such as this example (using the `controller`, `action` and `id` attributes). `<g:link>` is also smart enough to follow our URL mappings, so if we change the URL mapping for `vehicle/show`, the `<g:link>` tag will still render the correct URL. There's many more attributes supported by `<g:link>` - see the https://grails.apache.org/docs/latest/ref/Tags/link.html[Grails documentation] for more.

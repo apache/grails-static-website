@@ -1,0 +1,30 @@
+Run the app with Gradle `bootRun` task.
+
+[source,bash]
+----
+$ ./gradlew bootRun
+----
+
+as previously. Now that our app is running navigate to http://localhost:8080 to see the following.
+
+image::homeScreen.png[]
+
+Select a book and see that no `Favourite` button is available when not signed in.
+
+image::unauthorizedShow.png[]
+
+Click `Login with Google` from our menu and select your account / signin
+
+image::googleSignin.png[]
+
+See our successful login message
+
+image::loginMessage.png[]
+
+Select a book and see that the `Favourite` button is now available.
+
+image::authorizedShow.png[]
+
+Click on logout and you will see our logout message displayed.
+
+image::logoutMessage.png[]

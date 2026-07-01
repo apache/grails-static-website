@@ -1,0 +1,31 @@
+We are going to use a functional test to verify the index method
+returns a JSON payload with a list of Students.
+
+We can use `HttpClient` from the Micronaut HTTP library. Import the
+dependency into the `build.gradle`.
+
+[source, groovy]
+.build.gradle
+----
+dependencies {
+...
+include::../snippets/build.gradle[tag=micronaut-http-client]
+}
+----
+
+We can invoke the controller actions by using the appropriate URL in the `HttpClient` API. We will get back a
+`HttpResponse` object and with that object, we can validate the returned items of the controller.
+
+The next feature method invokes the `index()` action and return a JSON list of students.
+
+[source, groovy]
+.src/integration-test/groovy/demo/StudentControllerIntSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/demo/StudentControllerIntSpec.groovy[indent=0]
+----
+
+<1> `.json` can be appended to the URL to declare we want a JSON response. 
+<2> The JSON return type can be binded to a List of Maps.
+<3> use the `HttpResponse` object to validate the status code, JSON Payload etc.
+
+NOTE: `serverPort` property is automatically injected. It contains the random port where the Grails application runs during the functional test.

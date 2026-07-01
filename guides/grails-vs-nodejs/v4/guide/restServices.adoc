@@ -1,0 +1,31 @@
+Now that we have our database configured and populated, it's time to set
+up our service layer. Before we do this, it's important to understand
+the two main data-handling "artifacts" provided by the Grails framework.
+
+1.  *Controllers*: Grails is a MVC framework, where "C" stands for
+Controller. In an MVC app, controllers define the logic of the web
+application, and manage the communication between the model and the
+view. Controllers respond to _requests_, interact with data from the
+model, and then _respond_ with either a view (HTML page) or some other
+consumable format (such as JSON). Controllers are Groovy classes located
+in `grails-app/controllers`
+2.  *Services*: Many times we need to do more with our data than simply
+take a request and return a response. Real-world apps typically include
+a substantial amount of code dedicated to "business logic". Grails
+supports "services" which are classes that have full access to the
+model, but are not tied to a request. Controllers, as well as other
+parts of your app, can call services (which are made available via
+Spring’s dependency injection) to get back the data they need to respond
+to their requests. Services are Groovy classes located in
+`grails-app/services` and can be injected by name into other Grails
+artifacts.
+
+To implement our RESTful API in our app, we'll use controllers to
+respond to API requests (POST, GET, PUT, DELETE), and services to handle
+our "business logic" (which is pretty simple in our case). Let's start
+with a controller:
+
+The React app consumes several endpoints.
+
+
+

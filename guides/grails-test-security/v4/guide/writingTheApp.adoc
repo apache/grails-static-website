@@ -1,0 +1,2 @@
+We are going to write an app which combines both a traditional web application and an API.
+API endpoints will be prefixed with  _/api/_

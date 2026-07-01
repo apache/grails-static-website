@@ -1,0 +1,4 @@
+In this part of this guide, we have separated the Grails application from the uploaded images.
+We use https://www.mamp.info[MAMP] to run a local apache server at port 8888 pointing to the folder data.
+
+image::transfer.png[]

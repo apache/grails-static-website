@@ -1,0 +1,7 @@
+Before starting the application ensure the Neo4j server is running and that you have populated the Movies data as per the instructions in the <<gettingStarted, Getting Started>> section.
+
+include::{commondir}/common-runapp.adoc[]
+
+With the application running head over to http://localhost:8080 and you should see the UI of the application rendered correctly with a visualization of the graph:
+
+image::neo4j-ui.png[]

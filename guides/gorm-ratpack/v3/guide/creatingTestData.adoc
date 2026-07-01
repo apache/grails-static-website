@@ -1,0 +1,7 @@
+Create a `Service` to encapsulate the creation of sample data when the application starts. 
+
+[source,groovy]
+./src/main/groovy/demo/BootStrapService.groovy
+----
+include::../snippets/src/main/groovy/demo/BootStrapService.groovy[]
+----

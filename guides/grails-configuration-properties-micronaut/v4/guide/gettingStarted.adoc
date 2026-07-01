@@ -1,0 +1,1 @@
+In this guide, we are going to demonstrate Grails file transfer capabilities by creating an app which downloads an excel file with a list of books.

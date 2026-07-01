@@ -1,0 +1,30 @@
+With the Tailwind pipeline in place, replace the layout markup. The starter ships a Bootstrap 5 layout in `grails-app/views/layouts/main.gsp`; rewrite it with Tailwind utilities and a small flex-based navbar:
+
+[source,html]
+.grails-app/views/layouts/main.gsp
+----
+include::../snippets/grails-app/views/layouts/main.gsp[tag=layout][]
+----
+
+A few patterns are worth pointing at:
+
+* The `<asset:stylesheet src="application.css"/>` taglib resolves to the bundled, fingerprinted `application.css` URL at runtime. The manifest you edited in the previous chapter is what tells the pipeline to include the compiled Tailwind `app.css` in that bundle. The layout never references `app.css` directly.
+* The layout keeps the starter's `favicon.ico` link and `application.js` include. That means the page still uses the stock asset-pipeline conventions even though the CSS is now Tailwind-driven.
+* The outer `<body>` carries `bg-gray-50 dark:bg-gray-900` so the colour scheme flips at the top level.
+* The navbar uses `mx-auto max-w-7xl` plus a flex row, replacing the Bootstrap `navbar` component with a hand-rolled equivalent that is easier to customise.
+* The footer link is the `text-blue-600 hover:underline dark:text-blue-400` triplet that you will repeat all over the app once you commit to the utility-first approach.
+
+The welcome page itself follows the same recipe:
+
+[source,html]
+.grails-app/views/index.gsp
+----
+include::../snippets/grails-app/views/index.gsp[tag=index][]
+----
+
+Reload `http://localhost:8080` after `./gradlew bootRun` and you should see the Tailwind-styled cards and the dark-mode toggle in the top right.
+
+Files touched in this chapter:
+
+* `grails-app/views/layouts/main.gsp`
+* `grails-app/views/index.gsp`

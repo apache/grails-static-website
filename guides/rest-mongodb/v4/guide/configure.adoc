@@ -1,0 +1,9 @@
+The first step after starting the MongoDB server is to ensure the application is correctly configured. By default the configuration for the MongoDB client can be found in the `grails-app/conf/application.yml` file:
+
+[source,groovy]
+.grails-app/conf/application.yml
+----
+include::../snippets/grails-app/conf/application.yml[tags=config,indent=0]
+----
+
+The configuration is setup to use the defaults, however if your MongoDB server requires authentication or any custom configuration you may want to http://gorm.grails.org/latest/mongodb/manual/index.html#advancedConfig[alter the configuration].

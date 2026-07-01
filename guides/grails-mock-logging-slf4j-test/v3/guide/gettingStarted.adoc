@@ -1,0 +1,2 @@
+In this guide you are going to learn how to mock logging and verify logs events in a Grails Application by using the
+http://projects.lidalia.org.uk/slf4j-test/[Slf4j Test] library.

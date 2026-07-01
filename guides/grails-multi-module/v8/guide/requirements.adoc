@@ -1,0 +1,9 @@
+To complete this guide you will need:
+
+* JDK 21
+* Internet access to download three starters from link:https://start.grails.org[start.grails.org]
+* About 45 minutes
+
+Files touched:
+
+- None yet

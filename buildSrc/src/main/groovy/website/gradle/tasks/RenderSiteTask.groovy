@@ -21,10 +21,11 @@ package website.gradle.tasks
 import groovy.time.TimeCategory
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
-
 import jakarta.annotation.Nonnull
 import jakarta.annotation.Nullable
 import jakarta.validation.constraints.NotNull
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 import org.gradle.api.Project
 import org.gradle.api.file.DirectoryProperty
@@ -45,6 +46,7 @@ import org.gradle.api.tasks.TaskProvider
 import website.gradle.GrailsWebsiteExtension
 import website.model.ContentAndMetadata
 import website.model.Page
+import website.model.documentation.ReleaseVersion
 import website.model.documentation.SiteMap
 import website.utils.DateUtils
 
@@ -97,6 +99,10 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
     @OutputDirectory
     abstract DirectoryProperty getOutputDir()
 
+    @InputDirectory
+    @PathSensitive(PathSensitivity.RELATIVE)
+    abstract DirectoryProperty getPartialsDir()
+
     static TaskProvider<RenderSiteTask> register(
             Project project,
             GrailsWebsiteExtension siteExt,
@@ -112,6 +118,7 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
             it.robots.set(siteExt.robots)
             it.title.set(siteExt.title)
             it.url.set(siteExt.url)
+            it.partialsDir.set(siteExt.partialsDir)
         }
     }
 
@@ -123,6 +130,7 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
                 .reverse()
                 .collect { "<option>${it}</option>" }
                 .join(' ')
+        def heroCards = buildHeroCardsHtml(releasesFile)
         def metaData = siteMeta(
                 title.get(),
                 about.get(),
@@ -130,7 +138,8 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
                 keywords.get(),
                 robots.get(),
                 latest.versionText,
-                versions)
+                versions,
+                heroCards)
         def listOfPages = parsePages(pagesDir.get().asFile)
         listOfPages.addAll(
                 parsePages(
@@ -141,8 +150,54 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
                 metaData,
                 listOfPages,
                 outputDir.dir('dist').get().asFile,
-                document.get().asFile.text
+                document.get().asFile.text,
+                partialsDir.isPresent() ? partialsDir.get().asFile : null
         )
+    }
+
+    /** First Grails major distributed via the Apache mirrors. Hero cards are
+     *  only emitted for majors at or above this; older majors used GitHub
+     *  releases that don't have the predictable apache.org/dyn/closer.lua URL
+     *  pattern the hero links rely on. */
+    private static final int FIRST_APACHE_MAJOR = 7
+
+    /**
+     * Renders the home-page hero as one card per active minor line, driven
+     * entirely by the SiteMap multi-major helpers. This is what makes the
+     * home page scale: today the hero shows 7.0 + 7.1, after 8.0.0 ships it
+     * shows 7.0 + 7.1 + 8.0 with no edit to {@code pages/index.html} required.
+     * Pre-releases / milestones are intentionally absent here per Apache
+     * release-policy guidance - those still surface on /download.html and
+     * /documentation.html.
+     */
+    private static String buildHeroCardsHtml(File releasesFile) {
+        List<String> activeLines = SiteMap.activeMinorLines(releasesFile)
+        Map<String, ReleaseVersion> latestPerLine = SiteMap.latestStablePerMinorLine(releasesFile)
+        if (activeLines.isEmpty()) {
+            return ''
+        }
+        StringBuilder sb = new StringBuilder()
+        sb.append('<div class="hero-cards">')
+        boolean rendered = false
+        for (String lineKey : activeLines) {
+            ReleaseVersion v = latestPerLine[lineKey]
+            if (v == null || v.major < FIRST_APACHE_MAJOR) {
+                continue
+            }
+            String version = v.versionText
+            String downloadUrl = "https://www.apache.org/dyn/closer.lua/grails/core/${version}/distribution/apache-grails-${version}-bin.zip?action=download"
+            String docsUrl = "https://grails.apache.org/docs/${version}/"
+            sb.append('<div class="hero-card">')
+            sb.append('<div class="hero-card-label">Grails ').append(version).append('</div>')
+            sb.append('<div class="hero-card-actions">')
+            sb.append('<a class="hero-action hero-action-download" href="').append(downloadUrl).append('">Download</a>')
+            sb.append('<a class="hero-action hero-action-docs" href="').append(docsUrl).append('">Documentation</a>')
+            sb.append('</div>')
+            sb.append('</div>')
+            rendered = true
+        }
+        sb.append('</div>')
+        rendered ? sb.toString() : ''
     }
 
     static Map<String, String> siteMeta(
@@ -152,7 +207,8 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
             List<String> keywords,
             String robots,
             String latest,
-            String versionsBeforeGrails6
+            String versionsBeforeGrails6,
+            String heroCards = ''
     ) {
         return [
             title: title,
@@ -164,6 +220,7 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
             versionAfterGrails6: versionsBeforeGrails6,
             keywords: keywords.join(','),
             robots: robots,
+            hero_cards: heroCards,
         ]
     }
 
@@ -172,16 +229,26 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
             String> siteMeta,
             List<Page> listOfPages,
             File outputDir,
-            String templateText
+            String templateText,
+            @Nullable File partialsRoot = null
     ) {
         for (def page : listOfPages) {
-            def resolvedMetadata = processMetadata(
-                    siteMeta + page.metadata + [ogurl: siteMeta['url'] + page.path]
-            )
+            // Default the Open Graph URL to <site><page path>, but let a page
+            // override it via its own `ogurl` metadata. Pages parsed from disk
+            // carry a root-relative path (e.g. "/faq.html"), so the default is
+            // correct for them; generated guide pages (index, tags, categories,
+            // versions) carry only a bare leaf filename (e.g. "8.html"), so they
+            // set `ogurl` explicitly to the right /guides/... URL.
+            def pageMetadata = siteMeta + page.metadata
+            if (!pageMetadata.containsKey('ogurl')) {
+                pageMetadata = pageMetadata + [ogurl: siteMeta['url'] + page.path]
+            }
+            def resolvedMetadata = processMetadata(pageMetadata)
             def html = renderHtmlWithTemplateContent(
                     page.content,
                     resolvedMetadata,
-                    templateText
+                    templateText,
+                    partialsRoot
             )
             html = highlightMenu(html, siteMeta, page.path)
             if (page.bodyClassAttr) {
@@ -363,11 +430,39 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
     static String renderHtmlWithTemplateContent(
             @Nonnull @NotNull String html,
             @Nonnull @NotNull Map<String, String> meta,
-            @NotNull @Nonnull String templateText
+            @NotNull @Nonnull String templateText,
+            @Nullable File partialsRoot = null
     ) {
-        def outputHtml = templateText
+        def outputHtml = expandPartials(templateText, partialsRoot)
         def result = outputHtml.replace(' data-document>', '>' + html)
         return replaceLineWithMetadata(result, meta)
+    }
+
+    /**
+     * Replace [%PARTIAL:&lt;name&gt;] tokens with the contents of
+     * &lt;partialsRoot&gt;/&lt;name&gt;.html, so shared chrome (header, footer,
+     * head scripts) lives in a single source of truth.
+     */
+    static String expandPartials(String templateText, @Nullable File partialsRoot) {
+        if (partialsRoot == null) {
+            return templateText
+        }
+        Pattern token = Pattern.compile(/\[%PARTIAL:([\w\-]+)\]/)
+        Matcher m = token.matcher(templateText)
+        StringBuilder out = new StringBuilder()
+        int last = 0
+        while (m.find()) {
+            out.append(templateText, last, m.start())
+            File partial = new File(partialsRoot, "${m.group(1)}.html")
+            if (partial.isFile()) {
+                out.append(partial.getText('UTF-8'))
+            } else {
+                out.append("<!-- missing partial: ${m.group(1)} -->")
+            }
+            last = m.end()
+        }
+        out.append(templateText, last, templateText.length())
+        out.toString()
     }
 
     static String formatDate(String date) {

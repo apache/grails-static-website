@@ -1,0 +1,24 @@
+Spring Security allows to register custom https://grails-plugins.github.io/grails-spring-security-core/3.2.x/index.html#logoutHandlers[Logout Handlers].
+Register a new logout handler to clear the JWT cookie. We reuse `CookieClearingLogoutHandler` which ships with Spring Security.
+
+Modify `grails-app/conf/spring/resources.groovy`:
+
+[source,groovy]
+.grails-app/conf/spring/resources.groovy
+----
+include::../snippets/grails-app/conf/spring/resources.groovy[tag=cookieClearingImport]
+beans {
+...
+..
+.
+include::../snippets/grails-app/conf/spring/resources.groovy[tag=cookieClearing]
+}
+----
+
+Add the custom logout handler to Spring Security Core plugin `logout.handlerNames`.
+
+[source,groovy]
+.grails-app/conf/application.groovy
+----
+include::../snippets/grails-app/conf/application.groovy[tag=logoutHandlers]
+----

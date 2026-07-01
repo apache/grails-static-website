@@ -1,0 +1,49 @@
+Create several Groovy POGOs (Plain Old Groovy Objects) to map the `OpenWeatherMap` JSON response to classes. 
+
+[source, groovy]
+.src/main/groovy/org/openweathermap/CurrentWeather.groovy
+----
+include::{sourcedir}/src/main/groovy/org/openweathermap/CurrentWeather.groovy[]
+----
+
+[source, groovy]
+.src/main/groovy/org/openweathermap/Clouds.groovy
+----
+include::{sourcedir}/src/main/groovy/org/openweathermap/Clouds.groovy[]
+----
+
+[source, groovy]
+.src/main/groovy/org/openweathermap/Coordinate.groovy
+----
+include::{sourcedir}/src/main/groovy/org/openweathermap/Coordinate.groovy[]
+----
+
+[source, groovy]
+.src/main/groovy/org/openweathermap/Rain.groovy
+----
+include::{sourcedir}/src/main/groovy/org/openweathermap/Rain.groovy[]
+----
+
+[source, groovy]
+.src/main/groovy/org/openweathermap/Unit.groovy
+----
+include::{sourcedir}/src/main/groovy/org/openweathermap/Unit.groovy[]
+----
+
+[source, groovy]
+.src/main/groovy/org/openweathermap/Weather.groovy
+----
+include::{sourcedir}/src/main/groovy/org/openweathermap/Weather.groovy[]
+----
+
+[source, groovy]
+.src/main/groovy/org/openweathermap/Sys.groovy
+----
+include::{sourcedir}/src/main/groovy/org/openweathermap/Sys.groovy[]
+----
+
+[source, groovy]
+.src/main/groovy/org/openweathermap/Wind.groovy
+----
+include::{sourcedir}/src/main/groovy/org/openweathermap/Wind.groovy[]
+----

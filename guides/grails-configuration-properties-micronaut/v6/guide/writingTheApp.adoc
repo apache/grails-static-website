@@ -1,0 +1,2 @@
+`grails create-app example.grails.complete`
+

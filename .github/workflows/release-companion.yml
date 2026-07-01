@@ -1,0 +1,58 @@
+name: Release Companion Artifact
+on:
+  workflow_dispatch:
+    inputs:
+      grails_major:
+        description: 'Grails major version this companion ships under (e.g. 7, 8)'
+        required: true
+      artifact_id:
+        description: 'Companion artifactId, e.g. grails-redis, grails-spring-security'
+        required: true
+      artifact_version:
+        description: 'New companion version (e.g. 5.0.2)'
+        required: true
+      mirror_directory:
+        description: 'First-time only: sub-path under https://www.apache.org/dyn/closer.lua/grails/ where the artifact distribution lives. Ignored for subsequent bumps.'
+        required: false
+      release_notes_repo:
+        description: 'First-time only: GitHub slug (org/repo) used for the v<version> release-notes link. Ignored for subsequent bumps.'
+        required: false
+      display_name:
+        description: 'First-time only: human-readable label rendered on the downloads page. Ignored for subsequent bumps.'
+        required: false
+jobs:
+  release-companion:
+    runs-on: ubuntu-latest
+    env:
+      GIT_USER_NAME: grails-build
+      GIT_USER_EMAIL: grails-build@users.noreply.github.com
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up JDK 17
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: Record companion release
+        run: |
+          ./gradlew --no-daemon recordCompanionRelease \
+            -PgrailsMajor=${{ github.event.inputs.grails_major }} \
+            -PartifactId=${{ github.event.inputs.artifact_id }} \
+            -PartifactVersion=${{ github.event.inputs.artifact_version }} \
+            -PmirrorDirectory="${{ github.event.inputs.mirror_directory }}" \
+            -PreleaseNotesRepo="${{ github.event.inputs.release_notes_repo }}" \
+            -PdisplayName="${{ github.event.inputs.display_name }}"
+      - name: Commit companion release
+        run: |
+          git config user.name ${GIT_USER_NAME}
+          git config user.email ${GIT_USER_EMAIL}
+          git add conf/releases.yml
+          git commit -m "Update conf/releases.yml" -m "Bump ${ARTIFACT} to ${VERSION} for Grails ${MAJOR}"
+          git push
+        env:
+          MAJOR: ${{ github.event.inputs.grails_major }}
+          ARTIFACT: ${{ github.event.inputs.artifact_id }}
+          VERSION: ${{ github.event.inputs.artifact_version }}

@@ -1,0 +1,19 @@
+Our final component before we wire everything together will be a form to create new vehicles, using the drivers, makes and models we've pre-populated in our API. This is a slightly more complicated component than we've created up till now, but it builds off of the same features we've been seeing already.
+
+Create a new file named `VehicleForm.vue` under `client/src/components/form`, and edit it as shown below:
+
+[source,html]
+./client/src/components/form/VehicleForm.vue
+----
+include::../snippets/client/src/components/form/VehicleForm.vue[]
+----
+<1> This is the `VehicleFormHeader` component we created earlier.
+<2> Again, we are using the `v-model` directive to bind the value of an input to a variable in our `data`.
+<3> This is the `FieldSelect` component we created earlier - note that we are using the `v-model` directive for two-way binding (allowing the component to update our data), as well as using one-way data-binding to pass in a list of `:values`.
+<4> Since we wrote the `FieldSelect` component generically, we can reuse it for each of the select lists in our form.
+<5> Note that we're not actually making the POST call to create a vehicle in this component - that task will be delegatd to the parent component, by *emitting* a `submit` event (as done here in the `submit()` method).
+<6> The `vehicle` prop represents the "new" vehicle object being created from the fields in this form. The `makes`, `models`, and `drivers` props will be the lists of records used to populate the select components.
+
+=== Next Step
+
+At this point, we have all the components we need to build a form and display our vehicles in a table. We still need to implement our API integration, and then put all these pieces together into a working application.

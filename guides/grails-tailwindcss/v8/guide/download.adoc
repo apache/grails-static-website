@@ -1,0 +1,22 @@
+Open link:https://start.grails.org[start.grails.org], pick the `web` profile, name the application `tailwind`, set the package to `example`, choose JDK 21, and download the generated zip. Unzip it and `cd` into the `tailwind` directory.
+
+Verify it boots before you go further:
+
+[source,bash]
+----
+./gradlew bootRun
+----
+
+Open `http://localhost:8080/` in a browser and you should see the default Grails landing page. Stop the application with `Ctrl+C` once you have confirmed it runs.
+
+[NOTE]
+====
+The forge's default `build.gradle` ships with `compileJava.options.release = 17` even when JDK 21 is requested. The `complete/` tree in the upstream repo already patches this to `21`; do the same in your local checkout if you want JDK 21 source-level features.
+====
+
+Files touched in this chapter:
+
+* `build.gradle`
+* `settings.gradle`
+* `grails-app/views/layouts/main.gsp`
+* `grails-app/views/index.gsp`

@@ -1,0 +1,27 @@
+Now that we have the git commit info captured and included in our application via a `git.properties` file, it is time to utilize it.
+
+Grails 3.x is based on Spring Boot and we can leverage some of the underlying tools already included in the application.
+
+include::{commondir}/common-quoteSpringBootActuator.adoc[]
+
+Built into Spring boot is a module called `spring-boot-actuator` that provides these endpoints.
+The endpoints are disabled by default so the first step is to enabled them.
+
+'''
+
+If you open up `grails-app/conf/application.yml` you will find a block of configuration that looks like this:
+
+[source,yaml]
+.grails-app/conf/application.yml
+----
+include::../snippets/../initial/grails-app/conf/application.yml[indent=0, tag=initYmlP1]
+----
+
+You simply have to enable the actuator endpoints by setting *`enabled: true`*
+
+[source,yaml]
+./grails-app/conf/application.yml
+----
+endpoints:
+    enabled: true
+----

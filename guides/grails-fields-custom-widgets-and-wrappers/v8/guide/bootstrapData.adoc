@@ -1,0 +1,11 @@
+Replace `grails-app/init/example/BootStrap.groovy` with the following so that the application starts with a few authors and books to look at:
+
+[source,groovy]
+.grails-app/init/example/BootStrap.groovy
+----
+include::../snippets/grails-app/init/example/BootStrap.groovy[]
+----
+
+The seed runs inside a `Book.withTransaction { }` block. This matters for the `Book`-`Tag` many-to-many: a bare `save()` in `BootStrap` runs outside any transaction and the join-table rows are not reliably flushed, while `save(flush: true)` without a transaction throws `TransactionRequiredException`. Wrapping the whole seed in a transaction lets the books, authors, contact info, and the many-to-many join all commit together.
+
+Restart the application with `./gradlew bootRun`. The H2 database is in-memory by default, so the seed data is recreated on every startup.

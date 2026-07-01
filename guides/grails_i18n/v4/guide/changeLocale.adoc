@@ -1,0 +1,14 @@
+You can switch locales by simply passing a parameter called `lang` to Grails as a request parameter:
+
+`/?lang=es`
+
+Grails will automatically switch the user's locale and store it in a
+cookie so subsequent requests will have the new header.
+
+We can verify this behaviour with a Functional Test:
+
+[source, groovy]
+./src/integration-test/groovy/demo/ChangeLocaleSpec.groovy
+----
+include::{sourcedir}/src/integration-test/groovy/demo/ChangeLocaleSpec.groovy[]
+----

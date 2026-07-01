@@ -1,0 +1,11 @@
+Grails is a https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller[Model View Controller] (MVC) framework, based upon the Spring Boot project. Typically an MVC application divides the responsibilities of the app into three categories:
+
+1. Model - code that defines and manages the data
+2. View - code that manages the presentation of data (e.g, HTML page)
+3. Controller - code that defines the logic of the web application, and manages the communication between the model and the view. Controllers respond to requests, obtain data from the model, and pass it along to the view.
+
+Typically an object-oriented MVC framework requires the developer to configure which classes correspond to each of the three categories above. However, Grails goes farther than most frameworks by following a https://en.wikipedia.org/wiki/Convention_over_configuration["Convention over Configuration"] approach to development. This means that for many artefact types in Grails (controllers, views, etc), you simply create a file in a particular directory in your project, and Grails will automatically wire it into your application without any additional configuration on your part.
+
+TIP: Handling the mapping of domain classes to database tables (and other persistent stores) is the job of http://gorm.grails.org/latest/[GORM], the Grails Object Relational Mapper. GORM is a powerful tool in the Grails framework, and can even be used standalone outside of a Grails project. It supports relational databases (via Hibernate) as well as MongoDb, Neo4j, Redis and Cassandra datasources. Please see the http://gorm.grails.org/latest/hibernate/manual/index.html[GORM documentation] for more information.
+
+When building a MVC application, it is typical to start with the "M" (Model), also known as the "Domain model". In Grails, your domain model is defined with Groovy classes under `grails-app/domain`. Let's create a domain class.

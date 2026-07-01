@@ -96,6 +96,10 @@ abstract class MinutesTask extends GrailsWebsiteTask {
     @PathSensitive(PathSensitivity.RELATIVE)
     abstract DirectoryProperty getMinutesDir()
 
+    @InputDirectory
+    @PathSensitive(PathSensitivity.RELATIVE)
+    abstract DirectoryProperty getPartialsDir()
+
     @Input
     abstract Property<String> getAbout()
 
@@ -126,6 +130,7 @@ abstract class MinutesTask extends GrailsWebsiteTask {
             it.keywords.set(siteExt.keywords)
             it.minutesDir.set(siteExt.minutesDir)
             it.outputDir.set(siteExt.outputDir)
+            it.partialsDir.set(siteExt.partialsDir)
             it.releases.set(siteExt.releases)
             it.robots.set(siteExt.robots)
             it.title.set(siteExt.title)
@@ -147,11 +152,33 @@ abstract class MinutesTask extends GrailsWebsiteTask {
                         .collect {"<option>$it</option>" }
                         .join(' ')
         )
+        // Expand the [%PARTIAL:...] tokens once up front. The downstream
+        // static helpers (renderMinutesHtml, renderArchive) all forward
+        // this expanded text into RenderSiteTask.renderHtmlWithTemplateContent
+        // without a partialsRoot, and that helper's internal expandPartials
+        // is a no-op when partialsRoot is null. Without this expansion,
+        // every rendered minutes page shipped the literal
+        // "[%PARTIAL:site-head]" tokens to production.
+        def templateText = RenderSiteTask.expandPartials(
+                document.get().asFile.text,
+                partialsDir.get().asFile
+        )
+        // Output path lives under build/dist/ alongside every other rendered
+        // page (BlogTask emits to outputDir.dir('dist/blog'), RenderSiteTask
+        // emits to outputDir.dir('dist'), the genHtaccess / genSitemap /
+        // genPlugins tasks all live under build/dist/). The publish workflow
+        // only ships build/dist/ to the asf-site-production branch, so the
+        // previous output path 'foundation/minutes' (which resolved to
+        // build/foundation/minutes/) never reached production at all.
+        // The downstream renderRss call uses outputDir.parentFile + RSS_FILE,
+        // which correspondingly moves from build/foundation/minutes.xml to
+        // build/dist/foundation/minutes.xml, lining up with how BlogTask
+        // emits build/dist/rss.xml.
         renderMinutes(
                 meta,
                 processMinutes(meta, parseMinutes(minutesDir.get().asFile).sort(false)),
-                outputDir.dir('foundation/minutes').get().asFile.tap { it.mkdirs() },
-                document.get().asFile.text
+                outputDir.dir('dist/foundation/minutes').get().asFile.tap { it.mkdirs() },
+                templateText
         )
         fileSystemOperations.copy { CopySpec copy ->
             copy.from(assetsDir.dir('bgimages'))
@@ -213,6 +240,10 @@ abstract class MinutesTask extends GrailsWebsiteTask {
 
         def html = writer.toString()
         def metadata = htmlMinutes.metadata.toMap()
+        // Per-page Open Graph URL. Without this the [%ogurl] token in
+        // templates/document.html ships verbatim on every rendered minutes
+        // page. minutesLink() resolves to "<siteUrl>/foundation/minutes/<path>".
+        metadata['ogurl'] = minutesLink(htmlMinutes)
         html = RenderSiteTask.renderHtmlWithTemplateContent(html, metadata, templateText)
         html = RenderSiteTask.highlightMenu(html, metadata, htmlMinutes.path)
         metadata['bodyClassAttr'] = metadata['bodyClassAttr'] ?: 'foundation minutes'
@@ -319,6 +350,12 @@ abstract class MinutesTask extends GrailsWebsiteTask {
         def html = cardsHtml(minuteCards.toList())
         def resolvedMetadata = RenderSiteTask.processMetadata(siteMeta).tap {
             it.title = 'Foundation | Grails Framework'
+            // [%ogurl] is the per-page Open Graph URL token in
+            // templates/document.html. The minutes archive lives at
+            // <siteUrl>/foundation/minutes/index.html; without this the
+            // rendered HTML shipped the literal [%ogurl] in the og:url
+            // meta tag.
+            it.ogurl = "${it.url}/$MINUTES/$INDEX".toString()
         }
         html = RenderSiteTask.renderHtmlWithTemplateContent(html, resolvedMetadata, templateText)
         html = RenderSiteTask.highlightMenu(html, resolvedMetadata, "/$MINUTES/$INDEX")

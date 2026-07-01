@@ -1,0 +1,32 @@
+____
+A Promise is a concept being embraced by many concurrency frameworks. They are similar to java.util.concurrent.Future instances, but include a more user friendly exception handling model, useful features like chaining and the ability to attach listeners.
+
+____
+
+In Grails the `grails.async.Promises` class provides the entry point to the Promise API:
+
+
+[source, groovy]
+.grails-app/services/org/openweathermap/OpenweathermapService.groovy
+----
+include::{sourcedir}/grails-app/services/org/openweathermap/OpenweathermapService.groovy[tag=promisesImports]
+----
+
+Add to `OpenweathermapService` the following methods:
+
+[source, groovy]
+.grails-app/services/org/openweathermap/OpenweathermapService.groovy
+----
+include::{sourcedir}/grails-app/services/org/openweathermap/OpenweathermapService.groovy[tag=findCurrentWeatherByCitiesAndCountryCodeAsync]
+----
+
+<1> The `task` method, which returns an instance of the `grails.async.Promise`.
+<2> A `PromiseList` is returned which contains a union of all of the created `grails.async.Promise` instances
+
+Add an equivalent synchronous method.
+
+[source, groovy]
+.grails-app/services/org/openweathermap/OpenweathermapService.groovy
+----
+include::{sourcedir}/grails-app/services/org/openweathermap/OpenweathermapService.groovy[tag=findCurrentWeatherByCitiesAndCountryCodeSynchronous]
+----

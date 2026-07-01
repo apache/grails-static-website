@@ -1,0 +1,21 @@
+The first step is to add the Micronaut HTTP client library to our project. Add the next dependency:
+
+[source, groovy]
+.build.gradle
+----
+include::{sourcedir}/build.gradle[tag=micronaut-http-client]
+----
+
+If you are a windows user you need to have this in `build.gradle`:
+
+[source, groovy]
+.build.gradle
+----
+webdriverBinaries {
+    chromedriver {
+        version = '77.0.3865.40'
+        architecture = 'X86'
+    }
+    geckodriver '0.24.0'
+}
+----

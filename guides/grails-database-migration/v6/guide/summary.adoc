@@ -1,0 +1,8 @@
+To summarize this guide, we learned how use the database migration plugin to change column names, add columns, and potentially
+redesign tables while migration existing data. It is important to note that database migration consists of a typical workflow:
+
+1. Make changes to Domain objects.
+2. Generate the changelog which will identify database structure differences between the existing database and the edited
+domain objects.
+3. Consider any existing data to migrate.
+4. Execute the database migration scripts.

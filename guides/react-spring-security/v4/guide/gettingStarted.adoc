@@ -1,0 +1,3 @@
+In this guide you will learn how to secure your React/Grails application with Spring Security REST (using the default JWT Token authentication).
+
+In many React apps, libraries like https://reacttraining.com/react-router/[React Router] are used to handle client-side routing, including login/logout redirects. In this guide we will not use any dedicated routing solution, in order to focus the learning experience on the authentication functionality.

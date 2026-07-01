@@ -1,0 +1,14 @@
+We'll create a https://grails.apache.org/docs/latest/ref/Domain%20Classes/Usage.html[Domain Class], `Announcement`, which we are going to use as an example through this guide:
+
+[source, bash]
+----
+./grailsw create-domain-class Announcement
+| Created grails-app/domain/example/grails/Announcement.groovy
+| Created src/test/groovy/example/grails/AnnouncementSpec.groovy
+----
+
+[source,groovy]
+.grails-app/domain/example/grails/Announcement.groovy
+----
+include::../snippets/grails-app/domain/example/grails/Announcement.groovy[indent=0]
+----

@@ -1,0 +1,7 @@
+Create a script which will serve as the entrypoint of the container. 
+
+[source, groovy]
+.src/main/docker/app-entrypoint.sh
+----
+include::../snippets/src/main/docker/app-entrypoint.sh[indent=0]
+----

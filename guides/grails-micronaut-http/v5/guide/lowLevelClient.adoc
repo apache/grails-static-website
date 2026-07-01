@@ -1,0 +1,48 @@
+We will query the iTunes repository for the artist and expect to receive several pieces of information in the form of JSON, such
+as album name and a URL link to the album. In order to capture the return data easily, we can create POJOs with properties
+named exactly the same as the JSON structure.  The iTunes API will return `resultCount` with a list of albums that contain:
+
+- `artistName`
+- `collectionName`
+- `collectionViewUrl`
+
+Note the following POJOs are already created:
+
+[source, groovy]
+.src/main/groovy/example/grails/SearchResult.groovy
+----
+include::../snippets/src/main/groovy/example/grails/SearchResult.groovy[]
+----
+
+[source, groovy]
+.src/main/groovy/example/grails/Album.groovy
+----
+include::../snippets/src/main/groovy/example/grails/Album.groovy[]
+----
+
+We need to configure Micronaut to accept the `text/javascript` MIME type from the iTunes API.
+
+[source, groovy]
+.grails-app/conf/application.yml
+----
+include::../snippets/grails-app/conf/application.yml[tag=mime]
+----
+
+In the `ItunesSearchService`, we create the low level client and use the API to contact `iTunes.apple.com`.  Conceptually we are
+going to create a client with a `baseUrl`, then form a request object that sends a `GET` request with URL params.
+Subsequently, we will issue a blocking request and received a String response. `ObjectMapper` from Jackson Databind will
+map the incoming JSON to the POJOs. Add the following to `ItunesSearchService`:
+
+[source, groovy]
+.grails-app/services/example/grails/ItunesSearchService.groovy
+----
+include::../snippets/grails-app/services/example/grails/ItunesSearchService.groovy[tag=searchWithApi]
+----
+
+<1> Issue the request with a blocking call, and accept a String response.
+<2> Ignore extra properties.
+<3> Map the JSON into the POJOs.
+
+'''
+
+Run `./gradlew bootRun` and hit `http://localhost:8080/search/searchWithApi?searchTerm=U2` and see the results.

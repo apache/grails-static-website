@@ -1,0 +1,16 @@
+Next we need to create our services to return all our books and our favourite ones. First we leverage data services
+for our basic functionality.
+
+[source,groovy]
+.grails-app/services/demo/BookDataService.groovy
+----
+include::../snippets/grails-app/services/demo/BookDataService.groovy[]
+----
+
+Create a GORM Data Service for `BookFavourite` domain class CRUD operations.
+
+[source,groovy]
+.grails-app/services/demo/BookFavouriteDataService.groovy
+----
+include::../snippets/grails-app/services/demo/BookFavouriteDataService.groovy[]
+----

@@ -1,0 +1,32 @@
+You could write a unit test for the previous Data Service as follows:
+
+[source, groovy]
+.src/test/groovy/example/grails/PersonDataServiceSpec.groovy
+----
+include::../snippets/src/test/groovy/example/grails/PersonDataServiceWithoutHibernateSpec.groovy[tag=packagedeclaration]
+
+include::../snippets/src/test/groovy/example/grails/PersonDataServiceWithoutHibernateSpec.groovy[tag=imports]
+
+class PersonDataServiceSpec extends Specification { // <1>
+
+include::../snippets/src/test/groovy/example/grails/PersonDataServiceWithoutHibernateSpec.groovy[tag=classContent]
+}
+----
+
+<1> The test should extend `spock.lang.Specification`
+<2> The `Shared` annotation is used to indicate to Spock that the `HibernateDatastore`, `personDataService` and `transactionManager` properties are shared across all tests.
+<3> The `AutoCleanup` annotation makes sure that HibernateDatastore is shutdown when all tests finish executing.
+<4> Within the `setupSpec` method a new HibernateDatastore is constructed with the domain classes to use as the argument to the constructor.
+<5> In general you have to wrap your test execution logic in a session or transaction. You can obtain the PlatformTransactionManager from the HibernateDatastore.
+<6> Typically you want to annotate your feature methods with the Rollback annotation which is used to rollback any changes made within each test.
+<7> Cleanup the person created during the test.
+
+Luckily, https://grails.apache.org/plugins.html[Grails Hibernate Plugin] includes a utility class `grails.test.hibernate.HibernateSpec` which you could extend from and simplify
+the previous unit test:
+
+[source, groovy]
+.src/test/groovy/example/grails/PersonDataServiceSpec.groovy
+----
+include::../snippets/src/test/groovy/example/grails/PersonDataServiceSpec.groovy[tag=PersonDataServiceSpec]
+}
+----

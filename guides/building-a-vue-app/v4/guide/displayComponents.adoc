@@ -1,0 +1,82 @@
+=== Select Component
+
+We'll need a generic `<select>` component that will allow the user to pick from available `Make`, `Model`, and `Driver` records, when creating a new vehicle.
+
+image::vueSelect.png[]
+
+Create the file `FieldSelect.vue` under `client/src/components/form`, and edit the contents as shown below:
+
+[source,html]
+./client/src/components/form/FieldSelect.vue
+----
+include::../snippets/client/src/components/form/FieldSelect.vue[]
+----
+<1> Declare a *prop* with the name `values` - this prop will represent our list of objects to pick from, and will be passed into the components as an HTML attribute. E.g., `<field-select values="[obj1,obj2,obj3]"/>`.
+<2> The second prop is named `field`, and will represent the human-readable name of the field being selected (this is used as the default "no-selection" option).
+<3> The `data()` function returns an object which will become the initial data (or state) of the component. In this case, we only have one variable in our `data` - `selected`, which will store the current value of the select list.
+<4> The `v-model` directive sets up two-way binding between the "value" of the element and a variable in `data`. When the value changes, the model variable (`selected`) will be updated, and vice versa.
+<5> `methods` is an object containing arbitrary JavaScript functions, which can be called either within the template or from other methods in the component.
+<6> The `updateValue` method *emits* an event, which allows a parent component to respond to changes in this component. In this case, we are emitting the value of `selected`, which will be the user-selected option in the list.
+<7> We use the `updateValue` method as an event handler for the `onChange` event of our `<select>` element, using the `@change` attribute (other events are also supported - `@click`, `@focus`, etc).
+
+
+[TIP]
+.One-Way vs Two-Way Data-binding
+====
+Vue.js supports both *one-way* and *two-way data-binding*, and this component demonstrates both of those approaches. When an data variable is used in a template expression (`{{field}}`), or bound as an attribute to a component (via the `:value="field"` syntax), the element will be updated when/if the `field` variable changes. This binding is one-way - the element cannot change the value of `field` directly.
+
+However, if an element uses the `v-model` directive, a two-way data-binding will be created. For example, `<select v-model="selected">` means that the value of the `select` element will be bound to the value of `data.selected`, but if that value is changed in the element (e.g., the user selects a different option in the `select` list), then the value of `data.selected` will be updated with the new value.
+
+This flexibility means that you can develop in Vue.js using either approach, and mix and match when appropriate. In general, one-way data-binding leads to simpler, more predictable code. However, two-way binding is convenient and can simplify the creation of forms with many fields that correspond to the component's data. Vue.js leaves the choice to you as the developer.
+====
+
+
+=== Table Components
+
+The next couple components will be used to display a table of vehicles in our UI. They are presentation components, so they won't need any methods or event handling.
+
+Create a new file named `TableRow.vue` under `client/src/components/table/`, and add the following content:
+
+[source,javascript]
+./client/src/components/TableRow.vue
+----
+include::../snippets/client/src/components/table/TableRow.vue[]
+----
+<1> This component accepts a single prop of `item`, which holds the record to be rendered in the template.
+
+
+Create a new file named `VehicleTable.vue` under `client/src/components/table/`, and add the following content:
+
+[source,javascript]
+./client/src/components/table/VehicleTable.vue
+----
+include::../snippets/client/src/components/table/VehicleTable.vue[]
+----
+<1> The `v-for` directive allows us to iterate over arrays, similar to a GSP `<g:each>` tag or `ng-for` directive in Angular.
+<2> Again, we are using the `:item` syntax to bind a `vehicle` object to the `item` prop of of `<table-row>` component. Note that we are also binding to a `:key` prop - similar to React, iteration of elements with `v-for` requires that each element have a unique `key`, which in our case is the `vehicle.id`.
+<3> In order to use our `<table-row>` component, we import it at the top of our `<script>` tags, and then specify it in a `components` object on our instance definition.
+
+[TIP]
+====
+Notice that the `components` object is *not* an array, it is an object. We are using some ES6 shorthand to combine the key and value when both have the same name. In other words, the `components` object above is exactly the same as this code:
+
+[source,javascript]
+----
+components: {
+      'TableRow': TableRow // == TableRow
+    }
+----
+
+This of course assumes that you want to use the same name for the component as the component's `.vue` file (`TableRow.vue`, in our case). If not, you could use this object to effectively "rename" the component within your template:
+
+
+Notice that the `components` object is *not* an array, it is an object. We are using some ES6 shorthand to combine the key and value when both have the same name. In other words, the `components` object above is exactly the same as this code:
+
+[source,javascript]
+----
+components: {
+      'MyCustomRow': TableRow
+    }
+----
+
+====

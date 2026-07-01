@@ -1,0 +1,164 @@
+== Prefixes
+
+In these prefixes, `Flag` represents some Boolean property of a domain class; replace it
+with the name of the Boolean property to be tested.
+
+[%header, cols="1,3", width="75%", format=csv]
+|===
+Prefix,Purpose
+`findBy`,Find a single instance that matches the query.
+`findAllBy`,Find multiple instances that match the query.
+`countBy`,Count how many instances match the query.
+`findOrCreateBy`,Special form: creates a new instance if an existing match is not found.
+`findOrSaveBy`,Special form: creates and saves a new instance if an existing match is not found.
+`findAllFlag[By]`,Special form for boolean properties: finds all instances where named property is true. Append 'By' to extend the query.
+`findAllNotFlag[By]`,Special form for boolean properties: finds all instances where named property is false. Append 'By' to extend the query.
+|===
+
+== Comparators
+
+In the following table, `prop` represents some property of a domain class; replace it with
+the name of the actual property to be tested. Replace `val` (or similar) with the actual
+value to compare against.
+[%header,cols="1,2,2,3"]
+|===
+|Comparator
+|Example
+|Equivalent Groovy Code
+|Purpose
+
+|<none>
+|`findAllByProp(val)`
+|`prop == val`
+|Tests property is equal to value.
+
+|`NotEqual`
+|`findAllByPropNotEqual(val)`
+|`prop != val`
+|Tests property is not equal to value.
+
+|`LessThan`
+|`findAllByPropLessThan(val)`
+|`prop < val`
+|Tests property is less than value.
+
+|`LessThanEquals`
+|`findAllByPropLessThanEquals(val)`
+|`prop &lt;= val`
+|Tests property is less than or equal to value.
+
+|`GreaterThan`
+|`findAllByPropGreaterThan(val)`
+|`prop > val`
+|Tests property is greater than value.
+
+|`GreaterThanEquals`
+|`findAllByPropGreaterThanEquals(val)`
+|`prop >= val`
+|Tests property is greater than or equal to value.
+
+|`Between`
+|`findAllByPropBetween(lowerVal, upperVal)`
+|`(lowerVal &lt;= prop) && (prop &lt;= upperVal)`
+|Tests property is between lowerVal and upperVal. Requires two arguments.
+
+|`InRange`
+|`findAllByPropInRange(val)`
+|`prop in val`
+|Tests property is in range specified by val (of `Range` type).
+
+|`Like`
+|`findAllByPropLike(val)`
+|No exact equivalent. Similar to `prop.endsWith(val)`, `prop.startsWith(val)`,
+ `prop.contains(val)`, depending on search string.
+|Tests property matches using wildcard string comparison. Use `%` for wildcard.
+ Case-sensitive.
+
+|`Ilike`
+|`findAllByPropIlike(val)`
+|Same as `Like`.
+|Same as `Like`, but case-insensitive.
+
+|`Rlike`
+|`findAllByPropRlike(val)`
+|`prop ==~ val`
+|Tests property matches using regular expression.
+
+|`IsNull`
+|`findAllByPropIsNull()`
+|`prop == null`
+|Tests property is null. Requires no arguments.
+
+|`IsNotNull`
+|`findAllByPropIsNull()`
+|`prop != null`
+|Tests property is not null. Requires no arguments.
+|===
+
+== Combiners
+
+Within a single dynamic finder method name, you may use either `And` or `Or` multiple
+times to combine multiple criteria, but you cannot use both `And` and `Or` in the same
+dynamic finder.
+
+[%header, cols="1,2,2,3"]
+|===
+|Combiner
+|Example
+|Equivalent Groovy Code
+|Purpose
+
+|`And`
+|`findByNameAndYearLessThan('Foo', 2017)`
+|`(name == 'Foo') && (year < 2017)`
+|Both expressions must match for the instance to match.
+
+|`Or`
+|`findAllByAgeLessThanOrAgeGreaterThan(8,88)`
+|`(age < 8) \|\| (age > 88)`
+|At least one expression must match for the instance to match.
+|===
+
+== Parameters
+
+Pagination and sorting are done by adding a final `Map` argument to any dynamic finder.
+The map may contain the following parameters:
+
+[%header, cols="1,4,2"]
+|===
+|Parameter
+|Purpose
+|Default
+
+|`sort`
+|All matching instances are sorted according to the property specified.
+ Sorting is done _before_ the `offset` and `max` parameters are applied.
+|No default; if not specified, results are unsorted.
+
+|`order`
+|Sets the sorting order to either ascending/increasing (`'asc'`) or
+ descending/decreasing (`'desc'`).
+|`asc`
+
+|`ignoreCase`
+|Sorting is case-insensitive if `true`, case-sensitive if `false`.
+|`true`
+
+|`offset`
+|From all matching, sorted instances, `offset` specifies the index of the first
+ instance to be returned. Used for paginating results.
+|`0`
+
+|`max`
+|From all matching, sorted instances, `max` specifies the upper limit of how
+ many instances to return. Used for paginating results.
+|No default; if not specified, returns all results.
+|===
+
+For example, the following finds all games with an average duration between 30 and
+90 minutes, sorted by their average duration (`sort: 'averageDuration'`), starting
+with the longest (order: 'desc'), and returning only the first five
+(`offset: 0, max: 5`) results.
+```
+    Game.findAllByAverageDurationInRange(30..90, [sort: 'averageDuration', order: 'desc', offset: 0, max: 5])
+```

@@ -1,0 +1,3 @@
+Verify everything executes correctly up to this point.
+
+include::{commondir}/common-testApp.adoc[]

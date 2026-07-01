@@ -1,0 +1,6 @@
+In this guide, we setup a message queue to work across two different applications.
+In this guide, we have an app which lists books and book's detail.
+We want to keep track of the number of times each book is viewed.
+We add a separate analytics app that keeps track of the number of times each one is viewed.
+
+image::appsummary.png[]

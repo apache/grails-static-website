@@ -1,0 +1,13 @@
+Create a functional test which verifies that a `Notification` instance is created, due to the event triggering, when a `User` is created.
+
+[source,groovy]
+.src/integration-test/groovy/demo/SignUpPage.groovy
+----
+include::../snippets/src/integration-test/groovy/demo/SignUpPage.groovy[]
+----
+
+[source,groovy]
+.src/integration-test/groovy/demo/RegisterControllerSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/demo/RegisterControllerSpec.groovy[]
+----

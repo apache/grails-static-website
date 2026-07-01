@@ -1,0 +1,25 @@
+Our final change needs to happen in `UrlMappings.groovy`. If you recall, by default the `server` Grails app renders some
+ application metadata at the root context. However, in order for our combined build to work, we need to load our Vue app
+ at the root context. Fortunately, this is a very simple change as well.
+
+Edit `server/grails-app/controllers/example/grails/UrlMappings.groovy`:
+
+Delete this line:
+
+[source,groovy]
+----
+'/'(controller: 'application', action:'index')
+----
+
+Replace it with this:
+
+[source,groovy]
+.server/grails-app/controllers/example/grails/UrlMappings.groovy
+----
+include::../snippets/server/grails-app/controllers/example/grails/UrlMappings.groovy[indent=0, tag=defaultPage]
+----
+<1> We are using the `grails.util.Environment` class to determine whether we are running in development mode or in a deployed artefact,
+and setting the URL mappings appropriately.
+
+With this new mapping config, when we build our executable JAR file, the `/` URL will be mapped to `/index.html`,
+which happens to also be the landing page for our Vue application.

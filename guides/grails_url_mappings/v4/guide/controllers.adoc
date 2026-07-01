@@ -1,0 +1,84 @@
+Before we can define our URL mappings, we need to create some *controllers*. You can think of them as the "web layer" of our application. Controllers respond to requests (i.e., from a user's browser, or from a another microservice), obtain data from the model, and return a response, such as an HTML page or a JSON string.
+
+You can create a controller by simply creating a Groovy class under the `grails-app/controllers` directory. However, Grails provides a handy command for creating controllers on the command-line.
+
+Because we're going to create several controllers, let's use the *interactive mode* provided by the Grails CLI. Run the following command from within your project directory:
+
+[source,bash]
+----
+~ ./grailsw
+...
+
+grails >
+----
+
+Once the interactive CLI is loaded up, you can run any available Grails commands, including `create-controller`. Run the following commands:
+
+[source,bash]
+----
+grails > create-controller demo.Talk
+grails > create-controller demo.Speaker
+grails > create-controller demo.Agenda
+grails > create-controller demo.Conference
+----
+
+Go head and quit the Grails CLI:
+
+[source,bash]
+----
+grails > exit
+----
+
+Now that we have our controllers, it's time to create *actions* which will be exposed as endpoints for users of our application (whether humans or perhaps a client of our API). Actions are simply methods defined in a controller class. In a *CRUD* (*C*reate, *R*ead, *U*pdate, *D*elete) controller, you will typically want actions such as shown below:
+
+[source,groovy]
+----
+
+class CrudController {
+
+    def index() {} //usually a "list" view
+
+    def save() {} //save new records
+
+    def show(Serializable id) {} //retrieve details on a specific record
+
+    def update(Serializable id) {} //update a specific record
+
+    def delete(Serializable id) {} //delete specific record
+}
+----
+
+If this was a *REST* controller, the above actions might be sufficient for CRUD operations. If we wanted to also display HTML forms for editing and creating records, we might also add `create` and `edit` actions to display those pages.
+
+Let's stub out CRUD actions for our (future) domain model. Edit the first three controllers (`TalkController`, `SpeakerController`, and `AgendaController`) as shown below:
+
+[source,groovy]
+.grails-app/controllers/demo/TalkController.groovy
+----
+include::../snippets/grails-app/controllers/demo/TalkController.groovy[]
+----
+
+[source,groovy]
+.grails-app/controllers/demo/SpeakerController.groovy
+----
+include::../snippets/grails-app/controllers/demo/SpeakerController.groovy[]
+----
+
+[source,groovy]
+.grails-app/controllers/demo/AgendaController.groovy
+----
+include::../snippets/grails-app/controllers/demo/AgendaController.groovy[]
+----
+
+For the `ConferenceController`, we'll create a different set of actions - `talks`, `speakers`, and `agenda`. In addition, the `talks` and `speakers` actions will accept an optional `id` parameter, so that we can display a specific speaker or talk.
+
+Edit `ConferenceController.groovy` as shown below:
+
+
+[source,groovy]
+.grails-app/controllers/demo/ConferenceController.groovy
+----
+include::../snippets/grails-app/controllers/demo/ConferenceController.groovy[]
+----
+
+Now that we have our controller actions stubbed out, let's see what Grails URL mappings have given us out of the box.

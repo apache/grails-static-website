@@ -1,0 +1,12 @@
+.gradle/
+build/
+out/
+.idea/
+*.iml
+.git/
+.github/
+*.log
+.DS_Store
+Thumbs.db
+README.md
+compose.yml

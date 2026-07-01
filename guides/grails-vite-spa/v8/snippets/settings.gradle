@@ -1,0 +1,16 @@
+/*
+ * Two-tier multi-project build.
+ *
+ *   backend/    Grails 8 rest_api - JSON over /api/**
+ *   frontend/   Vite + React - NOT a Gradle subproject; driven by npm
+ *               via the npmInstall + frontendBuild + copyFrontendToBackend
+ *               tasks in the root build.gradle.
+ *
+ * A single bootJar produced by `./gradlew :backend:bootJar` ships both
+ * halves: the SPA's static bundle is copied into backend/src/main/
+ * resources/public/ before bootJar packages it.
+ */
+
+rootProject.name = 'grails-vite-spa'
+
+include ':backend'

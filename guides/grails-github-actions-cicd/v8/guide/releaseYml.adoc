@@ -1,0 +1,13 @@
+A separate workflow at `.github/workflows/release.yml` triggers on tag pushes and produces (a) an OCI image on GitHub Container Registry, (b) a GitHub Release with the bootJar attached:
+
+[source,yaml]
+..github/workflows/release.yml
+----
+include::../snippets/.github/workflows/release.yml[]
+----
+
+Three pieces are doing the work:
+
+* `on.push.tags: ['v*.*.*']` triggers the workflow when a tag matching `v1.2.3` is pushed. The matching `workflow_dispatch` block lets you run the same pipeline manually from the Actions tab against an arbitrary branch when you need an out-of-band release.
+* `permissions: contents: write` (for the GitHub Release) + `packages: write` (for the GHCR push) is the strict minimum the workflow needs. The two are declared at workflow level rather than job level only because every job in this workflow needs both.
+* The `Resolve release version` step extracts the version from the tag (`v1.2.3` -> `1.2.3`) when triggered by tag push, or uses the manual input on `workflow_dispatch`. Every later step references `${{ steps.version.outputs.version }}` so the version flows through to `gradlew`, the image tag, and the release name.

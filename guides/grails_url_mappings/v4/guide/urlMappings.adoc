@@ -1,0 +1,158 @@
+Let's look at the default `UrlMappings.groovy` file (under `grails-app/controllers/demo`):
+
+[source,groovy]
+----
+package demo
+
+class UrlMappings {
+
+    static mappings = {
+        "/$controller/$action?/$id?(.$format)?"{
+            constraints {
+                // apply constraints here
+            }
+        }
+
+        "/"(view:"/index")
+        "500"(view:'/error')
+        "404"(view:'/notFound')
+    }
+}
+----
+
+The very first mapping in the `mappings` block is pretty straightforward. It has two components: a string, defining the URL pattern, and a closure, where options (such as *constraints*) can be specified to change the behavior of the mapping.
+
+TIP: See how to use URL constraints https://grails.apache.org/docs/latest/guide/theWebLayer.html#applyingConstraints[here in the Grails documentation].
+
+The URL pattern can include variables, which are denoted by Groovy Strings within the pattern (e.g., `$controller` or `${controller}`. Grails has a few special wildcards which it supports out of the box. For example, `$controller` will be mapped to the name of a given controller, `$action` will be mapped to an action within that controller, and so forth. Optional variables are suffixed with a `?`. E.g., `/controller/$action?`
+
+Using the variables for all the parts of the URL pattern means this particular mapping will match *any* URL. See the table below:
+
+
+.URL Mapping Resolution
+|===
+|URL | Result
+
+|`/talk/show/1`
+|`TalkController`, `show` action, `id` parameter of `1`
+
+|`/talk/`
+|`TalkController`,  default action (typically an`index` action)
+
+|`/speaker/show/1.json`
+|`SpeakerController`, `show` action, `id` parameter of `1`, `format` parameter of `json` (can be used for content-negotiation)
+
+|===
+
+In addition to mapping to controller actions, URL mappings can also map directly to a view (without specifying a controller or action), or an arbitrary URI (useful for redirects). For example, the default URL mapping for the root context, `/`, points to the default `index.gsp` page under `grails-app/views`:
+
+[source,groovy]
+----
+    "/"(view:"/index")
+----
+
+You can use the `uri` argument to map to a different URI:
+
+[source,groovy]
+----
+    "/hello"(uri: "/hello.dispatch")
+----
+
+Another useful kind of mapping are HTTP error code mappings, also seen in the default `UrlMappings.groovy` file. The default mappings simply load a default error view, however you could easily redirect these requests to an error-handling or logging controller to apply custom error handling logic and recovery in your app. E.g.,
+
+[source.groovy]
+----
+    "500"(controller:'myErrorController', action: 'somethingBroke')
+    "404"(controller:'myErrorController', action: 'notFound')
+----
+
+
+The default URL mappings will cover most of our needs in this sample app. However, to give us finer grained control, we are going to add a few of our own mappings for the `ConferenceController` actions we stubbed out above.
+
+WARNING: The default set of URL mappings cover many use cases. However, when it's time to secure your application, you may want to remove the default mapping and replace it with more specific mappings (so that users cannot access any controller action they like simply by figuring out the names).
+
+Edit the `UrlMappings.groovy` file as shown below:
+
+[source,groovy]
+.grails-app/controllers/demo/UrlMappings.groovy
+----
+package demo
+
+class UrlMappings {
+
+    static mappings = {
+        "/$controller/$action?/$id?(.$format)?"{
+            constraints {
+                // apply constraints here
+            }
+        }
+
+
+        "/talks/$id?"(controller: 'conference', action: 'talks') //<1>
+
+        "/speakers/$id?"(controller: 'conference', action: 'speakers')
+
+        "/agenda"(controller: 'conference', action: 'agenda') //<2>
+
+
+        "/"(view:"/index")
+        "500"(view:'/error')
+        "404"(view:'/notFound')
+    }
+}
+----
+<1> We are mapping a custom URL pattern `/talks/$id?` to our `ConferenceController` actions. The `$id` variable means that this component of the URL pattern will be mapped to the `id` parameter of the `talks` action. The suffix of `?` makes this variable optional.
+<2> Note that we're not using any variables in this patterns, so the request must match the URL pattern exactly. Otherwise, it will be handled by the default URL mapping at the top of the file.
+
+If you start up the application now and make a request to `http://localhost:8080/talks`, you should see this text rendered to the browser:
+
+```
+    Returning conference talks...
+```
+
+Try another URL: `http://localhost:8080/talks/1`:
+
+```
+    Returning conference talk 1...
+```
+
+
+=== HTTP Methods
+
+There's one more feature to note on URL mappings before we move on. In addition to specifying URL patterns and constraints, mappings can also specify the specific HTTP method required to match the mapping. This is as simple as prefixing the pattern with the required HTTP verb, such as `get`, `post`, or `put`.
+
+Let's update our `UrlMappings.groovy` file one more time, to specify that we only accept `GET` requests to our `ConferenceController` actions.
+
+
+[source,groovy]
+.grails-app/controllers/demo/UrlMappings.groovy
+----
+package demo
+
+class UrlMappings {
+
+    static mappings = {
+        "/$controller/$action?/$id?(.$format)?"{
+            constraints {
+                // apply constraints here
+            }
+        }
+
+        get "/talks/$id?"(controller: 'conference', action: 'talks')
+        get "/speakers/$id?"(controller: 'conference', action: 'speakers')
+        get "/agenda"(controller: 'conference', action: 'agenda')
+
+
+        "/"(view:"/index")
+        "500"(view:'/error')
+        "404"(view:'/notFound')
+    }
+}
+----
+
+If you now use `curl` (or another HTTP client) to make a non-GET request to one of these URLs, you'll receive a 404 page. Try it with the below `curl` command:
+
+[source,bash]
+----
+~ curl -X PUT localhost:8080/talks
+----

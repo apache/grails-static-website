@@ -1,0 +1,35 @@
+JSON views (`.gson`) shape the response without touching the controller. Each view declares its model and emits the JSON body using a Groovy DSL.
+
+The shared partial:
+
+[source,groovy]
+.grails-app/views/book/_book.gson
+----
+include::../snippets/grails-app/views/book/_book.gson[]
+----
+
+The `model { }` block declares the Groovy types the view expects. The `json { }` block emits the response body. The `_links` object is plain JSON; nothing about HAL or HATEOAS is enforced - it is a convention you can either keep or drop, but having it makes API discovery from a browser dramatically easier.
+
+The list view reuses the partial via `g.render`:
+
+[source,groovy]
+.grails-app/views/book/index.gson
+----
+include::../snippets/grails-app/views/book/index.gson[]
+----
+
+Three things to notice:
+
+* The `model` block declares both the page (`Iterable<Book> bookList`) and the total count (`Long bookCount`). `RestfulController.index` populates both automatically.
+* The pagination metadata at the top (`page`, `pageSize`, `total`) gives clients enough information to render a pager without re-querying.
+* `bookList.collect { Book b -> g.render(template: 'book', model: [book: b]) }` reuses the `_book.gson` partial for every item. One source of truth for the body shape; both the show and index views use it.
+
+The `show.gson` view is a one-liner that delegates to the same partial:
+
+[source,groovy]
+.grails-app/views/book/show.gson
+----
+include::../snippets/grails-app/views/book/show.gson[]
+----
+
+Author views follow the same pattern: `_author.gson` partial, `index.gson` list with pagination metadata, `show.gson` one-liner.

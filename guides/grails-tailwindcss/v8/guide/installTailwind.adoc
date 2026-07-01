@@ -1,0 +1,21 @@
+Tailwind 4 ships as the npm package `tailwindcss`, with a separate `@tailwindcss/cli` package for the standalone command-line compiler that we will drive from Gradle. Add a small `package.json` at the project root:
+
+[source,json]
+.package.json
+----
+include::../snippets/package.json[]
+----
+
+Then run `npm install` once to populate `node_modules/` and create `package-lock.json`:
+
+[source,bash]
+----
+npm install
+----
+
+The `build` and `watch` scripts call the `tailwindcss` binary that `@tailwindcss/cli` exposes, while the Gradle task you will add in a later chapter runs the same compiler through `npx @tailwindcss/cli`. That keeps the npm side and Gradle side aligned.
+
+Files touched in this chapter:
+
+* `package.json`
+* `package-lock.json`

@@ -1,0 +1,6 @@
+The initial project, which we are going to work on, was generated with https://grails.apache.org/docs/latest/guide/webServices.html#restProfile[Grails REST profile].
+
+[source,bash]
+----
+grails create-app myapp --profile=rest-api
+----

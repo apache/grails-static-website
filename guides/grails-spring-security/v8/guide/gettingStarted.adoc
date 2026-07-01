@@ -1,0 +1,22 @@
+Clone the repository and run the starting application:
+
+[source,bash]
+----
+git clone -b grails8 https://github.com/grails-guides/grails-spring-security.git
+cd grails-spring-security/initial
+./gradlew bootRun
+----
+
+Open http://localhost:8080/[http://localhost:8080/] for the welcome JSON payload. The `initial/` project exposes a simple `Resource` REST API with no security plugin yet.
+
+To skip ahead, `cd complete` and run the same commands — that tree contains the finished security configuration, domains, and tests.
+
+[[cloneAndRun]]
+== Verify tests
+
+[source,bash]
+----
+./gradlew test
+----
+
+Both `initial` and `complete` must pass in CI (see `.github/workflows/grails8.yml`).

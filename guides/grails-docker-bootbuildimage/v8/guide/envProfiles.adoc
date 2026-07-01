@@ -1,0 +1,21 @@
+A production image cannot ship with a hard-coded `jdbc:postgresql://localhost:5432/...` URL; the same image has to run on a developer laptop, in CI, in staging, and in production with different connection strings, credentials, and even different database servers.
+
+Grails uses the standard Spring Boot environment-variable -> property mapping. Replace the literal values in `grails-app/conf/application.yml` with `${SPRING_DATASOURCE_URL:fallback}` placeholders:
+
+[source,yaml]
+.grails-app/conf/application.yml
+----
+include::../snippets/grails-app/conf/application.yml[tag=dataSource,indent=0]
+----
+
+Three things to notice:
+
+* The `development` block keeps a fallback (`jdbc:postgresql://localhost:5432/devDb...`) so `./gradlew bootRun` still works without a `SPRING_DATASOURCE_URL` set.
+* The `production` block has no fallback. If the image is started in `production` mode without `SPRING_DATASOURCE_URL` set, Spring Boot fails fast at startup. That is what you want.
+* The username and password resolve from `SPRING_DATASOURCE_USERNAME` and `SPRING_DATASOURCE_PASSWORD` regardless of profile, with the username defaulting to `postgres` for local development.
+
+The Compose file we will write later passes these three variables to the container. Kubernetes deployments would pass the same variables via a `Secret` and `envFrom: { secretRef: ... }`.
+
+Files touched in this chapter:
+
+* `grails-app/conf/application.yml`

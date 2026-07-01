@@ -1,0 +1,28 @@
+By the end of the guide your workspace will look like:
+
+[source,text]
+----
+grails-multi-module/
+|-- settings.gradle
+|-- build.gradle
+|-- shared-core/                # Grails web plugin, packaged as a plain jar
+|   |-- build.gradle
+|   |-- src/main/groovy/example/SharedCoreGrailsPlugin.groovy
+|   `-- grails-app/
+|       |-- domain/example/Book.groovy
+|       `-- services/example/BookService.groovy
+|-- webapp-customer/            # Grails web app (read-only catalog)
+|   |-- build.gradle            # `grails { plugins { implementation project(':shared-core') } }`
+|   `-- grails-app/
+|       `-- controllers/customer/CatalogController.groovy
+`-- webapp-admin/               # Grails web app (CRUD)
+    |-- build.gradle            # `grails { plugins { implementation project(':shared-core') } }`
+    `-- grails-app/
+        `-- controllers/admin/BookController.groovy
+----
+
+Three modules, one root, two deployable `bootJar`s, and one shared plugin jar. `shared-core` is not a third application. It is the reusable Grails plugin that both webapps compile against, package, and reload from during development.
+
+Files touched:
+
+- None yet

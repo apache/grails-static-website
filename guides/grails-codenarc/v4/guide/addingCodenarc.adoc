@@ -1,0 +1,144 @@
+Adding CodeNarc to our project is a simple task because there's a https://docs.gradle.org/current/userguide/codenarc_plugin.html[Gradle plugin]
+ to do it.
+
+Let's modify `build.gradle` and add the following:
+
+[source, groovy]
+./app/build.gradle
+----
+include::{sourcedir}/app/build.gradle[tag=applyFromCodenarc]
+----
+
+We encapsulate all the CodeNarc configuration in `gradle/codenarc.gradle`:
+
+[source, groovy]
+./gradle/codenarc.gradle
+----
+include::{sourcedir}/gradle/codenarc.gradle[tag=configureCodeNarc]
+----
+
+<1> Apply the `codenarc` plugin.
+<2> Set the CodeNarc version we want to use.
+<3> Define the main file with the rules. By default CodeNarc uses `config/codenarc/codenarc.xml` but we don't want to
+write XML files, don't we?
+<4> The report format we want. For a human-readable format we use `html`. If we want to integrate CodeNarc with, for
+example, Jenkins we need to change it to `xml`.
+<5> We don't want that the build fails when there's only one violation.
+
+Then we need to create the rules file:
+
+[source, groovy]
+./config/codenarc/rules.groovy
+----
+ruleset {
+    description 'Grails-CodeNarc Project RuleSet'
+
+    ruleset('rulesets/basic.xml')
+    ruleset('rulesets/braces.xml')
+    ruleset('rulesets/convention.xml')
+    ruleset('rulesets/design.xml')
+    ruleset('rulesets/dry.xml')
+    ruleset('rulesets/exceptions.xml')
+    ruleset('rulesets/formatting.xml')
+    ruleset('rulesets/generic.xml')
+    ruleset('rulesets/imports.xml')
+    ruleset('rulesets/naming.xml')
+    ruleset('rulesets/unnecessary.xml')
+    ruleset('rulesets/unused.xml')
+    ruleset('rulesets/grails.xml')
+}
+----
+
+With this configuration we can just run the `check` task.
+
+[source, bash]
+----
+$ ./gradlew app:check
+
+:check UP-TO-DATE
+:complete:codenarcMain
+CodeNarc rule violations were found. See the report at: file:///home/ivan/workspaces/oci/guides/grails-codenarc/complete/app/build/reports/codenarc/main.html
+:complete:codenarcTest NO-SOURCE
+:complete:compileJava NO-SOURCE
+:complete:compileGroovy UP-TO-DATE
+:complete:buildProperties UP-TO-DATE
+:complete:processResources UP-TO-DATE
+:complete:classes UP-TO-DATE
+:complete:compileTestJava NO-SOURCE
+:complete:compileTestGroovy NO-SOURCE
+:complete:processTestResources NO-SOURCE
+:complete:testClasses UP-TO-DATE
+:complete:test NO-SOURCE
+:complete:check
+
+Total time: 1.953 secs
+----
+
+And we can open the test report to check the violations:
+
+image::report1.png[]
+
+- First, we have a section with the execution date and the CodeNarc version used. 
+- Then there's another section with a Summary with the total of files with violations and also the number of violations with priority 1, 2 and 3. 
+- After that, there's a section for each file in which we can see all the violations in the file with the line of code and a small fragment of it. The rule name is a link to a more detailed explanation.
+
+=== Let's fix the violations
+
+There are different ways of fixing a CodeNarc violation:
+
+- Fixing the problem: As the name implies, just fix the violation.
+- Disabling the rule: Sometimes we don't agree with that specific CodeNarc violation. We can disable it.
+- Ignoring the rule for that specific class or method: This case is when we don't want to disable the rule but want to
+skip it only in a particular class or method.
+
+
+==== Fix the problem
+
+- To fix the violation `FileEndsWithoutNewline` add a new line at the end of `UrlMappings` file. 
+
+- To fix the violation `SpaceBeforeOpeningBrace` add a space before the braces.
+
+
+==== Disable the rule
+
+For the case of `ClassJavadoc` and `NoDef` we can just disable the rules modifying the `rules.groovy` file:
+
+[source, groovy]
+./app/src/codenarc/rules.groovy
+----
+ruleset {
+    description 'Grails-CodeNarc Project RuleSet'
+
+    ...
+    ruleset('rulesets/convention.xml') {
+        'NoDef' {
+            enabled = false
+        }
+    }
+    ...
+    ruleset('rulesets/formatting.xml') {
+        'ClassJavadoc' {
+            enabled = false
+        }
+    }
+    ...
+}
+----
+
+==== Ignoring a rule
+
+Finally, we can ignore a rule for a particular class. In this case, we're going to ignore the `UnnecessaryGString` rule
+for `UrlMappings.groovy` using `@SuppressWarnings`:
+
+[source, groovy]
+./app/grails-app/controllers/demo/UrlMappings.groovy
+----
+include::{sourcedir}/app/grails-app/controllers/demo/UrlMappings.groovy[tag=urlMappings]
+----
+
+
+==== Checking the result
+
+Just execute again the `check` task and open the report to see that all the violations are gone:
+
+image::report2.png[]

@@ -1,0 +1,10 @@
+If you would like to enable enhanced logging so you can see what is returned when calling Googles OAuth api, add the
+following to the end of your `logback.groovy` file
+
+[source,groovy]
+.grails-app/conf/logback.groovy
+----
+logger("org.springframework.security", DEBUG, ['STDOUT'], false)
+logger("grails.plugin.springsecurity", DEBUG, ['STDOUT'], false)
+logger("org.pac4j", DEBUG, ['STDOUT'], false)
+----

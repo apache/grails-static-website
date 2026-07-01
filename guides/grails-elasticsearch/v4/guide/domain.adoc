@@ -1,0 +1,11 @@
+You can create a domain class
+
+[source, groovy]
+.grails-app/domain/demo/Book.groovy
+----
+include::../snippets/grails-app/domain/demo/Book.groovy[tag=package]
+include::../snippets/grails-app/domain/demo/Book.groovy[tag=importAndClass]
+include::../snippets/grails-app/domain/demo/Book.groovy[tag=properties]
+include::../snippets/grails-app/domain/demo/Book.groovy[tag=mapping]
+include::../snippets/grails-app/domain/demo/Book.groovy[tag=closeClass]
+----

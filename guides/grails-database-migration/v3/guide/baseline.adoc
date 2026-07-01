@@ -1,0 +1,113 @@
+Instead of using GORM schema auto-generation, the database schema is going to changed with http://www.liquibase.org[Liquibase]; the database migration tool which the Grails Database Migration Plugin uses. 
+
+We want to run migrations on startup and our migrations are going to be located in `changelog.groovy`
+
+
+[source, groovy]
+.grails-app/conf/application.yml
+----
+...
+include::../snippets/grails-app/conf/application.yml[tags=updateOnStartUp]
+...
+----
+
+The plugin comes with several commands, one of those commands, `dbm-generate-gorm-changelog` generates an initial changelog with a Groovy DSL file from current GORM classes 
+
+[source, bash]
+----
+> grails dbm-generate-gorm-changelog changelog.groovy
+----
+
+This will generate a changelog such as: 
+
+[source, groovy]
+.grails-app/migrations/changelog.groovy
+----
+include::../snippets/grails-app/migrations/create-person-table.groovy[]
+----
+
+You may see the below INFO log statement. It is a non-error:
+
+----
+INFO 7/24/17 11:29 AM: liquibase: Can not use class org.grails.plugins.databasemigration.liquibase.GormDatabase as a
+Liquibase service because it does not have a no-argument constructor
+----
+
+Move the initial changelog to its own file and reference it from the main changelog file. 
+
+[source, bash]
+----
+$ cp grails-app/migrations/changelog.groovy grails-app/migrations/create-person-table.groovy
+----
+
+Replace the content of _changelog.groovy_ with:
+
+[source, groovy]
+.grails-app/migrations/changelog.groovy
+----
+databaseChangeLog = {
+include::../snippets/grails-app/migrations/changelog.groovy[tag=createPersonTable]
+}
+----
+
+
+Apply the migration:
+
+[source, bash]
+----
+$ grails dbm-update
+----
+
+
+The database tables are created:
+
+[source, sql]
+----
+> show tables;
+----
+
+|===
+|Tables in dbmigration
+| DATABASECHANGELOG
+|DATABASECHANGELOGLOCK
+|person
+|===
+
+
+The tables `DATABASECHANGELOG`, `DATABASECHANGELOGLOCK` are used by the Database Migration Plugin to keep track of database migrations.
+
+The `person` table correspond to the `Person` Domain Class. 
+
+[source, sql]
+----
+> describe person;
+----
+
+
+|===
+|Field|Type|Null|Key|Default|Extra
+|id
+|bigint(20)
+|NO
+|Pri
+|<null>
+|auto_increment
+|version
+|bigint(20)
+|NO
+|
+|<null>
+|
+|age
+|int(11)
+|NO
+|
+|<null>
+|
+|name
+|varchar(255)
+|NO
+|
+|<null>
+|
+|===

@@ -1,0 +1,52 @@
+Imagine the following scenario. You want to send every user an email 2 hours after they registered into your app. You want to ask him about his experiences during this first interaction with your service.
+
+For this guide, we are going to schedule a Job to trigger after one minute. 
+
+Modify `BootStrap.groovy` to call twice a new service named `RegisterService`.
+
+[source, groovy]
+.grails-app/init/demo/BootStrap.groovy
+----
+package demo
+
+import groovy.transform.CompileStatic
+
+@CompileStatic
+class BootStrap {
+
+	RegisterService registerService
+
+    def init = { servletContext ->
+    	registerService.register('harry@howards.com')
+    	sleep(20_000)
+    	registerService.register('ron@howards.com')
+    }
+    def destroy = {
+    }
+}
+----
+
+Create `RegisterService.groovy`
+
+
+[source, groovy]
+.grails-app/services/demo/RegisterService.groovy
+----
+include::../snippets/grails-app/services/demo/RegisterService.groovy[]
+----
+
+<1> Dependency injection of our TaskScheduler bean
+<2> Dependency injection of emailService
+<3> This method returns a date one minute into the future
+<4> Schedule the trigger
+
+If you execute the above code you will see the Job being executed one minute after we schedule it and with the supplied email address.
+
+[source, bash]
+----
+INFO demo.RegisterService         : saving harry@howards.com at 23/1/2018 07:55:21
+INFO demo.RegisterService         : saving ron@howards.com at 23/1/2018 07:55:41
+INFO demo.EmailService            : Sending email to harry@howards.com : Follow up - How was your experience at 23/1/2018 07:56:21
+INFO demo.EmailService            : Sending email to ron@howards.com : Follow up - How was your experience at 23/1/2018 07:56:41
+----
+ 

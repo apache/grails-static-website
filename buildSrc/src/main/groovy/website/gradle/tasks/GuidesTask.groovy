@@ -27,6 +27,7 @@ import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.OutputDirectory
@@ -62,6 +63,11 @@ abstract class GuidesTask extends GrailsWebsiteTask {
     @PathSensitive(PathSensitivity.RELATIVE)
     abstract RegularFileProperty getReleases()
 
+    /** The local YAML metadata source consumed by {@link GuidesFetcher}. */
+    @InputFile
+    @PathSensitive(PathSensitivity.RELATIVE)
+    abstract RegularFileProperty getGuidesYml()
+
     @Input
     abstract Property<String> getAbout()
 
@@ -80,6 +86,16 @@ abstract class GuidesTask extends GrailsWebsiteTask {
     @OutputDirectory
     abstract DirectoryProperty getOutputDir()
 
+    /**
+     * Shared chrome partials ({@code templates/partials/}) wired in at
+     * configuration time. Captured as a task input rather than read through
+     * {@code project} at execution time so the task is compatible with the
+     * configuration cache, mirroring {@code RenderSiteTask.getPartialsDir()}.
+     */
+    @InputDirectory
+    @PathSensitive(PathSensitivity.RELATIVE)
+    abstract DirectoryProperty getPartialsDir()
+
     static TaskProvider<GuidesTask> register(
             Project project,
             GrailsWebsiteExtension siteExt,
@@ -94,17 +110,20 @@ abstract class GuidesTask extends GrailsWebsiteTask {
             it.releases.set(siteExt.releases)
             it.title.set(siteExt.title)
             it.url.set(siteExt.url)
+            it.partialsDir.set(siteExt.partialsDir)
+            it.guidesYml.set(project.layout.projectDirectory.file('conf/guides.yml'))
         }
     }
 
     @TaskAction
     void renderGuides() {
         def tempDir = outputDir.dir('temp').get().asFile.tap { it.mkdirs() }
-        generateGuidesPages(tempDir, url.get())
+        generateGuidesPages(tempDir, url.get(), guidesYml.get().asFile)
 
         def template = document.get().asFile
         def templateText = template.text
-        def distDir = outputDir.dir('dist').get().asFile.tap { it.mkdirs() }
+        // Guides landing, tag, and category pages live under /guides/.
+        def distDir = outputDir.dir('dist/guides').get().asFile.tap { it.mkdirs() }
 
         def releasesFile = releases.get().asFile
         def latest = SiteMap.latestVersion(releasesFile)
@@ -121,18 +140,31 @@ abstract class GuidesTask extends GrailsWebsiteTask {
         def f = new File(tempDir, PAGE_NAME_GUIDES)
         def page = pageWithFile(f)
         page.filename = 'index.html'
-        RenderSiteTask.renderPages(meta, [page], distDir, templateText)
+        // Resolve [%PARTIAL:<name>] tokens against the same partial bundle
+        // RenderSiteTask uses, so guides/index.html, tag, and category pages
+        // share the main-site chrome.
+        File partialsArg = partialsDir.isPresent() ? partialsDir.get().asFile : null
+        RenderSiteTask.renderPages(meta, [page], distDir, templateText, partialsArg)
         RenderSiteTask.renderPages(
                 meta,
                 parseCategoryPages(tempDir),
                 new File(distDir, 'categories').tap { it.mkdirs() },
-                templateText
+                templateText,
+                partialsArg
         )
         RenderSiteTask.renderPages(
                 meta,
                 parseTagsPages(tempDir),
                 new File(distDir, 'tags').tap { it.mkdirs() },
-                templateText
+                templateText,
+                partialsArg
+        )
+        RenderSiteTask.renderPages(
+                meta,
+                parseVersionsPages(tempDir),
+                new File(distDir, 'versions').tap { it.mkdirs() },
+                templateText,
+                partialsArg
         )
     }
 
@@ -152,6 +184,14 @@ abstract class GuidesTask extends GrailsWebsiteTask {
         listOfPages
     }
 
+    static List<Page> parseVersionsPages(File pages) {
+        List<Page> listOfPages = []
+        new File(pages, 'versions').eachFile { versionFile ->
+            listOfPages << pageWithFile(versionFile)
+        }
+        listOfPages
+    }
+
     static Page pageWithFile(File f) {
         def contentAndMetadata = RenderSiteTask.parseFile(f)
         new Page(
@@ -161,11 +201,11 @@ abstract class GuidesTask extends GrailsWebsiteTask {
         )
     }
 
-    static void generateGuidesPages(File pages, String url) {
-        def guides = GuidesFetcher.fetchGuides()
+    static void generateGuidesPages(File pages, String url, File guidesYml) {
+        def guides = GuidesFetcher.fetchGuides(guidesYml)
         def tags = TagUtils.populateTags(guides)
         new File(pages, PAGE_NAME_GUIDES).setText(
-                "title: Guides | Grails Framework\nbody: guides\nJAVASCRIPT: $url/javascripts/search.js\n---\n" +
+                "title: Guides | Grails Framework\nbody: guides\nogurl: $url/guides/index.html\nJAVASCRIPT: $url/javascripts/search.js\n---\n" +
                         GuidesPage.mainContent(guides, tags),
                 'UTF-8'
 
@@ -175,7 +215,7 @@ abstract class GuidesTask extends GrailsWebsiteTask {
         for (def tag : tags) {
             def slug = "${tag.slug.toLowerCase()}.html"
             new File(tagsDir, slug).setText(
-                    "---\ntitle: Guides with tag: $tag.title | Grails Framework\nbody: guides\n---\n" +
+                    "---\ntitle: Guides with tag: $tag.title | Grails Framework\nbody: guides\nogurl: $url/guides/tags/$slug\n---\n" +
                             GuidesPage.mainContent(guides, tags, null, tag),
                     'UTF-8'
 
@@ -185,8 +225,17 @@ abstract class GuidesTask extends GrailsWebsiteTask {
         for (def category : GuidesPage.categories.values()) {
             def slug = "${category.slug.toLowerCase()}.html"
             new File(categoriesDir, slug).setText(
-                    "---\ntitle: Guides at category $category.name | Grails Framework\nbody: guides\n---\n" +
+                    "---\ntitle: Guides at category $category.name | Grails Framework\nbody: guides\nogurl: $url/guides/categories/$slug\n---\n" +
                             GuidesPage.mainContent(guides, tags, category, null),
+                    'UTF-8'
+            )
+        }
+        def versionsDir = new File(pages, 'versions').tap { it.mkdirs() }
+        for (def version : GuidesPage.availableVersions(guides)) {
+            def slug = "${version}.html"
+            new File(versionsDir, slug).setText(
+                    "---\ntitle: Guides for Grails $version | Grails Framework\nbody: guides\nogurl: $url/guides/versions/$slug\n---\n" +
+                            GuidesPage.mainContent(guides, tags, null, null, version),
                     'UTF-8'
             )
         }

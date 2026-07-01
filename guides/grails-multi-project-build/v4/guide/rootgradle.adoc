@@ -1,0 +1,30 @@
+If you compare `app/build.gradle` and `plugin/build.gradle` you will see a lot of duplication.
+To remove duplication, we are going to add a ROOT `build.gradle`
+
+[source, groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[indent=0]
+----
+
+the `app` and `plugin` gradle files are really simple:
+
+[source, groovy]
+.app/build.gradle
+----
+include::../snippets/app/build.gradle[tag=appversiongroup]
+dependencies {
+include::../snippets/app/build.gradle[tag=dependency_datastore_rest_client]
+}
+include::../snippets/app/build.gradle[indent=0, tag=grailsplugins]
+
+----
+
+[source, groovy]
+.plugin/build.gradle
+----
+include::../snippets/plugin/build.gradle[tag=pluginversiongroup]
+dependencies {
+include::../snippets/plugin/build.gradle[tag=dependencygroovylib]
+}
+----

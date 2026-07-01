@@ -1,0 +1,13 @@
+`DomainUnitTest<Book>` is the cheapest and fastest test layer in Grails. It loads in milliseconds because no Spring context boots; the in-memory datastore is per-spec via `@AutoCleanup`. Every constraint - `blank`, `nullable`, `maxSize`, `unique`, `matches`, `min`, `max` - is tested here.
+
+[source,groovy]
+.src/test/groovy/example/BookSpec.groovy
+----
+include::../snippets/src/test/groovy/example/BookSpec.groovy[]
+----
+
+Three patterns to point at:
+
+* `b.errors.getFieldError('title').code` checks the *constraint code*, not the localised message. Codes are stable across releases and locales; messages are not. Note the subtlety the spec demonstrates: omitting `title` from the map constructor leaves it `null`, so the `nullable` code fires - not `blank`. To exercise the `blank` constraint you must assign `b.title = ''` *directly*, because Grails data binding converts an empty string passed through the map constructor into `null`.
+* `@Unroll` plus a `where:` data table collapses what would otherwise be five copy-pasted tests into one parameterised spec. The `#pageCount` token in the test name expands to the actual value, so the IDE's run-tree shows each row separately.
+* No `@Transactional`, no Spring, no JDBC. The whole spec runs in a few hundred milliseconds across all six tests.

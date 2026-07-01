@@ -1,0 +1,20 @@
+Each HTMX endpoint is its own URL with an explicit method:
+
+[source,groovy]
+.grails-app/controllers/example/UrlMappings.groovy
+----
+include::../snippets/grails-app/controllers/example/UrlMappings.groovy[]
+----
+
+The repetition (`/tasks` for both index and create, distinguished by method) is intentional: HTMX requests carry their semantics in the HTTP method, exactly as REST does. Using `"/tasks"(resources: 'task')` would also work, but the explicit-route form makes the surface easier to read for an author who has never seen Grails' resource-mapping shorthand.
+
+This is also close to the Grails 8 `web` profile skeleton, which still shows explicit `"/$controller/$action?/$id?(.$format)?"` mappings in `UrlMappings.groovy`.
+
+[IMPORTANT]
+====
+Because `/tasks` is shared by `index` and `create`, and `/tasks/$id` by `show`, `update`, and `delete`, Grails' reverse URL mapping cannot unambiguously pick a route from a controller+action pair alone - `createLink(controller: 'task', action: 'create')` falls back to the default `/task/create` convention, which no mapping serves, so the HTMX request 404s and nothing swaps. The partials therefore build the HTMX URLs from the path directly, e.g. `hx-post="${createLink(uri: '/tasks')}"` and `hx-delete="${createLink(uri: '/tasks/' + task.id)}"`. `createLink(uri: ...)` is still context-path aware but skips reverse mapping entirely.
+====
+
+Files touched:
+
+* `grails-app/controllers/example/UrlMappings.groovy`

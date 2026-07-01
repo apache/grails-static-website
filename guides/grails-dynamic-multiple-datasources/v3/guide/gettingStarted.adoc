@@ -1,0 +1,2 @@
+This guide starts where the https://grails.apache.org/guides/grails-custom-security-tenant-resolver/guide/index.html#test[Custom Tenant Resolver by JWT] left off.
+Please, complete that guide before starting this guide to get a better understanding.

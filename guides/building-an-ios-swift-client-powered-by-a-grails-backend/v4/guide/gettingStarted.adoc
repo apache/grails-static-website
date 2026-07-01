@@ -1,0 +1,7 @@
+In this guide you are going to build a https://grails.apache.org[Grails application] which will serve as a company intranet backend.
+It exposes a JSON API of company announcements.
+
+Additionally, you are going to build an https://developer.apple.com/ios/[iOS App], the intranet client, which
+consumes the JSON API offered by the backend.
+
+The guide explores the support of diffent API versions.

@@ -1,0 +1,51 @@
+Once your app is deployed in Google App Engine Flexible, you can test it. 
+
+Go back to the Google Actions Console and click test.
+
+image::test1.png[]
+
+image::test2.png[]
+
+Try to test out your actions with the following phrases:
+
+____
+Ask to Grails Color Finder to find a brighter color for magenta
+____
+
+You should see the response:
+
+____
+Sure, here is the test version of Grails Color Finder
+The brighter color for magenta is fuchsia"
+____
+
+image::test-brigther-color.png[]
+
+Let's try another:
+
+____
+talk to Grails Color Finder
+____
+
+You'll see:
+
+____
+Sure, here is the test version of Grails Color Finder
+Hey, it works! Now tell something so I could repeat it.
+____
+
+Now respond with something:
+
+____
+Grails is awesome
+____
+
+You should see it echo back what you entered:
+
+____
+You just told: Grails is awesome
+____
+
+image::test-default.png[]
+
+Now you can make a more rich skill, and when you are ready go to the Google API dashboard, fill in the directory listing and submit it for testing.

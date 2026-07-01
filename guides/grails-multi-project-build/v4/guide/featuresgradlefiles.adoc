@@ -1,0 +1,21 @@
+Another possibility to keep your build dry is to create specific Gradle
+files for different features.
+
+Imagine you have Geb tests in several projects of your multi-project build.
+
+We can encapsulate a set of dependencies to run
+https://grails.apache.org/guides/grails-geb-multiple-browsers/guide/index.html[Geb tests for multiple browsers].
+
+[source, groovy]
+.gradle/geb.gradle
+----
+include::../snippets/gradle/geb.gradle[indent=0]
+----
+
+Then you can apply these dependencies to a particular project:
+
+[source, groovy]
+.app/build.gradle
+----
+apply from: "${rootProject.projectDir}/gradle/geb.gradle"
+----

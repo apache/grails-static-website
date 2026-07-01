@@ -1,0 +1,10 @@
+To complete the Grails application developed in this guide, you will need to checkout the source from Github and work through the steps presented by the guide.
+
+To get started do the following:
+
+* link:https://github.com/grails-guides/grails-tvmlapp/archive/master.zip[Download] and unzip
+the source or if you already have https://git-scm.com/[Git]: `git clone https://github.com/grails-guides/grails-tvmlapp.git`
+* `cd` into `grails-guides/grails-tvmlapp/initial`
+* Head on over to the next section
+
+TIP: You can go right to the completed example if you `cd` into `grails-guides/grails-tvmlapp/complete`

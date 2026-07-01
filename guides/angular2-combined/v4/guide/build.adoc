@@ -1,0 +1,84 @@
+It would be ideal if the application would just "work" by executing `run-app` similar to how typical Grails applications with the web profile do. In order to achieve that, additional configuration is required.
+
+To support the build process, first we need to add some NPM scripts. Add the following to the `package.json` file.
+
+[source,json]
+.src/main/client/package.json
+----
+{
+  ...
+  "scripts": {
+    "build": "ng build --prod",
+    "buildDev": "ng build",
+    "buildWatch": "ng build --watch=true",
+  ...
+}
+----
+
+The next step is to add the https://github.com/srs/gradle-node-plugin[Gradle Node Plugin].
+
+[source,groovy]
+.build.gradle
+----
+buildscript {
+    dependencies {
+        classpath "com.moowork.gradle:gradle-node-plugin:1.0.1"
+    }
+}
+
+apply plugin:"com.moowork.node"
+----
+
+Now that we have the plugin, we need to configure it and use it to create some tasks to hook into the build process of the Grails application.
+
+[source,groovy]
+.build.gradle
+----
+node {
+    version = '6.9.1'
+    download = true
+    nodeModulesDir = file("src/main/client")
+}
+
+task buildClientDev(type: NpmTask, dependsOn: 'npmInstall') {
+    group = 'build'
+    description = 'Compile client side assets for development'
+    args = ['run', 'buildDev']
+}
+
+task buildClient(type: NpmTask, dependsOn: 'npmInstall') {
+    group = 'build'
+    description = 'Compile client side assets for production'
+    args = ['run', 'build']
+}
+
+task buildClientWatch(type: NpmTask, dependsOn: 'npmInstall') {
+    group = 'application'
+    description = 'Builds and watches the client side assets for rebuilding'
+    args = ['run', 'buildWatch']
+}
+
+task clientTest(type: NpmTask, dependsOn: 'npmInstall') {
+    group = 'verification'
+    description = 'Executes client side unit tests'
+    args = ['run', 'test']
+}
+
+task clientIntegrationTest(type: NpmTask, dependsOn: 'npmInstall') {
+    group = 'verification'
+    description = 'Executes client side integration tests'
+    args = ['run', 'e2e']
+}
+
+bootRun.dependsOn(buildClientDev)
+
+war.dependsOn(buildClient)
+
+test.dependsOn(clientTest)
+
+integrationTest.dependsOn(clientIntegrationTest)
+
+clean {
+    delete fileTree(dir: "src/main/webapp")
+}
+----

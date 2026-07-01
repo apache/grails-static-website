@@ -1,0 +1,29 @@
+For the version which you would like to inspect, select Logs in the diagnose dropdown:
+
+image::logs.png[]
+
+Application log messages written to stdout and stderr are automatically collected and can be
+viewed in the Logs Viewer.
+
+We are going to create a controller and log with level INFO and verify the log statement is
+visible in the Log Viewer.
+
+
+[source,groovy]
+.grails-app/controllers/demo/LegalController.groovy
+----
+include::../snippets/grails-app/controllers/demo/LegalController.groovy[]
+----
+
+We add the next line to `grails-app/conf/logback.groovy`
+
+`logger 'demo', INFO, ['STDOUT'], false`
+
+to log _INFO_ statements of classes under package _demo_ to _STDOUT_ appender with additivity _false_
+
+If you redeploy the app to App Engine and access the _/legal_ end point, you will see the logging statements in Log Viewer.
+
+Check https://cloud.google.com/appengine/docs/flexible/java/writing-application-logs[Writing Application Logs]
+documentation to read more about logs in the Flexible Environment.
+
+Write your application logs using stdout for output and stderr for errors. Note that this does not provide log levels that you can use for filtering in the Logs Viewer; however, the Logs Viewer does provide other filtering, such as text, timestamp, etc.

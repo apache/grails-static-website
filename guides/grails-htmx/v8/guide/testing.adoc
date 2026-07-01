@@ -1,0 +1,45 @@
+The sample app is covered at three layers: fast domain unit tests, `@Integration` tests for the GORM queries the controller relies on, and Geb browser tests that drive the real HTMX interactions. The integration and functional layers run against the in-memory H2 database; the browser layer additionally needs a running Docker daemon for the Selenium container.
+
+== Unit: the Task domain
+
+`DomainUnitTest<Task>` exercises the constraints in milliseconds with no Spring context:
+
+[source,groovy]
+.src/test/groovy/example/TaskSpec.groovy
+----
+include::../snippets/src/test/groovy/example/TaskSpec.groovy[]
+----
+
+== Integration: the queries behind the endpoints
+
+The live-search action calls `Task.findAllByTitleIlike(...)` and the list relies on the `dateCreated desc` mapping. An `@Integration` + `@Rollback` spec pins both against a real database:
+
+[source,groovy]
+.src/integration-test/groovy/example/TaskIntegrationSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/TaskIntegrationSpec.groovy[]
+----
+
+== Browser: the HTMX interactions through Geb
+
+`ContainerGebSpec` starts a Selenium-Chrome container via Testcontainers and drives the booted app. Each HTMX swap type is exercised: the create OOB prepend, the toggle and inline-edit `outerHTML` swaps, the live-search `innerHTML` swap, and the delete removal. `withConfirm(true)` answers the `hx-confirm` dialog on delete:
+
+[source,groovy]
+.src/integration-test/groovy/example/TaskTrackerFunctionalSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/TaskTrackerFunctionalSpec.groovy[]
+----
+
+A few disciplines keep these browser tests reliable:
+
+* `@Rollback` is *not* used - the HTMX endpoints commit, so each spec creates its fixture through the UI (or `withNewTransaction`) and uses unique titles so rows left by earlier feature methods do not interfere.
+* `waitFor { ... }` wraps every assertion that follows an HTMX request, because the swap happens asynchronously after the AJAX round trip.
+* Rows are targeted by their stable `#task-${id}` id, which survives the `outerHTML` swaps, rather than by text that changes mid-edit.
+
+Run it all:
+
+[source,bash]
+----
+./gradlew test             # unit - milliseconds, no Docker
+./gradlew integrationTest  # integration + Geb browser tests - Docker required
+----

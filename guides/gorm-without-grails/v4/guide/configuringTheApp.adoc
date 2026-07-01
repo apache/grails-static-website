@@ -1,0 +1,14 @@
+Edit _build.gradle_ files to include GORM dependencies.
+
+[source,groovy]
+./build.gradle
+----
+include::../snippets/build.gradle[]
+----
+
+<1> Repository to resolve GORM dependencies.
+<2> Add the required dependencies for GORM to our project.
+<3> For connection pooling
+<4> To use `WebClient` in the tests, include the `spring-webflux` module in your project.
+
+http://gorm.grails.org/latest/hibernate/manual/index.html#springBoot[Read the GORM documentation to learn more]

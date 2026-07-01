@@ -1,0 +1,34 @@
+Edit `build.gradle`
+
+[source,groovy]
+.build.gradle
+----
+dependencies {
+    //...
+
+    runtime 'mysql:mysql-connector-java:5.1.40' <1>
+----
+<1> Add the MySQL JDBC driver as a dependency
+
+include::{commondir}/common-warningDependencyNotBuildscriptDependency.adoc[]
+
+Edit `application.yml`
+
+[source,yml]
+.grails-app/conf/application.yml
+----
+dataSource:
+    pooled: true
+    jmxExport: true
+    driverClassName: com.mysql.jdbc.Driver   <1>
+    dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    username: sa
+    password: testing
+environments:
+    development:
+        dataSource:
+            dbCreate: update
+            url: jdbc:mysql://127.0.0.1:3306/myapp <2>
+----
+<1> Change the `driverClassName` and `dialect` to MySQL settings
+<2> This assumes you have a local MySQL instance with a database named `myapp`

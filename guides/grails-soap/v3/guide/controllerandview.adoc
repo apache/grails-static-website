@@ -1,0 +1,24 @@
+The app allow users to submit a form and check if a VAT Number is valid for a particular state.
+
+We encapsulate the request in a command object:
+[source,groovy]
+.grails-app/controllers/demo/VatCommand.groovy
+----
+include::../snippets/grails-app/controllers/demo/VatCommand.groovy[]
+----
+
+Create a _VatController_ to handle the request, collaborate with the services previously introduced and generate a response via _flash_ messages or errors.
+
+[source,groovy]
+.grails-app/controllers/demo/VatController.groovy
+----
+include::../snippets/grails-app/controllers/demo/VatController.groovy[]
+----
+
+Create a GSP to render the form and render the  _flash_ messages or errors.
+
+[source,groovy]
+.grails-app/views/vat/index.gsp
+----
+include::../snippets/grails-app/views/vat/index.gsp[]
+----

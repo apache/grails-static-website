@@ -1,0 +1,76 @@
+Tests live with the module they cover.
+
+* `shared-core` keeps its own unit and integration tests focused on the domain model and GORM data services.
+* `webapp-customer` keeps its own web and functional tests for the customer-facing UI.
+* `webapp-admin` keeps its own CRUD and admin-side functional tests.
+
+== shared-core: the domain and data service
+
+The plugin owns the model, so its tests own the model's behaviour. Both webapps inherit a tested `Book` and `BookService` rather than re-testing them:
+
+[source,groovy]
+.shared-core/src/test/groovy/example/BookSpec.groovy
+----
+include::../snippets/shared-core/src/test/groovy/example/BookSpec.groovy[]
+----
+
+[source,groovy]
+.shared-core/src/test/groovy/example/BookServiceSpec.groovy
+----
+include::../snippets/shared-core/src/test/groovy/example/BookServiceSpec.groovy[]
+----
+
+== webapp-admin: the REST surface over real HTTP
+
+The admin `BookController` is a `RestfulController`, so the admin module adds a `resources` URL mapping to route the REST verbs, then drives it with a functional spec. The `Book` it persists comes from the plugin - proving the shared model works end to end in a booted app:
+
+[source,groovy]
+.webapp-admin/grails-app/controllers/example/UrlMappings.groovy
+----
+include::../snippets/webapp-admin/grails-app/controllers/example/UrlMappings.groovy[]
+----
+
+[source,groovy]
+.webapp-admin/src/integration-test/groovy/admin/AdminBookFunctionalSpec.groovy
+----
+include::../snippets/webapp-admin/src/integration-test/groovy/admin/AdminBookFunctionalSpec.groovy[]
+----
+
+== webapp-customer: the read-only catalog
+
+The customer functional spec drives the hand-rolled `CatalogController`, which injects the same plugin `BookService`:
+
+[source,groovy]
+.webapp-customer/src/integration-test/groovy/customer/CatalogFunctionalSpec.groovy
+----
+include::../snippets/webapp-customer/src/integration-test/groovy/customer/CatalogFunctionalSpec.groovy[]
+----
+
+Run them granularly during development:
+
+[source,bash]
+----
+./gradlew :shared-core:test :shared-core:integrationTest
+./gradlew :webapp-customer:test :webapp-customer:integrationTest
+./gradlew :webapp-admin:test :webapp-admin:integrationTest
+----
+
+Or fan out the whole suite from the workspace root:
+
+[source,bash]
+----
+./gradlew test integrationTest
+----
+
+Because the root `build.gradle` applies `tasks.withType(Test).configureEach { useJUnitPlatform() }`, every `Test` task in the workspace follows the same Grails 8 starter pattern as `grails-profiles/base/skeleton/build.gradle`.
+
+The matching link:../grails-github-actions-cicd/8/guide/index.html[GitHub Actions CI/CD guide] shows how to split these module suites into separate jobs so a failing admin functional test does not hide a passing `shared-core` result.
+
+Files touched:
+
+- shared-core/src/test/groovy/**
+- shared-core/src/integration-test/groovy/**
+- webapp-customer/src/test/groovy/**
+- webapp-customer/src/integration-test/groovy/**
+- webapp-admin/src/test/groovy/**
+- webapp-admin/src/integration-test/groovy/**

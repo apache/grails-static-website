@@ -1,0 +1,28 @@
+import com.example.Order
+
+import java.text.SimpleDateFormat
+
+SimpleDateFormat simpleDateFormat = new SimpleDateFormat('M-dd-yyy')
+
+model {
+    Order order
+}
+json {
+    id order.orderId
+    shippingCost order.shippingCost
+    date simpleDateFormat.format(order.orderPlaced)
+
+    shippingAddress { //<1>
+        street order.shippingAddress.street
+        street2 order.shippingAddress.street2
+        city order.shippingAddress.city
+        state order.shippingAddress.state
+        zip order.shippingAddress.zip
+    }
+
+    products order.products.collect { [id: it.id] } //<2>
+
+    customer {
+        id order.customer.id
+    }
+}

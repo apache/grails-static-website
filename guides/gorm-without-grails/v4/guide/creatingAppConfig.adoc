@@ -1,0 +1,38 @@
+Beyond our simple domain tests getting everything configured properly takes a few extra changes.
+If you started with our `initial` app or if you created your own, you will find that you have
+a `src/main/resources/application.properties`. Lets go ahead and add some options there.
+
+[source,groovy]
+./src/main/resources/application.properties
+----
+include::../snippets/src/main/resources/application.properties[]
+----
+
+The last line is required in order to make use of hibernates auto importing feature to
+bootstrap data. Without this line being set to `create` or `create-drop` it will not
+bootstrap our data (more on this next).
+
+The first 3 lines enable h2 console access in the browser so you can navigate to
+http://localhost:8080/console[] and view your database.
+
+image::consoleLogin.png[]
+image::loggedInConsole.png[]
+
+Next create an additional `application.yml` in `src/main/resources`. After creation go
+ahead and edit the file and add the following.
+
+NOTE: For more information on configuration look at the GORM documentation
+http://gorm.grails.org/latest/hibernate/manual/index.html#configuration[here].
+
+[source,groovy]
+./src/main/resources/application.yml
+----
+include::../snippets/src/main/resources/application.yml[]
+----
+
+The `dataSource` block is what ties your database and GORM together. Without this your
+domain tests will pass but if you run the application and go to view your database at
+http://localhost:8080/console[] it will always be empty and no tables will be generated.
+
+IMPORTANT: There is a lot going on in these two files so
+      pay close attention as these are the connecting glue.

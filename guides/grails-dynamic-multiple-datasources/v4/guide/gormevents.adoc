@@ -1,0 +1,48 @@
+Create a class named `UserInsertedListener`. It creates a new connection source when a new user is inserted.
+
+It uses the `@Listener` annotation to listen *synchronously* to https://grails.apache.org/docs/latest/guide/async.html[Events from GORM].
+
+[source,groovy]
+.src/main/groovy/demo/UserInsertedListener.groovy
+----
+include::../snippets/src/main/groovy/demo/UserInsertedListener.groovy[]
+----
+
+<1> Listen Synchrounsly to GORM events of the domain class `User`
+<2> Listen to `PostInsertEvent` events
+<3> Use a collaborator to retrieve a `DatabaseConfiguration` object (see below).
+<4> Use http://gorm.grails.org/latest/hibernate/manual/index.html#connectionSources[ConnectionSources API] to configure the new dataSource dynamically.
+
+Define the `UserInsertedListener` as a Bean
+
+[source,groovy]
+.grails-app/conf/spring/resources.groovy
+----
+...
+include::../snippets/grails-app/conf/spring/resources.groovy[tag=userInsertedListenerImport]
+...
+beans = {
+...
+include::../snippets/grails-app/conf/spring/resources.groovy[tag=userInsertedListenerBean]
+...
+}
+----
+
+The previous listener uses a couple of classes as collaborators:
+
+[source,groovy]
+.src/main/groovy/demo/DatabaseConfiguration.groovy
+----
+include::../snippets/src/main/groovy/demo/DatabaseConfiguration.groovy[]
+----
+
+[source,groovy]
+.grails-app/services/demo/DatabaseProvisioningService.groovy
+----
+include::../snippets/grails-app/services/demo/DatabaseProvisioningService.groovy[]
+----
+
+<1> Equivalent of `dbCreate: none`
+<2> Change these configuration settings to match your system.
+
+NOTE: The previous settings do not specify the MySQL Driver or Dialect. Those are inherited from the default Datasource which was configured in `application.yml`

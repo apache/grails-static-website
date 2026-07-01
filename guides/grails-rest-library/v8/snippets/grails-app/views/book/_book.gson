@@ -1,0 +1,25 @@
+import example.Book
+
+model {
+    Book book
+}
+
+json {
+    id          book.id
+    title       book.title
+    isbn        book.isbn
+    pageCount   book.pageCount
+    publishedOn book.publishedOn?.format('yyyy-MM-dd')
+    author {
+        id   book.author.id
+        name book.author.name
+    }
+    _links {
+        self {
+            href g.link(resource: book, absolute: true)
+        }
+        author {
+            href g.link(resource: book.author, absolute: true)
+        }
+    }
+}

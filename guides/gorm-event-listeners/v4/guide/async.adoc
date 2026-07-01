@@ -1,0 +1,46 @@
+Our first listener will save `Audit` instances whenever a new `Book` is created, as well as when a `Book` is updated and deleted.
+
+Create a new Grails service, named `AuditListenerService`:
+
+[source,bash]
+----
+~ grails create-service demo.AuditListenerService
+----
+
+TIP: A Grails service is not required in order to write an event listener. You could place the same methods we are about to write in a Groovy class under `src/main/groovy`. However, the listener does need to be wired into the Spring context, so we would have to do that manually if we did not use a Grails service. We will use Grails services for convenience.
+
+Edit `AuditListenerService` as shown below:
+
+[source,groovy]
+.grails-app/services/demo/AuditListenerService.groovy
+----
+include::../snippets/grails-app/services/demo/AuditListenerService.groovy[]
+----
+<1> The Subscriber annotation and the method signature indicate what event this method is interested in - e.g., a method named `afterInsert` with an argument of type `PostInsertEvent` means this method will only be called after an object is saved.
+<2> We can access the domain object that fired the event, via the `event.entityObject`. In order to access the id of this object, we cast it as `Book` and obtain the id, which we use as the `bookId` property of our `Audit` instance.
+<3> Again, the method signature here indicates that this method will be called for events of type `PostUpdateEvent` - after an object is updated.
+
+NOTE: Keep in mind that the method `bookId` will return null for any classes but `Book` entities. Thus, the previous class creates `Audit` instances for `Book` insert, update or delete operations.
+
+Write a unit test to verify the `auditDataService` is invoked whenever a `Book` event of type `PostInsertEvent`, `PostUpdateEvent` or `PostDeleteEvent` is received. The next illustrates another big advantage of GORM Data Services. They create easy to test scenarios. Being interfaces they are easy to Mock.
+
+[source,groovy]
+.src/test/groovy/demo/AuditListenerServiceSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/AuditListenerServiceSpec.groovy[]
+----
+<1> We implement `grails.testing.services.ServiceUnitTest` (a trait to unit test services) and `DataTest` trait as well since we will be using GORM features.
+<2> The `DataTest` trait provides a `mockDomains` method, which we supply with the domain classes we intend to use in our test.
+<3> Because `DataTest` has wired up GORM for us, we can simply create a new instance of our `Book` class.
+<4> We can now use the `Book` instance to set up a `PostInsertEvent` (note that the `dataStore` property is available in our test, again as a result of implementing the `DataTest` trait).
+<5> We can now call the `afterSave` method, passing in the event.
+<6> We now can assert that our `Audit` instance was saved (via the `auditDataService.save()` method call).
+
+
+Next, create an integration tests to verify that saving, updating or deleting a book leaves an audit trail. Since our service is capturing GORM Events asynchronously,  are using http://spockframework.org/spock/javadoc/1.1/spock/util/concurrent/PollingConditions.html[Spock Polling Conditions], which will repeatedly evaluate one or more conditions until they are satisfied or a timeout has elapsed.
+
+[source,groovy]
+.src/integration-test/groovy/demo/AuditListenerServiceIntegrationSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/demo/AuditListenerServiceIntegrationSpec.groovy[]
+----

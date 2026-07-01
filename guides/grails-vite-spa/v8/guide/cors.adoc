@@ -1,0 +1,31 @@
+CORS does not appear in either dev or prod for this layout - and that is the point.
+
+* *In dev*, the browser only ever talks to Vite on `:5173`. Vite forwards `/api/**` to Grails on `:8080` via its server-to-server proxy; the browser never sees a cross-origin request. No CORS preflight, no `Access-Control-Allow-Origin` headers.
+* *In prod*, the browser only ever talks to the bootJar on `:8080`. The SPA's static bundle is served from `/`; the API is served from `/api/**`. Both are the same origin. Same story: no CORS.
+
+For the case where the SPA and the API genuinely live on different origins (e.g. SPA on `app.example.com`, API on `api.example.com`), Grails ships a first-class CORS configuration block. From `grails-doc/src/en/guide/theWebLayer/cors.adoc` (the official 8.0.x reference):
+
+[source,yaml]
+.grails-app/conf/application.yml
+----
+grails:
+    cors:
+        enabled: true
+        allowedOrigins:
+            - 'https://app.example.com'
+        allowedMethods:
+            - GET
+            - POST
+        allowCredentials: true
+----
+
+The `grails.cors` block produces a Spring `CorsConfiguration` under the hood, mapped to `/**` by default. Per-mapping overrides are documented in the same `cors.adoc` chapter under the `mappings:` sub-key. The Spring Boot CORS documentation is the underlying reference for the option semantics (max-age, exposed headers, etc.).
+
+[NOTE]
+====
+*Auth*: HTTP-only cookie sessions work transparently with this same-origin layout - the browser sends the session cookie on every request without any client-side wiring. JWT in `Authorization` headers is the alternative when the SPA is hosted independently of the API; it requires the SPA to attach the header explicitly on every fetch. The cookie-session path is recommended for browser-only SPAs unless you have a reason to pick JWT.
+====
+
+Files touched in this chapter:
+
+* None (CORS only becomes relevant if you split the SPA and the API across origins)

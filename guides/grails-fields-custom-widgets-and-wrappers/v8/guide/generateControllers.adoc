@@ -1,0 +1,23 @@
+Generate two controllers, one per domain class:
+
+[source,bash]
+----
+./grailsw create-controller example.Book
+./grailsw create-controller example.Author
+----
+
+Replace each generated controller with the scaffolded version below. The `static scaffold` property is the only line you need:
+
+[source,groovy]
+.grails-app/controllers/example/BookController.groovy
+----
+include::../snippets/grails-app/controllers/example/BookController.groovy[]
+----
+
+[source,groovy]
+.grails-app/controllers/example/AuthorController.groovy
+----
+include::../snippets/grails-app/controllers/example/AuthorController.groovy[]
+----
+
+Restart the app, browse to `http://localhost:8080/book/index`, and you should see a working CRUD UI rendered entirely from runtime-generated GSPs.

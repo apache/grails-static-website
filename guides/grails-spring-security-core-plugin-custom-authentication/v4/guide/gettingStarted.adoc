@@ -1,0 +1,2 @@
+In this guide, you are going to write a custom authentication mechanism.
+https://grails-plugins.github.io/grails-spring-security-core/v3/index.html[Spring Security Core Plugin] allows for a significant degree of customization which we are going to explore next.

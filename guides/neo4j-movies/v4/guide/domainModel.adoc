@@ -1,0 +1,49 @@
+Now that you have configured GORM correctly, the next step is to define a domain model that maps the Neo4j graph.
+
+To do so we are going to create domain classes to represent the two types of nodes in the domain model. You can use the `create-domain-class` command of the CLI to do this, or your favourite IDE or text editor:
+
+[source,bash]
+----
+$ grails create-domain-class neo4j.movies.Person
+$ grails create-domain-class neo4j.movies.Movie
+----
+
+In addition, we will create a domain class to model the _relationship_ between the two domain classes called `CastMember`:
+
+[source,bash]
+----
+$ grails create-domain-class neo4j.movies.CastMember
+----
+
+Now open up the `Person` domain class located at `grails-app/domain/neo4j/movies/Person.groovy` and modify the contents to look like the following:
+
+[source,groovy]
+.grails-app/domain/neo4j/movies/Person.groovy
+----
+include::../snippets/grails-app/domain/neo4j/movies/Person.groovy[]
+----
+
+As you can see a `Person` has a `name`, a year of birth and an association to `CastMember` (more on that later).
+
+Now open up the `Movie` domain class located at `grails-app/domain/neo4j/movies/Movie.groovy` and modify the contents to look like the following:
+
+[source,groovy]
+.grails-app/domain/neo4j/movies/Movie.groovy
+----
+include::../snippets/grails-app/domain/neo4j/movies/Movie.groovy[]
+----
+
+A `Movie` has a `title`, a `tagline`, release `year` and also features an association to `CastMember`.
+
+The `CastMember` domain class is going to model the relationship between a `Person` and a `Movie`. To do that we are going to use the `grails.neo4j.Relationship` trait, which allows us to map a domain class to a Neo4j relationship instead of a node:
+
+[source,groovy]
+.grails-app/domain/neo4j/movies/CastMember.groovy
+----
+include::../snippets/grails-app/domain/neo4j/movies/CastMember.groovy[]
+----
+
+<1> The `Relationship` trait takes 2 generic arguments. The `from` entity and the `to` entity.
+<2> Relationship entities can have attributes too, in this case a `roles` attribute
+<3> We set the default relationship type to `ACTED_IN`
+<4> The relationship types are represented by a `RoleType` enum

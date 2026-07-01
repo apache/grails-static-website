@@ -1,0 +1,2 @@
+We will quickly put together an app that lists books and allows us to favorite them. The favorite button will only be
+available once we have logged in using google.

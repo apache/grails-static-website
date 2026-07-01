@@ -1,0 +1,20 @@
+To delete a `Product` simply send a `DELETE` request:
+
+[source,bash]
+----
+$ curl -i -X DELETE localhost:8080/products/1
+----
+
+If deleting the instance was successful the output will be:
+
+[source,bash]
+----
+HTTP/1.1 204
+X-Application-Context: application:development
+Content-Type: application/json;charset=UTF-8
+Date: Wed, 23 Nov 2016 08:57:27 GMT
+----
+
+Congratulations! You have built your first REST application with Grails, GORM and Hibernate 5!
+
+TIP: Remember you can obtain the source code for the completed examples using the links on the right.

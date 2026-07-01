@@ -1,0 +1,45 @@
+[[unitTests]]
+== Unit tests
+
+Controller unit tests exercise action logic with mocked domains:
+
+[source,groovy]
+.src/test/groovy/example/ResourceControllerSpec.groovy
+----
+include::../snippets/src/test/groovy/example/ResourceControllerSpec.groovy[]
+----
+
+[[integrationTests]]
+== Integration tests
+
+Integration specs boot the full application context and exercise real HTTP requests with Basic authentication:
+
+[source,groovy]
+.src/integration-test/groovy/example/ResourceSecurityIntegrationSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/ResourceSecurityIntegrationSpec.groovy[]
+----
+
+These tests verify the security rules end to end:
+
+* Anonymous `GET /api/resources` returns **200**
+* Anonymous `POST` returns **401**
+* Authenticated `ROLE_USER` can create resources
+* `ROLE_USER` without admin receives **403** on update
+* `ROLE_ADMIN` can update and delete
+* Invalid payloads return **422**
+
+Run unit tests:
+
+[source,bash]
+----
+cd complete
+./gradlew test
+----
+
+Run integration tests (requires Docker):
+
+[source,bash]
+----
+./gradlew integrationTest
+----

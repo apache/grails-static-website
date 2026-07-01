@@ -1,0 +1,8 @@
+Allow GORM to implement the methods for you and manage transactions, while you simply
+define the interface. Data Services can reduce errors, performance issues and are testable.  Plus it has a high COOL factor!
+
+Read http://gorm.grails.org/latest/hibernate/manual/index.html#dataServices[GORM Data Services] documentation to learn more.
+
+Watch Graeme Rocher presentation at Greach Conf 2018:
+
+video::6pIOgv7cZzo[youtube, width=540, height=320]

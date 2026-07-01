@@ -1,0 +1,7 @@
+Summary:
+
+* Add the https://plugins.gradle.org/plugin/com.gorylenko.gradle-git-properties[gradle-git-properties plugin]
+* Enable actuator endpoint via `endpoints.info.enabled=true` or `endpoints.enabled=true`
+* <<configuration, Configure>> and <<secured, Secure>> the endpoint as desired
+* ...
+* Enjoy knowing exactly which version of code is running (_profit!_)

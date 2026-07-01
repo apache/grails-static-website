@@ -1,0 +1,55 @@
+If you wish to define http://gorm.grails.org/latest/hibernate/manual/index.html#constraints[validation constraints]
+on properties defined in a GORM domain class, you can do so using the `constraints` property:
+
+[source,groovy]
+.grails-app/domain/demo/Product.groovy
+----
+include::../snippets/grails-app/domain/demo/Product.groovy[tags=constraints,indent=0]
+----
+
+The above example applies two constraints:
+
+* The `name` property is constrained so that it cannot be a blank string.
+* The `price` property is constrained so that it must be greater than 0 and less than a thousand using the `range` constraint.
+
+To verify these constraints work to our expectation you can write a test. If you used the `create-domain-class` a test
+called `src/test/groovy/demo/ProductSpec.groovy` was generated for you already. Otherwise simply creating an appropriately
+named test in `src/test/groovy` using your IDE or text editor will suffice.
+
+Tests in Grails are written with http://spockframework.org[Spock Framework],
+tests including having spaces in the test name.
+
+To write unit tests with MongoDB and Spock, you can simply extend from `grails.test.mongodb.MongoSpec`.
+
+[source,groovy]
+.src/test/groovy/demo/ProductSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/ProductSpec.groovy[tag=imports]
+
+include::../snippets/src/test/groovy/demo/ProductSpec.groovy[tag=clazz]
+----
+
+<1> Spock allows you to define much more readable
+<2> Override the `createMongoClient` method of the `MongoSpec` base class. Use something such as https://github.com/fakemongo/fongo[Fongo]; an in-memory java implementation of MongoDB.
+<3> MongoSpec is an abstract class that will initialise GORM in the setup phase of the specification being executed
+<4> Use the https://grails.apache.org/docs/latest/guide/testing.html[grails.testing.gorm.DomainUnitTest] trait to unit test single domain class.
+
+Add the fongo dependency to `build.gradle`
+
+[source,groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[tag=fongo]
+----
+
+Now to run the test you can run `./gradlew check` from a terminal window or run the test within your IDE if the IDE supports it:
+
+[source,bash]
+----
+$ ./gradlew check
+----
+
+Checkout https://grails.apache.org/guides/grails-test-domain-class-constraints/guide/index.html[How to test domain class constraints?] guide to learn more about testing constraints.
+
+
+

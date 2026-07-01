@@ -1,0 +1,9 @@
+In this guide, you will write a https://developer.apple.com/library/prerelease/content/documentation/TVMLKitJS/Conceptual/TVMLProgrammingGuide/index.html#//apple_ref/doc/uid/TP40016718-CH6-SW1[TVML application].
+
+____
+TVML apps provide you with a way to create apps for Apple TV using TVMLKit JavaScript (TVMLKit JS), the Apple TV Markup Language (TVML), and the TVMLKit framework. Every template has a specific design that follows Apple style guidelines, allowing you to quickly create gorgeous looking apps.
+____
+
+The TVML App, built during this guide, displays an https://developer.apple.com/library/prerelease/content/documentation/LanguagesUtilities/Conceptual/ATV_Template_Guide/StackTemplate.html#//apple_ref/doc/uid/TP40015064-CH21-SW4[Apple TVML Stack Template] of Grails Quickcasts.
+Grails Quickcasts are short videos of pure Grails coding. When the user selects one, an https://developer.apple.com/library/prerelease/content/documentation/LanguagesUtilities/Conceptual/ATV_Template_Guide/ProductTemplate.html#//apple_ref/doc/uid/TP40015064-CH8-SW4[Apple TVML Product Template] shows the Quickcast detail. The user can reproduce the video
+by selecting the play button.

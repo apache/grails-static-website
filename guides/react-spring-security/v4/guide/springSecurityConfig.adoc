@@ -1,0 +1,32 @@
+Now that Spring Security has been added to our application, we can generate the default Spring Security
+configuration. The plugin provides a `s2-quickstart` command that will generate a set of domain classes and configuration to get us started.
+
+[source,bash]
+----
+cd initial/server
+----
+
+Then execute the following
+
+[source, bash]
+----
+grails s2-quickstart demo User Role
+----
+
+This should generate the following domain classes:
+
+[source]
+----
+/server/grails-app/domain/demo/User.groovy
+/server/grails-app/domain/demo/Role.groovy
+/server/grails-app/domain/demo/UserRole.groovy
+----
+
+In addition, the `s2-quickstart` has added an extra configuration file at `server/grails-app/conf/application.groovy`. Grails projects support both YML and Groovy configuration, but YML is preferred. Let's remove the `application.groovy` file and add the following snippet at the end of `application.yml`
+
+[source, yml]
+----
+include::../snippets/server/grails-app/conf/application.yml[tag=ssc]
+----
+
+Please refer to the http://alvarosanchez.github.io/grails-spring-security-rest/latest/docs/[Spring Security REST documentation] and https://grails-plugins.github.io/grails-spring-security-core/latest/[Spring Security Core Documentation] for more details.

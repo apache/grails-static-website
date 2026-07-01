@@ -1,0 +1,19 @@
+REST resources are mapped under `/api`:
+
+[source,groovy]
+.grails-app/controllers/example/UrlMappings.groovy
+----
+include::../snippets/grails-app/controllers/example/UrlMappings.groovy[]
+----
+
+`BookController` delegates persistence and queries to `BookService`:
+
+[source,groovy]
+.grails-app/controllers/example/BookController.groovy
+----
+include::../snippets/grails-app/controllers/example/BookController.groovy[]
+----
+
+Call `validate()` after binding request JSON and before `save`. That returns structured `422` responses for constraint violations; relying on `hasErrors()` alone only catches binding errors, and `save(failOnError: true)` would otherwise surface `ValidationException` as `500`.
+
+JSON responses are rendered with GSON views (for example `_book.gson`).

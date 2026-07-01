@@ -1,0 +1,7 @@
+import demo.Plan
+
+model {
+    Iterable<Plan> planList
+}
+
+json tmpl.plan('plan', planList)

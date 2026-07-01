@@ -1,0 +1,51 @@
+Spring Security expects a `User`, a `Role`, and a join class linking them.
+
+[[user]]
+== User
+
+[source,groovy]
+.grails-app/domain/example/User.groovy
+----
+include::../snippets/grails-app/domain/example/User.groovy[]
+----
+
+[[role]]
+== Role
+
+[source,groovy]
+.grails-app/domain/example/Role.groovy
+----
+include::../snippets/grails-app/domain/example/Role.groovy[]
+----
+
+[[userRole]]
+== UserRole
+
+The join class uses a composite primary key:
+
+[source,groovy]
+.grails-app/domain/example/UserRole.groovy
+----
+include::../snippets/grails-app/domain/example/UserRole.groovy[]
+----
+
+[[passwordEncoder]]
+== Password encoding
+
+Hash passwords before they reach the database with a GORM event listener:
+
+[source,groovy]
+.src/main/groovy/example/UserPasswordEncoderListener.groovy
+----
+include::../snippets/src/main/groovy/example/UserPasswordEncoderListener.groovy[]
+----
+
+Register the listener as a Spring bean:
+
+[source,groovy]
+.grails-app/conf/spring/resources.groovy
+----
+include::../snippets/grails-app/conf/spring/resources.groovy[]
+----
+
+The listener skips values that already look like BCrypt hashes (`$2a$` / `$2b$`), so re-saving a user does not double-encode the password.
