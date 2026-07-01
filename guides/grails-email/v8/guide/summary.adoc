@@ -1,0 +1,8 @@
+You added outbound email to a Grails 8 application:
+
+* An `EmailService` boundary with SMTP, SendGrid, and AWS SES implementations
+* Externalized provider and mail settings in `application.yml`
+* A REST controller with command-object validation
+* Spock Spring integration tests that mock the sender — no live email in CI
+
+Next steps: add HTML templates, queue outbound mail asynchronously, or wire email into domain events.

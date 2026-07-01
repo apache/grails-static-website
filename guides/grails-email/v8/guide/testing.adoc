@@ -1,0 +1,17 @@
+Verify the HTTP endpoint builds the message and invokes `EmailService` without sending live email. Register a Spock mock as the primary `EmailService` bean:
+
+[source,groovy]
+.src/integration-test/groovy/example/MailControllerSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/MailControllerSpec.groovy[]
+----
+
+The spec posts to `/mail/send` and asserts `emailService.send` is called with the expected recipient, subject, and body.
+
+Run tests:
+
+[source,bash]
+----
+cd complete
+./gradlew test integrationTest
+----

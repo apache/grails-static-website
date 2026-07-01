@@ -1,0 +1,27 @@
+  #tag::mailConfig[]
+  mail:
+    host: ${SMTP_HOST:localhost}
+    port: ${SMTP_PORT:1025}
+    username: ${SMTP_USERNAME:}
+    password: ${SMTP_PASSWORD:}
+    default:
+      from: ${SMTP_FROM:no-reply@example.com}
+    props:
+      mail.smtp.auth: ${SMTP_AUTH:false}
+      mail.smtp.starttls.enable: ${SMTP_STARTTLS:false}
+  #end::mailConfig[]
+#tag::emailProvider[]
+email:
+  provider: ${EMAIL_PROVIDER:smtp}
+#end::emailProvider[]
+#tag::sendgrid[]
+sendgrid:
+  api: ${SENDGRID_APIKEY:}
+  from: ${SENDGRID_FROM_EMAIL:}
+#end::sendgrid[]
+#tag::awsses[]
+aws:
+  ses:
+    source: ${AWS_SOURCE:}
+    region: ${AWS_REGION:}
+#end::awsses[]
