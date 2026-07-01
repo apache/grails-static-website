@@ -1,0 +1,52 @@
+[[unitTests]]
+== Unit tests
+
+Domain constraints:
+
+[source,groovy]
+.src/test/groovy/example/RecordLabelSpec.groovy
+----
+include::../snippets/src/test/groovy/example/RecordLabelSpec.groovy[]
+----
+
+Service delegation to the HTTP client with a mock:
+
+[source,groovy]
+.src/test/groovy/example/ItunesSearchServiceSpec.groovy
+----
+include::../snippets/src/test/groovy/example/ItunesSearchServiceSpec.groovy[]
+----
+
+[[integrationTests]]
+== Integration tests
+
+Verify the HTTP client is registered as a Spring bean:
+
+[source,groovy]
+.src/integration-test/groovy/example/ItunesClientIntegrationSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/ItunesClientIntegrationSpec.groovy[]
+----
+
+Assert GORM persistence against real PostgreSQL (Testcontainers):
+
+[source,groovy]
+.src/integration-test/groovy/example/RecordLabelIntegrationSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/RecordLabelIntegrationSpec.groovy[]
+----
+
+Run unit tests:
+
+[source,bash]
+----
+cd complete
+./gradlew test
+----
+
+Run integration tests (requires Docker):
+
+[source,bash]
+----
+./gradlew integrationTest
+----

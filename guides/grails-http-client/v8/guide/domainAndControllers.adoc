@@ -1,0 +1,40 @@
+Local record label data stays in GORM while album search results come from the external API.
+
+[[recordLabel]]
+== RecordLabel domain
+
+[source,groovy]
+.grails-app/domain/example/RecordLabel.groovy
+----
+include::../snippets/grails-app/domain/example/RecordLabel.groovy[]
+----
+
+Seed development data in `BootStrap`:
+
+[source,groovy]
+.grails-app/init/example/BootStrap.groovy
+----
+include::../snippets/grails-app/init/example/BootStrap.groovy[]
+----
+
+[[urlMappings]]
+== URL mappings
+
+[source,groovy]
+.grails-app/controllers/example/UrlMappings.groovy
+----
+include::../snippets/grails-app/controllers/example/UrlMappings.groovy[]
+----
+
+[[recordLabelController]]
+== RecordLabelController
+
+The REST controller delegates persistence to GORM and returns JSON views:
+
+[source,groovy]
+.grails-app/controllers/example/RecordLabelController.groovy
+----
+include::../snippets/grails-app/controllers/example/RecordLabelController.groovy[]
+----
+
+Call `validate()` after binding request JSON and before `save`. That returns structured `422` responses for constraint violations.
