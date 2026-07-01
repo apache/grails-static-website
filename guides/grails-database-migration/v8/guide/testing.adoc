@@ -1,0 +1,42 @@
+[[unitTests]]
+== Unit tests
+
+Domain constraints after schema evolution:
+
+[source,groovy]
+.src/test/groovy/example/PersonSpec.groovy
+----
+include::../snippets/src/test/groovy/example/PersonSpec.groovy[]
+----
+
+[source,groovy]
+.src/test/groovy/example/AddressSpec.groovy
+----
+include::../snippets/src/test/groovy/example/AddressSpec.groovy[]
+----
+
+[[integrationTests]]
+== Integration tests
+
+Assert Liquibase tracking tables, final schema shape, and GORM persistence on a clean Testcontainers PostgreSQL database:
+
+[source,groovy]
+.src/integration-test/groovy/example/DatabaseMigrationIntegrationSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/DatabaseMigrationIntegrationSpec.groovy[]
+----
+
+Run unit tests:
+
+[source,bash]
+----
+cd complete
+./gradlew test
+----
+
+Run integration tests (requires Docker):
+
+[source,bash]
+----
+./gradlew integrationTest
+----

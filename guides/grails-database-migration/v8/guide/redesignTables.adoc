@@ -1,0 +1,36 @@
+Introduce an `Address` domain and migrate existing column data with custom SQL:
+
+[source,groovy]
+.grails-app/domain/example/Address.groovy
+----
+include::../snippets/grails-app/domain/example/Address.groovy[]
+----
+
+[source,groovy]
+.grails-app/migrations/create-address-table.groovy
+----
+include::../snippets/grails-app/migrations/create-address-table.groovy[]
+----
+
+The migration creates the `address` table, adds a foreign key, copies data from `person`, then drops the denormalized columns.
+
+Include the file in `changelog.groovy` and apply:
+
+[source,bash]
+----
+./gradlew runCommand "-Pargs=dbm-update"
+----
+
+Expose persisted data through a read-only REST endpoint:
+
+[source,groovy]
+.grails-app/controllers/example/UrlMappings.groovy
+----
+include::../snippets/grails-app/controllers/example/UrlMappings.groovy[]
+----
+
+[source,groovy]
+.grails-app/controllers/example/PersonController.groovy
+----
+include::../snippets/grails-app/controllers/example/PersonController.groovy[]
+----
