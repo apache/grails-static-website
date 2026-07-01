@@ -1,0 +1,1 @@
+    implementation "org.apache.grails:grails-data-hibernate5-dbmigration"
