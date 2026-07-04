@@ -438,3 +438,6 @@ coreReleases:
   - version: 7.1.2
     publicationDate: Jun 22, 2026
 
+  - version: 7.0.13
+    publicationDate: Jul 04, 2026
+
