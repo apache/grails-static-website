@@ -1,5 +1,5 @@
 Learn how to call external REST APIs from a Grails 8 application using Spring Boot's built-in HTTP Services support: define a `@HttpExchange` interface, register it with `@ImportHttpServices`, inject the generated client into a Grails service, and expose results through JSON views. Local `RecordLabel` data stays in GORM/PostgreSQL; album metadata comes from the iTunes Search API.
 
-No Micronaut plugin or extra HTTP client dependency is required - this uses the same Spring stack Grails 8 already runs on.
+No Micronaut plugin is required - this uses the same Spring stack Grails 8 already runs on. Add `spring-boot-starter-json` so the HTTP client can deserialize JSON responses.
 
 This guide follows the standard Grails guides layout: work in the `initial/` project and compare your progress with `complete/`.

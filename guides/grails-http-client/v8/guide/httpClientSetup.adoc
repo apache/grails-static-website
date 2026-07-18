@@ -19,6 +19,14 @@ Declare the iTunes Search API client as a Spring HTTP service interface:
 include::../snippets/src/main/groovy/example/ItunesClient.groovy[]
 ----
 
+Configure the `RestClient` base URL from `itunes.base-url` (defaults to the public iTunes API; integration tests override it with MockWebServer):
+
+[source,groovy]
+.src/main/groovy/example/ItunesClientConfiguration.groovy
+----
+include::../snippets/src/main/groovy/example/ItunesClientConfiguration.groovy[]
+----
+
 [[dtos]]
 == Response DTOs
 
@@ -36,4 +44,4 @@ include::../snippets/src/main/groovy/example/Album.groovy[]
 include::../snippets/src/main/groovy/example/SearchResult.groovy[]
 ----
 
-Spring deserializes the iTunes JSON into these types automatically.
+With `spring-boot-starter-json` on the classpath, Spring deserializes the iTunes JSON into these types automatically.
