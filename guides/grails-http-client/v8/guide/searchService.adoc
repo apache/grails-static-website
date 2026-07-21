@@ -1,0 +1,17 @@
+Inject the `@HttpExchange` client into a Grails service:
+
+[source,groovy]
+.grails-app/services/example/ItunesSearchService.groovy
+----
+include::../snippets/grails-app/services/example/ItunesSearchService.groovy[]
+----
+
+Expose search results through a thin controller:
+
+[source,groovy]
+.grails-app/controllers/example/SearchController.groovy
+----
+include::../snippets/grails-app/controllers/example/SearchController.groovy[]
+----
+
+The service trims blank search terms and returns an empty list rather than calling the remote API with invalid input.

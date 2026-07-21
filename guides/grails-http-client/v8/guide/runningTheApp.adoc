@@ -1,0 +1,17 @@
+From the repository root:
+
+[source,bash]
+----
+cd complete
+./gradlew bootRun
+----
+
+Example endpoints:
+
+[source,bash]
+----
+curl -s http://localhost:8080/api/recordLabels
+curl -s 'http://localhost:8080/api/search?q=U2'
+----
+
+The search endpoint returns album metadata from the iTunes Search API. Record labels are served from your local PostgreSQL database.
