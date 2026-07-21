@@ -1,4 +1,4 @@
-Register HTTP service interfaces on the application class with `@ImportHttpServices`:
+Register HTTP service interfaces with `@ImportHttpServices` and explicitly import the client configuration:
 
 [source,groovy]
 .grails-app/init/example/Application.groovy
@@ -6,7 +6,7 @@ Register HTTP service interfaces on the application class with `@ImportHttpServi
 include::../snippets/grails-app/init/example/Application.groovy[]
 ----
 
-`@ImportHttpServices` scans `example` for `@HttpExchange` interfaces and registers a `RestClient`-backed proxy bean for each one. This requires the Grails 8 Spring 7 / Boot 4 baseline.
+`@ImportHttpServices` scans `example` for `@HttpExchange` interfaces and registers a `RestClient`-backed proxy bean for each one. `@Import(ItunesClientConfiguration)` ensures Grails loads the `RestClient` group configurer. This requires the Grails 8 Spring 7 / Boot 4 baseline.
 
 [[itunesClient]]
 == ItunesClient
@@ -19,7 +19,7 @@ Declare the iTunes Search API client as a Spring HTTP service interface:
 include::../snippets/src/main/groovy/example/ItunesClient.groovy[]
 ----
 
-Configure the `RestClient` base URL from `itunes.base-url` (defaults to the public iTunes API; integration tests override it with MockWebServer):
+Configure the `RestClient` base URL from `itunes.base-url` (defaults to the public iTunes API; integration tests override it with MockWebServer). The iTunes API returns JSON with a `text/javascript` content type, so add that media type to Spring's Jackson converter:
 
 [source,groovy]
 .src/main/groovy/example/ItunesClientConfiguration.groovy
@@ -44,4 +44,4 @@ include::../snippets/src/main/groovy/example/Album.groovy[]
 include::../snippets/src/main/groovy/example/SearchResult.groovy[]
 ----
 
-With `spring-boot-starter-json` on the classpath, Spring deserializes the iTunes JSON into these types automatically.
+With `spring-boot-starter-json` on the classpath and `text/javascript` enabled above, Spring deserializes the iTunes JSON into these types automatically.

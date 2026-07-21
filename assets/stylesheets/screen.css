@@ -2304,8 +2304,12 @@ body.guide .literalblock > .content {
  * that joins flush to the code body. */
 body.guide .listingblock > .title {
 	display: inline-block;
+	max-width: 100%;
+	box-sizing: border-box;
 	margin: 0 !important;
 	padding: 6px 12px;
+	white-space: normal;
+	overflow-wrap: anywhere;
 	background-color: #1f2328;
 	color: #f6f8fa;
 	font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;

@@ -8,14 +8,12 @@ import okhttp3.mockwebserver.RecordedRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
-import spock.lang.Shared
 import spock.lang.Specification
 
 @Integration
 @Rollback
 class ItunesClientIntegrationSpec extends Specification {
 
-    @Shared
     static MockWebServer mockWebServer = new MockWebServer()
 
     static {
@@ -34,6 +32,10 @@ class ItunesClientIntegrationSpec extends Specification {
         registry.add('itunes.base-url', { baseUrl })
     }
 
+    void cleanupSpec() {
+        mockWebServer.shutdown()
+    }
+
     void 'declarative ItunesClient HTTP service is registered as a Spring bean'() {
         expect:
         itunesClient != null
@@ -42,12 +44,13 @@ class ItunesClientIntegrationSpec extends Specification {
 
     void 'search binds the term query parameter and deserializes albums'() {
         given:
+        String searchTerm = 'U2 & Friends'
         mockWebServer.enqueue(new MockResponse()
-                .setHeader('Content-Type', 'application/json')
+                .setHeader('Content-Type', 'text/javascript; charset=utf-8')
                 .setBody('''{"resultCount":1,"results":[{"artistName":"U2","collectionName":"The Joshua Tree","collectionViewUrl":"https://example.com/album"}]}'''))
 
         when:
-        SearchResult result = itunesClient.search('U2')
+        SearchResult result = itunesClient.search(searchTerm)
 
         then:
         result.resultCount == 1
@@ -59,7 +62,7 @@ class ItunesClientIntegrationSpec extends Specification {
         and:
         RecordedRequest request = mockWebServer.takeRequest()
         request.method == 'GET'
-        request.path.contains('term=U2')
         request.path.contains('/search?')
+        request.requestUrl.queryParameter('term') == searchTerm
     }
 }

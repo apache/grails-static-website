@@ -20,7 +20,7 @@ include::../snippets/src/test/groovy/example/ItunesSearchServiceSpec.groovy[]
 [[integrationTests]]
 == Integration tests
 
-Verify the HTTP client is registered as a Spring bean:
+Verify the HTTP client is registered as a Spring bean, encodes query values, accepts the iTunes API's `text/javascript` response, and deserializes albums:
 
 [source,groovy]
 .src/integration-test/groovy/example/ItunesClientIntegrationSpec.groovy
