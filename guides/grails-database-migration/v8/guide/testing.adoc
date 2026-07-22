@@ -1,0 +1,44 @@
+[[unitTests]]
+== Unit tests
+
+Domain constraints after schema evolution:
+
+[source,groovy]
+.src/test/groovy/example/PersonSpec.groovy
+----
+include::../snippets/src/test/groovy/example/PersonSpec.groovy[]
+----
+
+[source,groovy]
+.src/test/groovy/example/AddressSpec.groovy
+----
+include::../snippets/src/test/groovy/example/AddressSpec.groovy[]
+----
+
+[[integrationTests]]
+== Integration tests
+
+Assert Liquibase tracking tables, final schema shape, GORM persistence, and a migration-path proof that legacy `person` address columns are copied into `address` before those columns are dropped:
+
+[source,groovy]
+.src/integration-test/groovy/example/DatabaseMigrationIntegrationSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/DatabaseMigrationIntegrationSpec.groovy[]
+----
+
+The migration-path test builds the pre-redesign schema on an isolated Testcontainers database, seeds a legacy row, then runs the same expand-migrate-contract SQL as `create-address-table.groovy`.
+
+Run unit tests:
+
+[source,bash]
+----
+cd complete
+./gradlew test
+----
+
+Run integration tests (requires Docker):
+
+[source,bash]
+----
+./gradlew integrationTest
+----

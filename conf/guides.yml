@@ -1810,7 +1810,7 @@ guides:
     title: 'Grails Database Migration'
     subtitle: 'In this guide we will learn how to use the Grails Database Migration Plugin'
     authors:
-      - 'Nirav Assar, Sergio del Amo'
+      - 'Nirav Assar, Sergio del Amo, Sanjana'
     category: 'Advanced Grails'
     publicationDate: '2017-08-07'
     versions:
@@ -1924,7 +1924,59 @@ guides:
           summary:
               title: Summary
           helpWithGrails:
-            title: Do you need help with Grails?  
+            title: Do you need help with Grails?
+      '8':
+        sourcePath: guides/grails-database-migration/v8
+        publicationDate: '2026-06-26'
+        tags:
+          - 'liquibase'
+          - 'database-migration'
+          - 'gorm'
+          - 'postgresql'
+          - 'schema-evolution'
+          - 'baselining'
+          - 'rollback'
+          - 'persistence'
+          - 'devops'
+          - 'versioning'
+          - 'spock'
+          - 'testcontainers'
+          - 'integration-testing'
+        sampleRef:
+          repo: 'grails-guides/grails-database-migration'
+          branch: 'grails8'
+        toc:
+          introduction:
+            title: Introduction
+          requirements: What you will need
+          gettingStarted:
+            title: Getting Started
+          pluginSetup:
+            title: Plugin setup
+          baseline:
+            title: Baseline the schema
+          makeColumnNullable:
+            title: Make a column nullable
+          addAttributes:
+            title: Add address columns
+          redesignTables:
+            title: Redesign tables and migrate data
+          releaseRunbook:
+            title: Release runbook
+          designedRollback:
+            title: Designed rollback
+          legacyOnboarding:
+            title: Existing database onboarding
+          changelogDiscipline:
+            title: Changelog discipline
+          testing:
+            title: Testing migrations
+          runningTheApp:
+            title: Running the application
+          summary:
+            title: Summary
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'grails-docker-bootbuildimage'
     title: 'Containerise a Grails 8 App with Spring Boot bootBuildImage'

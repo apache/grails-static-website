@@ -1,0 +1,34 @@
+Make `age` optional on the `Person` domain, then diff the change into a new migration:
+
+[source,groovy]
+.grails-app/domain/example/Person.groovy
+----
+include::../snippets/grails-app/domain/example/Person-after-nullable.groovy[]
+----
+
+Generate a migration from the domain diff:
+
+[source,bash]
+----
+./grailsw dbm-gorm-diff change-age-constraint-to-nullable.groovy --add
+----
+
+[source,groovy]
+.grails-app/migrations/change-age-constraint-to-nullable.groovy
+----
+include::../snippets/grails-app/migrations/change-age-constraint-to-nullable.groovy[]
+----
+
+Include the new file in `changelog.groovy` and apply:
+
+[source,bash]
+----
+./grailsw dbm-update
+----
+
+This changeset is reversible. Roll back the last applied changeset with:
+
+[source,bash]
+----
+./grailsw dbm-rollback-count 1
+----

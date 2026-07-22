@@ -1,0 +1,14 @@
+[source,bash]
+----
+cd complete
+./gradlew bootRun
+----
+
+Example endpoint:
+
+[source,bash]
+----
+curl -s http://localhost:8080/api/persons
+----
+
+Migrations apply on startup via `updateOnStart: true`.

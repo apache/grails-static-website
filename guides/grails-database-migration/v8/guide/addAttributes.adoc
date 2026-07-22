@@ -1,0 +1,16 @@
+Add address columns directly on `person` before splitting them into a separate table:
+
+[source,groovy]
+.grails-app/migrations/add-address-fields-to-person.groovy
+----
+include::../snippets/grails-app/migrations/add-address-fields-to-person.groovy[]
+----
+
+Include the file in `changelog.groovy` and apply:
+
+[source,bash]
+----
+./grailsw dbm-update
+----
+
+This intermediate step mirrors a real-world scenario where address data lives on `person` before normalization.
