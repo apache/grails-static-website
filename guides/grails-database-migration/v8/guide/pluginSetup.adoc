@@ -1,4 +1,4 @@
-Grails 8 uses `org.apache.grails:grails-data-hibernate5-dbmigration` from the Grails BOM — not the legacy `org.grails.plugins:database-migration` coordinate.
+Grails 8 uses `org.apache.grails:grails-data-hibernate5-dbmigration` from the Grails BOM - not the legacy `org.grails.plugins:database-migration` coordinate.
 
 Add the dependency in `build.gradle`:
 
@@ -16,4 +16,4 @@ Disable Hibernate auto-DDL and apply migrations on startup in `grails-app/conf/a
 include::../snippets/grails-app/conf/application-databasemigration.yml[]
 ----
 
-`dbCreate: none` ensures schema changes flow through Liquibase changelogs only. `updateOnStart: true` applies pending migrations when the application boots.
+`dbCreate: none` ensures schema changes flow through Liquibase changelogs only. `updateOnStart: true` is convenient for local and single-instance apps; for production with multiple instances, apply migrations once (for example with `./grailsw dbm-update`) before rolling out the new app version.

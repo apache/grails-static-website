@@ -1810,7 +1810,7 @@ guides:
     title: 'Grails Database Migration'
     subtitle: 'In this guide we will learn how to use the Grails Database Migration Plugin'
     authors:
-      - 'Nirav Assar, Sergio del Amo'
+      - 'Nirav Assar, Sergio del Amo, Sanjana'
     category: 'Advanced Grails'
     publicationDate: '2017-08-07'
     versions:
@@ -1961,6 +1961,14 @@ guides:
             title: Add address columns
           redesignTables:
             title: Redesign tables and migrate data
+          releaseRunbook:
+            title: Release runbook
+          designedRollback:
+            title: Designed rollback
+          legacyOnboarding:
+            title: Existing database onboarding
+          changelogDiscipline:
+            title: Changelog discipline
           testing:
             title: Testing migrations
           runningTheApp:

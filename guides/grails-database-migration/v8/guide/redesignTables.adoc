@@ -1,4 +1,4 @@
-Introduce an `Address` domain and migrate existing column data with custom SQL:
+Introduce an `Address` domain and migrate existing column data with custom SQL. Address ownership is mandatory (`person` is required), matching `person_id NOT NULL` in the database:
 
 [source,groovy]
 .grails-app/domain/example/Address.groovy
@@ -6,20 +6,22 @@ Introduce an `Address` domain and migrate existing column data with custom SQL:
 include::../snippets/grails-app/domain/example/Address.groovy[]
 ----
 
+This redesign is an expand-migrate-contract sequence: create `address`, copy data, then drop the denormalized `person` columns. Guard the destructive steps with `preConditions`, and supply explicit `rollback {}` blocks so `dbm-rollback` can restore columns and data:
+
 [source,groovy]
 .grails-app/migrations/create-address-table.groovy
 ----
 include::../snippets/grails-app/migrations/create-address-table.groovy[]
 ----
 
-The migration creates the `address` table, adds a foreign key, copies data from `person`, then drops the denormalized columns.
-
 Include the file in `changelog.groovy` and apply:
 
 [source,bash]
 ----
-./gradlew runCommand "-Pargs=dbm-update"
+./grailsw dbm-update
 ----
+
+If `./grailsw` is unavailable, use `./gradlew runCommand "-Pargs=dbm-update"`.
 
 Expose persisted data through a read-only REST endpoint:
 

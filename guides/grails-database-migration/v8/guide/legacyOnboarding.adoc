@@ -1,0 +1,17 @@
+Greenfield apps can baseline from GORM domains with `dbm-generate-gorm-changelog`. Existing production databases usually need a different path.
+
+Snapshot the live schema:
+
+[source,bash]
+----
+./grailsw dbm-generate-changelog existing-schema.groovy
+----
+
+Mark those changesets as already applied without running DDL again:
+
+[source,bash]
+----
+./grailsw dbm-changelog-sync
+----
+
+After that, new releases only append forward migrations. Use `dbm-generate-gorm-changelog` when the database should match domains from scratch; use `dbm-generate-changelog` + `dbm-changelog-sync` when the schema already exists and you must not recreate it.

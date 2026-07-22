@@ -10,7 +10,7 @@ Generate a migration from the domain diff:
 
 [source,bash]
 ----
-./gradlew runCommand "-Pargs=dbm-gorm-diff change-age-constraint-to-nullable.groovy --add"
+./grailsw dbm-gorm-diff change-age-constraint-to-nullable.groovy --add
 ----
 
 [source,groovy]
@@ -23,12 +23,12 @@ Include the new file in `changelog.groovy` and apply:
 
 [source,bash]
 ----
-./gradlew runCommand "-Pargs=dbm-update"
+./grailsw dbm-update
 ----
 
-To roll back the last changeset:
+This changeset is reversible. Roll back the last applied changeset with:
 
 [source,bash]
 ----
-./gradlew runCommand "-Pargs=dbm-rollback-count 1"
+./grailsw dbm-rollback-count 1
 ----

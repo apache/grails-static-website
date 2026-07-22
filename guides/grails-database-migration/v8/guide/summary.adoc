@@ -2,7 +2,8 @@ You evolved a PostgreSQL schema safely with Liquibase and the Grails Database Mi
 
 * Baseline changelog from GORM domains with `dbCreate: none`
 * Nullable constraint changes via `dbm-gorm-diff`
-* Column additions and table redesign with data migration SQL
-* Spock unit and integration tests against the migrated schema
+* Column additions and table redesign with data migration SQL, preconditions, and designed rollbacks
+* Release workflow: `dbm-status` → `dbm-update-sql` → `dbm-update`
+* Spock unit and integration tests, including a migration-path proof
 
-Next steps: add rollback scripts for production deployments, integrate migrations into CI/CD, or pair with the https://grails.apache.org/guides/grails-docker-bootbuildimage/[Docker bootBuildImage guide] for containerized releases.
+Next steps: integrate migrations into CI/CD, or pair with the https://grails.apache.org/guides/grails-docker-bootbuildimage/[Docker bootBuildImage guide] for containerized releases.

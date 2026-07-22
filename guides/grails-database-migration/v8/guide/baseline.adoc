@@ -10,7 +10,7 @@ Generate the initial changelog from GORM domains:
 
 [source,bash]
 ----
-./gradlew runCommand "-Pargs=dbm-generate-gorm-changelog changelog.groovy"
+./grailsw dbm-generate-gorm-changelog changelog.groovy
 ----
 
 Move the generated changeset into its own file and reference it from the main changelog:
@@ -31,7 +31,7 @@ Apply the migration:
 
 [source,bash]
 ----
-./gradlew runCommand "-Pargs=dbm-update"
+./grailsw dbm-update
 ----
 
 Liquibase creates `DATABASECHANGELOG`, `DATABASECHANGELOGLOCK`, and the `person` table.

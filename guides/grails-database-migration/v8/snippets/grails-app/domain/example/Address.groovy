@@ -17,6 +17,7 @@ class Address {
     }
 
     static constraints = {
+        person nullable: false
         streetName nullable: true
         city nullable: true
         zipCode nullable: true

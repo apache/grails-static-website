@@ -7,9 +7,9 @@ cd grails-database-migration/initial
 ./gradlew test
 ----
 
-The `initial/` project is a Grails 8 REST API starter with the database-migration plugin and a `Person` domain — but no Liquibase changelogs yet.
+The `initial/` project is a Grails 8 REST API starter with the database-migration plugin and a `Person` domain - but no Liquibase changelogs yet. Unit tests cover `Person` constraints; `updateOnStart` stays `false` in test config until you generate the baseline changelog.
 
-To skip ahead, `cd complete` and run the same commands — that tree contains the finished migrations, domains, and tests.
+To skip ahead, `cd ../complete` and run the same commands - that tree contains the finished migrations, domains, and tests.
 
 [[cloneAndRun]]
 == Verify CI
