@@ -32,7 +32,19 @@ import static website.utils.RenderUtils.renderHtml
 @CompileStatic
 class GuidesPage {
 
-    public static final Integer NUMBER_OF_LATEST_GUIDES = 8
+    /**
+     * Cap for the "Latest Guides" sidebar on the index. Sized high enough that
+     * every current Grails 8 guide still appears there when they are the newest
+     * publications - the old value of 8 silently dropped half of the modern set.
+     */
+    public static final Integer NUMBER_OF_LATEST_GUIDES = 20
+
+    /**
+     * Major version featured at the top of the guides index category grid and
+     * used as the default "modern" cut when sorting multi-version guide rows.
+     */
+    public static final String FEATURED_VERSION = '8'
+
     public static final String GUIDES_URL = 'https://grails.apache.org/guides'
 
     /**
@@ -80,17 +92,28 @@ class GuidesPage {
             spa: new Category(name: 'Frontend SPA', image: 'react.svg'),
             testing: new Category(name: 'Grails Testing', image: 'testing.svg'),
             weblayer: new Category(name: 'Web Layer', image: 'views.svg'),
+            restapis: new Category(name: 'Grails REST APIs', image: 'restapis.svg'),
     ]
-    
-    
+
+
     @CompileDynamic
-    static String renderGuide(Guide guide) {
+    static String renderGuide(Guide guide, String versionFilter = null) {
+        // Pre-resolve anything MarkupBuilder would otherwise treat as a tag name.
+        final boolean multi = guide instanceof GrailsVersionedGuide
+        final GrailsVersionedGuide multiGuide = multi ? (GrailsVersionedGuide) guide : null
+        final List<Integer> versionKeys = multi ? orderedVersionKeys(multiGuide) : Collections.emptyList()
+        final Integer filteredMajor = (multi && versionFilter?.isInteger()) ? versionFilter.toInteger() : null
+        final List<String> filteredTags = (multi && filteredMajor != null)
+                ? (multiGuide.grailsMayorVersionTags[filteredMajor] ?: []) as List<String>
+                : Collections.emptyList() as List<String>
+
         renderHtml {
             li {
                 if (guide instanceof SingleGuide) {
+                    String version = versionFilter ?: guide.versionNumber
                     a(
                             class: (guide.tags.contains('quick-cast') ? 'quick-cast guide' : 'guide'),
-                            href: "$GUIDES_URL/${guide.name}/${guide.versionNumber}/guide/index.html", guide.title
+                            href: "$GUIDES_URL/${guide.name}/${version}/guide/index.html", guide.title
                     )
                     guide.tags.each {
                         span(
@@ -98,25 +121,42 @@ class GuidesPage {
                                 class: 'tag', it
                         )
                     }
-                } else if (guide instanceof GrailsVersionedGuide) {
-                    def multiGuide = (GrailsVersionedGuide) guide
-                    div(class: (guide.tags.contains('quick-cast') ? 'quick-cast multi-guide' : 'multi-guide')) {
-                        span(class: 'title', guide.title)
-                        for (def grailsVersion :  multiGuide.grailsMayorVersionTags.keySet())  {
-                            def tagList = multiGuide.grailsMayorVersionTags[grailsVersion] as Set<String>
-                            div(class: 'align-left') {
-                                a(
-                                        class: 'grails-version',
-                                        href: "$GUIDES_URL/${multiGuide.name}/${grailsVersion}/guide/index.html"
-                                ) {
-                                    mkp.yield("grails$grailsVersion")
-                                }
-                                tagList.each {
-                                    span(
-                                            style: 'display: none',
-                                            class: 'tag',
-                                            it
-                                    )
+                } else if (multi) {
+                    // When a version filter is active (e.g. /versions/8.html), collapse
+                    // multi-version rows to a single link for that major so the page
+                    // reads as a complete modern catalogue rather than a version picker.
+                    if (versionFilter) {
+                        a(
+                                class: (filteredTags.contains('quick-cast') ? 'quick-cast guide' : 'guide'),
+                                href: "$GUIDES_URL/${multiGuide.name}/${versionFilter}/guide/index.html",
+                                multiGuide.title
+                        )
+                        filteredTags.each {
+                            span(
+                                    style: 'display: none',
+                                    class: 'tag', it
+                            )
+                        }
+                    } else {
+                        div(class: (guide.tags.contains('quick-cast') ? 'quick-cast multi-guide' : 'multi-guide')) {
+                            span(class: 'title', guide.title)
+                            // Newest majors first so Grails 8 is the first chip readers see.
+                            for (def grailsVersion : versionKeys) {
+                                def tagList = multiGuide.grailsMayorVersionTags[grailsVersion] as Set<String>
+                                div(class: 'align-left') {
+                                    a(
+                                            class: 'grails-version',
+                                            href: "$GUIDES_URL/${multiGuide.name}/${grailsVersion}/guide/index.html"
+                                    ) {
+                                        mkp.yield("grails$grailsVersion")
+                                    }
+                                    tagList.each {
+                                        span(
+                                                style: 'display: none',
+                                                class: 'tag',
+                                                it
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -185,70 +225,21 @@ class GuidesPage {
                         }
                     }
                 }
-                // The two-column grid pairs a "primary" category on the left with
-                // a complementary one on the right. Reading order goes top-down by
-                // pair, so the first pair (apprentice / advanced) is the most
-                // prominent. Tags - rendered in the right-hand sidebar above -
-                // are the primary navigation; this grid is a small curated set
-                // of high-level tracks for skimming by axis.
-                div(class: 'two-columns') {
-                    div(class: 'column') {
-                        if (!(tag || category || version)) {
-                            mkp.yieldUnescaped(guideGroupByCategory(categories.apprentice, guides, true, 'margin-top: 0'))
-                        }
-                    }
-                    div(class: 'column') {
-                        if (!(tag || category || version)) {
-                            mkp.yieldUnescaped(guideGroupByCategory(categories.advanced, guides, true, 'margin-top: 0'))
-                        }
-                    }
-                }
-                div(class: 'two-columns') {
-                    div(class: 'column') {
-                        if (!(tag || category || version)) {
-                            mkp.yieldUnescaped(guideGroupByCategory(categories.weblayer, guides, true, 'margin-top: 0'))
-                        }
-                    }
-                    div(class: 'column') {
-                        if (!(tag || category || version)) {
-                            mkp.yieldUnescaped(guideGroupByCategory(categories.devops, guides, true, 'margin-top: 0'))
-                        }
-                    }
-                }
-                div(class: 'two-columns') {
-                    div(class: 'column') {
-                        if (!(tag || category || version)) {
-                            mkp.yieldUnescaped(guideGroupByCategory(categories.gorm, guides, true, 'margin-top: 0'))
-                        }
-                    }
-                    div(class: 'column') {
-                        if (!(tag || category || version)) {
-                            mkp.yieldUnescaped(guideGroupByCategory(categories.testing, guides, true, 'margin-top: 0'))
-                        }
-                    }
-                }
-                div(class: 'two-columns') {
-                    div(class: 'column') {
-                        if (!(tag || category || version)) {
-                            mkp.yieldUnescaped(guideGroupByCategory(categories.security, guides, true, 'margin-top: 0'))
-                        }
-                    }
-                    div(class: 'column') {
-                        if (!(tag || category || version)) {
-                            mkp.yieldUnescaped(guideGroupByCategory(categories.spa, guides, true, 'margin-top: 0'))
-                        }
-                    }
-                }
-                div(class: 'two-columns') {
-                    div(class: 'column') {
-                        if (!(tag || category || version)) {
-                            mkp.yieldUnescaped(guideGroupByCategory(categories.async, guides, true, 'margin-top: 0'))
-                        }
-                    }
-                    div(class: 'column') {
-                        if (!(tag || category || version)) {
-                            mkp.yieldUnescaped(guideGroupByCategory(categories.cloud, guides, true, 'margin-top: 0'))
-                        }
+                // Featured modern catalogue: every guide published for the current
+                // major, un-capped, sits above the legacy category grid so readers
+                // hit Grails 8 first. On version pages the same grid is rendered
+                // filtered to that major so /versions/8.html is a full catalogue
+                // (flat list in the sidebar + categorized body), not a partial peek.
+                if (!(tag || category)) {
+                    String featuredVersion = version ?: FEATURED_VERSION
+                    List<Guide> featured = guidesForVersionList(featuredVersion, guides)
+                    if (featured) {
+                        mkp.yieldUnescaped(featuredVersionSection(featuredVersion, featured, version != null))
+                        mkp.yieldUnescaped(categoryGrid(guides, featuredVersion, version != null))
+                    } else if (!version) {
+                        // No featured-version guides yet - fall back to the full
+                        // unfiltered category grid so the page is never empty.
+                        mkp.yieldUnescaped(categoryGrid(guides, null, false))
                     }
                 }
             }
@@ -365,8 +356,18 @@ class GuidesPage {
             Category category,
             List<Guide> guides,
             boolean linkToCategory = true,
-            String cssStyle = ''
+            String cssStyle = '',
+            String versionFilter = null,
+            boolean onlyMatchingVersion = false
     ) {
+        List<Guide> inCategory = guides.findAll { it.category == category.name }
+        if (versionFilter && onlyMatchingVersion) {
+            inCategory = inCategory.findAll { guideHasVersion(it, versionFilter) }
+        }
+        if (!inCategory) {
+            return ''
+        }
+        inCategory = sortGuidesForDisplay(inCategory, versionFilter ?: FEATURED_VERSION)
         renderHtml {
             div(class: 'guide-group', style: cssStyle) {
                 div(class: 'guide-group-header') {
@@ -383,9 +384,105 @@ class GuidesPage {
                     }
                 }
                 ul {
-                    guides
-                            .findAll { it.category == category.name }
-                            .each { mkp.yieldUnescaped(GuidesPage.renderGuide(it)) }
+                    inCategory.each {
+                        mkp.yieldUnescaped(GuidesPage.renderGuide(it, onlyMatchingVersion ? versionFilter : null))
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Two-column category grid used on the index and on version pages. When
+     * {@code onlyMatchingVersion} is true, each category only lists guides that
+     * ship the given major (so /versions/8.html surfaces the full Grails 8 set
+     * organized by track). When false, every guide stays visible but guides for
+     * {@code preferVersion} sort to the top of each category.
+     */
+    @CompileDynamic
+    static String categoryGrid(List<Guide> guides, String preferVersion, boolean onlyMatchingVersion) {
+        List<List<Category>> pairs = [
+                [categories.apprentice, categories.advanced],
+                [categories.weblayer, categories.restapis],
+                [categories.devops, categories.gorm],
+                [categories.testing, categories.security],
+                [categories.spa, categories.async],
+                [categories.cloud],
+        ]
+        StringBuilder html = new StringBuilder()
+        boolean firstPair = true
+        for (List<Category> pair : pairs) {
+            Category leftCat = pair[0]
+            Category rightCat = pair.size() > 1 ? pair[1] : null
+            String left = leftCat
+                    ? guideGroupByCategory(
+                    leftCat, guides, true, firstPair ? 'margin-top: 0' : '', preferVersion, onlyMatchingVersion)
+                    : ''
+            String right = rightCat
+                    ? guideGroupByCategory(
+                    rightCat, guides, true, firstPair ? 'margin-top: 0' : '', preferVersion, onlyMatchingVersion)
+                    : ''
+            if (!left && !right) {
+                continue
+            }
+            html << renderHtml {
+                div(class: 'two-columns') {
+                    div(class: 'column') {
+                        if (left) {
+                            mkp.yieldUnescaped(left)
+                        }
+                    }
+                    div(class: 'column') {
+                        if (right) {
+                            mkp.yieldUnescaped(right)
+                        }
+                    }
+                }
+            }
+            firstPair = false
+        }
+        html.toString()
+    }
+
+    /**
+     * Full-width "Grails N Guides" block listing every guide for that major,
+     * newest first, with no take() cap. On the index this is the featured modern
+     * catalogue; on a version page it sits under the sidebar list as the
+     * categorized companion (the sidebar list itself is still rendered by
+     * {@link #guidesForVersion}).
+     */
+    @CompileDynamic
+    static String featuredVersionSection(String version, List<Guide> featured, boolean onVersionPage) {
+        // On the version page the left column already has the flat list; the
+        // body below is the categorized grid only. On the index we lead with
+        // this flat "all of them" list so nothing modern is buried.
+        if (onVersionPage) {
+            return ''
+        }
+        renderHtml {
+            div(class: 'latest-guides featured-version-guides', style: 'margin-top: 0') {
+                h3(class: 'column-header', "Grails $version Guides")
+                p(style: 'margin: -30px 0 30px 0; padding-left: 28px;') {
+                    mkp.yield("Every guide published for Grails $version. ")
+                    a(href: "$GUIDES_URL/versions/${version}.html", "Browse by version →")
+                }
+                ul {
+                    featured.each { guide ->
+                        li {
+                            b(guide.title)
+                            span {
+                                if (guide.publicationDate) {
+                                    mkp.yield(new SimpleDateFormat('MMM dd, yyyy').format(guide.publicationDate))
+                                    mkp.yield(' - ')
+                                }
+                                mkp.yield(guide.category)
+                            }
+                            a(
+                                    href: "$GUIDES_URL/${guide.name}/${version}/guide/index.html",
+                                    'Read More'
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -444,45 +541,94 @@ class GuidesPage {
      */
     @CompileDynamic
     static String guidesForVersion(String version, List<Guide> guides) {
+        List<Guide> matched = guidesForVersionList(version, guides)
         renderHtml {
             div(class: 'latest-guides') {
                 h3(class: 'column-header', "Guides for Grails $version")
+                if (matched) {
+                    p(style: 'margin: -30px 0 30px 0; padding-left: 0;') {
+                        mkp.yield("${matched.size()} guide${matched.size() == 1 ? '' : 's'} for Grails $version")
+                    }
+                }
                 ul {
-                    guides
-                            .findAll { Guide guide -> GuidesPage.guideHasVersion(guide, version) }
-                            .sort { Guide a, Guide b ->
-                                Date da = a.publicationDate
-                                Date db = b.publicationDate
-                                if (da == db) {
-                                    return 0
+                    matched.each { guide ->
+                        li {
+                            b(guide.title)
+                            span {
+                                if (guide.publicationDate) {
+                                    mkp.yield(new SimpleDateFormat('MMM dd, yyyy').format(guide.publicationDate))
+                                    mkp.yield(' - ')
                                 }
-                                if (da == null) {
-                                    return 1
-                                }
-                                if (db == null) {
-                                    return -1
-                                }
-                                db <=> da
+                                mkp.yield(guide.category)
                             }
-                            .each { guide ->
-                                li {
-                                    b(guide.title)
-                                    span {
-                                        if (guide.publicationDate) {
-                                            mkp.yield(new SimpleDateFormat('MMM dd, yyyy').format(guide.publicationDate))
-                                            mkp.yield(' - ')
-                                        }
-                                        mkp.yield(guide.category)
-                                    }
-                                    a(
-                                            href: "$GUIDES_URL/${guide.name}/${version}/guide/index.html",
-                                            'Read More'
-                                    )
-                                }
-                            }
+                            a(
+                                    href: "$GUIDES_URL/${guide.name}/${version}/guide/index.html",
+                                    'Read More'
+                            )
+                        }
+                    }
                 }
             }
         }
+    }
+
+    /**
+     * Every guide published for {@code version}, newest first, no cap. Shared by
+     * the version-page sidebar, the featured index section, and tests.
+     */
+    static List<Guide> guidesForVersionList(String version, List<Guide> guides) {
+        sortGuidesByPublicationDate(
+                guides.findAll { Guide guide -> guideHasVersion(guide, version) }
+        )
+    }
+
+    /**
+     * Major-version keys for a multi-version guide, newest first, so the
+     * rendered chip row leads with Grails 8 rather than the YAML encounter order.
+     */
+    static List<Integer> orderedVersionKeys(GrailsVersionedGuide guide) {
+        List<Integer> keys = new ArrayList<Integer>(guide.grailsMayorVersionTags.keySet())
+        keys.sort { Integer a, Integer b -> b <=> a }
+        keys
+    }
+
+    /**
+     * Sort guides so those that ship {@code preferVersion} come first (newest
+     * among themselves), then the rest by publication date descending. Used by
+     * the index category grid to keep modern work at the top of each track
+     * without hiding the legacy corpus.
+     */
+    static List<Guide> sortGuidesForDisplay(List<Guide> guides, String preferVersion) {
+        List<Guide> preferred = []
+        List<Guide> rest = []
+        for (Guide guide : guides) {
+            if (preferVersion && guideHasVersion(guide, preferVersion)) {
+                preferred << guide
+            } else {
+                rest << guide
+            }
+        }
+        sortGuidesByPublicationDate(preferred) + sortGuidesByPublicationDate(rest)
+    }
+
+    static List<Guide> sortGuidesByPublicationDate(List<Guide> guides) {
+        List<Guide> sorted = new ArrayList<Guide>(guides)
+        sorted.sort { Guide a, Guide b ->
+            Date da = a.publicationDate
+            Date db = b.publicationDate
+            if (da == db) {
+                return (a.title ?: '') <=> (b.title ?: '')
+            }
+            if (da == null) {
+                return 1
+            }
+            if (db == null) {
+                return -1
+            }
+            int byDate = db <=> da
+            byDate != 0 ? byDate : (a.title ?: '') <=> (b.title ?: '')
+        }
+        sorted
     }
 
     /**
