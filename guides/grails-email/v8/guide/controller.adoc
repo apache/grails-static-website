@@ -1,0 +1,29 @@
+Accept JSON payloads with a command object that implements `Email` and validates required fields:
+
+[source,groovy]
+.grails-app/controllers/example/EmailCmd.groovy
+----
+include::../snippets/grails-app/controllers/example/EmailCmd.groovy[]
+----
+
+The controller delegates to `EmailService`:
+
+[source,groovy]
+.grails-app/controllers/example/MailController.groovy
+----
+include::../snippets/grails-app/controllers/example/MailController.groovy[]
+----
+
+[IMPORTANT]
+====
+This endpoint is demonstration-only. It accepts arbitrary recipients and message content with no authentication, so a deployed copy can become an outbound mail relay through the configured provider. Before any public or production exposure, add authentication, authorization, recipient controls, and abuse/rate-limit protection.
+====
+
+Example request:
+
+[source,bash]
+----
+curl -X POST http://localhost:8080/mail/send \
+  -H 'Content-Type: application/json' \
+  -d '{"recipient":"user@example.com","subject":"Hello","textBody":"Hi there"}'
+----

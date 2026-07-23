@@ -1,0 +1,17 @@
+The default provider delegates to the Grails Mail plugin:
+
+[source,groovy]
+.grails-app/services/example/SmtpEmailService.groovy
+----
+include::../snippets/grails-app/services/example/SmtpEmailService.groovy[]
+----
+
+Configure SMTP settings in `application.yml`:
+
+[source,yaml]
+.grails-app/conf/application.yml
+----
+include::../snippets/grails-app/conf/application.yml[]
+----
+
+For local development, point `SMTP_HOST` and `SMTP_PORT` at a mail catcher on `localhost:1025`.
