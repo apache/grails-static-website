@@ -46,19 +46,14 @@ class SendGridEmailService implements EmailService, GrailsConfigurationAware {  
             Response response = sg.api(request)
             log.info('Status Code: {}', String.valueOf(response.statusCode))
             log.debug('Body: {}', response.body)
+            if (response.statusCode < 200 || response.statusCode >= 300) {
+                throw new IllegalStateException(
+                        "SendGrid returned status ${response.statusCode}: ${response.body}")
+            }
         } catch (IOException ex) {
-            log.error(ex.message)
+            log.error(ex.message, ex)
+            throw ex
         }
-    }
-
-    private Content contentOfEmail(Email email) {
-        if (email.textBody) {
-            return new Content('text/plain', email.textBody)
-        }
-        if (email.htmlBody) {
-            return new Content('text/html', email.htmlBody)
-        }
-        return null
     }
 
     private Personalization buildPersonalization(Email email) {
@@ -87,8 +82,12 @@ class SendGridEmailService implements EmailService, GrailsConfigurationAware {  
         SendGridEmail fromEmail = new SendGridEmail(this.from)
         mail.from = fromEmail
         mail.addPersonalization(personalization)
-        Content content = contentOfEmail(email)
-        mail.addContent(content)
+        if (email.textBody) {
+            mail.addContent(new Content('text/plain', email.textBody))
+        }
+        if (email.htmlBody) {
+            mail.addContent(new Content('text/html', email.htmlBody))
+        }
         mail
     }
 }

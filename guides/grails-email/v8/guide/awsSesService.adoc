@@ -1,9 +1,9 @@
 AWS SES is the third provider option:
 
 [source,groovy]
-.src/main/groovy/example/AwsSesMailService.groovy
+.src/main/groovy/example/AwsSesEmailService.groovy
 ----
-include::../snippets/src/main/groovy/example/AwsSesMailService.groovy[]
+include::../snippets/src/main/groovy/example/AwsSesEmailService.groovy[]
 ----
 
 Set `EMAIL_PROVIDER=ses` and configure `AWS_REGION` and `AWS_SOURCE` plus standard AWS credentials for the SDK.

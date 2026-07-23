@@ -1,4 +1,4 @@
-import example.AwsSesMailService
+import example.AwsSesEmailService
 import example.SendGridEmailService
 import example.SmtpEmailService
 import grails.util.Environment
@@ -14,10 +14,13 @@ beans = {
             emailService(SendGridEmailService)
             break
         case 'ses':
-            emailService(AwsSesMailService)
+            emailService(AwsSesEmailService)
+            break
+        case 'smtp':
+            emailService(SmtpEmailService)
             break
         default:
-            emailService(SmtpEmailService)
+            throw new IllegalArgumentException("Unsupported email.provider: ${provider}")
     }
     //end::emailServiceBeans[]
 }

@@ -1,4 +1,5 @@
-  #tag::mailConfig[]
+#tag::mailConfig[]
+grails:
   mail:
     host: ${SMTP_HOST:localhost}
     port: ${SMTP_PORT:1025}
@@ -9,7 +10,7 @@
     props:
       mail.smtp.auth: ${SMTP_AUTH:false}
       mail.smtp.starttls.enable: ${SMTP_STARTTLS:false}
-  #end::mailConfig[]
+#end::mailConfig[]
 #tag::emailProvider[]
 email:
   provider: ${EMAIL_PROVIDER:smtp}

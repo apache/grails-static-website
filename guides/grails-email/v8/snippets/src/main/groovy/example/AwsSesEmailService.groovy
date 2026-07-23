@@ -15,7 +15,7 @@ import software.amazon.awssdk.services.ses.model.SendEmailResponse
 
 @Slf4j
 @CompileStatic
-class AwsSesMailService implements EmailService, GrailsConfigurationAware {  // <1>
+class AwsSesEmailService implements EmailService, GrailsConfigurationAware {  // <1>
 
     String sourceEmail
     SesClient sesClient
@@ -77,8 +77,8 @@ class AwsSesMailService implements EmailService, GrailsConfigurationAware {  // 
             log.info('Email sent! {}', response.messageId())
 
         } catch (Exception ex) {
-            log.warn('The email was not sent.')
-            log.warn('Error message: {}', ex.message)
+            log.warn('The email was not sent.', ex)
+            throw ex
         }
     }
 }

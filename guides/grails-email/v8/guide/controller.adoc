@@ -14,6 +14,11 @@ The controller delegates to `EmailService`:
 include::../snippets/grails-app/controllers/example/MailController.groovy[]
 ----
 
+[IMPORTANT]
+====
+This endpoint is demonstration-only. It accepts arbitrary recipients and message content with no authentication, so a deployed copy can become an outbound mail relay through the configured provider. Before any public or production exposure, add authentication, authorization, recipient controls, and abuse/rate-limit protection.
+====
+
 Example request:
 
 [source,bash]
