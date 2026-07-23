@@ -40,6 +40,10 @@ That practical teaching continued on stage. At G3 Summit 2016 he presented "Get 
 
 Beyond code and documentation, Søren has helped make the Grails community feel like a community. In 2009 he [co-founded GR8Conf](https://glaforge.dev/posts/2009/03/04/announcing-the-gr8-conference-a-conference-dedicated-to-groovy-grails-and-griffon/) with Guillaume Laforge, then ran it for over a decade as the CEO of GR8 ApS - handling speakers, sponsors, venue, and the conference's visual identity while welcoming 120 to 200 attendees to Copenhagen each year. GR8Conf brought many of the brightest minds in the Groovy ecosystem together, and the official GR8Conf EU 2016 wrap-up singled out Søren and the GR8Crew for the months of work behind it. He also chaired the Danish Java user group, Javagruppen, from 2001 to 2022. That kind of organizing is easy to miss from a commit log, but it is a major part of how open source communities grow, renew, and welcome new contributors.
 
+> "Søren has been deeply committed to the Groovy and Grails communities for so many years. Who hasn't heard of the GR8Conf events in Europe, the US and India? That's his masterpiece! He's been a kind and caring member of the ecosystem, contributing in many ways and places, and I'm happy to see him receiving a Grails Lifetime Contributor Award."
+
+<p style="text-align:right;">—Guillaume Laforge, Co-founder of Apache Groovy</p>
+
 Søren also served on the Grails Foundation Technical Advisory Board from 2022 to 2024, where he represented the perspective of real Grails users and long-term adopters - weighing in on Grails 6, Java baselines, Spring Boot support, and maintenance windows. More recently, he helped guide Grails through its transition from the Grails Foundation to the Apache Software Foundation, helping secure the project's long-term, openly governed future. Today he continues to contribute through Apache Grails and Apache Groovy project work, public discussion, and hands-on consulting for teams moving complex Grails applications forward.
 
 ## Thank You, Søren
