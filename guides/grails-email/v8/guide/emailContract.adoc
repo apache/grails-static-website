@@ -22,4 +22,4 @@ Add the mail dependencies in `build.gradle`:
 include::../snippets/build.gradle[]
 ----
 
-Grails 8 uses `org.grails.plugins:grails-mail` 5.x from the Grails plugin repository — compatible with Apache Grails 8.
+Grails 8 uses `org.grails.plugins:grails-mail` 5.x from the Grails plugin repository, compatible with Apache Grails 8.

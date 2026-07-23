@@ -2191,7 +2191,7 @@ guides:
 
   - name: 'grails-email'
     title: 'Sending Email from a Grails 8 Application (and Testing It)'
-    subtitle: 'Send mail over SMTP or through SendGrid / AWS SES, externalize configuration, and verify send interactions with Spock Spring integration tests — without live email.'
+    subtitle: 'Send mail over SMTP or through SendGrid / AWS SES, externalize configuration, and verify send interactions with Spock Spring integration tests, without live email.'
     authors:
       - 'Sergio del Amo'
       - 'Sanjana'
@@ -2276,7 +2276,8 @@ guides:
         toc:
           introduction:
             title: Introduction
-          requirements: What you will need
+          requirements:
+            title: What you will need
           gettingStarted:
             title: Getting Started
           emailContract:

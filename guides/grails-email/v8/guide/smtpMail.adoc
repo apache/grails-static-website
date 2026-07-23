@@ -11,7 +11,7 @@ Configure SMTP settings in `application.yml`:
 [source,yaml]
 .grails-app/conf/application.yml
 ----
-include::../snippets/grails-app/conf/application-email.yml[]
+include::../snippets/grails-app/conf/application.yml[]
 ----
 
 For local development, point `SMTP_HOST` and `SMTP_PORT` at a mail catcher on `localhost:1025`.

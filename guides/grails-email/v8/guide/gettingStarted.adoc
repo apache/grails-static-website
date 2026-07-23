@@ -9,9 +9,6 @@ cd grails-email/initial
 
 The `initial/` project is a Grails 8 REST API starter with no mail wiring yet.
 
-To skip ahead, `cd complete` and run the same commands — that tree contains the finished mail services, controller, and integration spec.
-
-[[cloneAndRun]]
-== Verify CI
+To skip ahead, `cd complete` and run the same commands; that tree contains the finished mail services, controller, and integration spec.
 
 Both `initial` and `complete` must pass in CI (see `.github/workflows/grails8.yml`).
