@@ -62,6 +62,9 @@ class GuidesPageSpec extends Specification {
         html.contains('/multi/8/guide/index.html')
         html.contains('/multi/6/guide/index.html')
         html.contains('/multi/3/guide/index.html')
+        html.contains('multi-guide')
+        html.contains("class='align-left guides-version-chip'")
+        html.contains("class='grails-version'")
     }
 
     def 'renderGuide with version filter collapses multi-version row to one link'() {
@@ -230,6 +233,32 @@ class GuidesPageSpec extends Specification {
         index.contains('/g8-b/8/guide/index.html')
         index.contains('Legacy Guide')
 
+        and: 'featured catalogue precedes discovery search/clouds'
+        index.indexOf('featured-version-guides') < index.indexOf('guides-discovery')
+        index.indexOf('Grails 8 Guides') < index.indexOf("id='query'")
+        index.indexOf('guides-discovery') < index.indexOf('guides-category-grid')
+        index.contains('Browse by Category')
+        index.contains("class='guides-category-grid'")
+        !index.contains('style=')
+
+        and: 'search exposes a dedicated polite live status region'
+        index.contains("id='guides-search-status'")
+        index.contains("class='guides-search-status guides-visually-hidden'")
+        index.contains("role='status'")
+        index.contains("aria-live='polite'")
+        index.contains("aria-atomic='true'")
+        index.indexOf("id='query'") < index.indexOf("id='guides-search-status'")
+        index.indexOf("class='search-results'") < index.indexOf("id='guides-search-status'")
+
+        and: 'heading ranks nest without equal-rank peers'
+        index.contains("id='guides-catalogue-heading'")
+        index.contains('>Web Layer</h3>')
+        !index.contains('>Web Layer</h2>')
+        index.contains("<h3 class='column-header'>Latest Guides</h3>")
+        index.contains("<h4 class='guides-card-title'>")
+        index.contains("id='guides-featured-heading'")
+        index.contains("<h3 class='guides-card-title'>")
+
         and: 'version page lists every G8 guide uncapped with a count'
         versionPage.contains('2 guides for Grails 8')
         versionPage.contains('/g8-a/8/guide/index.html')
@@ -237,6 +266,77 @@ class GuidesPageSpec extends Specification {
         !versionPage.contains('/legacy/4/guide/index.html')
         versionPage.contains('G8 A')
         versionPage.contains('G8 B')
+
+        and: 'version page promotes catalogue before discovery and uses category grid'
+        versionPage.indexOf('guides-version-catalogue') < versionPage.indexOf('guides-discovery')
+        versionPage.indexOf('guides-category-grid') < versionPage.indexOf('guides-discovery')
+        versionPage.contains('Grails 8 by Category')
+        versionPage.contains("class='guides-category-grid'")
+        versionPage.contains('guides-discovery-layout-single')
+        !versionPage.contains('guides-discovery-primary')
+        !versionPage.contains('style=')
+    }
+
+    def 'categoryGrid emits responsive grid markup with catalogue heading'() {
+        given:
+        List<Guide> guides = [
+                new SingleGuide(
+                        name: 'g8-a',
+                        title: 'G8 A',
+                        category: 'Web Layer',
+                        versionNumber: '8',
+                        publicationDate: Date.parse('yyyy-MM-dd', '2026-06-01'),
+                        tags: [],
+                        authors: [],
+                ),
+        ]
+
+        when:
+        String indexGrid = GuidesPage.categoryGrid(guides, '8', false)
+        String versionGrid = GuidesPage.categoryGrid(guides, '8', true)
+        String standalone = GuidesPage.guideGroupByCategory(
+                GuidesPage.categories.weblayer, guides, false)
+
+        then:
+        indexGrid.contains("class='guides-category-grid'")
+        indexGrid.contains('Browse by Category')
+        indexGrid.contains('guides-catalogue')
+        indexGrid.contains('guide-group')
+        !indexGrid.contains('two-columns')
+        versionGrid.contains('Grails 8 by Category')
+        versionGrid.contains("class='guides-category-grid'")
+        !versionGrid.contains('style=')
+
+        and: 'grid cards use h3 under the catalogue h2; standalone category keeps h2'
+        indexGrid.contains("id='guides-catalogue-heading'")
+        indexGrid.contains('Browse by Category</h2>')
+        indexGrid.contains('>Web Layer</h3>')
+        !indexGrid.contains('>Web Layer</h2>')
+        standalone.contains('>Web Layer</h2>')
+        !standalone.contains('>Web Layer</h3>')
+    }
+
+    def 'latestGuides nests card titles as h4 under the Latest Guides h3'() {
+        given:
+        List<Guide> guides = [
+                new SingleGuide(
+                        name: 'g8-a',
+                        title: 'G8 A',
+                        category: 'Web Layer',
+                        versionNumber: '8',
+                        publicationDate: Date.parse('yyyy-MM-dd', '2026-06-01'),
+                        tags: [],
+                        authors: [],
+                ),
+        ]
+
+        when:
+        String html = GuidesPage.latestGuides(guides)
+
+        then:
+        html.contains("<h3 class='column-header'>Latest Guides</h3>")
+        html.contains("<h4 class='guides-card-title'>G8 A</h4>")
+        !html.contains("<h3 class='guides-card-title'>")
     }
 
     def 'real conf/guides.yml exposes every version-8 entry on the version page'() {
@@ -260,6 +360,9 @@ class GuidesPageSpec extends Specification {
         // category was missing from the hardcoded grid (regression: Grails REST APIs).
         v8Names.every { String name -> grid.contains("/${name}/8/guide/index.html") }
         grid.contains('Grails REST APIs')
+        grid.contains('restapis-guides.svg')
+        grid.contains('>Grails REST APIs</h3>')
+        !grid.contains('>Grails REST APIs</h2>')
     }
 
     private static File locateGuidesYml() {

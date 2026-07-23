@@ -1,8 +1,11 @@
 <header class='main-header'>
     <div class='content'>
         <a href='https://grails.apache.org/index.html'><img class='grails-logo' src='https://grails.apache.org/images/grails_logo.svg' alt='Grails Logo'/></a>
-        <a href='javascript:show("top-menus", "show-navigation-link")' id='show-navigation-link'
-           class='mobile align-center'>Show Navigation</a>
+        <button type='button' id='show-navigation-link'
+            class='mobile align-center navigation-toggle'
+            aria-expanded='false'
+            aria-controls='top-menus'
+            onclick='toggleNavigation()'>Show Navigation</button>
         <div id='top-menus'>
             <nav class='secondary-menu' id='secondary-menu'>
                 <ul>
