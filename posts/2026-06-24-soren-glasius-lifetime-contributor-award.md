@@ -48,4 +48,8 @@ Lifetime contribution is not a single feature, release, or event. It is the stea
 
 On behalf of the Apache Grails community, thank you, Søren, for your years of technical excellence, stewardship, and generosity. Grails is stronger because of your work.
 
+> "The community is responsible for Grails' success, and throughout the framework's history, no one has done more to bring us together than Søren. He is not only an extraordinary community leader, but a great friend. Thank you, Søren!"
+
+<p style="text-align:right;">—Jeff Scott Brown, Object Computing Partner, Grails and Micronaut Foundation Co-Founder</p>
+
 Please join us in congratulating Søren on the 2026 Grails Lifetime Contributor Award.
