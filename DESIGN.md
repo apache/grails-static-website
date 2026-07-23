@@ -167,7 +167,7 @@ Large headings may use balanced wrapping. Body copy should use natural wrapping 
 
 - **Structure:** 44x44 control with 12px bottom/right offsets; accessible DOM text `"Ask AI"` with `0` font-size so the control stays icon-only visually.
 - **Colors:** hidden launcher text may use accent `#feb672`; modal title uses brand blue `#255AA8` on white; launcher background uses documented dark `#3F4346`.
-- **Attributes:** documented legacy `data-button-*` plus current `data-launcher-button-*` height/width/background/bottom/right/image/padding; unsupported new-launcher aliases (`text-color`, `text-font-size`, `bg-color`, `position-bottom/right`) are not used.
+- **Attributes:** documented legacy `data-button-*` plus current `data-launcher-button-*` height/width/background/bottom/right/image/padding/border-radius; `data-button-*` aliases (`text-color`, `text-font-size`, `bg-color`, `position-bottom/right`) are used for compatibility.
 - **Layout:** catalogue pages reserve bottom safe space; below `961px`, `footer` gets a `68px` right exclusion zone so sentences are not covered.
 
 ## 6. Motion & Interaction
