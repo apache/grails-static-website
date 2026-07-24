@@ -1,6 +1,6 @@
 ---
 title: Søren Glasius Named 2026 Grails® Lifetime Contributor
-date: June 24, 2026
+date: July 28, 2026
 description: The Apache Grails community honors Søren Glasius with the 2026 Grails Lifetime Contributor Award.
 author: James Fredley
 image: grails-blog-index-3.png
