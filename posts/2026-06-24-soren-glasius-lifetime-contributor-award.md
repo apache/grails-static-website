@@ -48,6 +48,12 @@ He also chaired the Danish Java user group, Javagruppen, from 2001 to 2022. This
 
 That same instinct for stewardship carried into formal project leadership. Søren served on the Grails Foundation Technical Advisory Board from 2022 to 2024, where he represented the perspective of real Grails users and long-term adopters - weighing in on Grails 6, Java baselines, Spring Boot support, and maintenance windows. More recently, he helped with Grails' transition from the Grails Foundation to the Apache Software Foundation, supporting the project's move to long-term Apache governance. Today he continues to contribute through Apache Grails and Apache Groovy project work, public discussion, and hands-on consulting for teams moving complex Grails applications forward.
 
+Whether booking a Copenhagen venue, mentoring a plugin author, or sitting on a technical board, Søren gave the people around the technology the same care as the technology. That focus on bringing developers together - and keeping them connected long after the talks ended - is what colleagues cite again and again.
+
+> "I've always admired Søren's passion for bringing people together. Through his tireless work organizing GR8Conf over so many years, he created far more than a conference—he built a community. GR8Conf became the place where developers met, learned from one another, shared ideas, and formed friendships that have lasted for years. That sense of community has been one of the greatest strengths of the Groovy and Grails ecosystem, and Søren has been at the heart of making it happen. His dedication, generosity, and enthusiasm have left a lasting mark on all of us, and I can't think of anyone more deserving of this recognition."
+
+<p style="text-align:right;">—Graeme Rocher, Creator of the Grails and Micronaut frameworks</p>
+
 ## Thank You, Søren
 
 A lifetime contribution is not measured by a single feature, release, or event. It is the steady work of improving code, teaching users, maintaining plugins, organizing gatherings, reviewing direction, and helping new contributors get involved.
