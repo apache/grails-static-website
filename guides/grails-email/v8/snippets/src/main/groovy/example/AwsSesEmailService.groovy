@@ -28,22 +28,21 @@ class AwsSesEmailService implements EmailService, GrailsConfigurationAware {  //
         }
         this.sesClient = SesClient.builder().region(Region.of(awsRegion)).build()
 
-        this.sourceEmail = co.getProperty('aws.ses.source', String, '')
+        this.sourceEmail = co.getProperty('aws.ses.source', String)
         if (!this.sourceEmail) {
-            log.warn('aws.ses.source not set')
+            throw new IllegalStateException('aws.ses.source not set')
         }
     }
 
     private Body bodyOfEmail(Email email) {
+        Body.Builder bodyBuilder = Body.builder()
         if (email.htmlBody) {
-            Content htmlBody = Content.builder().data(email.htmlBody).build()
-            return Body.builder().html(htmlBody).build()
+            bodyBuilder.html(Content.builder().data(email.htmlBody).build())
         }
         if (email.textBody) {
-            Content textBody = Content.builder().data(email.textBody).build()
-            return Body.builder().text(textBody).build()
+            bodyBuilder.text(Content.builder().data(email.textBody).build())
         }
-        Body.builder().build()
+        bodyBuilder.build()
     }
 
     private Destination destination(Email email) {

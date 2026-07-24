@@ -60,11 +60,11 @@ class MailControllerSpec extends Specification {
 
         then:
         ex != null
-        ex.statusCode == HttpStatus.UNPROCESSABLE_ENTITY
+        ex.statusCode == HttpStatus.UNPROCESSABLE_CONTENT
         def body = new JsonSlurper().parseText(ex.responseBodyAsString)
         body.message
-        body.path
-        body._links
+        body.path == '/mail/send'
+        body._links.self.href == "http://localhost:$serverPort/mail/send"
         0 * emailService.send(_)
     }
 
@@ -87,11 +87,11 @@ class MailControllerSpec extends Specification {
 
         then:
         ex != null
-        ex.statusCode == HttpStatus.UNPROCESSABLE_ENTITY
+        ex.statusCode == HttpStatus.UNPROCESSABLE_CONTENT
         def body = new JsonSlurper().parseText(ex.responseBodyAsString)
         body.message
-        body.path
-        body._links
+        body.path == '/mail/send'
+        body._links.self.href == "http://localhost:$serverPort/mail/send"
         0 * emailService.send(_)
     }
 

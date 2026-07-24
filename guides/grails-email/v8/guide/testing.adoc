@@ -12,6 +12,6 @@ Run tests:
 
 [source,bash]
 ----
-cd complete
+cd ../complete
 ./gradlew test integrationTest
 ----
