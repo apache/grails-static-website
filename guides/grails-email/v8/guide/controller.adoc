@@ -14,6 +14,16 @@ The controller delegates to `EmailService`:
 include::../snippets/grails-app/controllers/example/MailController.groovy[]
 ----
 
+When the command object fails validation, `respond` renders the errors through the JSON views error template. Grails resolves that template by convention, first at `grails-app/views/<controllerName>/_errors.gson` and then at `grails-app/views/errors/_errors.gson`. A `view:` argument is ignored on this path, so the template has to live at one of those two locations. Update the generated template to report the request path and an absolute self link:
+
+[source,groovy]
+.grails-app/views/errors/_errors.gson
+----
+include::../snippets/grails-app/views/errors/_errors.gson[]
+----
+
+The template the application generator creates uses `g.link(resource: request.uri)`, which treats the URI as a resource name and reports `/send` instead of `/mail/send`. This version reports `request.uri` directly as `path`, and passes the same URI to `g.link` as `uri:` with `absolute: true` to build the self link. The context path is stripped before linking because `g.link` adds it back for absolute links, which would otherwise repeat it when the application runs under a servlet context path.
+
 [IMPORTANT]
 ====
 This endpoint is demonstration-only. It accepts arbitrary recipients and message content with no authentication, so a deployed copy can become an outbound mail relay through the configured provider. Before any public or production exposure, add authentication, authorization, recipient controls, and abuse/rate-limit protection.
