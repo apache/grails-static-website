@@ -1,0 +1,5 @@
+Learn how to send mail from a Grails 8 application over SMTP (Grails Mail plugin) and through a provider (SendGrid / AWS SES), externalize configuration in `application.yml`, and verify send interactions with Spock Spring integration tests, without dispatching real email in CI.
+
+This guide parallels the HTTP client guide in shape: an external integration behind a mockable service boundary, with tests that assert the contract.
+
+This guide follows the standard Grails guides layout: work in the `initial/` project and compare your progress with `complete/`.

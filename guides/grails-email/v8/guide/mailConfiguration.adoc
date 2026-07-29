@@ -1,0 +1,9 @@
+Wire the active provider in `grails-app/conf/spring/resources.groovy`:
+
+[source,groovy]
+.grails-app/conf/spring/resources.groovy
+----
+include::../snippets/grails-app/conf/spring/resources.groovy[]
+----
+
+The switch reads `email.provider` from configuration. Provider wiring is skipped in the `test` environment so integration tests can register a mock `EmailService` bean.
