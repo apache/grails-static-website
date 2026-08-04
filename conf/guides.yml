@@ -478,6 +478,7 @@ guides:
     subtitle: 'Learn how to create your first Grails app'
     authors:
       - 'Zachary Klein'
+      - 'Sanjana'
     category: 'Grails Apprentice'
     publicationDate: '2017-01-23'
     versions:
@@ -687,7 +688,49 @@ guides:
           deployment:
             title: Deploying your App
           helpWithGrails:
-            title: Do you need help with Grails?  
+            title: Do you need help with Grails?
+      '8':
+        sourcePath: guides/creating-your-first-grails-app/v8
+        publicationDate: '2026-08-05'
+        tags:
+          - 'beginner'
+          - 'domain-classes'
+          - 'controllers'
+          - 'services'
+          - 'gsp'
+          - 'unit-tests'
+          - 'integration-tests'
+          - 'scaffolding'
+          - 'getting-started'
+          - 'crud'
+        sampleRef:
+          repo: 'grails-guides/creating-your-first-grails-app'
+          branch: 'grails8'
+        toc:
+          introduction:
+            title: Introduction
+          requirements:
+            title: What you will need
+          gettingStarted:
+            title: Getting Started
+          creatingTheApp:
+            title: Creating the app
+          runningTheApp:
+            title: Running the app
+          domainClasses:
+            title: Domain classes
+          controllers:
+            title: Controllers and scaffolding
+          views:
+            title: GSP views
+          services:
+            title: Services
+          testing:
+            title: Testing
+          summary:
+            title: Summary
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'database-per-tenant'
     title: 'Database per Tenant Multi-Tenancy'

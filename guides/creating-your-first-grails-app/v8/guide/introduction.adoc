@@ -1,0 +1,3 @@
+Build a first Apache Grails 8 web application: domain classes, controllers, GSP views, GORM data services, scaffolding, and Spock tests.
+
+This guide follows the standard Grails guides layout: work in the `initial/` project and compare your progress with `complete/`.

@@ -1,0 +1,9 @@
+You built a first Grails 8 web app:
+
+* Domain classes for `Make`, `Model`, and `Vehicle`
+* Annotation scaffolding for Make / Model and a custom `VehicleController`
+* GSP views with Fields tags and a home page that lists seeded vehicles
+* GORM data services plus `ValueEstimateService`
+* Spock unit tests and a Geb integration spec
+
+Next steps: add validation messages, secure the CRUD actions, or swap H2 for PostgreSQL in production.

@@ -1,0 +1,39 @@
+Map the root URL to a home controller and use scaffolding for Make / Model CRUD.
+
+Point `/` at `HomeController`:
+
+[source,groovy]
+.grails-app/controllers/example/UrlMappings.groovy
+----
+include::../snippets/grails-app/controllers/example/UrlMappings.groovy[]
+----
+
+`HomeController` lists vehicles and lets the visitor update a session name:
+
+[source,groovy]
+.grails-app/controllers/example/HomeController.groovy
+----
+include::../snippets/grails-app/controllers/example/HomeController.groovy[]
+----
+
+For `Make` and `Model`, Grails 8 scaffolding is annotation-based:
+
+[source,groovy]
+.grails-app/controllers/example/MakeController.groovy
+----
+include::../snippets/grails-app/controllers/example/MakeController.groovy[]
+----
+
+[source,groovy]
+.grails-app/controllers/example/ModelController.groovy
+----
+include::../snippets/grails-app/controllers/example/ModelController.groovy[]
+----
+
+`VehicleController` is a hand-written CRUD controller. The `show` action adds an estimated value from `ValueEstimateService`:
+
+[source,groovy]
+.grails-app/controllers/example/VehicleController.groovy
+----
+include::../snippets/grails-app/controllers/example/VehicleController.groovy[]
+----
