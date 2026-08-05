@@ -701,6 +701,7 @@ guides:
           - 'unit-tests'
           - 'integration-tests'
           - 'scaffolding'
+          - 'url-mappings'
           - 'getting-started'
           - 'crud'
         sampleRef:
