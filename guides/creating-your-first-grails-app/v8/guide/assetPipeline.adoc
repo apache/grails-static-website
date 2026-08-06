@@ -1,0 +1,70 @@
+The web starter ships with the Asset Pipeline plugin (`cloud.wondrify:asset-pipeline-grails`). It manages CSS, JavaScript, and images under `grails-app/assets/` and exposes them with `<asset:*>` tags.
+
+Common tags:
+
+[source,xml]
+----
+<asset:javascript src="application.js"/>
+<asset:stylesheet src="application.css"/>
+<asset:image src="grails.svg" alt="Grails Logo"/>
+----
+
+Convention:
+
+* `grails-app/assets/javascripts` for JS
+* `grails-app/assets/stylesheets` for CSS
+* `grails-app/assets/images` for images
+
+The default layout already wires the manifests:
+
+[source,gsp]
+.grails-app/views/layouts/main.gsp
+----
+<head>
+    ...
+    <asset:link rel="icon" href="favicon.ico" type="image/x-ico"/>
+    <asset:stylesheet src="application.css"/>
+    ...
+</head>
+<body>
+    ...
+    <asset:image src="grails.svg" alt="Grails Logo"/>
+    ...
+    <asset:javascript src="application.js"/>
+</body>
+----
+
+`application.css` and `application.js` are manifest files. In Grails 8 they pull Bootstrap and jQuery from WebJars:
+
+[source,css]
+.grails-app/assets/stylesheets/application.css
+----
+include::../snippets/grails-app/assets/stylesheets/application.css[]
+----
+
+[source,javascript]
+.grails-app/assets/javascripts/application.js
+----
+include::../snippets/grails-app/assets/javascripts/application.js[]
+----
+
+To add your own script, create `grails-app/assets/javascripts/site.js` and require it from the manifest:
+
+[source,javascript]
+.grails-app/assets/javascripts/application.js
+----
+//= require webjars/jquery/%/dist/jquery.js
+//= require webjars/bootstrap/%/dist/js/bootstrap.bundle.js
+//= require site
+//= require_self
+----
+
+[source,javascript]
+.grails-app/assets/javascripts/site.js
+----
+console.log('site.js loaded')
+----
+
+Reload http://localhost:8080/ and check the browser console. The same pattern works for CSS: add a file under `stylesheets/` and `*= require` it from `application.css`.
+
+At build time Asset Pipeline concatenates and can minify these assets for production.

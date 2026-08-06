@@ -701,6 +701,7 @@ guides:
           - 'unit-tests'
           - 'integration-tests'
           - 'scaffolding'
+          - 'asset-pipeline'
           - 'url-mappings'
           - 'getting-started'
           - 'crud'
@@ -724,6 +725,8 @@ guides:
             title: Controllers and scaffolding
           views:
             title: GSP views
+          assetPipeline:
+            title: Asset Pipeline
           services:
             title: Services
           testing:
