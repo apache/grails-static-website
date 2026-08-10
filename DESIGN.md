@@ -170,6 +170,15 @@ Large headings may use balanced wrapping. Body copy should use natural wrapping 
 - **Attributes:** documented legacy `data-button-*` plus current `data-launcher-button-*` height/width/background/bottom/right/image/padding/border-radius; `data-button-*` aliases (`text-color`, `text-font-size`, `bg-color`, `position-bottom/right`) are used for compatibility.
 - **Layout:** catalogue pages reserve bottom safe space; below `961px`, `footer` gets a `68px` right exclusion zone so sentences are not covered.
 
+### Homepage merchandise card
+
+- **Structure:** full-width card in the homepage community band with a square product image, `h2`, short description, variant guidance, and one TeePublic link.
+- **Spacing:** mobile padding uses the existing `24px` comfortable step; the image and copy separate further at tablet width.
+- **States:** the TeePublic link keeps white text on Grails blue, darkens on hover, and receives a visible Grails-blue focus outline against the white card.
+- **Accessibility:** the section is labelled by its heading, the image has useful alternative text and intrinsic dimensions, and variant guidance is available as text rather than encoded only in the image.
+- **Motion:** inherited color feedback only; no decorative movement.
+- **Layout:** one readable column on mobile, changing to a balanced image-and-copy grid from `768px` while remaining inside the shared `1141px` content width.
+
 ## 6. Motion & Interaction
 
 | Type | Duration | Easing | Usage |
