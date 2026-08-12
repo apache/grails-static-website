@@ -394,6 +394,22 @@ body.body {
 	}
 }
 
+@media print {
+	body.body .listingblock pre,
+	body.body .listingblock pre code,
+	body.body .literalblock pre,
+	body.body .literalblock pre code,
+	body.guide .listingblock pre,
+	body.guide .listingblock pre code,
+	body.guide .literalblock pre,
+	body.guide .literalblock pre code {
+		contain: none;
+		overflow-x: visible !important;
+		overflow-wrap: anywhere;
+		white-space: pre-wrap;
+	}
+}
+
 #main .tableblock,
 #main .imageblock,
 #main .videoblock,
