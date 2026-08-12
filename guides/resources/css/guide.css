@@ -82,7 +82,6 @@ textarea:focus-visible,
 #navigation #nav-summary > a:focus-visible {
 	background: #1f2328;
 	color: #ffffff;
-	margin-left: 4px;
 }
 
 .input-group {
