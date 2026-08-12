@@ -1,4 +1,12 @@
-The job must not run for a delivery that rolls back. The service first persists the delivery and publishes a small event within its GORM transaction:
+The job must not run for a delivery that rolls back. The delivery model records the business state and progress that the job updates:
+
+[source,groovy]
+.grails-app/domain/example/grails/Delivery.groovy
+----
+include::../snippets/complete/grails-app/domain/example/grails/Delivery.groovy[]
+----
+
+The service first persists the delivery and publishes a small event within its GORM transaction:
 
 [source,groovy]
 .grails-app/services/example/grails/DeliveryService.groovy
