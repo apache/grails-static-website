@@ -4,10 +4,12 @@
 <head>
     <title>${sectionNumber} ${title.encodeAsHtml()}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="canonical" href="${canonicalUrl}"/>
     <link rel="stylesheet" href="${resourcesPath}/css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="${resourcesPath}/css/guide.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />            
     <link rel="stylesheet" href="${resourcesPath}/css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript" src="${resourcesPath}/js/clipboard.min.js"></script>
     <script type="text/javascript">
 function addJsClass() {
     var classes = document.body.className.split(" ");
@@ -28,10 +30,10 @@ function addJsClass() {
     <div class="navLinks">
         <ul>
             <li>
-                <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
-                    <a href="${path}/guide/index.html" class="button">Table of contents</a>
+                <div id="nav-summary">
+                    <a href="${path}/guide/index.html" class="button" aria-haspopup="true">Table of contents</a>
 
-                    <div id="nav-summary-childs" style="display:none;">
+                    <div id="nav-summary-childs">
                         <% toc.children.eachWithIndex { ch, i -> %>
                         <div class="toc-item" style="margin-left:0"><a href="${path}/guide/${ch.name.encodeAsUrlPath().encodeAsHtml()}.html"><strong>${i + 1}</strong><span>${ch.title.encodeAsHtml()}</span></a>
                         </div>
@@ -50,13 +52,15 @@ function addJsClass() {
         <td id="col1">
             <div id="main" class="corner-all">
 
-                <% if(prev){ %>
-                    <div class="toc-item prev-left"><a href="${path}/guide/${prev?.name?.encodeAsUrlPath()?.encodeAsHtml()}.html">&lt;&lt; <strong>${chapterNumber - 1}</strong><span>${prev?.title?.encodeAsHtml()}</span></a></div>
-                <% } %>
+                <nav class="chapter-navigation" aria-label="Chapter navigation">
+                    <% if(prev){ %>
+                        <div class="toc-item prev-left"><a href="${path}/guide/${prev?.name?.encodeAsUrlPath()?.encodeAsHtml()}.html">&lt;&lt; <strong>${chapterNumber - 1}</strong><span>${prev?.title?.encodeAsHtml()}</span></a></div>
+                    <% } %>
 
-                <% if(next){ %>
-                    <div class="toc-item next-right"><a href="${path}/guide/${next?.name?.encodeAsUrlPath()?.encodeAsHtml()}.html"><strong>${chapterNumber + 1}</strong><span>${next?.title?.encodeAsHtml()}</span> >></a></div>
-                <% } %>
+                    <% if(next){ %>
+                        <div class="toc-item next-right"><a href="${path}/guide/${next?.name?.encodeAsUrlPath()?.encodeAsHtml()}.html"><strong>${chapterNumber + 1}</strong><span>${next?.title?.encodeAsHtml()}</span> >></a></div>
+                    <% } %>
+                </nav>
 
 
                 <% if (sectionToc) { %>
@@ -95,8 +99,7 @@ function addJsClass() {
         </td>
         <td id="col2">
             <div class="local clearfix">
-                <div class="local-title" style="text-align: right"><a href="https://travis-ci.org/${githubSlug}"><img src="https://travis-ci.org/${githubSlug}.svg?branch=master" /></a></div>            
-                 <div class="local-title">
+                <div class="local-title">
                     <a href="https://github.com/${githubSlug}">
                     <svg height="35" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="35" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a> &nbsp;&nbsp;Get the Code
                 </div>
@@ -109,17 +112,18 @@ function addJsClass() {
        
                     <div class="input-group">                    
                         <!-- Target -->
-                        <input id="github-url" value="git@github.com:${githubSlug}.git" type="text" />
+                        <input id="github-url" aria-label="Git repository URL" value="git@github.com:${githubSlug}.git" type="text" />
 
                         <!-- Trigger -->
-                        <button class="clipbtn" type="button" data-clipboard-target="#github-url">
+                        <button class="clipbtn" type="button" data-clipboard-target="#github-url" aria-label="Copy Git repository URL">
 
                             <img width="13" src="../img/clippy.svg" alt="Copy to clipboard">
                         </button>       
+                        <script type="text/javascript">new Clipboard('.clipbtn');</script>
 
                     </div>
                     <div class="input-group">
-                      <a href="https://github.com/${githubSlug}/archive/master.zip" class="downloadButton">Download ZIP</a>
+                      <a href="https://github.com/${githubSlug}/archive/${githubBranch}.zip" class="downloadButton">Download ZIP</a>
                     </div>
                 </div>
             </div>
