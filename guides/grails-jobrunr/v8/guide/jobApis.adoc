@@ -24,7 +24,15 @@ include::../snippets/complete/src/main/groovy/example/grails/jobrunr/RetryDelive
 include::../snippets/complete/src/main/groovy/example/grails/jobrunr/RetryDeliveryJobRequestHandler.groovy[]
 ----
 
-The controller and URL mappings expose these examples as `202 Accepted` operations:
+`DeliveryController` exposes the delivery creation and lookup API, returning `201 Created`, validation errors, or `404 Not Found` as appropriate:
+
+[source,groovy]
+.grails-app/controllers/example/grails/DeliveryController.groovy
+----
+include::../snippets/complete/grails-app/controllers/example/grails/DeliveryController.groovy[]
+----
+
+`JobExamplesController` and the URL mappings separately expose the asynchronous examples as `202 Accepted` operations:
 
 [source,groovy]
 .grails-app/controllers/example/grails/JobExamplesController.groovy
