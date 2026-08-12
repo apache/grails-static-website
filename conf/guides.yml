@@ -9,6 +9,54 @@ defaults:
   tags: []
 
 guides:
+  - name: 'grails-jobrunr'
+    title: 'Background Jobs with JobRunr in Grails 8'
+    subtitle: 'Run durable background work safely with JobRunr OSS, Grails transactions, and explicit storage wiring.'
+    authors:
+      - 'James Fredley'
+    category: 'Grails Async'
+    publicationDate: '2026-08-11'
+    versions:
+      '8':
+        sourcePath: guides/grails-jobrunr/v8
+        publicationDate: '2026-08-11'
+        tags:
+          - 'grails8'
+          - 'jobrunr'
+          - 'background-jobs'
+          - 'scheduling'
+          - 'async'
+          - 'transactions'
+          - 'spring-boot'
+          - 'gorm'
+          - 'testing'
+        sampleRef:
+          repo: 'grails-guides/grails-jobrunr'
+          branch: 'grails8'
+        toc:
+          gettingStarted:
+            title: Getting Started
+            requirements: What You Will Build and Need
+            howto: How to Complete the Guide
+          dependencySetup:
+            title: Add JobRunr and Jackson
+          storageConfiguration:
+            title: Configure Dedicated Job Storage
+          jobRequests:
+            title: Use Job Requests From Groovy
+          durableEnqueue:
+            title: Enqueue After Commit
+          jobApis:
+            title: Schedule and Track Jobs
+          runningTheApp:
+            title: Run and Inspect Jobs
+          testing:
+            title: Test the Integration
+          operations:
+            title: Production Operations
+          helpWithGrails:
+            title: Do You Need Help With Grails?
+
   - name: 'adding-commit-info'
     title: 'Adding Commit Info to your Grails Application'
     subtitle: 'Knowing the exact version of code that your application is running is important'

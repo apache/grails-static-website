@@ -1,0 +1,13 @@
+JobRunr is a durable background-job system: it stores job details, lets workers execute them after a request returns, retries failures, and provides an operational dashboard. This guide builds a small delivery API in which creating a delivery commits a GORM row, then schedules a JobRunr job that marks that delivery complete.
+
+The sample is verified with Grails `8.0.0-M5`, Gradle `9.6.1`, Java 21, and JobRunr OSS `8.8.1`. Grails `8.0.0-M5` is a milestone release, while JobRunr `8.8.1` is a GA release. Check the current https://grails.apache.org[Apache Grails] and https://github.com/jobrunr/jobrunr/releases/tag/v8.8.1[JobRunr 8.8.1 release] before choosing versions for a new production application.
+
+The design deliberately uses JobRunr OSS only. It stores JobRunr tables in a dedicated data source, sends a small delivery ID rather than an entity graph, waits for the delivery transaction to commit before enqueueing, and makes the handler safe to run again.
+
+== What you will build
+
+* A Grails JSON API that creates a `Delivery` and returns `201 Created`.
+* A durable `JobRequest` queued after the delivery transaction commits.
+* A statically compiled handler that reports progress and marks the delivery successful.
+* Endpoints that demonstrate immediate, delayed, recurring, and retrying jobs.
+* An H2-backed development dashboard and tests that prove routing, storage separation, and live execution.

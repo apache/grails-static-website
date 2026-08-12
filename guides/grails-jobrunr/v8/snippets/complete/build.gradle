@@ -1,0 +1,38 @@
+plugins {
+    id 'org.apache.grails.gradle.grails-web' version "${grailsVersion}"
+    id 'org.apache.grails.gradle.grails-gsp' version "${grailsVersion}"
+}
+
+group = 'example.grails'
+version = '0.1.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.apache.grails:grails-dependencies-starter-web'
+    implementation 'org.apache.grails:grails-data-hibernate5'
+    implementation 'org.apache.grails:grails-data-hibernate5-spring-boot'
+    implementation 'org.apache.grails:grails-datasource'
+    implementation "org.jobrunr:jobrunr-spring-boot-4-starter:${jobrunrVersion}"
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    runtimeOnly 'com.h2database:h2'
+    testImplementation 'org.apache.grails:grails-testing-support-web'
+    testImplementation 'org.apache.grails:grails-testing-support-datamapping'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+bootRun {
+    jvmArgs '-Dgrails.env=development'
+    sourceResources sourceSets.main
+}

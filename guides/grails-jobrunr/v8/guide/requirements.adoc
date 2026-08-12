@@ -1,0 +1,8 @@
+To complete this guide, you will need:
+
+* JDK 21. Grails 8 requires Java 21.
+* About 45 minutes.
+* An IDE with Groovy support.
+* The Gradle wrapper included with the sample. It is pinned to Gradle `9.6.1`.
+
+The sample uses in-memory H2 databases for application and JobRunr storage. That is suitable for learning and tests only. The production section explains the persistent writer database and schema workflow.
