@@ -36,7 +36,7 @@ guides:
         toc:
           gettingStarted:
             title: Getting Started
-            requirements: What You Will Build and Need
+            requirements: What you will need
             howto: How to Complete the Guide
           dependencySetup:
             title: Add JobRunr and Jackson
