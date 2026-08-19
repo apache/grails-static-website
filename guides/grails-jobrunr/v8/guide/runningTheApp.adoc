@@ -10,7 +10,7 @@ In the development environment, the sample starts two workers and enables the da
 
 [source,bash]
 ----
-curl -i -X POST http://localhost:8080/deliveries -H "Accept: application/json" -d "reference=guide-delivery-1"
+curl -i -X POST http://localhost:8080/deliveries -H "Accept: application/json" -H "Content-Type: application/x-www-form-urlencoded" -d "reference=guide-delivery-1"
 curl http://localhost:8080/deliveries/1
 ----
 
