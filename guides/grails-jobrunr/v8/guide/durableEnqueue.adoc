@@ -1,0 +1,39 @@
+The job must not run for a delivery that rolls back. The delivery model records the business state and progress that the job updates:
+
+[source,groovy]
+.grails-app/domain/example/grails/Delivery.groovy
+----
+include::../snippets/complete/grails-app/domain/example/grails/Delivery.groovy[]
+----
+
+The service first persists the delivery and publishes a small event within its GORM transaction:
+
+[source,groovy]
+.grails-app/services/example/grails/DeliveryService.groovy
+----
+include::../snippets/complete/grails-app/services/example/grails/DeliveryService.groovy[]
+----
+
+[source,groovy]
+.src/main/groovy/example/grails/DeliveryCreatedEvent.groovy
+----
+include::../snippets/complete/src/main/groovy/example/grails/DeliveryCreatedEvent.groovy[]
+----
+
+The listener uses Spring's https://docs.spring.io/spring-framework/reference/data-access/transaction/event.html[transaction-bound event support] to run only after that transaction commits, then enqueues the request:
+
+[source,groovy]
+.src/main/groovy/example/grails/DeliveryJobEnqueuer.groovy
+----
+include::../snippets/complete/src/main/groovy/example/grails/DeliveryJobEnqueuer.groovy[]
+----
+
+Grails does not register Spring's `TransactionalEventListenerFactory` through `@EnableTransactionManagement`, so declare it explicitly or the transactional listener is silently ignored:
+
+[source,groovy]
+.grails-app/conf/spring/resources.groovy
+----
+include::../snippets/complete/grails-app/conf/spring/resources.groovy[]
+----
+
+This is a best-effort OSS pattern, not an atomic cross-database transaction. A process can fail after the GORM commit but before enqueueing. For business-critical delivery, write an application-managed transactional outbox in the application transaction and dispatch it reliably, or evaluate JobRunr Pro's https://www.jobrunr.io/en/documentation/pro/transactions/[transaction plugin]. The transaction plugin is a Pro feature and is intentionally not used by this sample.

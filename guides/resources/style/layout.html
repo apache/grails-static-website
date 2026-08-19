@@ -18,13 +18,13 @@ ${siteHeader}
             <li><button type="button" class="btn btn-default codeButton" onclick="document.getElementById('github-url').value='https://github.com/${githubSlug}.git'">HTTPS</button></li>
         </ul>
         <div class="input-group">
-            <input id="github-url" value="git@github.com:${githubSlug}.git" type="text"/>
-            <button type="button" class="clippy btn btn-default" data-clipboard-target="#github-url">
+            <input id="github-url" aria-label="Git repository URL" value="git@github.com:${githubSlug}.git" type="text"/>
+            <button type="button" class="clippy btn btn-default" data-clipboard-target="#github-url" aria-label="Copy Git repository URL">
                 <img width="13" src="${resourcesPath}/img/clippy.svg" alt="Copy to clipboard">
             </button>
         </div>
         <script>var clipboard = new Clipboard('.clippy');</script>
-        <button type="button" class="btn btn-large" onclick="window.location.href=&quot;https://github.com/${githubSlug}/archive/master.zip&quot;">Download ZIP</button>
+        <button type="button" class="btn btn-large" onclick="window.location.href=&quot;https://github.com/${githubSlug}/archive/${githubBranch}.zip&quot;">Download ZIP</button>
         <% if(toc){ %>
         <div id="table-of-content">
             <h3>Table of Contents</h3>

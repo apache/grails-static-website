@@ -1,0 +1,33 @@
+Grails 8 runs on Spring Boot 4, so use JobRunr's Spring Boot 4 starter. The https://www.jobrunr.io/en/guides/jvm-frameworks/grails/[JobRunr Grails guide] documents this starter family, and the https://search.maven.org/artifact/org.jobrunr/jobrunr-spring-boot-4-starter/8.8.1/jar[Maven Central artifact] identifies the selected GA release.
+
+The initial build has no JobRunr runtime dependency:
+
+[source,groovy]
+.initial/build.gradle
+----
+include::../snippets/initial/build.gradle[]
+----
+
+The complete build adds the Boot 4 starter and explicit `jackson-databind`:
+
+[source,groovy]
+.complete/build.gradle
+----
+include::../snippets/complete/build.gradle[]
+----
+
+The starter supplies Jackson version constraints but not an application Jackson Databind runtime dependency. Add `com.fasterxml.jackson.core:jackson-databind` explicitly so JobRunr can create its job mapper. Keep the version managed by the Grails dependency platform rather than pinning a competing version.
+
+The version delta is visible in the two Gradle property files:
+
+[source,properties]
+.initial/gradle.properties
+----
+include::../snippets/initial/gradle.properties[]
+----
+
+[source,properties]
+.complete/gradle.properties
+----
+include::../snippets/complete/gradle.properties[]
+----

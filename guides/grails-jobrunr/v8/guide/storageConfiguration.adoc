@@ -1,0 +1,29 @@
+JobRunr needs one durable writer data source. Do not point JobRunr at a read replica: workers both read and write job state. The https://www.jobrunr.io/en/documentation/storage/[JobRunr storage documentation] explains the storage requirements.
+
+The sample separates application persistence from JobRunr persistence. Grails names the default bean `dataSource` and the named `jobrunr` source `dataSource_jobrunr`:
+
+[source,yaml]
+.grails-app/conf/application.yml
+----
+include::../snippets/complete/grails-app/conf/application.yml[]
+----
+
+With multiple data sources, relying on type-only auto-configuration can be ambiguous. Instead, the sample supplies an explicit `StorageProvider` and qualifies the dedicated source. It also installs the `JobMapper` eagerly:
+
+[source,groovy]
+.src/main/groovy/example/grails/jobrunr/JobRunrStorageConfig.groovy
+----
+include::../snippets/complete/src/main/groovy/example/grails/jobrunr/JobRunrStorageConfig.groovy[]
+----
+
+The configuration reads `jobrunr.database.table-prefix` and `jobrunr.database.skip-create` from JobRunr properties. Set a table prefix when JobRunr must share a schema with other applications or deployments. With `skip-create: false`, the provider creates its tables, which is useful for this guide's disposable H2 storage. With `skip-create: true`, it uses `DatabaseOptions.SKIP_CREATE` and does not create tables at application startup.
+
+Before any production node starts with `skip-create: true`, apply the JobRunr schema migrations for the configured database and table prefix. Missing tables must fail startup rather than allowing an application instance to take ownership of production DDL. Production schema management is covered in xref:operations.adoc#operations[Production Operations and OSS Boundaries].
+
+Grails must see the configuration class and its components. The application imports the configuration and scans the package containing the listener and handlers:
+
+[source,groovy]
+.grails-app/init/example/grails/Application.groovy
+----
+include::../snippets/complete/grails-app/init/example/grails/Application.groovy[]
+----

@@ -1,0 +1,61 @@
+The sample uses both focused unit tests and a live integration test. First, the request test protects the deserialization-friendly no-argument constructor and handler mapping:
+
+[source,groovy]
+.src/test/groovy/example/grails/jobrunr/JobRequestSpec.groovy
+----
+include::../snippets/complete/src/test/groovy/example/grails/jobrunr/JobRequestSpec.groovy[]
+----
+
+The listener test checks that the production wiring keeps the decisive `AFTER_COMMIT` phase and submits the expected request:
+
+[source,groovy]
+.src/test/groovy/example/grails/DeliveryJobEnqueuerSpec.groovy
+----
+include::../snippets/complete/src/test/groovy/example/grails/DeliveryJobEnqueuerSpec.groovy[]
+----
+
+The storage configuration test verifies that the configured table prefix is used and that `skip-create` leaves an empty data source without JobRunr tables:
+
+[source,groovy]
+.src/test/groovy/example/grails/jobrunr/JobRunrStorageConfigSpec.groovy
+----
+include::../snippets/complete/src/test/groovy/example/grails/jobrunr/JobRunrStorageConfigSpec.groovy[]
+----
+
+The HTTP integration test discovers the controller action and URL mapping, then sends a real request to the embedded server:
+
+[source,groovy]
+.src/test/groovy/example/grails/DeliveryHttpApiSpec.groovy
+----
+include::../snippets/complete/src/test/groovy/example/grails/DeliveryHttpApiSpec.groovy[]
+----
+
+The sample also includes unit tests for the scheduler endpoints and service. They are not required to follow the earlier chapters, but they keep the `JobExamplesController` and `JobExamplesService` behavior in lockstep with the companion app:
+
+[source,groovy]
+.src/test/groovy/example/grails/JobExamplesControllerSpec.groovy
+----
+include::../snippets/complete/src/test/groovy/example/grails/JobExamplesControllerSpec.groovy[]
+----
+
+[source,groovy]
+.src/test/groovy/example/grails/JobExamplesServiceSpec.groovy
+----
+include::../snippets/complete/src/test/groovy/example/grails/JobExamplesServiceSpec.groovy[]
+----
+
+Finally, the integration test starts JobRunr and GORM together. It proves that a live `JobRequest` runs to completion and that `JOBRUNR_JOBS` exists only in the dedicated JobRunr data source:
+
+[source,groovy]
+.src/test/groovy/example/grails/JobRunrIntegrationSpec.groovy
+----
+include::../snippets/complete/src/test/groovy/example/grails/JobRunrIntegrationSpec.groovy[]
+----
+
+Run the complete suite with:
+
+[source,bash]
+----
+cd complete
+./gradlew test
+----

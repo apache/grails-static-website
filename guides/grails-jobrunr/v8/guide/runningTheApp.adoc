@@ -1,0 +1,29 @@
+Start the completed application:
+
+[source,bash]
+----
+cd complete
+./gradlew bootRun
+----
+
+In the development environment, the sample starts two workers and enables the dashboard on port `8000`. Create a delivery, then read it after the worker completes:
+
+[source,bash]
+----
+curl -i -X POST http://localhost:8080/deliveries -H "Accept: application/json" -H "Content-Type: application/x-www-form-urlencoded" -d "reference=guide-delivery-1"
+curl http://localhost:8080/deliveries/1
+----
+
+The first response is `201 Created` with a `PENDING` delivery. The second eventually reports `SUCCEEDED`, `progress: 100`, and a completion time. Open `http://localhost:8000/dashboard` to inspect the job and its progress.
+
+Exercise the scheduler endpoints with the delivery ID returned by the create request:
+
+[source,bash]
+----
+curl -X POST http://localhost:8080/jobs/immediate/1
+curl -X POST http://localhost:8080/jobs/delayed/1
+curl -X POST http://localhost:8080/jobs/recurring/1
+curl -X POST http://localhost:8080/jobs/retry/1
+----
+
+Each responds with `202 Accepted`. The retry example intentionally transitions through retry states before failing. Do not enable this development dashboard configuration unchanged in production; see xref:operations.adoc#operations[Production Operations and OSS Boundaries].
