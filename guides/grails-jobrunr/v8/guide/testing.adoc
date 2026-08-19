@@ -30,6 +30,20 @@ The HTTP integration test discovers the controller action and URL mapping, then 
 include::../snippets/complete/src/test/groovy/example/grails/DeliveryHttpApiSpec.groovy[]
 ----
 
+The sample also includes unit tests for the scheduler endpoints and service. They are not required to follow the earlier chapters, but they keep the `JobExamplesController` and `JobExamplesService` behavior in lockstep with the companion app:
+
+[source,groovy]
+.src/test/groovy/example/grails/JobExamplesControllerSpec.groovy
+----
+include::../snippets/complete/src/test/groovy/example/grails/JobExamplesControllerSpec.groovy[]
+----
+
+[source,groovy]
+.src/test/groovy/example/grails/JobExamplesServiceSpec.groovy
+----
+include::../snippets/complete/src/test/groovy/example/grails/JobExamplesServiceSpec.groovy[]
+----
+
 Finally, the integration test starts JobRunr and GORM together. It proves that a live `JobRequest` runs to completion and that `JOBRUNR_JOBS` exists only in the dedicated JobRunr data source:
 
 [source,groovy]
