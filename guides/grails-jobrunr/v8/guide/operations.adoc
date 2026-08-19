@@ -1,0 +1,25 @@
+== Persistent storage and schema ownership
+
+Use a supported persistent database and route all JobRunr nodes to the same writer storage. Do not use a read replica for JobRunr storage. Set `jobrunr.database.table-prefix` when the JobRunr tables must be namespaced in a shared schema, and use that same prefix in migrations and every application node. Apply the JobRunr schema migrations before deployment, then set `jobrunr.database.skip-create: true` in production so `DatabaseOptions.SKIP_CREATE` expects a pre-applied schema without application startup owning DDL. The https://www.jobrunr.io/en/documentation/storage/[storage documentation] is the first-party reference for supported databases and schema behavior.
+
+JobRunr `8.8.1` moved retention configuration to `jobrunr.jobs.delete-succeeded-jobs-after` and `jobrunr.jobs.permanently-delete-deleted-jobs-after`. Do not copy deprecated retention keys nested below the background server.
+
+The production sample sets `jobrunr.miscellaneous.allow-anonymous-data-usage: false` to opt out of anonymous JobRunr data usage. Keep that setting unless your organization has intentionally approved participation.
+
+== Dashboard and workers
+
+The background server is disabled by default. Its default poll interval is 15 seconds and default shutdown wait is 10 seconds. Size worker count for the work and downstream capacity, then scale horizontally only when all nodes use the same writer storage and handlers remain idempotent.
+
+The OSS dashboard is a separate server, not a Grails controller. It is disabled by default and uses `http://localhost:8000/dashboard` when enabled. It binds a wildcard address, so keep it disabled by default in production. If you enable it, configure both `jobrunr.dashboard.username` and `jobrunr.dashboard.password` from external secrets, restrict network access, and put it behind a TLS-terminating reverse proxy. OSS Basic authentication protects the dashboard but does not provide the SSO, role authorization, Spring Security integration, or context-path controls offered by Pro. See the https://www.jobrunr.io/en/documentation/background-methods/dashboard/[dashboard documentation].
+
+== Delivery semantics, payloads, and observability
+
+Job execution is at-least-once at the business-effect level. A retry restarts the handler, and a process failure can leave a job eligible to execute again. Make every effect idempotent, preserve interruption as the sample handler does, and record a business idempotency key where the effect cannot be safely repeated.
+
+Pass small, serializable values, preferably IDs, not live GORM entities, request objects, credentials, or large payloads. Jobs may run much later and may be inspected in storage. The https://www.jobrunr.io/en/documentation/background-methods/passing-arguments/[JobRunr argument guidance] explains this boundary.
+
+Expose JobRunr logs, job counts, failure rates, queue latency, and worker capacity to your telemetry system. JobRunr's https://www.jobrunr.io/en/documentation/configuration/metrics/[metrics configuration] documents its metrics integrations. Alert on sustained failed jobs and on a growing scheduled or enqueued backlog, not only on process health.
+
+== OSS and Pro boundary
+
+This guide uses the supported OSS path: durable storage, background workers, dashboard, immediate and delayed jobs, recurring jobs, progress, and standard retries. It intentionally excludes Pro-only batches, chains or continuations, replacement, custom retry policy, and the transaction plugin. Use an application outbox when OSS needs reliable coupling to a GORM transaction; do not paste Pro APIs into this sample and expect them to work on OSS.

@@ -1,0 +1,28 @@
+== Do not enqueue Groovy closures
+
+JobRunr needs a durable description of the method to execute. An ordinary Groovy closure does not provide one. More subtly, this tempting cast does not make the job safe:
+
+[source,groovy]
+----
+jobScheduler.enqueue((JobLambda) (() -> processDelivery(deliveryId)))
+----
+
+The cast chooses a Java functional-interface overload, but it does not produce a javac-style JobRunr target. Executed checks against Groovy `4.0.33` and against Grails `8.0.0-M5` with Groovy `5.0.8` both persisted a generated `Closure#doCall` target. The jobs failed before the intended method ran. Never claim this cast-arrow form is a workaround.
+
+Use JobRunr's explicit https://github.com/jobrunr/jobrunr/blob/v8.8.1/core/src/main/java/org/jobrunr/jobs/lambdas/JobRequest.java[`JobRequest`] and https://github.com/jobrunr/jobrunr/blob/v8.8.1/core/src/main/java/org/jobrunr/jobs/lambdas/JobRequestHandler.java[`JobRequestHandler`] contract instead. The request carries only the durable delivery ID, has a no-argument constructor for deserialization, and maps itself to a Spring handler:
+
+[source,groovy]
+.src/main/groovy/example/grails/jobrunr/ProcessDeliveryJobRequest.groovy
+----
+include::../snippets/complete/src/main/groovy/example/grails/jobrunr/ProcessDeliveryJobRequest.groovy[]
+----
+
+The handler is a Spring component, statically compiled, and transactional. It reloads current state rather than serializing a `Delivery` instance. It returns for a missing or previously completed delivery, reports progress, and preserves interruption by restoring the interrupt flag before throwing:
+
+[source,groovy]
+.src/main/groovy/example/grails/jobrunr/DeliveryJobRequestHandler.groovy
+----
+include::../snippets/complete/src/main/groovy/example/grails/jobrunr/DeliveryJobRequestHandler.groovy[]
+----
+
+The `SUCCEEDED` guard makes retries and repeated delivery harmless for this state transition. Real handlers need the same kind of idempotency around every externally visible effect.

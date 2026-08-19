@@ -333,6 +333,80 @@ td {
 	margin-top: 20px;
 }
 
+.shirt-promotion {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 24px;
+	align-items: center;
+	box-sizing: border-box;
+	margin: 50px 0;
+	padding: 24px;
+	background-color: #ffffff;
+	border-top: 2px solid #feb672;
+	box-shadow: 0 8px 6px -6px #ccc;
+}
+
+.shirt-promotion-image {
+	display: block;
+	width: 100%;
+	max-width: 420px;
+	height: auto;
+	margin: 0 auto;
+}
+
+.shirt-promotion-copy {
+	min-width: 0;
+	color: #666666;
+}
+
+.training .content .shirt-promotion-copy h2 {
+	margin: 0 0 16px;
+	color: #4f4f4f;
+	font-size: 24px;
+	line-height: 1.3;
+}
+
+.shirt-promotion-variant {
+	color: #4f4f4f;
+	font-weight: bold;
+}
+
+.shirt-promotion-link,
+.shirt-promotion-link:visited {
+	display: inline-block;
+	box-sizing: border-box;
+	max-width: 100%;
+	padding: 12px 20px;
+	background-color: #255AA8;
+	box-shadow: 1px 4px 4px #ccc;
+	color: #ffffff;
+	font-family: 'Archia-Light', 'Roboto-Light', "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 18px;
+	line-height: 1.4;
+	text-decoration: none;
+}
+
+.shirt-promotion-link:hover {
+	background-color: #1d4684;
+	color: #ffffff;
+}
+
+.shirt-promotion-link:focus,
+.shirt-promotion-link:focus-visible {
+	background-color: #1d4684;
+	color: #ffffff;
+	outline: 3px solid #255AA8;
+	outline-offset: 3px;
+}
+
+@media screen and (min-width: 768px) {
+	.shirt-promotion {
+		grid-template-columns: minmax(240px, 0.9fr) minmax(0, 1.1fr);
+		gap: 40px;
+		padding: 32px;
+	}
+}
+
 
 
 body.search thead th,
