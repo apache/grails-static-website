@@ -1,0 +1,62 @@
+Add a `create` action. The `Player` instance here is *not* a command object because it
+is not an action parameter:
+
+[source,groovy]
+.grails-app/controllers/demo/PlayerController.groovy
+----
+include::../snippets/grails-app/controllers/demo/PlayerController.groovy[tags=create, indent=0]
+----
+
+From http://localhost:8080/player/index, open *New Player*. Submitting the form needs a
+`save` action. When `Player` is an action argument, it *is* a command object: Grails binds
+request data, injects dependencies where needed, and validates.
+
+[source,groovy]
+.grails-app/domain/demo/Player.groovy
+----
+include::../snippets/grails-app/domain/demo/Player.groovy[]
+----
+
+Form field names match `Player` properties, so binding fills `name`, `game`, `region`,
+and converts `wins` / `losses` to `int`. Domain `constraints` run automatically.
+
+Complete `save` with error handling and persistence:
+
+[source,groovy]
+.grails-app/controllers/demo/PlayerController.groovy
+----
+include::../snippets/grails-app/controllers/demo/PlayerController.groovy[tags=save-full, indent=0]
+----
+
+To see server-side validation (the GSPs already do client-side checks), with the app
+running:
+
+[source,bash]
+----
+curl --request POST \
+  --header "Accept: application/json" \
+  --form "name=Bob Smith" --form "wins=42" --form "losses=abc" \
+  "http://localhost:8080/player/save.json"
+----
+
+You should get HTTP `422` with errors for `losses` (type mismatch) and missing `game`.
+
+The companion includes a functional test that asserts the same behaviour with
+`java.net.http.HttpClient`:
+
+[source,groovy]
+.src/integration-test/groovy/demo/PlayerControllerFuncSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/demo/PlayerControllerFuncSpec.groovy[]
+----
+
+<4> Failed command-object validation returns `422 Unprocessable Entity`.
+
+[NOTE]
+====
+Controller code here stays small on purpose. For a fuller starting point in your own apps:
+
+----
+./grailsw generate-controller demo.Player
+----
+====

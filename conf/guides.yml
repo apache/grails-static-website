@@ -449,6 +449,7 @@ guides:
     subtitle: 'This guide will explain how you can use command objects to validate input data in a Grails application'
     authors:
       - 'Matthew Moss'
+      - 'Sanjana'
     category: 'Grails Apprentice'
     publicationDate: '2017-01-09'
     versions:
@@ -519,7 +520,39 @@ guides:
           runningTheApp:
             title: Running the Application
           helpWithGrails:
-            title: Do you need help with Grails?  
+            title: Do you need help with Grails?
+      '8':
+        sourcePath: guides/command-objects-and-forms/v8
+        publicationDate: '2026-08-26'
+        tags:
+          - 'command-objects'
+          - 'forms'
+          - 'data-binding'
+          - 'validation'
+          - 'controllers'
+          - 'gsp'
+          - 'web-layer'
+          - 'unit-tests'
+          - 'functional-tests'
+          - 'beginner'
+        sampleRef:
+          repo: 'grails-guides/command-objects-and-forms'
+          branch: 'grails8'
+        toc:
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          whatAreCommandObjects: What are command objects?
+          writingTheApp:
+            title: Writing the Application
+            createTheController: Create the controller
+            addCreateAndSaveActions: Implement the create and save actions
+            addEditAndUpdateActions: Implement the edit and update actions
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'creating-your-first-grails-app'
     title: 'Creating your first Grails Application'

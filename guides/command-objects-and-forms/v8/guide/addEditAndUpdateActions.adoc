@@ -1,0 +1,64 @@
+`edit` and `update` mirror `create` / `save`. With a `Player` command object, Grails loads
+the existing row for the form. The scaffolded `edit.gsp` already omits wins/losses fields,
+but that alone does not block a crafted request from changing them:
+
+[source,bash]
+----
+curl --request GET "http://localhost:8080/player/show/1.json"
+curl --request POST --form "id=1" --form "wins=2" --form "losses=194" \
+  "http://localhost:8080/player/update.json"
+----
+
+Use a dedicated command object that only exposes editable fields. Define `PlayerInfo` in
+the same file as the controller (Grails makes same-file command classes `Validateable`):
+
+[source,groovy]
+.grails-app/controllers/demo/PlayerController.groovy
+----
+include::../snippets/grails-app/controllers/demo/PlayerController.groovy[tags=playerInfo;playerInfo-constraints]
+----
+
+Wire `update` to that command object, copy allowed properties onto the domain instance,
+and validate the command object first:
+
+[source,groovy]
+.grails-app/controllers/demo/PlayerController.groovy
+----
+include::../snippets/grails-app/controllers/demo/PlayerController.groovy[tags=update, indent=0]
+----
+
+Because `PlayerInfo` has no `wins` / `losses`, those values are ignored even if posted.
+
+Unit tests in the companion cover the controller and constraints:
+
+[source,groovy]
+.src/test/groovy/demo/PlayerControllerSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/PlayerControllerSpec.groovy[indent=0]
+----
+
+<1> Call `update()` with values in `params`; binding fills the command object as at runtime.
+
+[source,groovy]
+.src/test/groovy/demo/PlayerInfoSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/PlayerInfoSpec.groovy[indent=0]
+----
+
+If you define the command class under `src/` instead of next to the controller, implement
+`grails.validation.Validateable` to keep a `constraints` block:
+
+[source,groovy]
+----
+class PlayerInfo implements grails.validation.Validateable {
+    String name
+    String game
+    String region
+
+    static constraints = {
+        name blank: false
+        game blank: false
+        region nullable: true
+    }
+}
+----

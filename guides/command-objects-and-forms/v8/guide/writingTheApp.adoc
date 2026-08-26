@@ -1,0 +1,2 @@
+This guide walks through a controller whose actions use command objects so form
+input is handled safely with little boilerplate.

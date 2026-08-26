@@ -1,0 +1,15 @@
+From `complete/` (or your finished `initial/`):
+
+[source,bash]
+----
+./gradlew bootRun
+----
+
+Open http://localhost:8080/player — list, create, edit, and confirm wins/losses cannot be
+changed via the edit form or a crafted update request.
+
+[source,bash]
+----
+./gradlew test
+./gradlew integrationTest
+----
