@@ -1,5 +1,5 @@
-Add a `create` action. The `Player` instance here is *not* a command object because it
-is not an action parameter:
+Next, add the ability to create new players. To `PlayerController`, add the `create`
+action.
 
 [source,groovy]
 .grails-app/controllers/demo/PlayerController.groovy
@@ -7,9 +7,43 @@ is not an action parameter:
 include::../snippets/grails-app/controllers/demo/PlayerController.groovy[tags=create, indent=0]
 ----
 
-From http://localhost:8080/player/index, open *New Player*. Submitting the form needs a
-`save` action. When `Player` is an action argument, it *is* a command object: Grails binds
-request data, injects dependencies where needed, and validates.
+While this action does make use of the `Player` class, the instance of `Player` *is not* a command object
+since it is not an argument to the action. That should make sense: the intent is to render an empty
+form, so there is no submitted input to bind yet.
+
+From the Player List (http://localhost:8080/player/index), click *New Player* to see the create form
+(http://localhost:8080/player/create). If you fill in the form and click *Create* now, you get a
+`404 Page Not Found` error, because `save` is not defined yet. Add that next.
+
+[source,groovy]
+----
+    def save(Player player) {
+        // ...
+    }
+----
+
+Here, `player` *is* a command object, because it is an argument to the action. Behind
+the scenes, Grails rewrites the action to fetch existing records (if necessary), bind input
+data to the command object, perform dependency injection, and validate the object.
+
+The best feature here is https://grails.apache.org/docs/latest/guide/theWebLayer.html#dataBinding[data binding].
+The create view is already in `initial/`. Grails 8 scaffolding uses the Fields plugin: `f:all`
+renders an input for every `Player` property.
+
+[source,html]
+.grails-app/views/player/create.gsp
+----
+<g:form action="save">
+    <fieldset class="form">
+        <f:all bean="player"/>
+    </fieldset>
+    <fieldset class="buttons">
+        <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
+    </fieldset>
+</g:form>
+----
+
+The generated input `name` attributes match the properties of the domain class `Player`.
 
 [source,groovy]
 .grails-app/domain/demo/Player.groovy
@@ -17,10 +51,75 @@ request data, injects dependencies where needed, and validates.
 include::../snippets/grails-app/domain/demo/Player.groovy[]
 ----
 
-Form field names match `Player` properties, so binding fills `name`, `game`, `region`,
-and converts `wins` / `losses` to `int`. Domain `constraints` run automatically.
+Data binding takes the form-submitted string values for `name`, `game`, and `region`
+(if set) and sets those properties on the command object `player`. The submitted
+strings for `wins` and `losses` are converted to `int`. The convention of using the same
+names for domain properties and input fields is what keeps this code small: view fields
+are pre-filled from domain objects, and command objects are filled from submitted form data.
 
-Complete `save` with error handling and persistence:
+After binding, domain `constraints` run. That is the place to add error handling. The
+`HttpStatus` import is already at the top of the controller from the `index` / `show` step.
+Update the `save` action:
+
+[source,groovy]
+.grails-app/controllers/demo/PlayerController.groovy
+----
+include::../snippets/grails-app/controllers/demo/PlayerController.groovy[tags=save;save-handleErrors, indent=0]
+----
+
+The generated GSPs do as much client-side checking as they can. To see server-side
+validation, use `curl` while the app is running. The create form posts
+`application/x-www-form-urlencoded` (not multipart), so match that:
+
+[source,bash]
+----
+curl --request POST \
+  --header "Accept: application/json" \
+  --header "Content-Type: application/x-www-form-urlencoded" \
+  --data "name=Bob+Smith&wins=42&losses=abc" \
+  "http://localhost:8080/player/save.json"
+----
+
+You should receive HTTP `422 Unprocessable Entity` with a type-mismatch on `losses`
+(displayed nicely here):
+
+[source,json]
+----
+{"errors": [
+  {"object": "demo.Player",
+   "field": "losses",
+   "rejected-value": "abc",
+   "message": "Property losses is type-mismatched"}
+]}
+----
+
+Grails 8 reports the type-mismatch for this request. `game` is also required (`blank: false`),
+but a conversion error on another field is what this particular payload surfaces.
+
+We are going to verify this with a functional test.
+
+include::{commondir}/common-functionalTestsIntro.adoc[]
+
+The companion uses JDK `java.net.http.HttpClient` (no extra HTTP-client dependency). Successful
+form posts follow `request.withFormat` and *redirect*, so the spec disables automatic redirect
+following and then GETs the JSON show representation.
+
+[source,groovy]
+.src/integration-test/groovy/demo/PlayerControllerFuncSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/demo/PlayerControllerFuncSpec.groovy[tags=saveSpec]
+----
+
+<1> `serverPort` is injected. It is the random port where the application runs during the functional test.
+<2> If your client accepts JSON, set the `Accept` header.
+<3> This POST is form-urlencoded, the same `Content-Type` as the create form. Set it explicitly.
+<4> Failed command-object validation returns `422 Unprocessable Entity`.
+
+This first-stage spec is enough to run `./gradlew integrationTest` after `save` exists.
+The next chapter adds a second test for mass-assignment protection.
+
+Now that binding, validation, and error-checking are in place, complete `save` so it persists
+the player and responds to the form:
 
 [source,groovy]
 .grails-app/controllers/demo/PlayerController.groovy
@@ -28,33 +127,12 @@ Complete `save` with error handling and persistence:
 include::../snippets/grails-app/controllers/demo/PlayerController.groovy[tags=save-full, indent=0]
 ----
 
-To see server-side validation (the GSPs already do client-side checks), with the app
-running:
-
-[source,bash]
-----
-curl --request POST \
-  --header "Accept: application/json" \
-  --form "name=Bob Smith" --form "wins=42" --form "losses=abc" \
-  "http://localhost:8080/player/save.json"
-----
-
-You should get HTTP `422` with errors for `losses` (type mismatch) and missing `game`.
-
-The companion includes a functional test that asserts the same behaviour with
-`java.net.http.HttpClient`:
-
-[source,groovy]
-.src/integration-test/groovy/demo/PlayerControllerFuncSpec.groovy
-----
-include::../snippets/src/integration-test/groovy/demo/PlayerControllerFuncSpec.groovy[]
-----
-
-<4> Failed command-object validation returns `422 Unprocessable Entity`.
+You should now be able to create and save new players.
 
 [NOTE]
 ====
-Controller code here stays small on purpose. For a fuller starting point in your own apps:
+The example controller code here is kept small on purpose so the guide can focus on command
+objects. For a fuller starting point in your own apps:
 
 ----
 ./grailsw generate-controller demo.Player

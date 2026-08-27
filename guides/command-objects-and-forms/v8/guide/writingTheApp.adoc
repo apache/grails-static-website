@@ -1,2 +1,2 @@
 This guide walks through a controller whose actions use command objects so form
-input is handled safely with little boilerplate.
+input is bound, validated, and accepted only for the fields you expose.

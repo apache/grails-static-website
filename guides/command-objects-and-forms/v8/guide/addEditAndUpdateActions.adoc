@@ -1,35 +1,164 @@
-`edit` and `update` mirror `create` / `save`. With a `Player` command object, Grails loads
-the existing row for the form. The scaffolded `edit.gsp` already omits wins/losses fields,
-but that alone does not block a crafted request from changing them:
+Next, add the ability to update existing players. Add `edit` and `update` actions
+to `PlayerController`. These look almost the same as `create` and `save`.
+
+[source,groovy]
+----
+    def edit(Player player) {
+        respond player
+    }
+
+    @Transactional
+    def update(Player player) {
+        if (player == null) {
+            render status: HttpStatus.NOT_FOUND
+            return
+        }
+
+        if (player.hasErrors()) {
+            respond player.errors, view: 'edit'
+            return
+        }
+
+        player.save flush: true
+
+        request.withFormat {
+            form multipartForm { redirect player }
+            '*' { respond player, status: HttpStatus.OK }
+        }
+    }
+----
+
+The `edit` action starts with a `Player` command object; Grails fetches the existing `Player`,
+and those properties are the initial values of the form in `edit.gsp`. The `update` action is
+the same as `save`, except that errors re-render `edit` rather than `create`, and the HTTP
+status for success is `OK` rather than `CREATED`.
+
+On the assumption that a player's win and loss counts are managed elsewhere, wins and losses
+have already been removed from `edit.gsp`. The Fields plugin is used with an explicit property
+list instead of `f:all`:
+
+[source,html]
+.grails-app/views/player/edit.gsp
+----
+<g:form resource="${this.player}" method="PUT">
+    <g:hiddenField name="version" value="${this.player?.version}" />
+    <fieldset class="form">
+        <f:field bean="player" property="name" />
+        <f:field bean="player" property="game" />
+        <f:field bean="player" property="region" />
+    </fieldset>
+    <fieldset class="buttons">
+        <input class="save" type="submit" value="${message(code: 'default.button.update.label', default: 'Update')}" />
+    </fieldset>
+</g:form>
+----
+
+While the application is running, open a player from the list. You can see the win/loss count
+on the show page, but *Edit* does not offer those fields.
+
+That is not sufficient. Removing inputs from the form *does not prevent* those fields from
+being changed. A crafted request can still submit them.
 
 [source,bash]
 ----
-curl --request GET "http://localhost:8080/player/show/1.json"
-curl --request POST --form "id=1" --form "wins=2" --form "losses=194" \
+curl --header "Accept: application/json" "http://localhost:8080/player/show/1.json"
+----
+
+[source,json]
+----
+{"id":1, "game":"Pandemic", "losses":30, "name":"Alexis Barnett", "region":"EAST", "wins":96}
+----
+
+[source,bash]
+----
+curl --request POST \
+  --header "Accept: application/json" \
+  --header "Content-Type: application/x-www-form-urlencoded" \
+  --data "id=1&wins=2&losses=194" \
   "http://localhost:8080/player/update.json"
 ----
 
-Use a dedicated command object that only exposes editable fields. Define `PlayerInfo` in
-the same file as the controller (Grails makes same-file command classes `Validateable`):
+[source,bash]
+----
+curl --header "Accept: application/json" "http://localhost:8080/player/show/1.json"
+----
+
+After the POST, Alexis Barnett has two wins and 194 losses instead of 96 and 30. A form POST
+hits `request.withFormat`'s `form` branch and redirects; GET the show URL afterwards to see
+the stored values.
+
+One way to fix this would be to stop using a `Player` command object and bind fields by hand.
+Command objects do not have to be domain classes, though: use any class. Define `PlayerInfo`
+in `PlayerController.groovy` below the controller. Its property names match the edit form's
+inputs, so only those fields bind.
 
 [source,groovy]
 .grails-app/controllers/demo/PlayerController.groovy
 ----
-include::../snippets/grails-app/controllers/demo/PlayerController.groovy[tags=playerInfo;playerInfo-constraints]
+include::../snippets/grails-app/controllers/demo/PlayerController.groovy[tags=playerInfo, indent=0]
 ----
 
-Wire `update` to that command object, copy allowed properties onto the domain instance,
-and validate the command object first:
+Change `update` to use `PlayerInfo` as the command object. Load the `Player`, then copy the
+command object's properties onto it:
 
 [source,groovy]
-.grails-app/controllers/demo/PlayerController.groovy
 ----
-include::../snippets/grails-app/controllers/demo/PlayerController.groovy[tags=update, indent=0]
+    @Transactional
+    def update(PlayerInfo info) {
+        Player player = Player.get(params.id)
+        if (player == null) {
+            render status: HttpStatus.NOT_FOUND
+            return
+        }
+
+        player.properties = info.properties
+        player.save flush: true
+
+        if (player.hasErrors()) {
+            respond player.errors, view: 'edit'
+            return
+        }
+
+        request.withFormat {
+            form multipartForm { redirect player }
+            '*' { respond player, status: HttpStatus.OK }
+        }
+    }
 ----
 
-Because `PlayerInfo` has no `wins` / `losses`, those values are ignored even if posted.
+Because `PlayerInfo` does *not* contain `wins` or `losses`, those values are ignored even if
+they are posted.
 
-Unit tests in the companion cover the controller and constraints:
+[source,bash]
+----
+curl --header "Accept: application/json" "http://localhost:8080/player/show/4.json"
+----
+
+[source,json]
+----
+{"id":4, "name":"Catherine Newton", "game":"Scythe", "region":"WEST", "wins":66, "losses":40}
+----
+
+[source,bash]
+----
+curl --request POST \
+  --header "Accept: application/json" \
+  --header "Content-Type: application/x-www-form-urlencoded" \
+  --data "id=4&name=June+Smith&game=Chess&region=NORTH&wins=0&losses=10" \
+  "http://localhost:8080/player/update.json"
+
+curl --header "Accept: application/json" "http://localhost:8080/player/show/4.json"
+----
+
+[source,json]
+----
+{"id":4, "name":"June Smith", "game":"Chess", "region":"NORTH", "wins":66, "losses":40}
+----
+
+`name`, `game`, and `region` updated; `wins` and `losses` did not. The `PlayerInfo` command
+object restricted which fields are accepted.
+
+Create a unit test for that behaviour:
 
 [source,groovy]
 .src/test/groovy/demo/PlayerControllerSpec.groovy
@@ -37,7 +166,23 @@ Unit tests in the companion cover the controller and constraints:
 include::../snippets/src/test/groovy/demo/PlayerControllerSpec.groovy[indent=0]
 ----
 
-<1> Call `update()` with values in `params`; binding fills the command object as at runtime.
+<1> Call the no-argument `update()` and put values in `params`. Databinding fills the command
+object. That is what happens at runtime.
+
+The current solution is still lacking. Because `PlayerInfo` is the command object, validation
+does not run until `player.save`. It is better to validate earlier, as when `Player` itself
+was the command object.
+
+When you define `PlayerInfo` in the same file as the controller, Grails makes it
+`Validateable`. Add a `constraints` block:
+
+[source,groovy]
+.grails-app/controllers/demo/PlayerController.groovy
+----
+include::../snippets/grails-app/controllers/demo/PlayerController.groovy[tags=playerInfo;playerInfo-constraints]
+----
+
+Create a unit test for those constraints:
 
 [source,groovy]
 .src/test/groovy/demo/PlayerInfoSpec.groovy
@@ -45,8 +190,35 @@ include::../snippets/src/test/groovy/demo/PlayerControllerSpec.groovy[indent=0]
 include::../snippets/src/test/groovy/demo/PlayerInfoSpec.groovy[indent=0]
 ----
 
-If you define the command class under `src/` instead of next to the controller, implement
-`grails.validation.Validateable` to keep a `constraints` block:
+Revise `update` once more so command-object errors are checked *before* the domain instance
+is loaded and saved. `respond info.errors, view: 'edit'` returns the error payload for API
+clients. For an HTML form post it also re-renders `edit.gsp`, but with a `playerInfo` model
+rather than `player`, so the scaffold form does not redisplay those errors. This beginner
+sample does not add an error-model bridge:
+
+[source,groovy]
+.grails-app/controllers/demo/PlayerController.groovy
+----
+include::../snippets/grails-app/controllers/demo/PlayerController.groovy[tags=update, indent=0]
+----
+
+The companion functional spec's second test posts a crafted update after a real save and
+asserts `wins` / `losses` stay unchanged while `game` and `region` update. Add this method
+(and the private helpers) to the spec from the previous chapter:
+
+[source,groovy]
+.src/integration-test/groovy/demo/PlayerControllerFuncSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/demo/PlayerControllerFuncSpec.groovy[tags=updateIgnores]
+----
+
+Command object classes can be defined elsewhere (for example under `src/`). They need not
+live in the same file as the controller. That is useful for sharing a command object across
+controllers.
+
+**If the command object is in the same source file as the controller, Grails automatically
+makes it `Validateable`. If you define it elsewhere and need `constraints`, implement
+`Validateable`:**
 
 [source,groovy]
 ----
