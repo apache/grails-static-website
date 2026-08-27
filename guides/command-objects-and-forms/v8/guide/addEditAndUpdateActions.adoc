@@ -84,8 +84,8 @@ curl --header "Accept: application/json" "http://localhost:8080/player/show/1.js
 ----
 
 After the POST, Alexis Barnett has two wins and 194 losses instead of 96 and 30. A form POST
-hits `request.withFormat`'s `form` branch and redirects; GET the show URL afterwards to see
-the stored values.
+hits the `form` branch of `request.withFormat` and redirects; GET the show URL afterwards to
+see the stored values.
 
 One way to fix this would be to stop using a `Player` command object and bind fields by hand.
 Command objects do not have to be domain classes, though: use any class. Define `PlayerInfo`
@@ -163,7 +163,7 @@ Create a unit test for that behaviour:
 [source,groovy]
 .src/test/groovy/demo/PlayerControllerSpec.groovy
 ----
-include::../snippets/src/test/groovy/demo/PlayerControllerSpec.groovy[indent=0]
+include::../snippets/src/test/groovy/demo/PlayerControllerSpec.groovy[tags=updateSpec, indent=0]
 ----
 
 <1> Call the no-argument `update()` and put values in `params`. Databinding fills the command
@@ -191,15 +191,28 @@ include::../snippets/src/test/groovy/demo/PlayerInfoSpec.groovy[indent=0]
 ----
 
 Revise `update` once more so command-object errors are checked *before* the domain instance
-is loaded and saved. `respond info.errors, view: 'edit'` returns the error payload for API
-clients. For an HTML form post it also re-renders `edit.gsp`, but with a `playerInfo` model
-rather than `player`, so the scaffold form does not redisplay those errors. This beginner
-sample does not add an error-model bridge:
+is loaded and saved. Copying onto `Player` still runs domain constraints, including
+`unique: true` on `name`, so inspect the `save` result and return those errors instead of
+reporting success. Because `update` is `@Transactional` and the `Player` is already dirty,
+call `transactionStatus.setRollbackOnly()` so the failed instance is not flushed when the
+action returns. `respond info.errors, view: 'edit'` returns the command-object error
+payload for API clients. For an HTML form post it also re-renders `edit.gsp`, but with a
+`playerInfo` model rather than `player`, so the scaffold form does not redisplay those
+errors. This beginner sample does not add an error-model bridge:
 
 [source,groovy]
 .grails-app/controllers/demo/PlayerController.groovy
 ----
 include::../snippets/grails-app/controllers/demo/PlayerController.groovy[tags=update, indent=0]
+----
+
+Add a unit test that a duplicate `name` is reported instead of treated as a successful
+update:
+
+[source,groovy]
+.src/test/groovy/demo/PlayerControllerSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/PlayerControllerSpec.groovy[tags=uniqueSpec, indent=0]
 ----
 
 The companion functional spec's second test posts a crafted update after a real save and

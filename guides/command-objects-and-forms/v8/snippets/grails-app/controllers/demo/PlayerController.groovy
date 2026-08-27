@@ -69,7 +69,11 @@ class PlayerController {
         }
 
         player.properties = info.properties
-        player.save flush: true
+        if (!player.save(flush: true)) {
+            transactionStatus.setRollbackOnly()
+            respond player.errors, view: 'edit'
+            return
+        }
 
         request.withFormat {
             form multipartForm { redirect player }
