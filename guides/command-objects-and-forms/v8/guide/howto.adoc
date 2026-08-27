@@ -1,0 +1,12 @@
+Clone the companion and start from `initial/`:
+
+[source,bash]
+----
+git clone -b grails8 https://github.com/grails-guides/command-objects-and-forms.git
+cd command-objects-and-forms/initial
+./gradlew bootRun
+----
+
+`initial/` already includes the `Player` domain, scaffold views, and sample data. You will add `PlayerController` and the `PlayerInfo` command object.
+
+To skip ahead, use `complete/` instead of `initial/`. Both trees must pass `./gradlew test integrationTest` (see `.github/workflows/grails8.yml`).

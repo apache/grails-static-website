@@ -370,7 +370,8 @@ class RenderGuidesPlugin {
      *
      * <p>Supports the four attribute styles that account for 100% of usage
      * across the vendored guides ({@code []}, {@code [indent=N]},
-     * {@code [tag(s)=foo,bar]}, {@code [lines=N..M[,P..Q]]}).</p>
+     * {@code [tag(s)=foo;bar]} (commas also accepted),
+     * {@code [lines=N..M[,P..Q]]}).</p>
      *
      * <p>Three include shapes are recognised:</p>
      * <ul>
@@ -510,7 +511,9 @@ class RenderGuidesPlugin {
      */
     @CompileDynamic
     static String extractTaggedRegions(String body, String tagSpec) {
-        List<String> tokens = tagSpec.split(',').collect { it.trim() }.findAll { it }
+        // Asciidoctor's documented multi-tag separator is `;`. Historical
+        // guides also use commas (`tags=foo,bar`), so accept both.
+        List<String> tokens = tagSpec.split(/[,;]/).collect { it.trim() }.findAll { it }
         Set<String> includeTags = tokens.findAll { !it.startsWith('!') } as Set
         Set<String> excludeTags = tokens.findAll { it.startsWith('!') }.collect { it.substring(1) } as Set
         boolean wildcardAll = includeTags.contains('*') || includeTags.contains('**')
