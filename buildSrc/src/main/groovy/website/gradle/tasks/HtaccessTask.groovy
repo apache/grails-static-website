@@ -40,6 +40,7 @@ abstract class HtaccessTask extends GrailsWebsiteTask {
     public static final String NAME = 'genHtaccess'
 
     private static final List<String> DOMAINS = [
+            'https://*.grails.org/', // Forge UI at /start/ fetches latest/next/snapshot/prev.grails.org
             'https://*.kapa.ai/',
             'https://kapa-widget-proxy-la7dkmplpq-uc.a.run.app',
             'https://www.google.com/recaptcha/',
