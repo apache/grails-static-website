@@ -5,12 +5,7 @@ To get started with this profile, specify it when generating your app:
 $ grails create-app myApp --profile=react
 ----
 
-You can also generate your project using the https://grails.apache.org/start/[Application Forge], either from the web interface or using the following `curl` command:
-
-[source,bash]
-----
-curl -O start.grails.org/myApp.zip -d version=3.3.2 -d profile=react
-----
+You can also generate your project using the https://grails.apache.org/start/[Application Forge] web interface. The old `start.grails.org` curl API no longer serves profile-specific zips.
 
 
 Take a look at the directory structure - you will see a typical Gradle multi-project build, with separate client and server projects.
