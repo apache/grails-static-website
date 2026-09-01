@@ -11,7 +11,7 @@ If you have Grails (>= 3.3.0) installed, you can create your application on the 
 
 === 2. Create a new Application via the Application Forge
 
-You can download your project from https://grails.apache.org/start/, either by using the online wizard, or the following `curl` command:
+You can download your project from the online wizard at https://grails.apache.org/start/, or with the following `curl` command:
 
 [source,bash]
 ----
