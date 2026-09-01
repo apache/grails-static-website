@@ -1,4 +1,4 @@
-Open link:https://start.grails.org[start.grails.org] in three browser tabs and generate three starters with the same baseline settings: JDK 21, Groovy, Gradle, Spock, and package `example`.
+Open link:https://grails.apache.org/start/[grails.apache.org/start] in three browser tabs and generate three starters with the same baseline settings: JDK 21, Groovy, Gradle, Spock, and package `example`.
 
 [cols="1,1,1",options="header"]
 |===

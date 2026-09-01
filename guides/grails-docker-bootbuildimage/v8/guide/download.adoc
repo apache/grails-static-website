@@ -1,4 +1,4 @@
-Open link:https://start.grails.org[start.grails.org], pick the `web` profile, name the application `docker`, set the package to `example`, choose JDK 21, tick the `postgres`, `testcontainers`, and `database-migration` features, and download the generated zip. Unzip it and `cd` into the `docker` directory.
+Open link:https://grails.apache.org/start/[grails.apache.org/start], pick the `web` profile, name the application `docker`, set the package to `example`, choose JDK 21, tick the `postgres`, `testcontainers`, and `database-migration` features, and download the generated zip. Unzip it and `cd` into the `docker` directory.
 
 The forge unpacks into a `docker/` directory containing a vanilla Grails 8 layout plus the three feature-driven additions:
 

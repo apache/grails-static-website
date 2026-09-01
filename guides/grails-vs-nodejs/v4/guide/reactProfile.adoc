@@ -3,7 +3,7 @@ purposes of following along with this guide, you may choose to https://grails.ap
 Grails via the official website, or using http://sdkman.io[sdkman] (recommended).
 However, there is no need to install the framework on your machine to
 create your Grails app - instead, let's browse to
-http://start.grails.org and create our application using the *Grails
+https://grails.apache.org/start/ and create our application using the *Grails
 Application Forge*.
 
 Choose the latest version of Grails ({grailsVersion} as of the time of writing)

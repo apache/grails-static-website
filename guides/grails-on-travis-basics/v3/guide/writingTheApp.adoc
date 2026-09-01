@@ -1,5 +1,5 @@
 The `initial` project contains a Grails Application created with the `web` profile and the `geb2` feature
-with the http://start.grails.org[Grails Application Forge].
+with the https://grails.apache.org/start/[Grails Application Forge].
 
 image::appforge.png[]
 
