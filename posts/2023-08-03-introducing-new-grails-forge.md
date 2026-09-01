@@ -30,7 +30,7 @@ With the New Grails Forge CLI, you can create Grails applications offline or in 
 
 Getting started with the Grails Forge UI is as simple as 1, 2, 3:
 
-1. Visit the Website: Head over to the official Grails Forge UI website at [https://start.grails.org](https://start.grails.org)
+1. Visit the Website: Head over to the official Grails Forge UI website at [https://grails.apache.org/start/](https://grails.apache.org/start/)
 
 2. Explore and Customize: Take a tour of the website and explore its features. Customize your project settings to match your development requirements.
 
@@ -118,7 +118,7 @@ Curious about the inner workings of the New Grails Forge? Delve into the source 
 
 ## Preview Feature: Explore Your Grails Application Source Files
 
-We are excited to introduce the Preview Feature on [https://start.grails.org](https://start.grails.org)! This powerful addition allows you to take a sneak peek into your Grails application source files before actually generating the project. With the Preview Feature, you can explore the selected options and features to see exactly what will be generated, giving you full control and confidence in your project setup.
+We are excited to introduce the Preview Feature on [https://grails.apache.org/start/](https://grails.apache.org/start/)! This powerful addition allows you to take a sneak peek into your Grails application source files before actually generating the project. With the Preview Feature, you can explore the selected options and features to see exactly what will be generated, giving you full control and confidence in your project setup.
 
 How does it work? It's simple:
 
@@ -134,7 +134,7 @@ How does it work? It's simple:
 
 This Preview Feature is a game-changer, as it allows you to make informed decisions and tailor your Grails application precisely to your needs. Gone are the days of uncertainty - with the Preview Feature, you can confidently create and manage your Grails projects with ease.
 
-So, what are you waiting for? Try out the Preview Feature on [https://start.grails.org](https://start.grails.org) and unleash the full potential of the New Grails Forge CLI and UI.
+So, what are you waiting for? Try out the Preview Feature on [https://grails.apache.org/start/](https://grails.apache.org/start/) and unleash the full potential of the New Grails Forge CLI and UI.
 
 ## Ready to Forge Ahead
 
@@ -146,7 +146,7 @@ Now, let's move on to the star of the show - the React-based Grails Forge UI! Th
 
 ## Seamless Replacement for the Old Grails Forge Website
 
-With the Grails Forge UI, we are embracing the future of project creation and bidding farewell to the old Grails Forge website [https://start.grails.org](https://start.grails.org). This exciting transition ensures a more advanced and efficient platform for generating Grails projects.
+With the Grails Forge UI, we are embracing the future of project creation and bidding farewell to the old Grails Forge website [https://grails.apache.org/start/](https://grails.apache.org/start/). This exciting transition ensures a more advanced and efficient platform for generating Grails projects.
 
 ## A Leap Towards the Future
 

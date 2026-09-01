@@ -10,7 +10,7 @@ $ cd myApp/
 **Run the App without Grails Installed**
 
 Thanks to the https://grails.apache.org/docs/latest/guide/introduction.html#whatsNewGrailsWrapper[Grails Wrapper], as of Grails version 3.2.3 or later, you can run any Grails command without having
-Grails installed. If you download it from the http://start.grails.org[Grails Application Forge], the Grails Wrapper is included too.
+Grails installed. If you download it from the https://grails.apache.org/start/[Grails Application Forge], the Grails Wrapper is included too.
 
 [source, bash]
 ----

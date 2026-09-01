@@ -1,4 +1,4 @@
-Generate a Grails 8 starter from link:https://start.grails.org[start.grails.org]:
+Generate a Grails 8 starter from link:https://grails.apache.org/start/[grails.apache.org/start]:
 
 [source,bash]
 ----

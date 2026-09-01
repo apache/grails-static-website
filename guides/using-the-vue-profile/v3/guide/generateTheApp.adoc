@@ -5,7 +5,7 @@ To get started with this profile, specify it when generating your app:
 $ grails create-app myApp --profile=vue
 ----
 
-You can also generate your project using the http://start.grails.org[Application Forge], either from the web interface or using the following `curl` command:
+You can also generate your project using the https://grails.apache.org/start/[Application Forge], either from the web interface or using the following `curl` command:
 
 [source,bash]
 ----

@@ -1,4 +1,4 @@
-Open link:https://start.grails.org[start.grails.org], pick the `web` profile, name the application `cicd`, set the package to `example`, choose JDK 21, tick the `postgres` and `testcontainers` features, and download the generated zip. Unzip it and `cd` into the `cicd` directory.
+Open link:https://grails.apache.org/start/[grails.apache.org/start], pick the `web` profile, name the application `cicd`, set the package to `example`, choose JDK 21, tick the `postgres` and `testcontainers` features, and download the generated zip. Unzip it and `cd` into the `cicd` directory.
 
 The forge unpacks into a `cicd/` directory containing a vanilla Grails 8 web layout with two feature-driven additions:
 
