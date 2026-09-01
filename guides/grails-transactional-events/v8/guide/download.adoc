@@ -2,7 +2,7 @@ Generate a Grails 8 starter from link:https://grails.apache.org/start/[grails.ap
 
 [source,bash]
 ----
-curl -sL "https://start.grails.org/grails/grails-transactional-events.zip?type=web&javaVersion=21&grailsVersion=8.0.0" -o grails-transactional-events.zip
+curl https://latest.grails.org/create/WEB/grails-transactional-events -o grails-transactional-events.zip
 unzip grails-transactional-events.zip -d grails-transactional-events
 cd grails-transactional-events
 ----
