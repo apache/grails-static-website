@@ -240,8 +240,10 @@ abstract class PublishMainSiteTask extends DefaultTask {
         // apache/grails-github-actions#110 does for deploy-github-pages: fetch
         // the new tip, require it to descend from the tip we cloned, rebase
         // the unpublished local commit, and push again. Never force-push.
-        // deploy-github-pages itself is not a drop-in here: it publishes into
-        // docs/<snapshot|version>, and `git add $path/*` skips root .htaccess
+        // Keep Gradle rather than calling the action: it can target this
+        // same repo/branch (TARGET_FOLDER defaults to `.`; grails-core sets
+        // docs/), but default PURGE_EXISTING would wipe grails-core docs/
+        // on a root overlay, and `git add $path/*` skips new root .htaccess
         // and .well-known.
         String lastRemoteTip = captureGit(deployRoot, 'rev-parse', 'HEAD')
         String commitMessage = "Updating ${slug} ${branch} branch for GitHub Actions run:${run}"

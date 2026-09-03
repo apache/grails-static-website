@@ -9,10 +9,11 @@ on:
 # Serialize this repo's own overlapping publishes (push vs cron). Cross-repo
 # races against grails-core on apache/grails-website asf-site-production are
 # retried by publishMainSite (same non-fast-forward rebase as
-# apache/grails-github-actions#110). deploy-github-pages is not used here:
-# that action publishes into docs/<snapshot|version>, stages with
-# `git add $path/*` (skips .htaccess and .well-known), and a root purge
-# would delete grails-core's docs/ tree.
+# apache/grails-github-actions#110). Keep :publishMainSite instead of
+# deploy-github-pages: that action can push this same target repo/branch
+# (grails-core already does, with TARGET_FOLDER: docs), but a root overlay
+# with default PURGE_EXISTING would wipe docs/, and `git add $path/*`
+# skips new root .htaccess / .well-known.
 concurrency:
   group: publish-${{ github.ref }}
   cancel-in-progress: false
