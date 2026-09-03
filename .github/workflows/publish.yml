@@ -6,15 +6,20 @@ on:
   schedule:
     - cron:  '0 */2 * * *'
   workflow_dispatch:
-# Prevent two simultaneous publishes from racing on the deploy branch.
-# cancel-in-progress=false so the in-flight deploy completes before the next.
+# Serialize this repo's own overlapping publishes (push vs cron). Cross-repo
+# races against grails-core on apache/grails-website asf-site-production are
+# retried by publishMainSite (same non-fast-forward rebase as
+# apache/grails-github-actions#110). deploy-github-pages is not used here:
+# that action publishes into docs/<snapshot|version>, stages with
+# `git add $path/*` (skips .htaccess and .well-known), and a root purge
+# would delete grails-core's docs/ tree.
 concurrency:
   group: publish-${{ github.ref }}
   cancel-in-progress: false
 jobs:
   build:
     permissions:
-      contents: write
+      contents: read
     if: github.repository == 'apache/grails-static-website'
     runs-on: ubuntu-latest
     steps:
@@ -55,4 +60,3 @@ jobs:
           GH_TOKEN: ${{ secrets.GRAILS_GHTOKEN }}
           GH_BRANCH: asf-site-production
           GRAILS_WS_URL: https://grails.apache.org
-

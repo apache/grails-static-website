@@ -20,7 +20,7 @@ limitations under the License.
 
 Source for the Apache Grails website at [https://grails.apache.org/](https://grails.apache.org/) and the guides site at [https://grails.apache.org/guides/](https://grails.apache.org/guides/). Built as a static site with [Gradle](https://gradle.org); the build logic lives in [`buildSrc/`](buildSrc/).
 
-The cron-driven [`publish.yml`](.github/workflows/publish.yml) workflow builds this repository and pushes the result to the [`asf-site-production` branch on `apache/grails-website`](https://github.com/apache/grails-website/tree/asf-site-production), which Apache Infra mirrors to `grails.apache.org`.
+The cron-driven [`publish.yml`](.github/workflows/publish.yml) workflow builds this repository and pushes the result to the [`asf-site-production` branch on `apache/grails-website`](https://github.com/apache/grails-website/tree/asf-site-production), which Apache Infra mirrors to `grails.apache.org`. Concurrent documentation pushes from Grails Core are retried with the same non-fast-forward rebase as [`deploy-github-pages` PR #110](https://github.com/apache/grails-github-actions/pull/110).
 
 The legacy `https://guides.grails.org/` host is kept alive serving meta-refresh redirects to the new canonical URLs.
 

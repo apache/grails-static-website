@@ -73,7 +73,10 @@ import java.nio.file.attribute.BasicFileAttributes
  *       {@code .git/} metadata).</li>
  *   <li>Stages all changes; if {@code git status --porcelain} is empty,
  *       reports "no changes" and exits 0 without pushing.</li>
- *   <li>Otherwise commits and pushes back to {@code GH_BRANCH}.</li>
+ *   <li>Otherwise commits and pushes back to {@code GH_BRANCH}. Concurrent
+ *       non-fast-forward rejections are retried (fetch, descendant check,
+ *       rebase of the unpublished commit) up to five attempts, matching
+ *       apache/grails-github-actions#110. There is no force-push.</li>
  * </ol>
  *
  * The task uses {@link ExecOperations} (configuration-cache compatible)
@@ -233,17 +236,93 @@ abstract class PublishMainSiteTask extends DefaultTask {
             return
         }
 
-        // 6. Commit + push.
+        // 6. Commit + push. Retry genuine non-fast-forward races the same way
+        // apache/grails-github-actions#110 does for deploy-github-pages: fetch
+        // the new tip, require it to descend from the tip we cloned, rebase
+        // the unpublished local commit, and push again. Never force-push.
+        // deploy-github-pages itself is not a drop-in here: it publishes into
+        // docs/<snapshot|version>, and `git add $path/*` skips root .htaccess
+        // and .well-known.
+        String lastRemoteTip = captureGit(deployRoot, 'rev-parse', 'HEAD')
         String commitMessage = "Updating ${slug} ${branch} branch for GitHub Actions run:${run}"
         runGit(deployRoot, 'commit', '-m', commitMessage)
-        // Re-use the credential-bearing URL so this push does not depend on
-        // any global git credential helper state.
         String pushUrl = "https://oauth2:${token}@github.com/${slug}.git"
-        runGit(deployRoot, 'push', pushUrl, branch)
+        pushWithRetry(deployRoot, pushUrl, branch, lastRemoteTip)
+    }
+
+    private static final int MAX_PUSH_ATTEMPTS = 5
+
+    static boolean retryablePushRejection(String output) {
+        output.readLines().any { String line ->
+            line ==~ /^!\t.*\t\[rejected\] \((non-fast-forward|fetch first)\)$/
+        }
+    }
+
+    void pushWithRetry(File deployRoot, String pushUrl, String branch, String lastRemoteTip) {
+        String observedTip = lastRemoteTip
+        for (int attempt = 1; attempt <= MAX_PUSH_ATTEMPTS; attempt++) {
+            logger.lifecycle("Push attempt ${attempt}/${MAX_PUSH_ATTEMPTS}")
+            ByteArrayOutputStream combined = new ByteArrayOutputStream()
+            int exit = exec.exec { spec ->
+                spec.workingDir = deployRoot
+                spec.commandLine = ['git', '-c', 'core.hooksPath=', 'push', '--porcelain', pushUrl, "HEAD:refs/heads/${branch}".toString()]
+                spec.environment('LC_ALL', 'C')
+                spec.standardOutput = combined
+                spec.errorOutput = combined
+                spec.ignoreExitValue = true
+            }.exitValue
+            String output = new String(combined.toByteArray(), 'UTF-8')
+            if (!output.empty) {
+                logger.lifecycle(output)
+            }
+            if (exit == 0) {
+                logger.lifecycle('Deployment successful!')
+                return
+            }
+            boolean retryable = retryablePushRejection(output)
+            if (!retryable) {
+                throw new GradleException('Push failed without a retryable non-fast-forward rejection.')
+            }
+            if (attempt == MAX_PUSH_ATTEMPTS) {
+                throw new GradleException("Push failed after ${MAX_PUSH_ATTEMPTS} attempts.")
+            }
+            logger.lifecycle('Push rejected by a concurrent publisher, rebasing and retrying...')
+            if (!Boolean.getBoolean('website.publish.skipRetryBackoff')) {
+                int backoffSeconds = 1 << (attempt - 1)
+                Thread.sleep((backoffSeconds + new Random().nextInt(backoffSeconds + 1)) * 1000L)
+            }
+            runGit(deployRoot, 'fetch', '--no-tags', pushUrl, "refs/heads/${branch}")
+            String newRemoteTip = captureGit(deployRoot, 'rev-parse', 'FETCH_HEAD')
+            ByteArrayOutputStream ancestorOut = new ByteArrayOutputStream()
+            int ancestorExit = exec.exec { spec ->
+                spec.workingDir = deployRoot
+                spec.commandLine = ['git', 'merge-base', '--is-ancestor', observedTip, newRemoteTip]
+                spec.standardOutput = ancestorOut
+                spec.errorOutput = ancestorOut
+                spec.ignoreExitValue = true
+            }.exitValue
+            if (newRemoteTip == observedTip || ancestorExit != 0) {
+                throw new GradleException('Concurrent documentation branch update is not a descendant of the observed remote tip.')
+            }
+            int rebaseExit = exec.exec { spec ->
+                spec.workingDir = deployRoot
+                spec.commandLine = ['git', 'rebase', '--onto', newRemoteTip, observedTip]
+                spec.ignoreExitValue = true
+            }.exitValue
+            if (rebaseExit != 0) {
+                exec.exec { spec ->
+                    spec.workingDir = deployRoot
+                    spec.commandLine = ['git', 'rebase', '--abort']
+                    spec.ignoreExitValue = true
+                }
+                throw new GradleException('Rebase failed; aborting without changing the remote branch.')
+            }
+            observedTip = newRemoteTip
+        }
     }
 
     private void runGit(File workingDir, String... args) {
-        List<String> cmd = ['git']
+        List<String> cmd = ['git', '-c', 'core.hooksPath=']
         cmd.addAll(args.toList())
         exec.exec { spec ->
             spec.workingDir = workingDir
@@ -252,7 +331,7 @@ abstract class PublishMainSiteTask extends DefaultTask {
     }
 
     private String captureGit(File workingDir, String... args) {
-        List<String> cmd = ['git']
+        List<String> cmd = ['git', '-c', 'core.hooksPath=']
         cmd.addAll(args.toList())
         ByteArrayOutputStream out = new ByteArrayOutputStream()
         exec.exec { spec ->
