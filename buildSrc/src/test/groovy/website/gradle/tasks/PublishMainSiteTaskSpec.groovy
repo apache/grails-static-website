@@ -29,8 +29,19 @@ class PublishMainSiteTaskSpec extends Specification {
     @TempDir
     File tempDir
 
+    private static String previousSkipRetryBackoff
+
     def setupSpec() {
+        previousSkipRetryBackoff = System.getProperty('website.publish.skipRetryBackoff')
         System.setProperty('website.publish.skipRetryBackoff', 'true')
+    }
+
+    def cleanupSpec() {
+        if (previousSkipRetryBackoff == null) {
+            System.clearProperty('website.publish.skipRetryBackoff')
+        } else {
+            System.setProperty('website.publish.skipRetryBackoff', previousSkipRetryBackoff)
+        }
     }
 
     void 'retryablePushRejection recognizes porcelain non-fast-forward lines'() {
@@ -41,6 +52,13 @@ class PublishMainSiteTaskSpec extends Specification {
                 '!\tHEAD:refs/heads/asf-site-production\t[rejected] (fetch first)')
         !PublishMainSiteTask.retryablePushRejection('error: failed to push some refs')
         !PublishMainSiteTask.retryablePushRejection('')
+    }
+
+    void 'redactAuthenticatedUrls masks credentials in git output'() {
+        expect:
+        PublishMainSiteTask.redactAuthenticatedUrls(
+                'remote: https://oauth2:secret-token@github.com/apache/grails-website.git') ==
+                'remote: https://***@github.com/apache/grails-website.git'
     }
 
     void 'first push succeeds when the destination has not moved'() {

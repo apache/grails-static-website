@@ -258,6 +258,10 @@ abstract class PublishMainSiteTask extends DefaultTask {
         }
     }
 
+    static String redactAuthenticatedUrls(String output) {
+        output.replaceAll(/https:\/\/[^\/\s@]+@([^\/\s]+)/, 'https://***@$1')
+    }
+
     void pushWithRetry(File deployRoot, String pushUrl, String branch, String lastRemoteTip) {
         String observedTip = lastRemoteTip
         for (int attempt = 1; attempt <= MAX_PUSH_ATTEMPTS; attempt++) {
@@ -273,7 +277,7 @@ abstract class PublishMainSiteTask extends DefaultTask {
             }.exitValue
             String output = new String(combined.toByteArray(), 'UTF-8')
             if (!output.empty) {
-                logger.lifecycle(output)
+                logger.lifecycle(redactAuthenticatedUrls(output))
             }
             if (exit == 0) {
                 logger.lifecycle('Deployment successful!')
@@ -296,23 +300,23 @@ abstract class PublishMainSiteTask extends DefaultTask {
             ByteArrayOutputStream ancestorOut = new ByteArrayOutputStream()
             int ancestorExit = exec.exec { spec ->
                 spec.workingDir = deployRoot
-                spec.commandLine = ['git', 'merge-base', '--is-ancestor', observedTip, newRemoteTip]
+                spec.commandLine = ['git', '-c', 'core.hooksPath=', 'merge-base', '--is-ancestor', observedTip, newRemoteTip]
                 spec.standardOutput = ancestorOut
                 spec.errorOutput = ancestorOut
                 spec.ignoreExitValue = true
             }.exitValue
             if (newRemoteTip == observedTip || ancestorExit != 0) {
-                throw new GradleException('Concurrent documentation branch update is not a descendant of the observed remote tip.')
+                throw new GradleException("Concurrent branch update is not a descendant of observed tip ${observedTip}; new remote tip is ${newRemoteTip}.")
             }
             int rebaseExit = exec.exec { spec ->
                 spec.workingDir = deployRoot
-                spec.commandLine = ['git', 'rebase', '--onto', newRemoteTip, observedTip]
+                spec.commandLine = ['git', '-c', 'core.hooksPath=', 'rebase', '--onto', newRemoteTip, observedTip]
                 spec.ignoreExitValue = true
             }.exitValue
             if (rebaseExit != 0) {
                 exec.exec { spec ->
                     spec.workingDir = deployRoot
-                    spec.commandLine = ['git', 'rebase', '--abort']
+                    spec.commandLine = ['git', '-c', 'core.hooksPath=', 'rebase', '--abort']
                     spec.ignoreExitValue = true
                 }
                 throw new GradleException('Rebase failed; aborting without changing the remote branch.')
@@ -388,3 +392,4 @@ abstract class PublishMainSiteTask extends DefaultTask {
         })
     }
 }
+
