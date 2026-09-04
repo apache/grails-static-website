@@ -363,7 +363,7 @@ class DownloadPage {
                         )
                         p('The quickest way to get started with our application generator:')
                         p {
-                            a(href: 'https://start.grails.org', 'Grails Application Forge')
+                            a(href: 'https://grails.apache.org/start/', 'Grails Application Forge')
                         }
                     }
                     div(class: 'column') {

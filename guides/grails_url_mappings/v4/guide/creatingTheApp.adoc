@@ -11,12 +11,7 @@ If you have Grails (>= 3.3.0) installed, you can create your application on the 
 
 === 2. Create a new Application via the Application Forge
 
-You can download your project from http://start.grails.org, either by using the online wizard, or the following `curl` command:
-
-[source,bash]
-----
-~ curl -O start.grails.org/agenda.zip -d version=3.3.2
-----
+You can download your project from the online wizard at https://grails.apache.org/start/. The old `start.grails.org` curl API no longer serves versioned zips.
 
 === 3. Use the Initial Project from the Guide Repo
 

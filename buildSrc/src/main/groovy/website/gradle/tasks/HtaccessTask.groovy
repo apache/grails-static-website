@@ -40,6 +40,16 @@ abstract class HtaccessTask extends GrailsWebsiteTask {
     public static final String NAME = 'genHtaccess'
 
     private static final List<String> DOMAINS = [
+            // Host-only (no path). Trailing slash on a wildcard host is ignored by
+            // some browsers, which blocked Forge UI fetches to /versions.
+            'https://*.grails.org',
+            'https://latest.grails.org',
+            'https://next.grails.org',
+            'https://next-snapshot.grails.org',
+            'https://snapshot.grails.org',
+            'https://prev.grails.org',
+            'https://prev-snapshot.grails.org',
+            'https://older.grails.org',
             'https://*.kapa.ai/',
             'https://kapa-widget-proxy-la7dkmplpq-uc.a.run.app',
             'https://www.google.com/recaptcha/',
