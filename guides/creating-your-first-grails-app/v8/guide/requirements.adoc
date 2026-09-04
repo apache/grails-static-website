@@ -1,0 +1,5 @@
+* Approximately 60 minutes
+* JDK 21 (Apache Grails 8 requires Java 21)
+* A text editor or IDE
+* The Gradle wrapper bundled in `initial/` and `complete/` (no separate Grails SDK install required)
+* Docker, if you want to run Geb integration tests (`./gradlew integrationTest`)

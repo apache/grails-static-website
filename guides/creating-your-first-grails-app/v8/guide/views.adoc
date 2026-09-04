@@ -1,0 +1,25 @@
+GSPs under `grails-app/views/` render the HTML. The home page uses `<g:each>` and `<g:link>`:
+
+[source,gsp]
+.grails-app/views/home/index.gsp
+----
+include::../snippets/grails-app/views/home/index.gsp[]
+----
+
+Vehicle list and form pages use the Fields plugin tags (`<f:table>`, `<f:all>`, `<f:display>`). The list view:
+
+[source,gsp]
+.grails-app/views/vehicle/index.gsp
+----
+include::../snippets/grails-app/views/vehicle/index.gsp[]
+----
+
+The show page displays the estimated value next to the vehicle:
+
+[source,gsp]
+.grails-app/views/vehicle/show.gsp
+----
+include::../snippets/grails-app/views/vehicle/show.gsp[]
+----
+
+Create and edit forms live in `create.gsp` and `edit.gsp` and call `<f:all bean="vehicle"/>`.

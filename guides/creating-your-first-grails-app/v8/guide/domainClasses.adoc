@@ -1,0 +1,27 @@
+Model a simple vehicle inventory with three domain classes under `grails-app/domain/example/`.
+
+`Make` is a plain name:
+
+[source,groovy]
+.grails-app/domain/example/Make.groovy
+----
+include::../snippets/grails-app/domain/example/Make.groovy[]
+----
+
+`Model` belongs to a `Make`:
+
+[source,groovy]
+.grails-app/domain/example/Model.groovy
+----
+include::../snippets/grails-app/domain/example/Model.groovy[]
+----
+
+`Vehicle` ties name, year, make, and model together:
+
+[source,groovy]
+.grails-app/domain/example/Vehicle.groovy
+----
+include::../snippets/grails-app/domain/example/Vehicle.groovy[]
+----
+
+GORM maps these classes to tables automatically when you run the app against H2 (the starter default).
