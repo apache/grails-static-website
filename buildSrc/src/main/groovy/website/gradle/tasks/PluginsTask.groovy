@@ -152,7 +152,6 @@ abstract class PluginsTask extends GrailsWebsiteTask {
                                 PluginsPage.mainContent(siteUrl, plugins, 'Grails Plugins', null),
                                 "${siteUrl}/plugins.html".toString()
                         ),
-                        metadata,
                         '/plugins.html'
                 ),
                 'UTF-8'
