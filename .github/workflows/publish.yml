@@ -55,4 +55,5 @@ jobs:
           GH_TOKEN: ${{ secrets.GRAILS_GHTOKEN }}
           GH_BRANCH: asf-site-production
           GRAILS_WS_URL: https://grails.apache.org
-
+          ALGOLIA_APP_ID: ${{ vars.ALGOLIA_APP_ID }}
+          ALGOLIA_SEARCH_API_KEY: ${{ vars.ALGOLIA_SEARCH_API_KEY }}

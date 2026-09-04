@@ -1,0 +1,38 @@
+name: Update Algolia Search Index
+
+on:
+  workflow_run:
+    workflows:
+      - Publish
+    types:
+      - completed
+  workflow_dispatch:
+
+concurrency:
+  group: algolia-index
+  cancel-in-progress: false
+
+jobs:
+  index:
+    if: github.repository == 'apache/grails-static-website' && (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success')
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
+        with:
+          distribution: liberica
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@50e97c2cd7a37755bbfafc9c5b7cafaece252f6e # v6.1.0
+        with:
+          cache-provider: basic
+          develocity-access-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+      - name: Update Algolia index
+        run: ./gradlew clean uploadAlgoliaIndex --console=plain --no-daemon --no-configuration-cache
+        env:
+          ALGOLIA_APP_ID: ${{ vars.ALGOLIA_APP_ID }}
+          ALGOLIA_SEARCH_API_KEY: ${{ vars.ALGOLIA_SEARCH_API_KEY }}
+          ALGOLIA_WRITE_API_KEY: ${{ secrets.ALGOLIA_WRITE_API_KEY }}
+          ALGOLIA_COLLECT_EXTERNAL_DOCUMENTATION: 'true'
+          GRAILS_WS_URL: https://grails.apache.org

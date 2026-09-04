@@ -45,7 +45,9 @@ abstract class HtaccessTask extends GrailsWebsiteTask {
             'https://www.google.com/recaptcha/',
             'https://www.gstatic.com/recaptcha/',
             'https://hcaptcha.com',
-            'https://*.hcaptcha.com'
+            'https://*.hcaptcha.com',
+            'https://*.algolia.net/',
+            'https://*.algolianet.com/'
     ]
 
     private static String HT_ACCESS_CONTENT =

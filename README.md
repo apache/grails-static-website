@@ -94,6 +94,33 @@ export GRAILS_WS_URL=http://127.0.0.1:8000
 
 Generate the site, then serve `build/dist/` with any static-file server.
 
+### Testing Algolia search locally
+
+The local search page can query the deployed `grails_site_search` index using
+the public Algolia credentials. Do not use the admin API key here. Set the
+application ID and search-only key before generating the site:
+
+```bash
+export ALGOLIA_APP_ID=your-app-id
+export ALGOLIA_SEARCH_API_KEY=your-search-only-key
+export GRAILS_WS_URL=http://127.0.0.1:8000
+./gradlew clean build --console=plain
+```
+
+Then serve the generated site and open
+[`http://127.0.0.1:8000/search.html`](http://127.0.0.1:8000/search.html):
+
+```bash
+jwebserver -d "$(pwd)/build/dist"
+```
+
+The `GRAILS_WS_URL` protocol and port must match the server you use. For
+example, use `http://127.0.0.1:8080` with
+`python3 -m http.server 8080 --directory build/dist`, not an `https://` URL.
+The page uses the live Algolia index, but the site itself is served locally.
+Search result links point to the published Grails website unless the indexed
+URLs are changed separately.
+
 ### Using jwebserver (JDK 19+)
 
 JDK 19+ ships with a built-in static-file server called [`jwebserver`](https://docs.oracle.com/en/java/javase/25/docs/specs/man/jwebserver.html):
@@ -374,3 +401,46 @@ For broader Grails contribution discussion and questions:
 - [Community page](https://grails.apache.org/community.html)
 - [Dev mailing list](https://lists.apache.org/list.html?dev@grails.apache.org)
 - [Slack](https://slack.grails.org)
+
+## Algolia Search
+
+The site-wide search at [`/search.html`](https://grails.apache.org/search.html) uses the `grails_site_search` index in the project's Algolia application. The Guides catalogue and plugin portal retain their separate client-side filters.
+
+The public search configuration is supplied to GitHub Actions through these repository variables:
+
+```text
+ALGOLIA_APP_ID
+ALGOLIA_SEARCH_API_KEY
+```
+
+The indexing workflow uses the repository secret `ALGOLIA_WRITE_API_KEY`. This secret must never be placed in site assets or generated output.
+
+To generate the local record export, including rendered topic Guides and the published User and API Documentation, run:
+
+```bash
+ALGOLIA_COLLECT_EXTERNAL_DOCUMENTATION=true ./gradlew clean exportAlgoliaIndex --console=plain
+```
+
+To upload the export manually, use the repository helper script. It prompts for any missing credentials without echoing the write key, and collects external documentation by default:
+
+```bash
+./etc/bin/upload-algolia-index.sh
+```
+
+The application ID can be supplied through the environment; the write key can remain an interactive prompt. Extra arguments are passed to Gradle:
+
+```bash
+export ALGOLIA_APP_ID=your-app-id
+./etc/bin/upload-algolia-index.sh --stacktrace
+```
+
+Set `ALGOLIA_COLLECT_EXTERNAL_DOCUMENTATION=false` to upload only locally rendered website and Guide records.
+
+The export distinguishes these content sources:
+
+- `website`: main pages, blog posts, FAQ, and case studies
+- `guides`: step-by-step topic and technology guides under `/guides/`
+- `user-documentation`: Grails framework User Documentation under `/docs/<version>/guide/`
+- `api`: Groovydoc/API Documentation under `/docs/<version>/api/`
+
+User Documentation and API Documentation are collected from the published documentation site during indexing because they are not generated in this repository. The default collector indexes the latest stable version for each Grails major plus the latest current pre-release from `conf/releases.yml`; override the source URL with `ALGOLIA_DOCUMENTATION_BASE_URL` and selected versions with comma-separated `ALGOLIA_DOCUMENTATION_VERSIONS` when needed.
