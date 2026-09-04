@@ -33,8 +33,8 @@ class SiteMap {
         // Accept either `coreReleases:` (canonical) or the legacy `releases:` key
         // for one release cycle so external tooling that still writes the old
         // schema keeps working during the migration window.
-        def coreReleases = (model.coreReleases ?: model.releases) as List<Map>
-        coreReleases
+        def coreReleases = (model.containsKey('coreReleases') ? model.coreReleases : model.releases) as List<Map>
+        (coreReleases ?: [])
                 .collect { ReleaseVersion.build(it.version as String) }
                 .findAll { it != null }
                 .toSorted()
