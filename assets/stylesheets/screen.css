@@ -2673,7 +2673,8 @@ body.guide article.guide .tip td.content {
 	gap: 10px;
 }
 
-.hero-card-actions .hero-action {
+.hero-card-actions .hero-action,
+.search-page-action .hero-action {
 	display: inline-block;
 	padding: 12px 20px;
 	font-family: 'Roboto-Medium', sans-serif;
@@ -2685,8 +2686,17 @@ body.guide article.guide .tip td.content {
 	transition: opacity 0.15s ease;
 }
 
-.hero-card-actions .hero-action:hover {
+.hero-card-actions .hero-action:hover,
+.search-page-action .hero-action:hover {
 	opacity: 0.85;
+}
+
+.search-page-action {
+	text-align: center;
+}
+
+.search-page-description {
+	text-align: center;
 }
 
 .hero-action-download {
@@ -3157,4 +3167,3 @@ body.guide article.guide .tip td.content {
 		transition: none;
 	}
 }
-

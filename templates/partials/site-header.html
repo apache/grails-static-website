@@ -1,6 +1,6 @@
 <header class='main-header'>
     <div class='content'>
-        <a href='https://grails.apache.org/index.html'><img class='grails-logo' src='https://grails.apache.org/images/grails_logo.svg' alt='Grails Logo'/></a>
+        <a href='[%url]/index.html'><img class='grails-logo' src='[%url]/images/grails_logo.svg' alt='Grails Logo'/></a>
         <button type='button' id='show-navigation-link'
             class='mobile align-center navigation-toggle'
             aria-expanded='false'
@@ -9,24 +9,100 @@
         <div id='top-menus'>
             <nav class='secondary-menu' id='secondary-menu'>
                 <ul>
-                    <li><a href='https://grails.apache.org/casestudies/index.html'>Case Studies</a></li>
-                    <li><a href='https://grails.apache.org/blog/index.html'>Blog</a></li>
-                    <li><a href='https://grails.apache.org/learning.html'>Learning</a></li>
-                    <li><a href='https://grails.apache.org/community.html'>Community</a></li>
-                    <li><a href='https://grails.apache.org/search.html'>Search</a></li>
+                    <li><a href='[%url]/blog/index.html'>Blog</a></li>
+                    <li><a href='[%url]/casestudies/index.html'>Case Studies</a></li>
+                    <li><a href='[%url]/community.html'>Community</a></li>
+                    <li><a href='[%url]/faq.html'>FAQ</a></li>
+                    <li><a href='[%url]/support.html'>Support</a></li>
                 </ul>
             </nav>
             <nav class='main-menu' id='main-menu'>
                 <ul>
-                    <li><a href='https://grails.apache.org/documentation.html'>Documentation</a></li>
-                    <li><a href='https://grails.apache.org/download.html'>Download</a></li>
-                    <li><a href='https://grails.apache.org/plugins.html'>Plugins</a></li>
-                    <li><a href='https://grails.apache.org/guides'>Guides</a></li>
-                    <li><a href='https://grails.apache.org/faq.html'>FAQ</a></li>
-                    <li><a href='https://grails.apache.org/support.html'>Support</a></li>
-                    <li><a href='https://grails.apache.org/start/'>Forge App</a></li>
+                    <li><a href='[%url]/search.html' class='search-nav-link' data-search-open
+                           aria-haspopup='dialog' aria-controls='global-search-dialog' aria-keyshortcuts='Control+K Meta+K'>
+                        <svg class='search-nav-icon' aria-hidden='true' focusable='false' viewBox='0 0 24 24'>
+                            <circle cx='11' cy='11' r='6.5'></circle>
+                            <path d='m16 16 5 5'></path>
+                        </svg>
+                        <span>Search</span><kbd aria-label='Control or Command K'>Ctrl K</kbd>
+                    </a></li>
+                    <li class='search-nav-divider'><a href='[%url]/start' class='app-forge-nav-link'>
+                        <span>App Forge</span>
+                    </a></li>
+                    <li><a href='[%url]/documentation.html'>Documentation</a></li>
+                    <li><a href='[%url]/download.html'>Download</a></li>
+                    <li><a href='[%url]/guides'>Guides</a></li>
+                    <li><a href='[%url]/plugins.html'>Plugins</a></li>
                 </ul>
             </nav>
         </div>
     </div>
 </header>
+<div id='global-search-dialog' class='global-search-dialog' role='dialog'
+     aria-modal='true' aria-label='Search' hidden>
+    <div class='global-search-backdrop' data-search-close></div>
+    <div class='global-search-panel'>
+        <div class='global-search-fixed-content'>
+            <form id='global-search-form' class='global-search-form' role='search'>
+                <div class='global-search-input-row'>
+                    <div class='global-search-input-control'>
+                        <input id='global-search-input' type='search' autocomplete='off'
+                               aria-label='Search the Grails website, guides and documentation'
+                               placeholder='Search the Grails website and documentation'
+                               aria-describedby='global-search-status'/>
+                        <button id='global-search-clear' class='global-search-clear' type='button'
+                                aria-label='Clear search' hidden>
+                            <svg aria-hidden='true' focusable='false' viewBox='0 0 24 24'>
+                                <path d='m6 6 12 12M18 6 6 18'></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <button type='button' class='global-search-mobile-close' data-search-close>Close</button>
+                </div>
+            </form>
+            <div class='global-search-filters'>
+                <select id='global-search-source-filter' aria-label='Collection'>
+                    <option value=''>All content</option>
+                    <option value='website'>Website</option>
+                    <option value='guides'>Guides</option>
+                    <option value='user-documentation'>User Documentation</option>
+                    <option value='api'>API Documentation</option>
+                </select>
+                <div id='global-search-content-type-filter-container'>
+                    <select id='global-search-content-type-filter' aria-label='Type'>
+                        <option value=''>All types</option>
+                        <option value='page'>Pages</option>
+                        <option value='plugin'>Plugins</option>
+                        <option value='blog'>Blog posts</option>
+                        <option value='faq'>FAQ</option>
+                        <option value='case-study'>Case studies</option>
+                        <option value='guide'>Guides</option>
+                        <option value='guide-catalog'>Guide catalogue</option>
+                        <option value='user-documentation'>User Documentation</option>
+                        <option value='api'>API Documentation</option>
+                    </select>
+                </div>
+                <select id='global-search-version-filter' aria-label='Version'>
+                    <option value=''>All versions</option>
+                </select>
+            </div>
+        </div>
+        <div class='global-search-results-pane' tabindex='-1'>
+            <div class='global-search-results-content'>
+                <div id='global-search-results' class='global-search-results'></div>
+                <div id='global-search-load-more' class='global-search-load-more' aria-hidden='true'></div>
+            </div>
+        </div>
+        <p class='global-search-attribution'>
+            <a href='https://algolia.com' target='_blank' rel='noopener noreferrer' aria-label='Search by Algolia'>
+                <span>Search by</span>
+                <img class='global-search-algolia-logo' src='[%url]/images/algolia-logo-blue.svg' alt=''/>
+            </a>
+            <span class='global-search-footer-status'>
+                <span id='global-search-status' class='global-search-status' role='status' aria-live='polite'></span>
+                <span class='global-search-close-separator' aria-hidden='true'>&bull;</span>
+                <button type='button' class='global-search-close-hint' data-search-close>Esc to close</button>
+            </span>
+        </p>
+    </div>
+</div>

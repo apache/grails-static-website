@@ -68,6 +68,46 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
     private static final String SEPARATOR = '---'
     private static final int TWITTER_CARD_PLAYER_WIDTH = 560
     private static final int TWITTER_CARD_PLAYER_HEIGHT = 315
+    private static final String KAPA_WIDGET = '''<script
+    async
+    src="https://widget.kapa.ai/kapa-widget.bundle.js"
+    data-website-id="d804a9f2-51a2-414c-97f7-12f2a1ba4609"
+    data-project-name="Apache Grails"
+    data-project-color="#3F4346"
+    data-font-family="system-ui,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,Segoe UI,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;"
+    data-project-logo="https://grails.apache.org/images/grails.png"
+    data-modal-override-open-id="ask-ai-input"
+    data-modal-override-open-class="search-input"
+    data-user-analytics-fingerprint-enabled="true"
+    data-modal-title="Apache Grails AI Assistant"
+    data-modal-example-questions-title="Try asking me..."
+    data-modal-example-questions="How does database migration work?,How does Spring Security work?"
+    data-button-text="Ask AI"
+    data-button-text-color="#feb672"
+    data-button-text-font-size="0"
+    data-button-bg-color="#3F4346"
+    data-button-height="44px"
+    data-button-width="44px"
+    data-button-image-height="24"
+    data-button-image-width="24"
+    data-button-padding="10px"
+    data-button-border-radius="50%"
+    data-button-position-bottom="12px"
+    data-button-position-right="12px"
+    data-launcher-button-text="Ask AI"
+    data-launcher-button-font-size="0"
+    data-launcher-button-background-color="#3F4346"
+    data-launcher-button-height="44px"
+    data-launcher-button-width="44px"
+    data-launcher-button-image-height="24"
+    data-launcher-button-image-width="24"
+    data-launcher-button-padding="10px"
+    data-launcher-button-border-radius="50%"
+    data-launcher-button-bottom="12px"
+    data-launcher-button-right="12px"
+    data-modal-header-bg-color="#FFFFFF"
+    data-modal-title-color="#255AA8"
+    data-consent-required="true"></script>'''
 
     @InputFile
     @PathSensitive(PathSensitivity.RELATIVE)
@@ -230,7 +270,8 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
             List<Page> listOfPages,
             File outputDir,
             String templateText,
-            @Nullable File partialsRoot = null
+            @Nullable File partialsRoot = null,
+            String menuPathPrefix = ''
     ) {
         for (def page : listOfPages) {
             // Default the Open Graph URL to <site><page path>, but let a page
@@ -250,7 +291,11 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
                     templateText,
                     partialsRoot
             )
-            html = highlightMenu(html, siteMeta, page.path)
+            String pagePath = page.path.replaceFirst('^/+', '')
+            String menuPath = menuPathPrefix ?
+                    "${menuPathPrefix.replaceAll('/+$', '')}${pagePath == 'index.html' ? '' : "/${pagePath}"}" :
+                    page.path
+            html = highlightMenu(html, menuPath)
             if (page.bodyClassAttr) {
                 html = html.replace('<body>', "<body class='${page.bodyClassAttr}'>")
             }
@@ -299,6 +344,11 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
         }
         if (!resolvedMetadata.containsKey('description')) {
             resolvedMetadata.put('description', '')
+        }
+        if (resolvedMetadata['disableKapa'] == 'true') {
+            resolvedMetadata.put('kapa', '')
+        } else if (!resolvedMetadata.containsKey('kapa')) {
+            resolvedMetadata.put('kapa', KAPA_WIDGET)
         }
         if (!resolvedMetadata.containsKey('date')) {
             resolvedMetadata.put(
@@ -368,10 +418,11 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
         "<meta name='twitter:card' content='$cardType'/>"
     }
 
-    static String highlightMenu(String html, Map<String, String> sitemeta, String path) {
-        html.replaceAll(
-                "<li><a href='" + sitemeta['url'] + path,
-                "<li class='active'><a href='" + sitemeta['url'] + path
+    static String highlightMenu(String html, String path) {
+        String normalizedPath = path.startsWith('/') ? path : "/$path"
+        html.replaceFirst(
+                "(<li)(><a href='[^']*${Pattern.quote(normalizedPath)}')",
+                "\$1 class='active'\$2"
         )
     }
 
@@ -463,6 +514,17 @@ abstract class RenderSiteTask extends GrailsWebsiteTask {
         }
         out.append(templateText, last, templateText.length())
         out.toString()
+    }
+
+    /**
+     * Resolves placeholders used by shared partials before a separate
+     * renderer, such as the Guide renderer, inserts them into its template.
+     */
+    static String resolvePartial(String partialText, String siteUrl, boolean disableKapa = false) {
+        replaceLineWithMetadata(partialText, [
+                url: siteUrl,
+                kapa: disableKapa ? '' : KAPA_WIDGET,
+        ])
     }
 
     static String formatDate(String date) {

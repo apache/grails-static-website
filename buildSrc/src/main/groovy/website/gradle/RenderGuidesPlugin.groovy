@@ -33,6 +33,7 @@ import website.gradle.tasks.BlogTask
 import website.gradle.tasks.BskyAtProtoDidTask
 import website.gradle.tasks.DocumentationTask
 import website.gradle.tasks.DownloadTask
+import website.gradle.tasks.GenerateAlgoliaConfigTask
 import website.gradle.tasks.GuidesTask
 import website.gradle.tasks.HtaccessTask
 import website.gradle.tasks.MinutesTask
@@ -143,7 +144,6 @@ class RenderGuidesPlugin {
 
                 Map<String, Object> attributes = buildAttributes(
                         guide, version, versionKey)
-                injectSitePartials(project, attributes)
 
                 String stageTaskName = "stageGuideSource_${safeName}_${safeVersion}"
                 String renderTaskName = "renderGuide_${safeName}_${safeVersion}"
@@ -187,6 +187,7 @@ class RenderGuidesPlugin {
                     task.description =
                             "Renders ${guideName} v${versionKey} via the vendored grails-doc renderer"
                     task.dependsOn(stageTaskName)
+                    task.dependsOn(AssetsTask.NAME, GenerateAlgoliaConfigTask.NAME)
                     task.sourceDir.set(
                             project.layout.buildDirectory.dir(stagedRelPath))
                     task.resourcesDir.set(templateRoot)
@@ -264,6 +265,15 @@ class RenderGuidesPlugin {
                         }
                     }
                 }
+                // The build script may override grailsWebsite.url after the
+                // plugin is applied. Resolve shared partials after evaluation
+                // so local Guide builds use that configured URL as well.
+                project.afterEvaluate {
+                    String siteUrl = project.extensions
+                            .getByType(GrailsWebsiteExtension)
+                            .url.get()
+                    injectSitePartials(project, attributes, siteUrl)
+                }
                 wiring.renderTaskNames << renderTaskName
             }
         }
@@ -282,6 +292,7 @@ class RenderGuidesPlugin {
             task.description = description
             if (aggregateName == AGGREGATE_TASK) {
                 task.notCompatibleWithConfigurationCache('Runs vendored PublishGuide tasks and their log-capture finalizers.')
+                task.dependsOn(GenerateAlgoliaConfigTask.NAME)
             }
             for (String name : taskNames) {
                 task.dependsOn(name)
@@ -314,12 +325,20 @@ class RenderGuidesPlugin {
      * exposes them as {@code siteHead}, {@code siteHeader}, {@code siteFooter}
      * so the legacy guide layout can substitute them via Groovy {@code ${...}}.
      */
-    private static void injectSitePartials(Project project, Map<String, Object> attrs) {
+    private static void injectSitePartials(Project project, Map<String, Object> attrs, String siteUrl) {
+        attrs.put('siteUrl', siteUrl)
         ['siteHead': 'site-head', 'siteHeader': 'site-header', 'siteFooter': 'site-footer'].each { key, partial ->
             File f = project.rootProject.layout.projectDirectory
                     .file("templates/partials/${partial}.html").asFile
             if (f.isFile()) {
-                attrs.put(key, f.getText('UTF-8'))
+                String resolved = RenderSiteTask.resolvePartial(
+                        f.getText('UTF-8'), siteUrl)
+                if (key == 'siteHeader') {
+                    // Individual Guide pages bypass RenderSiteTask, so apply
+                    // the section highlight while injecting their header.
+                    resolved = RenderSiteTask.highlightMenu(resolved, '/guides')
+                }
+                attrs.put(key, resolved)
             }
         }
     }

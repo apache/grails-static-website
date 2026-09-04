@@ -1,0 +1,560 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+
+/* Global search dialog */
+
+.search-nav-link {
+    align-items: center;
+    display: inline-flex !important;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.search-nav-icon {
+    fill: none;
+    height: 16px;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-width: 2;
+    width: 16px;
+}
+
+.search-nav-link kbd {
+    background: #f5f5f5;
+    border: 1px solid #d5d5d5;
+    border-radius: 3px;
+    color: #777;
+    font-size: 10px;
+    letter-spacing: 0;
+    padding: 2px 4px;
+    text-transform: none;
+}
+
+.search-nav-link:hover kbd,
+.search-nav-link:focus-visible kbd,
+.main-menu li.active .search-nav-link kbd {
+    background: #fff;
+    color: #255AA8;
+}
+
+.app-forge-nav-link {
+    align-items: center;
+    display: inline-flex !important;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+@media screen and (min-width: 961px) {
+    .main-menu li.search-nav-divider {
+        border-left: 1px solid #d5d5d5;
+        padding-left: 25px;
+    }
+}
+
+.global-search-dialog[hidden] {
+    display: none;
+}
+
+.global-search-dialog {
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 1000;
+}
+
+.global-search-backdrop {
+    background: rgba(22, 31, 45, 0.68);
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.global-search-panel {
+    background: #fff;
+    border-top: 5px solid #feb672;
+    box-shadow: 0 14px 45px rgba(0, 0, 0, 0.25);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    margin: 8vh auto 0;
+    max-height: 84vh;
+    max-width: 760px;
+    overflow: hidden;
+    padding: 24px 0 20px;
+    position: relative;
+    width: calc(100% - 32px);
+}
+
+.global-search-fixed-content,
+.global-search-results-content {
+    padding-left: 28px;
+    padding-right: 28px;
+}
+
+.global-search-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.global-search-form {
+    margin-top: 0;
+}
+
+.global-search-input-row {
+    display: flex;
+    gap: 8px;
+}
+
+.global-search-mobile-close {
+    display: none;
+}
+
+.global-search-filters select {
+    background-color: #fff;
+    border: 1px solid #767676;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: #7c7c7c;
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    min-height: 34px;
+    min-width: 0;
+    padding: 5px 6px;
+    width: 100%;
+}
+
+.global-search-input-row input {
+    flex: 1;
+}
+
+.global-search-input-control {
+    flex: 1;
+    min-width: 0;
+    position: relative;
+}
+
+.global-search-input-control input {
+    border: 1px solid #767676;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font: inherit;
+    min-height: 40px;
+    padding: 8px 40px 8px 10px;
+    width: 100%;
+}
+
+.global-search-pagination button {
+    background: #255AA8;
+    border: 0;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    font: inherit;
+    padding: 8px 16px;
+}
+
+.global-search-pagination button:hover:not(:disabled) {
+    background: #1d4684;
+}
+
+.global-search-input-control .global-search-clear[hidden] {
+    display: none;
+}
+
+.global-search-input-control .global-search-clear {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    color: #666;
+    display: flex;
+    height: 32px;
+    justify-content: center;
+    padding: 4px;
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    width: 32px;
+}
+
+.global-search-input-control .global-search-clear:hover,
+.global-search-input-control .global-search-clear:focus-visible {
+    background: #f5f5f5;
+    color: #255AA8;
+}
+
+.global-search-clear svg {
+    fill: none;
+    height: 18px;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-width: 2;
+    width: 18px;
+}
+
+.global-search-mobile-close {
+    display: none;
+}
+
+.global-search-filters {
+    display: grid;
+    gap: 8px 10px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 18px 0 8px;
+}
+
+.global-search-status {
+    color: #666;
+    font-size: 13px;
+    text-align: right;
+}
+
+.global-search-attribution {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.global-search-footer-status {
+    align-items: center;
+    display: inline-flex;
+}
+
+.global-search-close-hint {
+    background-color: transparent !important;
+    border: 0;
+    color: #666;
+    cursor: pointer;
+    font: inherit;
+    padding: 0;
+    transform: none;
+    white-space: nowrap;
+}
+
+.global-search-close-hint:hover,
+.global-search-close-hint:focus-visible {
+    background-color: transparent !important;
+    color: #255AA8;
+    transform: none;
+    text-decoration: underline;
+}
+
+.global-search-close-separator {
+    display: none;
+    margin: 0 8px;
+}
+
+.global-search-status:not(:empty) + .global-search-close-separator {
+    display: inline;
+}
+
+.global-search-results-pane {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: auto;
+}
+
+.global-search-results {
+    margin-top: 12px;
+}
+
+.global-search-no-results {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 32px;
+    min-height: 160px;
+    text-align: center;
+}
+
+.global-search-no-results p {
+    margin: 0;
+}
+
+.global-search-no-results a {
+    margin-top: 10px;
+}
+
+.global-search-result {
+    border-top: 2px solid #feb672;
+    margin-top: 6px;
+    padding: 12px 0 2px;
+}
+
+.global-search-result h3 {
+    font-size: 18px;
+    margin: 0 0 5px;
+}
+
+.global-search-result h3 a {
+    color: #255AA8;
+}
+
+.global-search-result h3 + p {
+    margin-bottom: 4px;
+}
+
+.global-search-result > p:not(.global-search-result-context):not(.global-search-result-meta) {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.global-search-result-meta {
+    color: #666;
+    font-size: 14px;
+    margin: 6px 0 0;
+}
+
+.global-search-result-badge {
+    background: #fafafa;
+    border: 1px solid #e2e2e2;
+    border-radius: 3px;
+    color: #777;
+    display: inline-block;
+    font-size: 12px;
+    margin: 0 6px 4px 0;
+    padding: 2px 5px;
+}
+
+.global-search-result-context {
+    background: #f4f7fb;
+    border-left: 3px solid #feb672;
+    box-sizing: border-box;
+    color: #255AA8;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    line-height: 1.45;
+    margin: 0 0 8px;
+    overflow-wrap: anywhere;
+    padding: 4px 8px;
+}
+
+.global-search-result-version {
+    margin-right: 0;
+}
+
+.global-search-result em {
+    background: rgba(254, 182, 114, 0.35);
+    font-style: normal;
+}
+
+.global-search-load-more {
+    height: 1px;
+}
+
+.global-search-attribution {
+    background: #f5f5f5;
+    border-top: 1px solid #d8d8d8;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.08);
+    color: #666;
+    flex-shrink: 0;
+    font-size: 13px;
+    margin: 0 0 -20px;
+    padding: 12px 28px;
+}
+
+.global-search-attribution a {
+    align-items: center;
+    color: #666;
+    display: inline-flex;
+    gap: 5px;
+    text-decoration: none;
+}
+
+.global-search-attribution a:hover,
+.global-search-attribution a:focus-visible {
+    color: #255AA8;
+    text-decoration: underline;
+}
+
+.global-search-algolia-logo {
+    fill: currentColor;
+    height: 15px;
+    width: auto;
+}
+
+/* Kept for any older page markup that still references these classes. */
+.algolia-search-form label,
+ .algolia-search-filters label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.algolia-search-input-row {
+    display: flex;
+    gap: 8px;
+}
+
+.algolia-search-input-row input,
+.algolia-search-filters select {
+    border: 1px solid #767676;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font: inherit;
+    min-height: 40px;
+    padding: 8px 10px;
+}
+
+.algolia-search-input-row input {
+    flex: 1;
+}
+
+.algolia-search-input-row button,
+.algolia-search-pagination button {
+    background: #255AA8;
+    border: 0;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    font: inherit;
+    padding: 8px 16px;
+}
+
+.algolia-search-input-row button:hover,
+.algolia-search-pagination button:hover:not(:disabled) {
+    background: #1d4684;
+}
+
+.algolia-search-filters {
+    display: flex;
+    gap: 10px;
+    margin: 24px 0 8px;
+}
+
+.algolia-search-filters label {
+    align-self: center;
+    margin: 0;
+}
+
+.algolia-search-status {
+    min-height: 24px;
+}
+
+.algolia-search-results {
+    margin-top: 16px;
+}
+
+.algolia-result {
+    border-top: 2px solid #feb672;
+    margin-top: 16px;
+    padding: 16px 0 4px;
+}
+
+.algolia-result h2 {
+    font-size: 18px;
+    margin: 0 0 6px;
+}
+
+.algolia-result h2 a {
+    color: #255AA8;
+}
+
+.algolia-result-meta {
+    color: #666;
+    font-size: 14px;
+    margin: 0 0 8px;
+}
+
+.algolia-result-version {
+    margin-left: 8px;
+}
+
+.algolia-result em {
+    background: rgba(254, 182, 114, 0.35);
+    font-style: normal;
+}
+
+.algolia-search-pagination {
+    margin-top: 24px;
+    text-align: center;
+}
+
+.algolia-search-pagination button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.algolia-attribution {
+    color: #666;
+    font-size: 13px;
+    margin-top: 24px;
+}
+
+@media (max-width: 600px) {
+    .search-nav-link kbd {
+        display: none;
+    }
+
+    .global-search-panel {
+        height: auto;
+        margin-top: 3vh;
+        max-height: 94vh;
+        padding: 20px 0 16px;
+        width: calc(100% - 16px);
+    }
+
+    .global-search-fixed-content,
+    .global-search-results-content {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .global-search-attribution {
+        margin-bottom: -16px;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .global-search-mobile-close {
+        background: #255AA8;
+        border: 0;
+        border-radius: 4px;
+        color: #fff;
+        cursor: pointer;
+        display: block;
+        flex-shrink: 0;
+        font: inherit;
+        padding: 8px 10px;
+    }
+
+    .global-search-mobile-close:hover,
+    .global-search-mobile-close:focus-visible {
+        background: #1d4684;
+        outline: 2px solid #255AA8;
+        outline-offset: 2px;
+    }
+
+    .global-search-close-hint {
+        display: none;
+    }
+
+    .global-search-filters {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .algolia-search-input-row,
+    .algolia-search-filters {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .algolia-search-input-row button {
+        width: 100%;
+    }
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .global-search-close-hint {
+        display: none;
+    }
+}
