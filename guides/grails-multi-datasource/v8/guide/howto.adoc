@@ -1,0 +1,10 @@
+Clone the companion and start from `initial/`:
+
+[source,bash]
+----
+git clone -b grails8 https://github.com/grails-guides/grails-multi-datasource.git
+cd grails-multi-datasource/initial
+./gradlew test
+----
+
+`initial/` is a Grails 8 REST API starter (`rest-api` profile, Hibernate, H2, JSON views). You will add a second datasource, domains, services, controllers, views, and a functional test. To skip ahead, use `complete/`.

@@ -1,0 +1,7 @@
+Wire up the default data source and a second `books` data source in `application.yml`:
+
+[source,yaml]
+.grails-app/conf/application.yml
+----
+include::../snippets/grails-app/conf/application.yml[tag=dataSource]
+----

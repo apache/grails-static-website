@@ -1,0 +1,25 @@
+Create `BookController` and `MovieController`. They consume the services from the previous step.
+
+[source,groovy]
+.grails-app/controllers/demo/SaveBookCommand.groovy
+----
+include::../snippets/grails-app/controllers/demo/SaveBookCommand.groovy[]
+----
+
+[source,groovy]
+.grails-app/controllers/demo/BookController.groovy
+----
+include::../snippets/grails-app/controllers/demo/BookController.groovy[]
+----
+
+[source,groovy]
+.grails-app/controllers/demo/SaveMovieCommand.groovy
+----
+include::../snippets/grails-app/controllers/demo/SaveMovieCommand.groovy[]
+----
+
+[source,groovy]
+.grails-app/controllers/demo/MovieController.groovy
+----
+include::../snippets/grails-app/controllers/demo/MovieController.groovy[]
+----
