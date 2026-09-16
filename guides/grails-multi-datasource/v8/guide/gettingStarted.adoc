@@ -1,0 +1,1 @@
+In this guide you connect a Grails 8 REST API to two data sources and handle transactions against each of them.

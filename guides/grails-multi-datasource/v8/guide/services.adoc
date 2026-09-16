@@ -1,0 +1,58 @@
+Create a https://gorm.grails.org/latest/hibernate/manual/index.html#dataServices[Data Service] for `Movie`:
+
+[source,groovy]
+.grails-app/services/demo/MovieDataService.groovy
+----
+include::../snippets/grails-app/services/demo/MovieDataService.groovy[]
+----
+
+<1> You can specify query joins with the `@Join` annotation.
+
+Add a regular service:
+
+[source,groovy]
+.grails-app/services/demo/MovieService.groovy
+----
+include::../snippets/grails-app/services/demo/MovieService.groovy[]
+----
+
+[source,groovy]
+.grails-app/services/demo/BookDataService.groovy
+----
+include::../snippets/grails-app/services/demo/BookDataService.groovy[]
+----
+
+<1> Specify the data source name in `@Transactional` and `@ReadOnly`.
+<2> You can specify query joins with the `@Join` annotation.
+
+WARNING: If you use `@ReadOnly` instead of `@ReadOnly('books')` you will get `org.hibernate.HibernateException: No Session found for current thread`.
+
+Add a regular service:
+
+[source,groovy]
+.grails-app/services/demo/BookService.groovy
+----
+include::../snippets/grails-app/services/demo/BookService.groovy[]
+----
+
+<1> Specify the data source name in `@Transactional`.
+
+Add a `Keyword` service that works with multiple data sources.
+
+The first data source listed on a domain class is the default when you do not use an explicit connection. For `Keyword`, `ConnectionSource.DEFAULT` is used by default.
+
+[source,groovy]
+.grails-app/services/demo/KeywordService.groovy
+----
+include::../snippets/grails-app/services/demo/KeywordService.groovy[]
+----
+
+<1> Specify the data source name with `withConnection` for a query.
+
+You could write the `books` query with a dynamic finder or a criteria query instead of a where query:
+
+Where query: `Keyword.where {}.withConnection('books').list()`
+
+Dynamic finder: `Keyword.books.findAll()`
+
+Criteria: `Keyword.books.createCriteria().list { }`

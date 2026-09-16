@@ -1,0 +1,7 @@
+Add a functional test that verifies Grails handles multiple data sources as expected. The companion uses `java.net.http.HttpClient` (no extra HTTP-client dependency):
+
+[source,groovy]
+.src/integration-test/groovy/demo/MultipleDataSourceSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/demo/MultipleDataSourceSpec.groovy[]
+----

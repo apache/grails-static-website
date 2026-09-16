@@ -3631,6 +3631,7 @@ guides:
     subtitle: 'Learn how to consume and handle transactions to multiple data sources from a Grails application. '
     authors:
       - 'Sergio del Amo'
+      - 'Sanjana'
     category: 'Advanced Grails'
     publicationDate: '2017-10-10'
     versions:
@@ -3686,6 +3687,38 @@ guides:
         toc:
           training:
             title: Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            configuration: Configuration
+            domain: Domain Classes
+            services: Services
+            controllers: Controllers
+            views: Views
+            test: Functional Test
+          testingTheApp:
+            title: Testing the Application
+          helpWithGrails:
+            title: Help with Grails
+      '8':
+        sourcePath: guides/grails-multi-datasource/v8
+        publicationDate: '2026-09-16'
+        tags:
+          - 'multi-datasource'
+          - 'json-views'
+          - 'gorm'
+          - 'hibernate'
+          - 'database'
+          - 'transactions'
+          - 'rest-api'
+          - 'configuration'
+        sampleRef:
+          repo: 'grails-guides/grails-multi-datasource'
+          branch: 'grails8'
+        toc:
           gettingStarted:
             title: Getting Started
             requirements: What you will need

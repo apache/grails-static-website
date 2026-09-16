@@ -1,0 +1,5 @@
+We are writing a Grails application using the `rest-api` profile that connects to two data sources.
+
+image::graph.jpg[]
+
+NOTE: In older Grails releases a best-effort transaction chain tried to manage a transaction across every configured data source. That is not a true XA transaction and it costs performance, so it is not used here. Declare the data source you need on `@Transactional` / `@ReadOnly` (or use `withConnection`) instead.
