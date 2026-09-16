@@ -36,6 +36,7 @@ include::../snippets/grails-app/services/demo/BookService.groovy[]
 ----
 
 <1> Specify the data source name in `@Transactional`.
+<2> `Keyword` is mapped to both datasources and defaults to `ConnectionSource.DEFAULT`. Save it on the `books` connection so Hibernate does not flush it on the default session (which has no transaction here).
 
 Add a `Keyword` service that works with multiple data sources.
 

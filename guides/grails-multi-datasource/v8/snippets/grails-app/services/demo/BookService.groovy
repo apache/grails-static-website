@@ -1,11 +1,9 @@
 package demo
 
 import grails.gorm.transactions.Transactional
-import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 
 @Slf4j
-@CompileStatic
 class BookService {
 
     @Transactional('books') // <1>
@@ -13,7 +11,9 @@ class BookService {
         Book book = new Book(title: title)
         if (keywords) {
             for (String keyword : keywords) {
-                book.addToKeywords(new Keyword(name: keyword))
+                Keyword keywordInstance = new Keyword(name: keyword)
+                keywordInstance.books.save() // <2>
+                book.addToKeywords(keywordInstance)
             }
         }
         if (!book.save()) {
