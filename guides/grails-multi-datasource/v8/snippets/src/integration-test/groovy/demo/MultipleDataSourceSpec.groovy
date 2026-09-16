@@ -69,12 +69,12 @@ class MultipleDataSourceSpec extends Specification {
                 [title: 'Inception', tags: ['sci-fi']],
         ]
         books.each { book ->
-            HttpResponse<String> resp = saveResource('book', book.title as String, book.tags as List<String>)
-            assert resp.statusCode() == 201
+            HttpResponse<String> saveResp = saveResource('book', book.title as String, book.tags as List<String>)
+            assert saveResp.statusCode() == 201
         }
         movies.each { movie ->
-            HttpResponse<String> resp = saveResource('movie', movie.title as String, movie.tags as List<String>)
-            assert resp.statusCode() == 201
+            HttpResponse<String> saveResp = saveResource('movie', movie.title as String, movie.tags as List<String>)
+            assert saveResp.statusCode() == 201
         }
 
         when:
