@@ -819,9 +819,10 @@ guides:
 
   - name: 'database-per-tenant'
     title: 'Database per Tenant Multi-Tenancy'
-    subtitle: 'Learn how to leverage Multi-Tenancy features of GORM 6.1 to build an application using a unique database per tenant'
+    subtitle: 'Learn how to leverage Multi-Tenancy features of GORM to build an application using a unique database per tenant'
     authors:
       - 'Graeme Rocher'
+      - 'Sanjana'
     category: 'GORM'
     publicationDate: '2017-05-15'
     versions:
@@ -843,6 +844,46 @@ guides:
         toc:
           training:
             title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            setupMultitenancy:
+              title: Setup Multi-Tenancy
+              multiTenancyMode: The Multi-Tenancy Mode
+              multiTenancyResolver: The TenantResolver
+              dataSources: Multiple Data Sources
+            domainClasses: Creating the Domain Classes
+            seedData: Setup Test Data
+            tenantSelection: Implementing Tenant Selection
+            multiTenantLogic:
+              title: Writing Multi-Tenant Aware Data Logic
+              readingData: Executing Multi-Tenant Aware Queries
+              writingData: Executing Multi-Tenant Updates
+          testingTheApp: Multi-Tenancy Unit Testing
+          integrationTest: Functional Tests
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Do you need help with Grails?
+      '8':
+        sourcePath: guides/database-per-tenant/v8
+        publicationDate: '2026-09-13'
+        tags:
+          - 'multi-tenancy'
+          - 'database-per-tenant'
+          - 'gorm'
+          - 'hibernate'
+          - 'tenant-resolver'
+          - 'data-isolation'
+          - 'multi-datasource'
+          - 'security'
+        sampleRef:
+          repo: 'grails-guides/database-per-tenant'
+          branch: 'grails8'
+        toc:
           gettingStarted:
             title: Getting Started
             requirements: What you will need

@@ -1,0 +1,31 @@
+When creating domain classes for your application you will typically have domain classes that are Multi-Tenant and others that are not.
+
+For domain classes which won't be using Multi-Tenancy simply define them as you would normally do and they will be mapped to the default `dataSource`.
+
+For this example the `Manufacturer` will be the provider of tenant ids. The name of the `Manufacturer` will be used as the tenant `id` allowing access to each configured database:
+
+[source, groovy]
+.grails-app/domain/demo/Manufacturer.groovy
+----
+include::../../snippets/grails-app/domain/demo/Manufacturer.groovy[]
+----
+
+Next step is to define domain classes that can only be accessed by a given tenant:
+
+[source, groovy]
+.grails-app/domain/demo/Engine.groovy
+----
+include::../../snippets/grails-app/domain/demo/Engine.groovy[]
+----
+
+[source, groovy]
+.grails-app/domain/demo/Vehicle.groovy
+----
+include::../../snippets/grails-app/domain/demo/Vehicle.groovy[]
+----
+
+<1> Both domain class implement the link:https://grails.apache.org/docs/latest/api/grails/gorm/MultiTenant.html[MultiTenant trait]
+
+The `Vehicle` and `Engine` domain classes both implement the link:https://grails.apache.org/docs/latest/api/grails/gorm/MultiTenant.html[MultiTenant] trait which results in GORM resolving the database to use from the resulting tenant id returned from the configured link:https://grails.apache.org/docs/latest/api/org/grails/datastore/mapping/multitenancy/TenantResolver.html[TenantResolver].
+
+NOTE: On modern H2, `year` is a reserved word, so `Vehicle` maps the column as `` `year` ``.
