@@ -1,10 +1,10 @@
 Apart from the default `dataSource`, we configure two additional data sources
 `audi` and `ford` for each of the tenants:
 
-[source, groovy]
+[source, yaml]
 .grails-app/conf/application.yml
 ----
-include::{sourcedir}/grails-app/conf/application.yml[tag=dataSources]
+include::../../../snippets/grails-app/conf/application.yml[tag=dataSources]
 ----
 
 The names of the data sources correspond to the tenant ids that the configured `TenantResolver` should return.

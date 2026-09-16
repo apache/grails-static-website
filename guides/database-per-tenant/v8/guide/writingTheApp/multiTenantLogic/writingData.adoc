@@ -4,9 +4,9 @@ To add logic to perform write operations you can simply modify the `VehicleServi
 [source, groovy]
 .grails-app/services/demo/VehicleService.groovy
 ----
-include::{sourcedir}/grails-app/services/demo/VehicleService.groovy[tags=save, indent=0]
+include::../../../snippets/grails-app/services/demo/VehicleService.groovy[tags=save, indent=0]
 
-include::{sourcedir}/grails-app/services/demo/VehicleService.groovy[tags=delete, indent=0]
+include::../../../snippets/grails-app/services/demo/VehicleService.groovy[tags=delete, indent=0]
 ----
 
 The above `save` and `delete` methods will be implemented automatically for you.
@@ -18,7 +18,7 @@ To implement updates you can add a new method that calls the existing abstract `
 [source, groovy]
 .grails-app/services/demo/VehicleService.groovy
 ----
-include::{sourcedir}/grails-app/services/demo/VehicleService.groovy[tags=update, indent=0]
+include::../../../snippets/grails-app/services/demo/VehicleService.groovy[tags=update, indent=0]
 ----
 
 This demonstrates an important concept of GORM Data Services: It is possible to easily mix methods you define with ones that are automatically implemented for you by GORM.
@@ -28,10 +28,10 @@ The corresponding controller actions to call `VehicleService` and expose these w
 [source, groovy]
 .grails-app/controllers/demo/VehicleController.groovy
 ----
-include::{sourcedir}/grails-app/controllers/demo/VehicleController.groovy[tags=save, indent=0]
+include::../../../snippets/grails-app/controllers/demo/VehicleController.groovy[tags=save, indent=0]
 
-include::{sourcedir}/grails-app/controllers/demo/VehicleController.groovy[tags=update, indent=0]
+include::../../../snippets/grails-app/controllers/demo/VehicleController.groovy[tags=update, indent=0]
 
-include::{sourcedir}/grails-app/controllers/demo/VehicleController.groovy[tags=delete, indent=0]
+include::../../../snippets/grails-app/controllers/demo/VehicleController.groovy[tags=delete, indent=0]
 ----
 

@@ -1,9 +1,9 @@
-To implement Multi-Tenant queries in a GORM Data Service simply add abstract methods that correspond to link:{gormdocs}#_data_service_queries[one of the supported conventions in GORM]:
+To implement Multi-Tenant queries in a GORM Data Service simply add abstract methods that correspond to https://grails.apache.org/docs/latest/grails-data/hibernate5/manual/index.html#dataServiceQueries[one of the supported conventions in GORM]:
 
 [source, groovy]
 .grails-app/services/demo/VehicleService.groovy
 ----
-include::{sourcedir}/grails-app/services/demo/VehicleService.groovy[tags=queries, indent=0]
+include::../../../snippets/grails-app/services/demo/VehicleService.groovy[tags=queries, indent=0]
 ----
 
 <1> Each query method is annotated with `@Join`
@@ -17,25 +17,25 @@ Once the method completes however, this session is closed which means that any a
 
 It is therefore critical that your queries always return the data that is required to render the view. This typically leads to better performing queries anyway and will in fact help you design a better performing application.
 
-The `@Join` annotation is a simple way to achieve a join query, but in some cases it may be simpler to use link:{gormdocs}#_query_joins[a JPA-QL query].
+The `@Join` annotation is a simple way to achieve a join query, but in some cases it may be simpler to use https://grails.apache.org/docs/latest/grails-data/hibernate5/manual/index.html#queryJoins[a JPA-QL query].
 
-Now it is time to write a controller that can use these newly defined methods. First, create a new `grails-app/controllers/demo/VehicleController.groovy` class with either the `create-controller` command or your preferred IDE.
+Now it is time to write a controller that can use these newly defined methods. First, create `grails-app/controllers/demo/VehicleController.groovy` with `./grailsw create-controller demo.Vehicle` or your preferred IDE.
 
 The `VehicleController` should define a property referencing the previously created `VehicleService`:
 
 [source, groovy]
 .grails-app/controllers/demo/VehicleController.groovy
 ----
-include::{sourcedir}/grails-app/controllers/demo/VehicleController.groovy[tags=class, indent=0]
+include::../../../snippets/grails-app/controllers/demo/VehicleController.groovy[tags=class, indent=0]
     ...
 }
 ----
 
-Now run `grails generate-views` to generate some default GSP views that can render the `Vehicle` instances:
+Now generate default GSP views for `Vehicle`:
 
 [source,bash]
 ----
-$ grails generate-views demo.Vehicle
+./grailsw generate-views demo.Vehicle
 ----
 
 Next add an entry into the `UrlMappings.groovy` file to map the `/vehicles` URI:
@@ -43,7 +43,7 @@ Next add an entry into the `UrlMappings.groovy` file to map the `/vehicles` URI:
 [source, groovy]
 .grails-app/controllers/demo/UrlMappings.groovy
 ----
-include::{sourcedir}/grails-app/controllers/demo/UrlMappings.groovy[tag=vehicles, indent=0]
+include::../../../snippets/grails-app/controllers/demo/UrlMappings.groovy[tag=vehicles, indent=0]
 ----
 
 Now you are ready to add the query logic to read `Vehicle` instances for each tenant. Update `VehicleController` with the following read operations:
@@ -51,9 +51,11 @@ Now you are ready to add the query logic to read `Vehicle` instances for each te
 [source, groovy]
 .grails-app/controllers/demo/VehicleController.groovy
 ----
-include::{sourcedir}/grails-app/controllers/demo/VehicleController.groovy[tags=index, indent=0]
+include::../../../snippets/grails-app/controllers/demo/VehicleController.groovy[tags=index, indent=0]
 
-include::{sourcedir}/grails-app/controllers/demo/VehicleController.groovy[tags=show, indent=0]
+include::../../../snippets/grails-app/controllers/demo/VehicleController.groovy[tags=show, indent=0]
+
+include::../../../snippets/grails-app/controllers/demo/VehicleController.groovy[tags=create, indent=0]
 ----
 
-Both the `find` and `show` actions use the `VehicleService` to locate `Vehicle` instances. The `VehicleService` will ensure the correct tenant is resolved and the correct data returned for each tenant.
+The `index` and `show` actions use the `VehicleService` to locate `Vehicle` instances. `create` and `edit` instantiate a `MultiTenant` domain class, so they are annotated with `@CurrentTenant`. The `VehicleService` will ensure the correct tenant is resolved and the correct data returned for each tenant.

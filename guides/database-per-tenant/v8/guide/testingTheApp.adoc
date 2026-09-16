@@ -8,7 +8,7 @@ To write a unit test for the `VehicleController` class create a new `src/test/gr
 [source, groovy]
 .src/test/groovy/demo/VehicleControllerSpec.groovy
 ----
-include::{sourcedir}/src/test/groovy/demo/VehicleControllerSpec.groovy[tags=class, indent=0]
+include::../snippets/src/test/groovy/demo/VehicleControllerSpec.groovy[tags=class, indent=0]
 	...
 }
 ----
@@ -20,17 +20,17 @@ To make testing simpler override the `tenantResolverClass` by overriding the `ge
 [source, groovy]
 .src/test/groovy/demo/VehicleControllerSpec.groovy
 ----
-include::{sourcedir}/src/test/groovy/demo/VehicleControllerSpec.groovy[tags=config, indent=0]
+include::../snippets/src/test/groovy/demo/VehicleControllerSpec.groovy[tags=config, indent=0]
 ----
 
-This will allow you to use link:{gormapi}/org/grails/datastore/mapping/multitenancy/resolvers/SystemPropertyTenantResolver.html[SystemPropertyTenantResolver] for changing the tenant id within the test.
+This will allow you to use link:https://grails.apache.org/docs/latest/api/org/grails/datastore/mapping/multitenancy/resolvers/SystemPropertyTenantResolver.html[SystemPropertyTenantResolver] for changing the tenant id within the test.
 
 Next step is to provide a `setup` method that configures the `VehicleService` for the controller:
 
 [source, groovy]
 .src/test/groovy/demo/VehicleControllerSpec.groovy
 ----
-include::{sourcedir}/src/test/groovy/demo/VehicleControllerSpec.groovy[tags=setup, indent=0]
+include::../snippets/src/test/groovy/demo/VehicleControllerSpec.groovy[tags=setup, indent=0]
 ----
 
 <1> Define a `vehicleService` as a property of the unit test
@@ -43,7 +43,7 @@ To ensure proper cleanup you should also clear the tenant id in a `cleanup` meth
 [source, groovy]
 .src/test/groovy/demo/VehicleControllerSpec.groovy
 ----
-include::{sourcedir}/src/test/groovy/demo/VehicleControllerSpec.groovy[tags=cleanup, indent=0]
+include::../snippets/src/test/groovy/demo/VehicleControllerSpec.groovy[tags=cleanup, indent=0]
 ----
 
 With that done it is trivial to test the controller logic, for example to test the `index` action with no data:
@@ -51,7 +51,7 @@ With that done it is trivial to test the controller logic, for example to test t
 [source, groovy]
 .src/test/groovy/demo/VehicleControllerSpec.groovy
 ----
-include::{sourcedir}/src/test/groovy/demo/VehicleControllerSpec.groovy[tags=index, indent=0]
+include::../snippets/src/test/groovy/demo/VehicleControllerSpec.groovy[tags=index, indent=0]
 ----
 
 You can also write tests to test the case where no tenant id is present by clearing the tenant id:
@@ -59,7 +59,7 @@ You can also write tests to test the case where no tenant id is present by clear
 [source, groovy]
 .src/test/groovy/demo/VehicleControllerSpec.groovy
 ----
-include::{sourcedir}/src/test/groovy/demo/VehicleControllerSpec.groovy[tags=noTenant, indent=0]
+include::../snippets/src/test/groovy/demo/VehicleControllerSpec.groovy[tags=noTenant, indent=0]
 ----
 
 Testing more complex interactions like saving data is possible too:
@@ -67,7 +67,7 @@ Testing more complex interactions like saving data is possible too:
 [source, groovy]
 .src/test/groovy/demo/VehicleControllerSpec.groovy
 ----
-include::{sourcedir}/src/test/groovy/demo/VehicleControllerSpec.groovy[tags=save, indent=0]
+include::../snippets/src/test/groovy/demo/VehicleControllerSpec.groovy[tags=save, indent=0]
 ----
 
 Note that within the assertions of the above test we use the `vehicleService` which makes sure the correct database connection is used when making the assertion.

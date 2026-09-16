@@ -3,25 +3,25 @@ We map the CRUD pages with Geb page objects:
 [source, groovy]
 .src/integration-test/groovy/demo/ManufacturersPage.groovy
 ----
-include::{sourcedir}/src/integration-test/groovy/demo/ManufacturersPage.groovy[]
+include::../snippets/src/integration-test/groovy/demo/ManufacturersPage.groovy[]
 ----
 
 [source, groovy]
 .src/integration-test/groovy/demo/NewVehiclePage.groovy
 ----
-include::{sourcedir}/src/integration-test/groovy/demo/NewVehiclePage.groovy[]
+include::../snippets/src/integration-test/groovy/demo/NewVehiclePage.groovy[]
 ----
 
 [source, groovy]
 .src/integration-test/groovy/demo/ShowVehiclePage.groovy
 ----
-include::{sourcedir}/src/integration-test/groovy/demo/ShowVehiclePage.groovy[]
+include::../snippets/src/integration-test/groovy/demo/ShowVehiclePage.groovy[]
 ----
 
 [source, groovy]
 .src/integration-test/groovy/demo/VehiclesPage.groovy
 ----
-include::{sourcedir}/src/integration-test/groovy/demo/VehiclesPage.groovy[]
+include::../snippets/src/integration-test/groovy/demo/VehiclesPage.groovy[]
 ----
 
 We test tenant selection with a `ContainerGebSpec` functional test (requires Docker / Testcontainers):
@@ -29,7 +29,7 @@ We test tenant selection with a `ContainerGebSpec` functional test (requires Doc
 [source, groovy]
 .src/integration-test/groovy/demo/TenantSelectionFuncSpec.groovy
 ----
-include::{sourcedir}/src/integration-test/groovy/demo/TenantSelectionFuncSpec.groovy[]
+include::../snippets/src/integration-test/groovy/demo/TenantSelectionFuncSpec.groovy[]
 ----
 
 There is also a non-browser integration test that proves tenant isolation with `Tenants.withId`:
@@ -37,5 +37,5 @@ There is also a non-browser integration test that proves tenant isolation with `
 [source, groovy]
 .src/integration-test/groovy/demo/TenantIsolationIntegrationSpec.groovy
 ----
-include::{sourcedir}/src/integration-test/groovy/demo/TenantIsolationIntegrationSpec.groovy[]
+include::../snippets/src/integration-test/groovy/demo/TenantIsolationIntegrationSpec.groovy[]
 ----

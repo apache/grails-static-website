@@ -3,5 +3,5 @@ The starter already pins Apache Grails 8 in `gradle.properties`:
 [source, properties]
 .gradle.properties
 ----
-include::{sourcedir}/gradle.properties[]
+include::../snippets/gradle.properties[]
 ----

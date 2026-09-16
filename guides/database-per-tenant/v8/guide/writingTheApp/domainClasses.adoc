@@ -7,7 +7,7 @@ For this example the `Manufacturer` will be the provider of tenant ids. The name
 [source, groovy]
 .grails-app/domain/demo/Manufacturer.groovy
 ----
-include::{sourcedir}/grails-app/domain/demo/Manufacturer.groovy[]
+include::../../snippets/grails-app/domain/demo/Manufacturer.groovy[]
 ----
 
 Next step is to define domain classes that can only be accessed by a given tenant:
@@ -15,17 +15,17 @@ Next step is to define domain classes that can only be accessed by a given tenan
 [source, groovy]
 .grails-app/domain/demo/Engine.groovy
 ----
-include::{sourcedir}/grails-app/domain/demo/Engine.groovy[]
+include::../../snippets/grails-app/domain/demo/Engine.groovy[]
 ----
 
 [source, groovy]
 .grails-app/domain/demo/Vehicle.groovy
 ----
-include::{sourcedir}/grails-app/domain/demo/Vehicle.groovy[]
+include::../../snippets/grails-app/domain/demo/Vehicle.groovy[]
 ----
 
-<1> Both domain class implement the link:{gormapi}/grails/gorm/MultiTenant.html[MultiTenant trait]
+<1> Both domain class implement the link:https://grails.apache.org/docs/latest/api/grails/gorm/MultiTenant.html[MultiTenant trait]
 
-The `Vehicle` and `Engine` domain classes both implement the link:{gormapi}/grails/gorm/MultiTenant.html[MultiTenant] trait which results in GORM resolving the database to use from the resulting tenant id returned from the configured link:{gormapi}/org/grails/datastore/mapping/multitenancy/TenantResolver.html[TenantResolver].
+The `Vehicle` and `Engine` domain classes both implement the link:https://grails.apache.org/docs/latest/api/grails/gorm/MultiTenant.html[MultiTenant] trait which results in GORM resolving the database to use from the resulting tenant id returned from the configured link:https://grails.apache.org/docs/latest/api/org/grails/datastore/mapping/multitenancy/TenantResolver.html[TenantResolver].
 
 NOTE: On modern H2, `year` is a reserved word, so `Vehicle` maps the column as `` `year` ``.
