@@ -46,6 +46,11 @@ companionArtifacts:
       mirrorDirectory: grails-publish
       releaseNotesRepo: apache/grails-gradle-publish
       displayName: Grails Publish Gradle Plugin
+    - artifactId: grails-intellij-plugin
+      version: '262.0.1'
+      mirrorDirectory: intellij
+      releaseNotesRepo: apache/grails-intellij-plugin
+      displayName: Grails IntelliJ Plugin
   '8':
     - artifactId: grails-publish
       version: '1.0.0-M2'
