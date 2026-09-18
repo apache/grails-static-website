@@ -1305,6 +1305,7 @@ guides:
     subtitle: 'Learn to configure routes and endpoints'
     authors:
       - 'Zachary Klein'
+      - 'Sanjana'
     category: 'Grails Apprentice'
     publicationDate: '2018-01-17'
     versions:
@@ -1324,6 +1325,39 @@ guides:
           branch: 'master'
         toc:
           gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          creatingTheApp:
+            title: Creating our Application
+          controllers:
+            title: Creating Controllers
+          urlMappings:
+            title: Defining URL Mappings
+          splitUrlMappings:
+            title: Organize URL Mappings
+          testing:
+            title: Testing URL Mappings
+          conclusion:
+            title: Conclusion
+          helpWithGrails:
+            title: Help with Grails
+      '8':
+        sourcePath: guides/grails_url_mappings/v8
+        publicationDate: '2026-09-18'
+        tags:
+          - 'url-mappings'
+          - 'controllers'
+          - 'rest-api'
+          - 'routing'
+          - 'web-layer'
+          - 'beginner'
+          - 'api-design'
+        sampleRef:
+          repo: 'grails-guides/grails_url_mappings'
+          branch: 'grails8'
+        toc:
+          gettingStarted:
             title: Getting Started
             requirements: What you will need
             howto: How to complete the guide
