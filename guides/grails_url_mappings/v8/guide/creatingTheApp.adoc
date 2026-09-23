@@ -1,0 +1,10 @@
+This guide uses the companion `initial/` project, which is already a Grails 8 web starter (`web` profile, package `demo`).
+
+If you prefer a fresh application instead, generate one from https://grails.apache.org/start/ or with the Grails 8 CLI:
+
+[source,bash]
+----
+grails create-app demo
+----
+
+Then follow the remaining chapters inside that project.
