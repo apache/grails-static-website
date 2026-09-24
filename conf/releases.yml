@@ -475,3 +475,6 @@ coreReleases:
   - version: 8.0.0-M6
     publicationDate: Aug 29, 2026
 
+  - version: 7.0.17
+    publicationDate: Sep 24, 2026
+
