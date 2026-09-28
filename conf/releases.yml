@@ -499,3 +499,6 @@ coreReleases:
   - version: 7.2.4
     publicationDate: Sep 25, 2026
 
+  - version: 8.0.0-RC1
+    publicationDate: Sep 28, 2026
+
