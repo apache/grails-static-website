@@ -97,6 +97,35 @@ class SiteMap {
     }
 
     /**
+     * Reads the {@code tools:} block from {@code conf/releases.yml} and returns
+     * the Apache-released developer tools (e.g. the IntelliJ plugin) that are
+     * versioned independently of any single Grails major. Tool entries share
+     * the {@link CompanionArtifact} schema.
+     *
+     * @param releases the {@code conf/releases.yml} file
+     * @return list of {@link CompanionArtifact} entries in file order; never null
+     */
+    static List<CompanionArtifact> tools(File releases) {
+        assert releases.exists()
+        def model = releases.newInputStream().withCloseable {
+            new Yaml().load(it) as Map
+        }
+        def entries = model.tools as List<Map>
+        if (!entries) {
+            return Collections.<CompanionArtifact> emptyList()
+        }
+        entries.collect { Map e ->
+            new CompanionArtifact(
+                    artifactId: e.artifactId as String,
+                    version: e.version as String,
+                    mirrorDirectory: e.mirrorDirectory as String,
+                    releaseNotesRepo: e.releaseNotesRepo as String,
+                    displayName: e.displayName as String,
+            )
+        }
+    }
+
+    /**
      * Returns the Grails major versions that have entries under
      * {@code companionArtifacts:} but no entry of any kind (stable or
      * pre-release) under {@code coreReleases:}. These are companion plugins

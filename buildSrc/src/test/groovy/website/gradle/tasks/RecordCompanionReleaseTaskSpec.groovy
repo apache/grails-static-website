@@ -178,6 +178,69 @@ coreReleases:
 '''
     }
 
+    void 'bootstraps a new major before a following tools: section without touching it'() {
+
+        given:
+            File yaml = writeReleases('''\
+companionArtifacts:
+  '7':
+    - artifactId: grails-redis
+      version: '5.0.1'
+      mirrorDirectory: redis
+      releaseNotesRepo: apache/grails-redis
+      displayName: Grails Redis Plugin
+
+tools:
+  # tool comment
+  - artifactId: grails-intellij-plugin
+    version: '262.1.1'
+    mirrorDirectory: intellij
+    releaseNotesRepo: apache/grails-intellij-plugin
+    displayName: Grails IntelliJ Plugin
+
+coreReleases:
+  - version: 7.0.0
+''')
+            def task = registerTask(yaml)
+            task.grailsMajor.set('8')
+            task.artifactId.set('grails-publish')
+            task.artifactVersion.set('1.0.0-M1')
+            task.mirrorDirectory.set('grails-publish')
+            task.releaseNotesRepo.set('apache/grails-gradle-publish')
+            task.displayName.set('Grails Publish Gradle Plugin')
+
+        when:
+            task.recordCompanionRelease()
+
+        then:
+            yaml.text == '''\
+companionArtifacts:
+  '7':
+    - artifactId: grails-redis
+      version: '5.0.1'
+      mirrorDirectory: redis
+      releaseNotesRepo: apache/grails-redis
+      displayName: Grails Redis Plugin
+  '8':
+    - artifactId: grails-publish
+      version: '1.0.0-M1'
+      mirrorDirectory: grails-publish
+      releaseNotesRepo: apache/grails-gradle-publish
+      displayName: Grails Publish Gradle Plugin
+
+tools:
+  # tool comment
+  - artifactId: grails-intellij-plugin
+    version: '262.1.1'
+    mirrorDirectory: intellij
+    releaseNotesRepo: apache/grails-intellij-plugin
+    displayName: Grails IntelliJ Plugin
+
+coreReleases:
+  - version: 7.0.0
+'''
+    }
+
     void 'fails with a clear message when bootstrapping a new major without descriptor flags'() {
 
         given:

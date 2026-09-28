@@ -270,6 +270,44 @@ companionArtifacts:
             result[1].artifactId == 'grails-quartz'
     }
 
+    void 'tools returns an empty list when no tools section exists'() {
+
+        given:
+            File releases = releasesFile('''
+coreReleases:
+  - version: 7.0.0
+'''.stripIndent())
+
+        expect:
+            SiteMap.tools(releases) == []
+    }
+
+    void 'tools returns the parsed tool entries in file order'() {
+
+        given:
+            File releases = releasesFile('''
+tools:
+  - artifactId: grails-intellij-plugin
+    version: '262.1.1'
+    mirrorDirectory: intellij
+    releaseNotesRepo: apache/grails-intellij-plugin
+    displayName: Grails IntelliJ Plugin
+coreReleases:
+  - version: 7.0.0
+'''.stripIndent())
+
+        when:
+            List<CompanionArtifact> result = SiteMap.tools(releases)
+
+        then:
+            result.size() == 1
+            result[0].artifactId == 'grails-intellij-plugin'
+            result[0].version == '262.1.1'
+            result[0].mirrorDirectory == 'intellij'
+            result[0].releaseNotesRepo == 'apache/grails-intellij-plugin'
+            result[0].displayName == 'Grails IntelliJ Plugin'
+    }
+
     void 'orphanCompanionMajors returns an empty list when no companionArtifacts section exists'() {
 
         given:
