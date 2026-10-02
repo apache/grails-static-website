@@ -144,7 +144,7 @@ class DocumentationPage {
      *       (Single-page, User Guide, API Reference) for every stable docs
      *       URL since Grails 1.2.0.</li>
      *   <li><strong>Modules</strong> - the GORM / Security / Upgrade / Testing /
-     *       Views / Async / Database / Redis category boxes, in a two-column
+     *       Views / Async / Database / Redis / IDE category boxes, in a two-column
      *       footer.</li>
      * </ul>
      *
@@ -265,7 +265,7 @@ class DocumentationPage {
                         )
                     }
                     div(class: 'column') {
-                        ['Upgrade', 'Testing', 'Views', 'Async', 'Database', 'Redis'].each { title ->
+                        ['Upgrade', 'Testing', 'Views', 'Async', 'Database', 'Redis', 'IDE'].each { title ->
                             mkp.yieldUnescaped(
                                     DocumentationPage.renderCategory(categories.find {
                                         it.title == title
