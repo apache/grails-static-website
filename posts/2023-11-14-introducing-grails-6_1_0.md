@@ -75,7 +75,7 @@ These upgrades ensure that Grails 6.1.0 remains compatible with the latest libra
 
 ## Installing Grails 6.1.0
 
-You can get started with Grails 6.1.0 today by visiting our [official website](https://start.grails.org/). Alternatively, you can quickly install Grails 6.1.0 using the [SDKMan](https://sdkman.io/).
+You can get started with Grails 6.1.0 today by visiting our [official website](https://grails.apache.org/start/). Alternatively, you can quickly install Grails 6.1.0 using the [SDKMan](https://sdkman.io/).
 
 1. If you don't have SDKMan installed, follow the instructions at [SDKMan Installation Guide](https://sdkman.io/install/) to set it up.
 
@@ -115,7 +115,7 @@ If manual dependency updates seem daunting or you want a more streamlined approa
 
 #### 1. Use Grails Forge Website
 
-Visit [https://start.grails.org](https://start.grails.org) and generate a new Grails application with Grails 6.1.0. Compare the versions in the newly generated application with your existing one to identify any discrepancies. This can serve as a reference point for your update.
+Visit [https://grails.apache.org/start/](https://grails.apache.org/start/) and generate a new Grails application with Grails 6.1.0. Compare the versions in the newly generated application with your existing one to identify any discrepancies. This can serve as a reference point for your update.
 
 #### 2. Automated Dependency Update Bots
 

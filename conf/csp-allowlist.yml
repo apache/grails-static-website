@@ -36,6 +36,10 @@ allowedHosts:
     reason: 'Same as github.com but for raw asset URLs occasionally referenced from docs.'
   - host: 'guides.grails.org'
     reason: 'Legacy guides site; transitional cross-references during the migration. Remove after Phase 15 redirect cutover.'
+  - host: '*.algolia.net'
+    reason: 'Algolia search API connections used by the public search page.'
+  - host: '*.algolianet.com'
+    reason: 'Algolia search API connections for applications using the Algolia network endpoint.'
 
 # Tags whose src/href URLs are scanned. The defaults cover the four
 # CSP-relevant directives (script-src, style-src, frame-src, img-src).

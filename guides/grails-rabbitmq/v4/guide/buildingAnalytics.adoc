@@ -1,5 +1,5 @@
 Create a new Grails 3 application for this additional app. For example by using
-http://start.grails.org/[Grails Application Forge] or the command line:
+https://grails.apache.org/start/[Grails Application Forge] or the command line:
 
 [source,bash]
 ----

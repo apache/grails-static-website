@@ -1,0 +1,17 @@
+Clone the repository and verify tests pass:
+
+[source,bash]
+----
+git clone -b grails8 https://github.com/grails-guides/grails-database-migration.git
+cd grails-database-migration/initial
+./gradlew test
+----
+
+The `initial/` project is a Grails 8 REST API starter with the database-migration plugin and a `Person` domain - but no Liquibase changelogs yet. Unit tests cover `Person` constraints; `updateOnStart` stays `false` in test config until you generate the baseline changelog.
+
+To skip ahead, `cd ../complete` and run the same commands - that tree contains the finished migrations, domains, and tests.
+
+[[cloneAndRun]]
+== Verify CI
+
+Both `initial` and `complete` must pass in CI (see `.github/workflows/grails8.yml`).

@@ -68,6 +68,22 @@ textarea {
 	vertical-align: middle;
 }
 
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+#main pre:focus-visible,
+#navigation a:focus-visible {
+	outline: 3px solid #0969da;
+	outline-offset: 2px;
+}
+
+#navigation #nav-summary > a:focus-visible {
+	background: #1f2328;
+	color: #ffffff;
+}
+
 .input-group {
 	display: table;
 	margin-top: 12px;
@@ -325,23 +341,179 @@ body.guide article.guide aside button.btn-large + ul.githublinks + .input-group 
 	color: #ffffff;
 }
 
+#footer {
+	box-sizing: border-box;
+}
+
 .local-title {
 	font-size: 1.4em;
 	font-weight: bold;
 }
 
+/* ---- Standalone chapter layout -------------------------------------------- */
+body.body {
+	text-align: left;
+}
+
+#colset {
+	table-layout: fixed;
+}
+
+#colset #col1 {
+	min-width: 0;
+}
+
+#main,
+#main .listingblock,
+#main .listingblock .content {
+	min-width: 0;
+	max-width: 100%;
+}
+
+#main h1,
+#main h2 {
+	color: #d97706;
+}
+
+@media screen {
+	#main pre {
+		box-sizing: border-box;
+		contain: paint;
+		max-width: 100%;
+		overflow-x: auto;
+		white-space: pre;
+	}
+
+	#main .tableblock,
+	#main .imageblock,
+	#main .videoblock,
+	#main .listingblock,
+	#main .literalblock {
+		overflow-x: auto;
+	}
+}
+
+@media print {
+	body.body .listingblock pre,
+	body.body .listingblock pre code,
+	body.body .literalblock pre,
+	body.body .literalblock pre code,
+	body.guide .listingblock pre,
+	body.guide .listingblock pre code,
+	body.guide .literalblock pre,
+	body.guide .literalblock pre code {
+		contain: none;
+		overflow-x: visible !important;
+		overflow-wrap: anywhere;
+		white-space: pre-wrap;
+	}
+}
+
+#main .tableblock,
+#main .imageblock,
+#main .videoblock,
+#main .listingblock,
+#main .literalblock {
+	max-width: 100%;
+}
+
+#main img,
+#main object,
+#main svg {
+	height: auto;
+	max-width: 100%;
+}
+
+.chapter-navigation {
+	display: flex;
+	justify-content: space-between;
+	gap: 16px;
+	margin-bottom: 16px;
+}
+
+.chapter-navigation .toc-item {
+	float: none;
+}
+
+.chapter-navigation .next-right {
+	margin-left: auto;
+	text-align: right;
+}
+
+#nav-summary-childs {
+	display: none;
+	box-sizing: border-box;
+	max-width: calc(100vw - 32px);
+}
+
+#nav-summary:hover #nav-summary-childs,
+#nav-summary:focus-within #nav-summary-childs {
+	display: block;
+}
+
+.downloadButton {
+	display: inline-block;
+	color: #24292f !important;
+	background: #ffffff;
+	border: 1px solid #d0d7de;
+	border-radius: 6px;
+	padding: 7px 12px;
+	text-decoration: none;
+}
+
+.downloadButton:hover {
+	background: #f6f8fa;
+}
+
 /* ---- Responsive: hide aside on small screens ----------------------------- */
-@media only screen and (max-device-width: 480px) and (orientation: portrait) {
+@media only screen and (max-width: 768px) {
+	body.body {
+		text-align: left;
+	}
+
+	.chapter-navigation {
+		align-items: flex-start;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	.chapter-navigation .next-right {
+		margin-left: 0;
+		text-align: left;
+	}
+
+	.contribute-btn {
+		clear: both;
+		float: none;
+		margin: 8px 0 16px;
+		position: static;
+		top: auto;
+	}
+
+	#colset,
+	#colset tbody,
+	#colset tr,
+	#colset #col1 {
+		display: block;
+		width: 100%;
+	}
 	#colset #col1 {
 		margin: 0;
 		padding: 0;
 	}
 	#main {
-		width: 98%;
+		box-sizing: border-box;
+		width: auto;
 		margin: 0;
 		border: 0;
 	}
 	#colset #col2 {
 		display: none;
+	}
+}
+
+@media only screen and (min-width: 481px) and (max-width: 900px) {
+	body.guide article.guide > header {
+		padding-right: 72px;
 	}
 }

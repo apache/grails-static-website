@@ -7,4 +7,4 @@ cd grails-transactional-events/complete
 ./gradlew integrationTest
 ----
 
-`initial/` is the vanilla Grails 8 starter from link:https://start.grails.org[start.grails.org] with the default H2 in-memory database. `complete/` adds the `Customer`/`Order`/`AuditLog` domain model, the `OrderPlacedEvent` POGO, the `OrderService` publisher, the three listener beans, and the integration specs.
+`initial/` is the vanilla Grails 8 starter from link:https://grails.apache.org/start/[grails.apache.org/start] with the default H2 in-memory database. `complete/` adds the `Customer`/`Order`/`AuditLog` domain model, the `OrderPlacedEvent` POGO, the `OrderService` publisher, the three listener beans, and the integration specs.

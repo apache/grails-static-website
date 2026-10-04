@@ -9,6 +9,54 @@ defaults:
   tags: []
 
 guides:
+  - name: 'grails-jobrunr'
+    title: 'Background Jobs with JobRunr in Grails 8'
+    subtitle: 'Run durable background work safely with JobRunr OSS, Grails transactions, and explicit storage wiring.'
+    authors:
+      - 'James Fredley'
+    category: 'Grails Async'
+    publicationDate: '2026-08-11'
+    versions:
+      '8':
+        sourcePath: guides/grails-jobrunr/v8
+        publicationDate: '2026-08-11'
+        tags:
+          - 'grails8'
+          - 'jobrunr'
+          - 'background-jobs'
+          - 'scheduling'
+          - 'async'
+          - 'transactions'
+          - 'spring-boot'
+          - 'gorm'
+          - 'testing'
+        sampleRef:
+          repo: 'grails-guides/grails-jobrunr'
+          branch: 'grails8'
+        toc:
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to Complete the Guide
+          dependencySetup:
+            title: Add JobRunr and Jackson
+          storageConfiguration:
+            title: Configure Dedicated Job Storage
+          jobRequests:
+            title: Use Job Requests From Groovy
+          durableEnqueue:
+            title: Enqueue After Commit
+          jobApis:
+            title: Schedule and Track Jobs
+          runningTheApp:
+            title: Run and Inspect Jobs
+          testing:
+            title: Test the Integration
+          operations:
+            title: Production Operations
+          helpWithGrails:
+            title: Do You Need Help With Grails?
+
   - name: 'adding-commit-info'
     title: 'Adding Commit Info to your Grails Application'
     subtitle: 'Knowing the exact version of code that your application is running is important'
@@ -401,6 +449,7 @@ guides:
     subtitle: 'This guide will explain how you can use command objects to validate input data in a Grails application'
     authors:
       - 'Matthew Moss'
+      - 'Sanjana'
     category: 'Grails Apprentice'
     publicationDate: '2017-01-09'
     versions:
@@ -471,13 +520,46 @@ guides:
           runningTheApp:
             title: Running the Application
           helpWithGrails:
-            title: Do you need help with Grails?  
+            title: Do you need help with Grails?
+      '8':
+        sourcePath: guides/command-objects-and-forms/v8
+        publicationDate: '2026-08-26'
+        tags:
+          - 'command-objects'
+          - 'forms'
+          - 'data-binding'
+          - 'validation'
+          - 'controllers'
+          - 'gsp'
+          - 'web-layer'
+          - 'unit-tests'
+          - 'functional-tests'
+          - 'beginner'
+        sampleRef:
+          repo: 'grails-guides/command-objects-and-forms'
+          branch: 'grails8'
+        toc:
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          whatAreCommandObjects: What are command objects?
+          writingTheApp:
+            title: Writing the Application
+            createTheController: Create the controller
+            addCreateAndSaveActions: Implement the create and save actions
+            addEditAndUpdateActions: Implement the edit and update actions
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'creating-your-first-grails-app'
     title: 'Creating your first Grails Application'
     subtitle: 'Learn how to create your first Grails app'
     authors:
       - 'Zachary Klein'
+      - 'Sanjana'
     category: 'Grails Apprentice'
     publicationDate: '2017-01-23'
     versions:
@@ -687,13 +769,60 @@ guides:
           deployment:
             title: Deploying your App
           helpWithGrails:
-            title: Do you need help with Grails?  
+            title: Do you need help with Grails?
+      '8':
+        sourcePath: guides/creating-your-first-grails-app/v8
+        publicationDate: '2026-08-05'
+        tags:
+          - 'beginner'
+          - 'domain-classes'
+          - 'controllers'
+          - 'services'
+          - 'gsp'
+          - 'unit-tests'
+          - 'integration-tests'
+          - 'scaffolding'
+          - 'asset-pipeline'
+          - 'url-mappings'
+          - 'getting-started'
+          - 'crud'
+        sampleRef:
+          repo: 'grails-guides/creating-your-first-grails-app'
+          branch: 'grails8'
+        toc:
+          introduction:
+            title: Introduction
+          requirements:
+            title: What you will need
+          gettingStarted:
+            title: Getting Started
+          creatingTheApp:
+            title: Creating the app
+          runningTheApp:
+            title: Running the app
+          domainClasses:
+            title: Domain classes
+          controllers:
+            title: Controllers and scaffolding
+          views:
+            title: GSP views
+          assetPipeline:
+            title: Asset Pipeline
+          services:
+            title: Services
+          testing:
+            title: Testing
+          summary:
+            title: Summary
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'database-per-tenant'
     title: 'Database per Tenant Multi-Tenancy'
-    subtitle: 'Learn how to leverage Multi-Tenancy features of GORM 6.1 to build an application using a unique database per tenant'
+    subtitle: 'Learn how to leverage Multi-Tenancy features of GORM to build an application using a unique database per tenant'
     authors:
       - 'Graeme Rocher'
+      - 'Sanjana'
     category: 'GORM'
     publicationDate: '2017-05-15'
     versions:
@@ -715,6 +844,46 @@ guides:
         toc:
           training:
             title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            setupMultitenancy:
+              title: Setup Multi-Tenancy
+              multiTenancyMode: The Multi-Tenancy Mode
+              multiTenancyResolver: The TenantResolver
+              dataSources: Multiple Data Sources
+            domainClasses: Creating the Domain Classes
+            seedData: Setup Test Data
+            tenantSelection: Implementing Tenant Selection
+            multiTenantLogic:
+              title: Writing Multi-Tenant Aware Data Logic
+              readingData: Executing Multi-Tenant Aware Queries
+              writingData: Executing Multi-Tenant Updates
+          testingTheApp: Multi-Tenancy Unit Testing
+          integrationTest: Functional Tests
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Do you need help with Grails?
+      '8':
+        sourcePath: guides/database-per-tenant/v8
+        publicationDate: '2026-09-13'
+        tags:
+          - 'multi-tenancy'
+          - 'database-per-tenant'
+          - 'gorm'
+          - 'hibernate'
+          - 'tenant-resolver'
+          - 'data-isolation'
+          - 'multi-datasource'
+          - 'security'
+        sampleRef:
+          repo: 'grails-guides/database-per-tenant'
+          branch: 'grails8'
+        toc:
           gettingStarted:
             title: Getting Started
             requirements: What you will need
@@ -865,6 +1034,38 @@ guides:
             title: Conclusion
           helpWithGrails: 
             title: Help with Grails 
+      '8':
+        sourcePath: guides/gorm-event-listeners/v8
+        publicationDate: '2026-09-11'
+        tags:
+          - 'gorm'
+          - 'gorm-events'
+          - 'event-listeners'
+          - 'domain-events'
+          - 'async'
+          - 'service-layer'
+          - 'persistence-events'
+          - 'unit-tests'
+          - 'integration-tests'
+        sampleRef:
+          repo: 'grails-guides/gorm-event-listeners'
+          branch: 'grails8'
+        toc:
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            dataServices: Data Services
+            async: Listening to events from GORM asynchronously
+            sync: Listening to events from GORM synchronously
+          runningTheTests:
+            title: Running the Tests
+          conclusion:
+            title: Conclusion
+          helpWithGrails:
+            title: Help with Grails
 
   - name: 'gorm-graphql-with-react-and-apollo'
     title: 'Building a GORM/GraphQL App with React and Apollo'
@@ -1104,6 +1305,7 @@ guides:
     subtitle: 'Learn to configure routes and endpoints'
     authors:
       - 'Zachary Klein'
+      - 'Sanjana'
     category: 'Grails Apprentice'
     publicationDate: '2018-01-17'
     versions:
@@ -1123,6 +1325,39 @@ guides:
           branch: 'master'
         toc:
           gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          creatingTheApp:
+            title: Creating our Application
+          controllers:
+            title: Creating Controllers
+          urlMappings:
+            title: Defining URL Mappings
+          splitUrlMappings:
+            title: Organize URL Mappings
+          testing:
+            title: Testing URL Mappings
+          conclusion:
+            title: Conclusion
+          helpWithGrails:
+            title: Help with Grails
+      '8':
+        sourcePath: guides/grails_url_mappings/v8
+        publicationDate: '2026-09-18'
+        tags:
+          - 'url-mappings'
+          - 'controllers'
+          - 'rest-api'
+          - 'routing'
+          - 'web-layer'
+          - 'beginner'
+          - 'api-design'
+        sampleRef:
+          repo: 'grails-guides/grails_url_mappings'
+          branch: 'grails8'
+        toc:
+          gettingStarted:
             title: Getting Started
             requirements: What you will need
             howto: How to complete the guide
@@ -1810,7 +2045,7 @@ guides:
     title: 'Grails Database Migration'
     subtitle: 'In this guide we will learn how to use the Grails Database Migration Plugin'
     authors:
-      - 'Nirav Assar, Sergio del Amo'
+      - 'Nirav Assar, Sergio del Amo, Sanjana'
     category: 'Advanced Grails'
     publicationDate: '2017-08-07'
     versions:
@@ -1924,7 +2159,59 @@ guides:
           summary:
               title: Summary
           helpWithGrails:
-            title: Do you need help with Grails?  
+            title: Do you need help with Grails?
+      '8':
+        sourcePath: guides/grails-database-migration/v8
+        publicationDate: '2026-06-26'
+        tags:
+          - 'liquibase'
+          - 'database-migration'
+          - 'gorm'
+          - 'postgresql'
+          - 'schema-evolution'
+          - 'baselining'
+          - 'rollback'
+          - 'persistence'
+          - 'devops'
+          - 'versioning'
+          - 'spock'
+          - 'testcontainers'
+          - 'integration-testing'
+        sampleRef:
+          repo: 'grails-guides/grails-database-migration'
+          branch: 'grails8'
+        toc:
+          introduction:
+            title: Introduction
+          requirements: What you will need
+          gettingStarted:
+            title: Getting Started
+          pluginSetup:
+            title: Plugin setup
+          baseline:
+            title: Baseline the schema
+          makeColumnNullable:
+            title: Make a column nullable
+          addAttributes:
+            title: Add address columns
+          redesignTables:
+            title: Redesign tables and migrate data
+          releaseRunbook:
+            title: Release runbook
+          designedRollback:
+            title: Designed rollback
+          legacyOnboarding:
+            title: Existing database onboarding
+          changelogDiscipline:
+            title: Changelog discipline
+          testing:
+            title: Testing migrations
+          runningTheApp:
+            title: Running the application
+          summary:
+            title: Summary
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'grails-docker-bootbuildimage'
     title: 'Containerise a Grails 8 App with Spring Boot bootBuildImage'
@@ -2190,10 +2477,11 @@ guides:
             title: Help with Grails
 
   - name: 'grails-email'
-    title: 'Send Email and Spock Spring'
-    subtitle: 'Learn how to send emails with AWS SES and SendGrid from a Grails app and leverage Spock Spring integration to verify interaction.'
+    title: 'Sending Email from a Grails 8 Application (and Testing It)'
+    subtitle: 'Send mail over SMTP or through SendGrid / AWS SES, externalize configuration, and verify send interactions with Spock Spring integration tests, without live email.'
     authors:
       - 'Sergio del Amo'
+      - 'Sanjana'
     category: 'Grails Testing'
     publicationDate: '2018-06-04'
     versions:
@@ -2255,6 +2543,46 @@ guides:
               sendGridService: SendGrid
             resources: Resources
             test: Test
+          helpWithGrails:
+            title: Do you need help with Grails?
+      '8':
+        sourcePath: guides/grails-email/v8
+        publicationDate: '2026-07-01'
+        tags:
+          - 'email'
+          - 'smtp'
+          - 'sendgrid'
+          - 'ses'
+          - 'aws'
+          - 'spock-spring'
+          - 'integration-testing'
+          - 'mail'
+        sampleRef:
+          repo: 'grails-guides/grails-email'
+          branch: 'grails8'
+        toc:
+          introduction:
+            title: Introduction
+          requirements:
+            title: What you will need
+          gettingStarted:
+            title: Getting Started
+          emailContract:
+            title: Email contract
+          smtpMail:
+            title: SMTP with the Mail plugin
+          sendGridService:
+            title: SendGrid
+          awsSesService:
+            title: AWS SES
+          mailConfiguration:
+            title: Wire the provider
+          controller:
+            title: Controller
+          testing:
+            title: Testing without live email
+          summary:
+            title: Summary
           helpWithGrails:
             title: Do you need help with Grails?
 
@@ -2823,6 +3151,51 @@ guides:
           helpWithGrails:
               title: Help with Grails
 
+  - name: 'grails-http-client'
+    title: 'Calling REST APIs with Spring HTTP Services in Grails 8'
+    subtitle: 'Add a declarative @HttpExchange client to a Grails 8 REST API, combine GORM data with external API results, and test with Spock.'
+    authors:
+      - 'Sanjana'
+    category: 'Grails REST APIs'
+    publicationDate: '2026-06-26'
+    versions:
+      '8':
+        sourcePath: guides/grails-http-client/v8
+        publicationDate: '2026-06-26'
+        tags:
+          - 'rest-api'
+          - 'http-client'
+          - 'http-exchange'
+          - 'spring-boot'
+          - 'gorm'
+          - 'postgresql'
+          - 'spock'
+          - 'testcontainers'
+          - 'integration-testing'
+        sampleRef:
+          repo: 'grails-guides/grails-http-client'
+          branch: 'grails8'
+        toc:
+          introduction:
+            title: Introduction
+          requirements: What you will need
+          gettingStarted:
+            title: Getting Started
+          httpClientSetup:
+            title: HTTP client setup
+          domainAndControllers:
+            title: Domain and local REST API
+          searchService:
+            title: Search service and controller
+          testing:
+            title: Testing
+          runningTheApp:
+            title: Running the application
+          summary:
+            title: Summary
+          helpWithGrails:
+            title: Do you need help with Grails?
+
   - name: 'grails-htmx'
     title: 'HTMX with Grails 8'
     subtitle: 'Build a small task tracker with server-rendered Grails 8 GSP and HTMX-driven inline editing, live search, optimistic delete, and toggle - no SPA, no JSON.'
@@ -3333,6 +3706,7 @@ guides:
     subtitle: 'Learn how to consume and handle transactions to multiple data sources from a Grails application. '
     authors:
       - 'Sergio del Amo'
+      - 'Sanjana'
     category: 'Advanced Grails'
     publicationDate: '2017-10-10'
     versions:
@@ -3388,6 +3762,38 @@ guides:
         toc:
           training:
             title: Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            configuration: Configuration
+            domain: Domain Classes
+            services: Services
+            controllers: Controllers
+            views: Views
+            test: Functional Test
+          testingTheApp:
+            title: Testing the Application
+          helpWithGrails:
+            title: Help with Grails
+      '8':
+        sourcePath: guides/grails-multi-datasource/v8
+        publicationDate: '2026-09-16'
+        tags:
+          - 'multi-datasource'
+          - 'json-views'
+          - 'gorm'
+          - 'hibernate'
+          - 'database'
+          - 'transactions'
+          - 'rest-api'
+          - 'configuration'
+        sampleRef:
+          repo: 'grails-guides/grails-multi-datasource'
+          branch: 'grails8'
+        toc:
           gettingStarted:
             title: Getting Started
             requirements: What you will need

@@ -1,0 +1,5 @@
+In this guide you will learn how to write and test GORM *event listeners* on Apache Grails 8. GORM event listeners let you run custom logic when objects are saved, updated, or deleted — for example creating an audit log, updating a related object, or changing a property before it is persisted. These listeners use Grails events, with shortcuts that target domain-class persistence events.
+
+TIP: You may already know the persistence callbacks on domain classes (`beforeInsert`, `afterInsert`, `beforeUpdate`, and so on). Event listeners do the same kind of work, but they live in the Spring context. That means they can call other services and beans. Domain classes are not autowired by default, so they are a poorer place for this logic.
+
+Work in the `initial/` project and compare your progress with `complete/`.

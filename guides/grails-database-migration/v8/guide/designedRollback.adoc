@@ -1,0 +1,31 @@
+Treat rollback as a designed capability, not an afterthought.
+
+Simple, auto-reversible changesets (such as `dropNotNullConstraint`) can use:
+
+[source,bash]
+----
+./grailsw dbm-rollback-count 1
+----
+
+For multi-step redesigns, write explicit `rollback {}` blocks (as in `create-address-table.groovy`) so Liquibase can re-add dropped columns and restore data from `address`.
+
+Tag a known-good release before a risky update:
+
+[source,bash]
+----
+./grailsw dbm-tag before-address-redesign
+----
+
+Preview the rollback SQL to that tag:
+
+[source,bash]
+----
+./grailsw dbm-rollback-sql before-address-redesign
+----
+
+Execute the rollback when you need to:
+
+[source,bash]
+----
+./grailsw dbm-rollback before-address-redesign
+----

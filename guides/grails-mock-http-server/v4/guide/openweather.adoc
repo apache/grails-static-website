@@ -8,6 +8,4 @@ They have a FREE plan which allows you to get the https://openweathermap.org/cur
 
 After you register, you get an API Key. You will need an API key to interact with the Open Weather Map API.
 
-image::apiKey.png[]
-
 TIP: the API key may take several minutes to become active.

@@ -1,5 +1,5 @@
 include::{commondir}/common-runapp.adoc[]
 
-If you setup a valid API Key in `application.yml`, you will see the London weather prediction.
+If you set the `OPENWEATHER_APPID` environment variable to a valid API key, you will see the London weather prediction.
 
 image::homepage.png[]

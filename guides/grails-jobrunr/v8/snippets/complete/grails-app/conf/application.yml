@@ -1,0 +1,64 @@
+grails:
+    profile: web
+    codegen:
+        defaultPackage: example.grails
+    gorm:
+        reactor:
+            events: false
+
+dataSource:
+    dbCreate: create-drop
+    url: jdbc:h2:mem:application;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    username: sa
+    password: ''
+
+dataSources:
+    jobrunr:
+        dbCreate: none
+        url: jdbc:h2:mem:jobrunr;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+        driverClassName: org.h2.Driver
+        username: sa
+        password: ''
+
+hibernate:
+    cache:
+        queries: false
+        use_second_level_cache: false
+        use_query_cache: false
+
+jobrunr:
+    jobs:
+        default-number-of-retries: 3
+
+server:
+    port: 8080
+
+environments:
+    development:
+        jobrunr:
+            background-job-server:
+                enabled: true
+                worker-count: 2
+                poll-interval-in-seconds: 5
+            dashboard:
+                enabled: true
+                port: 8000
+    test:
+        jobrunr:
+            background-job-server:
+                enabled: true
+                worker-count: 1
+                poll-interval-in-seconds: 5
+            dashboard:
+                enabled: false
+    production:
+        jobrunr:
+            database:
+                skip-create: true
+            background-job-server:
+                enabled: false
+            dashboard:
+                enabled: false
+            miscellaneous:
+                allow-anonymous-data-usage: false

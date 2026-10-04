@@ -144,27 +144,31 @@ abstract class GuidesTask extends GrailsWebsiteTask {
         // RenderSiteTask uses, so guides/index.html, tag, and category pages
         // share the main-site chrome.
         File partialsArg = partialsDir.isPresent() ? partialsDir.get().asFile : null
-        RenderSiteTask.renderPages(meta, [page], distDir, templateText, partialsArg)
+        RenderSiteTask.renderPages(
+                meta, [page], distDir, templateText, partialsArg, '/guides')
         RenderSiteTask.renderPages(
                 meta,
                 parseCategoryPages(tempDir),
                 new File(distDir, 'categories').tap { it.mkdirs() },
                 templateText,
-                partialsArg
+                partialsArg,
+                '/guides/categories'
         )
         RenderSiteTask.renderPages(
                 meta,
                 parseTagsPages(tempDir),
                 new File(distDir, 'tags').tap { it.mkdirs() },
                 templateText,
-                partialsArg
+                partialsArg,
+                '/guides/tags'
         )
         RenderSiteTask.renderPages(
                 meta,
                 parseVersionsPages(tempDir),
                 new File(distDir, 'versions').tap { it.mkdirs() },
                 templateText,
-                partialsArg
+                partialsArg,
+                '/guides/versions'
         )
     }
 

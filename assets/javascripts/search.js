@@ -3,6 +3,7 @@ const guideClassName = 'guide'
 const mobileQueryInputFieldId = 'mobile-query'
 const multiGuideClassName = 'multi-guide'
 const queryInputFieldId = 'query'
+const searchStatusId = 'guides-search-status'
 
 
 const elementsClassNames = [
@@ -12,6 +13,7 @@ const elementsClassNames = [
     'versions-by-grails',
     'tags-by-topic',
     'guides-suggestion',
+    'guides-catalogue',
 ]
 
 window.addEventListener('load', () => {
@@ -62,13 +64,31 @@ function hideElementsByClassName(className) {
 function showElementsByClassName(className) {
     const elements = document.getElementsByClassName(className)
     for (let i = 0; i < elements.length; i++) {
-        elements[i].style.display = 'block'
+        elements[i].style.display = ''
+    }
+}
+
+function hasClass(node, className) {
+    if (!node || node.nodeType !== 1) {
+        return false
+    }
+    if (node.classList) {
+        return node.classList.contains(className)
+    }
+    const value = node.className || ''
+    return (' ' + value + ' ').indexOf(' ' + className + ' ') !== -1
+}
+
+function updateSearchStatus(message) {
+    const status = document.getElementById(searchStatusId)
+    if (status) {
+        status.textContent = message
     }
 }
 
 function titleAtMultiGuide(element) {
     for (let y = 0; y < element.childNodes.length; y++) {
-        if (element.childNodes[y].className === 'title') {
+        if (hasClass(element.childNodes[y], 'title')) {
             return element.childNodes[y].textContent
         }
     }
@@ -78,17 +98,17 @@ function titleAtMultiGuide(element) {
 function versionsAtMultiGuide(element) {
     const versions = []
     for (let y = 0; y < element.childNodes.length; y++) {
-        if (element.childNodes[y].className === 'align-left') {
+        if (hasClass(element.childNodes[y], 'align-left')) {
             const versionDiv = element.childNodes[y]
             let verEl
             let hrefEl
             const tagsArr = []
             for (let x = 0; x < versionDiv.childNodes.length; x++) {
-                if (versionDiv.childNodes[x].className === 'grails-version') {
+                if (hasClass(versionDiv.childNodes[x], 'grails-version')) {
                     verEl = versionDiv.childNodes[x].textContent
                     hrefEl = versionDiv.childNodes[x].getAttribute('href')
                 }
-                if (versionDiv.childNodes[x].className === 'tag') {
+                if (hasClass(versionDiv.childNodes[x], 'tag')) {
                     tagsArr.push(versionDiv.childNodes[x].textContent);
                 }
             }
@@ -105,7 +125,7 @@ function versionsAtMultiGuide(element) {
 function tagsAtGuide(element) {
     const tags = []
     for (let y = 0; y < element.childNodes.length; y++) {
-        if (element.childNodes[y].className === 'tag') {
+        if (hasClass(element.childNodes[y], 'tag')) {
             tags.push(element.childNodes[y].textContent);
         }
     }
@@ -115,11 +135,19 @@ function tagsAtGuide(element) {
 function onQueryChanged() {
     const query = queryValue().trim()
     const resultsDiv = document.getElementsByClassName('search-results')
+    if (!resultsDiv.length) {
+        return
+    }
     if (query === '') {
         showElementsToDisplaySearchResults()
         resultsDiv[0].innerHTML = ''
+        updateSearchStatus('')
         return
     }
+
+    // Hide catalogue and other browse surfaces for every non-empty query
+    // before branching into matches vs no-results.
+    hideElementsToDisplaySearchResults()
 
     const matchingGuides = []
     for (let i = 0; i < allGuides.length; i++) {
@@ -129,11 +157,13 @@ function onQueryChanged() {
         }
     }
     if (matchingGuides.length > 0) {
-        hideElementsToDisplaySearchResults()
         resultsDiv[0].innerHTML = renderGuideGroup(matchingGuides, query)
+        const count = matchingGuides.length
+        updateSearchStatus(count === 1 ? '1 guide found' : count + ' guides found')
     } else {
         resultsDiv[0].innerHTML =
-            "<div class='guide-group'><div class='guide-group-header'><h2>No results found</h2></div></div>"
+            "<div class='guide-group'><div class='guide-group-header'><h3>No results found</h3></div></div>"
+        updateSearchStatus('No results found')
     }
 }
 
@@ -186,7 +216,7 @@ function renderGuideGroup(guides, query) {
     return `
     <div class="guide-group">
       <div class="guide-group-header">
-        <h2>Guides Filtered by: ${queryValue()}</h2>
+        <h3>Guides Filtered by: ${queryValue()}</h3>
       </div>
       <ul>
         ${items}
@@ -197,7 +227,7 @@ function renderGuideGroup(guides, query) {
 
 function renderGuideAsHtmlLi(guide, query) {
     const hiddenTags = (tags = []) =>
-        tags.map(tag => `<span style="display: none" class="tag">${tag}</span>`).join('')
+        tags.map(tag => `<span class="tag">${tag}</span>`).join('')
 
     // Multi-guide (no guide.tags)
     if (guide.tags == null) {
@@ -205,7 +235,7 @@ function renderGuideAsHtmlLi(guide, query) {
         const versionsHtml = guide.versions
             .filter(v => titleMatched || doesTagsMatchQuery(v.tags, query))
             .map(v => `
-              <div class="align-left">
+              <div class="align-left guides-version-chip">
                 <a class="grails-version" href="${v.href}">${v.grailsVersion}</a>
                 ${hiddenTags(v.tags)}
               </div>`

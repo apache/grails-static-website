@@ -1,0 +1,27 @@
+Unit-test the estimate service with Spock and the Grails testing mixins:
+
+[source,groovy]
+.src/test/groovy/example/ValueEstimateServiceSpec.groovy
+----
+include::../snippets/src/test/groovy/example/ValueEstimateServiceSpec.groovy[]
+----
+
+Run unit tests:
+
+[source,bash]
+----
+./gradlew test
+----
+
+Geb integration tests use Testcontainers (`ContainerGebSpec`). Docker must be running:
+
+[source,groovy]
+.src/integration-test/groovy/example/HomePageSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/HomePageSpec.groovy[]
+----
+
+[source,bash]
+----
+./gradlew integrationTest
+----

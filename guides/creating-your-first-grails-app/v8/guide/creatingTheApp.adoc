@@ -1,0 +1,14 @@
+You can recreate `initial/` yourself with the Grails Application Forge:
+
+[source,bash]
+----
+curl -O https://start.grails.org/creating-your-first-grails-app.zip \
+  -d version=8.0.0-SNAPSHOT \
+  -d profile=web \
+  -d features=gsp,hibernate5,scaffolding,geb,h2
+unzip creating-your-first-grails-app.zip
+----
+
+Or use the https://start.grails.org[web UI], choose Grails 8, the `web` profile, and the features you need, then download the zip.
+
+This guide uses the cloned `initial/` / `complete/` trees so paths and package names (`example`) stay consistent with the sample.

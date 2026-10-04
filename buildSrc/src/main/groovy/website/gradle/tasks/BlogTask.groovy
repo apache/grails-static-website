@@ -256,7 +256,7 @@ abstract class BlogTask extends GrailsWebsiteTask {
         def metadata = htmlPost.metadata.toMap()
         metadata['ogurl'] = postLink(htmlPost)
         html = RenderSiteTask.renderHtmlWithTemplateContent(html, metadata, templateText)
-        html = RenderSiteTask.highlightMenu(html, metadata, htmlPost.path)
+        html = RenderSiteTask.highlightMenu(html, htmlPost.path)
 
         def bodyClass = metadata.body
         bodyClass ? html.replace('<body>', "<body class='${bodyClass}'>") : html
@@ -435,7 +435,7 @@ abstract class BlogTask extends GrailsWebsiteTask {
         }
         def html = cardsHtml(postCards)
         html = RenderSiteTask.renderHtmlWithTemplateContent(html, meta, templateText)
-        html = RenderSiteTask.highlightMenu(html, meta, "/$BLOG/$INDEX")
+        html = RenderSiteTask.highlightMenu(html, "/$BLOG/$INDEX")
         f.setText(html, 'UTF-8')
     }
 

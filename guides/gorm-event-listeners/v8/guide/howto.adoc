@@ -1,0 +1,10 @@
+Clone the companion and start from `initial/`:
+
+[source,bash]
+----
+git clone -b grails8 https://github.com/grails-guides/gorm-event-listeners.git
+cd gorm-event-listeners/initial
+./gradlew test
+----
+
+`initial/` is a vanilla Grails 8 web starter. You will add the `Book` and `Audit` domains, GORM Data Services, and the listeners. To skip ahead, use `complete/`.

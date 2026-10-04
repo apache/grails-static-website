@@ -1,0 +1,37 @@
+Start with a `Person` domain:
+
+[source,groovy]
+.grails-app/domain/example/Person.groovy
+----
+include::../snippets/grails-app/domain/example/Person-initial.groovy[]
+----
+
+Generate the initial changelog from GORM domains:
+
+[source,bash]
+----
+./grailsw dbm-generate-gorm-changelog changelog.groovy
+----
+
+Move the generated changeset into its own file and reference it from the main changelog:
+
+[source,groovy]
+.grails-app/migrations/create-person-table.groovy
+----
+include::../snippets/grails-app/migrations/create-person-table.groovy[]
+----
+
+[source,groovy]
+.grails-app/migrations/changelog.groovy
+----
+include::../snippets/grails-app/migrations/changelog-baseline.groovy[]
+----
+
+Apply the migration:
+
+[source,bash]
+----
+./grailsw dbm-update
+----
+
+Liquibase creates `DATABASECHANGELOG`, `DATABASECHANGELOGLOCK`, and the `person` table.

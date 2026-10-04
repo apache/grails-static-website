@@ -1,0 +1,24 @@
+The domain model is small. Two classes cover the sample:
+
+.Domain Classes
+|===
+|Class |Role
+|Book
+|Core domain model
+|Audit
+|Log messages that record persistence events for a given `Book`
+|===
+
+Create the domain classes and edit them as shown below:
+
+[source,groovy]
+.grails-app/domain/demo/Book.groovy
+----
+include::../snippets/grails-app/domain/demo/Book.groovy[]
+----
+
+[source,groovy]
+.grails-app/domain/demo/Audit.groovy
+----
+include::../snippets/grails-app/domain/demo/Audit.groovy[]
+----

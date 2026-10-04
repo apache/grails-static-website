@@ -245,7 +245,7 @@ abstract class MinutesTask extends GrailsWebsiteTask {
         // page. minutesLink() resolves to "<siteUrl>/foundation/minutes/<path>".
         metadata['ogurl'] = minutesLink(htmlMinutes)
         html = RenderSiteTask.renderHtmlWithTemplateContent(html, metadata, templateText)
-        html = RenderSiteTask.highlightMenu(html, metadata, htmlMinutes.path)
+        html = RenderSiteTask.highlightMenu(html, htmlMinutes.path)
         metadata['bodyClassAttr'] = metadata['bodyClassAttr'] ?: 'foundation minutes'
         html = html.replace('<body>', "<body class='${metadata['bodyClassAttr']}'>")
         html
@@ -358,7 +358,7 @@ abstract class MinutesTask extends GrailsWebsiteTask {
             it.ogurl = "${it.url}/$MINUTES/$INDEX".toString()
         }
         html = RenderSiteTask.renderHtmlWithTemplateContent(html, resolvedMetadata, templateText)
-        html = RenderSiteTask.highlightMenu(html, resolvedMetadata, "/$MINUTES/$INDEX")
+        html = RenderSiteTask.highlightMenu(html, "/$MINUTES/$INDEX")
         f.text = html
     }
 

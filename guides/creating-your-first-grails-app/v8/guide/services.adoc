@@ -1,0 +1,37 @@
+Prefer GORM data services for persistence and a small transactional service for domain logic.
+
+Data services seed `BootStrap` without writing repository boilerplate:
+
+[source,groovy]
+.grails-app/services/example/MakeService.groovy
+----
+include::../snippets/grails-app/services/example/MakeService.groovy[]
+----
+
+[source,groovy]
+.grails-app/services/example/ModelService.groovy
+----
+include::../snippets/grails-app/services/example/ModelService.groovy[]
+----
+
+[source,groovy]
+.grails-app/services/example/VehicleService.groovy
+----
+include::../snippets/grails-app/services/example/VehicleService.groovy[]
+----
+
+`BootStrap` uses those services to insert sample rows on startup:
+
+[source,groovy]
+.grails-app/init/example/BootStrap.groovy
+----
+include::../snippets/grails-app/init/example/BootStrap.groovy[]
+----
+
+`ValueEstimateService` is a regular Grails service used by `VehicleController.show`:
+
+[source,groovy]
+.grails-app/services/example/ValueEstimateService.groovy
+----
+include::../snippets/grails-app/services/example/ValueEstimateService.groovy[]
+----

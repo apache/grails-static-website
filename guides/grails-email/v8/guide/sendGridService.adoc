@@ -1,0 +1,9 @@
+SendGrid implements the same `EmailService` contract:
+
+[source,groovy]
+.src/main/groovy/example/SendGridEmailService.groovy
+----
+include::../snippets/src/main/groovy/example/SendGridEmailService.groovy[]
+----
+
+Set `EMAIL_PROVIDER=sendgrid` and provide `SENDGRID_APIKEY` and `SENDGRID_FROM_EMAIL` (see the `sendgrid` block in `application.yml`).

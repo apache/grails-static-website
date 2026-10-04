@@ -1,0 +1,10 @@
+From `complete/` (or your working copy of `initial/` once you have added the domain model):
+
+[source,bash]
+----
+./gradlew bootRun
+----
+
+Open http://localhost:8080/[http://localhost:8080/]. You should see the home page with seeded vehicles. Try `/vehicle/index`, `/make/index`, and `/model/index` as well.
+
+The default server port is `8080`. To change it, set `server.port` in `grails-app/conf/application.yml` or pass `-Dserver.port=8090` to Gradle.

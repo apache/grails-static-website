@@ -1,0 +1,33 @@
+Before you apply pending changesets, inspect and preview them.
+
+Check what Liquibase thinks is pending:
+
+[source,bash]
+----
+./grailsw dbm-status
+----
+
+Generate the SQL that would run, without applying it:
+
+[source,bash]
+----
+./grailsw dbm-update-sql pending.sql
+----
+
+Review `pending.sql`, then apply:
+
+[source,bash]
+----
+./grailsw dbm-update
+----
+
+`updateOnStart: true` is fine for local development and single-instance deployments. In production, prefer running `dbm-update` once as a release step before you roll out multiple application instances, so every node boots against an already-migrated schema.
+
+If `./grailsw` is unavailable, the Gradle form works for CI and automation:
+
+[source,bash]
+----
+./gradlew runCommand "-Pargs=dbm-status"
+./gradlew runCommand "-Pargs=dbm-update-sql pending.sql"
+./gradlew runCommand "-Pargs=dbm-update"
+----

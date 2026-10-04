@@ -1,4 +1,4 @@
-Open link:https://start.grails.org[start.grails.org], pick the `web` profile, name the application `htmxtasks`, set the package to `example`, choose JDK 21, and download the generated zip. Unzip it and `cd` into the `htmxtasks` directory.
+Open link:https://grails.apache.org/start/[grails.apache.org/start], pick the `web` profile, name the application `htmxtasks`, set the package to `example`, choose JDK 21, and download the generated zip. Unzip it and `cd` into the `htmxtasks` directory.
 
 The default `web` starter already gives you the pieces this guide needs from Grails 8 core:
 

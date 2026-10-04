@@ -9,5 +9,5 @@ cd grails-github-actions-cicd/complete
 
 The repository contains two top-level directories:
 
-* `initial/` - the starting Grails 8 project, generated from link:https://start.grails.org[start.grails.org] with the `postgres` and `testcontainers` features.
+* `initial/` - the starting Grails 8 project, generated from link:https://grails.apache.org/start/[grails.apache.org/start] with the `postgres` and `testcontainers` features.
 * `complete/` - the same project with the three workflow YAML files added under `.github/`.

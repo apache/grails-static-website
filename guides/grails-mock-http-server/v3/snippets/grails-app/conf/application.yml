@@ -132,7 +132,7 @@ environments:
 ---
 #tag::openweathermap[]
 openweather:
-    appid: 1f6c7d09a28f1ddccf70c06e2cb75ee4
+    appid: '${OPENWEATHER_APPID:}'
     cityName: London
     countryCode: uk
 #end::openweathermap[]    

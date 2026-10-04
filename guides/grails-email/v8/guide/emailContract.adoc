@@ -1,0 +1,25 @@
+Define a small `Email` contract and a single `EmailService` boundary that every provider implements:
+
+[source,groovy]
+.src/main/groovy/example/Email.groovy
+----
+include::../snippets/src/main/groovy/example/Email.groovy[]
+----
+
+[source,groovy]
+.src/main/groovy/example/EmailService.groovy
+----
+include::../snippets/src/main/groovy/example/EmailService.groovy[]
+----
+
+Controllers and tests depend on `EmailService`, not on SMTP, SendGrid, or SES directly. Swap providers by changing Spring wiring and configuration.
+
+Add the mail dependencies in `build.gradle`:
+
+[source,groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[]
+----
+
+Grails 8 uses `org.grails.plugins:grails-mail` 5.x from the Grails plugin repository, compatible with Apache Grails 8.

@@ -1,0 +1,8 @@
+Keep changelog history append-only and immutable.
+
+* Include migration files in release order from `changelog.groovy`
+* Prefer one logical change per file, with a unique `author` + `id`
+* Never edit a changeset that has already been applied in any environment - add a corrective changeset instead
+* `dbm-clear-checksums` recalculates checksums after an emergency edit; it is not a substitute for append-only discipline
+
+Destructive redesigns should also declare `preConditions(onFail: 'HALT')` so the wrong ordering or schema drift fails loudly instead of damaging data.

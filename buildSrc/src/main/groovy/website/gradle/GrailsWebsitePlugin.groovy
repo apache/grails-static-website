@@ -28,12 +28,15 @@ import website.gradle.tasks.AcceptanceReportTask
 import website.gradle.tasks.AsciidoctorWarningGateTask
 import website.gradle.tasks.BlogTask
 import website.gradle.tasks.BskyAtProtoDidTask
+import website.gradle.tasks.CollectAlgoliaDocumentationTask
 import website.gradle.tasks.CrawlBuiltGuidesTask
 import website.gradle.tasks.CspScanTask
 import website.gradle.tasks.GenerateRedirectStubsTask
 import website.gradle.tasks.GenerateRedirectsManifestTask
 import website.gradle.tasks.DocumentationTask
 import website.gradle.tasks.DownloadTask
+import website.gradle.tasks.ExportAlgoliaIndexTask
+import website.gradle.tasks.GenerateAlgoliaConfigTask
 import website.gradle.tasks.GrailsWebsiteTask
 import website.gradle.tasks.GuidesTask
 import website.gradle.tasks.HtaccessTask
@@ -44,8 +47,10 @@ import website.gradle.tasks.PublishMainSiteTask
 import website.gradle.tasks.QuestionsTask
 import website.gradle.tasks.RecordCompanionReleaseTask
 import website.gradle.tasks.RecordReleaseTask
+import website.gradle.tasks.RecordToolReleaseTask
 import website.gradle.tasks.RenderSiteTask
 import website.gradle.tasks.SitemapTask
+import website.gradle.tasks.UploadAlgoliaIndexTask
 import website.gradle.tasks.ValidateGuidesTask
 
 @CompileStatic
@@ -61,6 +66,7 @@ class GrailsWebsitePlugin implements Plugin<Project> {
         )
 
         AssetsTask.register(project, siteExt)
+        GenerateAlgoliaConfigTask.register(project)
         BlogTask.register(project, siteExt)
         DocumentationTask.register(project, siteExt)
         DownloadTask.register(project, siteExt)
@@ -71,6 +77,25 @@ class GrailsWebsitePlugin implements Plugin<Project> {
         PluginsTask.register(project, siteExt)
         ProfilesTask.register(project, siteExt)
         QuestionsTask.register(project, siteExt)
+        CollectAlgoliaDocumentationTask.register(project, siteExt)
+        ExportAlgoliaIndexTask.register(project, siteExt).configure {
+            it.dependsOn('build')
+            it.dependsOn('buildGuides')
+            it.dependsOn('buildAllGuides')
+            it.dependsOn(CollectAlgoliaDocumentationTask.NAME)
+            // These tasks are finalizers of build and write additional files
+            // into build/dist, so declare them explicitly for Gradle's output
+            // validation when the exporter reads that directory.
+            it.dependsOn(BlogTask.NAME)
+            it.dependsOn(MinutesTask.NAME)
+            it.dependsOn(PluginsTask.NAME)
+            it.dependsOn(HtaccessTask.NAME)
+            it.dependsOn(BskyAtProtoDidTask.NAME)
+            it.dependsOn(SitemapTask.NAME)
+        }
+        UploadAlgoliaIndexTask.register(project).configure {
+            it.dependsOn(ExportAlgoliaIndexTask.NAME)
+        }
 
         SitemapTask.register(project, siteExt).configure {
 
@@ -92,6 +117,7 @@ class GrailsWebsitePlugin implements Plugin<Project> {
             it.dependsOn(DownloadTask.NAME)
             it.dependsOn(ProfilesTask.NAME)
             it.dependsOn(QuestionsTask.NAME)
+            it.dependsOn(GenerateAlgoliaConfigTask.NAME)
 
             it.finalizedBy(BlogTask.NAME)
             it.finalizedBy(MinutesTask.NAME)
@@ -105,6 +131,7 @@ class GrailsWebsitePlugin implements Plugin<Project> {
             it.description = 'Build guides website - generates guides pages, copies assets and generates a sitemap'
             it.group = GrailsWebsiteTask.GROUP
             it.dependsOn(AssetsTask.NAME)
+            it.dependsOn(GenerateAlgoliaConfigTask.NAME)
             it.dependsOn(GuidesTask.NAME)
             it.dependsOn(GenerateRedirectsManifestTask.NAME)
             it.finalizedBy(SitemapTask.NAME)
@@ -119,6 +146,10 @@ class GrailsWebsitePlugin implements Plugin<Project> {
 
         project.tasks.named('build') {
             it.dependsOn(RenderSiteTask.NAME)
+            it.dependsOn('buildGuides')
+            // A complete site build must include the canonical rendered Guide
+            // pages as well as the main-site pages.
+            it.dependsOn(RenderGuidesPlugin.AGGREGATE_TASK)
         }
 
         // Mirrors build/dist/ into the deploy repo and pushes when changed.
@@ -136,6 +167,11 @@ class GrailsWebsitePlugin implements Plugin<Project> {
         // `./gradlew recordCompanionRelease -PgrailsMajor=N -PartifactId=name
         //  -PartifactVersion=X.Y.Z` on each plugin's release day.
         RecordCompanionReleaseTask.register(project)
+
+        // Bumps the version of an existing tool entry under tools: (e.g. the
+        // IntelliJ plugin). The release-tool.yml workflow invokes
+        // `./gradlew recordToolRelease -PartifactId=name -PartifactVersion=X`.
+        RecordToolReleaseTask.register(project)
 
         // Validates conf/guides.yml against the schema.
         // `-PvalidationMode=shape|existence|both` selects the rule set.

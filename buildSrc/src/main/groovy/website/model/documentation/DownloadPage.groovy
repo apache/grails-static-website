@@ -220,6 +220,73 @@ class DownloadPage {
     }
 
     /**
+     * Renders the "Developer Tools" card for Apache-released tools that are
+     * versioned independently of Grails core (e.g. the IntelliJ plugin). Unlike
+     * companion plugins, tools ship both a source and a binary distribution, so
+     * each tool gets Source and Binary links with SHA512 / ASC verification
+     * links, followed by a release-notes link.
+     *
+     * <p>Returns the empty string for an empty {@code tools} list so that
+     * callers can safely render unconditionally.
+     *
+     * @param tools the tools listed under {@code tools:} in {@code conf/releases.yml}
+     */
+    @CompileDynamic
+    static String renderToolsCard(List<CompanionArtifact> tools) {
+        if (!tools) {
+            return ''
+        }
+        renderHtml {
+            div(class: 'guide-group') {
+                div(class: 'guide-group-header') {
+                    img(src: '[%url]/images/download.svg', alt: 'Apache Grails developer tools')
+                    h2('Developer Tools')
+                }
+                ul {
+                    tools.each { CompanionArtifact t ->
+                        li {
+                            a(
+                                    href: sourceUrl(t.version, t.artifactId, '', t.mirrorDirectory),
+                                    "${t.displayName} ${t.version} Source"
+                            )
+                            a(
+                                    href: sourceVerificationUrl(t.version, t.artifactId, '.sha512', t.mirrorDirectory),
+                                    'SHA512'
+                            )
+                            a(
+                                    href: sourceVerificationUrl(t.version, t.artifactId, '.asc', t.mirrorDirectory),
+                                    'ASC'
+                            )
+                        }
+                        li {
+                            a(
+                                    href: binaryUrl(t.version, t.artifactId, '', t.mirrorDirectory),
+                                    "${t.displayName} ${t.version} Binary"
+                            )
+                            a(
+                                    href: binaryVerificationUrl(t.version, t.artifactId, '.sha512', t.mirrorDirectory),
+                                    'SHA512'
+                            )
+                            a(
+                                    href: binaryVerificationUrl(t.version, t.artifactId, '.asc', t.mirrorDirectory),
+                                    'ASC'
+                            )
+                        }
+                    }
+                    tools.each { CompanionArtifact t ->
+                        li {
+                            a(
+                                    href: "https://github.com/${t.releaseNotesRepo}/releases/tag/v${t.version}",
+                                    "${t.displayName} ${t.version} Release Notes"
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * @return {@code true} if this version line is distributed through the
      *         Apache mirrors ({@code major >= 7}). Older versions fell back to
      *         GitHub releases on apache/grails-core or apache/grails-forge.
@@ -244,7 +311,8 @@ class DownloadPage {
      * Apache-released milestones / RCs that haven't been superseded by
      * stable, an "Upcoming Plugins" grid for Apache-released companion
      * plugins whose target Grails major hasn't shipped yet (e.g. a Grails 8
-     * plugin published before any Grails 8 core release), the older-versions
+     * plugin published before any Grails 8 core release), a "Developer Tools"
+     * grid for Grails-version-independent tools (e.g. the IntelliJ plugin), the older-versions
      * dropdown, and a "Get Started" two-column footer with Application Forge
      * + SDKMAN install instructions.
      */
@@ -254,6 +322,7 @@ class DownloadPage {
         Map<String, ReleaseVersion> latestPerLine = SiteMap.latestStablePerMinorLine(releases)
         Map<Integer, ReleaseVersion> preReleasesPerMajor = SiteMap.latestPreReleasePerMajor(releases)
         List<Integer> orphanCompanionMajors = SiteMap.orphanCompanionMajors(releases)
+        List<CompanionArtifact> tools = SiteMap.tools(releases)
 
         renderHtml {
             div(class: 'header-bar chalices-bg') {
@@ -338,6 +407,18 @@ class DownloadPage {
                     }
                 }
 
+                if (!tools.isEmpty()) {
+                    h2(class: 'release-section-header column-header', 'Developer Tools')
+                    p(
+                            'Per Apache release policy, the tools below are official Apache releases ' +
+                            'with full source, binary, and signature artifacts. They are versioned ' +
+                            'independently of Grails core.'
+                    )
+                    div(class: 'release-grid') {
+                        mkp.yieldUnescaped(DownloadPage.renderToolsCard(tools))
+                    }
+                }
+
                 h2(class: 'release-section-header column-header', 'Older Versions')
                 p('You can download previous versions as far back as Grails 0.1.')
                 p(
@@ -363,7 +444,7 @@ class DownloadPage {
                         )
                         p('The quickest way to get started with our application generator:')
                         p {
-                            a(href: 'https://start.grails.org', 'Grails Application Forge')
+                            a(href: 'https://grails.apache.org/start/', 'Grails Application Forge')
                         }
                     }
                     div(class: 'column') {

@@ -1,0 +1,36 @@
+The first listener saves `Audit` rows whenever a `Book` is created, updated, or deleted.
+
+Create `grails-app/services/demo/AuditListenerService.groovy`:
+
+[source,groovy]
+.grails-app/services/demo/AuditListenerService.groovy
+----
+include::../snippets/grails-app/services/demo/AuditListenerService.groovy[]
+----
+<1> `@Subscriber` plus the method signature select the event. A method named `afterInsert` that takes a `PostInsertEvent` runs after an object is saved.
+<2> `event.entityObject` is the domain instance that fired the event. Cast it to `Book` to read the id used as `Audit.bookId`.
+<3> A `PostUpdateEvent` argument means this method runs after an update.
+
+NOTE: `bookId` returns `null` for any entity that is not a `Book`. This service therefore writes `Audit` rows only for `Book` insert, update, and delete operations.
+
+Write a unit test that verifies `auditDataService` is called for `PostInsertEvent`, `PostUpdateEvent`, and `PostDeleteEvent`. GORM Data Services help here: as interfaces they are easy to mock.
+
+[source,groovy]
+.src/test/groovy/demo/AuditListenerServiceSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/AuditListenerServiceSpec.groovy[]
+----
+<1> Implement `grails.testing.services.ServiceUnitTest` (unit-test services) and `DataTest` so GORM is available.
+<2> `DataTest` provides `mockDomains`, which registers the domain classes used in the test.
+<3> After `DataTest` has wired GORM, you can construct and save a `Book`.
+<4> Build a `PostInsertEvent` from the `Book`. `datastore` comes from `DataTest` (`getDatastore()`).
+<5> Call `afterInsert` with that event.
+<6> Assert that `auditDataService.save()` was invoked.
+
+Next, add an integration test that saving, updating, or deleting a book leaves an audit trail. Because `@Subscriber` handles GORM events asynchronously, the spec uses http://spockframework.org/spock/docs/2.3/interaction_based_testing.html#_polling_conditions[Spock `PollingConditions`], which retries assertions until they pass or the timeout expires.
+
+[source,groovy]
+.src/integration-test/groovy/demo/AuditListenerServiceIntegrationSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/demo/AuditListenerServiceIntegrationSpec.groovy[]
+----

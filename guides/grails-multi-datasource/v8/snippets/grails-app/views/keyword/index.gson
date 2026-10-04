@@ -1,0 +1,9 @@
+import demo.Keyword
+
+model {
+    Iterable<Keyword> keywordList
+}
+
+json {
+    keywords keywordList*.name.unique().sort()
+}

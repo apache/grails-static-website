@@ -1,0 +1,18 @@
+From `complete/` (or your finished `initial/`):
+
+[source,bash]
+----
+./gradlew bootRun
+----
+
+Open http://localhost:8080/player. List, create, and edit players. Confirm wins/losses cannot
+be changed via the edit form or a crafted update request.
+
+[source,bash]
+----
+./gradlew test
+./gradlew integrationTest
+----
+
+The integration spec covers save validation (`422` on a type-mismatched `losses` value) and
+the mass-assignment case (`wins` / `losses` ignored on update).

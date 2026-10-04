@@ -1,0 +1,49 @@
+`JobRequestScheduler` supports immediate enqueueing, delayed work, recurring work, and retries in OSS. The sample keeps each operation on the explicit request type:
+
+[source,groovy]
+.grails-app/services/example/grails/JobExamplesService.groovy
+----
+include::../snippets/complete/grails-app/services/example/grails/JobExamplesService.groovy[]
+----
+
+`enqueue` returns a one-off job ID. `schedule` stores a job for an `Instant` in the future. `scheduleRecurrently` uses a stable recurring ID and a cron expression, so a repeated registration updates the same recurring job rather than creating an unbounded set. The handler's `@Job(retries = 3)` controls its retry count; the application-level default in `application.yml` supplies the fallback.
+
+Progress belongs inside the handler, where the `ThreadLocalJobContext` is available. `DeliveryJobRequestHandler` creates a three-step progress bar and increments it as it writes the visible progress value. Progress is operational feedback, not a substitute for an idempotent business state transition.
+
+The retry endpoint deliberately schedules a handler that fails. This makes retry state visible in the dashboard without disguising a failure as successful work:
+
+[source,groovy]
+.src/main/groovy/example/grails/jobrunr/RetryDeliveryJobRequest.groovy
+----
+include::../snippets/complete/src/main/groovy/example/grails/jobrunr/RetryDeliveryJobRequest.groovy[]
+----
+
+[source,groovy]
+.src/main/groovy/example/grails/jobrunr/RetryDeliveryJobRequestHandler.groovy
+----
+include::../snippets/complete/src/main/groovy/example/grails/jobrunr/RetryDeliveryJobRequestHandler.groovy[]
+----
+
+`DeliveryController` exposes the delivery creation and lookup API, returning `201 Created`, validation errors, or `404 Not Found` as appropriate:
+
+[source,groovy]
+.grails-app/controllers/example/grails/DeliveryController.groovy
+----
+include::../snippets/complete/grails-app/controllers/example/grails/DeliveryController.groovy[]
+----
+
+`JobExamplesController` and the URL mappings separately expose the asynchronous examples as `202 Accepted` operations:
+
+[source,groovy]
+.grails-app/controllers/example/grails/JobExamplesController.groovy
+----
+include::../snippets/complete/grails-app/controllers/example/grails/JobExamplesController.groovy[]
+----
+
+[source,groovy]
+.grails-app/controllers/example/grails/UrlMappings.groovy
+----
+include::../snippets/complete/grails-app/controllers/example/grails/UrlMappings.groovy[]
+----
+
+https://www.jobrunr.io/en/documentation/background-methods/[JobRunr's background-method documentation] distinguishes these OSS operations from Pro-only workflows. Batches, chains or continuations, replacement, and custom retry policies are Pro features and do not appear as runnable code here.

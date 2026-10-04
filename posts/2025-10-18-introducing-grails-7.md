@@ -146,7 +146,7 @@ In this release, we've upgraded several dependency versions, including but not l
 * See all in the [grails-bom](https://grails.apache.org/docs/[%version]/ref/Versions/Grails%20BOM.html).
 
 ## Generating a new Grails [%version] application with Grails Forge
-Try out Grails today by visiting our online application generator [Grails Forge](https://start.grails.org). This is the quickest and the recommended way to get started with Grails.
+Try out Grails today by visiting our online application generator [Grails Forge](https://grails.apache.org/start/). This is the quickest and the recommended way to get started with Grails.
 
 After installing JetBrains' IntelliJ IDEA 2025.2 or later and the [Grails Plugin](https://plugins.jetbrains.com/plugin/18504-grails), the Grails Application Forge will also be available under New Project in IntelliJ IDEA. 
 
@@ -227,7 +227,7 @@ By following these steps, you should be able to transition your existing Grails 
 If manual dependency updates seem daunting, or you want a more streamlined approach, consider the following alternatives:
 
 #### 1. Use Grails Forge Website
-Visit [Grails Forge](https://start.grails.org) and generate a new Grails application with Grails [%version]. Compare the
+Visit [Grails Forge](https://grails.apache.org/start/) and generate a new Grails application with Grails [%version]. Compare the
 versions in the newly generated application with your existing one to identify any discrepancies. This can serve as a
 reference point for your update.
 

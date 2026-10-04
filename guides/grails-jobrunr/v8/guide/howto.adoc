@@ -1,0 +1,10 @@
+You can work through the code in the guide or clone the finished application:
+
+[source,bash]
+----
+git clone -b grails8 https://github.com/grails-guides/grails-jobrunr.git
+cd grails-jobrunr/complete
+./gradlew test
+----
+
+`initial/` is a plain Grails 8 web application. `complete/` adds the JobRunr starter, Jackson, the dedicated data source, an after-commit event listener, `JobRequest` handlers, HTTP endpoints, and the tests discussed below.

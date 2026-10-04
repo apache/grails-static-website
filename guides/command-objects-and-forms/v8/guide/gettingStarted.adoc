@@ -1,0 +1,6 @@
+In this guide you use
+https://grails.apache.org/docs/latest/guide/theWebLayer.html#commandObjects[command objects]
+to process form submissions with automatic type conversion, custom validation, and
+simple error handling on Apache Grails 8.
+
+Work in the `initial/` project and compare your progress with `complete/`.

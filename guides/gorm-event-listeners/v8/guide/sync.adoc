@@ -1,0 +1,81 @@
+Often you want to read or change properties on the domain object inside a listener — encode a password before save, or reject a title against a blacklist. GORM events expose `entityAccess`, which gets and sets properties on the entity that triggered the event.
+
+The next listener assigns a serial number and a friendly URL to each `Book`. The serial number is a random eight-letter string prefixed by the first characters of the title. A book titled `Groovy in Action` might get `GROO-WKVLEQED`. Instead of `/book/show/1`, the friendly URL looks like `/book/practical-grails-3`.
+
+Create `grails-app/services/demo/SerialNumberGeneratorService.groovy`:
+
+[source,groovy]
+.grails-app/services/demo/SerialNumberGeneratorService.groovy
+----
+include::../snippets/grails-app/services/demo/SerialNumberGeneratorService.groovy[]
+----
+<1> `take` safely returns the first 4 characters. It does not throw if the title is shorter than that.
+
+Create `grails-app/services/demo/FriendlyUrlService.groovy`:
+
+[source,groovy]
+.grails-app/services/demo/FriendlyUrlService.groovy
+----
+include::../snippets/grails-app/services/demo/FriendlyUrlService.groovy[]
+----
+
+And a unit test for it:
+
+[source,groovy]
+.src/test/groovy/demo/FriendlyUrlServiceSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/FriendlyUrlServiceSpec.groovy[]
+----
+
+Now add a listener for new and updated book titles. Create `grails-app/services/demo/TitleListenerService.groovy`.
+
+Populate `serialNumber` synchronously on insert. For that, use `@Listener` instead of `@Subscriber`.
+
+[source,groovy]
+.grails-app/services/demo/TitleListenerService.groovy
+----
+include::../snippets/grails-app/services/demo/TitleListenerService.groovy[]
+----
+<1> `@Listener` turns the method into a synchronous GORM listener. When GORM fires a persistence event, matching `@Listener` methods run. The annotation value is a domain class (or list of classes) to listen for — here, only `Book` events.
+<2> `onBookPreUpdate` runs when a book is dirty (a property changed). If `title` changed, refresh `friendlyUrl`.
+<3> `isDirty` reports which properties changed on the persisted object.
+<4> Read `title` with `event.entityAccess.getProperty()`.
+<5> Write `serialNumber` with `event.entityAccess.setProperty()`.
+
+WARNING: Do not cast `event.entityObject` to `Book` and assign `serialNumber` directly. That assignment can fire another event and re-enter the same listener. `entityAccess` applies the change in the current persistence session so it is saved with the original object.
+
+GORM Data Services also make this listener easy to unit-test. Stub the generator and assert that the serial number is set:
+
+[source,groovy]
+.src/test/groovy/demo/TitleListenerServiceSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/TitleListenerServiceSpec.groovy[]
+----
+<1> Override `doWithSpring` to add or replace beans in the test context.
+
+== Integration Testing
+
+Create an integration test that `friendlyUrl` updates when `title` changes:
+
+[source,groovy]
+.src/integration-test/groovy/demo/TitleListenerServiceIntegrationSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/demo/TitleListenerServiceIntegrationSpec.groovy[]
+----
+
+== Advanced Unit Testing
+
+An event-handling test is usually an *integration test*, as above. You can still write an equivalent unit test by wiring only the pieces you need — GORM, a few Spring beans, and the event listeners — without starting the whole application.
+
+Create `src/test/groovy/demo/TitleListenerServiceGrailsUnitSpec.groovy`:
+
+[source,groovy]
+.src/test/groovy/demo/TitleListenerServiceGrailsUnitSpec.groovy
+----
+include::../snippets/src/test/groovy/demo/TitleListenerServiceGrailsUnitSpec.groovy[]
+----
+
+<1> Because the spec wires GORM, Spring, and events itself, implement the basic `GrailsUnitTest` trait rather than `ServiceUnitTest`.
+<2> Hold a `@Shared` `@AutoCleanup` datastore. In `setupSpec`, take the `HibernateDatastore` from `applicationContext` (provided by `GrailsUnitTest`) and keep its `transactionManager`.
+<3> In `doWithSpring`, register `friendlyUrlService`, `serialNumberGeneratorService`, `titleListenerService`, and a `HibernateDatastore` constructed with the domain classes this test needs.
+<4> The assertions then look like the integration test.

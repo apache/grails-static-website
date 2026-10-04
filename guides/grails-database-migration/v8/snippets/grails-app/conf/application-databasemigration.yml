@@ -1,0 +1,10 @@
+environments:
+  development:
+    dataSource:
+      dbCreate: none
+      url: jdbc:postgresql://localhost:5432/devDb?tcpKeepAlive=true
+grails:
+  plugin:
+    databasemigration:
+      updateOnStart: true
+      updateOnStartFileName: changelog.groovy

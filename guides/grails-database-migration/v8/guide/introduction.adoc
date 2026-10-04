@@ -1,0 +1,5 @@
+Learn how to evolve a PostgreSQL schema safely across releases with the Grails Database Migration plugin and Liquibase changelogs: baseline from GORM domains, make columns nullable, add columns, redesign tables, and migrate existing data with custom SQL - without relying on Hibernate `dbCreate` auto-DDL.
+
+This is the production follow-on to the https://grails.apache.org/guides/grails-data-access/[Data Access with GORM] guide: *"Now that I've modeled my data, how do I evolve the schema safely across releases?"*
+
+This guide follows the standard Grails guides layout: work in the `initial/` project and compare your progress with `complete/`.

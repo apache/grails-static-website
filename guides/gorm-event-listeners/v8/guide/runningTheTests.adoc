@@ -1,0 +1,9 @@
+From `complete/` (or your finished `initial/`):
+
+[source,bash]
+----
+./gradlew test
+./gradlew integrationTest
+----
+
+Reports are written to `build/reports/tests/`.

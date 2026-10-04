@@ -1,4 +1,4 @@
-Generate a fresh Apache Grails 8 web application from link:https://start.grails.org[start.grails.org]. This is the same forge that produced the `initial/` tree in the upstream repository.
+Generate a fresh Apache Grails 8 web application from link:https://grails.apache.org/start/[grails.apache.org/start]. This is the same forge that produced the `initial/` tree in the upstream repository.
 
 Use the `web` profile. That keeps you on the same starter layout, index page, asset-pipeline manifest, and dependency set that Grails 8 ships from `grails-profiles/web`.
 
