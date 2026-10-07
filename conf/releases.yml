@@ -505,3 +505,6 @@ coreReleases:
   - version: 8.0.0-RC2
     publicationDate: Oct 03, 2026
 
+  - version: 8.0.0
+    publicationDate: Oct 07, 2026
+
