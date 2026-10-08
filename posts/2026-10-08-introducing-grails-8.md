@@ -19,6 +19,8 @@ image: grails-blog-index-3.png
 
 Grails 8 is the first major release planned and delivered entirely as an Apache Top-Level Project. Since the 8.0.x branch opened in November 2025, more than 4,000 commits across 400 pull requests have landed through six milestones and two release candidates. Grails 8 moves the platform to Java 21, Apache Groovy 5, Spring Boot 4.1 and Spring Framework 7, adds a GORM implementation for Hibernate 7, publishes GORM for Neo4j again, and changes plugin registration, CLI packaging, and GSP compilation.
 
+The Grails documentation is in the best shape it has ever been in. At the Grails 8 launch, [22 Grails guides](/guides/versions/8.html) have been updated to Grails 8.
+
 This post walks through what changed, grouped by area. If you are upgrading, read *Behavior Changes to Review Before Upgrading* later in this post before you change `grailsVersion`. The [What's New in Grails 8](https://grails.apache.org/docs/[%version]/guide/introduction.html#whatsNew) section of the guide covers the headline features, and the [Grails 8 upgrade guide](https://grails.apache.org/docs/[%version]/guide/upgrading.html#upgrading80x) documents every behavior change in detail.
 
 Thousands of volunteer hours went into this release. Thank you to everyone who contributed code, reviews, documentation, issue reports, and testing.
