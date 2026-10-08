@@ -287,7 +287,9 @@ grails {
 }
 ```
 
-Enabling it adds an `extractAotCacheApplication` task and a `trainAotCache` task, which you run explicitly. Training unpacks the executable jar into `build/aot-cache/application`, runs it over the listed paths, and writes the cache beside it:
+Enabling it adds an `extractAotCacheApplication` task and a `trainAotCache` task, which you run explicitly. Training unpacks the executable jar into `build/aot-cache/application`, runs it over the listed paths, and writes the cache beside it.
+
+**Warning:** training is a real run of the application, in the `production` environment by default. It executes bootstrap code, connects to whatever the configuration points at, and writes whatever that code writes. Point it at a build-time or throwaway database, never at production.
 
 ```shell
 ./gradlew trainAotCache
