@@ -3,7 +3,7 @@ You can recreate `initial/` yourself with the Grails Application Forge:
 [source,bash]
 ----
 curl -O https://start.grails.org/creating-your-first-grails-app.zip \
-  -d version=8.0.0-SNAPSHOT \
+  -d version=8.0.0 \
   -d profile=web \
   -d features=gsp,hibernate5,scaffolding,geb,h2
 unzip creating-your-first-grails-app.zip

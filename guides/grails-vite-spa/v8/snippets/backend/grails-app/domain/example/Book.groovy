@@ -10,8 +10,8 @@ class Book {
     String  isbn
 
     static constraints = {
-        title  blank: false, maxSize: 255
-        author blank: false, maxSize: 255
-        isbn   blank: false, unique: true, matches: /^(97(8|9))?\d{9}(\d|X)$/
+        title  nullable: false, blank: false, maxSize: 255
+        author nullable: false, blank: false, maxSize: 255
+        isbn   nullable: false, blank: false, unique: true, matches: /^(97(8|9))?\d{9}(\d|X)$/
     }
 }

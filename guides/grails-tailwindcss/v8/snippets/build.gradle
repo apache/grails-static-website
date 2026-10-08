@@ -109,7 +109,6 @@ dependencies {
     runtimeOnly "cloud.wondrify:asset-pipeline-grails"
     runtimeOnly "com.h2database:h2"
     runtimeOnly "com.zaxxer:HikariCP"
-    runtimeOnly "org.fusesource.jansi:jansi"
     testAndDevelopmentOnly "org.webjars.npm:bootstrap"
     testAndDevelopmentOnly "org.webjars.npm:bootstrap-icons"
     testAndDevelopmentOnly "org.webjars.npm:jquery"

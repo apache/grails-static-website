@@ -7,7 +7,7 @@ JobRunr needs a durable description of the method to execute. An ordinary Groovy
 jobScheduler.enqueue((JobLambda) (() -> processDelivery(deliveryId)))
 ----
 
-The cast chooses a Java functional-interface overload, but it does not produce a javac-style JobRunr target. Executed checks against Groovy `4.0.33` and against Grails `8.0.0-M5` with Groovy `5.0.8` both persisted a generated `Closure#doCall` target. The jobs failed before the intended method ran. Never claim this cast-arrow form is a workaround.
+The cast chooses a Java functional-interface overload, but it does not produce a javac-style JobRunr target. Executed checks against Groovy `4.0.33` and against Grails `8.0.0` with Groovy `5.0.8` both persisted a generated `Closure#doCall` target. The jobs failed before the intended method ran. Never claim this cast-arrow form is a workaround.
 
 Use JobRunr's explicit https://github.com/jobrunr/jobrunr/blob/v8.8.1/core/src/main/java/org/jobrunr/jobs/lambdas/JobRequest.java[`JobRequest`] and https://github.com/jobrunr/jobrunr/blob/v8.8.1/core/src/main/java/org/jobrunr/jobs/lambdas/JobRequestHandler.java[`JobRequestHandler`] contract instead. The request carries only the durable delivery ID, has a no-argument constructor for deserialization, and maps itself to a Spring handler:
 

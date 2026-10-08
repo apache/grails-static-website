@@ -11,9 +11,9 @@ class Author {
     static hasMany = [books: Book]
 
     static constraints = {
-        name blank: false, maxSize: 200
-        email email: true, blank: false
-        bio blank: false, maxSize: 4000, widget: 'textarea'
+        name nullable: false, blank: false, maxSize: 200
+        email nullable: false, email: true, blank: false
+        bio nullable: false, blank: false, maxSize: 4000, widget: 'textarea'
         website url: true, nullable: true
         contactInfo nullable: true
     }

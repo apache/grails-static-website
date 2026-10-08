@@ -10,7 +10,7 @@ class Tag {
     static hasMany = [books: Book]
 
     static constraints = {
-        name blank: false, unique: true, maxSize: 50
+        name nullable: false, blank: false, unique: true, maxSize: 50
     }
 
     String toString() {

@@ -10,7 +10,7 @@ Plain Spock specs with `DomainUnitTest` / `DataTest` verify every constraint, an
 include::../snippets/src/test/groovy/example/CustomerRequestStatusSpec.groovy[]
 ----
 
-The sample repo carries one spec per domain (`CustomerSpec`, `OrderSpec`, `AuditLogSpec`, `CustomerRequestSpec`, `WorkOrderSpec`, `WorkOrderAssigneeSpec`). One worth calling out: a blank string set through the *map constructor* is converted to `null` by Grails data binding, so a `blank: false` field reports a `nullable` error rather than `blank`. To test the `blank` constraint itself, assign the property directly.
+The sample repo carries one spec per domain (`CustomerSpec`, `OrderSpec`, `AuditLogSpec`, `CustomerRequestSpec`, `WorkOrderSpec`, `WorkOrderAssigneeSpec`). Grails 8 defaults `nullable` to `true`, including associations, so required strings and associations in this sample declare `nullable: false` explicitly. A blank string set through the *map constructor* is converted to `null` by Grails data binding, so a `blank: false` field reports a `nullable` error rather than `blank`. To test the `blank` constraint itself, assign the property directly.
 
 == Integration: the transactional contract
 

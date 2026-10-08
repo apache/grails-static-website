@@ -18,7 +18,8 @@ class WorkOrder {
     static belongsTo = [customerRequest: CustomerRequest]
 
     static constraints = {
-        description blank: false, maxSize: 255
+        customerRequest nullable: false
+        description nullable: false, blank: false, maxSize: 255
         status      nullable: false
     }
 

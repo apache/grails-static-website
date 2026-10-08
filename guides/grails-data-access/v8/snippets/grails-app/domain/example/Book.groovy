@@ -22,7 +22,7 @@ class Book {
     }
 
     static constraints = {
-        title blank: false, maxSize: 255
+        title nullable: false, blank: false, maxSize: 255
         isbn nullable: true, maxSize: 20
         price nullable: false, min: 0.01G, scale: 2
         publishedOn nullable: true

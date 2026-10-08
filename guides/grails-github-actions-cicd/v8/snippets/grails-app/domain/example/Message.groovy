@@ -8,7 +8,7 @@ class Message {
     String content
 
     static constraints = {
-        content blank: false, maxSize: 500
+        content nullable: false, blank: false, maxSize: 500
     }
 
     String toString() { content }
