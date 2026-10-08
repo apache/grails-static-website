@@ -1,0 +1,31 @@
+Add the Spring Security client libraries to `build.gradle`. Grails 8.0.0 manages the Spring Boot 4.1.1 line through `grails-bom`, so these two dependencies do not need their own versions:
+
+[source,groovy]
+----
+implementation 'org.springframework.boot:spring-boot-starter-security'
+implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+----
+
+`complete/gradle.properties` sets `grailsVersion=8.0.0`. Keep `initial/gradle.properties` on that same version.
+
+== application.yml
+
+The datasource stays on embedded H2. The Keycloak registration is the `keycloak` client under Spring Security's OAuth2 client properties. The registration id is the last segment of the login callback, `/login/oauth2/code/keycloak`.
+
+[source,yaml]
+----
+include::../snippets/grails-app/conf/application.yml[]
+----
+
+`KEYCLOAK_ISSUER` is the realm issuer, `http://localhost:8081/realms/example`, not the Keycloak root URL.
+
+== Register the role mapper
+
+`KeycloakAuthoritiesMapper` is not a Spring stereotype. Register it in `grails-app/conf/spring/resources.groovy` so `SecurityConfig` can inject it:
+
+[source,groovy]
+----
+include::../snippets/grails-app/conf/spring/resources.groovy[]
+----
+
+Place `SecurityConfig` and `KeycloakAuthoritiesMapper` in `src/main/groovy/com/grails/example/`. Place `SecurityTagLib` in `grails-app/taglib/com/grails/example/`. The next chapter walks through each class.
