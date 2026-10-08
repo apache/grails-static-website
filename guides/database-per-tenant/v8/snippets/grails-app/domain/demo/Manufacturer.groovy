@@ -4,6 +4,6 @@ class Manufacturer {
     String name
 
     static constraints = {
-        name blank: false
+        name nullable: false, blank: false
     }
 }

@@ -8,7 +8,7 @@ class Tag {
     static belongsTo = Book
 
     static constraints = {
-        name blank: false, maxSize: 60, unique: true
+        name nullable: false, blank: false, maxSize: 60, unique: true
     }
 
     static mapping = {

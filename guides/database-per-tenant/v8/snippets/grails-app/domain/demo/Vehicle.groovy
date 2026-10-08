@@ -11,7 +11,7 @@ class Vehicle implements MultiTenant<Vehicle> { // <1>
         year column: '`year`'
     }
     static constraints = {
-        model blank: false
-        year min: 1980
+        model nullable: false, blank: false
+        year nullable: false, min: 1980
     }
 }

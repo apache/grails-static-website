@@ -14,8 +14,22 @@
             <g:message code="${referencedClass.simpleName.toLowerCase()}.label"
                        default="${referencedClass.simpleName}"/>
         </legend>
-        <f:with bean="${value ?: referencedClass.newInstance()}" prefix="${prefix}${property}.">
-            <f:all/>
+        <%-- Grails Fields 8 passes only bean, property, and prefix into f:all,
+             so required on f:all is ignored. Set it on each child field.
+             An optional association must not HTML-require a blank child. --%>
+        <g:set var="childBean" value="${value ?: referencedClass.newInstance()}"/>
+        <g:set var="childEntity" value="${grailsApplication.mappingContext.getPersistentEntity(referencedClass.name)}"/>
+        <f:with bean="${childBean}" prefix="${prefix}${property}.">
+            <g:each in="${childEntity.persistentProperties}" var="childProp">
+                <g:if test="${!(childProp instanceof org.grails.datastore.mapping.model.types.Association) && !(childProp.name in ['id', 'version', 'dateCreated', 'lastUpdated'])}">
+                    <g:if test="${required}">
+                        <f:field property="${childProp.name}"/>
+                    </g:if>
+                    <g:else>
+                        <f:field property="${childProp.name}" required="false"/>
+                    </g:else>
+                </g:if>
+            </g:each>
         </f:with>
     </fieldset>
 </g:if>

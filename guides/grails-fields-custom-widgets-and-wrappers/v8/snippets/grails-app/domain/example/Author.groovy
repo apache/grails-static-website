@@ -18,6 +18,14 @@ class Author {
         contactInfo nullable: true
     }
 
+    def beforeValidate() {
+        // The optional contact fieldset is always rendered. A blank submission
+        // binds a new ContactInfo, which would fail its own required fields.
+        if (contactInfo && !contactInfo.id && !contactInfo.phone && !contactInfo.mailingAddress) {
+            contactInfo = null
+        }
+    }
+
     static mapping = {
         sort name: 'asc'
     }
