@@ -9,6 +9,41 @@ defaults:
   tags: []
 
 guides:
+  - name: 'grails-keycloak'
+    title: 'Keycloak Authentication in Grails 8'
+    subtitle: 'Sign users in with Keycloak and enforce USER and ADMIN client roles.'
+    authors:
+      - 'Aaron'
+    category: 'Grails Security'
+    publicationDate: '2026-10-08'
+    versions:
+      '8':
+        sourcePath: guides/grails-keycloak/v8
+        publicationDate: '2026-10-08'
+        tags:
+          - 'grails8'
+          - 'keycloak'
+          - 'oauth2'
+          - 'oidc'
+          - 'spring-security'
+          - 'authentication'
+        sampleRef:
+          repo: 'grails-guides/grails-keycloak'
+          branch: 'grails8'
+        toc:
+          gettingStarted:
+            title: Getting Started
+          keycloakSetup:
+            title: Run a Local Keycloak
+          configureGrails:
+            title: Configure the Grails Application
+          understandingTheCode:
+            title: Understand the Security Integration
+          runningTheApp:
+            title: Prove USER and ADMIN
+          helpWithGrails:
+            title: Do You Need Help With Grails?
+
   - name: 'grails-jobrunr'
     title: 'Background Jobs with JobRunr in Grails 8'
     subtitle: 'Run durable background work safely with JobRunr OSS, Grails transactions, and explicit storage wiring.'

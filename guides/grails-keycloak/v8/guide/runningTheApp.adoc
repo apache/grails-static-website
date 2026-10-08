@@ -1,0 +1,41 @@
+Start Keycloak, export `KEYCLOAK_CLIENT_ID`, `KEYCLOAK_CLIENT_SECRET`, and `KEYCLOAK_ISSUER`, then start Grails from `complete/`:
+
+[source,bash]
+----
+cd complete
+./gradlew bootRun
+----
+
+On Windows run `gradlew.bat bootRun` from the same directory. The application listens on http://localhost:8080[http://localhost:8080].
+
+== Anonymous
+
+Open `/`. The home page renders and the header shows *Login*. `/account` and `/admin` redirect to Keycloak.
+
+== USER
+
+Sign in as the user who has only the `USER` client role.
+
+* The header shows *Account* and *Logout*. It does not show *Admin*.
+* `/account` renders the account page.
+* `/admin` is denied. The mapping for `AuthorizationDeniedException` handles that response.
+
+== ADMIN
+
+Sign out, then sign in as the user who has the composite `ADMIN` client role.
+
+* The header shows *Account* and *Admin*.
+* `/account` and `/admin` both render.
+
+If *Admin* is missing for that user, evaluate the ID token again. `ADMIN` must be a composite that includes `USER`, and both roles must appear under `resource_access.example-client.roles`.
+
+== Logout
+
+*Logout* posts to `/logout` with the `_csrf` token. Keycloak ends its session and redirects the browser to `http://localhost:8080`. A missing post-logout redirect URI leaves the browser on a Keycloak error page instead.
+
+The unit and integration tests do not call Keycloak. `KeycloakAuthoritiesMapperSpec` checks the claim mapping, and the controller integration specs plant an authentication with `ROLE_USER` or `ROLE_ADMIN` to prove `@PreAuthorize`. Run them with:
+
+[source,bash]
+----
+./gradlew test integrationTest
+----

@@ -1,0 +1,143 @@
+Run Keycloak on port 8081 so it does not collide with the Grails application on port 8080.
+
+[source,bash]
+----
+docker run --rm --name grails-keycloak \
+  -p 8081:8080 \
+  -e KC_BOOTSTRAP_ADMIN_USERNAME=admin \
+  -e KC_BOOTSTRAP_ADMIN_PASSWORD=admin \
+  quay.io/keycloak/keycloak:26.8.0 \
+  start-dev
+----
+
+Open http://localhost:8081[http://localhost:8081] and sign in as `admin` / `admin`. `start-dev` reads the browser's host, so the issuer for this guide is `http://localhost:8081/realms/example`.
+
+== Realm and client
+
+Create a realm named `example`.
+
+In that realm, create an OpenID Connect client:
+
+[options="header"]
+|===
+|Setting |Value
+
+|Client type
+|OpenID Connect
+
+|Client ID
+|`example-client`
+
+|Client authentication
+|On
+
+|Standard flow
+|On
+
+|Valid redirect URIs
+|`http://localhost:8080/login/oauth2/code/keycloak`
+
+|Valid post logout redirect URIs
+|`http://localhost:8080`
+
+|Web origins
+|`http://localhost:8080`
+|===
+
+The redirect URI is the Spring Security login callback. The post-logout URI is `{baseUrl}` from the application, which is `http://localhost:8080` when Grails listens on that port. Keycloak 18 and later rejects a logout redirect that is not registered. In the Keycloak 26 client settings this field is under *Logout settings*.
+
+Copy the client secret from *Clients -> example-client -> Credentials*. The application reads it from `KEYCLOAK_CLIENT_SECRET`. Do not commit the secret.
+
+== Client roles
+
+Create `USER` and `ADMIN` under *Clients -> example-client -> Roles*. The mapper in this guide reads `resource_access.example-client.roles` from the ID token. Roles created under *Realm roles* are not in that claim, so a user can sign in and still fail every `@PreAuthorize` check.
+
+Open `ADMIN` and add `USER` as an associated role so `ADMIN` is a composite role. A user who is assigned only `ADMIN` then receives both `ADMIN` and `USER` in the client-role claim. The Account page requires `USER`, and the Admin page requires `ADMIN`, so an administrator can open both.
+
+== Put the client roles on the ID token
+
+Open *Clients -> example-client -> Client scopes -> dedicated scope* and add a mapper of type *User Client Role*.
+
+[options="header"]
+|===
+|Setting |Value
+
+|Name
+|`example-client-roles`
+
+|Client ID
+|`example-client`
+
+|Client Role prefix
+|leave blank
+
+|Multivalued
+|On
+
+|Token Claim Name
+|`resource_access.example-client.roles`
+
+|Claim JSON Type
+|String
+
+|Add to ID token
+|On
+
+|Add to access token
+|On
+
+|Add to lightweight access token
+|Off
+
+|Add to userinfo
+|On
+
+|Add to token introspection
+|On
+|===
+
+Token Claim Name is required and has no default. That value is the only claim `KeycloakAuthoritiesMapper` reads. Leave Client Role prefix blank so the token contains `USER` and `ADMIN`. The Grails mapper adds `ROLE_`.
+
+Check the result before starting Grails. Open *Client scopes -> Evaluate*, choose the test user, and generate an ID token. A user with the `USER` client role should show:
+
+[source,json]
+----
+{
+  "resource_access": {
+    "example-client": {
+      "roles": ["USER"]
+    }
+  }
+}
+----
+
+An `ADMIN` user should show both `ADMIN` and `USER` in that same `roles` array.
+
+== Users
+
+Create two users in the `example` realm. Set a non-temporary password on each.
+
+Assign client roles from *Role mapping -> Assign role*, with the filter set to clients:
+
+* One user gets `example-client` / `USER` only.
+* The other user gets `example-client` / `ADMIN` only. Composite membership supplies `USER`.
+
+== Environment variables
+
+The Grails application reads three variables. There is no database variable.
+
+[source,bash]
+----
+export KEYCLOAK_CLIENT_ID=example-client
+export KEYCLOAK_CLIENT_SECRET=paste-the-client-secret
+export KEYCLOAK_ISSUER=http://localhost:8081/realms/example
+----
+
+On PowerShell:
+
+[source,powershell]
+----
+$env:KEYCLOAK_CLIENT_ID = "example-client"
+$env:KEYCLOAK_CLIENT_SECRET = "paste-the-client-secret"
+$env:KEYCLOAK_ISSUER = "http://localhost:8081/realms/example"
+----
