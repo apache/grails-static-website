@@ -18,6 +18,7 @@ class WorkOrderAssignee {
     static belongsTo = [workOrder: WorkOrder]
 
     static constraints = {
-        employeeName blank: false, maxSize: 255
+        workOrder nullable: false
+        employeeName nullable: false, blank: false, maxSize: 255
     }
 }

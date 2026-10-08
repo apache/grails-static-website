@@ -14,10 +14,10 @@ class Book {
     static hasMany = [tags: Tag]
 
     static constraints = {
-        title blank: false, maxSize: 255
-        isbn blank: false, matches: /^(?:\d{10}|\d{13}|\d{3}-\d-\d{2}-\d{6}-\d)$/
+        title nullable: false, blank: false, maxSize: 255
+        isbn nullable: false, blank: false, matches: /^(?:\d{10}|\d{13}|\d{3}-\d-\d{2}-\d{6}-\d)$/
         genre inList: ['Fiction', 'Non-Fiction', 'Biography', 'Science', 'History', 'Poetry']
-        description blank: false, maxSize: 2000, widget: 'textarea'
+        description nullable: false, blank: false, maxSize: 2000, widget: 'textarea'
         publishedDate nullable: false
         priceUSD min: 0.00G, scale: 2
         inStock nullable: false

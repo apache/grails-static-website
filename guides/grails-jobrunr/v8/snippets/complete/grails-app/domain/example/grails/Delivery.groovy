@@ -8,7 +8,7 @@ class Delivery {
 
     static constraints = {
         reference nullable: false, blank: false, unique: true
-        status blank: false
+        status nullable: false, blank: false
         completedAt nullable: true
     }
 }

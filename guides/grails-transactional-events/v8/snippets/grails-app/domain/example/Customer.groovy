@@ -10,7 +10,7 @@ class Customer {
     BigDecimal lifetimeValue = BigDecimal.ZERO
 
     static constraints = {
-        name          blank: false, maxSize: 255
+        name          nullable: false, blank: false, maxSize: 255
         email         email: true, unique: true, maxSize: 255
         lifetimeValue min: BigDecimal.ZERO
     }

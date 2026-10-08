@@ -113,7 +113,6 @@ dependencies {
     console "org.apache.grails:grails-console"
     runtimeOnly "cloud.wondrify:asset-pipeline-grails"
     runtimeOnly "com.zaxxer:HikariCP"
-    runtimeOnly "org.fusesource.jansi:jansi"
     runtimeOnly "org.postgresql:postgresql"
     integrationTestImplementation testFixtures("org.apache.grails:grails-geb")
     testImplementation "org.apache.grails:grails-testing-support-datamapping"

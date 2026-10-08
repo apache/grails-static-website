@@ -10,7 +10,7 @@ class Task {
     Date dateCreated
 
     static constraints = {
-        title blank: false, maxSize: 255
+        title nullable: false, blank: false, maxSize: 255
     }
 
     static mapping = {

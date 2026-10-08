@@ -14,7 +14,7 @@ class CustomerRequest {
     CustomerRequestStatus status = CustomerRequestStatus.SUBMITTED
 
     static constraints = {
-        summary blank: false, maxSize: 255
+        summary nullable: false, blank: false, maxSize: 255
         status  nullable: false
     }
 
