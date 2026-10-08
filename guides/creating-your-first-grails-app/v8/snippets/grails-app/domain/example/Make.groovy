@@ -5,7 +5,7 @@ class Make {
     String name
 
     static constraints = {
-        name blank: false, maxSize: 255
+        name nullable: false, blank: false, maxSize: 255
     }
 
     String toString() {

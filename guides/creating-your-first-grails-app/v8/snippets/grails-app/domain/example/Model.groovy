@@ -7,7 +7,8 @@ class Model {
     static belongsTo = [make: Make]
 
     static constraints = {
-        name blank: false, maxSize: 255
+        name nullable: false, blank: false, maxSize: 255
+        make nullable: false
     }
 
     String toString() {

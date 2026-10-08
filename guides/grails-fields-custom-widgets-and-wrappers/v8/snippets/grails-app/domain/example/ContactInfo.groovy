@@ -8,8 +8,9 @@ class ContactInfo {
     static belongsTo = [author: Author]
 
     static constraints = {
-        phone blank: false, maxSize: 32
-        mailingAddress blank: false, maxSize: 500, widget: 'textarea'
+        author nullable: false
+        phone nullable: false, blank: false, maxSize: 32
+        mailingAddress nullable: false, blank: false, maxSize: 500, widget: 'textarea'
     }
 
     String toString() { "Contact for ${author?.name}" }
