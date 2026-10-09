@@ -12,10 +12,10 @@ class AuditLog {
     Date occurredAt
 
     static constraints = {
-        eventType  blank: false, maxSize: 64
-        orderId    min: 1L
-        customerId min: 1L
-        orderTotal min: new BigDecimal('0.01')
+        eventType  nullable: false, blank: false, maxSize: 64
+        orderId    nullable: false, min: 1L
+        customerId nullable: false, min: 1L
+        orderTotal nullable: false, min: new BigDecimal('0.01')
         occurredAt nullable: false
     }
 

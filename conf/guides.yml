@@ -10,41 +10,40 @@ defaults:
 
 guides:
   - name: 'grails-keycloak'
-    title: 'Keycloak Integration with Grails 8'
-    subtitle: 'Authenticate and authorize Grails 8 apps with Keycloak (OIDC)'
+    title: 'Keycloak Authentication in Grails 8'
+    subtitle: 'Sign users in with Keycloak and enforce USER and ADMIN client roles.'
     authors:
-      - 'amondel2'
-    category: 'Security'
-    publicationDate: '2026-09-02'
+      - 'Aaron'
+    category: 'Grails Security'
+    publicationDate: '2026-10-08'
     versions:
       '8':
         sourcePath: guides/grails-keycloak/v8
-        publicationDate: '2026-09-02'
+        publicationDate: '2026-10-08'
         tags:
           - 'grails8'
           - 'keycloak'
-          - 'security'
-          - 'openid-connect'
+          - 'oauth2'
+          - 'oidc'
+          - 'spring-security'
+          - 'authentication'
         sampleRef:
-          repo: 'grails-guides/grails-keycloak-example'
+          repo: 'grails-guides/grails-keycloak'
           branch: 'grails8'
         toc:
           gettingStarted:
             title: Getting Started
-            requirements: What you will need
-            howto: How to Complete the Guide
-          postgresql:
-            title: PostgreSQL Setup
+          keycloakSetup:
+            title: Run a Local Keycloak
           configureGrails:
             title: Configure the Grails Application
-          keycloakSetup:
-            title: Configure Keycloak
+          understandingTheCode:
+            title: Understand the Security Integration
           runningTheApp:
-            title: Run the Application
+            title: Prove USER and ADMIN
           helpWithGrails:
             title: Do You Need Help With Grails?
 
-  
   - name: 'grails-jobrunr'
     title: 'Background Jobs with JobRunr in Grails 8'
     subtitle: 'Run durable background work safely with JobRunr OSS, Grails transactions, and explicit storage wiring.'
@@ -855,9 +854,10 @@ guides:
 
   - name: 'database-per-tenant'
     title: 'Database per Tenant Multi-Tenancy'
-    subtitle: 'Learn how to leverage Multi-Tenancy features of GORM 6.1 to build an application using a unique database per tenant'
+    subtitle: 'Learn how to leverage Multi-Tenancy features of GORM to build an application using a unique database per tenant'
     authors:
       - 'Graeme Rocher'
+      - 'Sanjana'
     category: 'GORM'
     publicationDate: '2017-05-15'
     versions:
@@ -879,6 +879,46 @@ guides:
         toc:
           training:
             title: Grails Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            setupMultitenancy:
+              title: Setup Multi-Tenancy
+              multiTenancyMode: The Multi-Tenancy Mode
+              multiTenancyResolver: The TenantResolver
+              dataSources: Multiple Data Sources
+            domainClasses: Creating the Domain Classes
+            seedData: Setup Test Data
+            tenantSelection: Implementing Tenant Selection
+            multiTenantLogic:
+              title: Writing Multi-Tenant Aware Data Logic
+              readingData: Executing Multi-Tenant Aware Queries
+              writingData: Executing Multi-Tenant Updates
+          testingTheApp: Multi-Tenancy Unit Testing
+          integrationTest: Functional Tests
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Do you need help with Grails?
+      '8':
+        sourcePath: guides/database-per-tenant/v8
+        publicationDate: '2026-09-13'
+        tags:
+          - 'multi-tenancy'
+          - 'database-per-tenant'
+          - 'gorm'
+          - 'hibernate'
+          - 'tenant-resolver'
+          - 'data-isolation'
+          - 'multi-datasource'
+          - 'security'
+        sampleRef:
+          repo: 'grails-guides/database-per-tenant'
+          branch: 'grails8'
+        toc:
           gettingStarted:
             title: Getting Started
             requirements: What you will need
@@ -1300,6 +1340,7 @@ guides:
     subtitle: 'Learn to configure routes and endpoints'
     authors:
       - 'Zachary Klein'
+      - 'Sanjana'
     category: 'Grails Apprentice'
     publicationDate: '2018-01-17'
     versions:
@@ -1319,6 +1360,39 @@ guides:
           branch: 'master'
         toc:
           gettingStarted: 
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          creatingTheApp:
+            title: Creating our Application
+          controllers:
+            title: Creating Controllers
+          urlMappings:
+            title: Defining URL Mappings
+          splitUrlMappings:
+            title: Organize URL Mappings
+          testing:
+            title: Testing URL Mappings
+          conclusion:
+            title: Conclusion
+          helpWithGrails:
+            title: Help with Grails
+      '8':
+        sourcePath: guides/grails_url_mappings/v8
+        publicationDate: '2026-09-18'
+        tags:
+          - 'url-mappings'
+          - 'controllers'
+          - 'rest-api'
+          - 'routing'
+          - 'web-layer'
+          - 'beginner'
+          - 'api-design'
+        sampleRef:
+          repo: 'grails-guides/grails_url_mappings'
+          branch: 'grails8'
+        toc:
+          gettingStarted:
             title: Getting Started
             requirements: What you will need
             howto: How to complete the guide
@@ -3667,6 +3741,7 @@ guides:
     subtitle: 'Learn how to consume and handle transactions to multiple data sources from a Grails application. '
     authors:
       - 'Sergio del Amo'
+      - 'Sanjana'
     category: 'Advanced Grails'
     publicationDate: '2017-10-10'
     versions:
@@ -3722,6 +3797,38 @@ guides:
         toc:
           training:
             title: Training
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            configuration: Configuration
+            domain: Domain Classes
+            services: Services
+            controllers: Controllers
+            views: Views
+            test: Functional Test
+          testingTheApp:
+            title: Testing the Application
+          helpWithGrails:
+            title: Help with Grails
+      '8':
+        sourcePath: guides/grails-multi-datasource/v8
+        publicationDate: '2026-09-16'
+        tags:
+          - 'multi-datasource'
+          - 'json-views'
+          - 'gorm'
+          - 'hibernate'
+          - 'database'
+          - 'transactions'
+          - 'rest-api'
+          - 'configuration'
+        sampleRef:
+          repo: 'grails-guides/grails-multi-datasource'
+          branch: 'grails8'
+        toc:
           gettingStarted:
             title: Getting Started
             requirements: What you will need

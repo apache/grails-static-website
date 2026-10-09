@@ -12,7 +12,8 @@ class Order {
     static belongsTo = [customer: Customer]
 
     static constraints = {
-        total min: new BigDecimal('0.01')
+        customer nullable: false
+        total nullable: false, min: new BigDecimal('0.01')
     }
 
     static mapping = {

@@ -11,7 +11,7 @@ class Author {
     static hasMany = [books: Book]
 
     static constraints = {
-        name blank: false, maxSize: 100
+        name nullable: false, blank: false, maxSize: 100
         email email: true, unique: true, nullable: true, maxSize: 255
     }
 

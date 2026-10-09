@@ -14,7 +14,7 @@ include::../snippets/grails-app/views/_fields/oneToOne/_widget.gsp[]
 How the dispatch works:
 
 * `persistentProperty.bidirectional && persistentProperty.inverseSide?.owningSide` is `true` when the other side declares `belongsTo: ParentClass` (or its bidirectional equivalent). The owning side's row is created and destroyed with the parent.
-* When owned, the template uses `<f:with bean="${value ?: referencedClass.newInstance()}" prefix="${prefix}${property}.">` to recursively render `<f:all>` for the child. The `prefix` ensures the child's input names are like `author.contactInfo.phone` so Grails data binding cascades into the child object.
+* When owned, the template uses `<f:with bean="${value ?: referencedClass.newInstance()}" prefix="${prefix}${property}.">` and renders each non-association child property with `<f:field>`. The `prefix` ensures the child's input names are like `author.contactInfo.phone` so Grails data binding cascades into the child object. Grails Fields 8 ignores `required` on `<f:all>`, so an optional association passes `required="false"` to each child field. That lets the browser submit a parent with a blank child. `Author.beforeValidate()` then drops that blank child. A partial child still fails its own `nullable: false` constraints.
 * When not owned, the template falls through to a `<select>` of existing rows, exactly like many-to-one.
 
 This single template handles both `Author.contactInfo` (owned, inline edit) and any future `Book.cover` style relationship (independent, select an existing image) without per-property special-casing.

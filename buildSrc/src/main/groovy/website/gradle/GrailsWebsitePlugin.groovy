@@ -47,6 +47,7 @@ import website.gradle.tasks.PublishMainSiteTask
 import website.gradle.tasks.QuestionsTask
 import website.gradle.tasks.RecordCompanionReleaseTask
 import website.gradle.tasks.RecordReleaseTask
+import website.gradle.tasks.RecordToolReleaseTask
 import website.gradle.tasks.RenderSiteTask
 import website.gradle.tasks.SitemapTask
 import website.gradle.tasks.UploadAlgoliaIndexTask
@@ -166,6 +167,11 @@ class GrailsWebsitePlugin implements Plugin<Project> {
         // `./gradlew recordCompanionRelease -PgrailsMajor=N -PartifactId=name
         //  -PartifactVersion=X.Y.Z` on each plugin's release day.
         RecordCompanionReleaseTask.register(project)
+
+        // Bumps the version of an existing tool entry under tools: (e.g. the
+        // IntelliJ plugin). The release-tool.yml workflow invokes
+        // `./gradlew recordToolRelease -PartifactId=name -PartifactVersion=X`.
+        RecordToolReleaseTask.register(project)
 
         // Validates conf/guides.yml against the schema.
         // `-PvalidationMode=shape|existence|both` selects the rule set.

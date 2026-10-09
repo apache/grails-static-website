@@ -43,15 +43,15 @@ class BookController extends RestfulController<Book> {
     }
 
     @Override
-    protected Integer countResources() {
+    protected Long countResources() {
         Long authorId = params.long('author')
         if (authorId != null) {
             return Book.where {
                 author.id == authorId
-            }.count() as Integer
+            }.count() as Long
         }
 
-        Book.count()
+        Book.count() as Long
     }
 
     @Transactional
@@ -106,6 +106,6 @@ class BookController extends RestfulController<Book> {
 
         params.max = Math.max(drafts.size(), 1)
         params.offset = 0
-        respond drafts, [status: HttpStatus.CREATED, view: 'index', model: [bookCount: drafts.size()]]
+        respond drafts, [status: HttpStatus.CREATED, view: 'index', model: [bookCount: drafts.size() as Long]]
     }
 }

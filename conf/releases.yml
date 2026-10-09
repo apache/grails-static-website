@@ -1,10 +1,15 @@
 # conf/releases.yml is the single source of truth for the website's view of
-# the Apache Grails release inventory. It has two top-level sections:
+# the Apache Grails release inventory. It has three top-level sections:
 #
 #   companionArtifacts: per-Grails-major Apache-released companion artifacts
 #                       (Spring Security, Redis, Quartz, etc.) with their own
 #                       independent versions. Keyed by Grails major version.
 #                       Populated by the recordCompanionRelease Gradle task.
+#
+#   tools:              Apache-released developer tools (e.g. the IntelliJ
+#                       plugin) versioned independently of any Grails major.
+#                       Rendered in the "Developer Tools" downloads card.
+#                       Populated by the recordToolRelease Gradle task.
 #
 #   coreReleases:       the flat append-only list of every Grails core release
 #                       ever shipped, optionally annotated with a publicationDate.
@@ -48,10 +53,20 @@ companionArtifacts:
       displayName: Grails Publish Gradle Plugin
   '8':
     - artifactId: grails-publish
-      version: '1.0.0-M2'
+      version: '1.0.0-RC2'
       mirrorDirectory: grails-publish
       releaseNotesRepo: apache/grails-gradle-publish
       displayName: Grails Publish Gradle Plugin
+
+tools:
+  # Same schema as companionArtifacts entries. Each tool must publish both a
+  # source (sources/apache-<artifactId>-<version>-src.zip) and a binary
+  # (distribution/apache-<artifactId>-<version>-bin.zip) distribution.
+  - artifactId: grails-intellij-plugin
+    version: '263.0.0'
+    mirrorDirectory: intellij
+    releaseNotesRepo: apache/grails-intellij-plugin
+    displayName: Grails IntelliJ Plugin
 
 coreReleases:
   - version: '0.1'
@@ -474,4 +489,22 @@ coreReleases:
 
   - version: 8.0.0-M6
     publicationDate: Aug 29, 2026
+
+  - version: 7.0.17
+    publicationDate: Sep 24, 2026
+
+  - version: 7.1.7
+    publicationDate: Sep 25, 2026
+
+  - version: 7.2.4
+    publicationDate: Sep 25, 2026
+
+  - version: 8.0.0-RC1
+    publicationDate: Sep 28, 2026
+
+  - version: 8.0.0-RC2
+    publicationDate: Oct 03, 2026
+
+  - version: 8.0.0
+    publicationDate: Oct 07, 2026
 

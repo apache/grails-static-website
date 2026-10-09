@@ -1,0 +1,30 @@
+This guide connects a Grails 8.0.0 application to Keycloak with OpenID Connect. Users, passwords, and roles live in Keycloak. The Grails application stores nothing of its own and uses an embedded H2 database.
+
+The finished sample is the `grails8` branch of https://github.com/grails-guides/grails-keycloak[grails-guides/grails-keycloak]. `initial/` is a plain Grails web application. `complete/` adds Spring Security OAuth2 login, a client-role mapper, GSP security tags, and pages for the `USER` and `ADMIN` roles.
+
+== What you will build
+
+* A public home page at `/`.
+* An Account page that requires the Keycloak client role `USER`.
+* An Admin page that requires the Keycloak client role `ADMIN`.
+* A login redirect to Keycloak, and a logout that returns the browser to `http://localhost:8080`.
+
+== What you will need
+
+* JDK 21, with `JAVA_HOME` set.
+* Docker, to run Keycloak 26.8.0.
+* A browser.
+
+The sample's Gradle wrapper downloads Grails 8.0.0 and Gradle 9.8.0. You do not need a separate Grails install to run it. The Grails application does not need PostgreSQL. Keycloak `start-dev` keeps its own embedded database.
+
+The sample repository also contains `KEYCLOAK.md`. That file is a longer Keycloak setup (PostgreSQL, systemd, and SMTP). This guide is enough to sign in and prove the two roles.
+
+== How to follow this guide
+
+[source,bash]
+----
+git clone -b grails8 https://github.com/grails-guides/grails-keycloak.git
+cd grails-keycloak
+----
+
+Open `complete/` to run the finished application. Open `initial/` to apply the steps yourself. The chapters below show the files from `complete/`.

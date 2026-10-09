@@ -20,9 +20,11 @@ class BootStrap {
                 bio: 'English writer and philologist, best known for The Hobbit and The Lord of the Rings.',
                 website: 'https://www.tolkienestate.com/'
         )
+        tolkien.save(failOnError: true, flush: true)
         tolkien.contactInfo = new ContactInfo(
                 phone: '+44 20 7946 0958',
-                mailingAddress: '1 Oxford Way, Oxford, England'
+                mailingAddress: '1 Oxford Way, Oxford, England',
+                author: tolkien
         )
         tolkien.save(failOnError: true)
 
@@ -32,9 +34,11 @@ class BootStrap {
                 bio: 'English novelist known primarily for her six major novels of the early 19th century.',
                 website: null
         )
+        austen.save(failOnError: true, flush: true)
         austen.contactInfo = new ContactInfo(
                 phone: '+44 1256 462100',
-                mailingAddress: 'Steventon Rectory, Hampshire, England'
+                mailingAddress: 'Steventon Rectory, Hampshire, England',
+                author: austen
         )
         austen.save(failOnError: true)
 

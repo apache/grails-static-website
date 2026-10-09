@@ -11,8 +11,8 @@ class Book {
     Date    publishedOn
 
     static constraints = {
-        title       blank: false, maxSize: 255
-        isbn        blank: false, unique: true, matches: /^(97(8|9))?\d{9}(\d|X)$/
+        title       nullable: false, blank: false, maxSize: 255
+        isbn        nullable: false, blank: false, unique: true, matches: /^(97(8|9))?\d{9}(\d|X)$/
         pageCount   nullable: true, min: 1
         publishedOn nullable: true
     }
