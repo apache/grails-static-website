@@ -33,14 +33,15 @@ guides:
         toc:
           gettingStarted:
             title: Getting Started
+            howto: How to Complete the Guide
           keycloakSetup:
-            title: Run a Local Keycloak
+            title: Configure Keycloak
           configureGrails:
             title: Configure the Grails Application
-          understandingTheCode:
-            title: Understand the Security Integration
           runningTheApp:
-            title: Prove USER and ADMIN
+            title: Run the Application
+          testing:
+            title: Testing
           helpWithGrails:
             title: Do You Need Help With Grails?
 

@@ -1,41 +1,13 @@
-Start Keycloak, export `KEYCLOAK_CLIENT_ID`, `KEYCLOAK_CLIENT_SECRET`, and `KEYCLOAK_ISSUER`, then start Grails from `complete/`:
+After Keycloak is running and the environment variables are set, start the Grails app:
 
 [source,bash]
 ----
-cd complete
-./gradlew bootRun
+./grailsw bootRun
 ----
 
-On Windows run `gradlew.bat bootRun` from the same directory. The application listens on http://localhost:8080[http://localhost:8080].
+Public pages should be accessible without authentication. Accessing protected pages will redirect to Keycloak for login; after successful authentication Keycloak returns the user to the Grails app.
 
-== Anonymous
+== Testing roles
 
-Open `/`. The home page renders and the header shows *Login*. `/account` and `/admin` redirect to Keycloak.
-
-== USER
-
-Sign in as the user who has only the `USER` client role.
-
-* The header shows *Account* and *Logout*. It does not show *Admin*.
-* `/account` renders the account page.
-* `/admin` is denied. The mapping for `AuthorizationDeniedException` handles that response.
-
-== ADMIN
-
-Sign out, then sign in as the user who has the composite `ADMIN` client role.
-
-* The header shows *Account* and *Admin*.
-* `/account` and `/admin` both render.
-
-If *Admin* is missing for that user, evaluate the ID token again. `ADMIN` must be a composite that includes `USER`, and both roles must appear under `resource_access.example-client.roles`.
-
-== Logout
-
-*Logout* posts to `/logout` with the `_csrf` token. Keycloak ends its session and redirects the browser to `http://localhost:8080`. A missing post-logout redirect URI leaves the browser on a Keycloak error page instead.
-
-The unit and integration tests do not call Keycloak. `KeycloakAuthoritiesMapperSpec` checks the claim mapping, and the controller integration specs plant an authentication with `ROLE_USER` or `ROLE_ADMIN` to prove `@PreAuthorize`. Run them with:
-
-[source,bash]
-----
-./gradlew test integrationTest
-----
+* Create a Keycloak user with the `USER` role and verify access to user-protected pages.
+* Create an `ADMIN` user (which inherits `USER`) and verify access to admin-protected pages.

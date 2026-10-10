@@ -22,18 +22,11 @@
                         ${it.firstName} ${it.lastName}
                     </app:currentUser>
                 </span>
-                <g:set var="csrfToken" value="${request.getAttribute('org.springframework.security.web.csrf.CsrfToken')}"/>
-                <g:if test="${csrfToken instanceof java.util.function.Supplier}">
-                    <g:set var="csrfToken" value="${csrfToken.get()}"/>
-                </g:if>
-                <form action="${createLink(uri: '/logout')}" method="post" class="logout-form">
-                    <g:if test="${csrfToken}">
-                        <g:hiddenField name="${csrfToken.parameterName}" value="${csrfToken.token}"/>
-                    </g:if>
+                <g:form method="post" url="[uri: '/logout']" useToken="true" class="logout-form">
                     <button type="submit" class="logout-button">
                         <g:message code='header.btn.logout' />
                     </button>
-                </form>
+                </g:form>
             </app:loggedIn>
              <app:ifNotLoggedIn>
                 <g:link controller="account" class="login-button">

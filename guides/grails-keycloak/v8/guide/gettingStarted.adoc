@@ -12,7 +12,7 @@ The finished sample is the `grails8` branch of https://github.com/grails-guides/
 == What you will need
 
 * JDK 21, with `JAVA_HOME` set.
-* Docker, to run Keycloak 26.8.0.
+* Keycloak 26.8.0 installed on the OS.
 * A browser.
 
 The sample's Gradle wrapper downloads Grails 8.0.0 and Gradle 9.8.0. You do not need a separate Grails install to run it. The Grails application does not need PostgreSQL. Keycloak `start-dev` keeps its own embedded database.
