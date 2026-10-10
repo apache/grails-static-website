@@ -109,6 +109,11 @@ modules:
     category: Redis
     title: Redis
     url: https://github.com/apache/grails-redis?tab=readme-ov-file#grails-7
+  intellijplugin:
+    categoryImage: '[%url]/images/plugins.svg'
+    category: IDE
+    title: IntelliJ IDEA Plugin
+    url: https://github.com/apache/grails-intellij-plugin?tab=readme-ov-file#apache-grails-intellij-plugin
   buildstatus:
     categoryImage: '[%url]/images/buildstatus.svg'
     category: Build Status
