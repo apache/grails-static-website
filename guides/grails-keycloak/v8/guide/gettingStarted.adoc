@@ -12,12 +12,27 @@ The finished sample is the `grails8` branch of https://github.com/grails-guides/
 == What you will need
 
 * JDK 21, with `JAVA_HOME` set.
-* Docker, to run Keycloak 26.8.0.
+* Docker, or a Keycloak 26.8.0 installation on the OS.
 * A browser.
 
 The sample's Gradle wrapper downloads Grails 8.0.0 and Gradle 9.8.0. You do not need a separate Grails install to run it. The Grails application does not need PostgreSQL. Keycloak `start-dev` keeps its own embedded database.
 
 The sample repository also contains `KEYCLOAK.md`. That file is a longer Keycloak setup (PostgreSQL, systemd, and SMTP). This guide is enough to sign in and prove the two roles.
+
+== Assumptions
+
+The examples below assume:
+
+[cols="1,2"]
+|===
+| Component | Value
+| Keycloak URL | `http://localhost:8081`
+| Grails application | `http://localhost:8080`
+|===
+
+If your installation uses different ports or hostnames, replace them throughout.
+
+NOTE: This guide assumes a Linux installation. Keycloak runs the same on Windows, but the commands differ: use `bin\kc.bat start-dev` instead of `bin/kc.sh start-dev`, run it from a console (see https://www.keycloak.org/getting-started/getting-started-zip[Getting Started with Keycloak] and https://www.keycloak.org/server/installation[Server Installation and Configuration]). Alternatively, install https://learn.microsoft.com/windows/wsl/install[WSL] and run the Linux commands in this guide as-is.
 
 == How to follow this guide
 

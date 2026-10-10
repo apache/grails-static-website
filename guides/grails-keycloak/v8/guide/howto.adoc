@@ -1,0 +1,1 @@
+Read each chapter and copy the configuration snippets into your environment. Avoid committing secrets to source control; use environment variables as shown.

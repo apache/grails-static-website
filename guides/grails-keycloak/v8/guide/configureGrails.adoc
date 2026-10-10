@@ -1,31 +1,269 @@
-Add the Spring Security client libraries to `build.gradle`. Grails 8.0.0 manages the Spring Boot 4.1.1 line through `grails-bom`, so these two dependencies do not need their own versions:
+This chapter describes how to configure the Grails application to connect to Keycloak via environment variables.
+
+== Add the OAuth2 Client dependency
+
+Add the Spring Security OAuth2 Client starter to `build.gradle`:
 
 [source,groovy]
+.build.gradle
 ----
-implementation 'org.springframework.boot:spring-boot-starter-security'
-implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+include::../snippets/build.gradle[]
 ----
 
-`complete/gradle.properties` sets `grailsVersion=8.0.0`. Keep `initial/gradle.properties` on that same version.
+`spring-boot-starter-security` provides the core Spring Security filter chain, and `spring-boot-starter-oauth2-client` brings in the OpenID Connect client support that Keycloak relies on.
 
-== application.yml
+== Keycloak configuration
 
-The datasource stays on embedded H2. The Keycloak registration is the `keycloak` client under Spring Security's OAuth2 client properties. The registration id is the last segment of the login callback, `/login/oauth2/code/keycloak`.
+Set the Keycloak OIDC issuer and client credentials via environment variables:
+
+[source,text]
+----
+export KEYCLOAK_CLIENT_ID=example-client
+export KEYCLOAK_CLIENT_SECRET=change-me
+export KEYCLOAK_ISSUER=http://localhost:8081/realms/example
+----
+
+Then register the Keycloak client in `grails-app/conf/application.yml`:
 
 [source,yaml]
+.grails-app/conf/application.yml
 ----
-include::../snippets/grails-app/conf/application.yml[]
+include::../snippets/grails-app/conf/application-keycloak.yml[]
 ----
 
-`KEYCLOAK_ISSUER` is the realm issuer, `http://localhost:8081/realms/example`, not the Keycloak root URL.
+These settings tell Spring Security how to talk to Keycloak:
 
-== Register the role mapper
+* `${KEYCLOAK_ISSUER}` tells Spring Security where Keycloak is and where to find its OpenID Connect metadata (including the token endpoint that signs your login).
+* `client-id` and `client-secret` identify your app to Keycloak. They come from the `example-client` you created in the Keycloak chapter.
+* `authorization-grant-type: authorization_code` is the standard, most secure way for a user to log in through their browser.
+* `redirect-uri` is the URL Keycloak sends the user back to after login. It matches the redirect URI you configured in Keycloak (`{baseUrl}` becomes `http://localhost:8080` at runtime).
+* The `scope` list (openid, profile, email) tells Keycloak which user details to include in the token.
 
-`KeycloakAuthoritiesMapper` is not a Spring stereotype. Register it in `grails-app/conf/spring/resources.groovy` so `SecurityConfig` can inject it:
+Keep client secrets out of source control; use environment variables or a secrets manager.
+
+== Understanding the code
+
+This section explains the key components that wire Keycloak authentication into your Grails application. If you're new to Keycloak or Grails, read this section carefully—each class solves a specific problem in the authentication flow. Each snippet is a complete file; create it at the path shown in the caption, and the pieces will fit together exactly as described.
+
+=== How Keycloak and Grails work together
+
+Before diving into the code, here's what happens when a user logs in:
+
+1. User clicks a protected link in your Grails app and isn't logged in.
+2. The app redirects to Keycloak's login page (on a different server).
+3. User enters their username and password into Keycloak's login form.
+4. Keycloak validates the credentials and issues a security token (JWT) containing the user's identity and roles.
+5. Keycloak redirects back to your Grails app with the token.
+6. The Grails app receives the token and needs to extract the user's information and roles from it.
+7. Spring Security (a framework that Grails uses) stores this info so pages and controllers can check "is this user logged in?" and "does this user have the ADMIN role?"
+
+The classes below handle steps 6 and 7.
+
+=== SecurityConfig: The gatekeeper
+
+SecurityConfig tells Spring Security which URLs anyone can access without logging in, and which ones require login. It also configures how Keycloak tokens are processed.
 
 [source,groovy]
+.snippets/src/main/groovy/com/grails/example/SecurityConfig.groovy
+----
+include::../snippets/src/main/groovy/com/grails/example/SecurityConfig.groovy[]
+----
+
+**What it does:**
+
+* `@Configuration` marks this as a Spring configuration class—Spring reads it on startup and applies these rules.
+* `.permitAll()` on `/`, `/assets/**`, etc. means anyone can visit these URLs without logging in (public pages).
+* `.anyRequest().authenticated()` means **every other URL requires the user to be logged in**. If they're not, they're sent to Keycloak.
+* `.oauth2Login()` tells Spring Security to accept logins via OAuth2/OIDC (the protocol Keycloak uses). This is the "bridge" that lets Keycloak handle passwords.
+* `userAuthoritiesMapper(keycloakAuthoritiesMapper)` is the key line: after the user logs in and Keycloak sends back their info, this tells Spring Security to run the `KeycloakAuthoritiesMapper` to extract the user's roles.
+* `.logout()` configures logout to tell Keycloak the user is leaving, not just delete the local session.
+
+=== KeycloakAuthoritiesMapper: Translating roles into permissions
+
+When Keycloak sends back the user's info, it includes a JWT token with a claims section. That claims section contains roles, but they're formatted in a way Keycloak understands—not in a way Spring Security understands. This class translates them.
+
+[source,groovy]
+.snippets/src/main/groovy/com/grails/example/KeycloakAuthoritiesMapper.groovy
+----
+include::../snippets/src/main/groovy/com/grails/example/KeycloakAuthoritiesMapper.groovy[]
+----
+
+**What it does:**
+
+The Keycloak JWT token contains a section called `resource_access.<clientId>.roles`. For example:
+
+```json
+{
+  "resource_access": {
+    "my-app": {
+      "roles": ["USER", "ADMIN"]
+    }
+  }
+}
+```
+
+* `init()` reads your app's Keycloak client ID from `application.yml`. (The client ID identifies your Grails app to Keycloak.)
+* `mapAuthorities()` iterates over all the authorities Spring Security found in the token.
+* For each OIDC authority (the token sent by Keycloak), it calls `addKeycloakRoles()`.
+* `addKeycloakRoles()` digs into the `resource_access.<clientId>.roles` section, extracts each role, and converts it to Spring Security's format: `ROLE_<NAME>` (e.g., `ROLE_USER`, `ROLE_ADMIN`).
+* Spring Security now understands these roles and can enforce them. For example, a controller can say `@PreAuthorize("hasRole('ROLE_ADMIN')")` to allow only admins.
+
+**Why does this matter?**
+
+Without this mapper, Keycloak's roles stay in Keycloak's format and Spring Security doesn't recognize them. Your app has the user's info but can't check their roles. This class is the translator.
+
+=== Register the role mapper
+
+`KeycloakAuthoritiesMapper` is a plain class. It carries no Spring stereotype such as `@Component` or `@Service`, so Spring does not discover it on its own. `SecurityConfig` injects it with `@Autowired`, so the mapper has to be registered as a bean before the application starts.
+
+Register it in `grails-app/conf/spring/resources.groovy`:
+
+[source,groovy]
+.snippets/grails-app/conf/spring/resources.groovy
 ----
 include::../snippets/grails-app/conf/spring/resources.groovy[]
 ----
 
-Place `SecurityConfig` and `KeycloakAuthoritiesMapper` in `src/main/groovy/com/grails/example/`. Place `SecurityTagLib` in `grails-app/taglib/com/grails/example/`. The next chapter walks through each class.
+Place `SecurityConfig` and `KeycloakAuthoritiesMapper` in `src/main/groovy/com/grails/example/`, and `SecurityTagLib` in `grails-app/taglib/com/grails/example/`.
+
+=== SecurityTagLib: Checking permissions in web pages (GSP views)
+
+In Grails, web pages are written in GSP (Groovy Server Pages). SecurityTagLib provides simple tags you can use in GSP to show or hide content based on whether the user is logged in or has a certain role.
+
+[source,groovy]
+.snippets/grails-app/taglib/com/grails/example/SecurityTagLib.groovy
+----
+include::../snippets/grails-app/taglib/com/grails/example/SecurityTagLib.groovy[]
+----
+
+**The tags you get:**
+
+* `<app:loggedIn>...</app:loggedIn>` — Shows the content only if the user is logged in.
+* `<app:ifNotLoggedIn>...</app:ifNotLoggedIn>` — Shows the content only if the user is **not** logged in. Useful for showing a "Log in" link.
+* `<app:hasRole role="ADMIN">...</app:hasRole>` — Shows the content only if the user has that role.
+* `<app:currentUser>{ user -> ... }</app:currentUser>` — Extracts the current user's details (username, first name, last name, email) from Keycloak and passes them to the code block.
+
+**How they work:**
+
+* Each tag checks `SecurityContextHolder.context.authentication` — this is where Spring Security stores the logged-in user's information.
+* If `authentication` is null or the user is anonymous, the user is not logged in.
+* If `authentication` exists and is authenticated, the user is logged in.
+* For role checks, the code looks at `authentication.authorities` — a collection of roles that was populated by the `KeycloakAuthoritiesMapper` above.
+* If the user has the requested role, the tag's content is rendered.
+
+=== The layout and header: putting the tags to work
+
+Every page in the app shares a common layout. The layout pulls in a header that uses the tags from `SecurityTagLib` to show navigation links based on who is logged in.
+
+The layout, `grails-app/views/layouts/main.gsp`, is the skeleton every page uses:
+
+[source,gsp]
+.snippets/grails-app/views/layouts/main.gsp
+----
+include::../snippets/grails-app/views/layouts/main.gsp[]
+----
+
+* `<g:layoutTitle>` and `<g:layoutHead>` are where a page's own title and `head` content plug in.
+* `<g:render template='/layouts/header' />` pulls in the shared navigation header below.
+* `<g:layoutBody/>` is where each page's own body content is inserted.
+
+The header, `grails-app/views/layouts/_header.gsp`, is where the security tags earn their keep:
+
+[source,gsp]
+.snippets/grails-app/views/layouts/_header.gsp
+----
+include::../snippets/grails-app/views/layouts/_header.gsp[]
+----
+
+* The **left side of the nav** links to pages the user is allowed to see. `<app:hasRole role="USER">` wraps the Account link, so only users with the `USER` role (including admins, who inherit it) see it. `<app:hasRole role="ADMIN">` does the same for the Admin link.
+* The **right side of the nav** switches between a login link and the user's details. `<app:ifNotLoggedIn>` shows a "Login" link when nobody is logged in. `<app:loggedIn>` shows the user's name (via `<app:currentUser>`) and a Logout button instead.
+* `<g:form controller="logout">` submits a POST that Spring Security's logout handler uses, which redirects the user to Keycloak's logout page as configured in `SecurityConfig`.
+
+The message text (Home, Account, Logout, etc.) is just translation keys, defined in `grails-app/i18n/messages.properties`:
+
+[source,properties]
+.snippets/grails-app/i18n/messages.properties
+----
+include::../snippets/grails-app/i18n/messages.properties[]
+----
+
+=== The pages: one controller, one view
+
+Every controller renders a view. The rule is simple: `AccountController` renders the page in `grails-app/views/account/`, `AdminController` renders the page in `grails-app/views/admin/`, and so on. The filename of the view must match the name of the action.
+
+==== The public home page
+
+The home page is public — anyone can visit it without logging in.
+
+[source,groovy]
+.snippets/grails-app/controllers/com/grails/example/HomeController.groovy
+----
+include::../snippets/grails-app/controllers/com/grails/example/HomeController.groovy[]
+----
+
+The controller has no `@PreAuthorize` annotation, so it requires no role. This matches the `.permitAll()` rule for `/` in `SecurityConfig`.
+
+Its view lives at `grails-app/views/home/index.gsp`:
+
+[source,gsp]
+.snippets/grails-app/views/home/index.gsp
+----
+include::../snippets/grails-app/views/home/index.gsp[]
+----
+
+`<meta name="layout" content="main"/>` tells Grails to wrap this page in the shared layout. The `<g:message>` tags pull the page text from the messages file you created above.
+
+==== The account page: USER only
+
+The account page is only for authenticated users with the `USER` role.
+
+[source,groovy]
+.snippets/grails-app/controllers/com/grails/example/AccountController.groovy
+----
+include::../snippets/grails-app/controllers/com/grails/example/AccountController.groovy[]
+----
+
+`@PreAuthorize("hasRole('USER')")` on the class means every action in `AccountController` requires the `USER` role. A user without it is denied (HTTP 403) before the action runs.
+
+Its view lives at `grails-app/views/account/index.gsp`:
+
+[source,gsp]
+.snippets/grails-app/views/account/index.gsp
+----
+include::../snippets/grails-app/views/account/index.gsp[]
+----
+
+==== The admin page: ADMIN only
+
+The admin page is for administrators only.
+
+[source,groovy]
+.snippets/grails-app/controllers/com/grails/example/AdminController.groovy
+----
+include::../snippets/grails-app/controllers/com/grails/example/AdminController.groovy[]
+----
+
+`@PreAuthorize("hasRole('ADMIN')")` on `AdminController` requires the `ADMIN` role. Because the `ADMIN` role inherits `USER`, an admin can also access `USER`-protected pages, but not the other way around.
+
+Its view lives at `grails-app/views/admin/index.gsp`:
+
+[source,gsp]
+.snippets/grails-app/views/admin/index.gsp
+----
+include::../snippets/grails-app/views/admin/index.gsp[]
+----
+
+The annotation can also be placed on a single action method instead of the whole class, for example when only one endpoint needs protection. Note that `@EnableMethodSecurity` in `SecurityConfig` is what turns these annotations on. Without it, `@PreAuthorize` is ignored.
+
+=== Putting it all together
+
+The flow is:
+
+1. **User visits a protected URL** → SecurityConfig sees it requires authentication.
+2. **User is sent to Keycloak** → User logs in with username/password.
+3. **Keycloak sends back a token** → Token contains user's roles in Keycloak's format.
+4. **KeycloakAuthoritiesMapper translates roles** → Converts `resource_access.my-app.roles` into Spring Security's `ROLE_*` format.
+5. **SecurityTagLib checks permissions in views** → The header shows or hides the Account and Admin links based on the user's roles.
+6. **Controllers use `@PreAuthorize`** → Server-side methods can require specific roles too.
+
+All three pieces work together to give your app a complete authentication and authorization system powered by Keycloak.

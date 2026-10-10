@@ -1,0 +1,111 @@
+This chapter shows how to test the Keycloak integration without a running Keycloak server. Neither layer performs a real OpenID Connect handshake, so the whole suite runs offline in CI.
+
+The tests split along the two responsibilities identified in the configuration chapter:
+
+* The **unit test** proves the role mapper translates the Keycloak token claim into Spring Security authorities.
+* The **integration tests** prove the `@PreAuthorize` annotations on the controllers actually gate the actions.
+
+== Unit test: the role mapper
+
+`KeycloakAuthoritiesMapperSpec` is a plain Spock unit test. It builds a real `OidcIdToken` carrying the claims Keycloak would issue, then asserts what the mapper produces.
+
+The mapper reads its client ID from configuration at `init()` time, so the spec mocks `Config` and `GrailsApplication` to supply one. The token is built from a claims map, which means every feature can state its own claim shape without a live realm:
+
+[source,groovy]
+.snippets/src/test/groovy/com/grails/example/KeycloakAuthoritiesMapperSpec.groovy
+----
+include::../snippets/src/test/groovy/com/grails/example/KeycloakAuthoritiesMapperSpec.groovy[]
+----
+
+The four features cover the contract:
+
+* Client roles under `resource_access.<clientId>.roles` become `ROLE_USER` and `ROLE_ADMIN`.
+* A token that carries only `realm_access` produces no `ROLE_` authorities, which is why the roles must be client roles.
+* A blank or missing client ID produces no authorities and throws nothing.
+* A token with no `resource_access` claim at all produces no authorities.
+
+Run it with:
+
+[source,bash]
+----
+./gradlew test
+----
+
+== Integration tests: the secured controllers
+
+The controller integration specs prove the `@PreAuthorize` gate on the action itself, not just on a hand-constructed invocation. Two supporting classes make that possible offline.
+
+=== Stand-in client registration
+
+The application declares `spring.security.oauth2.client.provider.keycloak.issuer-uri`. Spring Boot resolves that by calling `ClientRegistrations.fromIssuerLocation()`, which is an HTTP request to Keycloak's `/.well-known/openid-configuration` endpoint. Every `@Integration` spec that autowires a secured controller forces the security filter chain to build, so without a stand-in the context fails to start whenever Keycloak is down.
+
+`TestOAuth2ClientConfiguration` declares the `ClientRegistrationRepository` bean itself. Spring Boot's auto-configuration backs off through its `@ConditionalOnMissingBean` guard, so discovery never happens. The registration points at unroutable `localhost` URLs because these specs never perform a real handshake, they only need the bean to exist:
+
+[source,groovy]
+.snippets/src/integration-test/groovy/com/grails/example/TestOAuth2ClientConfiguration.groovy
+----
+include::../snippets/src/integration-test/groovy/com/grails/example/TestOAuth2ClientConfiguration.groovy[]
+----
+
+The `end_session_endpoint` entry matters: `SecurityConfig` wires an `OidcClientInitiatedLogoutSuccessHandler`, which reads that key when building its redirect. Without the metadata it would silently fall back to a local logout URL instead of the Keycloak one.
+
+=== Shared request plumbing
+
+`SecuredRequestSupport` is a trait holding the helpers both specs need. `mockToken()` drops a `UsernamePasswordAuthenticationToken` carrying the given authorities into `SecurityContextHolder`, reproducing what Keycloak yields after login. `bindRequest()` puts a fresh `GrailsWebRequest` on `RequestContextHolder` so the action can resolve a view. `clearAuthContext()` resets both thread locals, which `cleanup()` calls:
+
+[source,groovy]
+.snippets/src/integration-test/groovy/com/grails/example/SecuredRequestSupport.groovy
+----
+include::../snippets/src/integration-test/groovy/com/grails/example/SecuredRequestSupport.groovy[]
+----
+
+Because the controller is `@Autowired` rather than constructed with `new`, the call goes through the Spring proxy, which is where the method-security interceptor fires.
+
+=== The account spec
+
+`AccountControllerIntegrationSpec` covers the three paths through the `USER` gate:
+
+[source,groovy]
+.snippets/src/integration-test/groovy/com/grails/example/AccountControllerIntegrationSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/com/grails/example/AccountControllerIntegrationSpec.groovy[]
+----
+
+* With `ROLE_USER` the action resolves `/account/index` with status 200.
+* With only `ROLE_ADMIN` the action throws `AccessDeniedException`.
+* With no token the action throws `AuthenticationCredentialsNotFoundException`.
+
+=== The admin spec
+
+`AdminControllerIntegrationSpec` is the mirror image, using `mockKeycloakUser()` for the negative case because a plain `USER` lacks the role the admin action requires:
+
+[source,groovy]
+.snippets/src/integration-test/groovy/com/grails/example/AdminControllerIntegrationSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/com/grails/example/AdminControllerIntegrationSpec.groovy[]
+----
+
+Run the integration specs with:
+
+[source,bash]
+----
+./gradlew integrationTest
+----
+
+Or run everything:
+
+[source,bash]
+----
+./gradlew test integrationTest
+----
+
+== What these tests do not prove
+
+These specs exercise the authorization layer, not the Keycloak conversation. The following still require a real Keycloak and a browser:
+
+* The authorization-code redirect to Keycloak and the callback back to the application.
+* Token signature validation against the realm JWKS endpoint.
+* The `KEYCLOAK_ISSUER` value and the issuer-uri discovery it drives.
+* The composite `ADMIN` role reaching the token as `resource_access.example-client.roles`.
+
+The `ROLE_ADMIN`-only denial in the account spec is correct for a token that lacks `ROLE_USER`. The composite-role story from the Keycloak chapter only holds once Keycloak actually puts both roles in the claim, which is what the Evaluate screen verifies.
