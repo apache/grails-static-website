@@ -1,0 +1,14 @@
+Every featured image upload is validated by the same https://grails.apache.org/guides/command-objects-and-forms/8/guide/index.html[command object]. It binds the uploaded file as a Spring `MultipartFile`, together with the `id` and `version` of the record being updated.
+
+[source, groovy]
+.grails-app/controllers/example/grails/FeaturedImageCommand.groovy
+----
+include::../snippets/grails-app/controllers/example/grails/FeaturedImageCommand.groovy[indent=0]
+----
+
+<1> A missing or empty file is rejected.
+<2> The file name must end in `.jpg`, `.jpeg`, or `.png`, and the browser must send an `image/jpeg` or `image/png` content type.
+<3> `StringUtils.getFilename` keeps only the last segment of the name the browser sent, so `../../etc/evil.png` becomes `evil.png`.
+<4> Any character other than letters, digits, dots, underscores, and hyphens is replaced with `_`.
+
+The original file name comes from the browser, so never use it as a path as it is. The services in this guide build file paths and S3 keys from `sanitizedFilename()` instead.

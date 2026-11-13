@@ -1,0 +1,19 @@
+The browser cannot read the image from the database directly, so add an action that renders the stored bytes:
+
+[source, groovy]
+.grails-app/controllers/example/grails/RestaurantController.groovy
+----
+include::../snippets/grails-app/controllers/example/grails/RestaurantController.groovy[indent=0,tag=featuredImage]
+----
+
+<1> `render file:` writes the bytes to the response with the stored content type.
+
+In `show.gsp`, point an `img` tag at that action with `createLink`:
+
+[source, html]
+.grails-app/views/restaurant/show.gsp
+----
+include::../snippets/grails-app/views/restaurant/show.gsp[indent=0,tag=featuredImage]
+----
+
+Storing images in the database keeps them in the same backup and transaction as the rest of the data, but every image is read through the application and the database grows quickly. The next two sections store the file somewhere else and keep only its URL.

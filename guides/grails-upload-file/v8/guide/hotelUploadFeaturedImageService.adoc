@@ -1,0 +1,32 @@
+The `uploadFeaturedImage` action validates the command object and hands the file to a service:
+
+[source, groovy]
+.grails-app/controllers/example/grails/HotelController.groovy
+----
+include::../snippets/grails-app/controllers/example/grails/HotelController.groovy[indent=0,tag=uploadFeaturedImage]
+----
+
+<1> The service uploads the file to S3 and updates the hotel.
+
+The service uploads the file with the `S3Client`, then stores the key and URL:
+
+[source, groovy]
+.grails-app/services/example/grails/UploadHotelFeaturedImageService.groovy
+----
+include::../snippets/grails-app/services/example/grails/UploadHotelFeaturedImageService.groovy[indent=0]
+----
+
+<1> The `S3Client` bean from `resources.groovy` is injected by name.
+<2> The bucket name is read from the configuration.
+<3> `putObject` streams the uploaded file to S3, with its content type.
+<4> The SDK builds the object's URL for the configured region or endpoint.
+<5> A GORM Data Service stores the key and URL.
+<6> If the hotel cannot be updated, the object is deleted from S3 again.
+
+Add the update method to `HotelDataService`:
+
+[source, groovy]
+.grails-app/services/example/grails/HotelDataService.groovy
+----
+include::../snippets/grails-app/services/example/grails/HotelDataService.groovy[indent=0]
+----

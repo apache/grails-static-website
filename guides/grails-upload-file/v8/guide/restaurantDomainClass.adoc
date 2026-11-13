@@ -1,0 +1,11 @@
+Add two properties to the `Restaurant` domain class, `featuredImageBytes` and `featuredImageContentType`:
+
+[source, groovy]
+.grails-app/domain/example/grails/Restaurant.groovy
+----
+include::../snippets/grails-app/domain/example/grails/Restaurant.groovy[indent=0]
+----
+
+<1> The bytes of the image, stored in a database column.
+<2> The content type of the image, for example `image/png`. You need it to serve the image back.
+<3> `maxSize` makes Hibernate create a column large enough for a 25MB image, and rejects anything larger.

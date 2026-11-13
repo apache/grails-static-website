@@ -1,0 +1,10 @@
+Add two properties to the `Hotel` domain class, `featuredImageKey` and `featuredImageUrl`:
+
+[source, groovy]
+.grails-app/domain/example/grails/Hotel.groovy
+----
+include::../snippets/grails-app/domain/example/grails/Hotel.groovy[indent=0]
+----
+
+<1> The key of the object in the bucket. You need it to delete the image.
+<2> The URL of the object, used to display the image.

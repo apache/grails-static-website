@@ -1,0 +1,23 @@
+Add an `editFeaturedImage` action to `PointOfInterestController`:
+
+[source, groovy]
+.grails-app/controllers/example/grails/PointOfInterestController.groovy
+----
+include::../snippets/grails-app/controllers/example/grails/PointOfInterestController.groovy[indent=0,tag=editFeaturedImage]
+----
+
+Create `grails-app/views/pointOfInterest/editFeaturedImage.gsp` with the same upload form as the restaurant:
+
+[source, html]
+.grails-app/views/pointOfInterest/editFeaturedImage.gsp
+----
+include::../snippets/grails-app/views/pointOfInterest/editFeaturedImage.gsp[indent=0,tag=uploadForm]
+----
+
+In `show.gsp`, add the *Edit Featured Image* button, and display the image from its URL:
+
+[source, html]
+.grails-app/views/pointOfInterest/show.gsp
+----
+include::../snippets/grails-app/views/pointOfInterest/show.gsp[indent=0,tag=featuredImage]
+----

@@ -1,0 +1,9 @@
+Add a `featuredImageUrl` property to the `PointOfInterest` domain class:
+
+[source, groovy]
+.grails-app/domain/example/grails/PointOfInterest.groovy
+----
+include::../snippets/grails-app/domain/example/grails/PointOfInterest.groovy[indent=0]
+----
+
+<1> The URL where the image can be downloaded.

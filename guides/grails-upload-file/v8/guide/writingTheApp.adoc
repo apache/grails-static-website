@@ -1,0 +1,5 @@
+The application lists tourism resources: hotels, restaurants, and points of interest. It already has domain classes, https://grails.apache.org/docs/latest/grails-data/hibernate/manual/index.html#dataServices[GORM Data Services], controllers, and GSP views for creating, editing, and deleting them.
+
+In the next sections you add a featured image to each resource. First you write the command object that validates an upload, and you raise the maximum upload size.
+
+NOTE: In Grails 8, domain class properties are nullable by default. The domain classes in this guide declare `name nullable: false, blank: false` so that a name stays required. See the https://grails.apache.org/docs/latest/guide/upgrading.html[upgrade notes] for details.

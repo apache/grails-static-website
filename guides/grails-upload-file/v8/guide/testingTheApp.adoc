@@ -1,0 +1,64 @@
+Unit tests check the command object without starting the application. They use Spring's `MockMultipartFile` to stand in for an uploaded file:
+
+[source, groovy]
+.src/test/groovy/example/grails/FeaturedImageCommandSpec.groovy
+----
+include::../snippets/src/test/groovy/example/grails/FeaturedImageCommandSpec.groovy[indent=0]
+----
+
+Integration tests send real multipart requests to the running application with the `grails-testing-support-http-client` module. Add it to `build.gradle`:
+
+[source, groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[indent=0,tag=httpClient]
+----
+
+A small helper builds a featured image upload:
+
+[source, groovy]
+.src/integration-test/groovy/example/grails/UploadTestSupport.groovy
+----
+include::../snippets/src/integration-test/groovy/example/grails/UploadTestSupport.groovy[indent=0]
+----
+
+The restaurant test uploads a 2MB image. It passes only because the upload limit was raised above Spring Boot's 1MB default:
+
+[source, groovy]
+.src/integration-test/groovy/example/grails/RestaurantUploadSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/grails/RestaurantUploadSpec.groovy[indent=0]
+----
+
+The point of interest test checks that the file is written to the folder, served under `/uploads`, and that a file name such as `../../evil.png` cannot leave the folder:
+
+[source, groovy]
+.src/integration-test/groovy/example/grails/PointOfInterestUploadSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/grails/PointOfInterestUploadSpec.groovy[indent=0]
+----
+
+The hotel test runs against https://www.localstack.cloud/[LocalStack], an S3-compatible service started in Docker by https://java.testcontainers.org/modules/localstack/[Testcontainers], so it needs no AWS account. Add the module to `build.gradle`:
+
+[source, groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[indent=0,tag=localstack]
+----
+
+[source, groovy]
+.src/integration-test/groovy/example/grails/HotelS3UploadSpec.groovy
+----
+include::../snippets/src/integration-test/groovy/example/grails/HotelS3UploadSpec.groovy[indent=0]
+----
+
+<1> The test is skipped when Docker is not available.
+<2> LocalStack is started with only the S3 service.
+<3> For each test, the service uses a client pointed at LocalStack and a test bucket, and the original client is restored afterwards.
+
+Run all the tests:
+
+[source, bash]
+----
+./gradlew test integrationTest
+----

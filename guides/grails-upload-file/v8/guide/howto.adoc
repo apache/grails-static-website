@@ -1,0 +1,10 @@
+Clone the companion and start from `initial/`:
+
+[source,bash]
+----
+git clone -b grails8 https://github.com/grails-guides/grails-upload-file.git
+cd grails-upload-file/initial
+./gradlew test
+----
+
+`initial/` is a Grails 8 web application with CRUD pages for restaurants, points of interest, and hotels. Each domain class has only a `name`. You will add the featured image to each of them. To skip ahead, use `complete/`.
