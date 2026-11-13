@@ -1,0 +1,3 @@
+This part of the guide writes the uploaded file to a folder and saves the URL where the image can be downloaded.
+
+In production, that folder is usually served by a web server or a CDN in front of the application. To keep this guide self-contained, the Grails application serves the folder itself under `/uploads/**`.

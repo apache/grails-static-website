@@ -1,0 +1,22 @@
+The form posts to an `uploadFeaturedImage` action. Grails binds the request to `FeaturedImageCommand` and validates it before the action runs:
+
+[source, groovy]
+.grails-app/controllers/example/grails/RestaurantController.groovy
+----
+include::../snippets/grails-app/controllers/example/grails/RestaurantController.groovy[indent=0,tag=uploadFeaturedImage]
+----
+
+<1> If validation fails, the upload form is shown again with the errors.
+<2> The image bytes and content type are passed to a GORM Data Service.
+
+Add `uploadFeaturedImage: 'POST'` to the controller's `allowedMethods`.
+
+Add the update method to `RestaurantDataService`:
+
+[source, groovy]
+.grails-app/services/example/grails/RestaurantDataService.groovy
+----
+include::../snippets/grails-app/services/example/grails/RestaurantDataService.groovy[indent=0]
+----
+
+<1> The first argument is the id of the restaurant to update. GORM implements the method for you and sets the properties that match the remaining argument names. An argument that does not match a property of the domain class is a compilation error.

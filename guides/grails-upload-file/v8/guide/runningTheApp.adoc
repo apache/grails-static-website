@@ -1,0 +1,8 @@
+Run the application:
+
+[source, bash]
+----
+./gradlew bootRun
+----
+
+Open http://localhost:8080, create a restaurant, a point of interest, and a hotel, and use *Edit Featured Image* on each of them. Uploading a hotel image needs an S3 bucket and AWS credentials, as described in link:awsS3.html#awsAccessAndSecret[Run the App with AWS Credentials]. Without them, the upload form shows the error that S3 returned.

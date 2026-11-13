@@ -1,0 +1,43 @@
+The `uploadFeaturedImage` action validates the command object and hands the file to a service:
+
+[source, groovy]
+.grails-app/controllers/example/grails/PointOfInterestController.groovy
+----
+include::../snippets/grails-app/controllers/example/grails/PointOfInterestController.groovy[indent=0,tag=uploadFeaturedImage]
+----
+
+<1> The service saves the file and updates the point of interest.
+
+Configure the folder where images are saved, and the root URL they are served from:
+
+[source, yaml]
+.grails-app/conf/application.yml
+----
+grails:
+  guides:
+    cdnFolder: build/uploads
+    cdnRootUrl: /uploads
+----
+
+The service writes the file and stores its URL:
+
+[source, groovy]
+.grails-app/services/example/grails/UploadPointOfInterestFeaturedImageService.groovy
+----
+include::../snippets/grails-app/services/example/grails/UploadPointOfInterestFeaturedImageService.groovy[indent=0]
+----
+
+<1> `GrailsConfigurationAware` gives the service the configuration when the application starts.
+<2> `transferTo` writes the uploaded file to its path in the folder. The path uses the sanitized file name, so it cannot point outside the folder.
+<3> A GORM Data Service updates `featuredImageUrl`.
+<4> If the point of interest cannot be updated, the file is deleted again.
+
+Add the update method to `PointOfInterestDataService`:
+
+[source, groovy]
+.grails-app/services/example/grails/PointOfInterestDataService.groovy
+----
+include::../snippets/grails-app/services/example/grails/PointOfInterestDataService.groovy[indent=0]
+----
+
+<1> GORM implements any method whose name starts with `update`. After the id, the argument names say which properties to set.

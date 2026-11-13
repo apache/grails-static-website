@@ -1,0 +1,27 @@
+Add an `editFeaturedImage` action to `RestaurantController`. It loads the restaurant and renders the upload form:
+
+[source, groovy]
+.grails-app/controllers/example/grails/RestaurantController.groovy
+----
+include::../snippets/grails-app/controllers/example/grails/RestaurantController.groovy[indent=0,tag=editFeaturedImage]
+----
+
+Create `grails-app/views/restaurant/editFeaturedImage.gsp`. It is similar to `edit.gsp`, but it uses `g:uploadForm` instead of `g:form`. `g:uploadForm` sets `enctype="multipart/form-data"` on the form, which the browser needs to send a file:
+
+[source, html]
+.grails-app/views/restaurant/editFeaturedImage.gsp
+----
+include::../snippets/grails-app/views/restaurant/editFeaturedImage.gsp[indent=0,tag=uploadForm]
+----
+
+The `accept` attribute only filters the browser's file picker. The command object still validates every upload on the server.
+
+In `show.gsp`, add a button that leads to the new page, next to the existing *Edit* button:
+
+[source, html]
+.grails-app/views/restaurant/show.gsp
+----
+<g:link class="btn btn-outline-primary" action="editFeaturedImage" resource="${this.restaurant}">
+    <i class="bi-image"></i> <g:message code="restaurant.featuredImage.edit.label" default="Edit Featured Image" />
+</g:link>
+----

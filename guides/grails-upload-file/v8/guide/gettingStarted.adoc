@@ -1,0 +1,7 @@
+In this guide you are going to add file uploads to a Grails 8 application. Each of three domain classes gets a featured image, and each stores it in a different way:
+
+* `Restaurant` stores the image bytes in the database.
+* `PointOfInterest` writes the image to a folder on the server.
+* `Hotel` uploads the image to https://aws.amazon.com/s3/[Amazon S3] with the AWS SDK for Java 2.x.
+
+A command object validates every upload, so only JPG and PNG images are accepted.

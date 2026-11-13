@@ -1,0 +1,9 @@
+Grails 8 handles uploads with Spring Boot's multipart support. By default Spring Boot allows files up to 1MB and requests up to 10MB. Allow featured images up to 25MB:
+
+[source, yaml]
+.grails-app/conf/application.yml
+----
+include::../snippets/grails-app/conf/application.yml[tag=multipart]
+----
+
+IMPORTANT: Earlier versions of this guide used `grails.controllers.upload.maxFileSize` and `grails.controllers.upload.maxRequestSize`. Grails 8 no longer supports those properties, and an application that sets them fails at startup with a message that explains how to move to `spring.servlet.multipart`.

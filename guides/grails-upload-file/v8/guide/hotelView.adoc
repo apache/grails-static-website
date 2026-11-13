@@ -1,0 +1,25 @@
+Add an `editFeaturedImage` action to `HotelController`:
+
+[source, groovy]
+.grails-app/controllers/example/grails/HotelController.groovy
+----
+include::../snippets/grails-app/controllers/example/grails/HotelController.groovy[indent=0,tag=editFeaturedImage]
+----
+
+Create `grails-app/views/hotel/editFeaturedImage.gsp` with the same upload form:
+
+[source, html]
+.grails-app/views/hotel/editFeaturedImage.gsp
+----
+include::../snippets/grails-app/views/hotel/editFeaturedImage.gsp[indent=0,tag=uploadForm]
+----
+
+In `show.gsp`, add the *Edit Featured Image* button, and display the image from its S3 URL:
+
+[source, html]
+.grails-app/views/hotel/show.gsp
+----
+include::../snippets/grails-app/views/hotel/show.gsp[indent=0,tag=featuredImage]
+----
+
+The browser downloads the image straight from S3, so the bucket must allow public reads of these objects, for example with a bucket policy. New buckets block public access by default. If the images must stay private, serve them through the application or with presigned URLs instead.

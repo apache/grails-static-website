@@ -1,0 +1,6 @@
+* Approximately 45 minutes
+* JDK 21 (Apache Grails 8 requires Java 21)
+* A text editor or IDE
+* The Gradle wrapper bundled in `initial/` and `complete/`
+* Docker (optional, for the S3 integration test, which runs against LocalStack with Testcontainers)
+* An AWS account and an S3 bucket (optional, only to upload hotel images to real S3)
