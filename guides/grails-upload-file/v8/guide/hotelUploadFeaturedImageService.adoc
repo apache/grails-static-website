@@ -7,6 +7,7 @@ include::../snippets/grails-app/controllers/example/grails/HotelController.groov
 ----
 
 <1> The service uploads the file to S3 and updates the hotel.
+<2> If S3 rejects the upload, for example because the bucket does not exist or the credentials are missing, the AWS SDK throws an `SdkException`. The action adds the `hotel.featuredImage.upload.failed` message to the command object errors and shows the upload form again, instead of an error page.
 
 The service uploads the file with the `S3Client`, then stores the key and URL:
 
@@ -30,3 +31,5 @@ Add the update method to `HotelDataService`:
 ----
 include::../snippets/grails-app/services/example/grails/HotelDataService.groovy[indent=0]
 ----
+
+<1> GORM implements the method and sets `featuredImageKey` and `featuredImageUrl` from the arguments with the same names.

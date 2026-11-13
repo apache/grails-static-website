@@ -24,7 +24,7 @@ include::../snippets/src/main/groovy/example/grails/S3ClientFactory.groovy[inden
 
 <1> The client talks to S3 in the configured region.
 <2> An optional `aws.s3.endpoint` points the client at an S3-compatible service instead, such as LocalStack.
-<3> Credentials come from the SDK's default credentials provider chain, described in <<awsAccessAndSecret>>.
+<3> Credentials come from the SDK's default credentials provider chain, described in <<awsAccessAndSecret,Run the App with AWS Credentials>>.
 
 Declare the client as a bean in `resources.groovy`, so it can be injected into services:
 

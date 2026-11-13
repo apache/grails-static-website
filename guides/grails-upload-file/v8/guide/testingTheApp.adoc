@@ -22,7 +22,7 @@ A small helper builds a featured image upload:
 include::../snippets/src/integration-test/groovy/example/grails/UploadTestSupport.groovy[indent=0]
 ----
 
-The restaurant test uploads a 2MB image. It passes only because the upload limit was raised above Spring Boot's 1MB default:
+The restaurant test uploads a 2MB image. It passes only because the upload limit was raised above Spring Boot's 1MB default. A second test checks that a text file is rejected with the message from `messages.properties`:
 
 [source, groovy]
 .src/integration-test/groovy/example/grails/RestaurantUploadSpec.groovy
@@ -55,6 +55,8 @@ include::../snippets/src/integration-test/groovy/example/grails/HotelS3UploadSpe
 <1> The test is skipped when Docker is not available.
 <2> LocalStack is started with only the S3 service.
 <3> For each test, the service uses a client pointed at LocalStack and a test bucket, and the original client is restored afterwards.
+
+The second test points the service at a bucket that does not exist, and checks that the S3 error is shown on the upload form.
 
 Run all the tests:
 

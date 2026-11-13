@@ -25,7 +25,7 @@ class UploadHotelFeaturedImageService implements GrailsConfigurationAware {
         bucket = co.getRequiredProperty('aws.s3.bucket') // <2>
     }
 
-    Hotel uploadFeatureImage(FeaturedImageCommand cmd) {
+    Hotel uploadFeaturedImage(FeaturedImageCommand cmd) {
         String key = "hotel/${cmd.id}/${cmd.sanitizedFilename()}"
         PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                 .bucket(bucket)

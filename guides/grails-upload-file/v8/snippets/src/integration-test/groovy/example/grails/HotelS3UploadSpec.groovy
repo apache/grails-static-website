@@ -90,4 +90,24 @@ class HotelS3UploadSpec extends Specification implements HttpClientSupport {
         cleanup:
         hotelDataService.delete(hotel.id)
     }
+
+    void "an S3 error is shown on the upload form and the hotel is not changed"() {
+        given:
+        Hotel hotel = hotelDataService.save('Grand')
+        uploadHotelFeaturedImageService.bucket = 'grails-guides-missing'
+
+        when:
+        def response = httpPostMultipart('/hotel/uploadFeaturedImage',
+                UploadTestSupport.featuredImageBody(hotel.id, hotel.version, 'photo.png', 'image/png',
+                        UploadTestSupport.pngBytes(1024)))
+
+        then:
+        response.assertStatus(200)
+        response.assertContains('alert-danger')
+        response.assertContains('The featured image could not be uploaded to S3')
+        hotelDataService.get(hotel.id).featuredImageKey == null
+
+        cleanup:
+        hotelDataService.delete(hotel.id)
+    }
 }

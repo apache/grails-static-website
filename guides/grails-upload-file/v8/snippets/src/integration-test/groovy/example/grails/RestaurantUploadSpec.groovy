@@ -45,6 +45,7 @@ class RestaurantUploadSpec extends Specification implements HttpClientSupport {
         then:
         response.assertStatus(200)
         response.assertContains('alert-danger')
+        response.assertContains('Choose a JPG or PNG image to upload')
         restaurantDataService.get(restaurant.id).featuredImageBytes == null
 
         cleanup:

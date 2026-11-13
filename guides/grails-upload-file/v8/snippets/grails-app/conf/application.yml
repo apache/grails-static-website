@@ -17,11 +17,9 @@ aws:
     bucket: grails-guides-upload-file
 # end::aws[]
 grails:
-  # tag::cdn[]
   guides:
     cdnFolder: build/uploads
     cdnRootUrl: /uploads
-  # end::cdn[]
   mime:
     disable:
       accept:

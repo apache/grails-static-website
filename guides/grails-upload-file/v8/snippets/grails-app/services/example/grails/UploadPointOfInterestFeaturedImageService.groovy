@@ -22,7 +22,7 @@ class UploadPointOfInterestFeaturedImageService implements GrailsConfigurationAw
         cdnRootUrl = co.getRequiredProperty('grails.guides.cdnRootUrl')
     }
 
-    PointOfInterest uploadFeatureImage(FeaturedImageCommand cmd) {
+    PointOfInterest uploadFeaturedImage(FeaturedImageCommand cmd) {
         String filename = cmd.sanitizedFilename()
         Path folder = cdnFolder.resolve("pointOfInterest/${cmd.id}")
         Files.createDirectories(folder)

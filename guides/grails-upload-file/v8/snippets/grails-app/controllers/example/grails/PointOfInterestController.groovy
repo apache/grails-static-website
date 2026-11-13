@@ -97,7 +97,7 @@ class PointOfInterestController {
             respond cmd.errors, model: [pointOfInterest: cmd], view: 'editFeaturedImage'
             return
         }
-        PointOfInterest pointOfInterest = uploadPointOfInterestFeaturedImageService.uploadFeatureImage(cmd) // <1>
+        PointOfInterest pointOfInterest = uploadPointOfInterestFeaturedImageService.uploadFeaturedImage(cmd) // <1>
         if (pointOfInterest == null) {
             notFound()
             return

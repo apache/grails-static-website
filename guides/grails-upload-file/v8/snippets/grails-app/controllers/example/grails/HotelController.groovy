@@ -2,6 +2,7 @@ package example.grails
 
 import grails.compiler.GrailsCompileStatic
 import org.springframework.context.MessageSource
+import software.amazon.awssdk.core.exception.SdkException
 
 @GrailsCompileStatic
 class HotelController {
@@ -97,7 +98,15 @@ class HotelController {
             respond cmd.errors, model: [hotel: cmd], view: 'editFeaturedImage'
             return
         }
-        Hotel hotel = uploadHotelFeaturedImageService.uploadFeatureImage(cmd) // <1>
+        Hotel hotel
+        try {
+            hotel = uploadHotelFeaturedImageService.uploadFeaturedImage(cmd) // <1>
+        } catch (SdkException e) { // <2>
+            cmd.errors.reject('hotel.featuredImage.upload.failed', [e.message] as Object[],
+                    'The featured image could not be uploaded to S3: {0}')
+            respond cmd.errors, model: [hotel: cmd], view: 'editFeaturedImage'
+            return
+        }
         if (hotel == null) {
             notFound()
             return
