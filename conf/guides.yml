@@ -14,7 +14,7 @@ guides:
     subtitle: 'Sign users in with Keycloak and enforce USER and ADMIN client roles.'
     authors:
       - 'Aaron'
-    category: 'Grails Security'
+    category: 'Security'
     publicationDate: '2026-10-08'
     versions:
       '8':
