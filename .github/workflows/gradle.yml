@@ -30,6 +30,9 @@ jobs:
       - name: Run Tests
         run: |
           (set -x; ./gradlew clean check --no-daemon)
+      - name: Run buildSrc Tests
+        run: |
+          (set -x; ./gradlew -p buildSrc clean test --no-daemon)
       - name: Publish Test Report
         if: failure()
         uses: mikepenz/action-junit-report@a9170d5795813c01ab4901ffb045b52bab4ab09d # v6.5.0
