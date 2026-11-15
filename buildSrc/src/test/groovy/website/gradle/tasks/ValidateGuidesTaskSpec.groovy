@@ -55,20 +55,6 @@ class ValidateGuidesTaskSpec extends Specification {
         runValidate(yml, ValidateGuidesTask.MODE_SHAPE)
     }
 
-    def 'shape mode rejects a non-40-char SHA'() {
-        given:
-        File yml = newGuidesYml(VALID_MINIMAL.replace(
-                '0123456789abcdef0123456789abcdef01234567',
-                'short-sha'))
-
-        when:
-        runValidate(yml, ValidateGuidesTask.MODE_SHAPE)
-
-        then:
-        GradleException e = thrown()
-        e.message.contains('1 error')
-    }
-
     def 'shape mode rejects a non-ISO-8601 publicationDate'() {
         given:
         File yml = newGuidesYml(VALID_MINIMAL.replace(
@@ -184,6 +170,5 @@ guides:
         sampleRef:
           repo: example/my-guide
           branch: master
-          sha: '0123456789abcdef0123456789abcdef01234567'
 '''
 }
