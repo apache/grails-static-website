@@ -6,4 +6,8 @@ Grails 8 handles uploads with Spring Boot's multipart support. By default Spring
 include::../snippets/grails-app/conf/application.yml[tag=multipart]
 ----
 
+`max-request-size` is set higher than `max-file-size`, because the request also carries the other form fields, such as `id` and `version`, and the boundaries between the parts. With the same value for both, a file of exactly 25MB would make the request too large.
+
+Files and requests above these limits are rejected before the controller runs, so the command object never sees them. Spring throws a `MaxUploadSizeExceededException`, and the user gets an HTTP `413 Content Too Large` error instead of a message on the upload form.
+
 IMPORTANT: Earlier versions of this guide used `grails.controllers.upload.maxFileSize` and `grails.controllers.upload.maxRequestSize`. Grails 8 no longer supports those properties, and an application that sets them fails at startup with a message that explains how to move to `spring.servlet.multipart`.

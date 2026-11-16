@@ -36,9 +36,11 @@
                 %{-- end::featuredImage[] --}%
                 <g:form resource="${this.restaurant}" method="DELETE">
                     <fieldset class="bg-body-tertiary">
+                        %{-- tag::editButton[] --}%
                         <g:link class="btn btn-outline-primary" action="editFeaturedImage" resource="${this.restaurant}">
                             <i class="bi-image"></i> <g:message code="restaurant.featuredImage.edit.label" default="Edit Featured Image" />
                         </g:link>
+                        %{-- end::editButton[] --}%
                         <g:link class="btn btn-outline-primary" action="edit" resource="${this.restaurant}">
                             <i class="bi-pencil-square"></i> <g:message code="default.button.edit.label" default="Edit" />
                         </g:link>

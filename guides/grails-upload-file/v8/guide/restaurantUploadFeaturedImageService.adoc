@@ -11,7 +11,7 @@ include::../snippets/grails-app/controllers/example/grails/RestaurantController.
 
 Add `uploadFeaturedImage: 'POST'` to the controller's `allowedMethods`.
 
-Add the update method to `RestaurantDataService`:
+The update method has to check the version that the form was opened with, so you write it yourself. Change `RestaurantDataService` from an interface to an abstract class, make the existing methods `abstract`, and add the update method. GORM still implements the abstract methods for you:
 
 [source, groovy]
 .grails-app/services/example/grails/RestaurantDataService.groovy
@@ -19,4 +19,5 @@ Add the update method to `RestaurantDataService`:
 include::../snippets/grails-app/services/example/grails/RestaurantDataService.groovy[indent=0]
 ----
 
-<1> The first argument is the id of the restaurant to update. GORM implements the method for you and sets the properties that match the remaining argument names. An argument that does not match a property of the domain class is a compilation error.
+<1> `@Transactional` loads and updates the restaurant in one transaction.
+<2> If the restaurant has a higher version than the form sent, someone else saved it after the form was opened. The upload is rejected with the `default.optimistic.locking.failure` message, instead of overwriting the newer image. Assigning the version to the restaurant is not enough, because Hibernate checks the version it loaded from the database, not the value you assign.

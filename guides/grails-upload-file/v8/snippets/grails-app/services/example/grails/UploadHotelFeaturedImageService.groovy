@@ -26,22 +26,35 @@ class UploadHotelFeaturedImageService implements GrailsConfigurationAware {
     }
 
     Hotel uploadFeaturedImage(FeaturedImageCommand cmd) {
-        String key = "hotel/${cmd.id}/${cmd.sanitizedFilename()}"
+        Hotel hotel = hotelDataService.get(cmd.id) // <3>
+        if (!hotel) {
+            return null
+        }
+        String previousKey = hotel.featuredImageKey
+
+        String key = "hotel/${cmd.id}/${UUID.randomUUID()}-${cmd.sanitizedFilename()}" // <4>
         PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                 .bucket(bucket)
                 .key(key)
                 .contentType(cmd.featuredImageFile.contentType)
                 .build()
         s3Client.putObject(putObjectRequest,
-                RequestBody.fromInputStream(cmd.featuredImageFile.inputStream, cmd.featuredImageFile.size)) // <3>
+                RequestBody.fromInputStream(cmd.featuredImageFile.inputStream, cmd.featuredImageFile.size)) // <5>
 
         String featuredImageUrl = s3Client.utilities()
                 .getUrl(GetUrlRequest.builder().bucket(bucket).key(key).build())
-                .toExternalForm() // <4>
+                .toExternalForm() // <6>
 
-        Hotel hotel = hotelDataService.update(cmd.id, cmd.version, key, featuredImageUrl) // <5>
+        try {
+            hotel = hotelDataService.update(cmd.id, cmd.version, key, featuredImageUrl) // <7>
+        } catch (Exception e) {
+            deleteFileByKey(key) // <8>
+            throw e
+        }
         if (!hotel || hotel.hasErrors()) {
-            deleteFileByKey(key) // <6>
+            deleteFileByKey(key) // <8>
+        } else if (previousKey) {
+            deleteFileByKey(previousKey) // <9>
         }
         hotel
     }

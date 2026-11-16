@@ -1,21 +1,37 @@
 package example.grails
 
 import grails.gorm.services.Service
+import grails.gorm.transactions.Transactional
 
 @Service(PointOfInterest)
-interface PointOfInterestDataService {
+abstract class PointOfInterestDataService {
 
-    PointOfInterest get(Serializable id)
+    abstract PointOfInterest get(Serializable id)
 
-    List<PointOfInterest> list(Map args)
+    abstract List<PointOfInterest> list(Map args)
 
-    Number count()
+    abstract Number count()
 
-    void delete(Serializable id)
+    abstract void delete(Serializable id)
 
-    PointOfInterest save(String name)
+    abstract PointOfInterest save(String name)
 
-    PointOfInterest updateName(Serializable id, Long version, String name)
+    abstract PointOfInterest updateName(Serializable id, Long version, String name)
 
-    PointOfInterest updateFeaturedImageUrl(Serializable id, Long version, String featuredImageUrl) // <1>
+    @Transactional
+    PointOfInterest updateFeaturedImageUrl(Serializable id, Long version, String featuredImageUrl) { // <1>
+        PointOfInterest poi = PointOfInterest.get(id)
+        if (!poi) {
+            return null
+        }
+        if (version != null && poi.version > version) { // <2>
+            poi.errors.rejectValue('version', 'default.optimistic.locking.failure',
+                    ['Point of Interest'] as Object[],
+                    'Another user has updated this Point of Interest while you were editing')
+            return poi
+        }
+        poi.featuredImageUrl = featuredImageUrl
+        poi.save()
+        poi
+    }
 }

@@ -22,7 +22,7 @@ A small helper builds a featured image upload:
 include::../snippets/src/integration-test/groovy/example/grails/UploadTestSupport.groovy[indent=0]
 ----
 
-The restaurant test uploads a 2MB image. It passes only because the upload limit was raised above Spring Boot's 1MB default. A second test checks that a text file is rejected with the message from `messages.properties`:
+The restaurant test uploads a 2MB image. It passes only because the upload limit was raised above Spring Boot's 1MB default. A second test checks that a text file is rejected with the message from `messages.properties`, and a third that an upload from an outdated form does not overwrite a newer image:
 
 [source, groovy]
 .src/integration-test/groovy/example/grails/RestaurantUploadSpec.groovy
@@ -30,7 +30,7 @@ The restaurant test uploads a 2MB image. It passes only because the upload limit
 include::../snippets/src/integration-test/groovy/example/grails/RestaurantUploadSpec.groovy[indent=0]
 ----
 
-The point of interest test checks that the file is written to the folder, served under `/uploads`, and that a file name such as `../../evil.png` cannot leave the folder:
+The point of interest test checks that the file is written to the folder with a unique name, served under `/uploads`, and that a file name such as `../../evil.png` cannot leave the folder. It also checks that a new image replaces the previous file, that deleting the point of interest deletes its file, and that the file of a rejected upload is deleted:
 
 [source, groovy]
 .src/integration-test/groovy/example/grails/PointOfInterestUploadSpec.groovy
@@ -56,7 +56,7 @@ include::../snippets/src/integration-test/groovy/example/grails/HotelS3UploadSpe
 <2> LocalStack is started with only the S3 service.
 <3> For each test, the service uses a client pointed at LocalStack and a test bucket, and the original client is restored afterwards.
 
-The second test points the service at a bucket that does not exist, and checks that the S3 error is shown on the upload form.
+The hotel tests check the same cleanup in the bucket as the point of interest tests do in the folder. The last test points the service at a bucket that does not exist, and checks that the upload form shows the generic error message, without the AWS details.
 
 Run all the tests:
 

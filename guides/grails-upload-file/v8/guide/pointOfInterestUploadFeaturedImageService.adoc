@@ -13,10 +13,7 @@ Configure the folder where images are saved, and the root URL they are served fr
 [source, yaml]
 .grails-app/conf/application.yml
 ----
-grails:
-  guides:
-    cdnFolder: build/uploads
-    cdnRootUrl: /uploads
+include::../snippets/grails-app/conf/application.yml[tag=cdn]
 ----
 
 The service writes the file and stores its URL:
@@ -28,11 +25,15 @@ include::../snippets/grails-app/services/example/grails/UploadPointOfInterestFea
 ----
 
 <1> `GrailsConfigurationAware` gives the service the configuration when the application starts.
-<2> `transferTo` writes the uploaded file to its path in the folder. The path uses the sanitized file name, so it cannot point outside the folder.
-<3> A GORM Data Service updates `featuredImageUrl`.
-<4> If the point of interest cannot be updated, the file is deleted again.
+<2> The point of interest is loaded first. If it does not exist, no file is written.
+<3> A random UUID in front of the sanitized file name gives every upload its own file and URL. Uploading a file with the same name again does not overwrite the current image, and browsers do not keep showing a cached copy of the old one.
+<4> `transferTo` writes the uploaded file to its path in the folder. The path uses the sanitized file name, so it cannot point outside the folder.
+<5> A GORM Data Service updates `featuredImageUrl`.
+<6> If the point of interest cannot be updated, or the update throws an exception, the new file is deleted again. The current image is not touched.
+<7> After a successful update, the previous image is deleted.
+<8> `deleteFileByUrl` finds the file from its URL, and only deletes files inside the folder.
 
-Add the update method to `PointOfInterestDataService`:
+Change `PointOfInterestDataService` to an abstract class too, and add an update method that checks the version, as you did for the restaurant:
 
 [source, groovy]
 .grails-app/services/example/grails/PointOfInterestDataService.groovy
@@ -40,4 +41,15 @@ Add the update method to `PointOfInterestDataService`:
 include::../snippets/grails-app/services/example/grails/PointOfInterestDataService.groovy[indent=0]
 ----
 
-<1> GORM implements any method whose name starts with `update`. After the id, the argument names say which properties to set.
+<1> `@Transactional` loads and updates the point of interest in one transaction.
+<2> An upload from a form opened before the last update is rejected.
+
+When a point of interest is deleted, delete its image too. Change the `delete` action of `PointOfInterestController`:
+
+[source, groovy]
+.grails-app/controllers/example/grails/PointOfInterestController.groovy
+----
+include::../snippets/grails-app/controllers/example/grails/PointOfInterestController.groovy[indent=0,tag=delete]
+----
+
+<1> The file is deleted after the record, so the image is kept if deleting the record fails.

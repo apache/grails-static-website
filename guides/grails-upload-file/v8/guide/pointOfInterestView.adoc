@@ -14,7 +14,15 @@ Create `grails-app/views/pointOfInterest/editFeaturedImage.gsp` with the same up
 include::../snippets/grails-app/views/pointOfInterest/editFeaturedImage.gsp[indent=0,tag=uploadForm]
 ----
 
-In `show.gsp`, add the *Edit Featured Image* button, and display the image from its URL:
+In `show.gsp`, add the *Edit Featured Image* button next to the existing *Edit* button:
+
+[source, html]
+.grails-app/views/pointOfInterest/show.gsp
+----
+include::../snippets/grails-app/views/pointOfInterest/show.gsp[indent=0,tag=editButton]
+----
+
+Display the image from its URL:
 
 [source, html]
 .grails-app/views/pointOfInterest/show.gsp

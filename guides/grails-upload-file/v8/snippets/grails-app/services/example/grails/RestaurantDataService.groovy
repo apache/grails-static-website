@@ -1,21 +1,38 @@
 package example.grails
 
 import grails.gorm.services.Service
+import grails.gorm.transactions.Transactional
 
 @Service(Restaurant)
-interface RestaurantDataService {
+abstract class RestaurantDataService {
 
-    Restaurant get(Serializable id)
+    abstract Restaurant get(Serializable id)
 
-    List<Restaurant> list(Map args)
+    abstract List<Restaurant> list(Map args)
 
-    Number count()
+    abstract Number count()
 
-    void delete(Serializable id)
+    abstract void delete(Serializable id)
 
-    Restaurant save(String name)
+    abstract Restaurant save(String name)
 
-    Restaurant update(Serializable id, Long version, String name)
+    abstract Restaurant update(Serializable id, Long version, String name)
 
-    Restaurant update(Serializable id, Long version, byte[] featuredImageBytes, String featuredImageContentType) // <1>
+    @Transactional
+    Restaurant update(Serializable id, Long version, byte[] featuredImageBytes, String featuredImageContentType) { // <1>
+        Restaurant restaurant = Restaurant.get(id)
+        if (!restaurant) {
+            return null
+        }
+        if (version != null && restaurant.version > version) { // <2>
+            restaurant.errors.rejectValue('version', 'default.optimistic.locking.failure',
+                    ['Restaurant'] as Object[],
+                    'Another user has updated this Restaurant while you were editing')
+            return restaurant
+        }
+        restaurant.featuredImageBytes = featuredImageBytes
+        restaurant.featuredImageContentType = featuredImageContentType
+        restaurant.save()
+        restaurant
+    }
 }

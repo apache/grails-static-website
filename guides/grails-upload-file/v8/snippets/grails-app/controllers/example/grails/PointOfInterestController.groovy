@@ -111,15 +111,19 @@ class PointOfInterestController {
     }
     // end::uploadFeaturedImage[]
 
+    // tag::delete[]
     def delete(Long id) {
         if (id == null) {
             notFound()
             return
         }
+        String featuredImageUrl = pointOfInterestDataService.get(id)?.featuredImageUrl
         pointOfInterestDataService.delete(id)
+        uploadPointOfInterestFeaturedImageService.deleteFileByUrl(featuredImageUrl) // <1>
         flash.message = crudMessage(CRUD.DELETE, id)
         redirect action: 'index', method: 'GET'
     }
+    // end::delete[]
 
     protected void notFound() {
         flash.message = crudMessage(CRUD.NOT_FOUND, params.long('id'))

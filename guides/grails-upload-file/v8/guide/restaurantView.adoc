@@ -21,7 +21,5 @@ In `show.gsp`, add a button that leads to the new page, next to the existing *Ed
 [source, html]
 .grails-app/views/restaurant/show.gsp
 ----
-<g:link class="btn btn-outline-primary" action="editFeaturedImage" resource="${this.restaurant}">
-    <i class="bi-image"></i> <g:message code="restaurant.featuredImage.edit.label" default="Edit Featured Image" />
-</g:link>
+include::../snippets/grails-app/views/restaurant/show.gsp[indent=0,tag=editButton]
 ----

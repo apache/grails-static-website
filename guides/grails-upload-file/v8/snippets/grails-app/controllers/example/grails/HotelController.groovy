@@ -102,8 +102,9 @@ class HotelController {
         try {
             hotel = uploadHotelFeaturedImageService.uploadFeaturedImage(cmd) // <1>
         } catch (SdkException e) { // <2>
-            cmd.errors.reject('hotel.featuredImage.upload.failed', [e.message] as Object[],
-                    'The featured image could not be uploaded to S3: {0}')
+            log.error('Could not upload the featured image of hotel {} to S3', cmd.id, e)
+            cmd.errors.reject('hotel.featuredImage.upload.failed',
+                    'The featured image could not be uploaded. Try again later.')
             respond cmd.errors, model: [hotel: cmd], view: 'editFeaturedImage'
             return
         }
@@ -120,15 +121,21 @@ class HotelController {
     }
     // end::uploadFeaturedImage[]
 
+    // tag::delete[]
     def delete(Long id) {
         if (id == null) {
             notFound()
             return
         }
+        String featuredImageKey = hotelDataService.get(id)?.featuredImageKey
         hotelDataService.delete(id)
+        if (featuredImageKey) {
+            uploadHotelFeaturedImageService.deleteFileByKey(featuredImageKey) // <1>
+        }
         flash.message = crudMessage(CRUD.DELETE, id)
         redirect action: 'index', method: 'GET'
     }
+    // end::delete[]
 
     protected void notFound() {
         flash.message = crudMessage(CRUD.NOT_FOUND, params.long('id'))

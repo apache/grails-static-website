@@ -14,7 +14,15 @@ Create `grails-app/views/hotel/editFeaturedImage.gsp` with the same upload form:
 include::../snippets/grails-app/views/hotel/editFeaturedImage.gsp[indent=0,tag=uploadForm]
 ----
 
-In `show.gsp`, add the *Edit Featured Image* button, and display the image from its S3 URL:
+In `show.gsp`, add the *Edit Featured Image* button next to the existing *Edit* button:
+
+[source, html]
+.grails-app/views/hotel/show.gsp
+----
+include::../snippets/grails-app/views/hotel/show.gsp[indent=0,tag=editButton]
+----
+
+Display the image from its S3 URL:
 
 [source, html]
 .grails-app/views/hotel/show.gsp
