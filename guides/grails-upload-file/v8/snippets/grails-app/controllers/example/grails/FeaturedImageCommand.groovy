@@ -8,6 +8,7 @@ class FeaturedImageCommand implements Validateable {
 
     static final List<String> ALLOWED_EXTENSIONS = ['jpg', 'jpeg', 'png']
     static final List<String> ALLOWED_CONTENT_TYPES = ['image/jpeg', 'image/png']
+    static final int MAX_FILENAME_LENGTH = 64
 
     MultipartFile featuredImageFile
     Long id
@@ -27,6 +28,12 @@ class FeaturedImageCommand implements Validateable {
 
     String sanitizedFilename() {
         String filename = StringUtils.getFilename(featuredImageFile.originalFilename) // <3>
-        filename.replaceAll(/[^A-Za-z0-9._-]/, '_') // <4>
+        String sanitized = filename.replaceAll(/[^A-Za-z0-9._-]/, '_') // <4>
+        if (sanitized.length() <= MAX_FILENAME_LENGTH) {
+            return sanitized
+        }
+        String extension = StringUtils.getFilenameExtension(sanitized)
+        String suffix = extension ? ".${extension}" : ''
+        sanitized.take(MAX_FILENAME_LENGTH - suffix.length()) + suffix // <5>
     }
 }

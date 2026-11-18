@@ -59,5 +59,7 @@ class FeaturedImageCommandSpec extends Specification {
         '../../etc/evil.png'   || 'evil.png'
         '/var/tmp/evil.png'    || 'evil.png'
         '..\\..\\evil.png'     || '.._.._evil.png'
+        'x' * 300 + '.png'     || 'x' * 60 + '.png'
+        'x' * 300 + '.jpeg'    || 'x' * 59 + '.jpeg'
     }
 }

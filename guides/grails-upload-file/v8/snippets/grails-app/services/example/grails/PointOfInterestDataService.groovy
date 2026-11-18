@@ -16,21 +16,24 @@ abstract class PointOfInterestDataService {
 
     abstract PointOfInterest save(String name)
 
-    abstract PointOfInterest updateName(Serializable id, Long version, String name)
-
     @Transactional
     PointOfInterest updateFeaturedImageUrl(Serializable id, Long version, String featuredImageUrl) { // <1>
         PointOfInterest poi = PointOfInterest.get(id)
-        if (!poi) {
-            return null
-        }
-        if (version != null && poi.version > version) { // <2>
-            poi.errors.rejectValue('version', 'default.optimistic.locking.failure',
-                    ['Point of Interest'] as Object[],
-                    'Another user has updated this Point of Interest while you were editing')
+        if (!poi || StaleVersion.reject(poi.errors, poi.version, version, 'Point of Interest')) { // <2>
             return poi
         }
         poi.featuredImageUrl = featuredImageUrl
+        poi.save()
+        poi
+    }
+
+    @Transactional
+    PointOfInterest updateName(Serializable id, Long version, String name) { // <3>
+        PointOfInterest poi = PointOfInterest.get(id)
+        if (!poi || StaleVersion.reject(poi.errors, poi.version, version, 'Point of Interest')) {
+            return poi
+        }
+        poi.name = name
         poi.save()
         poi
     }

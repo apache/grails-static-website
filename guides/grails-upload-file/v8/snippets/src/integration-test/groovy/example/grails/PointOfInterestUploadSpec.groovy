@@ -48,6 +48,7 @@ class PointOfInterestUploadSpec extends Specification implements HttpClientSuppo
         'photo.png'           || 'photo.png'
         '../../evil.png'      || 'evil.png'
         'my photo (1).png'    || 'my_photo__1_.png'
+        'x' * 300 + '.png'    || 'x' * 60 + '.png'
     }
 
     void "a new image replaces the previous file, and deleting the point of interest removes it"() {

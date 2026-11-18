@@ -2,6 +2,7 @@ package example.grails
 
 import grails.compiler.GrailsCompileStatic
 import org.springframework.context.MessageSource
+import org.springframework.dao.OptimisticLockingFailureException
 
 @GrailsCompileStatic
 class RestaurantController {
@@ -107,10 +108,17 @@ class RestaurantController {
             respond cmd.errors, model: [restaurant: cmd], view: 'editFeaturedImage'
             return
         }
-        Restaurant restaurant = restaurantDataService.update(cmd.id,
-                cmd.version,
-                cmd.featuredImageFile.bytes, // <2>
-                cmd.featuredImageFile.contentType)
+        Restaurant restaurant
+        try {
+            restaurant = restaurantDataService.update(cmd.id,
+                    cmd.version,
+                    cmd.featuredImageFile.bytes, // <2>
+                    cmd.featuredImageFile.contentType)
+        } catch (OptimisticLockingFailureException e) { // <3>
+            flash.message = optimisticLockingFailureMessage()
+            redirect action: 'editFeaturedImage', id: cmd.id
+            return
+        }
         if (restaurant == null) {
             notFound()
             return
@@ -139,9 +147,18 @@ class RestaurantController {
         redirect action: 'index', method: 'GET'
     }
 
+    // tag::messages[]
     private String crudMessage(CRUD crud, Long id) {
-        Locale locale = request.locale
-        String domainName = messageSource.getMessage('restaurant.label', [] as Object[], 'Restaurant', locale)
-        crudMessageService.message(crud, domainName, id, locale)
+        crudMessageService.message(crud, domainName(), id, request.locale)
     }
+
+    private String optimisticLockingFailureMessage() {
+        messageSource.getMessage('default.optimistic.locking.failure', [domainName()] as Object[],
+                'Another user has updated this {0} while you were editing', request.locale)
+    }
+
+    private String domainName() {
+        messageSource.getMessage('restaurant.label', [] as Object[], 'Restaurant', request.locale)
+    }
+    // end::messages[]
 }

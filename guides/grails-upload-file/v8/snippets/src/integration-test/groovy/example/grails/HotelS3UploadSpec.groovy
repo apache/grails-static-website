@@ -118,6 +118,11 @@ class HotelS3UploadSpec extends Specification implements HttpClientSupport {
         then:
         hotelDataService.get(hotel.id) == null
         objectKeys(hotel.id).empty
+
+        cleanup:
+        if (hotelDataService.get(hotel.id)) {
+            httpDelete("/hotel/delete/${hotel.id}")
+        }
     }
 
     void "an upload from an outdated form is rejected and its object is deleted"() {

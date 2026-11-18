@@ -7,6 +7,15 @@ include::../snippets/grails-app/controllers/example/grails/PointOfInterestContro
 ----
 
 <1> The service saves the file and updates the point of interest.
+<2> As for the restaurant, an upload that loses a race with another update redirects to the upload form with a message. The service has already deleted the new file.
+
+Add the same message methods as in `RestaurantController`:
+
+[source, groovy]
+.grails-app/controllers/example/grails/PointOfInterestController.groovy
+----
+include::../snippets/grails-app/controllers/example/grails/PointOfInterestController.groovy[indent=0,tag=messages]
+----
 
 Configure the folder where images are saved, and the root URL they are served from:
 
@@ -30,10 +39,10 @@ include::../snippets/grails-app/services/example/grails/UploadPointOfInterestFea
 <4> `transferTo` writes the uploaded file to its path in the folder. The path uses the sanitized file name, so it cannot point outside the folder.
 <5> A GORM Data Service updates `featuredImageUrl`.
 <6> If the point of interest cannot be updated, or the update throws an exception, the new file is deleted again. The current image is not touched.
-<7> After a successful update, the previous image is deleted.
+<7> After a successful update, the previous image is deleted. This is safe because the service is not transactional, so the update is already committed when `updateFeaturedImageUrl` returns. If you add `@Transactional` to the service, the update commits only when `uploadFeaturedImage` returns, and a rollback would leave the point of interest pointing at a deleted file. In that case, delete the previous file after the commit, for example from the `afterCommit` method of a `TransactionSynchronization`.
 <8> `deleteFileByUrl` finds the file from its URL, and only deletes files inside the folder.
 
-Change `PointOfInterestDataService` to an abstract class too, and add an update method that checks the version, as you did for the restaurant:
+Change `PointOfInterestDataService` to an abstract class too, and write the update methods that check the version, as you did for the restaurant:
 
 [source, groovy]
 .grails-app/services/example/grails/PointOfInterestDataService.groovy
@@ -43,6 +52,7 @@ include::../snippets/grails-app/services/example/grails/PointOfInterestDataServi
 
 <1> `@Transactional` loads and updates the point of interest in one transaction.
 <2> An upload from a form opened before the last update is rejected.
+<3> The name update uses the same check.
 
 When a point of interest is deleted, delete its image too. Change the `delete` action of `PointOfInterestController`:
 

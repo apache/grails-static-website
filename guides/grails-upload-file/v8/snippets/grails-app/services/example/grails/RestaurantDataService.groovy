@@ -16,22 +16,25 @@ abstract class RestaurantDataService {
 
     abstract Restaurant save(String name)
 
-    abstract Restaurant update(Serializable id, Long version, String name)
-
     @Transactional
     Restaurant update(Serializable id, Long version, byte[] featuredImageBytes, String featuredImageContentType) { // <1>
         Restaurant restaurant = Restaurant.get(id)
-        if (!restaurant) {
-            return null
-        }
-        if (version != null && restaurant.version > version) { // <2>
-            restaurant.errors.rejectValue('version', 'default.optimistic.locking.failure',
-                    ['Restaurant'] as Object[],
-                    'Another user has updated this Restaurant while you were editing')
+        if (!restaurant || StaleVersion.reject(restaurant.errors, restaurant.version, version, 'Restaurant')) { // <2>
             return restaurant
         }
         restaurant.featuredImageBytes = featuredImageBytes
         restaurant.featuredImageContentType = featuredImageContentType
+        restaurant.save()
+        restaurant
+    }
+
+    @Transactional
+    Restaurant update(Serializable id, Long version, String name) { // <3>
+        Restaurant restaurant = Restaurant.get(id)
+        if (!restaurant || StaleVersion.reject(restaurant.errors, restaurant.version, version, 'Restaurant')) {
+            return restaurant
+        }
+        restaurant.name = name
         restaurant.save()
         restaurant
     }

@@ -16,22 +16,25 @@ abstract class HotelDataService {
 
     abstract Hotel save(String name)
 
-    abstract Hotel update(Serializable id, Long version, String name)
-
     @Transactional
     Hotel update(Serializable id, Long version, String featuredImageKey, String featuredImageUrl) { // <1>
         Hotel hotel = Hotel.get(id)
-        if (!hotel) {
-            return null
-        }
-        if (version != null && hotel.version > version) { // <2>
-            hotel.errors.rejectValue('version', 'default.optimistic.locking.failure',
-                    ['Hotel'] as Object[],
-                    'Another user has updated this Hotel while you were editing')
+        if (!hotel || StaleVersion.reject(hotel.errors, hotel.version, version, 'Hotel')) { // <2>
             return hotel
         }
         hotel.featuredImageKey = featuredImageKey
         hotel.featuredImageUrl = featuredImageUrl
+        hotel.save()
+        hotel
+    }
+
+    @Transactional
+    Hotel update(Serializable id, Long version, String name) { // <3>
+        Hotel hotel = Hotel.get(id)
+        if (!hotel || StaleVersion.reject(hotel.errors, hotel.version, version, 'Hotel')) {
+            return hotel
+        }
+        hotel.name = name
         hotel.save()
         hotel
     }

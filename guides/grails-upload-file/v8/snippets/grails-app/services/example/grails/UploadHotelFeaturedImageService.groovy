@@ -38,8 +38,9 @@ class UploadHotelFeaturedImageService implements GrailsConfigurationAware {
                 .key(key)
                 .contentType(cmd.featuredImageFile.contentType)
                 .build()
-        s3Client.putObject(putObjectRequest,
-                RequestBody.fromInputStream(cmd.featuredImageFile.inputStream, cmd.featuredImageFile.size)) // <5>
+        cmd.featuredImageFile.inputStream.withCloseable { InputStream input ->
+            s3Client.putObject(putObjectRequest, RequestBody.fromInputStream(input, cmd.featuredImageFile.size)) // <5>
+        }
 
         String featuredImageUrl = s3Client.utilities()
                 .getUrl(GetUrlRequest.builder().bucket(bucket).key(key).build())

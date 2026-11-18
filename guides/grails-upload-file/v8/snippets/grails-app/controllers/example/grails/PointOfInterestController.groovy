@@ -2,6 +2,7 @@ package example.grails
 
 import grails.compiler.GrailsCompileStatic
 import org.springframework.context.MessageSource
+import org.springframework.dao.OptimisticLockingFailureException
 
 @GrailsCompileStatic
 class PointOfInterestController {
@@ -97,7 +98,14 @@ class PointOfInterestController {
             respond cmd.errors, model: [pointOfInterest: cmd], view: 'editFeaturedImage'
             return
         }
-        PointOfInterest pointOfInterest = uploadPointOfInterestFeaturedImageService.uploadFeaturedImage(cmd) // <1>
+        PointOfInterest pointOfInterest
+        try {
+            pointOfInterest = uploadPointOfInterestFeaturedImageService.uploadFeaturedImage(cmd) // <1>
+        } catch (OptimisticLockingFailureException e) { // <2>
+            flash.message = optimisticLockingFailureMessage()
+            redirect action: 'editFeaturedImage', id: cmd.id
+            return
+        }
         if (pointOfInterest == null) {
             notFound()
             return
@@ -130,9 +138,18 @@ class PointOfInterestController {
         redirect action: 'index', method: 'GET'
     }
 
+    // tag::messages[]
     private String crudMessage(CRUD crud, Long id) {
-        Locale locale = request.locale
-        String domainName = messageSource.getMessage('pointOfInterest.label', [] as Object[], 'Point of Interest', locale)
-        crudMessageService.message(crud, domainName, id, locale)
+        crudMessageService.message(crud, domainName(), id, request.locale)
     }
+
+    private String optimisticLockingFailureMessage() {
+        messageSource.getMessage('default.optimistic.locking.failure', [domainName()] as Object[],
+                'Another user has updated this {0} while you were editing', request.locale)
+    }
+
+    private String domainName() {
+        messageSource.getMessage('pointOfInterest.label', [] as Object[], 'Point of Interest', request.locale)
+    }
+    // end::messages[]
 }

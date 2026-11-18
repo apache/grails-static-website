@@ -2,6 +2,7 @@ package example.grails
 
 import grails.compiler.GrailsCompileStatic
 import org.springframework.context.MessageSource
+import org.springframework.dao.OptimisticLockingFailureException
 import software.amazon.awssdk.core.exception.SdkException
 
 @GrailsCompileStatic
@@ -107,6 +108,10 @@ class HotelController {
                     'The featured image could not be uploaded. Try again later.')
             respond cmd.errors, model: [hotel: cmd], view: 'editFeaturedImage'
             return
+        } catch (OptimisticLockingFailureException e) { // <3>
+            flash.message = optimisticLockingFailureMessage()
+            redirect action: 'editFeaturedImage', id: cmd.id
+            return
         }
         if (hotel == null) {
             notFound()
@@ -142,9 +147,18 @@ class HotelController {
         redirect action: 'index', method: 'GET'
     }
 
+    // tag::messages[]
     private String crudMessage(CRUD crud, Long id) {
-        Locale locale = request.locale
-        String domainName = messageSource.getMessage('hotel.label', [] as Object[], 'Hotel', locale)
-        crudMessageService.message(crud, domainName, id, locale)
+        crudMessageService.message(crud, domainName(), id, request.locale)
     }
+
+    private String optimisticLockingFailureMessage() {
+        messageSource.getMessage('default.optimistic.locking.failure', [domainName()] as Object[],
+                'Another user has updated this {0} while you were editing', request.locale)
+    }
+
+    private String domainName() {
+        messageSource.getMessage('hotel.label', [] as Object[], 'Hotel', request.locale)
+    }
+    // end::messages[]
 }

@@ -8,10 +8,17 @@ include::../snippets/grails-app/controllers/example/grails/RestaurantController.
 
 <1> If validation fails, the upload form is shown again with the errors.
 <2> The image bytes and content type are passed to a GORM Data Service.
+<3> Two uploads sent at the same moment can both pass the version check described below. Hibernate then rejects the second one when it commits, with an `OptimisticLockingFailureException`. The action redirects to the upload form, which loads the current version, and shows a message.
 
-Add `uploadFeaturedImage: 'POST'` to the controller's `allowedMethods`.
+Add `uploadFeaturedImage: 'POST'` to the controller's `allowedMethods`. Move the lookup of the domain name out of `crudMessage`, so that the optimistic locking message can use it too:
 
-The update method has to check the version that the form was opened with, so you write it yourself. Change `RestaurantDataService` from an interface to an abstract class, make the existing methods `abstract`, and add the update method. GORM still implements the abstract methods for you:
+[source, groovy]
+.grails-app/controllers/example/grails/RestaurantController.groovy
+----
+include::../snippets/grails-app/controllers/example/grails/RestaurantController.groovy[indent=0,tag=messages]
+----
+
+The update method has to check the version that the form was opened with, so you write it yourself. Change `RestaurantDataService` from an interface to an abstract class, make the existing methods `abstract`, and add the update method. GORM still implements the abstract methods for you. The name update needs the same check, so write that one yourself too:
 
 [source, groovy]
 .grails-app/services/example/grails/RestaurantDataService.groovy
@@ -21,3 +28,15 @@ include::../snippets/grails-app/services/example/grails/RestaurantDataService.gr
 
 <1> `@Transactional` loads and updates the restaurant in one transaction.
 <2> If the restaurant has a higher version than the form sent, someone else saved it after the form was opened. The upload is rejected with the `default.optimistic.locking.failure` message, instead of overwriting the newer image. Assigning the version to the restaurant is not enough, because Hibernate checks the version it loaded from the database, not the value you assign.
+<3> The `update(Serializable id, Long version, String name)` method that GORM generated in `initial/` assigns the version, so a stale edit form overwrote a newer name without an error. It now checks the version the same way.
+
+The three data services share the version check in a small helper:
+
+[source, groovy]
+.src/main/groovy/example/grails/StaleVersion.groovy
+----
+include::../snippets/src/main/groovy/example/grails/StaleVersion.groovy[indent=0]
+----
+
+<1> Nothing is rejected unless the stored version is newer than the version the form was opened with.
+<2> The error uses the `default.optimistic.locking.failure` message from `messages.properties`, with the entity name as its argument.
