@@ -42,7 +42,7 @@ companionArtifacts:
       releaseNotesRepo: apache/grails-quartz
       displayName: Grails Quartz Plugin
     - artifactId: grails-github-actions
-      version: '1.0.3'
+      version: '1.0.4'
       mirrorDirectory: actions
       releaseNotesRepo: apache/grails-github-actions
       displayName: Grails GitHub Actions
