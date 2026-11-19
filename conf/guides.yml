@@ -5351,10 +5351,11 @@ guides:
             title: Do you need help with Grails?  
 
   - name: 'grails-upload-file'
-    title: 'How to upload a file with Grails 4'
-    subtitle: 'Learn how to upload files with Grails 4; transfer them to a folder, save them as byte[] in the database or upload them to AWS S3.'
+    title: 'How to upload a file with Grails'
+    subtitle: 'Learn how to upload files with Grails; save them as byte[] in the database, transfer them to a folder or upload them to AWS S3.'
     authors:
       - 'Sergio del Amo'
+      - 'Sanjana'
     category: 'Grails Apprentice'
     publicationDate: '2017-03-13'
     versions:
@@ -5450,6 +5451,57 @@ guides:
             awsAccessAndSecret: Run the App with AWS Access and Secret
           helpWithGrails:
             title: Do you need help with Grails?  
+      '8':
+        sourcePath: guides/grails-upload-file/v8
+        publicationDate: '2026-11-13'
+        tags:
+          - 'file-upload'
+          - 'multipart'
+          - 'command-objects'
+          - 'validation'
+          - 'aws'
+          - 's3'
+          - 'cloud-storage'
+          - 'controllers'
+          - 'gsp'
+          - 'testcontainers'
+        sampleRef:
+          repo: 'grails-guides/grails-upload-file'
+          branch: 'grails8'
+        toc:
+          gettingStarted:
+            title: Getting Started
+            requirements: What you will need
+            howto: How to complete the guide
+          writingTheApp:
+            title: Writing the Application
+            featuredImageCommand: Featured Image Command Object
+            increaseFileSize: Increase the allowed file size
+          restaurant:
+            title: Restaurant - Upload and save as byte[]
+            restaurantDomainClass: Restaurant Domain Class
+            restaurantView: Restaurant Views
+            restaurantUploadFeaturedImageService: Save the Uploaded Image
+            loadByteArrayImage: Load the byte array image
+          pointOfInterest:
+            title: Point of Interest - Upload and transfer to a folder
+            pointOfInterestDomainClass: Point of Interest Domain Class
+            pointOfInterestView: Point of Interest Views
+            pointOfInterestUploadFeaturedImageService: Upload Featured Image Service
+            serveUploadedFiles: Serve the uploaded files
+          awsS3:
+            title: Hotel - Upload to AWS S3
+            awsSdk: Add the AWS SDK
+            hotelDomainClass: Hotel Domain Class
+            hotelView: Hotel Views
+            hotelUploadFeaturedImageService: Upload image to S3
+            awsAccessAndSecret: Run the App with AWS Credentials
+          testingTheApp:
+            title: Testing the Uploads
+          runningTheApp:
+            title: Running the Application
+          helpWithGrails:
+            title: Do you need help with Grails?
 
   - name: 'grails-vite-spa'
     title: 'Vite + React SPA on a Grails 8 Backend'

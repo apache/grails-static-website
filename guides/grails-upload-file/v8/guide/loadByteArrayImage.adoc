@@ -1,0 +1,21 @@
+The browser cannot read the image from the database directly, so add an action that renders the stored bytes:
+
+[source, groovy]
+.grails-app/controllers/example/grails/RestaurantController.groovy
+----
+include::../snippets/grails-app/controllers/example/grails/RestaurantController.groovy[indent=0,tag=featuredImage]
+----
+
+<1> `render file:` writes the bytes to the response with the stored content type.
+
+In `show.gsp`, point an `img` tag at that action with `createLink`:
+
+[source, html]
+.grails-app/views/restaurant/show.gsp
+----
+include::../snippets/grails-app/views/restaurant/show.gsp[indent=0,tag=featuredImage]
+----
+
+The `g:if` tests `featuredImageContentType`, not `featuredImageBytes`. The page only needs to know whether there is an image, and the bytes are sent by the `featuredImage` action.
+
+Storing images in the database keeps them in the same backup and transaction as the rest of the data, but it has a cost. Hibernate loads a `byte[]` property together with the rest of the row, so every page that loads a restaurant, such as `show` or `index`, reads its image too, up to 25MB each. Every image is also read through the application, and the database grows quickly. To keep the bytes out of ordinary queries, you can move them to a separate domain class that is loaded only by the `featuredImage` action. The next two sections store the file somewhere else and keep only its URL.

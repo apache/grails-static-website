@@ -1,0 +1,37 @@
+Add the AWS SDK BOM and the S3 module to `build.gradle`:
+
+[source, groovy]
+.build.gradle
+----
+include::../snippets/build.gradle[indent=0,tag=awssdk]
+----
+
+Configure the region and the bucket that images are uploaded to. The bucket must already exist:
+
+[source, yaml]
+.grails-app/conf/application.yml
+----
+include::../snippets/grails-app/conf/application.yml[tag=aws]
+----
+
+Create the `S3Client` in a small factory:
+
+[source, groovy]
+.src/main/groovy/example/grails/S3ClientFactory.groovy
+----
+include::../snippets/src/main/groovy/example/grails/S3ClientFactory.groovy[indent=0]
+----
+
+<1> The client talks to S3 in the configured region.
+<2> An optional `aws.s3.endpoint` points the client at an S3-compatible service instead, such as LocalStack.
+<3> Credentials come from the SDK's default credentials provider chain, described in <<awsAccessAndSecret,Run the App with AWS Credentials>>.
+
+Declare the client as a bean in `resources.groovy`, so it can be injected into services:
+
+[source, groovy]
+.grails-app/conf/spring/resources.groovy
+----
+include::../snippets/grails-app/conf/spring/resources.groovy[indent=0,tag=s3Client]
+----
+
+`destroyMethod` closes the client when the application shuts down.

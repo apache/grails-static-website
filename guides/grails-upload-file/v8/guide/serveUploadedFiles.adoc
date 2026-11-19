@@ -1,0 +1,20 @@
+The stored URLs start with `/uploads`, so the application has to serve the folder under that path. Register a Spring MVC resource handler:
+
+[source, groovy]
+.src/main/groovy/example/grails/UploadsWebMvcConfigurer.groovy
+----
+include::../snippets/src/main/groovy/example/grails/UploadsWebMvcConfigurer.groovy[indent=0]
+----
+
+<1> The folder is turned into a `file:` URL that Spring can read resources from.
+<2> Requests under `/uploads/` are answered with the files in that folder.
+
+Declare it as a bean in `resources.groovy`, passing the configured folder:
+
+[source, groovy]
+.grails-app/conf/spring/resources.groovy
+----
+include::../snippets/grails-app/conf/spring/resources.groovy[indent=0,tag=uploadsWebMvcConfigurer]
+----
+
+To serve the files from another server or a CDN instead, set `grails.guides.cdnRootUrl` to its URL and remove the bean.

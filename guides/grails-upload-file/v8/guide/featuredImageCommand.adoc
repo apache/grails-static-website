@@ -1,0 +1,27 @@
+Every featured image upload is validated by the same https://grails.apache.org/guides/command-objects-and-forms/8/guide/index.html[command object]. It binds the uploaded file as a Spring `MultipartFile`, together with the `id` and `version` of the record being updated.
+
+[source, groovy]
+.grails-app/controllers/example/grails/FeaturedImageCommand.groovy
+----
+include::../snippets/grails-app/controllers/example/grails/FeaturedImageCommand.groovy[indent=0]
+----
+
+<1> A missing or empty file is rejected.
+<2> The file name must end in `.jpg`, `.jpeg`, or `.png`, and the browser must send an `image/jpeg` or `image/png` content type.
+<3> `StringUtils.getFilename` keeps only the last segment of the name the browser sent, so `../../etc/evil.png` becomes `evil.png`.
+<4> Any character other than letters, digits, dots, underscores, and hyphens is replaced with `_`.
+<5> A long name is shortened to 64 characters, keeping its extension. The services put a UUID in front of the name, and the URL adds a folder or host on top of that, so an unlimited name could go over the file system's 255-byte limit for a file name, or the 255 characters of the column that stores the URL.
+
+The original file name comes from the browser, so never use it as a path as it is. The services in this guide build file paths and S3 keys from `sanitizedFilename()` instead.
+
+NOTE: The file name and the content type both come from the browser, so checking them is only a basic filter. Anyone can send any file named `photo.png` with an `image/png` content type, and the uploaded files are served publicly, from `/uploads/**` and from S3. A real application should also check the content of the file, for example that it starts with the signature of a PNG or JPEG file (the tests in this guide write the PNG signature `89 50 4E 47 0D 0A 1A 0A`), or that `javax.imageio.ImageIO.read` can decode it.
+
+When validation fails, Grails looks up an error message whose code starts with the command object class name and the property name. Without one, the user sees the generic `default.invalid.validator.message`, which includes the `toString()` of the uploaded file. Add clear messages to `messages.properties`:
+
+[source, properties]
+.grails-app/i18n/messages.properties
+----
+include::../snippets/grails-app/i18n/messages.properties[tag=featuredImage]
+----
+
+The first two messages are shown when no file is chosen or when the file is not a JPG or PNG image. The hotel upload uses the third message later in this guide, when S3 rejects an upload.

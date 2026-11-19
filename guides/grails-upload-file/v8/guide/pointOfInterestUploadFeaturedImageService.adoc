@@ -1,0 +1,66 @@
+The `uploadFeaturedImage` action validates the command object and hands the file to a service:
+
+[source, groovy]
+.grails-app/controllers/example/grails/PointOfInterestController.groovy
+----
+include::../snippets/grails-app/controllers/example/grails/PointOfInterestController.groovy[indent=0,tag=uploadFeaturedImage]
+----
+
+<1> The service saves the file and updates the point of interest.
+<2> As for the restaurant, an upload that loses a race with another update redirects to the upload form with a message. The service has already deleted the new file.
+
+Add the same message methods as in `RestaurantController`:
+
+[source, groovy]
+.grails-app/controllers/example/grails/PointOfInterestController.groovy
+----
+include::../snippets/grails-app/controllers/example/grails/PointOfInterestController.groovy[indent=0,tag=messages]
+----
+
+Configure the folder where images are saved, and the root URL they are served from:
+
+[source, yaml]
+.grails-app/conf/application.yml
+----
+include::../snippets/grails-app/conf/application.yml[tag=cdn]
+----
+
+The service writes the file and stores its URL:
+
+[source, groovy]
+.grails-app/services/example/grails/UploadPointOfInterestFeaturedImageService.groovy
+----
+include::../snippets/grails-app/services/example/grails/UploadPointOfInterestFeaturedImageService.groovy[indent=0]
+----
+
+<1> `GrailsConfigurationAware` gives the service the configuration when the application starts.
+<2> The point of interest is loaded first. If it does not exist, no file is written.
+<3> If the point of interest has a higher version than the form sent, the upload is rejected before the file is written. `updateFeaturedImage` checks the version again in its transaction, for an update that happens while the file is being written.
+<4> A random UUID in front of the sanitized file name gives every upload its own file and URL. Uploading a file with the same name again does not overwrite the current image, and browsers do not keep showing a cached copy of the old one.
+<5> `transferTo` writes the uploaded file to its path in the folder. The path uses the sanitized file name, so it cannot point outside the folder.
+<6> A GORM Data Service updates `featuredImageUrl`.
+<7> If the point of interest cannot be updated, or the update throws an exception, the new file is deleted again. The current image is not touched.
+<8> After a successful update, the previous image is deleted. This is safe because the service is not transactional, so the update is already committed when `updateFeaturedImage` returns. If you add `@Transactional` to the service, the update commits only when `uploadFeaturedImage` returns, and a rollback would leave the point of interest pointing at a deleted file. In that case, delete the previous file after the commit, for example from the `afterCommit` method of a `TransactionSynchronization`.
+<9> `deleteFileByUrl` finds the file from its URL, and only deletes files inside the folder.
+
+Change `PointOfInterestDataService` to an abstract class too, and write the update methods that check the version, as you did for the restaurant:
+
+[source, groovy]
+.grails-app/services/example/grails/PointOfInterestDataService.groovy
+----
+include::../snippets/grails-app/services/example/grails/PointOfInterestDataService.groovy[indent=0]
+----
+
+<1> `@Transactional` loads and updates the point of interest in one transaction.
+<2> An upload from a form opened before the last update is rejected.
+<3> `updateName` uses the same check. Change the `update` action of `PointOfInterestController` to call it.
+
+When a point of interest is deleted, delete its image too. Change the `delete` action of `PointOfInterestController`:
+
+[source, groovy]
+.grails-app/controllers/example/grails/PointOfInterestController.groovy
+----
+include::../snippets/grails-app/controllers/example/grails/PointOfInterestController.groovy[indent=0,tag=delete]
+----
+
+<1> The file is deleted after the record, so the image is kept if deleting the record fails.

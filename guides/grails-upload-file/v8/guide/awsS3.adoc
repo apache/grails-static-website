@@ -1,0 +1,5 @@
+For the `Hotel` domain class you upload the file to https://aws.amazon.com/s3/[Amazon S3].
+
+image::s3.png[]
+
+Earlier versions of this guide used a Grails plugin for the AWS SDK. That plugin is no longer maintained, and the repository it was published to has been shut down. This guide uses the https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/home.html[AWS SDK for Java 2.x] directly, which needs only a few lines of configuration.
