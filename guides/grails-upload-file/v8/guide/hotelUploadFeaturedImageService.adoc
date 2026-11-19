@@ -29,12 +29,13 @@ include::../snippets/grails-app/services/example/grails/UploadHotelFeaturedImage
 <1> The `S3Client` bean from `resources.groovy` is injected by name.
 <2> The bucket name is read from the configuration.
 <3> The hotel is loaded first. If it does not exist, nothing is uploaded.
-<4> A random UUID in the key gives every upload its own object and URL. Uploading a file with the same name again does not overwrite the current image, and browsers and CDNs do not keep showing a cached copy of the old one.
-<5> `putObject` streams the uploaded file to S3, with its content type. The SDK does not close the stream, so `withCloseable` closes it. Otherwise the temporary file Tomcat keeps for a large upload stays open until the garbage collector runs.
-<6> The SDK builds the object's URL for the configured region or endpoint.
-<7> A GORM Data Service stores the key and URL.
-<8> If the hotel cannot be updated, or the update throws an exception, the new object is deleted from S3 again. The current image is not touched.
-<9> After a successful update, the previous object is deleted. As for the point of interest, this relies on the service not being transactional.
+<4> If the hotel has a higher version than the form sent, the upload is rejected before anything is sent to S3. `updateFeaturedImage` checks the version again in its transaction, for an update that happens while the file is being uploaded.
+<5> A random UUID in the key gives every upload its own object and URL. Uploading a file with the same name again does not overwrite the current image, and browsers and CDNs do not keep showing a cached copy of the old one.
+<6> `putObject` streams the uploaded file to S3, with its content type. The SDK does not close the stream, so `withCloseable` closes it. Otherwise the temporary file Tomcat keeps for a large upload stays open until the garbage collector runs.
+<7> The SDK builds the object's URL for the configured region or endpoint.
+<8> A GORM Data Service stores the key and URL.
+<9> If the hotel cannot be updated, or the update throws an exception, the new object is deleted from S3 again. The current image is not touched.
+<10> After a successful update, the previous object is deleted. As for the point of interest, this relies on the service not being transactional.
 
 Change `HotelDataService` to an abstract class too, and write the update methods that check the version, as you did for the restaurant:
 
@@ -46,7 +47,7 @@ include::../snippets/grails-app/services/example/grails/HotelDataService.groovy[
 
 <1> `@Transactional` loads and updates the hotel in one transaction.
 <2> An upload from a form opened before the last update is rejected.
-<3> The name update uses the same check.
+<3> `updateName` uses the same check. Change the `update` action of `HotelController` to call it.
 
 When a hotel is deleted, delete its object from S3 too. Change the `delete` action of `HotelController`:
 

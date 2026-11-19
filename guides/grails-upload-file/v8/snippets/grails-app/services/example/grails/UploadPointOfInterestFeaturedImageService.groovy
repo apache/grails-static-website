@@ -29,25 +29,28 @@ class UploadPointOfInterestFeaturedImageService implements GrailsConfigurationAw
         if (!poi) {
             return null
         }
+        if (StaleVersion.reject(poi.errors, poi.version, cmd.version, 'Point of Interest')) { // <3>
+            return poi
+        }
         String previousUrl = poi.featuredImageUrl
 
-        String filename = "${UUID.randomUUID()}-${cmd.sanitizedFilename()}" // <3>
+        String filename = "${UUID.randomUUID()}-${cmd.sanitizedFilename()}" // <4>
         Path folder = cdnFolder.resolve("pointOfInterest/${cmd.id}")
         Files.createDirectories(folder)
         Path file = folder.resolve(filename)
-        cmd.featuredImageFile.transferTo(file) // <4>
+        cmd.featuredImageFile.transferTo(file) // <5>
 
         String featuredImageUrl = "${cdnRootUrl}/pointOfInterest/${cmd.id}/${filename}"
         try {
-            poi = pointOfInterestDataService.updateFeaturedImageUrl(cmd.id, cmd.version, featuredImageUrl) // <5>
+            poi = pointOfInterestDataService.updateFeaturedImage(cmd.id, cmd.version, featuredImageUrl) // <6>
         } catch (Exception e) {
-            deleteFile(file) // <6>
+            deleteFile(file) // <7>
             throw e
         }
         if (!poi || poi.hasErrors()) {
-            deleteFile(file) // <6>
+            deleteFile(file) // <7>
         } else {
-            deleteFileByUrl(previousUrl) // <7>
+            deleteFileByUrl(previousUrl) // <8>
         }
         poi
     }
@@ -58,7 +61,7 @@ class UploadPointOfInterestFeaturedImageService implements GrailsConfigurationAw
             return false
         }
         Path file = cdnFolder.resolve(featuredImageUrl.substring(prefix.length())).normalize()
-        if (!file.startsWith(cdnFolder)) { // <8>
+        if (!file.startsWith(cdnFolder)) { // <9>
             return false
         }
         deleteFile(file)

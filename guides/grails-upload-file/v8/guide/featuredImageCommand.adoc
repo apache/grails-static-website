@@ -14,6 +14,8 @@ include::../snippets/grails-app/controllers/example/grails/FeaturedImageCommand.
 
 The original file name comes from the browser, so never use it as a path as it is. The services in this guide build file paths and S3 keys from `sanitizedFilename()` instead.
 
+NOTE: The file name and the content type both come from the browser, so checking them is only a basic filter. Anyone can send any file named `photo.png` with an `image/png` content type, and the uploaded files are served publicly, from `/uploads/**` and from S3. A real application should also check the content of the file, for example that it starts with the signature of a PNG or JPEG file (the tests in this guide write the PNG signature `89 50 4E 47 0D 0A 1A 0A`), or that `javax.imageio.ImageIO.read` can decode it.
+
 When validation fails, Grails looks up an error message whose code starts with the command object class name and the property name. Without one, the user sees the generic `default.invalid.validator.message`, which includes the `toString()` of the uploaded file. Add clear messages to `messages.properties`:
 
 [source, properties]

@@ -17,7 +17,7 @@ abstract class HotelDataService {
     abstract Hotel save(String name)
 
     @Transactional
-    Hotel update(Serializable id, Long version, String featuredImageKey, String featuredImageUrl) { // <1>
+    Hotel updateFeaturedImage(Serializable id, Long version, String featuredImageKey, String featuredImageUrl) { // <1>
         Hotel hotel = Hotel.get(id)
         if (!hotel || StaleVersion.reject(hotel.errors, hotel.version, version, 'Hotel')) { // <2>
             return hotel
@@ -29,7 +29,7 @@ abstract class HotelDataService {
     }
 
     @Transactional
-    Hotel update(Serializable id, Long version, String name) { // <3>
+    Hotel updateName(Serializable id, Long version, String name) { // <3>
         Hotel hotel = Hotel.get(id)
         if (!hotel || StaleVersion.reject(hotel.errors, hotel.version, version, 'Hotel')) {
             return hotel

@@ -30,7 +30,7 @@
                 <g:flashMessages />
                 <h2><f:display bean="restaurant" property="name" /></h2>
                 %{-- tag::featuredImage[] --}%
-                <g:if test="${this.restaurant.featuredImageBytes}">
+                <g:if test="${this.restaurant.featuredImageContentType}">
                     <img src="${createLink(controller: 'restaurant', action: 'featuredImage', id: this.restaurant.id)}" class="img-fluid" width="400" alt="${this.restaurant.name}"/>
                 </g:if>
                 %{-- end::featuredImage[] --}%

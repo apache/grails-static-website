@@ -69,7 +69,7 @@ class HotelController {
             respond cmd.errors, model: [hotel: cmd], view: 'edit'
             return
         }
-        Hotel hotel = hotelDataService.update(cmd.id, cmd.version, cmd.name)
+        Hotel hotel = hotelDataService.updateName(cmd.id, cmd.version, cmd.name)
         if (hotel == null) {
             notFound()
             return

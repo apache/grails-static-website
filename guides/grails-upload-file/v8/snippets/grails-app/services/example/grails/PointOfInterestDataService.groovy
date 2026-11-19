@@ -17,7 +17,7 @@ abstract class PointOfInterestDataService {
     abstract PointOfInterest save(String name)
 
     @Transactional
-    PointOfInterest updateFeaturedImageUrl(Serializable id, Long version, String featuredImageUrl) { // <1>
+    PointOfInterest updateFeaturedImage(Serializable id, Long version, String featuredImageUrl) { // <1>
         PointOfInterest poi = PointOfInterest.get(id)
         if (!poi || StaleVersion.reject(poi.errors, poi.version, version, 'Point of Interest')) { // <2>
             return poi

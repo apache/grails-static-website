@@ -78,7 +78,7 @@ class RestaurantController {
             respond cmd.errors, model: [restaurant: cmd], view: 'edit'
             return
         }
-        Restaurant restaurant = restaurantDataService.update(cmd.id, cmd.version, cmd.name)
+        Restaurant restaurant = restaurantDataService.updateName(cmd.id, cmd.version, cmd.name)
         if (restaurant == null) {
             notFound()
             return
@@ -110,7 +110,7 @@ class RestaurantController {
         }
         Restaurant restaurant
         try {
-            restaurant = restaurantDataService.update(cmd.id,
+            restaurant = restaurantDataService.updateFeaturedImage(cmd.id,
                     cmd.version,
                     cmd.featuredImageFile.bytes, // <2>
                     cmd.featuredImageFile.contentType)

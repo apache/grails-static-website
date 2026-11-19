@@ -16,4 +16,6 @@ In `show.gsp`, point an `img` tag at that action with `createLink`:
 include::../snippets/grails-app/views/restaurant/show.gsp[indent=0,tag=featuredImage]
 ----
 
-Storing images in the database keeps them in the same backup and transaction as the rest of the data, but every image is read through the application and the database grows quickly. The next two sections store the file somewhere else and keep only its URL.
+The `g:if` tests `featuredImageContentType`, not `featuredImageBytes`. The page only needs to know whether there is an image, and the bytes are sent by the `featuredImage` action.
+
+Storing images in the database keeps them in the same backup and transaction as the rest of the data, but it has a cost. Hibernate loads a `byte[]` property together with the rest of the row, so every page that loads a restaurant, such as `show` or `index`, reads its image too, up to 25MB each. Every image is also read through the application, and the database grows quickly. To keep the bytes out of ordinary queries, you can move them to a separate domain class that is loaded only by the `featuredImage` action. The next two sections store the file somewhere else and keep only its URL.

@@ -17,7 +17,7 @@ abstract class RestaurantDataService {
     abstract Restaurant save(String name)
 
     @Transactional
-    Restaurant update(Serializable id, Long version, byte[] featuredImageBytes, String featuredImageContentType) { // <1>
+    Restaurant updateFeaturedImage(Serializable id, Long version, byte[] featuredImageBytes, String featuredImageContentType) { // <1>
         Restaurant restaurant = Restaurant.get(id)
         if (!restaurant || StaleVersion.reject(restaurant.errors, restaurant.version, version, 'Restaurant')) { // <2>
             return restaurant
@@ -29,7 +29,7 @@ abstract class RestaurantDataService {
     }
 
     @Transactional
-    Restaurant update(Serializable id, Long version, String name) { // <3>
+    Restaurant updateName(Serializable id, Long version, String name) { // <3>
         Restaurant restaurant = Restaurant.get(id)
         if (!restaurant || StaleVersion.reject(restaurant.errors, restaurant.version, version, 'Restaurant')) {
             return restaurant
