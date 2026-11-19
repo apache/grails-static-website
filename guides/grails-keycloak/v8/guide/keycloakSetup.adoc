@@ -1,4 +1,10 @@
-Run Keycloak on port 8081 so it does not collide with the Grails application on port 8080.
+This chapter covers the Keycloak configuration used by the example application: running Keycloak with `start-dev`, the realm and client, roles, the client role mapper, and test users.
+
+Keycloak `start-dev` keeps its own embedded database. No external database setup is required.
+
+== Start Keycloak
+
+If you have Docker, you can start Keycloak with the command below instead of installing it:
 
 [source,bash]
 ----
@@ -10,134 +16,379 @@ docker run --rm --name grails-keycloak \
   start-dev
 ----
 
-Open http://localhost:8081[http://localhost:8081] and sign in as `admin` / `admin`. `start-dev` reads the browser's host, so the issuer for this guide is `http://localhost:8081/realms/example`.
+From the Keycloak installation directory, start Keycloak in development mode:
 
-== Realm and client
+[source,bash]
+----
+bin/kc.sh start-dev --http-port=8081 \
+  --bootstrap-admin-username admin \
+  --bootstrap-admin-password admin
+----
 
-Create a realm named `example`.
+On Windows:
 
-In that realm, create an OpenID Connect client:
+[source,bash]
+----
+bin\kc.bat start-dev --http-port=8081 --bootstrap-admin-username admin --bootstrap-admin-password admin
+----
 
-[options="header"]
+`start-dev` uses an embedded H2 database. No database configuration is needed.
+
+== Access the Keycloak administration console
+
+Once Keycloak is running, open `http://localhost:8081` and log into the administration console. All three start commands in this chapter create the same administrator account: `admin` / `admin`.
+
+If you are accessing Keycloak from another machine, replace `localhost` with the hostname or address where Keycloak is running.
+
+== Create the example realm
+
+From the Keycloak Administration Console, create a new realm:
+
+```text
+Realm name:
+example
+```
+
+The OpenID Connect issuer for the realm is:
+
+```text
+http://localhost:8081/realms/example
+```
+
+This value becomes the Grails application's `KEYCLOAK_ISSUER` environment variable.
+
+== Create the OpenID Connect client
+
+Navigate to **Clients → Create client** and create an OpenID Connect client:
+
+```text
+Client type:
+OpenID Connect
+
+Client ID:
+example-client
+```
+
+The `Client ID` becomes the Grails application's `KEYCLOAK_CLIENT_ID` environment variable.
+
+=== Enable client authentication
+
+Enable client authentication for the client. Keycloak generates a client secret. That secret becomes the Grails application's `KEYCLOAK_CLIENT_SECRET` environment variable.
+
+Do not commit the client secret to Git.
+
+=== Configure redirect URIs
+
+For the example application running locally on port `8080`, configure the redirect URI:
+
+```text
+http://localhost:8080/login/oauth2/code/keycloak
+```
+
+This is the OAuth2 login callback used by the Grails application. If you run the application on a different URL, change the redirect URI accordingly.
+
+=== Configure web origins
+
+For local development, configure:
+
+```text
+http://localhost:8080
+```
+
+as the web origin. Do not use unrestricted origins unless they are specifically required.
+
+== Create the client roles
+
+This example uses client roles rather than realm roles.
+
+=== USER role
+
+Navigate to **Clients → example-client → Roles** and create:
+
+```text
+USER
+```
+
+Do not create this under **Realm roles**. The application uses `USER` for normal authenticated users:
+
+[source,groovy]
+----
+@PreAuthorize("hasRole('ROLE_USER')")
+----
+
+=== ADMIN role
+
+Under **Clients → example-client → Roles**, create:
+
+```text
+ADMIN
+```
+
+The client now contains `USER` and `ADMIN`. The application protects administrator-only functionality with:
+
+[source,groovy]
+----
+@PreAuthorize("hasRole('ROLE_ADMIN')")
+----
+
+=== Make ADMIN inherit USER
+
+Keycloak supports composite roles. Configure `ADMIN` as a composite role containing `USER`.
+
+Navigate to **Clients → example-client → Roles → ADMIN** and add `USER` as an associated/composite role.
+
+The resulting structure is:
+
+```text
+example-client
+│
+├── USER
+│
+└── ADMIN
+    └── USER
+```
+
+A user assigned `USER` has the effective roles:
+
+```text
+USER
+```
+
+A user assigned `ADMIN` has the effective roles:
+
+```text
+ADMIN
+USER
+```
+
+The administrator does not need `USER` assigned separately. This lets the application secure ordinary functionality with `ROLE_USER` while administrator-only functionality requires `ROLE_ADMIN`.
+
+== Create test users
+
+=== test-user
+
+Navigate to **Users → Add user** and create:
+
+```text
+Username:
+test-user
+
+Email:
+test-user@example.com
+```
+
+Set a password under **Credentials**.
+
+Open the user, navigate to **Role mapping**, select the `example-client` client roles, and assign:
+
+```text
+USER
+```
+
+The user should have:
+
+```text
+Direct role:
+USER
+
+Effective roles:
+USER
+```
+
+=== test-admin
+
+Create another user:
+
+```text
+Username:
+test-admin
+
+Email:
+test-admin@example.com
+```
+
+Assign only `ADMIN`. Do not separately assign `USER`. Because `ADMIN` contains `USER`, the effective roles should be:
+
+```text
+Direct role:
+ADMIN
+
+Effective roles:
+ADMIN
+USER
+```
+
+== Add the client role mapper
+
+Creating the roles is not enough. The client roles must also be included in the OpenID Connect tokens consumed by the Grails application.
+
+Navigate to **Clients → example-client → Client scopes → Dedicated scopes** and add a mapper for the client roles, configured for the `example-client` client.
+
+=== Configure the mapper
+
+Configure the mapper with the following settings:
+
 |===
-|Setting |Value
+| Setting | Value
 
-|Client type
-|OpenID Connect
+| Add to ID token
+| On
 
-|Client ID
-|`example-client`
+| Add to access token
+| On
 
-|Client authentication
-|On
+| Add to lightweight access token
+| Off
 
-|Standard flow
-|On
+| Add to userinfo
+| On
 
-|Valid redirect URIs
-|`http://localhost:8080/login/oauth2/code/keycloak`
-
-|Valid post logout redirect URIs
-|`http://localhost:8080`
-
-|Web origins
-|`http://localhost:8080`
+| Add to token introspection
+| On
 |===
 
-The redirect URI is the Spring Security login callback. The post-logout URI is `{baseUrl}` from the application, which is `http://localhost:8080` when Grails listens on that port. Keycloak 18 and later rejects a logout redirect that is not registered. In the Keycloak 26 client settings this field is under *Logout settings*.
+The final configuration is:
 
-Copy the client secret from *Clients -> example-client -> Credentials*. The application reads it from `KEYCLOAK_CLIENT_SECRET`. Do not commit the secret.
+```text
+Add to ID token:                  On
+Add to access token:              On
+Add to lightweight access token:  Off
+Add to userinfo:                  On
+Add to token introspection:       On
+```
 
-== Client roles
+=== Verify the token with Evaluate
 
-Create `USER` and `ADMIN` under *Clients -> example-client -> Roles*. The mapper in this guide reads `resource_access.example-client.roles` from the ID token. Roles created under *Realm roles* are not in that claim, so a user can sign in and still fail every `@PreAuthorize` check.
+Before troubleshooting the Grails application, verify that Keycloak puts the roles into the token.
 
-Open `ADMIN` and add `USER` as an associated role so `ADMIN` is a composite role. A user who is assigned only `ADMIN` then receives both `ADMIN` and `USER` in the client-role claim. The Account page requires `USER`, and the Admin page requires `ADMIN`, so an administrator can open both.
+Navigate to **Clients → example-client → Client scopes → Evaluate** and select `test-user`.
 
-== Put the client roles on the ID token
+The Evaluate screen shows the token Keycloak would issue for that user. The `test-user` should show the `USER` client role:
 
-Open *Clients -> example-client -> Client scopes -> dedicated scope* and add a mapper of type *User Client Role*.
+```text
+USER
+```
 
-[options="header"]
-|===
-|Setting |Value
+Select `test-admin` and evaluate again. Because `ADMIN` contains `USER`, the `test-admin` should show both roles:
 
-|Name
-|`example-client-roles`
+```text
+ADMIN
+USER
+```
 
-|Client ID
-|`example-client`
-
-|Client Role prefix
-|leave blank
-
-|Multivalued
-|On
-
-|Token Claim Name
-|`resource_access.example-client.roles`
-
-|Claim JSON Type
-|String
-
-|Add to ID token
-|On
-
-|Add to access token
-|On
-
-|Add to lightweight access token
-|Off
-
-|Add to userinfo
-|On
-
-|Add to token introspection
-|On
-|===
-
-Token Claim Name is required and has no default. That value is the only claim `KeycloakAuthoritiesMapper` reads. Leave Client Role prefix blank so the token contains `USER` and `ADMIN`. The Grails mapper adds `ROLE_`.
-
-Check the result before starting Grails. Open *Client scopes -> Evaluate*, choose the test user, and generate an ID token. A user with the `USER` client role should show:
+The client roles are typically represented in the token under `resource_access`. For example:
 
 [source,json]
 ----
 {
   "resource_access": {
     "example-client": {
-      "roles": ["USER"]
+      "roles": [
+        "USER"
+      ]
     }
   }
 }
 ----
 
-An `ADMIN` user should show both `ADMIN` and `USER` in that same `roles` array.
+An administrator has something similar with both roles:
 
-== Users
-
-Create two users in the `example` realm. Set a non-temporary password on each.
-
-Assign client roles from *Role mapping -> Assign role*, with the filter set to clients:
-
-* One user gets `example-client` / `USER` only.
-* The other user gets `example-client` / `ADMIN` only. Composite membership supplies `USER`.
-
-== Environment variables
-
-The Grails application reads three variables. There is no database variable.
-
-[source,bash]
+[source,json]
 ----
-export KEYCLOAK_CLIENT_ID=example-client
-export KEYCLOAK_CLIENT_SECRET=paste-the-client-secret
-export KEYCLOAK_ISSUER=http://localhost:8081/realms/example
+{
+  "resource_access": {
+    "example-client": {
+      "roles": [
+        "ADMIN",
+        "USER"
+      ]
+    }
+  }
+}
 ----
 
-On PowerShell:
+The exact token output varies by Keycloak version and configuration.
 
-[source,powershell]
-----
-$env:KEYCLOAK_CLIENT_ID = "example-client"
-$env:KEYCLOAK_CLIENT_SECRET = "paste-the-client-secret"
-$env:KEYCLOAK_ISSUER = "http://localhost:8081/realms/example"
-----
+TIP: After changing roles or mapper settings, log out and log back in so that a new token is issued.
+
+== Troubleshooting
+
+=== Keycloak does not start
+
+Check the Keycloak logs for errors. Common causes include:
+
+* Port 8081 is already in use
+* Java is not installed or not on the PATH
+* The Keycloak installation is incomplete
+
+=== Roles are missing from the application
+
+Start with Keycloak rather than Grails. Use **Clients → example-client → Client scopes → Evaluate** to inspect the token for the affected user.
+
+If the roles are missing from Evaluate, the problem is in Keycloak. Check:
+
+* The roles are client roles.
+* The roles belong to `example-client`.
+* The user has the expected role.
+* `ADMIN` contains `USER`.
+* The client role mapper exists and is configured for `example-client`.
+* Add to ID token, access token, userinfo, and token introspection are On; lightweight access token is Off.
+
+If the roles appear correctly in Evaluate but the Grails application does not recognize them, the problem is likely in the application authority mapping (see the snippets chapter).
+
+=== ADMIN does not have USER permissions
+
+Verify that `ADMIN` → `USER` is a composite role:
+
+```text
+ADMIN
+└── USER
+```
+
+Then use **Clients → example-client → Client scopes → Evaluate** to verify that an administrator has both `ADMIN` and `USER` effective roles.
+
+=== Redirect URI errors
+
+Verify that the Keycloak client contains the exact redirect URI the Grails application uses:
+
+```text
+http://localhost:8080/login/oauth2/code/keycloak
+```
+
+The URI must match the application's actual URL.
+
+== Configuration summary
+
+The complete Keycloak configuration for the example is:
+
+```text
+Keycloak (start-dev, embedded H2)
+│
+└── example realm
+    │
+    └── example-client
+        │
+        ├── USER
+        │
+        └── ADMIN
+            └── USER
+        │
+        └── Client Role Mapper
+            ├── ID Token: On
+            ├── Access Token: On
+            ├── Lightweight Access Token: Off
+            ├── Userinfo: On
+            └── Token Introspection: On
+```
+
+The most important pieces are:
+
+1. Keycloak `start-dev` keeps its own embedded database, so no external database setup is needed.
+2. `example` is the Keycloak realm, and `example-client` represents the Grails application.
+3. `USER` and `ADMIN` are client roles, and `ADMIN` is a composite role containing `USER`.
+4. A client role mapper places the roles into the OIDC tokens.
+5. The Evaluate screen verifies the token before you troubleshoot Grails.
+6. Spring Security maps the Keycloak roles to authorities such as `ROLE_USER` and `ROLE_ADMIN`.
+7. `@PreAuthorize` controls access within the Grails application.
+
+When the realm, client, roles, and mapper are configured, continue with the Grails application configuration described in the next chapters.
